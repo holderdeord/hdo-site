@@ -1,2 +1,6 @@
 rvm:
   - 1.9.3
+notifications:
+  recipients:
+    - jari.bakken@gmail.com
+  irc: "irc.freenode.net#holderdeord"
