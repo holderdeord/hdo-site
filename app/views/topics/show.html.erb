@@ -14,12 +14,24 @@
   <% if @topic.children.any? %>
     <strong><%= Topic.human_attribute_name :children %>:</strong>
     <ul>
-      <% @topic.children.sort_by(&:name).each do |subtopic| %>
+      <% @topic.children.each do |subtopic| %>
         <li>
           <%= link_to subtopic.name, subtopic %>
         </li>
       <% end %>
     </ul>
   <% end %>
+
+  <% if @topic.ancestors.any? %>
+    <strong><%= Topic.human_attribute_name :ancestors %>:</strong>
+    <ul>
+      <% @topic.ancestors.each do |ancestor| %>
+        <li>
+          <%= link_to ancestor.name, ancestor %>
+        </li>
+      <% end %>
+    </ul>
+  <% end %>
+
 </div>
 

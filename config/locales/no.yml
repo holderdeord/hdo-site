@@ -36,5 +36,6 @@
           name: "Navn"
           external_id: "Ekstern id"
           children: "Underemner"
+          ancestors: "Hovedemner"
 
 
