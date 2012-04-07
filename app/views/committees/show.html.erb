@@ -11,6 +11,7 @@
     <%= @committee.name %>
   </p>
 
+  <strong><%= Committee.human_attribute_name :representatives %>:</strong>
   <%= render :partial => 'shared/representatives_table', :locals => {:representatives => @committee.representatives } %>
 </div>
 

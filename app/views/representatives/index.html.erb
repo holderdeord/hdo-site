@@ -2,23 +2,4 @@
   <h1><%= Representative.model_name.human :count => 2 %></h1>
 </div>
 
-<p class="pull-right">Viser <strong><%= @representatives.size %></strong> representanter.</p>
-
-<table class="table table-striped">
-  <thead>
-    <tr>
-      <th><%= Representative.human_attribute_name :name %></th>
-      <th><%= Representative.human_attribute_name :party %></th>
-      <th><%= Representative.human_attribute_name :external_id %></th>
-    </tr>
-  </thead>
-  <tbody>
-      <% @representatives.each do |rep| %>
-      <tr>
-        <td><%= link_to rep.display_name, rep %></td>
-        <td><%= link_to rep.party.name, rep.party %></td>
-        <td><%= rep.external_id %></td>
-      </tr>
-      <% end %>
-  </tbody>
-</table>
+<%= render :partial => "shared/representatives_table", :locals => {:representatives => @representatives } %>
