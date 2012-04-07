@@ -1,5 +1,5 @@
 <div class="page-header">
-  <h1>Komiteer</h1>
+  <h1><%= Committee.model_name.human :count => 2 %></h1>
 </div>
 
 <p class="pull-right">Viser <strong><%= @committees.size %></strong> komiteer.</p>
@@ -10,6 +10,7 @@
     <tr>
       <th>Id</th>
       <th>Navn</th>
+      <th>Representanter</th>
     </tr>
   </thead>
 
@@ -18,6 +19,7 @@
       <tr>
         <td><%= com.id %></td>
         <td><%= link_to com.name, com %></td>
+        <td><%= com.representatives.count %></td>
       </tr>
       <% end %>
   </tbody>
