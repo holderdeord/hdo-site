@@ -3,7 +3,8 @@ source 'https://rubygems.org'
 gem 'rails', '3.2.2'
 
 gem 'sqlite3'
-gem "nokogiri"
+gem 'nokogiri'
+gem 'mysql2'
 
 # Gems used only for assets and not required
 # in production environments by default.
@@ -33,7 +34,7 @@ gem "twitter-bootstrap-rails", "~> 2.0"
 # gem 'unicorn'
 
 # Deploy with Capistrano
-# gem 'capistrano'
+gem 'capistrano'
 
 # To use debugger
 # gem 'ruby-debug19', :require => 'ruby-debug'
