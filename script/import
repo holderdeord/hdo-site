@@ -8,4 +8,5 @@ $LOAD_PATH.unshift File.expand_path("../../lib", __FILE__)
 
 require 'hdo/import'
 
+I18n.locale = :en
 Hdo::Import::Cli.new(ARGV).run

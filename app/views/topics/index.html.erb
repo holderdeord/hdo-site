@@ -1,0 +1,32 @@
+<div class="page-header">
+  <h1><%= Topic.model_name.human :count => 2 %></h1>
+</div>
+
+<p class="pull-right">Viser <strong><%= @topics.size %></strong> emner.</p>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>Navn</th>
+      <th>Underkategorier</th>
+    </tr>
+  </thead>
+  <tbody>
+      <% @topics.each do |topic|
+        next unless topic.main?
+      %>
+      <tr>
+        <td><%= topic.external_id %></td>
+        <td><%= link_to topic.name, topic %></td>
+        <td>
+          <% topic.children.sort_by(&:name).each do |sub_topic| %>
+          <ul class="unstyled">
+            <li><%= link_to sub_topic.name, sub_topic %></li>
+          </ul>
+          <% end %>
+        </td>
+      </tr>
+      <% end %>
+  </tbody>
+</table>

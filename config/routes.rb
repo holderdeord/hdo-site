@@ -1,7 +1,8 @@
 Hdo::Application.routes.draw do
-  resources :parties, :only => [:index, :show]
+  resources :topics,          :only => [:index, :show]
+  resources :parties,         :only => [:index, :show]
   resources :representatives, :only => [:index, :show]
-  resources :committees, :only => [:index, :show]
+  resources :committees,      :only => [:index, :show]
 
   get "home/index"
   get "docs/index"

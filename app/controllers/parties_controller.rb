@@ -1,6 +1,4 @@
 class PartiesController < ApplicationController
-  # GET /parties
-  # GET /parties.json
   def index
     @parties = Party.all
 
@@ -10,8 +8,6 @@ class PartiesController < ApplicationController
     end
   end
 
-  # GET /parties/1
-  # GET /parties/1.json
   def show
     @party = Party.find(params[:id])
 
@@ -20,5 +16,4 @@ class PartiesController < ApplicationController
       format.json { render json: @party }
     end
   end
-
 end

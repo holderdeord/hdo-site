@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120407133555) do
+ActiveRecord::Schema.define(:version => 20120407193022) do
 
   create_table "committees", :force => true do |t|
     t.string   "external_id"
@@ -49,5 +49,14 @@ ActiveRecord::Schema.define(:version => 20120407133555) do
   end
 
   add_index "representatives_parties", ["representative_id", "party_id"], :name => "index_representatives_parties_on_representative_id_and_party_id"
+
+  create_table "topics", :force => true do |t|
+    t.string   "external_id"
+    t.integer  "parent_id"
+    t.string   "name"
+    t.boolean  "main"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
 
 end

@@ -28,8 +28,10 @@ module Hdo
           Party.import doc
         when 'committees'
           Committee.import doc
+        when 'topics'
+          Topic.import doc
         else
-          raise "uknown type: #{doc.name}"
+          raise "unknown type: #{doc.name}"
         end
       end
 
