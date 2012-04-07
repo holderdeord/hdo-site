@@ -11,7 +11,14 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120221234246) do
+ActiveRecord::Schema.define(:version => 20120407131710) do
+
+  create_table "committees", :force => true do |t|
+    t.string   "external_id"
+    t.string   "name"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
 
   create_table "parties", :force => true do |t|
     t.string   "external_id"

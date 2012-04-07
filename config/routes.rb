@@ -1,6 +1,7 @@
 Hdo::Application.routes.draw do
   resources :parties
   resources :representatives
+  resources :committees
 
   get "home/index"
   get "docs/index"

@@ -14,6 +14,14 @@ module Hdo
 </committee>
       XML
 
+      def self.import(doc)
+        doc.css("committee").map do |party|
+          p = ::Committee.find_or_create_by_external_id party.css("externalId").text
+          p.update_attributes! :name => party.css("name").text
+
+          p
+        end
+      end
     end
   end
 end
