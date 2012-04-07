@@ -15,6 +15,9 @@
         party:
           one: "Parti"
           other: "Partier"
+        topic:
+          one: "Emne"
+          other: "Emner"
       attributes:
         representative:
           name: "Navn"
@@ -29,3 +32,9 @@
           name: "Navn"
           representatives: "Representanter"
           external_id: "Ekstern id"
+        topic:
+          name: "Navn"
+          external_id: "Ekstern id"
+          children: "Underemner"
+
+

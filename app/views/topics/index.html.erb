@@ -7,22 +7,21 @@
 <table class="table">
   <thead>
     <tr>
-      <th>Id</th>
-      <th>Navn</th>
-      <th>Underkategorier</th>
+      <th><%= Topic.human_attribute_name :external_id %></th>
+      <th><%= Topic.human_attribute_name :name %></th>
+      <th><%= Topic.human_attribute_name :children %></th>
     </tr>
   </thead>
   <tbody>
-      <% @topics.each do |topic|
-        next unless topic.main?
+      <% @topics.select(&:main?).each do |topic|
       %>
       <tr>
         <td><%= topic.external_id %></td>
         <td><%= link_to topic.name, topic %></td>
         <td>
-          <% topic.children.sort_by(&:name).each do |sub_topic| %>
+          <% topic.children.each do |subtopic| %>
           <ul class="unstyled">
-            <li><%= link_to sub_topic.name, sub_topic %></li>
+            <li><%= link_to subtopic.name, subtopic %></li>
           </ul>
           <% end %>
         </td>
