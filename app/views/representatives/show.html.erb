@@ -15,6 +15,11 @@
     <b><%= Representative.human_attribute_name :party %>:</b>
     <%= link_to @representative.party.name, @representative.party %>
   </p>
+
+  <p>
+    <b><%= Representative.human_attribute_name :district %>:</b>
+    <%= link_to @representative.district.name, @representative.district %>
+  </p>
   
   <strong><%= Representative.human_attribute_name :committees %>:</strong>
   <ul>

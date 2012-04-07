@@ -6,9 +6,9 @@ module Hdo
         Field.new(:firstName, true, :string, 'The first name of the representative.'),
         Field.new(:lastName, true, :string, 'The last name of the representative.'),
         Field.new(:period, true, :string, "An identifier for the period the representative is elected for."),
-        Field.new(:area, true, :string, 'The geographical area the representative belongs to.'),
+        Field.new(:district, true, :string, "The electoral district the representative belongs to. Must match the 'name' field of the district type."),
         Field.new(:party, true, :string, "The name of the representative's party."),
-        Field.new(:committee, true, :list, "A list of committees the representative is a member of. This should match the 'name' field of the committee type."),
+        Field.new(:committee, true, :list, "A (possibly empty) list of committees the representative is a member of. This should match the 'name' field of the committee type."),
       ]
 
       DESC = 'a member of parliament'
@@ -17,7 +17,7 @@ module Hdo
   <externalId>DD</externalId>
   <firstName>Donald</firstName>
   <lastName>Duck</lastName>
-  <area>Duckburg</area>
+  <district>Duckburg</district>
   <party>Democratic Party</party>
   <committees>
     <committe>A</committe>
@@ -34,20 +34,22 @@ module Hdo
           first_name      = rep.css("firstName").first.text
           last_name       = rep.css("lastName").first.text
           committee_names = rep.css("committees committee").map { |e| e.text }
+          district_name   = rep.css("district").first.text
 
           party = ::Party.find_by_name!(party_name)
-          committees = committee_names.map do |name|
-            ::Committee.find_by_name!(name)
-          end
+          committees = committee_names.map { |name| ::Committee.find_by_name!(name) }
+          district = ::District.find_by_name!(district_name)
 
           rec = ::Representative.find_or_create_by_external_id external_id
           rec.update_attributes!(
             :party       => party,
             :first_name  => first_name,
             :last_name   => last_name,
-            :committees  => committees
-            # :area        => rep.css("area").text,
+            :committees  => committees,
+            :district    => district
           )
+          
+          print "."
         end
       end
 

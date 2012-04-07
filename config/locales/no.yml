@@ -43,5 +43,6 @@
         district:
           name: "Navn"
           external_id: "Ekstern id"
+          representatives: "Representanter"
 
 

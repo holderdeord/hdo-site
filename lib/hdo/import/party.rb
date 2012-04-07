@@ -19,6 +19,8 @@ module Hdo
           p = ::Party.find_or_create_by_external_id party.css("externalId").text
           p.update_attributes! :name => party.css("name").text
         end
+        
+        print "."
       end
 
     end

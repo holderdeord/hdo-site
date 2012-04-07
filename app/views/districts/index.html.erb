@@ -9,14 +9,16 @@
     <tr>
       <th><%= District.human_attribute_name :external_id %></th>
       <th><%= District.human_attribute_name :name %></th>
+      <th><%= District.human_attribute_name :representatives %></th>
     </tr>
   </thead>
 
   <tbody>
-      <% @districts.each do |com| %>
+      <% @districts.each do |dist| %>
       <tr>
-        <td><%= com.id %></td>
-        <td><%= link_to com.name, com %></td>
+        <td><%= dist.id %></td>
+        <td><%= link_to dist.name, dist %></td>
+        <td><%= dist.representatives.count %></td>
       </tr>
       <% end %>
   </tbody>

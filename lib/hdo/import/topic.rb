@@ -41,6 +41,8 @@ module Hdo
 
             parent.children << child
           end
+          
+          print "."
         end
       end
 

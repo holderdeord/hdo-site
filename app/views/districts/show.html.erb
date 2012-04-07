@@ -10,6 +10,8 @@
     <strong><%= District.human_attribute_name :name %>:</strong>
     <%= @district.name %>
   </p>
-
+  
+  <strong><%= District.human_attribute_name :representatives %>:</strong>
+  <%= render :partial => "shared/representatives_table", :locals => {:representatives => @district.representatives } %>
 </div>
 

@@ -1,5 +1,6 @@
 class Representative < ActiveRecord::Base
   belongs_to :party
+  belongs_to :district
   has_and_belongs_to_many :committees
 
   validates_uniqueness_of :first_name, :scope => :last_name # TODO: :scope => :period ?!
