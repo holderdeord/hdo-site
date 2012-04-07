@@ -40,6 +40,13 @@
 <strong>$</strong> cat /path/to/reps.xml
 <%= "<representatives>\n  " + Hdo::Import::Representative::XML_EXAMPLE.split("\n").join("\n  ") + "\n</representatives>" %>
 <strong>$</strong> script/import /path/to/reps.xml</pre>
+
+  <p>XML should be imported in the following order to keep relationships intact:</p>
+
+  <ul>
+    <li>party</li>
+    <li>representative</li>
+  </ul>
 </section>
 
 <section id="input-formats">
