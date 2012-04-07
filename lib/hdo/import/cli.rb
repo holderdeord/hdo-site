@@ -30,6 +30,8 @@ module Hdo
           Committee.import doc
         when 'topics'
           Topic.import doc
+        when 'districts'
+          District.import doc
         else
           raise "unknown type: #{doc.name}"
         end

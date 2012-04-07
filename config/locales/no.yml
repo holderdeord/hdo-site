@@ -18,6 +18,9 @@
         topic:
           one: "Emne"
           other: "Emner"
+        district:
+          one: "Fylke"
+          other: "Fylker"
       attributes:
         representative:
           name: "Navn"
@@ -37,5 +40,8 @@
           external_id: "Ekstern id"
           children: "Underemner"
           ancestors: "Hovedemner"
+        district:
+          name: "Navn"
+          external_id: "Ekstern id"
 
 

@@ -1,4 +1,6 @@
 Hdo::Application.routes.draw do
+  resources :districts
+
   resources :topics,          :only => [:index, :show]
   resources :parties,         :only => [:index, :show]
   resources :representatives, :only => [:index, :show]

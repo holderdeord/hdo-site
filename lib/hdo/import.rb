@@ -15,5 +15,6 @@ require 'hdo/import/party'
 require 'hdo/import/issue'
 require 'hdo/import/topic'
 require 'hdo/import/committee'
+require 'hdo/import/district'
 
 require 'hdo/import/cli'
