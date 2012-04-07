@@ -20,7 +20,12 @@
           name: "Navn"
           party: "Parti"
           external_id: "Ekstern id"
+          committees: "Komiteer"
         party:
+          name: "Navn"
+          representatives: "Representanter"
+          external_id: "Ekstern id"
+        committee:
           name: "Navn"
           representatives: "Representanter"
           external_id: "Ekstern id"

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120407131710) do
+ActiveRecord::Schema.define(:version => 20120407133555) do
 
   create_table "committees", :force => true do |t|
     t.string   "external_id"
@@ -19,6 +19,13 @@ ActiveRecord::Schema.define(:version => 20120407131710) do
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
   end
+
+  create_table "committees_representatives", :id => false, :force => true do |t|
+    t.integer "committee_id"
+    t.integer "representative_id"
+  end
+
+  add_index "committees_representatives", ["committee_id", "representative_id"], :name => "index_com_reps"
 
   create_table "parties", :force => true do |t|
     t.string   "external_id"

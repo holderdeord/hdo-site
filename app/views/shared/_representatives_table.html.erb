@@ -1,0 +1,18 @@
+<strong><%= Committee.human_attribute_name :representatives %>:</strong>
+<table class="table">
+  <thead>
+    <tr>
+      <th><%= Representative.human_attribute_name :name %></th>
+      <th><%= Representative.human_attribute_name :party %></th>
+    </tr>
+  </thead>
+    
+  <tbody>
+    <% representatives.sort_by(&:last_name).each do |rep| %>
+      <tr>
+        <td><%= link_to rep.display_name, rep %></td>
+        <td><%= rep.party.external_id %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

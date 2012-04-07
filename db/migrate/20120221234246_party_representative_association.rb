@@ -11,5 +11,6 @@ class PartyRepresentativeAssociation < ActiveRecord::Migration
 
   def down
     drop_table :representatives_parties
+    remove_column :representatives, :party_id
   end
 end

@@ -15,6 +15,14 @@
     <b><%= Representative.human_attribute_name :party %>:</b>
     <%= link_to @representative.party.name, @representative.party %>
   </p>
+  
+  <strong><%= Representative.human_attribute_name :committees %>:</strong>
+  <ul>
+    <% @representative.committees.sort_by(&:name).each do |com| %>
+      <li><%= link_to com.name, com %></li>
+    <% end %>
+  </ul>
+  
 </div>
 
 

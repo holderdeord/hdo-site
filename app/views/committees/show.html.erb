@@ -1,0 +1,16 @@
+<p id="notice"><%= notice %></p>
+
+<div class="well">
+  <p>
+    <strong><%= Committee.human_attribute_name :external_id %>:</strong>
+    <%= @committee.external_id %>
+  </p>
+
+  <p>
+    <strong><%= Committee.human_attribute_name :name %>:</strong>
+    <%= @committee.name %>
+  </p>
+
+  <%= render :partial => 'shared/representatives_table', :locals => {:representatives => @committee.representatives } %>
+</div>
+

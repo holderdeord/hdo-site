@@ -17,7 +17,7 @@
       <% @committees.each do |com| %>
       <tr>
         <td><%= com.id %></td>
-        <td><%= com.name %></td>
+        <td><%= link_to com.name, com %></td>
       </tr>
       <% end %>
   </tbody>
