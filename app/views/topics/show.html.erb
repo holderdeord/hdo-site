@@ -1,14 +1,11 @@
-<p id="notice"><%= notice %></p>
+<div class="page-header">
+  <h1><%= @topic.name %></h1>
+</div>
 
 <div class="well">
   <p>
     <strong><%= Topic.human_attribute_name :external_id %>:</strong>
     <%= @topic.external_id %>
-  </p>
-
-  <p>
-    <strong><%= Topic.human_attribute_name :name %>:</strong>
-    <%= @topic.name %>
   </p>
 
   <% if @topic.children.any? %>

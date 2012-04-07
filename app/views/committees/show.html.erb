@@ -1,14 +1,11 @@
-<p id="notice"><%= notice %></p>
+<div class="page-header">
+  <h1><%= @committee.name %></h1>
+</div>
 
 <div class="well">
   <p>
     <strong><%= Committee.human_attribute_name :external_id %>:</strong>
     <%= @committee.external_id %>
-  </p>
-
-  <p>
-    <strong><%= Committee.human_attribute_name :name %>:</strong>
-    <%= @committee.name %>
   </p>
 
   <strong><%= Committee.human_attribute_name :representatives %>:</strong>

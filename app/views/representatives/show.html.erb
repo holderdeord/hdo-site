@@ -1,14 +1,11 @@
-<p id="notice"><%= notice %></p>
+<div class="page-header">
+  <h1><%= @representative.first_name %> <%= @representative.last_name %></h1>
+</div>
 
 <div class="well">
   <p>
     <b><%= Representative.human_attribute_name :external_id %>:</b>
     <%= @representative.external_id %>
-  </p>
-
-  <p>
-    <b><%= Representative.human_attribute_name :name %>:</b>
-    <%= @representative.display_name %>
   </p>
 
   <p>
@@ -20,14 +17,14 @@
     <b><%= Representative.human_attribute_name :district %>:</b>
     <%= link_to @representative.district.name, @representative.district %>
   </p>
-  
+
   <strong><%= Representative.human_attribute_name :committees %>:</strong>
   <ul>
     <% @representative.committees.sort_by(&:name).each do |com| %>
       <li><%= link_to com.name, com %></li>
     <% end %>
   </ul>
-  
+
 </div>
 
 

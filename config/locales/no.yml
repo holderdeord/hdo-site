@@ -27,6 +27,7 @@
           party: "Parti"
           external_id: "Ekstern id"
           committees: "Komiteer"
+          district: "Fylke"
         party:
           name: "Navn"
           representatives: "Representanter"
