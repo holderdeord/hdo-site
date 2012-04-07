@@ -15,7 +15,7 @@ module Hdo
       XML
 
       def self.import(doc)
-        doc.css("committee").eacg do |party|
+        doc.css("committee").each do |party|
           p = ::Committee.find_or_create_by_external_id party.css("externalId").text
           p.update_attributes! :name => party.css("name").text
 
