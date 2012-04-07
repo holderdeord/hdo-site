@@ -1,0 +1,83 @@
+<div class="subnav">
+  <ul class="nav nav-pills">
+    <li><a href="#source-code">Source code</a></li>
+    <li><a href="#api">API</a></li>
+    <li><a href="#data-import">Data import</a></li>
+    <li class="dropdown">
+      <a class="dropdown-toggle" data-toggle="dropdown" href="#">Input formats <b class="caret"></b></a>
+      <ul class="dropdown-menu">
+        <% @import_types.each do |type|
+          n = type_name type
+        %>
+          <li><a href="#input-format-<%= n %>"><%= n %></a></li>
+        <% end %>
+      </ul>
+    </li>
+  </ul>
+</div>
+
+<section id="source-code">
+  <div class="page-header">
+    <h1>Source code</h1>
+  </div>
+  <p>The source code for this project is available on <a href="http://github.com/jarib/hdo-prototype">GitHub</a>.
+</section>
+
+<section id="api">
+  <div class="page-header">
+    <h1>API</h1>
+  </div>
+
+  <p>Future: Describe the API.</p>
+</section>
+
+<section id="data-import">
+  <div class="page-header">
+    <h1>Data import</h1>
+  </div>
+  <p>To import your data, you should have a file for each of <a href="#input-formats">these XML types</a>, and pass them to <code>script/import</code>, e.g.:</p>
+  <pre>
+<strong>$</strong> cat /path/to/reps.xml
+<%= "<representatives>\n  " + Hdo::Import::Representative::XML_EXAMPLE.split("\n").join("\n  ") + "\n</representatives>" %>
+<strong>$</strong> script/import /path/to/reps.xml</pre>
+</section>
+
+<section id="input-formats">
+  <div class="page-header">
+    <h1>Input formats</h1>
+  </div>
+  <p>Describes the data formats used to import parliamentary data into the application.</p>
+
+  <% @import_types.each do |import_type| %>
+  <h2 class="page-header" id="input-format-<%= type_name import_type %>">
+      <%= type_name import_type %>
+      <small><%= import_type::DESC %></small>
+    </h2>
+
+    <h3>Fields</h3>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>name</th>
+          <th>required</th>
+          <th>type</th>
+          <th>description</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% import_type::FIELDS.each do |field| %>
+        <tr>
+          <td><code><%= field.name %></code></td>
+          <td><%= field.required %></td>
+          <td><%= field.type %></td>
+          <td><%= field.description %></td>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
+
+    <h3>XML example</h3>
+    <pre class=""><%= import_type::XML_EXAMPLE %></pre>
+  <% end %>
+</section>

@@ -1,0 +1,25 @@
+"no":
+  app:
+    title: "Holder de ord"
+    description: "er en politisk uavhengig organisasjon som kartlegger norske politiske partiers løfter og sammenligner disse med hva de gjør på Storting og i Regjering."
+    about: "Om oss"
+  activerecord:
+      models:
+        representative:
+          one: "Representant"
+          other: "Representanter"
+        committee:
+          one: "Komite"
+          other: "Komiteer"
+        party:
+          one: "Parti"
+          other: "Partier"
+      attributes:
+        representative:
+          name: "Navn"
+          party: "Parti"
+          external_id: "Ekstern id"
+        party:
+          name: "Navn"
+          representatives: "Representanter"
+          external_id: "Ekstern id"

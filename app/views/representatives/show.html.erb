@@ -1,0 +1,20 @@
+<p id="notice"><%= notice %></p>
+
+<div class="well">
+  <p>
+    <b><%= Representative.human_attribute_name :external_id %>:</b>
+    <%= @representative.external_id %>
+  </p>
+
+  <p>
+    <b><%= Representative.human_attribute_name :name %>:</b>
+    <%= @representative.display_name %>
+  </p>
+
+  <p>
+    <b><%= Representative.human_attribute_name :party %>:</b>
+    <%= link_to @representative.party.name, @representative.party %>
+  </p>
+</div>
+
+

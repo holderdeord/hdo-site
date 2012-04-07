@@ -1,0 +1,28 @@
+<div class="page-header">
+  <h1>Partier</h1>
+</div>
+
+<p class="pull-right">Viser <strong><%= @parties.size %></strong> partier.</p>
+
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>Navn</th>
+      <th>Antall representanter</th>
+      <th>Prosent</th>
+    </tr>
+  </thead>
+
+  <tbody>
+      <% @parties.each do |party| %>
+      <tr>
+        <td><%= party.id %></td>
+        <td><%= link_to party.name, party %></td>
+        <td><%= party.representatives.count %></td>
+        <td><%= party.percent_of_representatives %>%</td>
+      </tr>
+      <% end %>
+  </tbody>
+</table>

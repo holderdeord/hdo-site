@@ -1,0 +1,23 @@
+<p id="notice"><%= notice %></p>
+
+<div class="well">
+  <p>
+    <strong><%= Party.human_attribute_name :external_id %>:</strong>
+    <%= @party.external_id %>
+  </p>
+
+  <p>
+    <strong><%= Party.human_attribute_name :name %>:</strong>
+    <%= @party.name %>
+  </p>
+
+  <strong><%= Party.human_attribute_name :representatives %>:</strong>
+  <ul>
+    <% @party.representatives.sort_by(&:last_name).each do |rep| %>
+      <li>
+        <%= link_to rep.display_name, rep %>
+      </li>
+    <% end %>
+  </ul>
+</div>
+
