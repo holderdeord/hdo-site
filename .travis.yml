@@ -4,3 +4,4 @@ notifications:
   recipients:
     - jari.bakken@gmail.com
   irc: "irc.freenode.net#holderdeord"
+script: "bundle exec rake db:migrate spec"
