@@ -1,4 +1,6 @@
 class IssuesController < ApplicationController
+  caches_page :index, :show
+
   def index
     @issues = Issue.all(:order => :last_update).reverse
 

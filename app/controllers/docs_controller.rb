@@ -1,4 +1,6 @@
 class DocsController < ApplicationController
+  caches_page :index
+
   def index
     @import_types = [
       Hdo::Import::Party,

@@ -2,35 +2,37 @@
 
 <p class="pull-right">Viser <strong><%= votes.size %></strong> voteringer.</p>
 
-<table class="table table-striped">
-  <thead>
-    <tr>
-      <th><%= Vote.human_attribute_name :time %></th>
-      <% if display_issue %>
-        <th><%= Issue.model_name.human %></th>
+<% if votes.any? %>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th><%= Vote.human_attribute_name :time %></th>
+        <% if display_issue %>
+          <th><%= Issue.model_name.human %></th>
+        <% end %>
+        <th><%= Vote.human_attribute_name :subject %></th>
+        <th><%= Vote.human_attribute_name :enacted %></th>
+        <th><%= Vote.human_attribute_name :for_count %></th>
+        <th><%= Vote.human_attribute_name :against_count %></th>
+        <th><%= Vote.human_attribute_name :missing_count %></th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% votes.each do |vote| %>
+      <tr>
+        <td><%= vote.human_time %></td>
+        <% if display_issue %>
+          <td><%= link_to vote.issue.summary, vote.issue %></td>
+        <% end %>
+        <td><%= vote.subject %></td>
+        <td><%= vote.human_enacted %></td>
+        <td><%= vote.percent_for %>% (<%= vote.for_count %>)</td>
+        <td><%= vote.percent_against %>% (<%= vote.against_count %>)</td>
+        <td><%= vote.percent_missing %>% (<%= vote.missing_count %>)</td>
+        <td><a href="<%= url_for vote %>" class="btn btn-info"><%= t('app.details') %></a></td>
+      </tr>
       <% end %>
-      <th><%= Vote.human_attribute_name :subject %></th>
-      <th><%= Vote.human_attribute_name :enacted %></th>
-      <th><%= Vote.human_attribute_name :for_count %></th>
-      <th><%= Vote.human_attribute_name :against_count %></th>
-      <th><%= Vote.human_attribute_name :missing_count %></th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <% votes.each do |vote| %>
-    <tr>
-      <td><%= vote.human_time %></td>
-      <% if display_issue %>
-        <td><%= link_to vote.issue.summary, vote.issue %></td>
-      <% end %>
-      <td><%= vote.subject %></td>
-      <td><%= vote.human_enacted %></td>
-      <td><%= vote.percent_for %>% (<%= vote.for_count %>)</td>
-      <td><%= vote.percent_against %>% (<%= vote.against_count %>)</td>
-      <td><%= vote.percent_missing %>% (<%= vote.missing_count %>)</td>
-      <td><a href="<%= url_for vote %>" class="btn btn-info"><%= t('app.details') %></a></td>
-    </tr>
-    <% end %>
-  </tbody>
-</table>
+    </tbody>
+  </table>
+<% end %>

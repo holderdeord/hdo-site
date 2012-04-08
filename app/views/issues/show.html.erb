@@ -55,6 +55,4 @@
   </ul>
 </div>
 
-<% if @issue.votes.any? %>
 <%= render :partial => "shared/votes_summary_table", :locals => {:votes => @issue.votes, :display_issue => false }%>
-<% end %>

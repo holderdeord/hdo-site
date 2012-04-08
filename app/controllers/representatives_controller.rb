@@ -1,6 +1,6 @@
 class RepresentativesController < ApplicationController
-  # GET /representatives
-  # GET /representatives.json
+  caches_page :index, :show
+
   def index
     @representatives = Representative.order :last_name
 
@@ -10,8 +10,6 @@ class RepresentativesController < ApplicationController
     end
   end
 
-  # GET /representatives/1
-  # GET /representatives/1.json
   def show
     @representative = Representative.includes(:votes).find(params[:id])
 
