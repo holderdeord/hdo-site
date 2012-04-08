@@ -1,0 +1,26 @@
+<div class="page-header">
+  <h1><%= Issue.model_name.human :count => 2 %></h1>
+</div>
+
+<p class="pull-right">Viser <strong><%= @issues.size %></strong> saker.</p>
+
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th><%= Issue.human_attribute_name :summary %></th>
+      <th><%= Issue.human_attribute_name :status %></th>
+      <th><%= Issue.human_attribute_name :last_update %></th>
+    </tr>
+  </thead>
+
+  <tbody>
+      <% @issues.each do |issue| %>
+      <tr>
+        <td><%= link_to issue.summary, issue %></td>
+        <td><%= issue.human_status %></td>
+        <td><%= issue.human_last_update %></td>
+      </tr>
+      <% end %>
+  </tbody>
+</table>

@@ -20,7 +20,7 @@
 
   <strong><%= Representative.human_attribute_name :committees %>:</strong>
   <ul>
-    <% @representative.committees.sort_by(&:name).each do |com| %>
+    <% @representative.committees.each do |com| %>
       <li><%= link_to com.name, com %></li>
     <% end %>
   </ul>

@@ -1,0 +1,57 @@
+<div class="page-header">
+  <h1><%= @issue.summary %></h1>
+</div>
+
+<div class="well">
+  <p>
+    <strong><%= Issue.human_attribute_name :external_id %>:</strong>
+    <%= @issue.external_id %>
+  </p>
+
+  <p>
+    <strong><%= Issue.human_attribute_name :last_update %>:</strong>
+    <%= @issue.human_last_update %>
+  </p>
+
+  <p>
+    <strong><%= Issue.human_attribute_name :status %>:</strong>
+    <%= @issue.human_status %>
+  </p>
+
+  <p>
+    <strong><%= Issue.human_attribute_name :type %>:</strong>
+    <%= @issue.issue_type %>
+  </p>
+
+  <p>
+    <strong><%= Issue.human_attribute_name :document_group %>:</strong>
+    <%= @issue.document_group %>
+  </p>
+
+  <p>
+    <strong><%= Issue.human_attribute_name :reference %>:</strong>
+    <%= @issue.reference %>
+  </p>
+
+  <p>
+    <strong><%= Issue.human_attribute_name :description %>:</strong>
+    <%= @issue.description %>
+  </p>
+
+  <% if @issue.committee %>
+  <p>
+    <strong><%= Issue.human_attribute_name :committee %>:</strong>
+    <%= link_to @issue.committee.name, @issue.committee %>
+  </p>
+  <% end %>
+
+  <strong><%= Issue.human_attribute_name :topics %>:</strong>
+  <ul>
+    <% @issue.topics.each do |rep| %>
+      <li>
+        <%= link_to rep.name, rep %>
+      </li>
+    <% end %>
+  </ul>
+</div>
+

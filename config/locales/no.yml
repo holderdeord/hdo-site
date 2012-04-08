@@ -21,6 +21,9 @@
         district:
           one: "Fylke"
           other: "Fylker"
+        issue:
+          one: "Sak"
+          other: "Saker"
       attributes:
         representative:
           name: "Navn"
@@ -45,5 +48,15 @@
           name: "Navn"
           external_id: "Ekstern id"
           representatives: "Representanter"
+        issue:
+          summary: "Sammendrag"
+          external_id: "Ekstern id"
+          status: "Status"
+          last_update: "Sist oppdatert"
+          topics: "Emner"
+          description: "Beskrivelse"
+          committee: "Komité"
+          document_group: "Dokumentgruppe"
+          reference: "Henvisning"
 
 

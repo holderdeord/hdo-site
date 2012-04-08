@@ -32,6 +32,8 @@ module Hdo
           Topic.import doc
         when 'districts'
           District.import doc
+        when 'issues'
+          Issue.import doc
         else
           raise "unknown type: #{doc.name}"
         end

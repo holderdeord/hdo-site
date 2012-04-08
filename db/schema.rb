@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120407222531) do
+ActiveRecord::Schema.define(:version => 20120408112847) do
 
   create_table "committees", :force => true do |t|
     t.string   "external_id"
@@ -33,6 +33,27 @@ ActiveRecord::Schema.define(:version => 20120407222531) do
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
   end
+
+  create_table "issues", :force => true do |t|
+    t.string   "external_id"
+    t.string   "summary"
+    t.string   "description"
+    t.string   "issue_type"
+    t.string   "status"
+    t.datetime "last_update"
+    t.string   "document_group"
+    t.string   "reference"
+    t.integer  "committee_id"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
+  end
+
+  create_table "issues_topics", :id => false, :force => true do |t|
+    t.integer "issue_id"
+    t.integer "topic_id"
+  end
+
+  add_index "issues_topics", ["issue_id", "topic_id"], :name => "index_issues_topics_on_issue_id_and_topic_id"
 
   create_table "parties", :force => true do |t|
     t.string   "external_id"
