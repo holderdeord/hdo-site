@@ -1,7 +1,7 @@
 <strong><%= Vote.model_name.human :count => 2 %></strong>
 
 <p class="pull-right">Viser <strong><%= votes.size %></strong> voteringer.</p>
-  
+
 <table class="table table-striped">
   <thead>
     <tr>
@@ -27,8 +27,8 @@
       <td><%= vote.subject %></td>
       <td><%= vote.human_enacted %></td>
       <td><%= vote.percent_for %>% (<%= vote.for_count %>)</td>
-      <td><%= vote.percent_against %>% (<%= vote.percent_against %>)</td>
-      <td><%= vote.percent_missing %>% (<%= vote.percent_missing %>)</td>
+      <td><%= vote.percent_against %>% (<%= vote.against_count %>)</td>
+      <td><%= vote.percent_missing %>% (<%= vote.missing_count %>)</td>
       <td><a href="<%= url_for vote %>" class="btn btn-info"><%= t('app.details') %></a></td>
     </tr>
     <% end %>

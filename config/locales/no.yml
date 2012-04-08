@@ -22,8 +22,8 @@
           one: "Parti"
           other: "Partier"
         topic:
-          one: "Emne"
-          other: "Emner"
+          one: "Tema"
+          other: "Tema"
         district:
           one: "Fylke"
           other: "Fylker"
@@ -55,8 +55,8 @@
         topic:
           name: "Navn"
           external_id: "Ekstern id"
-          children: "Underemner"
-          ancestors: "Hovedemner"
+          children: "Undertema"
+          ancestors: "Hovedtema"
         district:
           name: "Navn"
           external_id: "Ekstern id"
@@ -66,13 +66,13 @@
           external_id: "Ekstern id"
           status: "Status"
           last_update: "Sist oppdatert"
-          topics: "Emner"
+          topics: "Tema"
           description: "Beskrivelse"
           committee: "Komité"
           document_group: "Dokumentgruppe"
           reference: "Henvisning"
         vote:
-          subject: "Tema"
+          subject: "Beskrivelse"
           for_count: "For"
           against_count: "Mot"
           missing_count: "Ikke tilstede"

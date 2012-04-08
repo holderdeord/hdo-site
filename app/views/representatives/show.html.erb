@@ -4,18 +4,23 @@
 
 <div class="well">
   <p>
-    <b><%= Representative.human_attribute_name :external_id %>:</b>
+    <strong><%= Representative.human_attribute_name :external_id %>:</strong>
     <%= @representative.external_id %>
   </p>
 
   <p>
-    <b><%= Representative.human_attribute_name :party %>:</b>
+    <strong><%= Representative.human_attribute_name :party %>:</strong>
     <%= link_to @representative.party.name, @representative.party %>
   </p>
 
   <p>
-    <b><%= Representative.human_attribute_name :district %>:</b>
+    <strong><%= Representative.human_attribute_name :district %>:</strong>
     <%= link_to @representative.district.name, @representative.district %>
+  </p>
+
+  <p>
+    <strong><%= Representative.human_attribute_name :alternate %>:</strong>
+    <%= @representative.human_alternate %>
   </p>
 
   <strong><%= Representative.human_attribute_name :committees %>:</strong>
@@ -24,7 +29,36 @@
       <li><%= link_to com.name, com %></li>
     <% end %>
   </ul>
-
 </div>
+
+
+<strong><%= Vote.model_name.human :count => 2 %></strong>
+<p class="pull-right">Viser siste <strong><%= @representative.vote_results.size %></strong> voteringer.</p>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th><%= Vote.human_attribute_name :time %></th>
+      <th><%= Issue.model_name.human %></th>
+      <th><%= Vote.human_attribute_name :subject %></th>
+      <th><%= Vote.human_attribute_name :enacted %></th>
+      <th><%= VoteResult.model_name.human %></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @representative.vote_results.each do |result| %>
+    <tr>
+      <td><%= result.vote.human_time %></td>
+      <td><%= link_to result.vote.issue.summary, result.vote.issue %></td>
+      <td><%= result.vote.subject %></td>
+      <td><%= result.vote.human_enacted %></td>
+      <td><%= result.human_result %></td>
+      <td><a href="<%= url_for result.vote %>" class="btn btn-info"><%= t('app.details') %></a></td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
+
 
 

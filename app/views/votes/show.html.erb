@@ -1,13 +1,23 @@
 <div class="page-header">
-  <h1><%= @issue.summary %>: <%= @vote.subject %></h1>
+  <h1><%= @vote.subject %></h1>
 </div>
 
 <div class="well">
   <p>
+    <strong><%= Issue.human_attribute_name :external_id %></strong>
+    <%= @vote.external_id %>
+  </p>
+
+  <p>
+    <strong><%= Issue.model_name.human %></strong>
+    <%= link_to @vote.issue.summary, @vote.issue %>
+  </p>
+
+  <p>
     <strong><%= Vote.human_attribute_name :enacted %></strong>
     <%= @vote.human_enacted %>
   </p>
-  
+
   <dl>
     <dt><%= Vote.human_attribute_name :for_count %></dd>
     <dd><%= @vote.percent_for %>% (<%= @vote.for_count %>)</dt>

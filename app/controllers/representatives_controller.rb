@@ -13,7 +13,7 @@ class RepresentativesController < ApplicationController
   # GET /representatives/1
   # GET /representatives/1.json
   def show
-    @representative = Representative.find(params[:id])
+    @representative = Representative.includes(:votes).find(params[:id])
 
     respond_to do |format|
       format.html # show.html.erb

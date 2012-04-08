@@ -11,4 +11,8 @@ class Representative < ActiveRecord::Base
   def display_name
     "#{last_name}, #{first_name}"
   end
+
+  def human_alternate
+    alternate? ? I18n.t("app.yes") : I18n.t("app.no")
+  end
 end

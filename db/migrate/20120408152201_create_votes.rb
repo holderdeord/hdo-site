@@ -12,5 +12,7 @@ class CreateVotes < ActiveRecord::Migration
 
       t.timestamps
     end
+
+    add_index :votes, :issue_id
   end
 end

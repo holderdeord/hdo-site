@@ -13,7 +13,7 @@
       <tr>
         <td><%= link_to rep.display_name, rep %></td>
         <td><%= link_to rep.party.name, rep.party %></td>
-        <td><%= rep.alternate? %></td>
+        <td><%= t("app.yes") if rep.alternate? %></td>
       </tr>
       <% end %>
   </tbody>
