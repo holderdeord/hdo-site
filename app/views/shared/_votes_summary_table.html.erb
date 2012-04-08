@@ -22,14 +22,17 @@
       <% votes.each do |vote| %>
       <tr>
         <td><%= vote.human_time %></td>
-        <% if display_issue %>
+        <% if show_issue %>
           <td><%= link_to vote.issue.summary, vote.issue %></td>
         <% end %>
         <td><%= vote.subject %></td>
         <td><%= vote.human_enacted %></td>
-        <td><%= vote.percent_for %>% (<%= vote.for_count %>)</td>
-        <td><%= vote.percent_against %>% (<%= vote.against_count %>)</td>
-        <td><%= vote.percent_missing %>% (<%= vote.missing_count %>)</td>
+
+        <% pc = vote.percentages %>
+
+        <td class="vote-for"><%= pc.for %>% (<%= vote.for_count %>)</td>
+        <td class="vote-against"><%= pc.against %>% (<%= vote.against_count %>)</td>
+        <td class="vote-missing"><%= pc.missing %>% (<%= vote.missing_count %>)</td>
         <td><a href="<%= url_for vote %>" class="btn btn-info"><%= t('app.details') %></a></td>
       </tr>
       <% end %>

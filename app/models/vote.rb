@@ -1,3 +1,5 @@
+require 'ostruct'
+
 class Vote < ActiveRecord::Base
   belongs_to :issue
 
@@ -12,15 +14,15 @@ class Vote < ActiveRecord::Base
     enacted? ? I18n.t('app.yes') : I18n.t('app.no')
   end
 
-  def percent_for
-    for_count * 100 / vote_results.count
+  def percentages
+    f, a, m = for_count, against_count, missing_count
+    total = f + a + m
+
+    OpenStruct.new(
+      :for     => f * 100 / total,
+      :against => a * 100 / total,
+      :missing => m * 100 / total
+    )
   end
 
-  def percent_against
-    against_count * 100 / vote_results.count
-  end
-
-  def percent_missing
-    missing_count * 100 / vote_results.count
-  end
 end
