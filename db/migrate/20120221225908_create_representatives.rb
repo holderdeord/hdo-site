@@ -7,5 +7,7 @@ class CreateRepresentatives < ActiveRecord::Migration
 
       t.timestamps
     end
+
+    add_index :representatives, :last_name
   end
 end

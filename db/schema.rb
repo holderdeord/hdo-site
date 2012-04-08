@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120408112847) do
+ActiveRecord::Schema.define(:version => 20120408160222) do
 
   create_table "committees", :force => true do |t|
     t.string   "external_id"
@@ -62,6 +62,8 @@ ActiveRecord::Schema.define(:version => 20120408112847) do
     t.datetime "updated_at",  :null => false
   end
 
+  add_index "parties", ["name"], :name => "index_parties_on_name"
+
   create_table "representatives", :force => true do |t|
     t.string   "external_id"
     t.string   "first_name"
@@ -70,7 +72,11 @@ ActiveRecord::Schema.define(:version => 20120408112847) do
     t.datetime "updated_at",  :null => false
     t.integer  "party_id"
     t.integer  "district_id"
+    t.boolean  "alternate"
   end
+
+  add_index "representatives", ["last_name"], :name => "index_representatives_on_last_name"
+  add_index "representatives", ["party_id"], :name => "index_representatives_on_party_id"
 
   create_table "topics", :force => true do |t|
     t.string   "external_id"
@@ -79,6 +85,29 @@ ActiveRecord::Schema.define(:version => 20120408112847) do
     t.boolean  "main"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
+  end
+
+  create_table "vote_results", :force => true do |t|
+    t.integer  "representative_id"
+    t.integer  "vote_id"
+    t.integer  "result"
+    t.datetime "created_at",        :null => false
+    t.datetime "updated_at",        :null => false
+  end
+
+  add_index "vote_results", ["representative_id", "vote_id"], :name => "index_vote_results_on_representative_id_and_vote_id"
+
+  create_table "votes", :force => true do |t|
+    t.string   "external_id"
+    t.integer  "issue_id"
+    t.integer  "for_count"
+    t.integer  "against_count"
+    t.integer  "missing_count"
+    t.boolean  "enacted"
+    t.string   "subject"
+    t.datetime "time"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
   end
 
 end

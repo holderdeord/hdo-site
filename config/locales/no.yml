@@ -4,6 +4,9 @@
     description: "er en politisk uavhengig organisasjon som kartlegger norske politiske partiers løfter og sammenligner disse med hva de gjør på Storting og i Regjering."
     about: "Om oss"
     documentation: "Dokumentasjon"
+    "yes": 'Ja'
+    "no": 'Nei'
+    details: 'Detaljer'
     external:
       urls:
         issue: "http://stortinget.no/no/Saker-og-publikasjoner/Saker/Sak/?p=%s"
@@ -27,6 +30,12 @@
         issue:
           one: "Sak"
           other: "Saker"
+        vote:
+          one: "Votering"
+          other: "Voteringer"
+        vote_result:
+          one: "Stemme"
+          other: "Stemmer"
       attributes:
         representative:
           name: "Navn"
@@ -34,6 +43,7 @@
           external_id: "Ekstern id"
           committees: "Komiteer"
           district: "Fylke"
+          alternate: "Vara"
         party:
           name: "Navn"
           representatives: "Representanter"
@@ -61,5 +71,17 @@
           committee: "Komité"
           document_group: "Dokumentgruppe"
           reference: "Henvisning"
+        vote:
+          subject: "Tema"
+          for_count: "For"
+          against_count: "Mot"
+          missing_count: "Ikke tilstede"
+          time: "Dato"
+          enacted: "Vedtatt"
+          counts: "Stemmegivning"
+        vote_result:
+          result: "Stemme"
+
+
 
 

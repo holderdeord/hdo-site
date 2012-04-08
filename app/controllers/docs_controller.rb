@@ -7,6 +7,7 @@ class DocsController < ApplicationController
       Hdo::Import::Representative,
       Hdo::Import::Topic,
       Hdo::Import::Issue,
+      Hdo::Import::Vote,
     ]
   end
 end

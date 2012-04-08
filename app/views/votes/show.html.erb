@@ -1,0 +1,43 @@
+<div class="page-header">
+  <h1><%= @issue.summary %>: <%= @vote.subject %></h1>
+</div>
+
+<div class="well">
+  <p>
+    <strong><%= Vote.human_attribute_name :enacted %></strong>
+    <%= @vote.human_enacted %>
+  </p>
+  
+  <dl>
+    <dt><%= Vote.human_attribute_name :for_count %></dd>
+    <dd><%= @vote.percent_for %>% (<%= @vote.for_count %>)</dt>
+
+    <dt><%= Vote.human_attribute_name :against_count %></dd>
+    <dd><%= @vote.percent_against %>% (<%= @vote.against_count %>)</dt>
+
+    <dt><%= Vote.human_attribute_name :missing_count %></dd>
+    <dd><%= @vote.percent_missing %>% (<%= @vote.missing_count %>)</dt>
+  </dl>
+</div>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th><%= Representative.model_name.human %></th>
+      <th><%= Representative.human_attribute_name :party %></th>
+      <th><%= VoteResult.human_attribute_name :vote %></th>
+    </tr>
+  </thead>
+  <tbody>
+      <% @vote.vote_results.each do |result| %>
+      <tr>
+        <td><%= link_to result.representative.display_name, result.representative %></td>
+        <td><%= link_to result.representative.party.name, result.representative.party %></td>
+        <td><%= result.human_result %></td>
+      </tr>
+      <% end %>
+  </tbody>
+</table>
+
+
+

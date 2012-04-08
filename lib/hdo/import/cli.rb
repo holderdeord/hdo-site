@@ -12,7 +12,7 @@ module Hdo
 
       def run
         @files.each do |file|
-          print "importing #{file.inspect}"
+          print "\nimporting #{file.inspect}:"
           doc = Nokogiri.XML(File.read(file)).first_element_child
           import doc
         end
@@ -21,7 +21,7 @@ module Hdo
       private
 
       def import(doc)
-        puts "- #{doc.name}"
+        puts " #{doc.name}"
 
         case doc.name
         when 'representatives'
@@ -36,6 +36,8 @@ module Hdo
           District.import doc
         when 'issues'
           Issue.import doc
+        when 'votes'
+          Vote.import doc
         else
           raise "unknown type: #{doc.name}"
         end

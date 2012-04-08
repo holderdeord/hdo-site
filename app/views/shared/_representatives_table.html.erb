@@ -5,6 +5,7 @@
     <tr>
       <th><%= Representative.human_attribute_name :name %></th>
       <th><%= Representative.human_attribute_name :party %></th>
+      <th><%= Representative.human_attribute_name :alternate %></th>
     </tr>
   </thead>
   <tbody>
@@ -12,6 +13,7 @@
       <tr>
         <td><%= link_to rep.display_name, rep %></td>
         <td><%= link_to rep.party.name, rep.party %></td>
+        <td><%= rep.alternate? %></td>
       </tr>
       <% end %>
   </tbody>

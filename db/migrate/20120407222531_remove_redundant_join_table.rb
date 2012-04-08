@@ -1,6 +1,7 @@
 class RemoveRedundantJoinTable < ActiveRecord::Migration
   def up
     drop_table :representatives_parties
+    add_index :representatives, :party_id
   end
 
   def down

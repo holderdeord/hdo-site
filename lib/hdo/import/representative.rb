@@ -29,28 +29,34 @@ module Hdo
 
       def self.import(doc)
         doc.css("representative").map do |rep|
-          external_id     = rep.css("externalId").first.text
-          party_name      = rep.css("party").first.text
-          first_name      = rep.css("firstName").first.text
-          last_name       = rep.css("lastName").first.text
-          committee_names = rep.css("committees committee").map { |e| e.text }
-          district_name   = rep.css("district").first.text
-
-          party = ::Party.find_by_name!(party_name)
-          committees = committee_names.map { |name| ::Committee.find_by_name!(name) }
-          district = ::District.find_by_name!(district_name)
-
-          rec = ::Representative.find_or_create_by_external_id external_id
-          rec.update_attributes!(
-            :party       => party,
-            :first_name  => first_name,
-            :last_name   => last_name,
-            :committees  => committees,
-            :district    => district
-          )
-          
+          import_representative(rep, false)
           print "."
         end
+      end
+
+      def self.import_representative(node, alternate = false)
+        external_id     = node.css("externalId").first.text
+        party_name      = node.css("party").first.text
+        first_name      = node.css("firstName").first.text
+        last_name       = node.css("lastName").first.text
+        committee_names = node.css("committees committee").map { |e| e.text }
+        district_name   = node.css("district").first.text
+
+        party = ::Party.find_by_name!(party_name)
+        committees = committee_names.map { |name| ::Committee.find_by_name!(name) }
+        district = ::District.find_by_name!(district_name)
+
+        rec = ::Representative.find_or_create_by_external_id external_id
+        rec.update_attributes!(
+          :party       => party,
+          :first_name  => first_name,
+          :last_name   => last_name,
+          :committees  => committees,
+          :district    => district,
+          :alternate   => alternate
+        )
+
+        rec
       end
 
     end

@@ -15,12 +15,13 @@ module Hdo
       XML
 
       def self.import(doc)
-        doc.css("party").map do |party|
+        doc.css("party").each do |party|
           p = ::Party.find_or_create_by_external_id party.css("externalId").text
           p.update_attributes! :name => party.css("name").text
+
+          print "."
         end
-        
-        print "."
+
       end
 
     end

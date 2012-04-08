@@ -6,5 +6,7 @@ class CreateParties < ActiveRecord::Migration
 
       t.timestamps
     end
+
+    add_index :parties, :name
   end
 end
