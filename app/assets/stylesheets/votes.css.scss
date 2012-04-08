@@ -1,3 +1,19 @@
 // Place all the styles related to the Votes controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+.vote-for {
+  color: #468847;
+}
+
+.vote-against {
+  color: #B94A48;
+}
+
+.vote-missing {
+  color: #3A87AD;
+}
+
+.date-header {
+  min-width: 70px;
+}

@@ -9,6 +9,6 @@
   </p>
 
   <strong><%= Committee.human_attribute_name :representatives %>:</strong>
-  <%= render :partial => 'shared/representatives_table', :locals => {:representatives => @committee.representatives } %>
+  <%= render :partial => 'shared/representatives_table', :locals => {:representatives => @committee.representatives, :show_party => true } %>
 </div>
 

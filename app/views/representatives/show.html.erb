@@ -31,14 +31,13 @@
   </ul>
 </div>
 
-
 <strong><%= Vote.model_name.human :count => 2 %></strong>
 <p class="pull-right">Viser siste <strong><%= @representative.vote_results.size %></strong> voteringer.</p>
 
 <table class="table table-striped">
   <thead>
     <tr>
-      <th><%= Vote.human_attribute_name :time %></th>
+      <th class="date-header"><%= Vote.human_attribute_name :time %></th>
       <th><%= Issue.model_name.human %></th>
       <th><%= Vote.human_attribute_name :subject %></th>
       <th><%= Vote.human_attribute_name :enacted %></th>
@@ -53,8 +52,8 @@
       <td><%= link_to result.vote.issue.summary, result.vote.issue %></td>
       <td><%= result.vote.subject %></td>
       <td><%= result.vote.human_enacted %></td>
-      <td><%= result.human_result %></td>
-      <td><a href="<%= url_for result.vote %>" class="btn btn-info"><%= t('app.details') %></a></td>
+      <td class="vote-<%= result.state %>"><%= result.human %></td>
+      <td><a href="<%= url_for result.vote %>" class="btn"><%= t('app.details') %></a></td>
     </tr>
     <% end %>
   </tbody>

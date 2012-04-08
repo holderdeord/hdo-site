@@ -6,8 +6,8 @@
   <table class="table table-striped">
     <thead>
       <tr>
-        <th><%= Vote.human_attribute_name :time %></th>
-        <% if display_issue %>
+        <th class="date-header"><%= Vote.human_attribute_name :time %></th>
+        <% if show_issue %>
           <th><%= Issue.model_name.human %></th>
         <% end %>
         <th><%= Vote.human_attribute_name :subject %></th>

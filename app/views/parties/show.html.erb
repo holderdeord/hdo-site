@@ -3,18 +3,8 @@
 </div>
 
 <div class="well">
-  <p>
-    <strong><%= Party.human_attribute_name :external_id %>:</strong>
-    <%= @party.external_id %>
-  </p>
-
-  <strong><%= Party.human_attribute_name :representatives %>:</strong>
-  <ul>
-    <% @party.representatives.each do |rep| %>
-      <li>
-        <%= link_to rep.display_name, rep %>
-      </li>
-    <% end %>
-  </ul>
+  <strong><%= Party.human_attribute_name :external_id %>:</strong>
+  <%= @party.external_id %>
 </div>
 
+<%= render :partial => 'shared/representatives_table', :locals => {:representatives => @party.representatives, :show_party => false } %>

@@ -12,8 +12,52 @@ class VoteResult < ActiveRecord::Base
       Vote.human_attribute_name :missing_count
     when -1
       Vote.human_attribute_name :against_count
-    else
-      'unknown'
     end
   end
+
+  def state
+    case result
+    when 1
+      :for
+    when 0
+      :missing
+    when -1
+      :against
+    end
+  end
+
+  def for?
+    result == 1
+  end
+
+  def against?
+    result == -1
+  end
+
+  def missing?
+    result == 0
+  end
+
+  def icon
+    case result
+    when 1
+      'plus-sign'
+    when -1
+      'minus-sign'
+    when 0
+      'question-sign'
+    end
+  end
+
+  def alert
+    case result
+    when 1
+      'alert-success'
+    when -1
+      'alert-error'
+    when 0
+      'alert-info'
+    end
+  end
+
 end

@@ -35,7 +35,7 @@
     <tr>
       <th><%= Representative.model_name.human %></th>
       <th><%= Representative.human_attribute_name :party %></th>
-      <th><%= VoteResult.human_attribute_name :vote %></th>
+      <th><%= VoteResult.human_attribute_name :result %></th>
     </tr>
   </thead>
   <tbody>
@@ -43,7 +43,7 @@
       <tr>
         <td><%= link_to result.representative.display_name, result.representative %></td>
         <td><%= link_to result.representative.party.name, result.representative.party %></td>
-        <td><%= result.human_result %></td>
+        <td class="vote-<%= result.state %>"><%= result.human %></td>
       </tr>
       <% end %>
   </tbody>
