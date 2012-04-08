@@ -5,7 +5,7 @@
 <div class="well">
   <p>
     <strong><%= Issue.human_attribute_name :external_id %>:</strong>
-    <%= @issue.external_id %>
+    <a href="<%= @issue.external_url %>"><%= @issue.external_id %></a>
   </p>
 
   <p>

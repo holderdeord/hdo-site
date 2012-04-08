@@ -9,4 +9,8 @@ class Issue < ActiveRecord::Base
   def human_last_update
     last_update.strftime("%Y-%m-%d")
   end
+
+  def external_url
+    I18n.t("app.external.urls.issue") % external_id
+  end
 end

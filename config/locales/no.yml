@@ -4,6 +4,9 @@
     description: "er en politisk uavhengig organisasjon som kartlegger norske politiske partiers løfter og sammenligner disse med hva de gjør på Storting og i Regjering."
     about: "Om oss"
     documentation: "Dokumentasjon"
+    external:
+      urls:
+        issue: "http://stortinget.no/no/Saker-og-publikasjoner/Saker/Sak/?p=%s"
   activerecord:
       models:
         representative:
