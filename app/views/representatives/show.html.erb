@@ -14,8 +14,8 @@
   </p>
 
   <p>
-    <strong><%= Representative.human_attribute_name :born %>:</strong>
-    <%= @representative.born %> (<%= @representative.age %> <%= t('app.time.years') %>)
+    <strong><%= Representative.human_attribute_name :date_of_birth %>:</strong>
+    <%= l @representative.date_of_birth, format: :short %> (<%= @representative.age %> <%= t('app.time.years') %>)
   </p>
 
   <p>

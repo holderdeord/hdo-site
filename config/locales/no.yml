@@ -38,6 +38,10 @@
       vote:
         one: "Viser <strong>1</strong> voteringer."
         other: "Viser <strong>%{count}</strong> voteringer."
+  time:
+    formats:
+      default: "%Y-%m-%d %H:%M:%S"
+      short: "%Y-%m-%d"
   activerecord:
       models:
         representative:
@@ -72,7 +76,8 @@
           committees: "Komiteer"
           district: "Fylke"
           alternate: "Vara"
-          born: 'Født'
+          date_of_birth: 'Født'
+          date_of_death: 'Død'
         party:
           name: "Navn"
           representatives: "Representanter"
