@@ -12,7 +12,7 @@ class RepresentativesController < ApplicationController
   end
 
   def show
-    @representative = Representative.includes(:votes).find(params[:id])
+    @representative = Representative.includes(:votes => :issue).find(params[:id])
 
     respond_to do |format|
       format.html

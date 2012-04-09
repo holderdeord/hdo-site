@@ -12,7 +12,10 @@ class VotesController < ApplicationController
   end
 
   def show
-    @vote = Vote.find(params[:id])
+    @vote = Vote.includes(
+      :issue, :vote_results => {:representative => :party},
+    ).find(params[:id])
+
     @issue = @vote.issue
 
     respond_to do |format|
