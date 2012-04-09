@@ -25,4 +25,9 @@ class Vote < ActiveRecord::Base
     )
   end
 
+  def minutes_url
+    # FIXME: hardcoded session
+    I18n.t("app.external.urls.minutes") % ['2011-2012', time.strftime("%y%m%d")]
+  end
+
 end

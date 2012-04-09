@@ -19,8 +19,4 @@ class Issue < ActiveRecord::Base
     status == I18n.t("app.issue.states.processed")
   end
 
-  def minutes_url
-    # FIXME: hardcoded session
-    I18n.t("app.external.urls.minutes") % ['2011-2012', last_update.strftime("%y%m%d")]
-  end
 end

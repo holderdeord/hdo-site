@@ -13,7 +13,6 @@
     <dt><%= Issue.model_name.human %></dt>
     <dd><%= link_to @vote.issue.summary, @vote.issue %></dd>
 
-
     <dt><%= Vote.human_attribute_name :enacted %></dt>
     <dd><%= @vote.human_enacted %></dd>
 
@@ -28,6 +27,13 @@
     <dd><%= pc.missing %>% (<%= @vote.missing_count %>)</dt>
   </dl>
 </div>
+
+<h2>stortinget.no</h2>
+<ul class="nav nav-tabs">
+  <li><a href="<%= @vote.issue.url %>">Sak</a></li>
+  <li><a href="<%= @vote.minutes_url %>">Referat</a></li>
+</ul>
+
 
 <table class="table table-striped">
   <thead>
