@@ -3,8 +3,9 @@ class PartiesController < ApplicationController
     @parties = Party.includes(:representatives).all
 
     respond_to do |format|
-      format.html # index.html.erb
+      format.html
       format.json { render json: @parties }
+      format.xml  { render xml:  @parties }
     end
   end
 
@@ -12,8 +13,9 @@ class PartiesController < ApplicationController
     @party = Party.find(params[:id])
 
     respond_to do |format|
-      format.html # show.html.erb
+      format.html
       format.json { render json: @party }
+      format.xml  { render xml:  @party }
     end
   end
 end

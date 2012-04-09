@@ -7,6 +7,7 @@ class VotesController < ApplicationController
     respond_to do |format|
       format.html
       format.json { render json: @votes }
+      format.xml  { render xml:  @votes }
     end
   end
 
@@ -17,6 +18,7 @@ class VotesController < ApplicationController
     respond_to do |format|
       format.html
       format.json { render json: @vote }
+      format.xml  { render xml:  @vote }
     end
   end
 end

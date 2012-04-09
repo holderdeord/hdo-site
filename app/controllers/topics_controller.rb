@@ -3,8 +3,9 @@ class TopicsController < ApplicationController
     @topics = Topic.includes(:children).all(:order => :name)
 
     respond_to do |format|
-      format.html # index.html.erb
+      format.html
       format.json { render json: @topics }
+      format.xml  { render xml:  @topics }
     end
   end
 
@@ -12,8 +13,9 @@ class TopicsController < ApplicationController
     @topic = Topic.includes(:issues).find(params[:id])
 
     respond_to do |format|
-      format.html # show.html.erb
+      format.html
       format.json { render json: @topic }
+      format.xml  { render xml:  @topic }
     end
   end
 

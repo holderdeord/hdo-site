@@ -2,11 +2,12 @@ class IssuesController < ApplicationController
   caches_page :index, :show
 
   def index
-    @issues = Issue.order(:last_update).reverse_order.all #(:order => :last_update).reverse
+    @issues = Issue.order(:last_update).reverse_order.all
 
     respond_to do |format|
-      format.html # index.html.erb
+      format.html
       format.json { render json: @issues }
+      format.xml { render xml: @issues }
     end
   end
 
@@ -14,8 +15,9 @@ class IssuesController < ApplicationController
     @issue = Issue.includes(:committee, :topics, :votes).find(params[:id])
 
     respond_to do |format|
-      format.html # show.html.erb
+      format.html
       format.json { render json: @issue }
+      format.xml  { render xml: @issue }
     end
   end
 

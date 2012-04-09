@@ -5,8 +5,9 @@ class RepresentativesController < ApplicationController
     @representatives = Representative.includes(:party).order :last_name
 
     respond_to do |format|
-      format.html # index.html.erb
+      format.html
       format.json { render json: @representatives }
+      format.xml  { render xml:  @representatives }
     end
   end
 
@@ -14,8 +15,9 @@ class RepresentativesController < ApplicationController
     @representative = Representative.includes(:votes).find(params[:id])
 
     respond_to do |format|
-      format.html # show.html.erb
+      format.html
       format.json { render json: @representative }
+      format.xml  { render xml:  @representative }
     end
   end
 end

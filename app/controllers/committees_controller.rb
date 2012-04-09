@@ -5,6 +5,7 @@ class CommitteesController < ApplicationController
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @committees }
+      format.xml  { render xml: @committees  }
     end
   end
 
@@ -14,6 +15,7 @@ class CommitteesController < ApplicationController
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @committee }
+      format.xml  { render xml: @committee }
     end
   end
 
