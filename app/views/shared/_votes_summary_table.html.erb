@@ -26,11 +26,11 @@
         <td><%= vote.subject %></td>
         <td><%= vote.human_enacted %></td>
 
-        <% pc = vote.percentages %>
+        <% stats = vote.stats %>
 
-        <td class="vote-for"><%= pc.for %>% (<%= vote.for_count %>)</td>
-        <td class="vote-against"><%= pc.against %>% (<%= vote.against_count %>)</td>
-        <td class="vote-missing"><%= pc.missing %>% (<%= vote.missing_count %>)</td>
+        <td class="vote-for"><%= stats.for %>% (<%= vote.for_count %>)</td>
+        <td class="vote-against"><%= stats.against %>% (<%= vote.against_count %>)</td>
+        <td class="vote-missing"><%= stats.missing %>% (<%= vote.missing_count %>)</td>
         <td><a href="<%= url_for vote %>" class="btn"><%= t('app.details') %></a></td>
       </tr>
       <% end %>

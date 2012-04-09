@@ -1,5 +1,3 @@
-require 'ostruct'
-
 class Vote < ActiveRecord::Base
   belongs_to :issue
 
@@ -14,15 +12,8 @@ class Vote < ActiveRecord::Base
     enacted? ? I18n.t('app.yes') : I18n.t('app.no')
   end
 
-  def percentages
-    f, a, m = for_count, against_count, missing_count
-    total = f + a + m
-
-    OpenStruct.new(
-      :for     => f * 100 / total,
-      :against => a * 100 / total,
-      :missing => m * 100 / total
-    )
+  def stats
+    Stats.new for_count, against_count, missing_count
   end
 
   def minutes_url
@@ -30,4 +21,34 @@ class Vote < ActiveRecord::Base
     I18n.t("app.external.urls.minutes") % ['2011-2012', time.strftime("%y%m%d")]
   end
 
-end
+  class Stats
+    def initialize(for_count, against_count, absent_count)
+      @for_count     = for_count
+      @against_count = against_count
+      @absent_count = absent_count
+    end
+
+    def total
+      @total ||= @for_count + @against_count + @absent_count
+      @total == 0 ? 1 : @total
+    end
+
+    def for
+      @for ||= percentage_of @for_count
+    end
+
+    def against
+      @against ||= percentage_of @against_count
+    end
+
+    def missing
+      @missing ||= percentage_of @absent_count
+    end
+
+    private
+
+    def percentage_of(count)
+      count * 100 / total
+    end
+  end # Stats
+end # Vote

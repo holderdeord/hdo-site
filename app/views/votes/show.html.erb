@@ -16,15 +16,15 @@
     <dt><%= Vote.human_attribute_name :enacted %></dt>
     <dd><%= @vote.human_enacted %></dd>
 
-    <% pc = @vote.percentages %>
+    <% stats = @vote.stats %>
     <dt><%= Vote.human_attribute_name :for_count %></dd>
-    <dd><%= pc.for %>% (<%= @vote.for_count %>)</dt>
+    <dd><%= stats.for %>% (<%= @vote.for_count %>)</dt>
 
     <dt><%= Vote.human_attribute_name :against_count %></dd>
-    <dd><%= pc.against %>% (<%= @vote.against_count %>)</dt>
+    <dd><%= stats.against %>% (<%= @vote.against_count %>)</dt>
 
     <dt><%= Vote.human_attribute_name :missing_count %></dd>
-    <dd><%= pc.missing %>% (<%= @vote.missing_count %>)</dt>
+    <dd><%= stats.missing %>% (<%= @vote.missing_count %>)</dt>
   </dl>
 </div>
 
