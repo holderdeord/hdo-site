@@ -68,12 +68,13 @@ ActiveRecord::Schema.define(:version => 20120409022029) do
     t.string   "external_id"
     t.string   "first_name"
     t.string   "last_name"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
     t.integer  "party_id"
     t.integer  "district_id"
     t.boolean  "alternate"
-    t.datetime "born"
+    t.datetime "date_of_birth"
+    t.datetime "date_of_death"
   end
 
   add_index "representatives", ["last_name"], :name => "index_representatives_on_last_name"
@@ -110,5 +111,7 @@ ActiveRecord::Schema.define(:version => 20120409022029) do
     t.datetime "created_at",    :null => false
     t.datetime "updated_at",    :null => false
   end
+
+  add_index "votes", ["issue_id"], :name => "index_votes_on_issue_id"
 
 end

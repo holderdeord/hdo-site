@@ -17,10 +17,16 @@ class Representative < ActiveRecord::Base
   end
 
   def age
-    return -1 if born.nil?
+    return -1 if date_of_birth.nil?
 
-    now = Time.now.utc.to_date
-    dob = born
+    if date_of_death
+      now = date_of_death
+    else
+      now = Time.now
+    end
+
+    now = now.utc.to_date
+    dob = date_of_birth
 
     now.year - dob.year - ((now.month > dob.month || (now.month == dob.month && now.day >= dob.day)) ? 0 : 1)
   end
