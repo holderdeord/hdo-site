@@ -7,7 +7,6 @@
 <table class="table table-striped">
   <thead>
     <tr>
-      <th><%= District.human_attribute_name :external_id %></th>
       <th><%= District.human_attribute_name :name %></th>
       <th><%= District.human_attribute_name :representatives %></th>
     </tr>
@@ -16,7 +15,6 @@
   <tbody>
       <% @districts.each do |dist| %>
       <tr>
-        <td><%= dist.id %></td>
         <td><%= link_to dist.name, dist %></td>
         <td><%= dist.representatives.size %></td>
       </tr>

@@ -7,16 +7,13 @@
 <table class="table">
   <thead>
     <tr>
-      <th><%= Topic.human_attribute_name :external_id %></th>
       <th><%= Topic.human_attribute_name :name %></th>
       <th><%= Topic.human_attribute_name :children %></th>
     </tr>
   </thead>
   <tbody>
-      <% @topics.select(&:main?).each do |topic|
-      %>
+      <% @topics.select(&:main?).each do |topic| %>
       <tr>
-        <td><%= topic.external_id %></td>
         <td><%= link_to topic.name, topic %></td>
         <td>
           <% topic.children.each do |subtopic| %>
