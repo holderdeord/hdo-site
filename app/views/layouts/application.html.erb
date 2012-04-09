@@ -55,8 +55,17 @@
                 <% end %>
               </li>
 
-              <li><a href="/issues"><i class="icon-file icon-white"></i> Saker</a></li>
-              <li><a href="/votes"><i class="icon-envelope icon-white"></i> Voteringer</a></li>
+              <li>
+                <%= link_to issues_path do %>
+                <i class="icon-file icon-white"></i> <%= Issue.model_name.human :count => 2 %>
+                <% end %>
+              </li>
+
+              <li>
+                <%= link_to votes_path do %>
+                <i class="icon-envelope icon-white"></i> <%= Vote.model_name.human :count => 2 %>
+                <% end %>
+              </li>
 
               <li class="divider-vertical"></li>
               <li><%= link_to t("app.documentation"), :controller => "docs" %></li>

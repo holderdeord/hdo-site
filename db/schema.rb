@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120408160222) do
+ActiveRecord::Schema.define(:version => 20120409022029) do
 
   create_table "committees", :force => true do |t|
     t.string   "external_id"
@@ -73,6 +73,7 @@ ActiveRecord::Schema.define(:version => 20120408160222) do
     t.integer  "party_id"
     t.integer  "district_id"
     t.boolean  "alternate"
+    t.datetime "born"
   end
 
   add_index "representatives", ["last_name"], :name => "index_representatives_on_last_name"

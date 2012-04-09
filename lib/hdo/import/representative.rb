@@ -9,6 +9,7 @@ module Hdo
         Field.new(:district, true, :string, "The electoral district the representative belongs to. Must match the 'name' field of the district type."),
         Field.new(:party, true, :string, "The name of the representative's party."),
         Field.new(:committee, true, :list, "A (possibly empty) list of committees the representative is a member of. This should match the 'name' field of the committee type."),
+        Field.new(:born, true, :string, "The representative's birth date."),
       ]
 
       DESC = 'a member of parliament'
@@ -24,6 +25,7 @@ module Hdo
     <committe>B</committe>
   </committes>
   <period>2011-2012</period>
+  <born>1969-04-04T00:00:00</born>
 </representative>
       XML
 
@@ -41,6 +43,7 @@ module Hdo
         last_name       = node.css("lastName").first.text
         committee_names = node.css("committees committee").map { |e| e.text }
         district_name   = node.css("district").first.text
+        born            = Time.parse(node.css("born").first.text)
 
         party = ::Party.find_by_name!(party_name)
         committees = committee_names.map { |name| ::Committee.find_by_name!(name) }
@@ -53,7 +56,8 @@ module Hdo
           :last_name   => last_name,
           :committees  => committees,
           :district    => district,
-          :alternate   => alternate
+          :alternate   => alternate,
+          :born        => born
         )
 
         rec

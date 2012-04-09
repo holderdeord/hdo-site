@@ -14,6 +14,8 @@
     issue:
       states:
         processed: "behandlet"
+    time:
+      years: 'År'
   activerecord:
       models:
         representative:
@@ -48,6 +50,7 @@
           committees: "Komiteer"
           district: "Fylke"
           alternate: "Vara"
+          born: 'Født'
         party:
           name: "Navn"
           representatives: "Representanter"

@@ -15,4 +15,11 @@ class Representative < ActiveRecord::Base
   def human_alternate
     alternate? ? I18n.t("app.yes") : I18n.t("app.no")
   end
+
+  def age
+    now = Time.now.utc.to_date
+    dob = born
+
+    now.year - dob.year - ((now.month > dob.month || (now.month == dob.month && now.day >= dob.day)) ? 0 : 1)
+  end
 end
