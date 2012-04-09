@@ -42,6 +42,11 @@
     formats:
       default: "%Y-%m-%d %H:%M:%S"
       short: "%Y-%m-%d"
+  datetime:
+    distance_in_words:
+      x_days:
+        one: "1 dag"
+        other: "%{count} dager"
   activerecord:
       models:
         representative:

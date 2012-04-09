@@ -8,7 +8,7 @@ class Issue < ActiveRecord::Base
   end
 
   def human_last_update
-    last_update.strftime("%Y-%m-%d")
+    I18n.l last_update, format: :short
   end
 
   def url
