@@ -1,0 +1,21 @@
+<p class="pull-right">Viser <strong><%= issues.size %></strong> saker.</p>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th class="date-header"><%= Issue.human_attribute_name :last_update %></th>
+      <th><%= Issue.human_attribute_name :summary %></th>
+      <th><%= Issue.human_attribute_name :status %></th>
+    </tr>
+  </thead>
+
+  <tbody>
+      <% issues.each do |issue| %>
+      <tr>
+        <td><%= issue.human_last_update %></td>
+        <td><%= link_to issue.summary, issue %></td>
+        <td><%= issue.human_status %></td>
+      </tr>
+      <% end %>
+  </tbody>
+</table>

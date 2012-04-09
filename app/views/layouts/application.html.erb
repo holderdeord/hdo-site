@@ -1,17 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="<%= I18n.locale %>">
   <head>
     <meta charset="utf-8">
     <title><%=t 'app.title' %></title>
     <%= csrf_meta_tags %>
 
     <%= stylesheet_link_tag "application", :media => "all" %>
-    <style>
-      body {
-        padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
-      }
-    </style>
-
     <link href="/images/favicon.ico" rel="shortcut icon">
     <link href="/images/apple-touch-icon.png" rel="apple-touch-icon">
     <link href="/images/apple-touch-icon-72x72.png" rel="apple-touch-icon" sizes="72x72">

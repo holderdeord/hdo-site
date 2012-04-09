@@ -1,4 +1,4 @@
-<strong><%= Vote.model_name.human :count => 2 %></strong>
+<h3><%= Vote.model_name.human :count => 2 %></h3>
 
 <p class="pull-right">Viser <strong><%= votes.size %></strong> voteringer.</p>
 
@@ -33,7 +33,7 @@
         <td class="vote-for"><%= pc.for %>% (<%= vote.for_count %>)</td>
         <td class="vote-against"><%= pc.against %>% (<%= vote.against_count %>)</td>
         <td class="vote-missing"><%= pc.missing %>% (<%= vote.missing_count %>)</td>
-        <td><a href="<%= url_for vote %>" class="btn btn-info"><%= t('app.details') %></a></td>
+        <td><a href="<%= url_for vote %>" class="btn"><%= t('app.details') %></a></td>
       </tr>
       <% end %>
     </tbody>

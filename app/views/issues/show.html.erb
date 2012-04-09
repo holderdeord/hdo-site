@@ -4,11 +4,6 @@
 
 <div class="well">
   <p>
-    <strong><%= Issue.human_attribute_name :external_id %>:</strong>
-    <a href="<%= @issue.external_url %>"><%= @issue.external_id %></a>
-  </p>
-
-  <p>
     <strong><%= Issue.human_attribute_name :last_update %>:</strong>
     <%= @issue.human_last_update %>
   </p>

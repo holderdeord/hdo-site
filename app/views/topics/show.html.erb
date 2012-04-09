@@ -29,6 +29,7 @@
       <% end %>
     </ul>
   <% end %>
-
 </div>
+
+<%= render :partial => "shared/issue_table", :locals => {:issues => @topic.issues } %>
 
