@@ -1,6 +1,6 @@
 class PartiesController < ApplicationController
   def index
-    @parties = Party.all
+    @parties = Party.includes(:representatives).all
 
     respond_to do |format|
       format.html # index.html.erb

@@ -1,6 +1,6 @@
 class DistrictsController < ApplicationController
   def index
-    @districts = District.all
+    @districts = District.includes(:representatives).all
 
     respond_to do |format|
       format.html # index.html.erb
@@ -9,7 +9,7 @@ class DistrictsController < ApplicationController
   end
 
   def show
-    @district = District.find(params[:id])
+    @district = District.includes(:representatives => :party).find(params[:id])
 
     respond_to do |format|
       format.html # show.html.erb

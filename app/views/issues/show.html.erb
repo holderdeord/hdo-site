@@ -13,6 +13,13 @@
     <%= @issue.human_status %>
   </p>
 
+  <% if @issue.committee %>
+  <p>
+    <strong><%= Issue.human_attribute_name :committee %>:</strong>
+    <%= link_to @issue.committee.name, @issue.committee %>
+  </p>
+  <% end %>
+
   <p>
     <strong><%= Issue.human_attribute_name :type %>:</strong>
     <%= @issue.issue_type %>
@@ -33,13 +40,6 @@
     <%= @issue.description %>
   </p>
 
-  <% if @issue.committee %>
-  <p>
-    <strong><%= Issue.human_attribute_name :committee %>:</strong>
-    <%= link_to @issue.committee.name, @issue.committee %>
-  </p>
-  <% end %>
-
   <strong><%= Issue.human_attribute_name :topics %>:</strong>
   <ul>
     <% @issue.topics.each do |rep| %>
@@ -49,5 +49,13 @@
     <% end %>
   </ul>
 </div>
+
+<h2>stortinget.no</h2>
+<ul class="nav nav-tabs">
+  <li><a href="<%= @issue.url %>">Sak</a></li>
+  <% if @issue.processed? %>
+    <li><a href="<%= @issue.minutes_url %>">Referat</a></li>
+  <% end %>
+</ul>
 
 <%= render :partial => "shared/votes_summary_table", :locals => {:votes => @issue.votes, :show_issue => false }%>

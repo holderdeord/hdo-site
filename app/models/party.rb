@@ -4,6 +4,6 @@ class Party < ActiveRecord::Base
   validates_uniqueness_of :name
 
   def percent_of_representatives
-    representatives.count * 100 / Representative.count
+    representatives.size * 100 / Representative.count
   end
 end

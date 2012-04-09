@@ -1,15 +1,6 @@
 <div class="page-header">
-  <h1><%= @district.name %></h1>
+  <h1><%= @district.name %> <small class="pull-right"><%= @district.external_id %></small></h1>
 </div>
 
-<div class="well">
-  <p>
-    <strong><%= District.human_attribute_name :external_id %>:</strong>
-    <%= @district.external_id %>
-  </p>
-
-  <strong><%= District.human_attribute_name :representatives %>:</strong>
-</div>
-
-<%= render :partial => "shared/representatives_table", :locals => {:representatives => @district.representatives } %>
+<%= render :partial => "shared/representatives_table", :locals => {:representatives => @district.representatives, :show_party => true } %>
 

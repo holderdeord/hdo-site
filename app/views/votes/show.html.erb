@@ -3,24 +3,21 @@
 </div>
 
 <div class="well">
-  <p>
-    <strong><%= Issue.human_attribute_name :external_id %></strong>
-    <%= @vote.external_id %>
-  </p>
-
-  <p>
-    <strong><%= Issue.model_name.human %></strong>
-    <%= link_to @vote.issue.summary, @vote.issue %>
-  </p>
-
-  <p>
-    <strong><%= Vote.human_attribute_name :enacted %></strong>
-    <%= @vote.human_enacted %>
-  </p>
-
   <dl>
-    <% pc = @vote.percentages %>
+    <dt><%= Issue.human_attribute_name :external_id %></dt>
+    <dd><%= @vote.external_id %></dd>
 
+    <dt><%= Vote.human_attribute_name :time %></dt>
+    <dd><%= @vote.time %></dd>
+
+    <dt><%= Issue.model_name.human %></dt>
+    <dd><%= link_to @vote.issue.summary, @vote.issue %></dd>
+
+
+    <dt><%= Vote.human_attribute_name :enacted %></dt>
+    <dd><%= @vote.human_enacted %></dd>
+
+    <% pc = @vote.percentages %>
     <dt><%= Vote.human_attribute_name :for_count %></dd>
     <dd><%= pc.for %>% (<%= @vote.for_count %>)</dt>
 

@@ -10,6 +10,10 @@
     external:
       urls:
         issue: "http://stortinget.no/no/Saker-og-publikasjoner/Saker/Sak/?p=%s"
+        minutes: "http://stortinget.no/no/Saker-og-publikasjoner/Publikasjoner/Referater/Stortinget/%s/%s"
+    issue:
+      states:
+        processed: "behandlet"
   activerecord:
       models:
         representative:

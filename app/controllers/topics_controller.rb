@@ -1,6 +1,6 @@
 class TopicsController < ApplicationController
   def index
-    @topics = Topic.all(:order => :name)
+    @topics = Topic.includes(:children).all(:order => :name)
 
     respond_to do |format|
       format.html # index.html.erb
@@ -9,7 +9,7 @@ class TopicsController < ApplicationController
   end
 
   def show
-    @topic = Topic.find(params[:id])
+    @topic = Topic.includes(:issues).find(params[:id])
 
     respond_to do |format|
       format.html # show.html.erb

@@ -20,7 +20,7 @@
       <tr>
         <td><%= party.id %></td>
         <td><%= link_to party.name, party %></td>
-        <td><%= party.representatives.count %></td>
+        <td><%= party.representatives.size %></td>
         <td><%= party.percent_of_representatives %>%</td>
       </tr>
       <% end %>

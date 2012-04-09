@@ -2,7 +2,7 @@ class RepresentativesController < ApplicationController
   caches_page :index, :show
 
   def index
-    @representatives = Representative.order :last_name
+    @representatives = Representative.includes(:party).order :last_name
 
     respond_to do |format|
       format.html # index.html.erb

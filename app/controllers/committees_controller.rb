@@ -1,6 +1,6 @@
 class CommitteesController < ApplicationController
   def index
-    @committees = Committee.all
+    @committees = Committee.includes(:representatives).all
 
     respond_to do |format|
       format.html # index.html.erb
@@ -9,12 +9,12 @@ class CommitteesController < ApplicationController
   end
 
   def show
-    @committee = Committee.find(params[:id])
+    @committee = Committee.includes(:representatives => :party).find(params[:id])
 
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @committee }
     end
   end
-  
+
 end
