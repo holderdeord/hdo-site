@@ -17,6 +17,8 @@ class Representative < ActiveRecord::Base
   end
 
   def age
+    return -1 if born.nil?
+
     now = Time.now.utc.to_date
     dob = born
 
