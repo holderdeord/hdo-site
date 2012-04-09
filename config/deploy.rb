@@ -1,5 +1,4 @@
 require 'bundler/capistrano'
-load 'deploy/assets'
 
 set :application, "hdo-site"
 
