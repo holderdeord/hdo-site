@@ -15,30 +15,44 @@
       states:
         processed: "behandlet"
     time:
-      years: 'År'
+      years: "år"
   activerecord:
       models:
         representative:
           one: "Representant"
           other: "Representanter"
+          messages:
+            counts: "Viser <strong>%{count}</strong> representanter."
         committee:
           one: "Komite"
           other: "Komiteer"
+          messages:
+            counts: "Viser <strong>%{count}</strong> komiteer."
         party:
           one: "Parti"
           other: "Partier"
+          messages:
+            counts: "Viser %{count} partier."
         topic:
           one: "Tema"
           other: "Tema"
+          messages:
+            counts: "Viser %{count} tema."
         district:
           one: "Fylke"
           other: "Fylker"
+          messages:
+            counts: "Viser %{count} fylker."
         issue:
           one: "Sak"
           other: "Saker"
+          messages:
+            counts: "Viser %{count} saker."
         vote:
           one: "Votering"
           other: "Voteringer"
+          messages:
+            counts: "Viser %{count} voteringer."
         vote_result:
           one: "Stemme"
           other: "Stemmer"

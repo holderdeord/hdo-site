@@ -1,4 +1,4 @@
-<p class="pull-right">Viser <strong><%= representatives.size %></strong> representanter.</p>
+<p class="pull-right"><%= t('activerecord.models.representative.messages.counts', :count => representatives.size).html_safe %></p>
 
 <table class="table table-striped">
   <thead>
