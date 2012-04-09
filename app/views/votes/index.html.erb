@@ -1,5 +1,5 @@
 <div class="page-header">
-  <h1><%= Vote.model_name.human :count => 2 %></h1>
+  <h1><%= Vote.model_name.human count: 2 %></h1>
 </div>
 
-<%= render :partial => "shared/votes_summary_table", :locals => {:votes => @votes, :show_issue => true } %>
+<%= render partial: "shared/votes_summary_table", locals: {votes: @votes, show_issue: true } %>

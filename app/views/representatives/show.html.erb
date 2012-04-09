@@ -31,8 +31,8 @@
   </ul>
 </div>
 
-<strong><%= Vote.model_name.human :count => 2 %></strong>
-<p class="pull-right">Viser siste <strong><%= @representative.vote_results.size %></strong> voteringer.</p>
+<h2><%= Vote.model_name.human count: 2 %></h2>
+<p class="pull-right"><%= t('app.counts.vote', count: @representative.vote_results.size).html_safe %></p>
 
 <table class="table table-striped">
   <thead>

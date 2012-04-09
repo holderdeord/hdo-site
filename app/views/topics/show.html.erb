@@ -26,6 +26,6 @@
   <% end %>
 </div>
 
-<h2><%= Issue.model_name.human :count => 2 %></h2>
-<%= render :partial => "shared/issue_table", :locals => {:issues => @topic.issues } %>
+<h2><%= Issue.model_name.human count: 2 %></h2>
+<%= render partial: "shared/issue_table", locals: { issues: @topic.issues } %>
 

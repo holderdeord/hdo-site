@@ -1,11 +1,36 @@
 en:
   app:
-    title: "Promises kept"
+    title: "Site Title"
     description: "is a politically independent organization that maps the political parties' promises and compares them with what they are doing in Parliament and in Government."
-    "no": "No"
     "yes": "Yes"
+    "no": "No"
+    counts:
+      representative:
+        one: "Showing <strong>1</strong> representative."
+        other: "Showing <strong>%{count}</strong> representatives."
+      committee:
+        one: "Showing <strong>1</strong> committee."
+        other: "Showing <strong>%{count}</strong> committees."
+      party:
+        one: "Showing <strong>1</strong> party."
+        other: "Showing <strong>%{count}</strong> parties."
+      topic:
+        one: "Showing <strong>1</strong> topic."
+        other: "Showing <strong>%{count}</strong> topics."
+      district:
+        one: "Showing <strong>1</strong> district."
+        other: "Showing <strong>%{count}</strong> districts."
+      issue:
+        one: "Showing <strong>1</strong> issue."
+        other: "Showing <strong>%{count}</strong> issues."
+      vote:
+        one: "Showing <strong>1</strong> vote."
+        other: "Showing <strong>%{count}</strong> votes."
   activerecord:
-    models:
-      representatives:
-        messages:
-          counts: "Viser <strong>%{count}</strong> representanter."
+      attributes:
+        vote:
+          for_count: "For"
+          against_count: "Against"
+          missing_count: "Absent"
+        topic:
+          children: "Subtopics"

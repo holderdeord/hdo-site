@@ -2,5 +2,5 @@
   <h1><%= @committee.name %> <small class="pull-right"><%= @committee.external_id %></small></h1>
 </div>
 
-<%= render :partial => 'shared/representatives_table', :locals => {:representatives => @committee.representatives, :show_party => true } %>
+<%= render partial: 'shared/representatives_table', locals: {representatives: @committee.representatives, show_party: true } %>
 

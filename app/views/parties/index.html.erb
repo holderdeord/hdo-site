@@ -1,9 +1,8 @@
 <div class="page-header">
-  <h1><%= Party.model_name.human :count => 2 %></h1>
+  <h1><%= Party.model_name.human count: 2 %></h1>
 </div>
 
-<p class="pull-right">Viser <strong><%= @parties.size %></strong> partier.</p>
-
+<p class="pull-right"><%= t('app.counts.party', count: @parties.size).html_safe %></p>
 
 <table class="table table-striped">
   <thead>

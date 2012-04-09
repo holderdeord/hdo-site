@@ -53,9 +53,7 @@
 <h2>stortinget.no</h2>
 <ul class="nav nav-tabs">
   <li><a href="<%= @issue.url %>">Sak</a></li>
-  <% if @issue.processed? %>
-    <li><a href="<%= @issue.minutes_url %>">Referat</a></li>
-  <% end %>
 </ul>
 
-<%= render :partial => "shared/votes_summary_table", :locals => {:votes => @issue.votes, :show_issue => false }%>
+<h2><%= Vote.model_name.human count: 2 %></h2>
+<%= render partial: "shared/votes_summary_table", locals: {votes: @issue.votes, show_issue: false }%>

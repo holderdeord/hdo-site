@@ -16,43 +16,51 @@
         processed: "behandlet"
     time:
       years: "år"
+    counts:
+      representative:
+        one: "Viser <strong>1</strong> representant."
+        other: "Viser <strong>%{count}</strong> representanter."
+      committee:
+        one: "Viser <strong>1</strong> komite."
+        other: "Viser <strong>%{count}</strong> komiteer."
+      party:
+        one: "Viser <strong>ett</strong> parti."
+        other: "Viser <strong>%{count}</strong> partier."
+      topic:
+        one: "Viser <strong>ett</strong> tema."
+        other: "Viser <strong>%{count}</strong> tema."
+      district:
+        one: "Viser <strong>ett</strong> fylke."
+        other: "Viser <strong>%{count}</strong> fylker."
+      issue:
+        one: "Viser <strong>1</strong> saker."
+        other: "Viser <strong>%{count}</strong> saker."
+      vote:
+        one: "Viser <strong>1</strong> voteringer."
+        other: "Viser <strong>%{count}</strong> voteringer."
   activerecord:
       models:
         representative:
           one: "Representant"
           other: "Representanter"
-          messages:
-            counts: "Viser <strong>%{count}</strong> representanter."
         committee:
           one: "Komite"
           other: "Komiteer"
-          messages:
-            counts: "Viser <strong>%{count}</strong> komiteer."
         party:
           one: "Parti"
           other: "Partier"
-          messages:
-            counts: "Viser %{count} partier."
         topic:
           one: "Tema"
           other: "Tema"
-          messages:
-            counts: "Viser %{count} tema."
         district:
           one: "Fylke"
           other: "Fylker"
-          messages:
-            counts: "Viser %{count} fylker."
         issue:
           one: "Sak"
           other: "Saker"
-          messages:
-            counts: "Viser %{count} saker."
         vote:
           one: "Votering"
           other: "Voteringer"
-          messages:
-            counts: "Viser %{count} voteringer."
         vote_result:
           one: "Stemme"
           other: "Stemmer"
@@ -69,6 +77,7 @@
           name: "Navn"
           representatives: "Representanter"
           external_id: "Ekstern id"
+          percent_of_representatives: "Prosent"
         committee:
           name: "Navn"
           representatives: "Representanter"

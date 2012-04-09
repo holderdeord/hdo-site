@@ -1,6 +1,4 @@
-<h2><%= Vote.model_name.human :count => 2 %></h2>
-
-<p class="pull-right">Viser <strong><%= votes.size %></strong> voteringer.</p>
+<p class="pull-right"><%= t('app.counts.vote', count: votes.size).html_safe %></p>
 
 <% if votes.any? %>
   <table class="table table-striped">

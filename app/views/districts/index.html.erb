@@ -1,8 +1,8 @@
 <div class="page-header">
-  <h1><%= District.model_name.human :count => 2 %></h1>
+  <h1><%= District.model_name.human count: 2 %></h1>
 </div>
 
-<p class="pull-right">Viser <strong><%= @districts.size %></strong> fylker.</p>
+<p class="pull-right"><%= t('app.counts.district', count: @districts.size).html_safe %></p>
 
 <table class="table table-striped">
   <thead>

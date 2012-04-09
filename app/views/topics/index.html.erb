@@ -1,10 +1,10 @@
 <div class="page-header">
-  <h1><%= Topic.model_name.human :count => 2 %></h1>
+  <h1><%= Topic.model_name.human count: 2 %></h1>
 </div>
 
-<p class="pull-right">Viser <strong><%= @topics.size %></strong> emner.</p>
+<p class="pull-right"><%= t('app.counts.topic', count: @topics.size).html_safe %></p>
 
-<table class="table">
+<table class="table table-striped">
   <thead>
     <tr>
       <th><%= Topic.human_attribute_name :name %></th>

@@ -1,23 +1,21 @@
 <div class="page-header">
-  <h1><%= Committee.model_name.human :count => 2 %></h1>
+  <h1><%= Committee.model_name.human count: 2 %></h1>
 </div>
 
-<p class="pull-right">Viser <strong><%= @committees.size %></strong> komiteer.</p>
+<p class="pull-right"><%= t('app.counts.committee', count: @committees.size).html_safe %></p>
 
 
 <table class="table table-striped">
   <thead>
     <tr>
-      <th>Id</th>
-      <th>Navn</th>
-      <th>Representanter</th>
+      <th><%= Committee.human_attribute_name :name %></th>
+      <th><%= Committee.human_attribute_name :representatives %></th>
     </tr>
   </thead>
 
   <tbody>
       <% @committees.each do |com| %>
       <tr>
-        <td><%= com.id %></td>
         <td><%= link_to com.name, com %></td>
         <td><%= com.representatives.size %></td>
       </tr>
