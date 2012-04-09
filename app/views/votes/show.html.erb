@@ -19,14 +19,16 @@
   </p>
 
   <dl>
+    <% pc = @vote.percentages %>
+
     <dt><%= Vote.human_attribute_name :for_count %></dd>
-    <dd><%= @vote.percent_for %>% (<%= @vote.for_count %>)</dt>
+    <dd><%= pc.for %>% (<%= @vote.for_count %>)</dt>
 
     <dt><%= Vote.human_attribute_name :against_count %></dd>
-    <dd><%= @vote.percent_against %>% (<%= @vote.against_count %>)</dt>
+    <dd><%= pc.against %>% (<%= @vote.against_count %>)</dt>
 
     <dt><%= Vote.human_attribute_name :missing_count %></dd>
-    <dd><%= @vote.percent_missing %>% (<%= @vote.missing_count %>)</dt>
+    <dd><%= pc.missing %>% (<%= @vote.missing_count %>)</dt>
   </dl>
 </div>
 
