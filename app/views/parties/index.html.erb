@@ -7,6 +7,7 @@
 <table class="table table-striped">
   <thead>
     <tr>
+      <th><%= Party.human_attribute_name :external_id %></th>
       <th><%= Party.human_attribute_name :name %></th>
       <th><%= Party.human_attribute_name :representatives %></th>
       <th><%= Party.human_attribute_name :percent_of_representatives %></th>
@@ -16,6 +17,7 @@
   <tbody>
       <% @parties.each do |party| %>
       <tr>
+        <td><%= party.external_id %></td>
         <td><%= link_to party.name, party %></td>
         <td><%= party.representatives.size %></td>
         <td><%= party.percent_of_representatives %>%</td>
