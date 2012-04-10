@@ -3,9 +3,10 @@
   <head>
     <meta charset="utf-8">
     <title><%=t 'app.title' %></title>
-    <%= csrf_meta_tags %>
 
+    <%= csrf_meta_tags %>
     <%= stylesheet_link_tag "application", :media => "all" %>
+
     <link href="/images/favicon.ico" rel="shortcut icon">
     <link href="/images/apple-touch-icon.png" rel="apple-touch-icon">
     <link href="/images/apple-touch-icon-72x72.png" rel="apple-touch-icon" sizes="72x72">
@@ -15,7 +16,7 @@
 
     <div class="navbar navbar-fixed-top">
       <div class="navbar-inner">
-          <div class="container">
+        <div class="container">
           <a class="btn btn-navbar" data-target=".nav-collapse" data-toggle="collapse">
             <span class="i-bar"></span>
             <span class="i-bar"></span>
@@ -64,6 +65,12 @@
               <li>
                 <%= link_to votes_path do %>
                 <i class="icon-envelope icon-white"></i> <%= Vote.model_name.human count: 2 %>
+                <% end %>
+              </li>
+
+              <li>
+                <%= link_to promises_path do %>
+                <i class="icon-gift icon-white"></i> <%= Promise.model_name.human count: 2 %>
                 <% end %>
               </li>
 

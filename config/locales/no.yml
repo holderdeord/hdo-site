@@ -6,7 +6,13 @@
     documentation: "Dokumentasjon"
     "yes": 'Ja'
     "no": 'Nei'
+    show: "Vis"
+    edit: "Rediger"
+    destroy: "Slett"
     details: 'Detaljer'
+    back: 'Tilbake'
+    cancel: 'Avbryt'
+    save: 'Lagre'
     external:
       urls:
         issue: "http://stortinget.no/no/Saker-og-publikasjoner/Saker/Sak/?p=%s"
@@ -16,6 +22,10 @@
         processed: "behandlet"
     time:
       years: "år"
+    created:
+      promise: 'Løftet ble lagret.'
+    updated:
+      promise: 'Løftet ble oppdatert.'
     counts:
       representative:
         one: "Viser <strong>1</strong> representant."
@@ -38,6 +48,9 @@
       vote:
         one: "Viser <strong>1</strong> voteringer."
         other: "Viser <strong>%{count}</strong> voteringer."
+      promises:
+        one: "Viser <strong>1</strong> løfte."
+        other: "Viser <strong>%{count}</strong> løfter."
   time:
     formats:
       default: "%Y-%m-%d %H:%M:%S"
@@ -73,6 +86,9 @@
         vote_result:
           one: "Stemme"
           other: "Stemmer"
+        promise:
+          one: "Løfte"
+          other: "Løfter"
       attributes:
         representative:
           name: "Navn"
@@ -121,6 +137,14 @@
           counts: "Stemmegivning"
         vote_result:
           result: "Stemme"
+        promise:
+          party: "Parti"
+          body: "Tekst"
+          general: "Generell"
+          source: "Kilde"
+          new: "Nytt løfte"
+          edit: "Endre løfte"
+          topics: "Emner"
 
 
 

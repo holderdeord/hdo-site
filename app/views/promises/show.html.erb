@@ -1,0 +1,39 @@
+<div class="page-header">
+  <h1><%= Promise.model_name.human %></h1>
+</div>
+
+<div class="well">
+  <p>
+    <b><%= Promise.human_attribute_name :party %></b>
+    <%= link_to @promise.party.name, @promise.party %>
+  </p>
+
+  <p>
+    <b><%= Promise.human_attribute_name :body %></b>
+    <%= @promise.body %>
+  </p>
+
+  <p>
+    <b><%= Promise.human_attribute_name :general %>?</b>
+    <%= @promise.general_text %>
+  </p>
+
+  <p>
+    <b><%= Promise.human_attribute_name :source %></b>
+    <%= @promise.source %>
+  </p>
+  
+  <p>
+    <b><%= Promise.human_attribute_name :topics %></b>
+    <ul>
+      <% @promise.topics.each do |topic| %>
+        <li><%= link_to topic.name, topic %></li>
+      <% end %>
+    </ul>
+    
+  </p>
+  
+  <%= link_to t('app.edit'), edit_promise_path(@promise), class: 'btn' %>
+</div>
+
+<%= link_to t('app.back'), promises_path %></td>

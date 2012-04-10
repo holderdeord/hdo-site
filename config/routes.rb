@@ -1,4 +1,5 @@
 Hdo::Application.routes.draw do
+  resources :promises
   resources :issues,          :only => [:index, :show]
   resources :votes,           :only => [:index, :show]
   resources :districts,       :only => [:index, :show]

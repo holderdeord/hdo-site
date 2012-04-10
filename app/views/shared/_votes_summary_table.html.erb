@@ -31,7 +31,7 @@
         <td class="vote-for"><%= stats.for %>% (<%= vote.for_count %>)</td>
         <td class="vote-against"><%= stats.against %>% (<%= vote.against_count %>)</td>
         <td class="vote-missing"><%= stats.missing %>% (<%= vote.missing_count %>)</td>
-        <td><a href="<%= url_for vote %>" class="btn"><%= t('app.details') %></a></td>
+        <td><%= link_to t('app.show'), vote, {class: 'btn'} %></td>
       </tr>
       <% end %>
     </tbody>
