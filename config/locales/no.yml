@@ -1,56 +1,4 @@
 "no":
-  app:
-    title: "Holder de ord"
-    description: "er en politisk uavhengig organisasjon som kartlegger norske politiske partiers løfter og sammenligner disse med hva de gjør på Storting og i Regjering."
-    about: "Om oss"
-    documentation: "Dokumentasjon"
-    "yes": 'Ja'
-    "no": 'Nei'
-    show: "Vis"
-    edit: "Rediger"
-    destroy: "Slett"
-    details: 'Detaljer'
-    back: 'Tilbake'
-    cancel: 'Avbryt'
-    save: 'Lagre'
-    external:
-      urls:
-        issue: "http://stortinget.no/no/Saker-og-publikasjoner/Saker/Sak/?p=%s"
-        minutes: "http://stortinget.no/no/Saker-og-publikasjoner/Publikasjoner/Referater/Stortinget/%s/%s"
-    issue:
-      states:
-        processed: "behandlet"
-    time:
-      years: "år"
-    created:
-      promise: 'Løftet ble lagret.'
-    updated:
-      promise: 'Løftet ble oppdatert.'
-    counts:
-      representative:
-        one: "Viser <strong>1</strong> representant."
-        other: "Viser <strong>%{count}</strong> representanter."
-      committee:
-        one: "Viser <strong>1</strong> komite."
-        other: "Viser <strong>%{count}</strong> komiteer."
-      party:
-        one: "Viser <strong>ett</strong> parti."
-        other: "Viser <strong>%{count}</strong> partier."
-      topic:
-        one: "Viser <strong>ett</strong> tema."
-        other: "Viser <strong>%{count}</strong> tema."
-      district:
-        one: "Viser <strong>ett</strong> fylke."
-        other: "Viser <strong>%{count}</strong> fylker."
-      issue:
-        one: "Viser <strong>1</strong> saker."
-        other: "Viser <strong>%{count}</strong> saker."
-      vote:
-        one: "Viser <strong>1</strong> voteringer."
-        other: "Viser <strong>%{count}</strong> voteringer."
-      promises:
-        one: "Viser <strong>1</strong> løfte."
-        other: "Viser <strong>%{count}</strong> løfter."
   time:
     formats:
       default: "%Y-%m-%d %H:%M:%S"
@@ -145,7 +93,55 @@
           new: "Nytt løfte"
           edit: "Endre løfte"
           topics: "Emner"
-
-
-
-
+  app:
+    title: "Holder de ord"
+    description: "er en politisk uavhengig organisasjon som kartlegger norske politiske partiers løfter og sammenligner disse med hva de gjør på Storting og i Regjering."
+    about: "Om oss"
+    documentation: "Dokumentasjon"
+    "yes": 'Ja'
+    "no": 'Nei'
+    show: "Vis"
+    edit: "Rediger"
+    destroy: "Slett"
+    details: 'Detaljer'
+    back: 'Tilbake'
+    cancel: 'Avbryt'
+    save: 'Lagre'
+    external:
+      urls:
+        issue: "http://stortinget.no/no/Saker-og-publikasjoner/Saker/Sak/?p=%s"
+        minutes: "http://stortinget.no/no/Saker-og-publikasjoner/Publikasjoner/Referater/Stortinget/%s/%s"
+    issue:
+      states:
+        processed: "behandlet"
+    time:
+      years: "år"
+    created:
+      promise: 'Løftet ble lagret.'
+    updated:
+      promise: 'Løftet ble oppdatert.'
+    counts:
+      representative:
+        one: "Viser <strong>1</strong> representant."
+        other: "Viser <strong>%{count}</strong> representanter."
+      committee:
+        one: "Viser <strong>1</strong> komite."
+        other: "Viser <strong>%{count}</strong> komiteer."
+      party:
+        one: "Viser <strong>ett</strong> parti."
+        other: "Viser <strong>%{count}</strong> partier."
+      topic:
+        one: "Viser <strong>ett</strong> tema."
+        other: "Viser <strong>%{count}</strong> tema."
+      district:
+        one: "Viser <strong>ett</strong> fylke."
+        other: "Viser <strong>%{count}</strong> fylker."
+      issue:
+        one: "Viser <strong>1</strong> saker."
+        other: "Viser <strong>%{count}</strong> saker."
+      vote:
+        one: "Viser <strong>1</strong> voteringer."
+        other: "Viser <strong>%{count}</strong> voteringer."
+      promises:
+        one: "Viser <strong>1</strong> løfte."
+        other: "Viser <strong>%{count}</strong> løfter."

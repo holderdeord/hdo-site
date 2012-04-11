@@ -2,8 +2,7 @@
   <h1><%= Promise.model_name.human count: 2 %></h1>
 </div>
 
-
-<%= link_to Promise.human_attribute_name(:new), new_promise_path, class: 'btn btn-primary' %>
+<p><%= link_to Promise.human_attribute_name(:new), new_promise_path, class: 'btn btn-primary' %></p>
 <p class="pull-right"><%= t('app.counts.promises', count: @promises.size).html_safe %></p>
 
 <table class="table table-striped">
