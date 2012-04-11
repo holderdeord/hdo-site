@@ -10,7 +10,7 @@
 
   <p>
     <strong><%= Issue.human_attribute_name :status %>:</strong>
-    <%= @issue.human_status %>
+    <%= @issue.status_text %>
   </p>
 
   <% if @issue.committee %>

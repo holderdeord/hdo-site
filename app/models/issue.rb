@@ -3,11 +3,11 @@ class Issue < ActiveRecord::Base
   has_and_belongs_to_many :topics
   has_many :votes
 
-  def human_status
+  def status_text
     status.gsub(/_/, ' ').capitalize
   end
 
-  def human_last_update
+  def last_update_text
     I18n.l last_update, format: :short
   end
 

@@ -1,16 +1,15 @@
 class Vote < ActiveRecord::Base
   belongs_to :issue
-
   validates_presence_of :issue
 
   has_many :vote_results, :dependent => :delete_all
   has_many :representatives, :through => :vote_results, :order => :last_name
 
-  def human_time
+  def time_text
     time.strftime("%Y-%m-%d")
   end
 
-  def human_enacted
+  def enacted_text
     enacted? ? I18n.t('app.yes') : I18n.t('app.no')
   end
 
@@ -28,11 +27,9 @@ class Vote < ActiveRecord::Base
       @for_count     = for_count     || 0
       @against_count = against_count || 0
       @absent_count  = absent_count  || 0
-    end
 
-    def total
-      @total ||= @for_count + @against_count + @absent_count
-      @total == 0 ? 1 : @total
+      @total = @for_count + @against_count + @absent_count
+      @total = 1 if @total.zero?
     end
 
     def for
@@ -50,7 +47,7 @@ class Vote < ActiveRecord::Base
     private
 
     def percentage_of(count)
-      count * 100 / total
+      count * 100 / @total
     end
   end # Stats
 end # Vote

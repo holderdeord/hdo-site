@@ -12,9 +12,9 @@
   <tbody>
       <% issues.each do |issue| %>
       <tr>
-        <td><%= issue.human_last_update %></td>
+        <td><%= issue.last_update_text %></td>
         <td><%= link_to issue.summary, issue %></td>
-        <td><%= issue.human_status %></td>
+        <td><%= issue.status_text %></td>
       </tr>
       <% end %>
   </tbody>

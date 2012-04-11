@@ -12,7 +12,7 @@ class Representative < ActiveRecord::Base
     "#{last_name}, #{first_name}"
   end
 
-  def human_alternate
+  def alternate_text
     alternate? ? I18n.t("app.yes") : I18n.t("app.no")
   end
 

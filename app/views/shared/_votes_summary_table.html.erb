@@ -19,18 +19,18 @@
     <tbody>
       <% votes.each do |vote| %>
       <tr>
-        <td><%= vote.human_time %></td>
+        <td><%= vote.time_text %></td>
         <% if show_issue %>
           <td><%= link_to vote.issue.summary, vote.issue %></td>
         <% end %>
         <td><%= vote.subject %></td>
-        <td><%= vote.human_enacted %></td>
+        <td><%= vote.enacted_text %></td>
 
         <% stats = vote.stats %>
-
         <td class="vote-for"><%= stats.for %>% (<%= vote.for_count %>)</td>
         <td class="vote-against"><%= stats.against %>% (<%= vote.against_count %>)</td>
         <td class="vote-missing"><%= stats.missing %>% (<%= vote.missing_count %>)</td>
+
         <td><%= link_to t('app.show'), vote, {class: 'btn'} %></td>
       </tr>
       <% end %>

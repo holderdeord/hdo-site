@@ -20,7 +20,7 @@
 
   <p>
     <strong><%= Representative.human_attribute_name :alternate %>:</strong>
-    <%= @representative.human_alternate %>
+    <%= @representative.alternate_text %>
   </p>
 
   <strong><%= Representative.human_attribute_name :committees %>:</strong>
@@ -48,10 +48,10 @@
   <tbody>
     <% @representative.vote_results.each do |result| %>
     <tr>
-      <td><%= result.vote.human_time %></td>
+      <td><%= result.vote.time_text %></td>
       <td><%= link_to result.vote.issue.summary, result.vote.issue %></td>
       <td><%= result.vote.subject %></td>
-      <td><%= result.vote.human_enacted %></td>
+      <td><%= result.vote.enacted_text %></td>
       <td class="vote-<%= result.state %>"><%= result.human %></td>
       <td><a href="<%= url_for result.vote %>" class="btn"><%= t('app.details') %></a></td>
     </tr>
