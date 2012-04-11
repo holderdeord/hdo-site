@@ -5,35 +5,5 @@
 <p><%= link_to Promise.human_attribute_name(:new), new_promise_path, class: 'btn btn-primary' %></p>
 <p class="pull-right"><%= t('app.counts.promises', count: @promises.size).html_safe %></p>
 
-<table class="table table-striped">
-  <thead>
-    <tr>
-      <th><%= Promise.human_attribute_name :party %></th>
-      <th><%= Promise.human_attribute_name :body %></th>
-      <th><%= Promise.human_attribute_name :general %></th>
-      <th><%= Promise.human_attribute_name :source %></th>
-      <th><%= Topic.model_name.human count: 2 %></th>
-      <th></th>
-      <th></th>
-      <th></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @promises.each do |promise| %>
-      <tr>
-        <td><%= link_to promise.party.name, promise.party %></td>
-        <td><%= promise.body %></td>
-        <td><%= promise.general_text %></td>
-        <td><%= promise.source %></td>
-        <td><%= promise.topic_names.join(", ") %></td>
-        <td><%= link_to t('app.show'), promise, class: 'btn btn-small' %></td>
-        <td><%= link_to t('app.edit'), edit_promise_path(promise), class: 'btn btn-small' %></td>
-        <td><%= link_to t('app.destroy'), promise, {confirm: 'Are you sure?', method: :delete, class: 'btn btn-small btn-danger'} %></td>
-      </tr>
-    <% end %>
-  </tbody>
-
-</table>
-
+<%= render partial: "shared/promises_table", locals: { promises: @promises } %>
 
