@@ -25,9 +25,9 @@ class Vote < ActiveRecord::Base
 
   class Stats
     def initialize(for_count, against_count, absent_count)
-      @for_count     = for_count
-      @against_count = against_count
-      @absent_count = absent_count
+      @for_count     = for_count     || 0
+      @against_count = against_count || 0
+      @absent_count  = absent_count  || 0
     end
 
     def total
