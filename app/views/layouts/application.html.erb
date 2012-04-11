@@ -107,5 +107,6 @@
 
     <%= javascript_include_tag "application" %>
     <%= render partial: 'layouts/ga' if Rails.env == 'production'  %>
+    <%= yield :document_ready %>
   </body>
 </html>
