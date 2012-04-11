@@ -66,12 +66,8 @@ module Hdo
             rep = Representative.import_representative(node, true)
           end
 
-          vote_result = ::VoteResult.new(:representative => rep, :vote => vote, :result => result)
-          
-          unless vote_result.save
-            p vote_result => vote_result.errors.full_messages
-            raise "invalid"
-          end
+          # TODO: validate save. need to support multiple issues per vote first.
+          ::VoteResult.create(:representative => rep, :vote => vote, :result => result)
         end
 
         print "."
