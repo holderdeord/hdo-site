@@ -39,11 +39,11 @@ module Hdo
       def self.import(doc)
         doc.xpath("./vote").each { |vote_node| import_vote vote_node }
       end
-      
+
       def self.import_vote(vote_node)
         vote = ::Vote.find_or_create_by_external_id vote_node.css("externalId").first.text
         issue = ::Issue.find_by_external_id! vote_node.css("externalIssueId").first.text
-          
+
         vote.update_attributes!(
           :issue         => issue,
           :for_count     => Integer(vote_node.css("counts for").text),
@@ -53,25 +53,30 @@ module Hdo
           :subject       => vote_node.css("subject").text,
           :time          => Time.parse(vote_node.css("time").text)
         )
-          
+
         vote_node.css("representatives representative").each do |node|
           # assumes externalId is unique
           xid = node.css("externalId").text
           result = Integer(node.css("voteResult").text)
-            
+
           rep = ::Representative.find_by_external_id(xid)
-            
+
           unless rep
             # alternate representative - not part of the list
             rep = Representative.import_representative(node, true)
           end
-            
-          ::VoteResult.create!(:representative => rep, :vote => vote, :result => result)
-        end
+
+          vote_result = ::VoteResult.new(:representative => rep, :vote => vote, :result => result)
           
+          unless vote_result.save
+            p vote_result => vote_result.errors.full_messages
+            raise "invalid"
+          end
+        end
+
         print "."
       end
-      
+
     end
   end
 end
