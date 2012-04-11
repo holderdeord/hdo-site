@@ -85,7 +85,15 @@
     <div class="container">
         <div class="content">
           <div class="row">
-            <div class="span9">
+            <div class="span12">
+              <% if flash.notice %>
+                <div class="alert alert-info"><%= flash.notice %></div>
+              <% end %>
+
+              <% if flash.alert %>
+                <div class="alert alert-error"><%= flash.alert %></div>
+              <% end %>
+
               <%= yield %>
             </div>
           </div>
