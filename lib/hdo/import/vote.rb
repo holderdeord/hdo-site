@@ -66,7 +66,7 @@ module Hdo
             rep = Representative.import_representative(node, true)
           end
             
-          ::VoteResult.create(:representative => rep, :vote => vote, :result => result)
+          ::VoteResult.create!(:representative => rep, :vote => vote, :result => result)
         end
           
         print "."
