@@ -23,15 +23,13 @@
         <% if show_issue %>
           <td><%= link_to vote.issue.summary, vote.issue %></td>
         <% end %>
-        <td><%= vote.subject %></td>
+        <td><%= link_to vote.subject, vote %></td>
         <td><%= vote.enacted_text %></td>
 
         <% stats = vote.stats %>
         <td class="vote-for"><%= stats.for_percent %>% (<%= vote.for_count %>)</td>
         <td class="vote-against"><%= stats.against_percent %>% (<%= vote.against_count %>)</td>
         <td class="vote-missing"><%= stats.missing_percent %>% (<%= vote.missing_count %>)</td>
-
-        <td><%= link_to t('app.show'), vote, {class: 'btn'} %></td>
       </tr>
       <% end %>
     </tbody>
