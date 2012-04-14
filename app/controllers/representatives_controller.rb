@@ -13,9 +13,7 @@ class RepresentativesController < ApplicationController
 
   def show
     @representative = Representative.includes(:votes => :issue).find(params[:id])
-
-    # TODO: do this in DB?
-    @vote_results = @representative.vote_results.sort_by { |e| e.vote.time }.reverse
+    @vote_results = @representative.vote_results.sort_by { |e| e.vote.time }
 
     respond_to do |format|
       format.html

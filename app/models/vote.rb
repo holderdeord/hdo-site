@@ -31,22 +31,28 @@ class Vote < ActiveRecord::Base
       @absent_count  = absent_count  || 0
     end
 
+    def vote_count
+      @vote_count ||= for_count + against_count
+    end
+
+    def total_count
+      @total_count ||= vote_count + absent_count
+    end
+
     def for_percent
-      @for_percent ||= percentage_of @for_count, @for_count + @against_count
+      @for_percent ||= percentage_of for_count, vote_count
     end
 
     def against_percent
-      @against_percent ||= percentage_of @against_count, @for_count + @against_count
+      @against_percent ||= percentage_of against_count, vote_count
     end
 
     def absent_percent
-      @absent_percent ||= percentage_of @absent_count, @for_count + @against_count + @absent_count
+      @absent_percent ||= percentage_of absent_count, total_count
     end
 
-    private
-
     def percentage_of(count, total)
-      count * 100 / (total == 0 ? 1 : total)
+      count * 100 / (total.zero? ? 1 : total)
     end
   end # Stats
 end # Vote

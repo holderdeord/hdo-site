@@ -52,18 +52,18 @@ class Representative < ActiveRecord::Base
     end
 
     def absent_percent
-      absent_count * 100 / total
+      absent_count * 100 / total_count
     end
 
     def for_percent
-      for_count * 100 / total
+      for_count * 100 / total_count
     end
 
     def against_percent
-      against_count * 100 / total
+      against_count * 100 / total_count
     end
 
-    def total
+    def total_count
       @total ||= @data.values.flatten.size
     end
 

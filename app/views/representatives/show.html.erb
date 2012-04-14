@@ -33,11 +33,11 @@
   <dl>
     <% stats = @representative.stats %>
     <dt>For</dt>
-    <dd><%= stats.for_percent %>% (<%= stats.for_count %>)</dd>
+    <dd><%= stats.for_percent %>% (<%= stats.for_count %> / <%= stats.total_count %>)</dd>
     <dt>Mot</dt>
-    <dd><%= stats.against_percent %>% (<%= stats.against_count %>)</dd>
+    <dd><%= stats.against_percent %>% (<%= stats.against_count %> / <%= stats.total_count %>)</dd>
     <dt>Ikke tilstede</dt>
-    <dd><%= stats.absent_percent %>% (<%= stats.absent_count %>)</dd>
+    <dd><%= stats.absent_percent %>% (<%= stats.absent_count %>) / <%= stats.total_count %></dd>
   </dl>
 </div>
 
@@ -47,7 +47,7 @@
 <table class="table table-striped">
   <thead>
     <tr>
-      <th class="date-header"><%= Vote.human_attribute_name :time %></th>
+      <th class="wide-table-header"><%= Vote.human_attribute_name :time %></th>
       <th><%= Issue.model_name.human %></th>
       <th><%= Vote.human_attribute_name :subject %></th>
       <th><%= Vote.human_attribute_name :enacted %></th>
@@ -56,7 +56,7 @@
     </tr>
   </thead>
   <tbody>
-    <% @vote_results.each do |result| %>
+    <% @vote_results.reverse_each do |result| %>
     <tr>
       <td><%= result.vote.time_text %></td>
       <td><%= link_to result.vote.issue.summary, result.vote.issue %></td>
