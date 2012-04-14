@@ -29,6 +29,16 @@
       <li><%= link_to com.name, com %></li>
     <% end %>
   </ul>
+
+  <dl>
+    <% stats = @representative.stats %>
+    <dt>For</dt>
+    <dd><%= stats.for_percent %>% (<%= stats.for_count %>)</dd>
+    <dt>Mot</dt>
+    <dd><%= stats.against_percent %>% (<%= stats.against_count %>)</dd>
+    <dt>Ikke tilstede</dt>
+    <dd><%= stats.absent_percent %>% (<%= stats.absent_count %>)</dd>
+  </dl>
 </div>
 
 <h2><%= Vote.model_name.human count: 2 %></h2>

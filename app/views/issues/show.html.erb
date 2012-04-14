@@ -4,6 +4,11 @@
 
 <div class="well">
   <p>
+    <strong><%= Issue.human_attribute_name :external_id %>:</strong>
+    <%= @issue.external_id %>
+  </p>
+
+  <p>
     <strong><%= Issue.human_attribute_name :last_update %>:</strong>
     <%= l @issue.last_update %>
   </p>
