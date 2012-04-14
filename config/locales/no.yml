@@ -126,7 +126,7 @@
     counts:
       representative:
         one: "Viser <strong>1</strong> representant."
-        other: "Viser <strong>%{count}</strong> representanter."
+        other: "Viser <strong>%{count}</strong> representanter (inkludert varaer)."
       committee:
         one: "Viser <strong>1</strong> komite."
         other: "Viser <strong>%{count}</strong> komiteer."

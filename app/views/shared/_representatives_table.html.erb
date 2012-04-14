@@ -4,10 +4,9 @@
   <thead>
     <tr>
       <th><%= Representative.human_attribute_name :name %></th>
-        <% if show_party %>
+      <% if show_party %>
         <th><%= Representative.human_attribute_name :party %></th>
-        <% end %>
-      <th><%= Representative.human_attribute_name :alternate %></th>
+      <% end %>
     </tr>
   </thead>
   <tbody>
@@ -17,7 +16,6 @@
         <% if show_party %>
           <td><%= link_to rep.party.name, rep.party %></td>
         <% end %>
-        <td><%= t("app.yes") if rep.alternate? %></td>
       </tr>
       <% end %>
   </tbody>

@@ -18,11 +18,6 @@
     <%= l @representative.date_of_birth, format: :short %> (<%= @representative.age %> <%= t('app.time.years') %>)
   </p>
 
-  <p>
-    <strong><%= Representative.human_attribute_name :alternate %>:</strong>
-    <%= @representative.alternate_text %>
-  </p>
-
   <strong><%= Representative.human_attribute_name :committees %>:</strong>
   <ul>
     <% @representative.committees.each do |com| %>

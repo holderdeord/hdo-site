@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120414173519) do
+ActiveRecord::Schema.define(:version => 20120414224734) do
 
   create_table "committees", :force => true do |t|
     t.string   "external_id"
@@ -88,7 +88,6 @@ ActiveRecord::Schema.define(:version => 20120414173519) do
     t.datetime "updated_at",    :null => false
     t.integer  "party_id"
     t.integer  "district_id"
-    t.boolean  "alternate"
     t.datetime "date_of_birth"
     t.datetime "date_of_death"
   end

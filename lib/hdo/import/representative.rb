@@ -33,12 +33,12 @@ module Hdo
 
       def self.import(doc)
         doc.css("representative").map do |rep|
-          import_representative(rep, false)
+          import_representative(rep)
           print "."
         end
       end
 
-      def self.import_representative(node, alternate = false)
+      def self.import_representative(node)
         external_id     = node.css("externalId").first.text
         party_name      = node.css("party").first.text
         first_name      = node.css("firstName").first.text
@@ -61,7 +61,6 @@ module Hdo
           :last_name     => last_name,
           :committees    => committees,
           :district      => district,
-          :alternate     => alternate,
           :date_of_birth => dob,
           :date_of_death => dod
         )
