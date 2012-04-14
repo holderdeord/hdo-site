@@ -107,6 +107,9 @@
     back: 'Tilbake'
     cancel: 'Avbryt'
     save: 'Lagre'
+    for: 'For'
+    against: 'Mot'
+    absent: 'Ikke tilstede'
     external:
       urls:
         issue: "http://stortinget.no/no/Saker-og-publikasjoner/Saker/Sak/?p=%s"
