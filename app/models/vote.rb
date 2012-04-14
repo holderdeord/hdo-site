@@ -23,22 +23,24 @@ class Vote < ActiveRecord::Base
   end
 
   class Stats
+    attr_reader :for_count, :against_count, :absent_count
+
     def initialize(for_count, against_count, absent_count)
       @for_count     = for_count     || 0
       @against_count = against_count || 0
       @absent_count  = absent_count  || 0
     end
 
-    def for
-      @for ||= percentage_of @for_count, @for_count + @against_count
+    def for_percent
+      @for_percent ||= percentage_of @for_count, @for_count + @against_count
     end
 
-    def against
-      @against ||= percentage_of @against_count, @for_count + @against_count
+    def against_percent
+      @against_percent ||= percentage_of @against_count, @for_count + @against_count
     end
 
-    def missing
-      @missing ||= percentage_of @absent_count, @for_count + @against_count + @absent_count
+    def missing_percent
+      @missing_percent ||= percentage_of @absent_count, @for_count + @against_count + @absent_count
     end
 
     private
