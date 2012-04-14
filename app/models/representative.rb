@@ -3,7 +3,7 @@ class Representative < ActiveRecord::Base
   belongs_to :district
   has_and_belongs_to_many :committees, :order => :name
 
-  has_many :vote_results, :reverse_order => :time
+  has_many :vote_results
   has_many :votes, :through => :vote_results
 
   validates_uniqueness_of :first_name, :scope => :last_name # TODO: :scope => :period ?!
@@ -17,7 +17,7 @@ class Representative < ActiveRecord::Base
   end
 
   def age
-    return -1 if date_of_birth.nil?
+    dob = date_of_birth or return -1
 
     if date_of_death
       now = date_of_death
@@ -26,7 +26,6 @@ class Representative < ActiveRecord::Base
     end
 
     now = now.utc.to_date
-    dob = date_of_birth
 
     now.year - dob.year - ((now.month > dob.month || (now.month == dob.month && now.day >= dob.day)) ? 0 : 1)
   end
