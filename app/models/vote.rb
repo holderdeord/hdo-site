@@ -27,27 +27,24 @@ class Vote < ActiveRecord::Base
       @for_count     = for_count     || 0
       @against_count = against_count || 0
       @absent_count  = absent_count  || 0
-
-      @total = @for_count + @against_count + @absent_count
-      @total = 1 if @total.zero?
     end
 
     def for
-      @for ||= percentage_of @for_count
+      @for ||= percentage_of @for_count, @for_count + @against_count
     end
 
     def against
-      @against ||= percentage_of @against_count
+      @against ||= percentage_of @against_count, @for_count + @against_count
     end
 
     def missing
-      @missing ||= percentage_of @absent_count
+      @missing ||= percentage_of @absent_count, @for_count + @against_count + @absent_count
     end
 
     private
 
-    def percentage_of(count)
-      count * 100 / @total
+    def percentage_of(count, total)
+      count * 100 / (total == 0 ? 1 : total)
     end
   end # Stats
 end # Vote
