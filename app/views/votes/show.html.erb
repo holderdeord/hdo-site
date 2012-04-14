@@ -18,13 +18,13 @@
 
     <% stats = @vote.stats %>
     <dt><%= Vote.human_attribute_name :for_count %></dd>
-    <dd><%= stats.for_percent %>% (<%= @vote.for_count %>)</dt>
+    <dd><%= stats.for_percent %>% (<%= stats.for_count %>/<%= stats.vote_count %>)</dt>
 
     <dt><%= Vote.human_attribute_name :against_count %></dd>
-    <dd><%= stats.against_percent %>% (<%= @vote.against_count %>)</dt>
+    <dd><%= stats.against_percent %>% (<%= stats.against_count %>/<%= stats.vote_count %>)</dt>
 
     <dt><%= Vote.human_attribute_name :absent_count %></dd>
-    <dd><%= stats.absent_percent %>% (<%= @vote.absent_count %>)</dt>
+    <dd><%= stats.absent_percent %>% (<%= stats.absent_count %>/<%= stats.total_count %>)</dt>
   </dl>
 </div>
 
