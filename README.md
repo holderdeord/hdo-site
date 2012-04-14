@@ -14,3 +14,6 @@ Getting started:
     $ cd hdo-site
     $ bundle install
     $ rake db:setup
+    $ rails server
+
+TODO: Add something about importing data here.
