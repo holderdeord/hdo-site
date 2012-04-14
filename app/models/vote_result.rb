@@ -9,7 +9,7 @@ class VoteResult < ActiveRecord::Base
     when 1
       Vote.human_attribute_name :for_count # TODO: :for etc.
     when 0
-      Vote.human_attribute_name :missing_count
+      Vote.human_attribute_name :absent_count
     when -1
       Vote.human_attribute_name :against_count
     end
@@ -20,7 +20,7 @@ class VoteResult < ActiveRecord::Base
     when 1
       :for
     when 0
-      :missing
+      :absent
     when -1
       :against
     end
@@ -34,7 +34,7 @@ class VoteResult < ActiveRecord::Base
     result == -1
   end
 
-  def missing?
+  def absent?
     result == 0
   end
 

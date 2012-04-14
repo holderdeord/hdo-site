@@ -79,7 +79,7 @@
           subject: "Beskrivelse"
           for_count: "For"
           against_count: "Mot"
-          missing_count: "Ikke tilstede"
+          absent_count: "Ikke tilstede"
           time: "Dato"
           enacted: "Vedtatt"
           counts: "Stemmegivning"

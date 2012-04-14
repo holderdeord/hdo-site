@@ -12,7 +12,7 @@
         <th><%= Vote.human_attribute_name :enacted %></th>
         <th><%= Vote.human_attribute_name :for_count %></th>
         <th><%= Vote.human_attribute_name :against_count %></th>
-        <th><%= Vote.human_attribute_name :missing_count %></th>
+        <th><%= Vote.human_attribute_name :absent_count %></th>
       </tr>
     </thead>
     <tbody>
@@ -28,7 +28,7 @@
         <% stats = vote.stats %>
         <td class="vote-for"><%= stats.for_percent %>% (<%= vote.for_count %>)</td>
         <td class="vote-against"><%= stats.against_percent %>% (<%= vote.against_count %>)</td>
-        <td class="vote-missing"><%= stats.missing_percent %>% (<%= vote.missing_count %>)</td>
+        <td class="vote-absent"><%= stats.absent_percent %>% (<%= vote.absent_count %>)</td>
       </tr>
       <% end %>
     </tbody>

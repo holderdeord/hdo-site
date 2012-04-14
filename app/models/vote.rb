@@ -14,7 +14,7 @@ class Vote < ActiveRecord::Base
   end
 
   def stats
-    Stats.new for_count, against_count, missing_count
+    Stats.new for_count, against_count, absent_count
   end
 
   def minutes_url
@@ -39,8 +39,8 @@ class Vote < ActiveRecord::Base
       @against_percent ||= percentage_of @against_count, @for_count + @against_count
     end
 
-    def missing_percent
-      @missing_percent ||= percentage_of @absent_count, @for_count + @against_count + @absent_count
+    def absent_percent
+      @absent_percent ||= percentage_of @absent_count, @for_count + @against_count + @absent_count
     end
 
     private

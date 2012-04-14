@@ -4,13 +4,13 @@ module Hdo
       FIELDS = [
         Import.external_id_field,
         Field.new(:externalIssueId, true, :string, "The id (matching the issue's externalId) of the issue being voted on."),
-        Field.new(:counts, true, :element, "An element with <for>, <against> and <missing> counts (see example)."),
+        Field.new(:counts, true, :element, "An element with <for>, <against> and <absent> counts (see example)."),
         Field.new(:enacted, true, :boolean, "Whether the proposal was enacted."),
         Field.new(:subject, true, :string, "The subject of the vote."),
         Field.new(:method, true, :string, "??"),
         Field.new(:resultType, true, :string, "??"),
         Field.new(:time, true, :string, "The timestamp for the vote."),
-        Field.new(:representatives, true, :element, "An element with each representatives vote. The externalId should match the representative's externalId (subject to change). For voteResult, 1 indicates 'for', -1 'against', and 0 'missing'. See example."),
+        Field.new(:representatives, true, :element, "An element with each representatives vote. The externalId should match the representative's externalId (subject to change). For voteResult, 1 indicates 'for', -1 'against', and 0 'absent'. See example."),
       ]
 
       DESC = 'a parliamentary vote'
@@ -21,7 +21,7 @@ module Hdo
   <counts>
     <for>88</for>
     <against>80</against>
-    <missing>1</missing>
+    <absent>1</absent>
   </counts>
   <enacted>true</enacted>
   <subject>Romertall I.</subject>
@@ -48,7 +48,7 @@ module Hdo
           :issue         => issue,
           :for_count     => Integer(vote_node.css("counts for").text),
           :against_count => Integer(vote_node.css("counts against").text),
-          :missing_count => Integer(vote_node.css("counts missing").text),
+          :absent_count  => Integer(vote_node.css("counts absent").text),
           :enacted       => vote_node.css("enacted").text == "true",
           :subject       => vote_node.css("subject").text,
           :time          => Time.parse(vote_node.css("time").text)

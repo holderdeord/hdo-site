@@ -23,8 +23,8 @@
     <dt><%= Vote.human_attribute_name :against_count %></dd>
     <dd><%= stats.against_percent %>% (<%= @vote.against_count %>)</dt>
 
-    <dt><%= Vote.human_attribute_name :missing_count %></dd>
-    <dd><%= stats.missing_percent %>% (<%= @vote.missing_count %>)</dt>
+    <dt><%= Vote.human_attribute_name :absent_count %></dd>
+    <dd><%= stats.absent_percent %>% (<%= @vote.absent_count %>)</dt>
   </dl>
 </div>
 

@@ -31,6 +31,6 @@ en:
         vote:
           for_count: "For"
           against_count: "Against"
-          missing_count: "Absent"
+          absent_count: "Absent"
         topic:
           children: "Subtopics"

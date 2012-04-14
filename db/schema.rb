@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120410192747) do
+ActiveRecord::Schema.define(:version => 20120414173519) do
 
   create_table "committees", :force => true do |t|
     t.string   "external_id"
@@ -120,7 +120,7 @@ ActiveRecord::Schema.define(:version => 20120410192747) do
     t.integer  "issue_id"
     t.integer  "for_count"
     t.integer  "against_count"
-    t.integer  "missing_count"
+    t.integer  "absent_count"
     t.boolean  "enacted"
     t.string   "subject"
     t.datetime "time"
