@@ -10,6 +10,7 @@ Hdo::Application.routes.draw do
   resources :committees,      :only => [:index, :show]
 
   get "home/index"
+  get "home/about"
   get "docs/index"
 
   # The priority is based upon order of creation:

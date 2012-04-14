@@ -97,7 +97,10 @@
     title: "Holder de ord"
     description: "er en politisk uavhengig organisasjon som kartlegger norske politiske partiers løfter og sammenligner disse med hva de gjør på storting og i regjering."
     about: "Om oss"
-    documentation: "Dokumentasjon"
+    read_more: "Les mer"
+    documentation:
+      default: "Dokumentasjon"
+      technical: "Teknisk"
     "yes": 'Ja'
     "no": 'Nei'
     show: "Vis"
