@@ -3,7 +3,6 @@
 </div>
 
 <p><%= link_to Promise.human_attribute_name(:new), new_promise_path, class: 'btn btn-primary' %></p>
-<p class="pull-right"><%= t('app.counts.promises', count: @promises.size).html_safe %></p>
 
 <%= render partial: "shared/promises_table", locals: { promises: @promises } %>
 
