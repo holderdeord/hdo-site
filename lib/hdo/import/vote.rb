@@ -10,7 +10,7 @@ module Hdo
         Field.new(:method, true, :string, "??"),
         Field.new(:resultType, true, :string, "??"),
         Field.new(:time, true, :string, "The timestamp for the vote."),
-        Field.new(:representatives, true, :element, "An element with each representatives vote. The externalId should match the representative's externalId (subject to change). For voteResult, 1 indicates 'for', -1 'against', and 0 'absent'. See example."),
+        Field.new(:representatives, true, :element, "An element with each representatives vote. The externalId should match the representative's externalId (subject to change). For voteResult, valid values are 'for', 'against', 'absent'. See example."),
       ]
 
       DESC = 'a parliamentary vote'
@@ -30,8 +30,16 @@ module Hdo
   <time>2012-02-07T12:40:29.687</time>
   <representatives>
     <representative>
-      <externalId>PTA</externalId>
-      <voteResult>-1</voteResult>
+      <externalId>A</externalId>
+      <voteResult>for</voteResult>
+    </representative>
+    <representative>
+      <externalId>B</externalId>
+      <voteResult>against</voteResult>
+    </representative>
+    <representative>
+      <externalId>C</externalId>
+      <voteResult>absent</voteResult>
     </representative>
 </vote>
       XML
@@ -39,6 +47,12 @@ module Hdo
       def self.import(doc)
         doc.xpath("./vote").each { |vote_node| import_vote vote_node }
       end
+
+      VOTE_RESULTS = {
+        "for"     => 1,
+        "absent"  => 0,
+        "against" => -1
+      }
 
       def self.import_vote(vote_node)
         vote = ::Vote.find_or_create_by_external_id vote_node.css("externalId").first.text
@@ -57,8 +71,10 @@ module Hdo
         vote_node.css("representatives representative").each do |node|
           # assumes externalId is unique
           xid = node.css("externalId").text
-          result = Integer(node.css("voteResult").text)
+          result_text = node.css("voteResult").text
 
+
+          result = VOTE_RESULTS[result_text] or raise "invalid vote result: #{result_text.inspect}"
           rep = ::Representative.find_by_external_id(xid)
 
           unless rep
