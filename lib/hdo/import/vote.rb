@@ -26,7 +26,7 @@ module Hdo
   <enacted>true</enacted>
   <subject>Romertall I.</subject>
   <method>ikke_spesifisert</method>
-  <result_type>ikke_spesifisert</result_type>
+  <resultType>ikke_spesifisert</result_type>
   <time>2012-02-07T12:40:29.687</time>
   <representatives>
     <representative>
