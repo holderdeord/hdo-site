@@ -8,16 +8,23 @@ set :branch, 'master'
 
 set :use_sudo, false
 set :deploy_via, :remote_cache
-set :deploy_to, "/sites/hdo.jaribakken.com/"
 
-set :user, 'jari'
-set :domain, 'hdo.jaribakken.com'
+if ENV['VAGRANT']
+  set :user, 'vagrant'
+  set :domain, 'localhost'
+  set :port, 2222
+  set :password, 'vagrant'
+  set :deploy_to, "/webapps/#{application}"
+else
+  set :user, 'jari'
+  set :domain, 'hdo.jaribakken.com'
+  set :deploy_to, "/sites/hdo.jaribakken.com/"
+end
 
 role :web, domain
 role :app, domain
 role :db, domain, :primary => true
 
-# If you are using Passenger mod_rails uncomment this:
 namespace :deploy do
   task :start do ; end
   task :stop do ; end
