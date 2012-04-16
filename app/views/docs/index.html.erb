@@ -83,7 +83,7 @@
           <td><code><%= field.name %></code></td>
           <td><%= field.required %></td>
           <td><%= field.type %></td>
-          <td><%= field.description %></td>
+          <td><%= field.description.html_safe %></td>
         </tr>
         <% end %>
       </tbody>
