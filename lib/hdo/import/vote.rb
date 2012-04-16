@@ -10,7 +10,7 @@ module Hdo
         Field.new(:method, true, :string, "??"),
         Field.new(:resultType, true, :string, "??"),
         Field.new(:time, true, :string, "The timestamp for the vote."),
-        Field.new(:representatives, true, :element, "An element with each representatives vote. The element should contain a set of <a href='#input-format-representative'>&gt;representative&lt;</a> elements with an extra subnode 'voteResult', where valid values are 'for', 'against', 'absent'. See example."),
+        Field.new(:representatives, true, :element, "An element with each representative's vote. The element should contain a set of <a href='#input-format-representative'>&gt;representative&lt;</a> elements with an extra subnode 'voteResult', where valid values are 'for', 'against', 'absent'. See example."),
       ]
 
       DESC = 'a parliamentary vote'
