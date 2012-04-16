@@ -10,7 +10,7 @@ module Hdo
         Field.new(:method, true, :string, "??"),
         Field.new(:resultType, true, :string, "??"),
         Field.new(:time, true, :string, "The timestamp for the vote."),
-        Field.new(:representatives, true, :element, "An element with each representatives vote. The externalId should match the representative's externalId (subject to change). For voteResult, valid values are 'for', 'against', 'absent'. See example."),
+        Field.new(:representatives, true, :element, "An element with each representatives vote. The element should contain a set of <a href='#input-format-representative'>&gt;representative&lt;</a> elements with an extra subnode 'voteResult', where valid values are 'for', 'against', 'absent'. See example."),
       ]
 
       DESC = 'a parliamentary vote'
@@ -30,16 +30,19 @@ module Hdo
   <time>2012-02-07T12:40:29.687</time>
   <representatives>
     <representative>
-      <externalId>A</externalId>
-      <voteResult>for</voteResult>
-    </representative>
-    <representative>
-      <externalId>B</externalId>
+      <externalId>DD</externalId>
+      <firstName>Donald</firstName>
+      <lastName>Duck</lastName>
+      <district>Duckburg</district>
+      <party>Democratic Party</party>
+      <committees>
+        <committe>A</committe>
+        <committe>B</committe>
+      </committes>
+      <period>2011-2012</period>
+      <dateOfBirth>1969-04-04T00:00:00</dateOfBirth>
+      <dateOfDeath>1969-04-04T00:00:00</dateOfDeath>
       <voteResult>against</voteResult>
-    </representative>
-    <representative>
-      <externalId>C</externalId>
-      <voteResult>absent</voteResult>
     </representative>
 </vote>
       XML
