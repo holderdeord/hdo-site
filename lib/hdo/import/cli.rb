@@ -14,7 +14,13 @@ module Hdo
         @files.each do |file|
           print "\nimporting #{file.inspect}:"
           doc = Nokogiri.XML(File.read(file)).first_element_child
-          import doc
+
+          if doc
+            import doc
+          else
+            p file => File.read(file)
+            raise
+          end
         end
       end
 

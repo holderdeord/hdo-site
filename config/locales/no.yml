@@ -37,6 +37,9 @@
         promise:
           one: "Løfte"
           other: "Løfter"
+        proposition:
+          one: "Forslag"
+          other: "Forslag"
       attributes:
         representative:
           name: "Navn"
@@ -93,6 +96,11 @@
           new: "Nytt løfte"
           edit: "Endre løfte"
           topics: "Emner"
+        proposition:
+          description: "Beskrivelse"
+          on_behalf_of: "På vegne av"
+          delivered_by: "Levert av"
+          body: "Tekst"
   app:
     title: "Holder de ord"
     description: "er en politisk uavhengig organisasjon som kartlegger norske politiske partiers løfter og sammenligner disse med hva de gjør på storting og i regjering."

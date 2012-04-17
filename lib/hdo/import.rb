@@ -7,8 +7,15 @@ module Hdo
     def self.external_id_field
       Field.new(:externalId, false, :string, 'An optional external id, matching potential id fields in the input data. This is useful if you want to reimport previous data without creating duplicates.')
     end
+
+    class Type
+      def self.indent(str, spaces = 2)
+        str.split("\n").map { |e| "#{' ' * spaces}#{e}" }.join("\n")
+      end
+    end
   end
 end
+
 
 require 'hdo/import/representative'
 require 'hdo/import/party'

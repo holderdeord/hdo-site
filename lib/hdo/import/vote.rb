@@ -1,6 +1,6 @@
 module Hdo
   module Import
-    class Vote
+    class Vote < Type
       FIELDS = [
         Import.external_id_field,
         Field.new(:externalIssueId, true, :string, "The id (matching the issue's externalId) of the issue being voted on."),
@@ -11,6 +11,7 @@ module Hdo
         Field.new(:resultType, true, :string, "??"),
         Field.new(:time, true, :string, "The timestamp for the vote."),
         Field.new(:representatives, true, :element, "An element with each representative's vote. The element should contain a set of <a href='#input-format-representative'>&lt;representative&gt;</a> elements with an extra subnode 'voteResult', where valid values are 'for', 'against', 'absent'. See example."),
+        Field.new(:propositions, false, :element, "An element with each proposition being voted over. The element should contain a set of <a href='#input-format-proposition'>&lt;proposition&gt;</a> elements. See example."),
       ]
 
       DESC = 'a parliamentary vote'
@@ -29,21 +30,11 @@ module Hdo
   <resultType>ikke_spesifisert</resultType>
   <time>2012-02-07T12:40:29.687</time>
   <representatives>
-    <representative>
-      <externalId>DD</externalId>
-      <firstName>Donald</firstName>
-      <lastName>Duck</lastName>
-      <district>Duckburg</district>
-      <party>Democratic Party</party>
-      <committees>
-        <committe>A</committe>
-        <committe>B</committe>
-      </committes>
-      <period>2011-2012</period>
-      <dateOfBirth>1969-04-04T00:00:00</dateOfBirth>
-      <dateOfDeath>1969-04-04T00:00:00</dateOfDeath>
-      <voteResult>against</voteResult>
-    </representative>
+#{indent Representative::XML_EXAMPLE, 4}
+  </representatives>
+  <propositions>
+#{indent Proposition::XML_EXAMPLE, 4}
+  </propositions>
 </vote>
       XML
 
@@ -72,22 +63,18 @@ module Hdo
         )
 
         vote_node.css("representatives representative").each do |node|
-          # assumes externalId is unique
-          xid = node.css("externalId").text
           result_text = node.css("voteResult").text
 
-
           result = VOTE_RESULTS[result_text] or raise "invalid vote result: #{result_text.inspect}"
-          rep = ::Representative.find_by_external_id(xid)
-
-          unless rep
-            # alternate representative - not part of the list
-            rep = Representative.import_representative(node, true)
-          end
+          rep = Representative.from(node)
 
           # TODO: validate save. need to support multiple issues per vote first.
           ::VoteResult.create(:representative => rep, :vote => vote, :result => result)
         end
+
+        props = vote_node.css("propositions proposition").map { |node| Proposition.import(node) }
+
+        vote.propositions << props
 
         print "."
       end

@@ -1,6 +1,6 @@
 module Hdo
   module Import
-    class District
+    class District < Type
       FIELDS = [
         Import.external_id_field,
         Field.new(:name, true, :string, 'The name of the electoral district.'),
@@ -18,7 +18,7 @@ module Hdo
         doc.css("district").map do |district|
           p = ::District.find_or_create_by_external_id district.css("externalId").text
           p.update_attributes! :name => district.css("name").text
-          
+
           print "."
         end
       end

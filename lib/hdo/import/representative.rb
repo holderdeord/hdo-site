@@ -1,6 +1,6 @@
 module Hdo
   module Import
-    class Representative
+    class Representative < Type
       FIELDS = [
         Import.external_id_field,
         Field.new(:firstName, true, :string, 'The first name of the representative.'),
@@ -30,6 +30,18 @@ module Hdo
   <dateOfDeath>1969-04-04T00:00:00</dateOfDeath>
 </representative>
       XML
+
+      def self.from(node)
+        # assumes externalId is unique
+        xid = node.css("externalId").first.text
+        rep = ::Representative.find_by_external_id xid
+
+        unless rep
+          rep = import_representative node
+        end
+
+        rep
+      end
 
       def self.import(doc)
         doc.css("representative").map do |rep|

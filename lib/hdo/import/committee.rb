@@ -1,6 +1,6 @@
 module Hdo
   module Import
-    class Committee
+    class Committee < Type
       FIELDS = [
         Import.external_id_field,
         Field.new(:name, true, :string, 'The name of the topic.'),

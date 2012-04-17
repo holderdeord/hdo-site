@@ -7,6 +7,7 @@ class Representative < ActiveRecord::Base
   has_many :votes, :through => :vote_results
 
   validates_uniqueness_of :first_name, :scope => :last_name # TODO: :scope => :period ?!
+  has_many :propositions
 
   def display_name
     "#{last_name}, #{first_name}"

@@ -2,6 +2,7 @@ class Vote < ActiveRecord::Base
   belongs_to :issue
   validates_presence_of :issue
 
+  has_many :propositions, :dependent => :delete_all
   has_many :vote_results, :dependent => :delete_all
   has_many :representatives, :through => :vote_results, :order => :last_name
 

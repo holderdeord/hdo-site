@@ -1,6 +1,6 @@
 module Hdo
   module Import
-    class Party
+    class Party < Type
       FIELDS = [
         Import.external_id_field,
         Field.new(:name, true, :string, 'The name of the party.'),

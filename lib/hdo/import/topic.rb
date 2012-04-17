@@ -1,6 +1,6 @@
 module Hdo
   module Import
-    class Topic
+    class Topic < Type
       FIELDS = [
         Import.external_id_field,
         Field.new(:name, true, :string, 'The name of the topic.'),
@@ -41,7 +41,7 @@ module Hdo
 
             parent.children << child
           end
-          
+
           print "."
         end
       end

@@ -1,6 +1,6 @@
 module Hdo
   module Import
-    class Issue
+    class Issue < Type
       FIELDS = [
         Import.external_id_field,
         Field.new(:summary,       true,  :string, 'A (preferably one-line) summary of the issue.'),
