@@ -18,6 +18,7 @@ end
 
 
 require 'hdo/import/representative'
+require 'hdo/import/proposition'
 require 'hdo/import/party'
 require 'hdo/import/issue'
 require 'hdo/import/topic'
