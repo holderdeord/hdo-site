@@ -2,9 +2,7 @@ source 'https://rubygems.org'
 
 gem 'rails', '3.2.2'
 
-gem 'sqlite3'
 gem 'nokogiri', '~> 1.5.0'
-gem 'mysql2', '~> 0.3.11'
 gem 'acts_as_tree', '~> 0.1.1'
 gem 'capistrano', '~> 2.11.2'
 
@@ -21,6 +19,11 @@ end
 
 group :development do
   gem "thin"
+  gem 'sqlite3' # TODO: same DB everywhere
+end
+
+gorup :production do
+  gem 'mysql2', '~> 0.3.11'
 end
 
 gem 'jquery-rails'
