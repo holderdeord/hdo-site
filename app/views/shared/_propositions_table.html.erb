@@ -1,0 +1,27 @@
+<h2><%= Proposition.model_name.human count: 2 %></h2>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th><%= Proposition.human_attribute_name :description %></th>
+      <th class="wide-table-header"><%= Proposition.human_attribute_name :on_behalf_of %></th>
+      <th class="wide-table-header"><%= Proposition.human_attribute_name :delivered_by %></th>
+      <th><%= Proposition.human_attribute_name :body %></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @vote.propositions.each do |prop| %>
+      <tr>
+        <td><%= prop.description %></td>
+        <td><%= prop.on_behalf_of %></td>
+        <% if prop.delivered_by %>
+          <td><%= link_to prop.delivered_by.display_name, prop.delivered_by %> (<%= prop.delivered_by.party.name %>)</td>
+        <% else %>
+          <td></td>
+        <% end %>
+        <td><%= prop.body.html_safe %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
