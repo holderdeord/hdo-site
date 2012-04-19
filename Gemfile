@@ -22,7 +22,7 @@ group :development do
   gem 'sqlite3' # TODO: same DB everywhere
 end
 
-gorup :production do
+group :production do
   gem 'mysql2', '~> 0.3.11'
 end
 
