@@ -1,4 +1,6 @@
 class TopicsController < ApplicationController
+  caches_page :index, :show
+
   def index
     @topics = Topic.includes(:children).all(:order => :name)
 

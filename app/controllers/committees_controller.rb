@@ -1,4 +1,6 @@
 class CommitteesController < ApplicationController
+  caches_page :index, :show
+
   def index
     @committees = Committee.includes(:representatives).all
 

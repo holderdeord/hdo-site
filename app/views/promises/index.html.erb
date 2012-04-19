@@ -2,7 +2,5 @@
   <h1><%= Promise.model_name.human count: 2 %></h1>
 </div>
 
-<p><%= link_to Promise.human_attribute_name(:new), new_promise_path, class: 'btn btn-primary' %></p>
-
 <%= render partial: "shared/promises_table", locals: { promises: @promises } %>
 

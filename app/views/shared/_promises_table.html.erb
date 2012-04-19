@@ -8,9 +8,6 @@
       <th><%= Promise.human_attribute_name :general %></th>
       <th><%= Promise.human_attribute_name :source %></th>
       <th><%= Topic.model_name.human count: 2 %></th>
-      <th></th>
-      <th></th>
-      <th></th>
     </tr>
   </thead>
 
@@ -22,9 +19,6 @@
         <td><%= promise.general_text %></td>
         <td><%= promise.source %></td>
         <td><%= promise.topic_names.join(", ") %></td>
-        <td><%= link_to t('app.show'), promise, class: 'btn btn-small' %></td>
-        <td><%= link_to t('app.edit'), edit_promise_path(promise), class: 'btn btn-small' %></td>
-        <td><%= link_to t('app.destroy'), promise, {confirm: 'Are you sure?', method: :delete, class: 'btn btn-small btn-danger'} %></td>
       </tr>
     <% end %>
   </tbody>

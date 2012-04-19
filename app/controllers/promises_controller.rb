@@ -1,4 +1,6 @@
 class PromisesController < ApplicationController
+  caches_page :index, :show
+
   def index
     @promises = Promise.all
 
@@ -74,7 +76,7 @@ class PromisesController < ApplicationController
       format.json { head :no_content }
     end
   end
-  
+
   private
-  
+
 end
