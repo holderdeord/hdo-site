@@ -3,23 +3,23 @@ require 'bundler/capistrano'
 set :application, "hdo-site"
 
 set :scm, :git
-set :repository,  "git://github.com/holderdeord/hdo-site"
+set :repository, "git://github.com/holderdeord/hdo-site"
 set :branch, 'master'
 
 set :use_sudo, false
 set :deploy_via, :remote_cache
+set :import_root, '/code/hdo-storting-importer'
 
 if ENV['VAGRANT']
-  set :user, 'vagrant'
+  set :user, 'hdo'
   set :domain, 'localhost'
   set :port, 2222
-  set :password, 'vagrant'
-  set :deploy_to, "/webapps/#{application}"
 else
-  set :user, 'jari'
-  set :domain, 'hdo.jaribakken.com'
-  set :deploy_to, "/sites/hdo.jaribakken.com/"
+  set :user, 'hdo'
+  set :domain, 'beta.holderdeord.no'
 end
+
+set :deploy_to, "/webapps/#{application}"
 
 role :web, domain
 role :app, domain
@@ -32,3 +32,15 @@ namespace :deploy do
     run "#{try_sudo} touch #{File.join(current_path,'tmp','restart.txt')}"
   end
 end
+
+namespace :db do
+  task :config, :except => { :no_release => true }, :role => :app do
+    run "cp -f /home/hdo/.hdo-database.yml #{release_path}/config/database.yml"
+  end
+end
+
+namespace :import do
+  task(:all) { run "cd #{import_root} && RAILS_ENV=production APP_ROOT=#{current_path} bin/import.rb all" }
+end
+
+after "deploy:finalize_update", "db:config"
