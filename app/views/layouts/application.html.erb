@@ -104,7 +104,8 @@
         </div>
 
       <footer>
-        <p>Holder De Ord &copy; 2012. Kontakt oss på <a href="mailto:kontakt@holderdeord.no">kontakt@holderdeord.no</a>.</p>
+        <% obscured_email = obscure_email t('app.contact.email') %>
+        <p>Holder De Ord &copy; 2012 <a href="mailto:<%= obscured_email %>"><%= obscured_email %></a>.</p>
       </footer>
 
     </div> <!-- /container -->
