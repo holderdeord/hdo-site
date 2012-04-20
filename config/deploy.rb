@@ -41,6 +41,7 @@ end
 
 namespace :import do
   task(:all) { run "cd #{import_root} && RAILS_ENV=production APP_ROOT=#{current_path} bin/import.rb all" }
+  task(:dld) { run "cd #{import_root} && RAILS_ENV=production APP_ROOT=#{current_path} bin/import.rb dld" }
 end
 
 namespace :cache do
