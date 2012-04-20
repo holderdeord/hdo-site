@@ -64,9 +64,15 @@ module Hdo
         committee_names = node.css("committees committee").map { |e| e.text }
         district_name   = node.css("district").first.text
         dob            = Time.parse(node.css("dateOfBirth").first.text)
-        dod            = Time.parse(node.css("dateOfDeath").first.text)
 
-        dod = nil if dod.year == 1
+
+        dod_node = node.css("dateOfDeath").first
+        if dod_node
+          dod = Time.parse(dod_node.text)
+          dod = nil if dod.year == 1
+        else
+          dod = nil
+        end
 
         party = ::Party.find_by_name!(party_name)
         committees = committee_names.map { |name| ::Committee.find_by_name!(name) }
