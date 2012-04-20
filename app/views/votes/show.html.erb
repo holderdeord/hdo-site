@@ -28,7 +28,7 @@
   </dl>
 </div>
 
-<h2><%= Proposition.modle_name.human count: @vote.propositions.size %></h2>
+<h2><%= Proposition.model_name.human count: @vote.propositions.size %></h2>
 <%= render partial: "shared/propositions_table", locals: { propositions: @vote.propositions } %>
 
 <h2>stortinget.no</h2>
