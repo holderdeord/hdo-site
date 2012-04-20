@@ -43,4 +43,8 @@ namespace :import do
   task(:all) { run "cd #{import_root} && RAILS_ENV=production APP_ROOT=#{current_path} bin/import.rb all" }
 end
 
+namespace :cache do
+  task(:clear) { run "rm -r #{current_path}/public/cache/*"}
+end
+
 after "deploy:finalize_update", "db:config"
