@@ -28,12 +28,14 @@
   </dl>
 </div>
 
+<h2><%= Proposition.modle_name.human count: @vote.propositions.size %></h2>
+<%= render partial: "shared/propositions_table", locals: { propositions: @vote.propositions } %>
+
 <h2>stortinget.no</h2>
 <ul class="nav nav-tabs">
   <li><a href="<%= @vote.issue.url %>">Sak</a></li>
   <li><a href="<%= @vote.minutes_url %>">Referat</a></li>
 </ul>
-
 
 <table class="table table-striped">
   <thead>
