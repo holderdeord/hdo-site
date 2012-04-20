@@ -13,6 +13,7 @@ class DocsController < ApplicationController
       Hdo::Import::Issue,
       Hdo::Import::Vote,
       Hdo::Import::Proposition,
+      Hdo::Import::Promise,
     ]
   end
 end

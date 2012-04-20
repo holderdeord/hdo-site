@@ -18,7 +18,11 @@
         <td><%= promise.body %></td>
         <td><%= promise.general_text %></td>
         <td><%= promise.source %></td>
-        <td><%= promise.topic_names.join(", ") %></td>
+        <td>
+          <% promise.topics.each do |t| %>
+          <%= link_to t.name, t %>
+          <% end %>
+        </td>
       </tr>
     <% end %>
   </tbody>

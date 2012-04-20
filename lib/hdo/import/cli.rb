@@ -44,6 +44,8 @@ module Hdo
           Issue.import doc
         when 'votes'
           Vote.import doc
+        when 'promises'
+          Promise.import doc
         else
           raise "unknown type: #{doc.name}"
         end
