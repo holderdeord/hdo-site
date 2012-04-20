@@ -39,6 +39,10 @@ module Hdo
         rep = ::Representative.find_by_external_id xid
 
         unless rep
+          rep = ::Representative.find_by_external_id external_id_from(xid)
+        end
+
+        unless rep
           rep = import_representative node
         end
 
