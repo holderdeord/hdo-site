@@ -39,13 +39,30 @@ namespace :db do
   end
 end
 
+after "deploy:finalize_update", "db:config"
+
 namespace :import do
   task(:all) { run "cd #{import_root} && RAILS_ENV=production APP_ROOT=#{current_path} bin/import.rb all" }
   task(:dld) { run "cd #{import_root} && RAILS_ENV=production APP_ROOT=#{current_path} bin/import.rb dld" }
+  task(:promises) { run "cd #{import_root} && RAILS_ENV=production APP_ROOT=#{current_path} bin/import.rb promises" }
 end
 
 namespace :cache do
   task(:clear) { run "rm -r #{current_path}/public/cache/*"}
 end
 
-after "deploy:finalize_update", "db:config"
+namespace :deploy do
+  namespace :web do
+    task :disable, :roles => :web do
+      # invoke with
+      # UNTIL="16:00 MST" REASON="a database upgrade" cap deploy:web:disable
+
+      on_rollback { rm "#{shared_path}/system/maintenance.html" }
+
+      require 'erb'
+      maintenance = ERB.new(File.read("./app/views/layouts/maintenance.erb")).result(binding)
+
+      put maintenance, "#{shared_path}/system/maintenance.html", :mode => 0644
+    end
+  end
+end
