@@ -28,8 +28,10 @@
   </dl>
 </div>
 
-<h2><%= Proposition.model_name.human count: @vote.propositions.size %></h2>
-<%= render partial: "shared/propositions_table", locals: { propositions: @vote.propositions } %>
+<% if @vote.propositions.any? %>
+  <h2><%= Proposition.model_name.human count: @vote.propositions.size %></h2>
+  <%= render partial: "shared/propositions_table", locals: { propositions: @vote.propositions } %>
+<% end %>
 
 <h2>stortinget.no</h2>
 <ul class="nav nav-tabs">
