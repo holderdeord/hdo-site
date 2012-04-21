@@ -32,6 +32,7 @@ VoteStatsGraph.prototype.render = function() {
         text: ''
       },
       labels: false,
+      tickInterval: 1,
     },
     tooltip: {
       formatter: function() {
