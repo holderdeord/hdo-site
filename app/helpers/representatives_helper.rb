@@ -5,9 +5,12 @@ module RepresentativesHelper
   # TODO: class doesn't belong here
   class VoteStats
     def initialize(results)
+      @subtitle = "Basert på #{results.size} voteringer"
 
-      # FIXME: This is because of the specially imported DLD vote. Get rid of this when we have the full session.
       if results.any?
+        @subtitle << %Q{ mellom #{I18n.l results.first.vote.time, format: :short} og #{I18n.l results.last.vote.time, format: :short}}
+
+        # FIXME: This is because of the specially imported DLD vote. Get rid of this when we have the full session.
         results = results[1..-1] if results.first.vote.time.strftime("%Y-%m-%d") == "2011-04-04"
       end
 
@@ -16,9 +19,6 @@ module RepresentativesHelper
       @for     = @grouped[1] || []
       @absent  = @grouped[0] || []
       @against = @grouped[-1] || []
-
-      @subtitle = "Basert på #{results.size} voteringer"
-      @subtitle << %Q{ mellom #{I18n.l results.first.vote.time, format: :short} og #{I18n.l results.last.vote.time, format: :short}}
     end
 
     def as_json(opts = nil)
