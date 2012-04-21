@@ -36,6 +36,8 @@
     <dd><%= stats.absent_percent %>% (<%= stats.absent_count %>/<%= stats.total_count %>)</dd>
   </dl>
   <% end %>
+
+  <div id="vote-stats-graph"></div>
 </div>
 
 <h2><%= Vote.model_name.human count: 2 %></h2>
@@ -64,5 +66,10 @@
   </tbody>
 </table>
 
-
-
+<% content_for :document_ready do %>
+<script type="text/javascript" charset="utf-8">
+$(document).ready(function() {
+  new VoteStatsGraph("vote-stats-graph", <%= RepresentativesHelper::VoteStats.new(@vote_results).to_json.html_safe %>).render();
+});
+</script>
+<% end %>
