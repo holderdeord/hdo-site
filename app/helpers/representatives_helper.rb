@@ -8,7 +8,7 @@ module RepresentativesHelper
 
       if results.any?
         results = results[1..-1] if results.first.vote.time.strftime("%Y-%m-%d") == "2011-04-04"
-        @subtitle = %Q{Basert på #{results.size} mellom #{I18n.l results.first.vote.time, format: :short} og #{I18n.l results.last.vote.time, format: :short}}
+        @subtitle = %Q{Basert på #{results.size} voteringer mellom #{I18n.l results.first.vote.time, format: :short} og #{I18n.l results.last.vote.time, format: :short}}
 
         # FIXME: This is because of the specially imported DLD vote. Get rid of this when we have the full session.
       else
