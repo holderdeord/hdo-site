@@ -65,7 +65,12 @@ class Representative < ActiveRecord::Base
     end
 
     def total_count
-      @total ||= @data.values.flatten.size
+      @total ||= (
+        t = @data.values.flatten.size
+        t = -1 if t.zero?
+
+        t
+      )
     end
 
   end

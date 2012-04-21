@@ -25,6 +25,7 @@
     <% end %>
   </ul>
 
+  <% if @vote_results.any? %>
   <dl>
     <% stats = @representative.stats %>
     <dt><%= t('app.for')  %></dt>
@@ -34,6 +35,7 @@
     <dt><%= t('app.absent') %></dt>
     <dd><%= stats.absent_percent %>% (<%= stats.absent_count %>/<%= stats.total_count %>)</dd>
   </dl>
+  <% end %>
 </div>
 
 <h2><%= Vote.model_name.human count: 2 %></h2>
