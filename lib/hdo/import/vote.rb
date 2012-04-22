@@ -52,12 +52,23 @@ module Hdo
         vote = ::Vote.find_or_create_by_external_id vote_node.css("externalId").first.text
         issue = ::Issue.find_by_external_id! vote_node.css("externalIssueId").first.text
 
+        for_count     = Integer(vote_node.css("counts for").text)
+        against_count = Integer(vote_node.css("counts against").text)
+        absent_count  = Integer(vote_node.css("counts absent").text)
+
+        enacted_node = vote_node.css("enacted").first
+        if enacted_node
+          enacted = enacted_node.text == "true"
+        else
+          enacted = for_count > against_count
+        end
+
         vote.update_attributes!(
           :issue         => issue,
-          :for_count     => Integer(vote_node.css("counts for").text),
-          :against_count => Integer(vote_node.css("counts against").text),
-          :absent_count  => Integer(vote_node.css("counts absent").text),
-          :enacted       => vote_node.css("enacted").text == "true",
+          :for_count     => for_count,
+          :against_count => against_count,
+          :absent_count  => absent_count,
+          :enacted       => enacted,
           :subject       => vote_node.css("subject").text,
           :time          => Time.parse(vote_node.css("time").text)
         )
