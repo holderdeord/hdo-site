@@ -1,56 +1,59 @@
 // Place all the behaviors and hooks related to the matching controller here.
 // All this logic will automatically be available in application.js.
 
-function ForAgainstChart (selector, data) {
+function VoteChart (selector, data) {
   this.selector = selector;
   this.data = data;
 }
 
-ForAgainstChart.prototype.render = function() {
+VoteChart.prototype.render = function() {
   this.chart = new Highcharts.Chart({
-    chart: {
-      renderTo: this.selector,
-      backgroundColor: null,
-      plotBackgroundColor: null,
-      plotBorderWidth: null,
-      plotShadow: false
-    },
-    colors: ['#89A54E', '#AA4643'],
-    title: {
-      // TODO: i18n
-      text: 'Stemmer'
-    },
+		chart: {
+			renderTo: this.selector,
+			type: 'column',
+      backgroundColor: null
+		},
     credits: {
-      // TODO: get this through i18n
-      text: 'holderdeord.no'
+      text: 'holderdeord.no',
     },
-    tooltip: {
-      formatter: function() {
-        return '<b>'+ this.point.name +'</b>: '+ this.point.y +' %';
-      }
-    },
-    plotOptions: {
-      pie: {
-        allowPointSelect: true,
-        cursor: 'pointer',
-        dataLabels: {
-          enabled: true,
-          color: '#000000',
-          connectorColor: '#000000',
-          formatter: function() {
-            return '<b>'+ this.point.name +'</b>: '+ this.point.y +' %';
-          }
-        }
-      }
-    },
-    series: [{
-      type: 'pie',
-      data: this.data
-    }]
-  });
+		title: {
+			text: ' '
+		},
+		xAxis: {
+			categories: ['For', 'Mot', 'Ikke tilstede']
+		},
+		yAxis: {
+			min: 0,
+			title: {
+				text: 'Antall representanter'
+			},
+		},
+		legend: {
+      enabled: false,
+		},
+		tooltip: {
+			formatter: function() {
+				return '<b>'+ this.x +'</b><br/>'+
+					this.series.name +': '+ this.y +'<br/>'
+			}
+		},
+		plotOptions: {
+			column: {
+        colorByPoint: true,
+				stacking: 'normal',
+				dataLabels: {
+					enabled: true,
+					color: (Highcharts.theme && Highcharts.theme.dataLabelsColor) || 'white'
+				}
+			}
+		},
+		series: [{
+			data: [
+        { y: this.data.for,     color: '#89A54E' },
+        { y: this.data.against, color: '#AA4643'},
+        { y: this.data.absent,  color: '#4572A7'}
+      ]
+		}]
+	});
 };
 
-function ForAgainstChart (selector, data) {
-  this.selector = selector;
-  this.data = data;
-}

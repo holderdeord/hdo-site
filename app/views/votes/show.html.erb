@@ -73,7 +73,7 @@
 <% content_for :document_ready do %>
 <script type="text/javascript" charset="utf-8">
   $(document).ready(function() {
-    new ForAgainstChart('for-against-chart', <%= @stats.to_json.html_safe %>).render();
+    new VoteChart('for-against-chart', <%= @stats.to_json.html_safe %>).render();
   });
 </script>
 <% end %>

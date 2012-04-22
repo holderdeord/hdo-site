@@ -39,10 +39,11 @@ class Vote < ActiveRecord::Base
     end
 
     def as_json(opts = nil)
-      [
-        [I18n.t('app.for'), for_percent.to_f],
-        [I18n.t('app.against'), against_percent.to_f],
-      ]
+      {
+        :for     => for_count,
+        :against => against_count,
+        :absent  => absent_count
+      }
     end
 
     def vote_count

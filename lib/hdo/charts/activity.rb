@@ -5,7 +5,6 @@ module Hdo
 
     # TODO: clean this up
     class Activity
-
       def initialize(name, results)
         @name = name
         @grouped = results.group_by { |e| e.vote.time.midnight }
