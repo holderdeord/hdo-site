@@ -13,6 +13,7 @@ PresenceStatsGraph.prototype.render = function() {
       type: 'area',
       backgroundColor: null,
       marginBottom: 100,
+      height: 300
     },
     credits: {
       text: this.options.credits
