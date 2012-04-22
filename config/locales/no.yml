@@ -103,6 +103,8 @@
           body: "Tekst"
   app:
     url: 'holderdeord.no'
+    urls:
+      wiki: "https://holderdeord.atlassian.net/"
     title: "Holder de ord"
     description: "er en politisk uavhengig organisasjon som kartlegger norske politiske partiers løfter og sammenligner disse med hva de gjør på storting og i regjering."
     about: "Om oss"
