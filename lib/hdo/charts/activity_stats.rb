@@ -2,7 +2,7 @@
 
 module Hdo
   module Charts
-    
+
     # TODO: clean this up
     class ActivityStats
       def initialize(results)
@@ -11,7 +11,7 @@ module Hdo
         @start = Time.parse("2011-10-01").utc.midnight
         @stop = Time.now.utc.midnight
 
-        @all = ::Vote.where(:time => @start..@stop).group_by { |v| v.time.midnight }
+        @all = ::Vote.not_unanimous.where(:time => @start..@stop).group_by { |v| v.time.midnight }
         @results = results.select { |r| r.vote.time.utc.between?(@start, @stop) }
       end
 
@@ -30,7 +30,7 @@ module Hdo
           ]
         }
       end
-      
+
       def votes
         grouped = @results.group_by { |e| e.result }
         build_series = lambda do |r|
@@ -40,7 +40,7 @@ module Hdo
         absent = Array(grouped[0]).map(&build_series)
         against = Array(grouped[-1]).map(&build_series)
         infavor = Array(grouped[1]).map(&build_series)
-        
+
         {
           # TODO: i18n
           title: '',
@@ -75,6 +75,6 @@ module Hdo
         end
       end
     end
-    
+
   end
 end

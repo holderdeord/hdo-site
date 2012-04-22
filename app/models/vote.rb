@@ -6,12 +6,18 @@ class Vote < ActiveRecord::Base
   has_many :vote_results, :dependent => :delete_all
   has_many :representatives, :through => :vote_results, :order => :last_name
 
+  scope :not_unanimous, where('for_count != 0 AND against_count != 0 AND absent_count != 0')
+
   def time_text
     time.strftime("%Y-%m-%d")
   end
 
   def enacted_text
     enacted? ? I18n.t('app.yes') : I18n.t('app.no')
+  end
+
+  def unanimous?
+    for_count == 0 && against_count == 0 && absent_count == 0
   end
 
   def stats
