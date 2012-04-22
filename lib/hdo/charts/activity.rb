@@ -4,7 +4,7 @@ module Hdo
   module Charts
 
     # TODO: clean this up
-    class ActivityStats
+    class Activity
 
       def initialize(name, results)
         @name = name

@@ -17,6 +17,7 @@ class VotesController < ApplicationController
     ).find(params[:id])
 
     @issue = @vote.issue
+    @stats = @vote.stats
 
     respond_to do |format|
       format.html
