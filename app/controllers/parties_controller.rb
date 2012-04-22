@@ -12,7 +12,7 @@ class PartiesController < ApplicationController
   end
 
   def show
-    @party = Party.find(params[:id])
+    @party = Party.includes(:representatives, :promises => :topics).find(params[:id])
 
     respond_to do |format|
       format.html

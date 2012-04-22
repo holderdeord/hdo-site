@@ -2,6 +2,11 @@
   <h1><%= @vote.subject %></h1>
 </div>
 
+<% if @vote.unanimous? %>
+  <div class="alert alert-info"><%= I18n.t('app.votes.unanimous') %></div>
+<% end %>
+
+
 <div class="well">
   <div class="row">
     <div class="span4">
