@@ -22,15 +22,6 @@
 
         <dt><%= Vote.human_attribute_name :enacted %></dt>
         <dd><%= @vote.enacted_text %></dd>
-
-        <dt><%= Vote.human_attribute_name :for_count %></dd>
-        <dd><%= @stats.for_percent %>% (<%= @stats.for_count %>/<%= @stats.vote_count %>)</dt>
-
-        <dt><%= Vote.human_attribute_name :against_count %></dd>
-        <dd><%= @stats.against_percent %>% (<%= @stats.against_count %>/<%= @stats.vote_count %>)</dt>
-
-        <dt><%= Vote.human_attribute_name :absent_count %></dd>
-        <dd><%= @stats.absent_percent %>% (<%= @stats.absent_count %>/<%= @stats.total_count %>)</dt>
       </dl>
     </div>
 
