@@ -47,6 +47,10 @@ namespace :import do
   task(:promises) { run "cd #{import_root} && RAILS_ENV=production APP_ROOT=#{current_path} bin/import.rb promises" }
 end
 
+namespace :clear do
+  task(:promises) { run "cd #{current_path} && RAILS_ENV=production bundle exec rake db:clear:promises"}
+end
+
 namespace :cache do
   task(:clear) { run "rm -r #{current_path}/public/cache/*"}
 end
@@ -54,9 +58,6 @@ end
 namespace :deploy do
   namespace :web do
     task :disable, :roles => :web do
-      # invoke with
-      # UNTIL="16:00 MST" REASON="a database upgrade" cap deploy:web:disable
-
       on_rollback { rm "#{shared_path}/system/maintenance.html" }
 
       require 'erb'
