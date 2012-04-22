@@ -51,7 +51,7 @@ VoteChart.prototype.render = function() {
 			data: [
         { y: this.data.for,     color: '#89A54E' },
         { y: this.data.against, color: '#AA4643'},
-        { y: this.data.absent,  color: '#4572A7'}
+        { y: this.data.absent,  color: 'gray'}
       ]
 		}]
 	});
