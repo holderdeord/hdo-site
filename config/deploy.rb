@@ -42,13 +42,19 @@ end
 after "deploy:finalize_update", "db:config"
 
 namespace :import do
-  task(:all) { run "cd #{import_root} && RAILS_ENV=production APP_ROOT=#{current_path} bin/import.rb all" }
-  task(:dld) { run "cd #{import_root} && RAILS_ENV=production APP_ROOT=#{current_path} bin/import.rb dld" }
-  task(:promises) { run "cd #{import_root} && RAILS_ENV=production APP_ROOT=#{current_path} bin/import.rb promises" }
+  cmd = "cd %s && RAILS_ENV=production APP_ROOT=%s bin/import.rb %s"
+
+  task(:all)       { run(cmd % [import_root, current_path, 'all'])      }
+  task(:dld)       { run(cmd % [import_root, current_path, 'dld'])      }
+  task(:promises)  { run(cmd % [import_root, current_path, 'promises']) }
+  task(:votes)     { run(cmd % [import_root, current_path, 'votes'])    }
 end
 
 namespace :clear do
-  task(:promises) { run "cd #{current_path} && RAILS_ENV=production bundle exec rake db:clear:promises"}
+  cmd = "cd %s && RAILS_ENV=production bundle exec rake db:clear:%s"
+
+  task(:promises) { run(cmd % [current_path, 'promises']) }
+  task(:votes)    { run(cmd % [current_path, 'votes'])    }
 end
 
 namespace :cache do
