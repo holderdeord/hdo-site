@@ -37,6 +37,7 @@
   </dl>
   <% end %>
 
+  <div id="presence-stats-graph"></div>
   <div id="vote-stats-graph"></div>
 </div>
 
@@ -67,9 +68,11 @@
 </table>
 
 <% content_for :document_ready do %>
+<% activity_stats = Hdo::Charts::ActivityStats.new(@vote_results) %>
 <script type="text/javascript" charset="utf-8">
 $(document).ready(function() {
-  new VoteStatsGraph("vote-stats-graph", <%= RepresentativesHelper::VoteStats.new(@vote_results).to_json.html_safe %>).render();
+  new PresenceStatsGraph("presence-stats-graph", <%= activity_stats.presence.to_json.html_safe %>).render();
+  new VoteStatsGraph("vote-stats-graph", <%= activity_stats.votes.to_json.html_safe %>).render();
 });
 </script>
 <% end %>

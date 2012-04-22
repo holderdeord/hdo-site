@@ -38,6 +38,10 @@ class VoteResult < ActiveRecord::Base
     result == 0
   end
 
+  def present?
+    result != 0
+  end
+
   def icon
     case result
     when 1
