@@ -5,7 +5,9 @@ module Hdo
 
     # TODO: clean this up
     class ActivityStats
-      def initialize(results)
+
+      def initialize(name, results)
+        @name = name
         @grouped = results.group_by { |e| e.vote.time.midnight }
 
         @start = Time.parse("2011-10-01").utc.midnight
@@ -23,8 +25,9 @@ module Hdo
 
         {
           # TODO: i18n
-          title: 'Aktivitet på Stortinget',
-          subtitle: %Q{Basert på #{@results.size} voteringer, 2011-2012},
+          title: "Aktivitet på Stortinget 2011-2012",
+          subtitle: %Q{Basert på #{@results.size} voteringer for #{@name}},
+          credits: I18n.t('app.url'),
           series: [
             { name: 'Prosent tilstede', data: series }
           ]
@@ -45,6 +48,7 @@ module Hdo
           # TODO: i18n
           title: '',
           subtitle: '',
+          credits: I18n.t('app.url'),
           series: [
             { name: I18n.t('app.absent'), data: absent },
             { name: I18n.t('app.against'), data: against },

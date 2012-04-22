@@ -68,7 +68,7 @@
 </table>
 
 <% content_for :document_ready do %>
-<% activity_stats = Hdo::Charts::ActivityStats.new(@vote_results) %>
+<% activity_stats = Hdo::Charts::ActivityStats.new(@representative.display_name, @vote_results) %>
 <script type="text/javascript" charset="utf-8">
 $(document).ready(function() {
   new PresenceStatsGraph("presence-stats-graph", <%= activity_stats.presence.to_json.html_safe %>).render();

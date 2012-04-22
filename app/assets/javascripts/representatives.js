@@ -14,7 +14,9 @@ PresenceStatsGraph.prototype.render = function() {
       backgroundColor: null,
       marginBottom: 100
     },
-    credits: { enabled: false },
+    credits: {
+      text: this.options.credits
+    },
     title: {
       text: this.options.title
     },
@@ -65,7 +67,9 @@ VoteStatsGraph.prototype.render = function() {
       type: 'spline',
       backgroundColor: null
     },
-    credits: { enabled: false },
+    credits: {
+      text: this.options.credits
+    },
     title: {
       text: this.options.title
     },
