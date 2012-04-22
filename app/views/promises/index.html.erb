@@ -2,5 +2,7 @@
   <h1><%= Promise.model_name.human count: 2 %></h1>
 </div>
 
+<div class="alert alert-info"><%= t('app.promises.disclaimer').html_safe %></div>
+
 <%= render partial: "shared/promises_table", locals: { promises: @promises } %>
 
