@@ -1,5 +1,5 @@
 <div class="page-header">
-  <h1><%= @representative.first_name %> <%= @representative.last_name %> <small class="pull-right"><%= @representative.external_id %></small></h1>
+  <h1><%= @representative.full_name %> <small class="pull-right"><%= @representative.external_id %></small></h1>
 </div>
 
 <div class="well">
@@ -72,7 +72,7 @@
 </table>
 
 <% content_for :document_ready do %>
-<% activity_stats = Hdo::Charts::ActivityStats.new(@representative.display_name, @vote_results) %>
+<% activity_stats = Hdo::Charts::ActivityStats.new(@representative.full_name, @vote_results) %>
 <script type="text/javascript" charset="utf-8">
 $(document).ready(function() {
   new PresenceStatsGraph("presence-stats-graph", <%= activity_stats.presence.to_json.html_safe %>).render();
