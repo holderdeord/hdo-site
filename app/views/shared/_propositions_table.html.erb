@@ -13,8 +13,8 @@
       <tr>
         <td><%= prop.description %></td>
         <td><%= prop.on_behalf_of %></td>
-        <% if prop.delivered_by %>
-          <td><%= link_to prop.delivered_by.display_name, prop.delivered_by %> (<%= prop.delivered_by.party.name %>)</td>
+        <% if rep = prop.delivered_by %>
+          <td><%= link_to rep.display_name, rep %> (<%= rep.party.external_id %>)</td>
         <% else %>
           <td></td>
         <% end %>

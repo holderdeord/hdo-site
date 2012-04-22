@@ -1,4 +1,6 @@
 class Proposition < ActiveRecord::Base
   belongs_to :vote
-  belongs_to :delivered_by, :class_name => "Representative"
+  belongs_to :representative
+
+  alias_method :delivered_by, :representative
 end

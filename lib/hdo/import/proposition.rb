@@ -41,7 +41,7 @@ module Hdo
           body: body
         }
 
-        attributes[:delivered_by] = rep if rep
+        attributes[:representative_id] = rep.id if rep
 
         prop.update_attributes! attributes
 
