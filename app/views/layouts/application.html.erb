@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <meta name="title" content="Holder de ord" />
+    <meta name="title" content="<%=t 'app.title' %>" />
     <meta property="og:description" content="Holder de ord kartlegger norske politiske partiers løfter og sammenligner disse med partienes stemmegivning og aktivitet på Stortinget og i andre folkevalgte organ." />
     
     
@@ -110,7 +110,7 @@
 
       <footer>
         <% obscured_email = obscure_email t('app.contact.email') %>
-        <p>Holder de ord &copy; 2012 <a href="mailto:<%= obscured_email %>"><%= obscured_email %></a>.</p>
+        <p><%=t 'app.title' %> &copy; 2012 <a href="mailto:<%= obscured_email %>"><%= obscured_email %></a>.</p>
       </footer>
 
     </div> <!-- /container -->
