@@ -12,10 +12,13 @@ PresenceStatsGraph.prototype.render = function() {
       renderTo: this.selector,
       type: 'area',
       backgroundColor: null,
-      marginBottom: 100
+      marginBottom: 100,
     },
     credits: {
       text: this.options.credits
+    },
+    legend: {
+      enabled: false
     },
     title: {
       text: this.options.title
@@ -45,6 +48,7 @@ PresenceStatsGraph.prototype.render = function() {
     },
     plotOptions: {
       area: {
+        lineWidth: 1,
         marker: {
           enabled: false,
           states: { hover: { enabled: true } }
@@ -54,56 +58,3 @@ PresenceStatsGraph.prototype.render = function() {
     series: this.options.series
   });
 };
-
-function VoteStatsGraph(selector, options) {
-  this.selector = selector;
-  this.options = options;
-}
-
-VoteStatsGraph.prototype.render = function() {
-  this.chart = new Highcharts.Chart({
-    chart: {
-      renderTo: this.selector,
-      type: 'spline',
-      backgroundColor: null
-    },
-    credits: {
-      text: this.options.credits
-    },
-    title: {
-      text: this.options.title
-    },
-    subtitle: {
-      text: this.options.subtitle
-    },
-    xAxis: {
-      type: 'datetime',
-      dateTimeLabelFormats: {
-        month: '%Y-%m',
-        year: '%b'
-      }
-    },
-    yAxis: {
-      labels: { enabled: false},
-      title: {
-        text: ''
-      },
-    },
-    tooltip: {
-      formatter: function() {
-          return '<b>'+ this.series.name +'</b><br/>'+
-          Highcharts.dateFormat('%Y-%m-%d: ', this.x) + this.y;
-      }
-    },
-    plotOptions: {
-      area: {
-        marker: {
-          enabled: false,
-          states: { hover: { enabled: true } }
-        }
-      }
-    },
-    series: this.options.series
-  });
-};
-

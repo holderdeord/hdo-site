@@ -3,42 +3,46 @@
 </div>
 
 <div class="well">
-  <p>
-    <strong><%= Representative.human_attribute_name :party %>:</strong>
-    <%= link_to @representative.party.name, @representative.party %>
-  </p>
+  <div class="row">
+    <div class="span4">
+      <p>
+        <strong><%= Representative.human_attribute_name :party %>:</strong>
+        <%= link_to @representative.party.name, @representative.party %>
+      </p>
 
-  <p>
-    <strong><%= Representative.human_attribute_name :district %>:</strong>
-    <%= link_to @representative.district.name, @representative.district %>
-  </p>
+      <p>
+        <strong><%= Representative.human_attribute_name :district %>:</strong>
+        <%= link_to @representative.district.name, @representative.district %>
+      </p>
 
-  <p>
-    <strong><%= Representative.human_attribute_name :date_of_birth %>:</strong>
-    <%= l @representative.date_of_birth, format: :short %> (<%= @representative.age %> <%= t('app.time.years') %>)
-  </p>
+      <p>
+        <strong><%= Representative.human_attribute_name :date_of_birth %>:</strong>
+        <%= l @representative.date_of_birth, format: :short %> (<%= @representative.age %> <%= t('app.time.years') %>)
+      </p>
 
-  <strong><%= Representative.human_attribute_name :committees %>:</strong>
-  <ul>
-    <% @representative.committees.each do |com| %>
-      <li><%= link_to com.name, com %></li>
-    <% end %>
-  </ul>
+      <strong><%= Representative.human_attribute_name :committees %>:</strong>
+      <ul>
+        <% @representative.committees.each do |com| %>
+          <li><%= link_to com.name, com %></li>
+        <% end %>
+      </ul>
 
-  <% if @vote_results.any? %>
-  <dl>
-    <% stats = @representative.stats %>
-    <dt><%= t('app.for')  %></dt>
-    <dd><%= stats.for_percent %>% (<%= stats.for_count %>/<%= stats.total_count %>)</dd>
-    <dt><%= t('app.against') %></dt>
-    <dd><%= stats.against_percent %>% (<%= stats.against_count %>/<%= stats.total_count %>)</dd>
-    <dt><%= t('app.absent') %></dt>
-    <dd><%= stats.absent_percent %>% (<%= stats.absent_count %>/<%= stats.total_count %>)</dd>
-  </dl>
-  <% end %>
+      <% if @vote_results.any? %>
+      <dl>
+        <% stats = @representative.stats %>
+        <dt><%= t('app.for')  %></dt>
+        <dd><%= stats.for_percent %>% (<%= stats.for_count %>/<%= stats.total_count %>)</dd>
+        <dt><%= t('app.against') %></dt>
+        <dd><%= stats.against_percent %>% (<%= stats.against_count %>/<%= stats.total_count %>)</dd>
+        <dt><%= t('app.absent') %></dt>
+        <dd><%= stats.absent_percent %>% (<%= stats.absent_count %>/<%= stats.total_count %>)</dd>
+      </dl>
+      <% end %>
+    </div>
 
-  <div id="presence-stats-graph"></div>
-  <div id="vote-stats-graph"></div>
+    <div class="span7" id="presence-stats-graph"></div>
+  </div>
+
 </div>
 
 <h2><%= Vote.model_name.human count: 2 %></h2>
@@ -72,7 +76,6 @@
 <script type="text/javascript" charset="utf-8">
 $(document).ready(function() {
   new PresenceStatsGraph("presence-stats-graph", <%= activity_stats.presence.to_json.html_safe %>).render();
-  new VoteStatsGraph("vote-stats-graph", <%= activity_stats.votes.to_json.html_safe %>).render();
 });
 </script>
 <% end %>
