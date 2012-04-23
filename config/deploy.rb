@@ -7,6 +7,7 @@ set :repository, "git://github.com/holderdeord/hdo-site"
 set :branch, 'master'
 
 set :use_sudo, false
+set :passenger_restart_strategy, :hard
 set :deploy_via, :remote_cache
 set :import_root, '/code/hdo-storting-importer'
 
