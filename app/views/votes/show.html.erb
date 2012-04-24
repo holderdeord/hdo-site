@@ -48,7 +48,7 @@
     </tr>
   </thead>
   <tbody>
-      <% @vote.vote_results.each do |result| %>
+      <% @vote.vote_results.sort_by { |r| r.representative.last_name }.each do |result| %>
       <tr>
         <td><%= link_to result.representative.display_name, result.representative %></td>
         <td><%= link_to result.representative.party.name, result.representative.party %></td>
