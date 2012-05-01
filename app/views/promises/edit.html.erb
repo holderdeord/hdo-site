@@ -2,5 +2,5 @@
   <h1><%= Promise.human_attribute_name :edit %></h1>
 </div>
 
-<%= render 'form' %>
+<%= render 'form', locals: { promise: @promise } %>
 
