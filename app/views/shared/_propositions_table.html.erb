@@ -9,7 +9,7 @@
   </thead>
 
   <tbody>
-    <% @vote.propositions.each do |prop| %>
+    <% propositions.each do |prop| %>
       <tr>
         <td><%= prop.description %></td>
         <td><%= prop.on_behalf_of %></td>
