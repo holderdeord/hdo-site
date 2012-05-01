@@ -3,7 +3,7 @@ class CreateCommittees < ActiveRecord::Migration
     create_table :committees do |t|
       t.string :external_id
       t.string :name
-      
+
       t.timestamps
     end
   end

@@ -22,7 +22,7 @@
     <b><%= Promise.human_attribute_name :source %></b>
     <%= @promise.source %>
   </p>
-  
+
   <p>
     <b><%= Promise.human_attribute_name :topics %></b>
     <ul>
@@ -30,9 +30,9 @@
         <li><%= link_to topic.name, topic %></li>
       <% end %>
     </ul>
-    
+
   </p>
-  
+
   <%= link_to t('app.edit'), edit_promise_path(@promise), class: 'btn' %>
 </div>
 

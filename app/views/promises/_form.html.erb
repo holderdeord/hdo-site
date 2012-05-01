@@ -10,25 +10,25 @@
       </ul>
     </div>
   <% end %>
-  
+
   <fieldset>
     <div class="control-group">
       <%= f.label :party, class: 'control-label' %>
       <div class="controls">
         <%= select :promise, :party_id, Party.all.map { |p| [p.name, p.id] } %>
       </div>
-    </div>      
-    
+    </div>
+
     <div class="control-group">
       <%= f.label :body, class: 'control-label' %>
       <div class="controls"><%= f.text_area :body %></div>
     </div>
-    
+
     <div class="control-group">
       <%= f.label :general, class: 'control-label' %>
       <div class="controls"><%= f.check_box :general %></div>
     </div>
-    
+
     <div class="control-group">
       <%= f.label :source, class: 'control-label' %>
       <div class="controls">
@@ -36,7 +36,7 @@
         <span class="help-block">F.eks. PP:8</span>
       </div>
     </div>
-    
+
     <div class="control-group">
       <%= f.label :topics, class: 'control-label' %>
       <div class="controls">
