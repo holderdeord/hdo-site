@@ -1,6 +1,8 @@
 class PromisesController < ApplicationController
   caches_page :index, :show
 
+  before_filter :find_promise, :only => [:show, :edit, :update, :destroy]
+
   def index
     @promises = Promise.all
 
@@ -12,10 +14,8 @@ class PromisesController < ApplicationController
   end
 
   def show
-    @promise = Promise.find(params[:id])
-
     respond_to do |format|
-      format.html # show.html.erb
+      format.html
       format.json { render json: @promise }
       format.xml  { render xml:  @promise }
     end
@@ -32,7 +32,6 @@ class PromisesController < ApplicationController
   end
 
   def edit
-    @promise = Promise.find(params[:id])
   end
 
   def create
@@ -52,8 +51,6 @@ class PromisesController < ApplicationController
   end
 
   def update
-    @promise = Promise.find(params[:id])
-
     respond_to do |format|
       if @promise.update_attributes(params[:promise])
         format.html { redirect_to @promise, notice: I18n.t('app.updated.promise') }
@@ -68,7 +65,6 @@ class PromisesController < ApplicationController
   end
 
   def destroy
-    @promise = Promise.find(params[:id])
     @promise.destroy
 
     respond_to do |format|
@@ -77,6 +73,9 @@ class PromisesController < ApplicationController
     end
   end
 
-  private
+  protected
 
+  def find_promise
+    @promise = Promise.find(params[:id])
+  end
 end
