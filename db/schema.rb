@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120416115640) do
+ActiveRecord::Schema.define(:version => 20120502204334) do
 
   create_table "committees", :force => true do |t|
     t.string   "external_id"
@@ -48,6 +48,8 @@ ActiveRecord::Schema.define(:version => 20120416115640) do
     t.datetime "updated_at",     :null => false
   end
 
+  add_index "issues", ["committee_id"], :name => "index_issues_on_committee_id"
+
   create_table "issues_topics", :id => false, :force => true do |t|
     t.integer "issue_id"
     t.integer "topic_id"
@@ -73,6 +75,8 @@ ActiveRecord::Schema.define(:version => 20120416115640) do
     t.datetime "updated_at", :null => false
   end
 
+  add_index "promises", ["party_id"], :name => "index_promises_on_party_id"
+
   create_table "promises_topics", :id => false, :force => true do |t|
     t.integer "promise_id"
     t.integer "topic_id"
@@ -91,6 +95,8 @@ ActiveRecord::Schema.define(:version => 20120416115640) do
     t.datetime "updated_at",        :null => false
   end
 
+  add_index "propositions", ["representative_id", "vote_id"], :name => "index_propositions_on_representative_id_and_vote_id"
+
   create_table "representatives", :force => true do |t|
     t.string   "external_id"
     t.string   "first_name"
@@ -103,6 +109,7 @@ ActiveRecord::Schema.define(:version => 20120416115640) do
     t.datetime "date_of_death"
   end
 
+  add_index "representatives", ["district_id"], :name => "index_representatives_on_district_id"
   add_index "representatives", ["last_name"], :name => "index_representatives_on_last_name"
   add_index "representatives", ["party_id"], :name => "index_representatives_on_party_id"
 
