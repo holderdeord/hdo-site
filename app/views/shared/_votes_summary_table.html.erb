@@ -1,7 +1,7 @@
-<p class="pull-right"><%= t('app.counts.vote', count: votes.size).html_safe %></p>
+<p id="app.counts.vote" class="pull-right"><%= t('app.counts.vote', count: votes.size).html_safe %></p>
 
 <% if votes.any? %>
-  <table class="table table-striped">
+  <table id="votes" class="table table-striped">
     <thead>
       <tr>
         <th class="wide-table-header"><%= Vote.human_attribute_name :time %></th>

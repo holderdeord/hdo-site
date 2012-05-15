@@ -1,6 +1,7 @@
 class Vote < ActiveRecord::Base
   has_and_belongs_to_many :issues
   validates_length_of :issues, :minimum => 1
+  validates_presence_of :time
 
   has_many :propositions, :dependent => :delete_all
   has_many :vote_results, :dependent => :delete_all
