@@ -9,7 +9,12 @@ unless ENV['RAILS_ENV'] == "production"
     RSpec::Core::RakeTask.new(:large) do |t|
       t.pattern = 'spec/large/**/*_spec.rb'
     end
+
+    task :all => %w[spec:small spec:large]
   end
 
-  task :spec => %w[db:test:prepare small]
+  task :spec => 'spec:small'
+
+  task 'spec:small' => 'db:test:prepare'
+  task 'spec:large' => 'db:test:prepare'
 end
