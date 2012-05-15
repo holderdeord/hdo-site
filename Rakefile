@@ -6,4 +6,4 @@ require File.expand_path('../config/application', __FILE__)
 
 Hdo::Application.load_tasks
 
-task :default => %w[db:migrate spec:all]
+task :default => %w[db:setup spec:all]
