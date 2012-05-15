@@ -7,7 +7,7 @@ module Pages
     end
 
     def loaded?
-      driver.find_element(tag_name: 'body').text.include? 'er en politisk uavhengig organisasjon'
+      text.include? 'er en politisk uavhengig organisasjon'
     end
   end
 end

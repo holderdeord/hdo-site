@@ -15,5 +15,9 @@ module Pages
     def current_url
       URI.parse driver.current_url
     end
+
+    def text
+      driver.find_element(tag_name: 'body').text
+    end
   end
 end
