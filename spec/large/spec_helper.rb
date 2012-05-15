@@ -68,6 +68,8 @@ end
 RSpec.configure do |config|
   config.include SpecHelper
 
+  config.use_transactional_fixtures = false
+
   config.before(:suite) { SpecHelper.launch_app }
   config.after(:suite) do
     SpecHelper.quit_driver
