@@ -5,6 +5,7 @@ module Pages
     def initialize(driver, parent)
       super(driver)
       @parent = parent
+      @timeout = 3
     end
 
     def load
