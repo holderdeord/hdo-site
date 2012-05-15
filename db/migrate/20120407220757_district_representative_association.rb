@@ -4,6 +4,6 @@ class DistrictRepresentativeAssociation < ActiveRecord::Migration
   end
 
   def down
-    remove_column :representatives, :district_id, :integer
+    remove_column :representatives, :district_id
   end
 end

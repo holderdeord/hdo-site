@@ -63,8 +63,9 @@ module Hdo
           enacted = for_count > against_count
         end
 
+        vote.issues << issue
+
         vote.update_attributes!(
-          :issue         => issue,
           :for_count     => for_count,
           :against_count => against_count,
           :absent_count  => absent_count,

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120502204334) do
+ActiveRecord::Schema.define(:version => 20120515184039) do
 
   create_table "committees", :force => true do |t|
     t.string   "external_id"
@@ -56,6 +56,13 @@ ActiveRecord::Schema.define(:version => 20120502204334) do
   end
 
   add_index "issues_topics", ["issue_id", "topic_id"], :name => "index_issues_topics_on_issue_id_and_topic_id"
+
+  create_table "issues_votes", :id => false, :force => true do |t|
+    t.integer "issue_id"
+    t.integer "vote_id"
+  end
+
+  add_index "issues_votes", ["vote_id", "issue_id"], :name => "index_issues_votes_on_vote_id_and_issue_id"
 
   create_table "parties", :force => true do |t|
     t.string   "external_id"
@@ -134,7 +141,6 @@ ActiveRecord::Schema.define(:version => 20120502204334) do
 
   create_table "votes", :force => true do |t|
     t.string   "external_id"
-    t.integer  "issue_id"
     t.integer  "for_count"
     t.integer  "against_count"
     t.integer  "absent_count"
@@ -144,7 +150,5 @@ ActiveRecord::Schema.define(:version => 20120502204334) do
     t.datetime "created_at",    :null => false
     t.datetime "updated_at",    :null => false
   end
-
-  add_index "votes", ["issue_id"], :name => "index_votes_on_issue_id"
 
 end

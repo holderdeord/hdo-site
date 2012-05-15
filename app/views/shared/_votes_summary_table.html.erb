@@ -5,7 +5,7 @@
     <thead>
       <tr>
         <th class="wide-table-header"><%= Vote.human_attribute_name :time %></th>
-        <% if show_issue %>
+        <% if show_issues %>
           <th><%= Issue.model_name.human %></th>
         <% end %>
         <th><%= Vote.human_attribute_name :subject %></th>
@@ -19,8 +19,15 @@
       <% votes.each do |vote| %>
       <tr>
         <td><%= vote.time_text %></td>
-        <% if show_issue %>
-          <td><%= link_to vote.issue.summary, vote.issue %></td>
+        <% if show_issues %>
+          <td>
+            <ul>
+              <%- vote.issues.each do |issue| -%>
+              <li><%= link_to issue.summary, issue %></li>
+              <%- end -%>
+            </ul>
+
+          </td>
         <% end %>
         <td><%= link_to vote.subject, vote %></td>
         <td><%= vote.enacted_text %></td>
