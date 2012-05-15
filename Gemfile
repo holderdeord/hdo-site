@@ -15,6 +15,7 @@ end
 
 group :test do
   gem "rspec-rails", "~> 2.8"
+  gem "selenium-webdriver", "~> 2.22.0.rc1"
 end
 
 group :development do
@@ -30,6 +31,7 @@ gem 'jquery-rails'
 gem "twitter-bootstrap-rails", "~> 2.0"
 gem "highcharts-rails", "~> 2.2"
 gem "jquery-tablesorter", ">= 0.0.5"
+gem "loadable_component", ">= 0.1.1"
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
