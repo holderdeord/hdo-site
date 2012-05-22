@@ -59,6 +59,7 @@ namespace :clear do
 end
 
 namespace :cache do
+  desc 'Clear the page cache.'
   task(:clear) { run "rm -r #{current_path}/public/cache/*"}
 end
 

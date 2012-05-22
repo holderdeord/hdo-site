@@ -17,7 +17,9 @@
         <dd><%= @vote.time %></dd>
 
         <dt><%= Issue.model_name.human %></dt>
-        <dd><%= link_to @vote.issue.summary, @vote.issue %></dd>
+        <% @issues.each do |issue| %>
+        <dd><%= link_to issue.summary, issue %></dd>
+        <% end %>
 
         <dt><%= Vote.human_attribute_name :enacted %></dt>
         <dd><%= @vote.enacted_text %></dd>
@@ -35,8 +37,10 @@
 
 <h2>stortinget.no</h2>
 <ul class="nav nav-tabs">
-  <li><a href="<%= @vote.issue.url %>">Sak</a></li>
   <li><a href="<%= @vote.minutes_url %>">Referat</a></li>
+  <% @issues.each_with_index do |issue, idx| %>
+    <li><a href="<%= issue.url %>">Sak <%= idx + 1 %></a></li>
+  <% end %>
 </ul>
 
 <table class="table table-striped">

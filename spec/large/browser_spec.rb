@@ -6,7 +6,15 @@ describe "Front page" do
     front_page.get
   end
 
-  it "should load the votes page" do
+  it "should show the list of representatives" do
+    pending
+  end
+
+  it "should show a specific representative" do
+    pending
+  end
+
+  it "should show a list of votes" do
     # TODO: use machinist, factory_girl?
     Vote.create! :for_count     => 50,
                  :against_count => 50,
@@ -23,5 +31,9 @@ describe "Front page" do
     vote.for.should == "50% (50/100)"
     vote.against.should == "50% (50/100)"
     vote.absent.should == "40% (69/169)"
+  end
+
+  it "should show a specific vote" do
+    pending
   end
 end

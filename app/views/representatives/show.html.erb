@@ -62,8 +62,15 @@
     <% @vote_results.reverse_each do |result| %>
     <tr>
       <td><%= result.vote.time_text %></td>
-      <td><%= link_to result.vote.issue.summary, result.vote.issue %></td>
       <td><%= link_to result.vote.subject, result.vote %></td>
+      <td>
+        <ul>
+          <%- result.vote.issues.each do |issue| -%>
+          <li><%= link_to issue.summary, issue %></li>
+          <%- end -%>
+        </ul>
+
+      </td>
       <td><%= result.vote.enacted_text %></td>
       <td class="vote-<%= result.state %>"><%= result.human %></td>
     </tr>
