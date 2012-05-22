@@ -43,7 +43,7 @@ end
 after "deploy:finalize_update", "db:config"
 
 namespace :import do
-  cmd = "cd %s && RAILS_ENV=production APP_ROOT=%s bin/import.rb %s"
+  cmd = "cd %s && RAILS_ENV=production bin/hdo-converter --app-root %s --source api %s"
 
   task(:all)       { run(cmd % [import_root, current_path, 'all'])      }
   task(:dld)       { run(cmd % [import_root, current_path, 'dld'])      }
