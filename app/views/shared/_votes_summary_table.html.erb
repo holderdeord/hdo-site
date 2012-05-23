@@ -6,7 +6,7 @@
       <tr>
         <th class="wide-table-header"><%= Vote.human_attribute_name :time %></th>
         <% if show_issues %>
-          <th><%= Issue.model_name.human %></th>
+          <th><%= Issue.model_name.human count: 2 %></th>
         <% end %>
         <th><%= Vote.human_attribute_name :subject %></th>
         <th><%= Vote.human_attribute_name :enacted %></th>
