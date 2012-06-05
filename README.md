@@ -8,9 +8,10 @@ Development dependencies
 - Ruby 1.9.2 or higher
 - GEM Bundler (ruby-bundler)
 - MySQL client and headers (libmysqlclient-dev)
-- LibXSLT (libxslt-dev)
+- LibXML headers (libxml2-dev)
+- LibXSLT headers (libxslt-dev)
 - SQLite headers (libsqlite3-dev)
-- Rails 3.2.4 or newer
+- Rails
 
 Getting started:
 ================
