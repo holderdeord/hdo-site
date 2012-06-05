@@ -10,7 +10,7 @@ Development dependencies
 - MySQL client and headers (libmysqlclient-dev)
 - LibXSLT (libxslt-dev)
 - SQLite headers (libsqlite3-dev)
-- Rails 2.3 or newer
+- Rails 3.2.4 or newer
 
 Getting started:
 ================
@@ -19,6 +19,6 @@ Getting started:
     $ cd hdo-site
     $ sudo bundle install
     $ rake db:setup
-    $ rails server
+    $ bundle exec rails server
 
 TODO: Add something about importing data here.
