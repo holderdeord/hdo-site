@@ -2,16 +2,17 @@ Prototype for holderdeord.no.
 
 [![Build Status](https://secure.travis-ci.org/holderdeord/hdo-site.png)](http://travis-ci.org/holderdeord/hdo-site)
 
+See https://holderdeord.atlassian.net/wiki/pages/viewpage.action?pageId=1310772
+
 Development dependencies
 ========================
 
 - Ruby 1.9.2 or higher
-- GEM Bundler (ruby-bundler)
+- Bundler (`gem install bundler` or ruby-bundler)
 - MySQL client and headers (libmysqlclient-dev)
 - LibXML headers (libxml2-dev)
 - LibXSLT headers (libxslt-dev)
 - SQLite headers (libsqlite3-dev)
-- Rails
 
 Getting started:
 ================
