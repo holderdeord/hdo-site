@@ -1,7 +1,7 @@
 require 'spec_helper'
 require 'large/spec_helper'
 
-describe "Front page" do
+describe "Site" do
   it "should load the front page" do
     front_page.get
   end
