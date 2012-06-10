@@ -7,7 +7,7 @@ module Pages
     end
 
     def loaded?
-      text.include? 'er en politisk uavhengig organisasjon'
+      text =~ /bringer politikken til folket/i
     end
   end
 end
