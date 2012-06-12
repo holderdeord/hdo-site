@@ -54,7 +54,10 @@ end
 namespace :clear do
   cmd = "cd %s && RAILS_ENV=production bundle exec rake db:clear:%s"
 
+  desc 'Clear promises'
   task(:promises) { run(cmd % [current_path, 'promises']) }
+
+  desc 'Clear votes'
   task(:votes)    { run(cmd % [current_path, 'votes'])    }
 end
 
