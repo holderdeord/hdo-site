@@ -21,6 +21,7 @@ end
 group :development do
   gem "thin"
   gem 'sqlite3' # TODO: same DB everywhere
+  gem "rails-erd"
 end
 
 group :production do
