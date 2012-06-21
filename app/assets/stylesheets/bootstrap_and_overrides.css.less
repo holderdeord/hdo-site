@@ -13,7 +13,33 @@
 // If you'd like to override bootstrap's own variables, you can do so here as well
 // See http://twitter.github.com/bootstrap/less.html for their names and documentation
 //
-// Example:
-//
 
-// @linkColor: #ff0000;
+
+@import url('http://fonts.googleapis.com/css?family=Ubuntu:400,700,400italic,700italic');
+
+@hdo-primary-color: #009ea6;
+@hdo-secondary-color: #e03d25;
+@hdo-tertiary-color: #332b2e;
+@hdo-quaternary-color: #231f20;
+
+@page-header-gradient-start: #01a1a4;
+@page-header-gradient-end: #028f93;
+
+@navbarBackground: @page-header-gradient-end;
+@navbarBackgroundHighlight: @page-header-gradient-start;
+@navbarLinkColor: yellow; 
+
+@sansFontFamily: monospace;
+@headingsFontFamily: 'Ubuntu';
+
+@gridColumns: 11;
+@gridColumnWidth: 68px;
+@gridGutterWidth: 21px;
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+	font-family: @headingsFontFamily;
+}
