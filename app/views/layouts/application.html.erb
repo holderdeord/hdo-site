@@ -20,7 +20,6 @@
   <body>
 
     <%= render partial: 'layouts/navigation' %>
-
     <div class="container">
         <div class="content">
           <div class="row">
@@ -37,7 +36,6 @@
             </div>
           </div>
         </div>
-
       <footer>
         <% obscured_email = obscure_email t('app.contact.email') %>
         <p><%=t 'app.title' %> &copy; 2012 <a href="mailto:<%= obscured_email %>"><%= obscured_email %></a>.</p>
