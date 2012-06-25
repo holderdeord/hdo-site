@@ -5,5 +5,8 @@ class HomeController < ApplicationController
   end
 
   def about
+    if params[:lang] == "en"
+      render :about, :locale => "en"
+    end
   end
 end
