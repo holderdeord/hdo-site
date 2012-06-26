@@ -1,43 +1,35 @@
-<p id="app.counts.vote" class="pull-right"><%= t('app.counts.vote', count: votes.size).html_safe %></p>
+<div class="row"><p class="pull-right"><%= t('app.counts.vote', count: votes.size).html_safe %></p></div>
 
 <% if votes.any? %>
-  <table id="votes" class="table table-striped">
-    <thead>
-      <tr>
-        <th class="wide-table-header"><%= Vote.human_attribute_name :time %></th>
-        <% if show_issues %>
-          <th><%= Issue.model_name.human count: 2 %></th>
+  <div class="row table-header-row">
+    <div class="span2"><%= Vote.human_attribute_name :time %></div>
+    <div class="span4"><%= Issue.model_name.human %></div>
+    <div class="span2"><%= Vote.human_attribute_name :subject %></div>
+    <div class="span1"><%= Vote.human_attribute_name :enacted %></div>
+    <div class="span1"><%= Vote.human_attribute_name :for_count %></div>
+    <div class="span1"><%= Vote.human_attribute_name :against_count %></div>
+    <div class="span1"><%= Vote.human_attribute_name :absent_count %></div>
+  </div>
+  <% issues.each do |issue| %>
+    <% alternative_votes = issue.votes %>
+    <div class="row table-issue-row">
+      <div class="span2"><%= alternative_votes[0].time_text %></div>
+      <div class="span4"><%= link_to issue.summary, issue %></div>
+      <div class="span6">
+        <% alternative_votes.each_with_index do |vote,i| %>
+      	  <div class="row<%= ' table-vote-row' if i>0  %>">
+      	    <div class="span2"><%= link_to vote.subject, vote %></div>
+      	    <div class="span1"><%= vote.enacted_text %></div>
+      	    <% stats = vote.stats %>
+      	    <div class="span1 vote-for"><%= stats.for_percent %>% (<%= stats.for_count %>/<%= stats.vote_count %>)</div>
+      	    <div class="span1 vote-against"><%= stats.against_percent %>% (<%= stats.against_count %>/<%= stats.vote_count %>)</div>
+      	    <div class="span1 vote-absent"><%= stats.absent_percent %>% (<%= stats.absent_count %>/<%= stats.vote_count %>)</div>
+      	  </div>
         <% end %>
-        <th><%= Vote.human_attribute_name :subject %></th>
-        <th><%= Vote.human_attribute_name :enacted %></th>
-        <th class="wide-table-header"><%= Vote.human_attribute_name :for_count %></th>
-        <th class="wide-table-header"><%= Vote.human_attribute_name :against_count %></th>
-        <th class="wide-table-header"><%= Vote.human_attribute_name :absent_count %></th>
-      </tr>
-    </thead>
-    <tbody>
-      <% votes.each do |vote| %>
-      <tr>
-        <td><%= vote.time_text %></td>
-        <% if show_issues %>
-          <td>
-            <ul>
-              <%- vote.issues.each do |issue| -%>
-              <li><%= link_to issue.summary, issue %></li>
-              <%- end -%>
-            </ul>
-
-          </td>
-        <% end %>
-        <td><%= link_to vote.subject, vote %></td>
-        <td><%= vote.enacted_text %></td>
-
-        <% stats = vote.stats %>
-        <td class="vote-for"><%= stats.for_percent %>% (<%= stats.for_count %>/<%= stats.vote_count %>)</td>
-        <td class="vote-against"><%= stats.against_percent %>% (<%= stats.against_count %>/<%= stats.vote_count %>)</td>
-        <td class="vote-absent"><%= stats.absent_percent %>% (<%= vote.absent_count %>/<%= stats.total_count %>)</td>
-      </tr>
-      <% end %>
-    </tbody>
-  </table>
+      </div>
+    </div>
+  <% end %>
+  <% if votes_index %>
+    <%= page_navigation_links @issues %>
+  <% end %>
 <% end %>

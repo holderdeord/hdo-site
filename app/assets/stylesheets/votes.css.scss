@@ -17,3 +17,26 @@
 .wide-table-header {
   min-width: 80px;
 }
+
+.table-header-row {
+  font-weight: bold;
+}
+
+.table-issue-row {
+  padding-top: 5px;
+  padding-bottom: 5px;
+  border-top: 1px solid #A4A4A4;
+}
+
+.table-issue-row:nth-child(2n+1) {
+  background-color: #FAFAFA;
+}
+.table-issue-row:hover {
+  background-color: #F2F2F2;
+}
+.table-vote-row {
+  border-top: 1px solid #A4A4A4;
+}
+.pagination {
+  text-align: center;
+}

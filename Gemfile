@@ -33,6 +33,7 @@ gem "twitter-bootstrap-rails", "~> 2.0"
 gem "highcharts-rails", "~> 2.2"
 gem "jquery-tablesorter", ">= 0.0.5"
 gem "loadable_component", ">= 0.1.1"
+gem "will_paginate", "~> 3.0.3"
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'

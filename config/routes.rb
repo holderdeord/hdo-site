@@ -1,6 +1,6 @@
 Hdo::Application.routes.draw do
   resources :promises,        :only => [:index]        # TODO: :create, :show and :edit behind auth
-  resources :issues,          :only => [:index, :show]
+  resources :issues,          :only => [:index, :show, :create]
   resources :votes,           :only => [:index, :show]
   resources :districts,       :only => [:index, :show]
 
