@@ -4,7 +4,7 @@ Hdo::Application.routes.draw do
   resources :votes,           :only => [:index, :show]
   resources :districts,       :only => [:index, :show]
 
-  resources :topics,          :only => [:index, :show]
+  resources :categories,      :only => [:index, :show]
   resources :parties,         :only => [:index, :show]
   resources :representatives, :only => [:index, :show]
   resources :committees,      :only => [:index, :show]

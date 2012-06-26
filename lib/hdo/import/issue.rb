@@ -11,7 +11,7 @@ module Hdo
         Field.new(:reference,     true,  :string, 'A reference.'),
         Field.new(:documentGroup, true,  :string, 'What document group this issue belongs to.'),
         Field.new(:committee,     false, :string, "What committee this issue belongs to. Should match the 'name' field in the committee type."),
-        Field.new(:topics,        false, 'list',  "List of topics (matching the 'name' field of the topic type).")
+        Field.new(:categories,    false, 'list',  "List of categories (matching the 'name' field of the category type).")
       ]
 
       DESC = 'a parliament issue'
@@ -26,9 +26,9 @@ module Hdo
   <summary>Samtykke til ratifikasjon av en frihandelsavtale og en avtale om arbeidstakerrettigheter.</summary>
   <description>Samtykke til ratifikasjon av en frihandelsavtale og en avtale om arbeidstakerrettigheter mellom EFTA-statene og Hongkong SAR.</description>
   <committee>Utenrikskomiteen</committee>
-  <topics>
-    <topic>EFTA/EU</topic>
-  </topics>
+  <categories>
+    <category>EFTA/EU</category>
+  </categories>
 </issue>
       XML
 
@@ -50,8 +50,8 @@ module Hdo
             committee = nil
           end
 
-          topics = issue.css("topics > topic").map do |e|
-            ::Topic.find_by_name! e.text
+          categories = issue.css("categories > category").map do |e|
+            ::Category.find_by_name! e.text
           end
 
           issue = ::Issue.find_or_create_by_external_id external_id
@@ -64,7 +64,7 @@ module Hdo
             :summary        => summary,
             :description    => description,
             :committee      => committee,
-            :topics         => topics
+            :categories     => categories
           )
 
           print "."

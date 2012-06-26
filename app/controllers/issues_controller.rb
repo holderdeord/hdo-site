@@ -12,7 +12,7 @@ class IssuesController < ApplicationController
   end
 
   def show
-    @issue = Issue.includes(:committee, :topics, :votes).find(params[:id])
+    @issue = Issue.includes(:committee, :categories, :votes).find(params[:id])
 
     respond_to do |format|
       format.html

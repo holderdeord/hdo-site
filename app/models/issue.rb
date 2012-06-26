@@ -1,6 +1,6 @@
 class Issue < ActiveRecord::Base
   belongs_to :committee
-  has_and_belongs_to_many :topics
+  has_and_belongs_to_many :categories
   has_and_belongs_to_many :votes
 
   def status_text

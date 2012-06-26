@@ -19,9 +19,9 @@
         party:
           one: "Parti"
           other: "Partier"
-        topic:
-          one: "Tema"
-          other: "Tema"
+        category:
+          one: "Kategori"
+          other: "Kategorier"
         district:
           one: "Fylke"
           other: "Fylker"
@@ -59,11 +59,11 @@
           name: "Navn"
           representatives: "Representanter"
           external_id: "Ekstern id"
-        topic:
+        category:
           name: "Navn"
           external_id: "Ekstern id"
-          children: "Undertema"
-          ancestors: "Hovedtema"
+          children: "Underkategorier"
+          ancestors: "Hovedkategorier"
         district:
           name: "Navn"
           external_id: "Ekstern id"
@@ -73,7 +73,7 @@
           external_id: "Ekstern id"
           status: "Status"
           last_update: "Sist oppdatert"
-          topics: "Tema"
+          categories: "Kategorier"
           description: "Beskrivelse"
           committee: "Komité"
           document_group: "Dokumentgruppe"
@@ -95,7 +95,7 @@
           source: "Kilde"
           new: "Nytt løfte"
           edit: "Endre løfte"
-          topics: "Emner"
+          categories: "Kategorier"
         proposition:
           description: "Beskrivelse"
           on_behalf_of: "På vegne av"
@@ -153,9 +153,9 @@
       party:
         one: "Viser <strong>ett</strong> parti."
         other: "Viser <strong>%{count}</strong> partier."
-      topic:
-        one: "Viser <strong>ett</strong> tema."
-        other: "Viser <strong>%{count}</strong> tema."
+      category:
+        one: "Viser <strong>en</strong> kategori."
+        other: "Viser <strong>%{count}</strong> kategorier."
       district:
         one: "Viser <strong>ett</strong> fylke."
         other: "Viser <strong>%{count}</strong> fylker."

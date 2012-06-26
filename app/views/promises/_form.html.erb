@@ -38,9 +38,9 @@
     </div>
 
     <div class="control-group">
-      <%= f.label :topics, class: 'control-label' %>
+      <%= f.label :categories, class: 'control-label' %>
       <div class="controls">
-        <%= f.collection_select :topic_ids, Topic.order(:name).all, :id, :name, {}, multiple: true %>
+        <%= f.collection_select :category_ids, Category.order(:name).all, :id, :name, {}, multiple: true %>
       </div>
     </div>
 

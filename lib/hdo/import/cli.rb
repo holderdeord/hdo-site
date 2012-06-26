@@ -36,8 +36,8 @@ module Hdo
           Party.import doc
         when 'committees'
           Committee.import doc
-        when 'topics'
-          Topic.import doc
+        when 'categories'
+          Category.import doc
         when 'districts'
           District.import doc
         when 'issues'

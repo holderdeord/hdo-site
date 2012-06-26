@@ -9,7 +9,7 @@
       <th><%= Promise.human_attribute_name :body %></th>
       <th><%= Promise.human_attribute_name :general %></th>
       <th><%= Promise.human_attribute_name :source %></th>
-      <th><%= Topic.model_name.human count: 2 %></th>
+      <th><%= Category.model_name.human count: 2 %></th>
     </tr>
   </thead>
 
@@ -21,8 +21,8 @@
         <td><%= promise.general_text %></td>
         <td><%= promise.source %></td>
         <td>
-          <% promise.topics.each do |t| %>
-          <%= link_to t.name, t %>
+          <% promise.categories.each do |c| %>
+          <%= link_to c.name, c %>
           <% end %>
         </td>
       </tr>

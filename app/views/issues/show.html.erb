@@ -45,11 +45,11 @@
     <%= @issue.description %>
   </p>
 
-  <strong><%= Issue.human_attribute_name :topics %>:</strong>
+  <strong><%= Issue.human_attribute_name :categories %>:</strong>
   <ul>
-    <% @issue.topics.each do |rep| %>
+    <% @issue.categories.each do |category| %>
       <li>
-        <%= link_to rep.name, rep %>
+        <%= link_to category.name, category %>
       </li>
     <% end %>
   </ul>

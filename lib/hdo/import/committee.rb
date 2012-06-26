@@ -3,7 +3,7 @@ module Hdo
     class Committee < Type
       FIELDS = [
         Import.external_id_field,
-        Field.new(:name, true, :string, 'The name of the topic.'),
+        Field.new(:name, true, :string, 'The name of the committee.'),
       ]
 
       DESC = 'a parliamentary committe'

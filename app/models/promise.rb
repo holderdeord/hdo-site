@@ -1,6 +1,6 @@
 class Promise < ActiveRecord::Base
   belongs_to :party
-  has_and_belongs_to_many :topics, :order => :name
+  has_and_belongs_to_many :categories, :order => :name
 
   validates_presence_of :source, :body, :party
   validates_uniqueness_of :body, :scope => :party_id
@@ -9,7 +9,7 @@ class Promise < ActiveRecord::Base
     I18n.t(general? ? 'app.yes' : 'app.no')
   end
 
-  def topic_names
-    topics.map(&:name)
+  def category_names
+    categories.map(&:name)
   end
 end

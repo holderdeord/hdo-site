@@ -14,9 +14,9 @@ en:
       party:
         one: "Showing <strong>1</strong> party."
         other: "Showing <strong>%{count}</strong> parties."
-      topic:
-        one: "Showing <strong>1</strong> topic."
-        other: "Showing <strong>%{count}</strong> topics."
+      categories:
+        one: "Showing <strong>1</strong> category."
+        other: "Showing <strong>%{count}</strong> categories."
       district:
         one: "Showing <strong>1</strong> district."
         other: "Showing <strong>%{count}</strong> districts."
@@ -32,5 +32,5 @@ en:
           for_count: "For"
           against_count: "Against"
           absent_count: "Absent"
-        topic:
-          children: "Subtopics"
+        category:
+          children: "Subcategories"

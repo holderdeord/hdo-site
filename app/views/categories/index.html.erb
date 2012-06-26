@@ -1,0 +1,28 @@
+<div class="page-header">
+  <h1><%= Category.model_name.human count: 2 %></h1>
+</div>
+
+<p class="pull-right"><%= t('app.counts.category', count: @categories.size).html_safe %></p>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th><%= Category.human_attribute_name :name %></th>
+      <th><%= Category.human_attribute_name :children %></th>
+    </tr>
+  </thead>
+  <tbody>
+      <% @categories.select(&:main?).each do |category| %>
+      <tr>
+        <td><%= link_to category.name, category %></td>
+        <td>
+          <% category.children.each do |subcategory| %>
+          <ul class="unstyled">
+            <li><%= link_to subcategory.name, subcategory %></li>
+          </ul>
+          <% end %>
+        </td>
+      </tr>
+      <% end %>
+  </tbody>
+</table>

@@ -9,7 +9,7 @@ class DocsController < ApplicationController
       Hdo::Import::Committee,
       Hdo::Import::District,
       Hdo::Import::Representative,
-      Hdo::Import::Topic,
+      Hdo::Import::Category,
       Hdo::Import::Issue,
       Hdo::Import::Vote,
       Hdo::Import::Proposition,

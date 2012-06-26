@@ -24,10 +24,10 @@
   </p>
 
   <p>
-    <b><%= Promise.human_attribute_name :topics %></b>
+    <b><%= Promise.human_attribute_name :categories %></b>
     <ul>
-      <% @promise.topics.each do |topic| %>
-        <li><%= link_to topic.name, topic %></li>
+      <% @promise.categories.each do |category| %>
+        <li><%= link_to category.name, category %></li>
       <% end %>
     </ul>
 
