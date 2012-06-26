@@ -168,3 +168,7 @@
       promises:
         one: "Viser <strong>1</strong> løfte."
         other: "Viser <strong>%{count}</strong> løfter."
+  will_paginate:
+        previous_label: "&#8592; Forrige"
+        next_label: "Neste &#8594;"
+        page_gap: "&hellip;"

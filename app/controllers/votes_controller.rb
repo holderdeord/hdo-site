@@ -1,7 +1,11 @@
+require 'will_paginate/array'
+
 class VotesController < ApplicationController
-  caches_page :index, :show
+  caches_page :show
 
   def index
+    @issues = Issue.includes(:votes).select { |issue| issue.has_votes? }
+      .paginate(:page => params[:page], :per_page => params[:per_page] || 25)
     @votes = Vote.includes(:issues).order(:time).reverse_order
 
     respond_to do |format|

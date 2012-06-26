@@ -2,4 +2,4 @@
   <h1><%= Vote.model_name.human count: 2 %></h1>
 </div>
 
-<%= render partial: "shared/votes_summary_table", locals: {votes: @votes, show_issues: true } %>
+<%= render partial: "shared/votes_summary_table", locals: {issues: @issues, votes: @votes, show_issues: true, votes_index: true } %>

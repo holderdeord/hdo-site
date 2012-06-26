@@ -13,6 +13,7 @@ class IssuesController < ApplicationController
 
   def show
     @issue = Issue.includes(:committee, :categories, :votes).find(params[:id])
+    @issue_as_array = [@issue]
 
     respond_to do |format|
       format.html

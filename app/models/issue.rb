@@ -19,4 +19,8 @@ class Issue < ActiveRecord::Base
     status == I18n.t("app.issue.states.processed")
   end
 
+  def has_votes?
+    votes.any?
+  end
+
 end
