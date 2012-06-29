@@ -1,0 +1,55 @@
+# Additional translations at http://github.com/plataformatec/devise/wiki/I18n
+
+nb:
+  errors:
+    messages:
+      expired: "har utløpt, vennligst få en ny en"
+      not_found: "ikke funnet"
+      already_confirmed: "har allerede blitt bekreftet. Prøv å logg inn."
+      not_locked: "var ikke låst"
+      not_saved:
+        one: "En feil gjorde at %{resource} ikke kunne lagres:"
+        other: "%{count} feil gjorde at %{resource} ikke kunne lagres:"
+  
+  devise:
+    failure:
+      already_authenticated: 'Du er allerede logget inn.'
+      unauthenticated: 'Du må logge inn eller registrere deg for å kunne fortsette.'
+      unconfirmed: 'Du må bekrefte kontoen din for å kunne fortsette.'
+      locked: 'Din konto er låst.'
+      invalid: 'Epostadresse eller passord er ikke gyldig.'
+      invalid_token: 'Ugyldig autentiseringstoken.'
+      timeout: 'Din sesjon er utløpt. Logg inn igjen for å kunne fortsette.'
+      inactive: 'Din konto er ikke aktivert.'
+    sessions:
+      signed_in: 'Du er nå logget inn.'
+      signed_out: 'Du er nå logget ut.'
+    passwords:
+      send_instructions: 'Du vil snart motta en epost med instruksjoner for å nullstille passordet ditt.'
+      updated: 'Ditt passord er endret og du er nå innlogget.'
+      send_paranoid_instructions: 'Hvis epostadressen din finnes i vår database vil du motta en epost med instruksjoner for å nullstille passordet ditt.'
+    confirmations:
+      send_instructions: 'Du vil snart motta en epost med instruksjoner for å aktivere din konto.'
+      send_paranoid_instructions: 'Hvis epostadressen din finnes i vår database vil du motta en epost med instruksjoner for å aktivere din konto.'
+      confirmed: 'Din konto er aktivert og du er nå innlogget.'
+    registrations:
+      signed_up: 'Velkommen! Din registrering er vellykket.'
+      signed_up_but_unconfirmed: 'En epost med en aktiveringslink er sent til din epostadresse.  Vennligst klikk på linken for å aktivere din konto.'
+      signed_up_but_inactive: 'Du er registrert. Men vi kan ikke logge deg på siden kontoen din ennå ikke er aktiv.'
+      signed_up_but_locked: 'Du er registrert. Men vi kan ikke logge deg på siden kontoen din er låst.' 
+      updated: 'Din profil er oppdatert.'
+      destroyed: 'Farvel. Din konto er nå slettet.'
+    unlocks:
+      send_instructions: 'Du vil snart motta en epost med instruksjon for å gjenåpne din konto.'
+      unlocked: 'Din konto er gjenåpnet og du er nå innlogget.'
+      send_paranoid_instructions: 'Hvis kontoen din eksisterer vil du motta en epost med instruksjoner for å låse den opp i løpet av noen minutter.'
+    omniauth_callbacks:
+      success: 'Vellykket autorisering fra %{kind}.'
+      failure: 'Kunne ikke autorisere deg fra %{kind} fordi "%{reason}".'
+    mailer:
+      confirmation_instructions:
+        subject: 'Bekreftelsesinstruksjoner'
+      reset_password_instructions:
+        subject: 'Nullstilling av passord'
+      unlock_instructions:
+        subject: 'Gjenåpning av konto'
