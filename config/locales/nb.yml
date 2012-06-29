@@ -1,4 +1,4 @@
-"no":
+nb:
   time:
     formats:
       default: "%Y-%m-%d %H:%M:%S"
@@ -9,98 +9,102 @@
         one: "1 dag"
         other: "%{count} dager"
   activerecord:
-      models:
-        representative:
-          one: "Representant"
-          other: "Representanter"
-        committee:
-          one: "Komite"
-          other: "Komiteer"
-        party:
-          one: "Parti"
-          other: "Partier"
-        category:
-          one: "Kategori"
-          other: "Kategorier"
-        district:
-          one: "Fylke"
-          other: "Fylker"
-        issue:
-          one: "Sak"
-          other: "Saker"
-        vote:
-          one: "Votering"
-          other: "Voteringer"
-        vote_result:
-          one: "Stemme"
-          other: "Stemmer"
-        promise:
-          one: "Løfte"
-          other: "Løfter"
-        proposition:
-          one: "Forslag"
-          other: "Forslag"
-      attributes:
-        representative:
-          name: "Navn"
-          party: "Parti"
-          external_id: "Ekstern id"
-          committees: "Komiteer"
-          district: "Fylke"
-          alternate: "Vara"
-          date_of_birth: 'Født'
-          date_of_death: 'Død'
-        party:
-          name: "Navn"
-          representatives: "Representanter"
-          external_id: "Ekstern id"
-          percent_of_representatives: "Prosent"
-        committee:
-          name: "Navn"
-          representatives: "Representanter"
-          external_id: "Ekstern id"
-        category:
-          name: "Navn"
-          external_id: "Ekstern id"
-          children: "Underkategorier"
-          ancestors: "Hovedkategorier"
-        district:
-          name: "Navn"
-          external_id: "Ekstern id"
-          representatives: "Representanter"
-        issue:
-          summary: "Sammendrag"
-          external_id: "Ekstern id"
-          status: "Status"
-          last_update: "Sist oppdatert"
-          categories: "Kategorier"
-          description: "Beskrivelse"
-          committee: "Komité"
-          document_group: "Dokumentgruppe"
-          reference: "Henvisning"
-        vote:
-          subject: "Beskrivelse"
-          for_count: "For"
-          against_count: "Mot"
-          absent_count: "Ikke tilstede"
-          time: "Dato"
-          enacted: "Vedtatt"
-          counts: "Stemmegivning"
-        vote_result:
-          result: "Stemme"
-        promise:
-          party: "Parti"
-          body: "Tekst"
-          general: "Generell"
-          source: "Kilde"
-          new: "Nytt løfte"
-          edit: "Endre løfte"
-          categories: "Kategorier"
-        proposition:
-          description: "Beskrivelse"
-          on_behalf_of: "På vegne av"
-          delivered_by: "Levert av"
-          body: "Tekst"
+    errors:
+      messages:
+        taken: "er allerede i bruk."
+        record_invalid: "Validering feilet: %{errors}"
+    models:
+      representative:
+        one: "Representant"
+        other: "Representanter"
+      committee:
+        one: "Komite"
+        other: "Komiteer"
+      party:
+        one: "Parti"
+        other: "Partier"
+      category:
+        one: "Kategori"
+        other: "Kategorier"
+      district:
+        one: "Fylke"
+        other: "Fylker"
+      issue:
+        one: "Sak"
+        other: "Saker"
+      vote:
+        one: "Votering"
+        other: "Voteringer"
+      vote_result:
+        one: "Stemme"
+        other: "Stemmer"
+      promise:
+        one: "Løfte"
+        other: "Løfter"
+      proposition:
+        one: "Forslag"
+        other: "Forslag"
+    attributes:
+      representative:
+        name: "Navn"
+        party: "Parti"
+        external_id: "Ekstern id"
+        committees: "Komiteer"
+        district: "Fylke"
+        alternate: "Vara"
+        date_of_birth: 'Født'
+        date_of_death: 'Død'
+      party:
+        name: "Navn"
+        representatives: "Representanter"
+        external_id: "Ekstern id"
+        percent_of_representatives: "Prosent"
+      committee:
+        name: "Navn"
+        representatives: "Representanter"
+        external_id: "Ekstern id"
+      category:
+        name: "Navn"
+        external_id: "Ekstern id"
+        children: "Underkategorier"
+        ancestors: "Hovedkategorier"
+      district:
+        name: "Navn"
+        external_id: "Ekstern id"
+        representatives: "Representanter"
+      issue:
+        summary: "Sammendrag"
+        external_id: "Ekstern id"
+        status: "Status"
+        last_update: "Sist oppdatert"
+        categories: "Kategorier"
+        description: "Beskrivelse"
+        committee: "Komité"
+        document_group: "Dokumentgruppe"
+        reference: "Henvisning"
+      vote:
+        subject: "Beskrivelse"
+        for_count: "For"
+        against_count: "Mot"
+        absent_count: "Ikke tilstede"
+        time: "Dato"
+        enacted: "Vedtatt"
+        counts: "Stemmegivning"
+      vote_result:
+        result: "Stemme"
+      promise:
+        party: "Parti"
+        body: "Tekst"
+        general: "Generell"
+        source: "Kilde"
+        new: "Nytt løfte"
+        edit: "Endre løfte"
+        categories: "Kategorier"
+      proposition:
+        description: "Beskrivelse"
+        on_behalf_of: "På vegne av"
+        delivered_by: "Levert av"
+        body: "Tekst"
   app:
     url: 'holderdeord.no'
     urls:
