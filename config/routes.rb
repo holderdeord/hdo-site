@@ -1,4 +1,6 @@
 Hdo::Application.routes.draw do
+  devise_for :users
+
   resources :promises,        :only => [:index]        # TODO: :create, :show and :edit behind auth
   resources :issues,          :only => [:index, :show]
   resources :votes,           :only => [:index, :show]
