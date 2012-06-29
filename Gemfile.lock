@@ -182,7 +182,7 @@ PLATFORMS
 DEPENDENCIES
   acts_as_tree (~> 0.1.1)
   capistrano (~> 2.11.2)
-  devise
+  devise (~> 2.1.2)
   highcharts-rails (~> 2.2)
   jquery-rails
   jquery-tablesorter (>= 0.0.5)

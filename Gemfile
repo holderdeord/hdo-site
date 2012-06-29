@@ -33,7 +33,7 @@ gem "twitter-bootstrap-rails", "~> 2.0"
 gem "highcharts-rails", "~> 2.2"
 gem "jquery-tablesorter", ">= 0.0.5"
 gem "loadable_component", ">= 0.1.1"
-gem "devise"
+gem "devise", "~> 2.1.2"
 
 # To use Jbuilder templates for JSON
 # gem 'jbuilder'
