@@ -90,6 +90,17 @@
               <li class="divider-vertical"></li>
               <li><%= link_to 'Wiki', t('app.urls.wiki') %></li>
               <li><%= link_to t("app.documentation.technical"), docs_index_path %></li>
+
+                <% if user_signed_in? %>
+                  <li>
+                    <%= link_to t('app.logout'), destroy_user_session_path, method: 'delete' %>
+                  </li>
+                <% else %>
+                  <li>
+                    <%= link_to t('app.login'), new_user_session_path  %>
+                  </li>
+                <% end %>
+
               <li class="divider-vertical"></li>
               <li><%= link_to t("app.about"), home_about_path %></li>
             </ul>

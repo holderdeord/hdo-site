@@ -110,6 +110,8 @@ nb:
     urls:
       wiki: "https://holderdeord.atlassian.net/"
     title: "Holder de ord"
+    login: "Logg inn"
+    logout: "Logg ut"
     description: "Bringer politikken til folket."
     about: "Om oss"
     read_more: "Les mer"
