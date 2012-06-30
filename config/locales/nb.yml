@@ -51,6 +51,9 @@ nb:
       user:
         one: "Bruker"
         other: "Brukere"
+      topic:
+        one: "Tema"
+        other: "Tema"
     attributes:
       representative:
         name: "Navn"
@@ -89,6 +92,8 @@ nb:
         committee: "Komité"
         document_group: "Dokumentgruppe"
         reference: "Henvisning"
+      topic:
+        edit: "Rediger"
       vote:
         subject: "Beskrivelse"
         for_count: "For"
