@@ -1,26 +1,40 @@
 require 'spec_helper'
 
 describe Topic do
-  let(:topic) { Topic.new }
-  
+  let(:blank_topic) { Topic.new }
+  let(:valid_topic) { Topic.new(:title => "Topic Title") }
+
   it "is invalid without a title" do
-    topic.should_not be_valid
-    topic.title = "foo"
-    topic.should be_valid
+    t = blank_topic
+
+    t.should_not be_valid
+    t.title = "foo"
+    t.should be_valid
   end
 
-  it "can have multiple categories" do
-    a = Category.create!(name: "Skole")
-    b = Category.create!(name: "Forsvar")
+  it "can associate categories" do
+    a = Category.make!
+    b = Category.make!
 
-    topic.categories << a
-    topic.categories << b
+    t = valid_topic
 
-    topic.categories.map(&:name).should == ["Skole", "Forsvar"]
+    t.categories << a
+    t.categories << b
+
+    t.categories.map(&:name).should == [a.name, b.name]
+
+    t.should be_valid
   end
 
-  it "can have multiple promises" do
-    topic.promises << Promise.create!(party: Party.new, source: 'PP:10', body: 'hei')
-    topic.promises.first.body.should == 'hei'
+  it "can associate promises" do
+    valid_topic.promises << Promise.make!
+    valid_topic.promises.first.body.should_not be_empty
+  end
+
+  it "can associate votes with a vote direction" do
+    vote = Vote.make!
+
+    vote_direction = VoteDirection.create!(:vote => vote, :topic => valid_topic, :matches => true)
+    valid_topic.votes.should == [vote]
   end
 end
