@@ -1,0 +1,18 @@
+<%= topic.inputs '', :class => 'sign_up' do %>
+  <div class="well">
+    <%= topic.text_field :title %>
+    <%= topic.text_area :description, :rows => 5 %>
+  </div>
+<% end %>
+<h2><%= Category.model_name.human count: 2 %></h2>
+<div class="well">
+<% @categories.each_slice(3) do |cat_array| %>
+  <div class="row">
+    <% cat_array.each do |category| %>
+      <div class="span3">
+        <%= check_box_tag "topic[category_ids][]", category.id, @topic.categories.include?(category) -%> <%= category.name -%>
+      </div>
+    <% end %>
+  </div>
+<% end %>
+</div>
