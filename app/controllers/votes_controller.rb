@@ -1,6 +1,4 @@
 class VotesController < ApplicationController
-  caches_page :index, :show
-
   def index
     @votes = Vote.includes(:issues).order(:time).reverse_order
 

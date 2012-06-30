@@ -1,6 +1,4 @@
 class DistrictsController < ApplicationController
-  caches_page :index, :show
-
   def index
     @districts = District.includes(:representatives).all
 
