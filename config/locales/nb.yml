@@ -119,6 +119,9 @@ nb:
         password_confirmation: "Bekreft passord"
         new: "Ny bruker"
         submit: "Lag bruker"
+        edit: "Rediger bruker"
+        destroy: "Slett bruker"
+        confirm_destroy: "Er du sikker på at du vil slette brukeren?"
   app:
     url: 'holderdeord.no'
     urls:
