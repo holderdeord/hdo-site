@@ -1,5 +1,6 @@
 class TopicsController < ApplicationController
   before_filter :authenticate_user!, :except => [:show]
+  before_filter :fetch_categories, :only => [:edit, :new]
   # GET /topics
   # GET /topics.json
   def index
@@ -80,5 +81,10 @@ class TopicsController < ApplicationController
       format.html { redirect_to topics_url }
       format.json { head :no_content }
     end
+  end
+  
+  private
+  def fetch_categories
+    @categories = Category.all
   end
 end

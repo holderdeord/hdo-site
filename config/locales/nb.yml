@@ -127,6 +127,14 @@ nb:
         edit: "Rediger bruker"
         destroy: "Slett bruker"
         confirm_destroy: "Er du sikker på at du vil slette brukeren?"
+      topic:
+        title: "Tittel"
+        description: "Beskrivelse"
+        new: "Nytt tema"
+        submit: "Lagre tema"
+        edit: "Rediger tema"
+        destroy: "Slett tema"
+        confirm_destroy: "Er du sikker på at du vil slette tema?"
   app:
     url: 'holderdeord.no'
     urls:
