@@ -11,4 +11,9 @@ module ApplicationHelper
       output ? "&##{output};" : (char == '@' ? '&#0064;' : char)
     }.join.html_safe
   end
+
+  def active_status_for(*what)
+    logger.info [what, controller_name]
+    'active' if what.include? controller_name.to_sym
+  end
 end
