@@ -1,26 +1,26 @@
 require 'spec_helper'
 
 describe Topic do
-  it "can create a new topic" do
-    t = Topic.create!(:title => "foo", :description => "bar")
-    t.title.should == "foo"
-    t.description.should == "bar"
-  end
+  let(:topic) { Topic.new }
   
   it "is invalid without a title" do
-    t = Topic.create(:description => "foo")
-    t.should_not be_valid
+    topic.should_not be_valid
+    topic.title = "foo"
+    topic.should be_valid
   end
-  
+
   it "can have multiple categories" do
-    a = Category.create!(:name => "Skole")
-    b = Category.create!(:name => "Forsvar")
-    
-    
-    t = Topic.create!(:title => "foo")
-    t.categories << a
-    t.categories << b
-    
-    t.categories.map(&:name).should == ["Skole", "Forsvar"]
+    a = Category.create!(name: "Skole")
+    b = Category.create!(name: "Forsvar")
+
+    topic.categories << a
+    topic.categories << b
+
+    topic.categories.map(&:name).should == ["Skole", "Forsvar"]
+  end
+
+  it "can have multiple promises" do
+    topic.promises << Promise.create!(party: Party.new, source: 'PP:10', body: 'hei')
+    topic.promises.first.body.should == 'hei'
   end
 end

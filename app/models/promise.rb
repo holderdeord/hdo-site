@@ -1,6 +1,7 @@
 class Promise < ActiveRecord::Base
   belongs_to :party
   has_and_belongs_to_many :categories, :order => :name
+  has_and_belongs_to_many :topics, :order => :title
 
   validates_presence_of :source, :body, :party
   validates_uniqueness_of :body, :scope => :party_id
