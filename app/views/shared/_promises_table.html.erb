@@ -5,10 +5,16 @@
 <table class="table table-striped">
   <thead>
     <tr>
+      <% if show_party %>
       <th><%= Promise.human_attribute_name :party %></th>
+    <% end %>
       <th><%= Promise.human_attribute_name :body %></th>
+      <% if show_general %>
       <th><%= Promise.human_attribute_name :general %></th>
+    <% end %>
+    <% if show_source %>
       <th><%= Promise.human_attribute_name :source %></th>
+    <% end %>
       <th><%= Category.model_name.human count: 2 %></th>
     </tr>
   </thead>
@@ -16,10 +22,16 @@
   <tbody>
     <% promises.each do |promise| %>
       <tr>
+      <% if show_party %>
         <td><%= link_to promise.party.name, promise.party %></td>
+    <% end %>
         <td><%= promise.body %></td>
+      <% if show_general %>
         <td><%= promise.general_text %></td>
+    <% end %>
+    <% if show_source %>
         <td><%= promise.source %></td>
+    <% end %>
         <td>
           <% promise.categories.each do |c| %>
           <%= link_to c.name, c %>

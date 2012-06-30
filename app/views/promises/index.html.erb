@@ -2,5 +2,5 @@
   <h1><%= Promise.model_name.human count: 2 %></h1>
 </div>
 
-<%= render partial: "shared/promises_table", locals: { promises: @promises } %>
+<%= render partial: "shared/promises_table", locals: { promises: @promises, show_party: true, show_general: true, show_source: true} %>
 
