@@ -15,5 +15,23 @@
 //
 // Example:
 //
-
 // @linkColor: #ff0000;
+
+@navbarBackground: #009ea6;
+@navbarBackgroundHighlight:#009ea6;
+@navbarLinkColor: @white;
+@navbarLinkColorHover: @grayLight;
+
+@navbarLinkBackgroundActive: @white;
+@navbarLinkColorActive: @black;
+
+
+.navbar .nav li.active {
+    .box-shadow(1px 0px 5px 1px @grayLight);
+}
+
+.navbar .nav .active > a, .navbar .nav .active > a:hover {
+    color: @black;
+    text-decoration: none;
+    background-color: @white;
+}
