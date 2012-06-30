@@ -13,6 +13,8 @@ Hdo::Application.routes.draw do
   
   resources :users
 
+  resources :topics
+
   get "home/index"
   get "home/about"
   get "docs/index"

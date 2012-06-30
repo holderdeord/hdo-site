@@ -1,0 +1,12 @@
+<%= twitter_bootstrap_form_for @topic do |topic| %>
+  
+
+  <%= topic.inputs :class => 'sign_up' do %>
+    <%= topic.text_field :title %>
+    <%= topic.text_field :description %>
+  <% end %>
+
+  <div class="actions">
+    <%= topic.submit  %>
+  </div>
+<% end %>
