@@ -11,9 +11,7 @@ PresenceStatsGraph.prototype.render = function() {
     chart: {
       renderTo: this.selector,
       type: 'area',
-      backgroundColor: null,
-      marginBottom: 100,
-      height: 300
+      backgroundColor: null
     },
     credits: {
       text: this.options.credits
