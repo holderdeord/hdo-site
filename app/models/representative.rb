@@ -8,6 +8,10 @@ class Representative < ActiveRecord::Base
   has_and_belongs_to_many :committees, :order => :name
 
   validates_uniqueness_of :first_name, :scope => :last_name # TODO: :scope => :period ?!
+  
+  def image
+    "representatives/#{external_id}.jpg"
+  end
 
   def display_name
     "#{last_name}, #{first_name}"
