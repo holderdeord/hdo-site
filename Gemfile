@@ -35,6 +35,7 @@ gem "jquery-tablesorter", ">= 0.0.5"
 gem "loadable_component", ">= 0.1.1"
 gem "devise", "~> 2.1.2"
 gem "twitter_bootstrap_form_for", "~> 1.0.5"
+gem "machinist", "~> 2.0"
 
 # To use Jbuilder templates for JSON
 # gem 'jbuilder'
