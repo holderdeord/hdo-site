@@ -169,6 +169,9 @@ GEM
       actionpack (>= 3.1)
       less-rails (~> 2.1.6)
       railties (>= 3.1)
+    twitter_bootstrap_form_for (1.0.5)
+      actionpack (~> 3)
+      railties (~> 3)
     tzinfo (0.3.33)
     uglifier (1.2.3)
       execjs (>= 0.3.0)
@@ -197,4 +200,5 @@ DEPENDENCIES
   sqlite3
   thin
   twitter-bootstrap-rails (~> 2.0)
+  twitter_bootstrap_form_for (~> 1.0.5)
   uglifier (>= 1.0.3)

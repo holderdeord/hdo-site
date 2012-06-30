@@ -1,4 +1,8 @@
 nb:
+  helpers:
+    submit:
+      create: "Lag %{model}"
+      update: "Bekreft endringer i %{model}"
   time:
     formats:
       default: "%Y-%m-%d %H:%M:%S"
@@ -44,6 +48,9 @@ nb:
       proposition:
         one: "Forslag"
         other: "Forslag"
+      user:
+        one: "Bruker"
+        other: "Brukere"
     attributes:
       representative:
         name: "Navn"
@@ -105,6 +112,13 @@ nb:
         on_behalf_of: "På vegne av"
         delivered_by: "Levert av"
         body: "Tekst"
+      user:
+        name: "Navn"
+        email: "E-post"
+        password: "Passord"
+        password_confirmation: "Bekreft passord"
+        new: "Ny bruker"
+        submit: "Lag bruker"
   app:
     url: 'holderdeord.no'
     urls:
