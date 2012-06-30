@@ -11,9 +11,30 @@
 </div>
 
 <div class="row">
+  <div class="span6">
+    <h3>Voteringer om temaet</h3>
+    <table class="table-condensed">
+      <thead>
+        <tr>
+          <th><%= Issue.human_attribute_name :summary %></th>
+          <th><%= Vote.human_attribute_name :subject %></th>
+          <th><%= Vote.human_attribute_name :enacted %></th>
+        </tr>
+      </thead>
+      <tbody>
+      <% @topic.votes.each do |vote| %>
+        <tr>
+          <td><%= link_to vote.issues.first.summary, vote.issues.first %></td>
+          <td><%= link_to vote.subject, vote %></td>
+          <td><%= vote.enacted_text %></td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
 
   <div class="span6">
-    <h3>Partienes løfter om temaet:</h3>
+    <h3>Partienes løfter om temaet</h3>
     <table class="table-condensed">
       <thead>
         <tr>
@@ -30,32 +51,6 @@
       <% end %>
       </tbody>
     </table>
-
-  </div>
-
-  <div class="span6">
-    <h3>Voteringer om temaet:</h3>
-    <ul>
-      <table class="table-condensed">
-        <thead>
-          <tr>
-            <th><%= Issue.human_attribute_name :summary %></th>
-            <th><%= Vote.human_attribute_name :subject %></th>
-            <th><%= Vote.human_attribute_name :enacted %></th>
-          </tr>
-        </thead>
-        <tbody>
-        <% @topic.votes.each do |vote| %>
-          <tr>
-            <td><%= vote.issues.first.summary %></td>
-            <td><%= link_to vote.subject, vote %></td>
-            <td><%= vote.enacted_text %></td>
-          </tr>
-        <% end %>
-        </tbody>
-      </table>
-    </ul>
-
   </div>
 </div>
 
