@@ -27,6 +27,8 @@ class TopicsController < ApplicationController
   # GET /topics/new.json
   def new
     @topic = Topic.new
+    session[:topic_params] = {}
+    session[:topic_step] = nil
 
     respond_to do |format|
       format.html # new.html.erb
@@ -42,16 +44,25 @@ class TopicsController < ApplicationController
   # POST /topics
   # POST /topics.json
   def create
-    @topic = Topic.new(params[:topic])
-
-    respond_to do |format|
-      if @topic.save
-        format.html { redirect_to @topic, notice: 'Topic was successfully created.' }
-        format.json { render json: @topic, status: :created, location: @topic }
-      else
-        format.html { render action: "new" }
-        format.json { render json: @topic.errors, status: :unprocessable_entity }
-      end
+    session[:topic_params].deep_merge!(params[:topic]) if params[:topic]
+    @topic = Topic.new(session[:topic_params])
+    @topic.current_step = session[:topic_step]
+    if(params[:prev_button])
+      @topic.previous_step
+      fetch_categories
+    elsif @topic.last_step?
+      @topic.save
+    else
+      @topic.next_step
+    end
+    session[:topic_step] = @topic.current_step
+    if(@topic.current_step == "promises")
+      @promises = Promise.find_all_by_id(@topic.categories.collect{ |cat| cat.promise_ids })
+    end
+    if @topic.new_record?
+      render 'new'
+    else
+      redirect_to @topic
     end
   end
 
