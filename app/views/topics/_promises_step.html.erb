@@ -1,13 +1,25 @@
-
 <h2><%= Promise.model_name.human count: 2 %></h2>
 <div class="well">
-<% @promises.each_slice(3) do |prom_array| %>
-    <% prom_array.each do |promise| %>
-      <div class="row">
-        <div class="span12">
-        <%= check_box_tag "topic[promise_ids][]", promise.id, @topic.promises.include?(promise) -%> <%= promise.body -%>
-        </div>
-      </div>
-    <% end %>
-<% end %>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th><%= Party.model_name.human %></th>
+        <th><%= Promise.human_attribute_name :body %></th>
+        <th></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @promises.each do |promise| %>
+      <tr>
+        <td><%= promise.party.name %></td>
+        <td><%= promise.body %></td>
+        <td>
+          <%= check_box_tag "topic[promise_ids][]", promise.id, @topic.promises.include?(promise) -%>
+        </td>
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
 </div>
+
