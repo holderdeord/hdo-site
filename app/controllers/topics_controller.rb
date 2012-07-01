@@ -37,7 +37,11 @@ class TopicsController < ApplicationController
   # GET /topics/1/edit
   def edit
     @topic = Topic.find(params[:id])
-    @topic.current_step = session[:topic_step]
+    if(params[:skip_to_step])
+      @topic.current_step = params[:skip_to_step]
+    else
+      @topic.current_step = session[:topic_step]
+    end
 
     if(@topic.current_step == "categories")
       fetch_categories

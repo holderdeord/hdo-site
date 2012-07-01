@@ -135,6 +135,9 @@ nb:
         edit: "Rediger tema"
         destroy: "Slett tema"
         confirm_destroy: "Er du sikker på at du vil slette tema?"
+        categories: "Kategorier"
+        promises: "Løfter"
+        votes: "Voteringer"
   app:
     next: "Neste"
     previous: "Forrige"

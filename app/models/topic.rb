@@ -46,4 +46,8 @@ class Topic < ActiveRecord::Base
   def is_vote_against?(vote_id)
     vote_directions.collect {|vd| vd.vote.id unless vd.matches}.include?(vote_id)
   end
+
+  def is_current_step?(step)
+    step == self.current_step
+  end
 end
