@@ -2,8 +2,9 @@
   <h1><%= @party.name %> <small class="pull-right"><%= @party.external_id %></small></h1>
 </div>
 
+<h3><%= Promise.model_name.human count: 2 %></h3>
+<%= render partial: "shared/promises_table", locals: { promises: @party.promises, show_party: false, show_general: false, show_source: false,} %>
+
 <h3><%= Representative.model_name.human count: 2 %></h3>
 <%= render partial: 'shared/representatives_table', locals: { representatives: @party.representatives, show_party: false } %>
 
-<h3><%= Promise.model_name.human count: 2 %></h3>
-<%= render partial: "shared/promises_table", locals: { promises: @party.promises } %>
