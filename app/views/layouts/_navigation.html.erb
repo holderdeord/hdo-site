@@ -19,63 +19,61 @@
 
       <div class="container nav-collapse">
         <ul class="nav">
-
-          <li class="active">
+          <li class="<%= active_status_for(:home) %>">
             <a href="/">Forside</a>
           </li>
 
-          <li>
+          <li class="<%= active_status_for(:parties) %>">
           <%= link_to parties_path do %>
             <%= Party.model_name.human count: 2 %>
           <% end %>
           </li>
 
-          <li>
+          <li class="<%= active_status_for(:issues) %>">
           <%= link_to issues_path do %>
             <%= Issue.model_name.human count: 2 %>
           <% end %>
           </li>
 
-          <li>
+          <li class="<%= active_status_for(:promises) %>">
           <%= link_to promises_path do %>
             <%= Promise.model_name.human count: 2 %>
           <% end %>
           </li>
 
-
-          <li>
+          <li class="<%= active_status_for(:representatives) %>">
           <%= link_to representatives_path do %>
             <%= Representative.model_name.human count: 2 %>
           <% end %>
           </li>
 
           <li class="dropdown" id="stortinget">
-          <a class="dropdown-toggle" data-toggle="dropdown" href="#stortinget">
-            Stortinget
-            <b class="caret"></b>
-          </a>
-          <ul class="dropdown-menu">
-            <li>
-            <%= link_to votes_path do %>
-              <i class="icon-envelope icon-white"></i> <%= Vote.model_name.human count: 2 %>
-            <% end %>
-            </li>
-            <li>
-            <%= link_to categories_path do %>
-              <i class="icon-folder-close icon-white"></i> <%= Category.model_name.human count: 2 %>
-            <% end %>
-            </li>
-            <li>
-            <%= link_to districts_path do %>
-              <i class="icon-home icon-white"></i> <%= District.model_name.human count: 2 %>
-            <% end %>
-            </li>
-            <li>
-            <%= link_to committees_path do %>
-              <i class="icon-inbox icon-white"></i> <%= Committee.model_name.human count: 2 %>
-            <% end %>
-            </li>
-          </ul>
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#stortinget">
+              Stortinget
+              <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+              <li>
+              <%= link_to votes_path do %>
+                <i class="icon-envelope icon-white"></i> <%= Vote.model_name.human count: 2 %>
+              <% end %>
+              </li>
+              <li>
+              <%= link_to categories_path do %>
+                <i class="icon-folder-close icon-white"></i> <%= Category.model_name.human count: 2 %>
+              <% end %>
+              </li>
+              <li>
+              <%= link_to districts_path do %>
+                <i class="icon-home icon-white"></i> <%= District.model_name.human count: 2 %>
+              <% end %>
+              </li>
+              <li>
+              <%= link_to committees_path do %>
+                <i class="icon-inbox icon-white"></i> <%= Committee.model_name.human count: 2 %>
+              <% end %>
+              </li>
+            </ul>
           </li>
 
           <li class="dropdown" id="Om oss">
@@ -93,12 +91,13 @@
 
           <li class="divider-vertical"></li>
           <% if user_signed_in? %>
+            <li><%= link_to Topic.model_name.human(count: 2), topics_path %></li>
             <li>
-              <%= link_to t('app.logout'), destroy_user_session_path, method: 'delete' %>
+              <%= link_to t('app.logout') + " (#{current_user.email})", destroy_user_session_path, method: 'delete' %>
             </li>
           <% else %>
             <li>
-              <%= link_to t('app.login'), new_user_session_path  %>
+              <%= link_to t('app.login'), new_user_session_path %>
             </li>
           <% end %>
         </ul>

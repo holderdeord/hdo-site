@@ -1,4 +1,4 @@
-class CreateTopics < ActiveRecord::Migration
+class CreateOldTopics < ActiveRecord::Migration
   def change
     create_table :topics do |t|
       t.string  :external_id

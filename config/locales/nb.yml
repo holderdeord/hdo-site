@@ -51,6 +51,9 @@ nb:
       user:
         one: "Bruker"
         other: "Brukere"
+      topic:
+        one: "Tema"
+        other: "Tema"
     attributes:
       representative:
         name: "Navn"
@@ -89,6 +92,8 @@ nb:
         committee: "Komité"
         document_group: "Dokumentgruppe"
         reference: "Henvisning"
+      topic:
+        edit: "Rediger"
       vote:
         subject: "Beskrivelse"
         for_count: "For"
@@ -119,7 +124,20 @@ nb:
         password_confirmation: "Bekreft passord"
         new: "Ny bruker"
         submit: "Lag bruker"
+        edit: "Rediger bruker"
+        destroy: "Slett bruker"
+        confirm_destroy: "Er du sikker på at du vil slette brukeren?"
+      topic:
+        title: "Tittel"
+        description: "Beskrivelse"
+        new: "Nytt tema"
+        submit: "Lagre tema"
+        edit: "Rediger tema"
+        destroy: "Slett tema"
+        confirm_destroy: "Er du sikker på at du vil slette tema?"
   app:
+    next: "Neste"
+    previous: "Forrige"
     url: 'holderdeord.no'
     urls:
       wiki: "https://holderdeord.atlassian.net/"

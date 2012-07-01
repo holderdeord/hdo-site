@@ -1,3 +1,11 @@
 // Place all the styles related to the Representatives controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+.representative-image {
+  max-width: 240px;
+  -moz-box-shadow: 5px 7px 15px #888;
+  -webkit-box-shadow: 5px 7px 15px #888;
+  box-shadow: 5px 7px 15px #888;
+  border-radius: 6px;
+}

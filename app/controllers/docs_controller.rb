@@ -1,6 +1,4 @@
 class DocsController < ApplicationController
-  caches_page :index
-
   def index
     # TODO: split into "main" and "sub" types
 

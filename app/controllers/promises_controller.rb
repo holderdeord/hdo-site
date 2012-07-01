@@ -1,10 +1,8 @@
 class PromisesController < ApplicationController
-  caches_page :index, :show
-
   before_filter :find_promise, :only => [:show, :edit, :update, :destroy]
 
   def index
-    @promises = Promise.all
+    @promises = Promise.includes(:categories, :party).all
 
     respond_to do |format|
       format.html

@@ -2,9 +2,21 @@
   <h1><%= @representative.full_name %> <small class="pull-right"><%= @representative.external_id %></small></h1>
 </div>
 
-<div class="well">
-  <div class="row">
-    <div class="span4">
+<div class="container-fluid">
+  <div class="row-fluid">
+    <div class="span3">
+      <%= image_tag @representative.image, class: 'representative-image'  %>
+    </div>
+      
+    <div class="span9">
+      <div id="presence-stats-graph"></div>
+    </div>
+  </div>
+  
+  <hr class="soften">
+  
+  <div class="row-fluid">
+    <div class="span3">
       <p>
         <strong><%= Representative.human_attribute_name :party %>:</strong>
         <%= link_to @representative.party.name, @representative.party %>
@@ -28,60 +40,60 @@
       </ul>
 
       <% if @vote_results.any? %>
-      <dl>
-        <% stats = @representative.stats %>
-        <dt><%= t('app.for')  %></dt>
-        <dd><%= stats.for_percent %>% (<%= stats.for_count %>/<%= stats.total_count %>)</dd>
-        <dt><%= t('app.against') %></dt>
-        <dd><%= stats.against_percent %>% (<%= stats.against_count %>/<%= stats.total_count %>)</dd>
-        <dt><%= t('app.absent') %></dt>
-        <dd><%= stats.absent_percent %>% (<%= stats.absent_count %>/<%= stats.total_count %>)</dd>
-      </dl>
+        <dl>
+          <% stats = @representative.stats %>
+          <dt><%= t('app.for')  %></dt>
+          <dd><%= stats.for_percent %>% (<%= stats.for_count %>/<%= stats.total_count %>)</dd>
+          <dt><%= t('app.against') %></dt>
+          <dd><%= stats.against_percent %>% (<%= stats.against_count %>/<%= stats.total_count %>)</dd>
+          <dt><%= t('app.absent') %></dt>
+          <dd><%= stats.absent_percent %>% (<%= stats.absent_count %>/<%= stats.total_count %>)</dd>
+        </dl>
       <% end %>
+    </div> <!-- end span3 -->
+
+    <div class="span9">
+      <h2><%= Vote.model_name.human count: 2 %></h2>
+      <p class="pull-right"><%= t('app.counts.vote', count: @vote_results.size).html_safe %></p>
+
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th class="wide-table-header"><%= Vote.human_attribute_name :time %></th>
+            <th><%= Issue.model_name.human count: 2 %></th>
+            <th><%= Vote.human_attribute_name :subject %></th>
+            <th><%= Vote.human_attribute_name :enacted %></th>
+            <th><%= VoteResult.model_name.human %></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @vote_results.reverse_each do |result| %>
+            <tr>
+              <td><%= result.vote.time_text %></td>
+              <td>
+                <ul>
+                  <%- result.vote.issues.each do |issue| -%>
+                    <li><%= link_to issue.summary, issue %></li>
+                  <%- end -%>
+                </ul>
+              </td>
+              <td><%= link_to result.vote.subject, result.vote %></td>
+              <td><%= result.vote.enacted_text %></td>
+              <td class="vote-<%= result.state %>"><%= result.human %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+
     </div>
-
-    <div class="span7" id="presence-stats-graph"></div>
   </div>
-
 </div>
 
-<h2><%= Vote.model_name.human count: 2 %></h2>
-<p class="pull-right"><%= t('app.counts.vote', count: @vote_results.size).html_safe %></p>
-
-<table class="table table-striped">
-  <thead>
-    <tr>
-      <th class="wide-table-header"><%= Vote.human_attribute_name :time %></th>
-      <th><%= Issue.model_name.human count: 2 %></th>
-      <th><%= Vote.human_attribute_name :subject %></th>
-      <th><%= Vote.human_attribute_name :enacted %></th>
-      <th><%= VoteResult.model_name.human %></th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @vote_results.reverse_each do |result| %>
-    <tr>
-      <td><%= result.vote.time_text %></td>
-      <td>
-        <ul>
-          <%- result.vote.issues.each do |issue| -%>
-          <li><%= link_to issue.summary, issue %></li>
-          <%- end -%>
-        </ul>
-      </td>
-      <td><%= link_to result.vote.subject, result.vote %></td>
-      <td><%= result.vote.enacted_text %></td>
-      <td class="vote-<%= result.state %>"><%= result.human %></td>
-    </tr>
-    <% end %>
-  </tbody>
-</table>
-
 <% content_for :document_ready do %>
-<% activity_stats = Hdo::Charts::Activity.new(@representative.full_name, @vote_results) %>
-<script type="text/javascript" charset="utf-8">
-$(document).ready(function() {
-  new PresenceStatsGraph("presence-stats-graph", <%= activity_stats.presence.to_json.html_safe %>).render();
-});
-</script>
+  <% activity_stats = Hdo::Charts::Activity.new(@representative.full_name, @vote_results) %>
+  <script type="text/javascript" charset="utf-8">
+    $(document).ready(function() {
+        new PresenceStatsGraph("presence-stats-graph", <%= activity_stats.presence.to_json.html_safe %>).render();
+        });
+  </script>
 <% end %>

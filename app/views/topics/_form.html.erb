@@ -1,0 +1,8 @@
+<%= twitter_bootstrap_form_for @topic do |topic| %>
+  <%= render "#{@topic.current_step}_step", :topic => topic %>
+
+  <div class="actions">
+    <%= (topic.submit t('app.previous'), :name => 'prev_button') unless @topic.first_step? %>
+    <%= topic.submit t('app.next') %>
+  </div>
+<% end %>
