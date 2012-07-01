@@ -13,7 +13,6 @@ module ApplicationHelper
   end
 
   def active_status_for(*what)
-    logger.info [what, controller_name]
     'active' if what.include? controller_name.to_sym
   end
 end
