@@ -1,0 +1,27 @@
+<div id="representative-carousel" class="carousel slide">
+  <div class="carousel-inner">
+    <div class="active item">
+      <% (@party.representatives.pop(4)).each do |representative| %>
+        <%= link_to(representative, :class => "representative-view") do %>
+          <%= image_tag representative.image, 
+            class: "representative-carousel-image",
+              :alt => representative.full_name %>
+            <% end %>
+          <% end %>
+        </div>
+        <% get_representative_carousel_content(@party.representatives).each do | representative_group | %>
+          <div class="item">
+            <% representative_group.each do |representative| %>
+              <%= link_to(representative, :class => "representative-view") do %>
+                <%= image_tag representative.image, 
+                  class: "representative-carousel-image",
+                    :alt => representative.full_name %>
+                  <% end %>
+                <% end %>
+              </div> 
+            <% end %>
+            <a class="carousel-control left" href="#representative-carousel" data-slide="prev">&lsaquo;</a>
+            <a class="carousel-control right" href="#representative-carousel" data-slide="next">&rsaquo;</a>
+          </div> 
+        </div> 
+    <script> $('.carousel').carousel() </script>
