@@ -78,7 +78,7 @@
 
           <li class="dropdown" id="Om oss">
             <a class="dropdown-toggle" data-toggle="dropdown" href="#omOss">
-              Om oss
+              <%= t("app.about") %>
               <b class="caret"></b>
             </a>
 
@@ -90,15 +90,17 @@
           </li>
         </ul>
 
-        <ul class="nav pull-right">
-          <% if user_signed_in? %>
-            <li><%= link_to User.model_name.human(count: 2), users_path %></li>
-            <li><%= link_to Topic.model_name.human(count: 2), topics_path %></li>
-            <li><%= link_to t('app.logout'), destroy_user_session_path, method: 'delete' %></li>
-          <% else %>
-              <li><%= link_to t('app.login'), new_user_session_path  %></li>
-          <% end %>
-        </ul>
+        <% if Rails.configuration.show_login_status %>
+          <ul class="nav pull-right">
+            <% if user_signed_in? %>
+              <li><%= link_to User.model_name.human(count: 2), users_path %></li>
+              <li><%= link_to Topic.model_name.human(count: 2), topics_path %></li>
+              <li><%= link_to t('app.logout'), destroy_user_session_path, method: 'delete' %></li>
+            <% else %>
+                <li><%= link_to t('app.login'), new_user_session_path  %></li>
+            <% end %>
+          </ul>
+        <% end %>
       </div>
     </div>
   </div>

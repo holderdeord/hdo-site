@@ -65,5 +65,7 @@ module Hdo
 
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
+
+    config.show_login_status = false
   end
 end
