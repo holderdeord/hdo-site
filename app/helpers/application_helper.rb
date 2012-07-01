@@ -1,11 +1,4 @@
 module ApplicationHelper
-  def get_representative_carousel_content(array)
-    logger.info "Input representatives : #{array}"
-    result = []
-    result.push(array.pop(4)) while array.size > 4
-    result.push(array)
-    result.reverse!
-  end
 
   def obscure_email(email)
     return nil if email.nil?

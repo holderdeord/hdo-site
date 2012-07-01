@@ -8,7 +8,7 @@
       <% end %>
     </div>
 
-    <% get_representative_carousel_content(@party.representatives).each do | representative_group | %>
+    <% @party.representatives.each_slice(4) do | representative_group | %>
       <div class="item">
         <% representative_group.each do |representative| %>
           <%= link_to(representative, :class => "representative-view") do %>
