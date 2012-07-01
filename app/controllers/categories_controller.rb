@@ -1,4 +1,6 @@
 class CategoriesController < ApplicationController
+  caches_page :index, :show
+
   def index
     @categories = Category.includes(:children).all(:order => :name)
 

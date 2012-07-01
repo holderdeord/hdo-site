@@ -1,4 +1,6 @@
 class PromisesController < ApplicationController
+  caches_page :index, :show
+
   before_filter :find_promise, :only => [:show, :edit, :update, :destroy]
 
   def index
