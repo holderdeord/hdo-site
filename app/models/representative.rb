@@ -10,7 +10,14 @@ class Representative < ActiveRecord::Base
   validates_uniqueness_of :first_name, :scope => :last_name # TODO: :scope => :period ?!
 
   def image
-    "representatives/#{external_id}.jpg"
+    default = "representatives/unknown.jpg"
+    rep = "representatives/#{URI.encode external_id}.jpg"
+
+    if File.exist?(File.join("#{Rails.root}/app/assets/images", rep))
+      rep
+    else
+      default
+    end
   end
 
   def display_name
