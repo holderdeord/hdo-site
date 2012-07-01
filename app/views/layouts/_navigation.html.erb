@@ -91,13 +91,12 @@
 
           <li class="divider-vertical"></li>
           <% if user_signed_in? %>
-            <li><%= link_to Topic.model_name.human(count: 2), topics_path %></li>
             <li>
-              <%= link_to t('app.logout') + " (#{current_user.email})", destroy_user_session_path, method: 'delete' %>
+              <%= link_to t('app.logout'), destroy_user_session_path, method: 'delete' %>
             </li>
           <% else %>
             <li>
-              <%= link_to t('app.login'), new_user_session_path %>
+              <%= link_to t('app.login'), new_user_session_path  %>
             </li>
           <% end %>
         </ul>
