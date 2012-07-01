@@ -2,40 +2,33 @@ class TopicsController < ApplicationController
   before_filter :authenticate_user!, :except => [:show]
   before_filter :fetch_categories, :only => [:edit, :new]
 
-  # GET /topics
-  # GET /topics.json
   def index
     @topics = Topic.all
 
     respond_to do |format|
-      format.html # index.html.erb
+      format.html
       format.json { render json: @topics }
     end
   end
 
-  # GET /topics/1
-  # GET /topics/1.json
   def show
     @topic = Topic.find(params[:id])
 
     respond_to do |format|
-      format.html # show.html.erb
+      format.html
       format.json { render json: @topic }
     end
   end
 
-  # GET /topics/new
-  # GET /topics/new.json
   def new
     @topic = Topic.new
 
     respond_to do |format|
-      format.html # new.html.erb
+      format.html
       format.json { render json: @topic }
     end
   end
 
-  # GET /topics/1/edit
   def edit
     @topic = Topic.find(params[:id])
 
@@ -53,8 +46,6 @@ class TopicsController < ApplicationController
     end
   end
 
-  # POST /topics
-  # POST /topics.json
   def create
     @topic = Topic.new(params[:topic])
     @topic.next_step
@@ -64,8 +55,6 @@ class TopicsController < ApplicationController
     redirect_to edit_topic_url(@topic)
   end
 
-  # PUT /topics/1
-  # PUT /topics/1.json
   def update
     @topic = Topic.find(params[:id])
     @topic.current_step = session[:topic_step]
@@ -88,8 +77,6 @@ class TopicsController < ApplicationController
     end
   end
 
-  # DELETE /topics/1
-  # DELETE /topics/1.json
   def destroy
     @topic = Topic.find(params[:id])
     @topic.destroy
