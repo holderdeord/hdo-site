@@ -3,8 +3,8 @@
   <table class="table table-striped">
     <thead>
       <tr>
-        <th><%= Issue.model_name.human count: 2 %></th>
-        <th><%= Vote.human_attribute_name :body %></th>
+        <th><%= Vote.model_name.human %></th>
+        <th><%= Proposition.model_name.human count: 2 %></th>
         <th></th>
         <th></th>
       </tr>
@@ -13,17 +13,25 @@
     <tbody>
       <% @votes.each do |vote| %>
       <tr>
-        <td><%= vote.issues[0].description %></td>
         <td><%= vote.subject %></td>
+        <td>
+          <ul>
+          <% vote.propositions.each  do |prop| %>
+            <li>
+              <%= prop.body.html_safe %>
+            </li>
+          </ul>
+          <% end %> 
+        </td>
         <td>
           <i class="icon-thumbs-up"></i>
           <strong><%= t 'app.for' %></strong>
-          <%= check_box_tag "votes_for[]", vote.id, @topic.is_vote_for?(vote.id) -%>
+          <%= radio_button_tag "votes_for[#{vote.id}]", true, @topic.is_vote_for?(vote.id) -%>
         </td>
         <td>
           <i class="icon-thumbs-down"></i>
           <strong><%= t 'app.against' %></strong>
-          <%= check_box_tag "votes_against[]", vote.id, @topic.is_vote_against?(vote.id) -%>
+          <%= radio_button_tag "votes_for[#{vote.id}]", false, @topic.is_vote_against?(vote.id) -%>
         </td>
       </tr>
       <% end %>

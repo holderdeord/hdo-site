@@ -61,16 +61,14 @@ class TopicsController < ApplicationController
 
   def process_vote_directions(topic, params)
     votes_for = params[:votes_for]
-    votes_against = params[:votes_against]
-
-    if(votes_for || votes_against)
-      topic.vote_directions = []
-    end
     if(votes_for)
-      set_vote_directions(votes_for, topic, true)
-    end
-    if(votes_against)
-      set_vote_directions(votes_against, topic, false)
+      topic.vote_directions = []
+      votes_for.each_pair do |vote_id, matches|
+        vote = Vote.find(vote_id)
+        topic.vote_directions << VoteDirection.new(:topic => topic,
+          :vote => vote,
+          :matches => matches)
+      end
     end
   end
 
