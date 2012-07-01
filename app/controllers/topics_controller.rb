@@ -1,6 +1,7 @@
 class TopicsController < ApplicationController
   before_filter :authenticate_user!, :except => [:show]
   before_filter :fetch_categories, :only => [:edit, :new]
+
   # GET /topics
   # GET /topics.json
   def index
@@ -37,18 +38,18 @@ class TopicsController < ApplicationController
   # GET /topics/1/edit
   def edit
     @topic = Topic.find(params[:id])
-    if(params[:skip_to_step])
-      @topic.current_step = params[:skip_to_step]
-    else
-      @topic.current_step = session[:topic_step]
-    end
 
-    if(@topic.current_step == "categories")
+    @topic.current_step = params[:skip_to_step] || session[:topic_step]
+
+    case @topic.current_step
+    when 'categories'
       fetch_categories
-    elsif(@topic.current_step == "promises")
+    when 'promises'
       @promises = Promise.find_all_by_id(@topic.categories.collect{ |cat| cat.promise_ids })
-    elsif(@topic.current_step == "votes")
+    when 'votes'
       @votes = Vote.all
+    else
+      raise "unknown step: #{@topic.current_step.inspect}"
     end
   end
 
@@ -60,29 +61,7 @@ class TopicsController < ApplicationController
     session[:topic_step] = @topic.current_step
     @topic.save!
 
-    redirect_to proc { edit_topic_url(@topic) }
-  end
-
-  def process_vote_directions(topic, params)
-    votes_for = params[:votes_for]
-    if(votes_for)
-      topic.vote_directions = []
-      votes_for.each_pair do |vote_id, matches|
-        vote = Vote.find(vote_id)
-        topic.vote_directions << VoteDirection.new(:topic => topic,
-          :vote => vote,
-          :matches => matches)
-      end
-    end
-  end
-
-  def set_vote_directions(vote_ids, topic, matches)
-    votes = Vote.find_all_by_id vote_ids
-      votes.each do |vote|
-        topic.vote_directions << VoteDirection.new(:topic => topic,
-            :vote => vote,
-            :matches => matches)
-      end
+    redirect_to edit_topic_url(@topic)
   end
 
   # PUT /topics/1
@@ -90,20 +69,22 @@ class TopicsController < ApplicationController
   def update
     @topic = Topic.find(params[:id])
     @topic.current_step = session[:topic_step]
+
     if params[:prev_button]
       @topic.previous_step
     else
       @topic.next_step
     end
+
     session[:topic_step] = @topic.current_step
     process_vote_directions @topic, params
     @topic.update_attributes(params[:topic])
-    if(params[:finish_button])
-      session[:topic_step] = nil
+
+    if params[:finish_button]
+      session.delete :topic_step
       redirect_to @topic
-      return
     else
-      redirect_to proc { edit_topic_url(@topic) }
+      redirect_to edit_topic_url(@topic)
     end
   end
 
@@ -118,9 +99,32 @@ class TopicsController < ApplicationController
       format.json { head :no_content }
     end
   end
-  
+
   private
+
   def fetch_categories
     @categories = Category.all
   end
+
+  def process_vote_directions(topic, params)
+    return unless params[:votes_for]
+
+    topic.vote_directions = []
+    params[:votes_for].each_pair do |vote_id, matches|
+      vote = Vote.find(vote_id)
+      topic.vote_directions.create! topic: topic,
+                                    vote:  vote,
+                                    matches: matches
+    end
+  end
+
+  def set_vote_directions(vote_ids, topic, matches)
+    votes = Vote.find_all_by_id vote_ids
+    votes.each do |vote|
+      topic.vote_directions.create! topic: topic,
+                                    vote: vote,
+                                    matches: matches
+    end
+  end
+
 end
