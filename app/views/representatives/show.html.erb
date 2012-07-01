@@ -7,14 +7,14 @@
     <div class="span3">
       <%= image_tag @representative.image, class: 'representative-image'  %>
     </div>
-      
+
     <div class="span9">
       <div id="presence-stats-graph"></div>
     </div>
   </div>
-  
+
   <hr class="soften">
-  
+
   <div class="row-fluid">
     <div class="span3">
       <p>
@@ -94,6 +94,6 @@
   <script type="text/javascript" charset="utf-8">
     $(document).ready(function() {
         new PresenceStatsGraph("presence-stats-graph", <%= activity_stats.presence.to_json.html_safe %>).render();
-        });
+    });
   </script>
 <% end %>

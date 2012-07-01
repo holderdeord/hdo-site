@@ -11,6 +11,18 @@ end
 Vote.blueprint do
 	issues { [Issue.make] }
 	time { Time.now }
+  vote_results { Array.new(10) { VoteResult.make! } }
+end
+
+VoteDirection.blueprint do
+  topic
+  vote
+  matches { true }
+end
+
+VoteResult.blueprint do
+  representative { Representative.make! }
+  result { rand(2) - 1 }
 end
 
 Issue.blueprint do
@@ -32,7 +44,15 @@ Category.blueprint do
 end
 
 Representative.blueprint do
-  party
+  party { Party.make! }
   first_name { "first-name-#{sn}" }
   last_name { "last-name-#{sn}" }
+end
+
+Topic.blueprint do
+  title { "topic-title-#{sn}" }
+  description { "topic-description-#{sn}" }
+  vote_directions {
+    Array.new(2) { VoteDirection.make!(:topic => object) }
+  }
 end

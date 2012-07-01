@@ -1,14 +1,15 @@
 <div class="hero-unit">
   <h1><%= @topic.title %></h1>
   <p><%= @topic.description %></p>
-
-  <h3>Hvor ofte har partiet stemt for temaet?</h3>
-  <ul>
-    <% Party.all.each do |party| %>
-    <li><%= party.name %></li>
-    <% end %>
-  </ul>
 </div>
+
+<div class="row">
+  <div class="span12">
+    <div id="topic-support-graph"></div>
+  </div>
+</div>
+
+<hr class="soften">
 
 <div class="row">
   <div class="span6">
@@ -54,9 +55,15 @@
   </div>
 </div>
 
-
-
 <% if user_signed_in? %>
   <%= link_to 'Edit', edit_topic_path(@topic) %> |
   <%= link_to 'Back', topics_path %>
+<% end %>
+
+<% content_for :document_ready do %>
+<script type="text/javascript" charset="utf-8">
+  $(document).ready(function() {
+    new TopicSupportGraph("topic-support-graph", JSON.parse(<%= @topic.stats.to_json.html_safe %>)).render();
+  });
+</script>
 <% end %>
