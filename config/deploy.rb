@@ -48,6 +48,8 @@ namespace :import do
   task(:all)       { run(cmd % [import_root, current_path, 'all'])      }
   task(:dld)       { run(cmd % [import_root, current_path, 'dld'])      }
   task(:promises)  { run(cmd % [import_root, current_path, 'promises']) }
+
+  task(:issues)    { run(cmd % [import_root, current_path, 'issues'])    }
   task(:votes)     { run(cmd % [import_root, current_path, 'votes'])    }
 end
 
