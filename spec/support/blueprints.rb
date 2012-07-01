@@ -1,19 +1,11 @@
 # encoding: utf-8
 require 'machinist/active_record'
 
-# Add your blueprints here.
-#
-# e.g.
-#   Post.blueprint do
-#     title { "Post #{sn}" }
-#     body  { "Lorem ipsum..." }
-#   end
-
 User.blueprint do
-	name {"user #{sn}" }
-	email {"user#{sn}@email.com}"}
-	password {"abcd1234"}
-	password_confirmation {"abcd1234"}
+	name { "user #{sn}" }
+	email { "user#{sn}@email.com}" }
+	password { "abcd1234" }
+	password_confirmation { "abcd1234" }
 end
 
 Vote.blueprint do
@@ -37,4 +29,10 @@ end
 
 Category.blueprint do
   name { "Category-#{sn}" }
+end
+
+Representative.blueprint do
+  party
+  first_name { "first-name-#{sn}" }
+  last_name { "last-name-#{sn}" }
 end
