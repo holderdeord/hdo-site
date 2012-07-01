@@ -26,9 +26,15 @@ class TopicsController < ApplicationController
   # GET /topics/new
   # GET /topics/new.json
   def new
-    @topic = Topic.new
-    session[:topic_params] = {}
-    session[:topic_step] = nil
+    session[:topic_params].deep_merge!(params[:topic]) if params[:topic]
+    @topic = Topic.new(session[:topic_params])
+    @topic.current_step = session[:topic_step]
+
+    if(@topic.current_step == "promises")
+      @promises = Promise.find_all_by_id(@topic.categories.collect{ |cat| cat.promise_ids })
+    elsif(@topic.current_step == "categories")
+      fetch_categories    
+    end
 
     respond_to do |format|
       format.html # new.html.erb
@@ -44,24 +50,24 @@ class TopicsController < ApplicationController
   # POST /topics
   # POST /topics.json
   def create
+    session[:topic_params] ||= {}
     session[:topic_params].deep_merge!(params[:topic]) if params[:topic]
     @topic = Topic.new(session[:topic_params])
     @topic.current_step = session[:topic_step]
+
     if(params[:prev_button])
       @topic.previous_step
-      fetch_categories
     elsif @topic.last_step?
       @topic.save
     else
       @topic.next_step
     end
     session[:topic_step] = @topic.current_step
-    if(@topic.current_step == "promises")
-      @promises = Promise.find_all_by_id(@topic.categories.collect{ |cat| cat.promise_ids })
-    end
+
     if @topic.new_record?
-      render 'new'
+      redirect_to :action => 'new'
     else
+      session[:topic_params] = session[:topic_step] = nil
       redirect_to @topic
     end
   end

@@ -179,8 +179,10 @@ nb:
       years: "år"
     created:
       promise: 'Løftet ble lagret.'
+      topic: 'Tema er lagret.'
     updated:
       promise: 'Løftet ble oppdatert.'
+      topic: 'Tema er oppdatert.'
     counts:
       representative:
         one: "Viser <strong>1</strong> representant."
