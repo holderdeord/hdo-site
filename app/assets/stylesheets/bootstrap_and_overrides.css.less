@@ -17,21 +17,28 @@
 //
 // @linkColor: #ff0000;
 
+@baseFontFamily: Verdana, "Helvetica Neue", Helvetica, Arial, sans-serif;
+
 @navbarBackground: #009ea6;
-@navbarBackgroundHighlight:#009ea6;
+@navbarBackgroundHighlight:#55bfbb;
 @navbarLinkColor: @white;
 @navbarLinkColorHover: @grayLight;
-
 @navbarLinkBackgroundActive: @white;
 @navbarLinkColorActive: @black;
 
+.navbar {
+    font-family: 'NeoSansStandard', Helvetica, Arial, sans-serif;
+    text-transform: uppercase;
+}
 
 .navbar .nav li.active {
-    .box-shadow(1px 0px 5px 1px @grayLight);
+    .box-shadow(0px -1px 10px -3px @grayDark);
 }
 
 .navbar .nav .active > a, .navbar .nav .active > a:hover {
     color: @black;
     text-decoration: none;
     background-color: @white;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
 }
