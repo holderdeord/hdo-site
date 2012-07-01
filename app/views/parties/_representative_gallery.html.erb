@@ -1,15 +1,7 @@
 <div id="representative-carousel" class="carousel slide">
   <div class="carousel-inner">
-    <div class="active item">
-      <% (@party.representatives.pop(4)).each do |representative| %>
-        <%= link_to(representative, :class => "representative-view") do %>
-          <%= image_tag representative.image, class: "representative-carousel-image", :alt => representative.full_name %>
-        <% end %>
-      <% end %>
-    </div>
-
-    <% @party.representatives.each_slice(4) do | representative_group | %>
-      <div class="item">
+    <% representatives.each_slice(4).with_index do |representative_group, index| %>
+      <div class="item <%= 'active' if index == 0 %>">
         <% representative_group.each do |representative| %>
           <%= link_to(representative, :class => "representative-view") do %>
             <%= image_tag representative.image, class: "representative-carousel-image",:alt => representative.full_name %>
