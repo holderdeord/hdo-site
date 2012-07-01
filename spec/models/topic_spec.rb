@@ -37,4 +37,8 @@ describe Topic do
     vote_direction = VoteDirection.create!(:vote => vote, :topic => valid_topic, :matches => true)
     valid_topic.votes.should == [vote]
   end
+
+  it "has a stats object" do
+    valid_topic.stats.should be_kind_of(Hdo::Stats::TopicCounts)
+  end
 end

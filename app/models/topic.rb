@@ -34,4 +34,8 @@ class Topic < ActiveRecord::Base
   def last_step?
   	current_step == steps.last
   end
+
+  def stats
+    @stats ||= Hdo::Stats::TopicCounts.new(self)
+  end
 end
