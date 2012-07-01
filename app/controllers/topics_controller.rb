@@ -26,15 +26,7 @@ class TopicsController < ApplicationController
   # GET /topics/new
   # GET /topics/new.json
   def new
-    session[:topic_params].deep_merge!(params[:topic]) if params[:topic]
-    @topic = Topic.new(session[:topic_params])
-    @topic.current_step = session[:topic_step]
-
-    if(@topic.current_step == "promises")
-      @promises = Promise.find_all_by_id(@topic.categories.collect{ |cat| cat.promise_ids })
-    elsif(@topic.current_step == "categories")
-      fetch_categories    
-    end
+    @topic = Topic.new
 
     respond_to do |format|
       format.html # new.html.erb
@@ -45,46 +37,71 @@ class TopicsController < ApplicationController
   # GET /topics/1/edit
   def edit
     @topic = Topic.find(params[:id])
+    @topic.current_step = session[:topic_step]
+
+    if(@topic.current_step == "categories")
+      fetch_categories
+    elsif(@topic.current_step == "promises")
+      @promises = Promise.find_all_by_id(@topic.categories.collect{ |cat| cat.promise_ids })
+    elsif(@topic.current_step == "votes")
+      @votes = Vote.all
+    end
   end
 
   # POST /topics
   # POST /topics.json
   def create
-    session[:topic_params] ||= {}
-    session[:topic_params].deep_merge!(params[:topic]) if params[:topic]
-    @topic = Topic.new(session[:topic_params])
-    @topic.current_step = session[:topic_step]
-
-    if(params[:prev_button])
-      @topic.previous_step
-    elsif @topic.last_step?
-      @topic.save
-    else
-      @topic.next_step
-    end
+    @topic = Topic.new(params[:topic])
+    @topic.next_step
     session[:topic_step] = @topic.current_step
+    @topic.save!
 
-    if @topic.new_record?
-      redirect_to :action => 'new'
-    else
-      session[:topic_params] = session[:topic_step] = nil
-      redirect_to @topic
+    redirect_to proc { edit_topic_url(@topic) }
+  end
+
+  def process_vote_directions(topic, params)
+    votes_for = params[:votes_for]
+    votes_against = params[:votes_against]
+
+    if(votes_for || votes_against)
+      topic.vote_directions = []
     end
+    if(votes_for)
+      set_vote_directions(votes_for, topic, true)
+    end
+    if(votes_against)
+      set_vote_directions(votes_against, topic, false)
+    end
+  end
+
+  def set_vote_directions(vote_ids, topic, matches)
+    votes = Vote.find_all_by_id vote_ids
+      votes.each do |vote|
+        topic.vote_directions << VoteDirection.new(:topic => topic,
+            :vote => vote,
+            :matches => matches)
+      end
   end
 
   # PUT /topics/1
   # PUT /topics/1.json
   def update
     @topic = Topic.find(params[:id])
-
-    respond_to do |format|
-      if @topic.update_attributes(params[:topic])
-        format.html { redirect_to @topic, notice: 'Topic was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { render action: "edit" }
-        format.json { render json: @topic.errors, status: :unprocessable_entity }
-      end
+    @topic.current_step = session[:topic_step]
+    if params[:prev_button]
+      @topic.previous_step
+    else
+      @topic.next_step
+    end
+    session[:topic_step] = @topic.current_step
+    process_vote_directions @topic, params
+    @topic.update_attributes(params[:topic])
+    if(params[:finish_button])
+      session[:topic_step] = nil
+      redirect_to @topic
+      return
+    else
+      redirect_to proc { edit_topic_url(@topic) }
     end
   end
 

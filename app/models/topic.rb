@@ -10,7 +10,7 @@ class Topic < ActiveRecord::Base
   has_many :votes, :through => :vote_directions, :order => :time
 
   def steps
-    %w[categories promises]
+    %w[categories promises votes]
   end
 
   def current_step
@@ -37,5 +37,13 @@ class Topic < ActiveRecord::Base
 
   def stats
     @stats ||= Hdo::Stats::TopicCounts.new(self)
+  end
+
+  def is_vote_for?(vote_id)
+    vote_directions.collect {|vd| vd.vote.id if vd.matches}.include?(vote_id)
+  end
+  
+  def is_vote_against?(vote_id)
+    vote_directions.collect {|vd| vd.vote.id unless vd.matches}.include?(vote_id)
   end
 end
