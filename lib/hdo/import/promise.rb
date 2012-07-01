@@ -26,21 +26,25 @@ XML
 
       def self.import(doc)
         doc.css("promise").each do |promise|
-          party      = ::Party.find_by_external_id!(promise.css("party").first.text)
+          party      = ::Party.find_by_external_id!(promise.css("party").first.text.strip)
           general    = promise.css("general").first.text == "true"
           categories = ::Category.where(name: promise.css("categories category").map { |e| e.text })
           source     = promise.css("source").first.text
           body       = promise.css("body").first.text
 
-          ::Promise.create!(
-            party: party,
-            general: general,
-            categories: categories,
-            source: source,
-            body: body
-          )
+          begin
+            ::Promise.create!(
+              party: party,
+              general: general,
+              categories: categories,
+              source: source,
+              body: body
+            )
 
-          print "."
+            print "."
+          rescue ActiveRecord::RecordInvalid => ex
+            STDERR.puts "failed to import promise: #{ex.message} for #{party.name}, #{body.inspect}"
+          end
         end
       end
 
