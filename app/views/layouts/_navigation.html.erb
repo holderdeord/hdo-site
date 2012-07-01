@@ -91,13 +91,12 @@
         </ul>
 
         <ul class="nav pull-right">
-          <li>
-            <% if user_signed_in? %>
-                <%= link_to t('app.logout'), destroy_user_session_path, method: 'delete' %>
-            <% else %>
-                <%= link_to t('app.login'), new_user_session_path  %>
-            <% end %>
-          </li>
+          <% if user_signed_in? %>
+            <li><%= link_to Topic.model_name.human(count: 2), topics_path %></li>
+            <li><%= link_to t('app.logout'), destroy_user_session_path, method: 'delete' %></li>
+          <% else %>
+              <li><%= link_to t('app.login'), new_user_session_path  %></li>
+          <% end %>
         </ul>
       </div>
     </div>

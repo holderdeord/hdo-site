@@ -16,7 +16,7 @@
         <td><%= link_to topic.title, topic %></td>
         <td><%= topic.description %></td>
         <td><%= link_to 'Edit', edit_topic_path(topic), class: 'btn' %></td>
-        <td><%= link_to 'Destroy', topic, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %></td>
+        <td><%= link_to 'Destroy', topic, method: :delete, data: { confirm: Topic.human_attribute_name(:confirm_destroy) }, class: 'btn btn-danger' %></td>
       </tr>
     <% end %>
   </tbody>
