@@ -1,5 +1,5 @@
 <h2><%= Vote.model_name.human count: 2 %></h2>
-<div class="well">
+<div class="well topic-vote-table">
   <table class="table table-striped">
     <thead>
       <tr>
@@ -13,15 +13,15 @@
     <tbody>
       <% @votes.each do |vote| %>
       <tr>
-        <td><%= vote.subject %></td>
+        <td><%= link_to vote.subject, vote, :target => 'topic_new' %></td>
         <td>
           <ul>
           <% vote.propositions.each  do |prop| %>
-            <li>
+            <li class="prop-row">
               <%= prop.body.html_safe %>
             </li>
-          </ul>
           <% end %> 
+          </ul>
         </td>
         <td>
           <i class="icon-thumbs-up"></i>
