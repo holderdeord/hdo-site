@@ -20,18 +20,18 @@
             <li class="prop-row">
               <%= prop.body.html_safe %>
             </li>
-          <% end %> 
+          <% end %>
           </ul>
         </td>
         <td>
           <i class="icon-thumbs-up"></i>
           <strong><%= t 'app.for' %></strong>
-          <%= radio_button_tag "votes_for[#{vote.id}]", true, @topic.is_vote_for?(vote.id) -%>
+          <%= radio_button_tag "votes_for[#{vote.id}]", true, @topic.vote_for?(vote.id) -%>
         </td>
         <td>
           <i class="icon-thumbs-down"></i>
           <strong><%= t 'app.against' %></strong>
-          <%= radio_button_tag "votes_for[#{vote.id}]", false, @topic.is_vote_against?(vote.id) -%>
+          <%= radio_button_tag "votes_for[#{vote.id}]", false, @topic.vote_against?(vote.id) -%>
         </td>
       </tr>
       <% end %>

@@ -3,13 +3,13 @@
 </div>
 
 <div class="pagination">
-	<ul>
-		<% @topic.steps.each do |step| %>
-			<li <%= 'class="active"'.html_safe if @topic.is_current_step?(step) %>>
-				<%= link_to Topic.human_attribute_name(step), :controller => :topics, :action => :edit, :skip_to_step => step %>
-			</li>
-		<% end %>
-	</ul>
+  <ul>
+    <% @topic.steps.each do |step| %>
+    <li class="<%= 'active' if @topic.current_step?(step) %>">
+        <%= link_to Topic.human_attribute_name(step), :controller => :topics, :action => :edit, :skip_to_step => step %>
+      </li>
+    <% end %>
+  </ul>
 </div>
 
 <%= render 'form' %>
