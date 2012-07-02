@@ -2,5 +2,9 @@
   <h1><%= @committee.name %> <small class="pull-right"><%= @committee.external_id %></small></h1>
 </div>
 
-<%= render partial: 'shared/representatives_table', locals: {representatives: @committee.representatives, show_party: true } %>
+<%= render partial: 'shared/representatives_table', locals: { representatives: @committee.representatives, show_party: true } %>
+
+<h2><%= Issue.model_name.human count: 2 %></h2>
+<%= render partial: 'shared/issue_table', locals: { issues: @committee.issues } %>
+
 

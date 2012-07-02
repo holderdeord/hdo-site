@@ -73,6 +73,7 @@ nb:
         name: "Navn"
         representatives: "Representanter"
         external_id: "Ekstern id"
+        issues: "Saker"
       category:
         name: "Navn"
         external_id: "Ekstern id"
