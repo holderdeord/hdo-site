@@ -9,6 +9,7 @@
     <tr>
       <th><%= District.human_attribute_name :name %></th>
       <th><%= District.human_attribute_name :representatives %></th>
+      <th><%= District.human_attribute_name :percent_of_representatives %></th>
     </tr>
   </thead>
 
@@ -16,7 +17,8 @@
       <% @districts.each do |dist| %>
       <tr>
         <td><%= link_to dist.name, dist %></td>
-        <td><%= dist.representatives.size %></td>
+        <td><%= dist.representatives.count %></td>
+        <td><%= dist.percent_of_representatives %>%</td>
       </tr>
       <% end %>
   </tbody>

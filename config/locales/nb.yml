@@ -83,6 +83,7 @@ nb:
         name: "Navn"
         external_id: "Ekstern id"
         representatives: "Representanter"
+        percent_of_representatives: "Prosent"
       issue:
         summary: "Sammendrag"
         external_id: "Ekstern id"
