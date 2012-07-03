@@ -13,7 +13,10 @@
         <div class="well">
           <h3><%=cat_group.name %></h3>
           <% [cat_group, cat_group.children].flatten.each do |cat| %>
-            <p><%= check_box_tag "topic[category_ids][]", cat.id, @topic.categories.include?(cat) %> <%= cat.name -%></p>
+          <label class="checkbox">
+            <%= check_box_tag "topic[category_ids][]", cat.id, @topic.categories.include?(cat) %>
+            <%= cat.name %>
+          </label>
           <% end %>
         </div>
       <% end %>
