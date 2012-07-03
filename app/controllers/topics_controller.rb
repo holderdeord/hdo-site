@@ -94,28 +94,7 @@ class TopicsController < ApplicationController
   private
 
   def fetch_categories
-    column_count = 3
-    category_count = Category.count
-    cat_groups = Category.where( :main => true).includes(:children) #.in_groups_of(Category.where(:main => true).count / 3, false)
-    column_length = (category_count / column_count)
-
-    lengths = []
-    sum = 0
-    prev_i = 0
-    cat_groups.each_with_index do |cat_group, i|
-      sum += (cat_group.children.count + 1)
-      if(sum >= column_length)
-        sum = 0
-        lengths << (i - prev_i)
-        prev_i = i
-      end
-    end
-
-    @categories = []
-    lengths.each do |l|
-      @categories << cat_groups.shift(l)
-    end
-    @categories << cat_groups
+    @categories = Category.column_groups
   end
 
   def process_vote_directions(topic, params)
