@@ -1,4 +1,4 @@
-<%= topic.inputs '', :class => 'sign_up' do %>
+<%= topic.inputs do %>
   <div class="well">
     <%= topic.text_field :title %>
     <%= topic.text_area :description, :rows => 5 %>
@@ -12,10 +12,8 @@
       <% cat_column.each do |cat_group| %>
         <div class="well">
           <h3><%=cat_group.name %></h3>
-          <p><%= check_box_tag "topic[category_ids][]", cat_group.id, @topic.categories.include?(cat_group) -%> <%= cat_group.name -%></p>
-
-          <% cat_group.children.each do |category| %>
-            <p><%= check_box_tag "topic[category_ids][]", category.id, @topic.categories.include?(category) -%> <%= category.name %></p>
+          <% [cat_group, cat_group.children].flatten.each do |cat| %>
+            <p><%= check_box_tag "topic[category_ids][]", cat.id, @topic.categories.include?(cat) %> <%= cat.name -%></p>
           <% end %>
         </div>
       <% end %>
