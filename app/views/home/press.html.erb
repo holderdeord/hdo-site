@@ -1,46 +1,40 @@
-<div class="span8">
-  <div class="page-header">
-    <h1>Har du lyst til å komme i kontakt med oss?</h1>
+<div class="page-header">
+  <h1>Har du lyst til å komme i kontakt med oss?</h1>
+</div>
+
+<div class="row">
+  <div class="span2"><%= image_tag 'hdo/daniel.jpg' %></div>
+  <div class="span6">
+    <h2>Daniel Rees <small>daglig leder</small></h2>
+    <dl>
+      <dt>Epost</dt>
+      <dd><a href="mailto:<%= obscure_email 'daniel@holderdeord.no' %>"><%= obscure_email 'daniel@holderdeord.no' %></a></dd>
+      <dt>Telefon</dt>
+      <dd><a href="tel:+4799452400"></a>+47 99452400</dd>
+    </dl>
   </div>
 
-  <div class="row">
-    <div class="span2"><%= image_tag 'hdo/daniel.jpg' %></div>
-    <address class="span6">
-      <h2>Daniel Rees <small>daglig leder</small></h2>
-      <dl>
-        <dt>Epost</dt>
-        <dd><a href="mailto:<%= obscure_email 'daniel@holderdeord.no' %>"><%= obscure_email 'daniel@holderdeord.no' %></a></dd>
-        <dt>Telefon</dt>
-        <dd><a href="tel:+4799452400"></a>+47 99452400</dd>
-      </dl>
-    </address>
+  <div class="span4">
+    <h3>Post- og besøksaddresse</h3>
+    <dl>
+      <dt>Holder de ord</dt>
+      <dd>c/o Mesh</dd>
+      <dd>Tordenskioldsgate 3</dd>
+      <dd>0160 Oslo</dd>
+      <dd>Norge</dd>
+    </dl>
   </div>
+</div>
 
-  <div class="row">
-    <div class="span2"><%= image_tag 'hdo/tiina.jpg' %></div>
-    <address class="span6">
-      <h2>Tiina Ruohonen <small>kommunikasjons- og pressesjef</small></h2>
-      <dl>
-        <dt>Epost</dt>
-        <dd><a href="mailto:<%= obscure_email 'tiina@holderdeord.no' %>"><%= obscure_email 'tiina@holderdeord.no' %></a></dd>
-        <dt>Telefon</dt>
-        <dd><a href="tel:+4790983161"></a>+47 90983161</dd>
-      </dl>
-    </address>
-  </div>
-
-  <hr class="soften">
-
-  <div class="row">
-    <div class="span6">
-      <h3>Post- og besøksaddresse</h3>
-      <dl>
-        <dt>Holder de ord</dt>
-        <dd>c/o Mesh</dd>
-        <dd>Tordenskioldsgate 3</dd>
-        <dd>0160 Oslo</dd>
-        <dd>Norge</dd>
-      </dl>
-    </div>
+<div class="row">
+  <div class="span2"><%= image_tag 'hdo/tiina.jpg' %></div>
+  <div class="span6">
+    <h2>Tiina Ruohonen <small>kommunikasjons- og pressesjef</small></h2>
+    <dl>
+      <dt>Epost</dt>
+      <dd><a href="mailto:<%= obscure_email 'tiina@holderdeord.no' %>"><%= obscure_email 'tiina@holderdeord.no' %></a></dd>
+      <dt>Telefon</dt>
+      <dd><a href="tel:+4790983161"></a>+47 90983161</dd>
+    </dl>
   </div>
 </div>
