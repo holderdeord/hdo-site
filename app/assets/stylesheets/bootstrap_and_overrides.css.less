@@ -13,11 +13,22 @@
 // If you'd like to override bootstrap's own variables, you can do so here as well
 // See http://twitter.github.com/bootstrap/less.html for their names and documentation
 //
-// Example:
-//
-// @linkColor: #ff0000;
+
+
+@font-face {
+	font-family: "Neo Sans";
+	src: url('/fonts/NeoSansStd-Regular.otf');
+}
+
+@import url('http://fonts.googleapis.com/css?family=Ubuntu:400,700,400italic,700italic');
+
+@hdo-primary-color: #009ea6;
+@hdo-secondary-color: #e03d25;
+@hdo-tertiary-color: #332b2e;
+@hdo-quaternary-color: #231f20;
 
 @baseFontFamily: Verdana, "Helvetica Neue", Helvetica, Arial, sans-serif;
+@headingsFontFamily: 'NeoSansStandard', 'Ubuntu', Helvetica, Arial, sans-serif;
 
 @navbarBackground: #009ea6;
 @navbarBackgroundHighlight:#55bfbb;
@@ -27,7 +38,7 @@
 @navbarLinkColorActive: @black;
 
 .navbar {
-    font-family: 'NeoSansStandard', Helvetica, Arial, sans-serif;
+    font-family: @headingsFontFamily;
     text-transform: uppercase;
 }
 
@@ -42,3 +53,16 @@
     border-top-left-radius: 3px;
     border-top-right-radius: 3px;
 }
+
+@gridColumns: 11;
+@gridColumnWidth: 68px;
+@gridGutterWidth: 21px;
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+	font-family: @headingsFontFamily;
+}
+
