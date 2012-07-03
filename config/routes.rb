@@ -10,13 +10,14 @@ Hdo::Application.routes.draw do
   resources :parties,         :only => [:index, :show]
   resources :representatives, :only => [:index, :show]
   resources :committees,      :only => [:index, :show]
-  
+
   resources :users
 
   resources :topics
 
   get "home/index"
   get "home/about"
+  get "home/press"
   get "docs/index"
 
   # The priority is based upon order of creation:

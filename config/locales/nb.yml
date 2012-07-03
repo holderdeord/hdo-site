@@ -152,8 +152,8 @@ nb:
     description: "Bringer politikken til folket."
     about: "Om oss"
     read_more: "Les mer"
-    contact:
-      email: "kontakt@holderdeord.no"
+    press: "Presse"
+    email: "kontakt@holderdeord.no"
     documentation:
       default: "Dokumentasjon"
       technical: "Teknisk"
