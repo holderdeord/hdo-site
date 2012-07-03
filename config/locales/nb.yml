@@ -170,7 +170,7 @@ nb:
     against: 'Mot'
     absent: 'Ikke tilstede'
     promises:
-      disclaimer: '<p>Vi jobber med å kode alle løftene fra partienes valgprogram.</p> <p>Her kan man foreløpig se noen eksempler på kategoriserte løfter. Vi vil etter planen publisere den ferdigkodede løftedatabasen i løpet av juni.</p>'
+      disclaimer: '<p>Vi jobber med å kode alle løftene fra partienes valgprogram.</p> <p>Her kan man foreløpig se noen eksempler på kategoriserte løfter. Vi vil etter planen publisere den ferdigkodede løftedatabasen i løpet av juli.</p>'
     votes:
       unanimous: 'Denne voteringen ble avgjort uten bruk av voteringssystemet.'
     external:
