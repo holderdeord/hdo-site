@@ -40,7 +40,7 @@ class TopicsController < ApplicationController
     when 'promises'
       @promises = Promise.find_all_by_id(@topic.categories.collect{ |cat| cat.promise_ids })
     when 'votes'
-      @votes = Vote.all
+      @votes = Vote.includes(:propositions).all
     else
       raise "unknown step: #{@topic.current_step.inspect}"
     end
