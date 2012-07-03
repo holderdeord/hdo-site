@@ -29,7 +29,7 @@ TopicSupportGraph.prototype.render = function() {
       text: 'holderdeord.no'
     },
     title: {
-      text: 'Hvor ofte har partiet stemt for temaet?'
+      text: ''
     },
     xAxis: {
       categories: this.categories(),

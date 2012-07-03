@@ -169,6 +169,7 @@ nb:
     for: 'For'
     against: 'Mot'
     absent: 'Ikke tilstede'
+    topic_graph_header: 'Hvor ofte har partiet stemt for for %{title}?'
     promises:
       disclaimer: '<p>Vi jobber med å kode alle løftene fra partienes valgprogram.</p> <p>Her kan man foreløpig se noen eksempler på kategoriserte løfter. Vi vil etter planen publisere den ferdigkodede løftedatabasen i løpet av juli.</p>'
     votes:
