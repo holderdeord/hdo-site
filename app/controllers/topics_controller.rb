@@ -109,13 +109,4 @@ class TopicsController < ApplicationController
     end
   end
 
-  def set_vote_directions(vote_ids, topic, matches)
-    votes = Vote.find_all_by_id vote_ids
-    votes.each do |vote|
-      topic.vote_directions.create! topic: topic,
-                                    vote: vote,
-                                    matches: matches
-    end
-  end
-
 end
