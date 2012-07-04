@@ -62,7 +62,7 @@ class TopicsController < ApplicationController
     @topic.current_step = session[:topic_step]
 
     if params[:prev_button]
-      @topic.previous_step
+      @topic.previous_step!
     else
       @topic.next_step!
     end
