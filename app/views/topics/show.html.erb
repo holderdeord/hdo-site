@@ -57,8 +57,9 @@
 </div>
 
 <% if user_signed_in? %>
-  <%= link_to 'Edit', edit_topic_path(@topic) %> |
-  <%= link_to 'Back', topics_path %>
+  <div class="form-actions">
+    <%= link_to t('app.edit'), edit_topic_path(@topic), class: 'btn' %>
+  </div>
 <% end %>
 
 <% content_for :document_ready do %>

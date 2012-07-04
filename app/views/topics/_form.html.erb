@@ -1,11 +1,4 @@
-<%= twitter_bootstrap_form_for @topic do |topic| %>
-  <%= render "#{@topic.current_step}_step", topic: topic %>
-
-  <div class="form-actions">
-    <%= topic.submit t('app.previous'), name: 'prev_button' unless @topic.first_step? %>
-    <%= topic.submit t('app.next') unless @topic.last_step? or @topic.new_record? %>
-
-    <%= topic.submit t('app.save'), class: 'btn btn-primary', name: 'finish_button' %>
-    <%= link_to t('app.cancel'), topics_path, :class => 'btn btn-danger' %>
-  </div>
+<%= twitter_bootstrap_form_for @topic do |form| %>
+<%= render partial: "#{@topic.current_step}_step", locals: { form: form} %>
+<%= render partial: "edit_buttons", locals: { form: form } %>
 <% end %>

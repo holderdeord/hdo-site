@@ -1,9 +1,9 @@
-<%= topic.inputs do %>
-<%= hidden_field_tag 'topic[category_ids][]' %>
+<%= form.inputs do %>
+  <%= hidden_field_tag 'topic[category_ids][]' %>
 
   <div class="well">
-    <%= topic.text_field :title %>
-    <%= topic.text_area :description, :rows => 5 %>
+    <%= form.text_field :title %>
+    <%= form.text_area :description, :rows => 5 %>
   </div>
 <% end %>
 
