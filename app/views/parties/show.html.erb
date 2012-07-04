@@ -7,7 +7,7 @@
     <div class="span3">
       <%= image_tag @party.large_logo, alt: @party.name + 's logo' %>
       <dl>
-        <dt><%= Representative.model_name.human(count: 2) %></dt>
+        <dt><%= Representative.model_name.human(count: 2).capitalize %></dt>
         <dd><%= @party.representatives.count %> (<%= @party.percent_of_representatives %>%)</dd>
       </dl>
     </div>

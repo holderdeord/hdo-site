@@ -40,7 +40,7 @@ nb:
         one: "votering"
         other: "voteringer"
       vote_result:
-        one: "steme"
+        one: "stemme"
         other: "stemmer"
       promise:
         one: "løfte"
@@ -172,6 +172,7 @@ nb:
     about: "Om oss"
     read_more: "Les mer"
     press: "Presse"
+    contact_us: 'Kontakt oss'
     email: "kontakt@holderdeord.no"
     documentation:
       default: "Dokumentasjon"
@@ -188,7 +189,7 @@ nb:
     for: 'For'
     against: 'Mot'
     absent: 'Ikke tilstede'
-    unrelated: 'Urelatert'
+    unrelated: 'Ikke relatert'
     connection: 'Kobling'
     expand: 'Åpne'
     collapse: 'Lukke'

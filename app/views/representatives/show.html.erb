@@ -44,7 +44,7 @@
 
     <div class="span9">
       <h2><%= Vote.model_name.human(count: 2).capitalize %></h2>
-      <p class="pull-right"><%= t('app.counts.vote', count: @vote_results.size).html_safe %></p>
+      <p class="pull-right"><%= page_entries_info @vote_results, model: Vote %></p>
 
       <table class="table table-striped">
         <thead>
@@ -53,7 +53,7 @@
             <th><%= Issue.model_name.human(count: 2).capitalize %></th>
             <th><%= Vote.human_attribute_name :subject %></th>
             <th><%= Vote.human_attribute_name :enacted %></th>
-            <th><%= VoteResult.model_name.human %></th>
+            <th><%= VoteResult.model_name.human.capitalize %></th>
           </tr>
         </thead>
         <tbody>

@@ -55,22 +55,22 @@
             <ul class="dropdown-menu">
               <li>
               <%= link_to votes_path do %>
-                <i class="icon-envelope icon-white"></i> <%= Vote.model_name.human(count: 2).capitalize %>
+                <i class="icon-envelope"></i> <%= Vote.model_name.human(count: 2).capitalize %>
               <% end %>
               </li>
               <li>
               <%= link_to categories_path do %>
-                <i class="icon-folder-close icon-white"></i> <%= Category.model_name.human(count: 2).capitalize %>
+                <i class="icon-folder-close"></i> <%= Category.model_name.human(count: 2).capitalize %>
               <% end %>
               </li>
               <li>
               <%= link_to districts_path do %>
-                <i class="icon-home icon-white"></i> <%= District.model_name.human(count: 2).capitalize %>
+                <i class="icon-home"></i> <%= District.model_name.human(count: 2).capitalize %>
               <% end %>
               </li>
               <li>
               <%= link_to committees_path do %>
-                <i class="icon-inbox icon-white"></i> <%= Committee.model_name.human(count: 2).capitalize %>
+                <i class="icon-inbox"></i> <%= Committee.model_name.human(count: 2).capitalize %>
               <% end %>
               </li>
             </ul>
@@ -94,8 +94,8 @@
         <% if Rails.configuration.show_login_status %>
           <ul class="nav pull-right">
             <% if user_signed_in? %>
-              <li><%= link_to User.model_name.human(count: 2), users_path %></li>
-              <li><%= link_to Topic.model_name.human(count: 2), topics_path %></li>
+              <li><%= link_to User.model_name.human(count: 2).capitalize, users_path %></li>
+              <li><%= link_to Topic.model_name.human(count: 2).capitalize, topics_path %></li>
               <li><%= link_to t('app.logout'), destroy_user_session_path, method: 'delete' %></li>
             <% else %>
                 <li><%= link_to t('app.login'), new_user_session_path  %></li>

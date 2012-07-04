@@ -16,7 +16,7 @@
         <dt><%= Vote.human_attribute_name :time %></dt>
         <dd><%= @vote.time %></dd>
 
-        <dt><%= Issue.model_name.human %></dt>
+        <dt><%= Issue.model_name.human.capitalize %></dt>
         <dd>
           <ul>
           <% @issues.each do |issue| %>
@@ -50,7 +50,7 @@
 <table class="table table-striped">
   <thead>
     <tr>
-      <th><%= Representative.model_name.human %></th>
+      <th><%= Representative.model_name.human.capitalize %></th>
       <th><%= Representative.human_attribute_name :party %></th>
       <th><%= VoteResult.human_attribute_name :result %></th>
     </tr>
