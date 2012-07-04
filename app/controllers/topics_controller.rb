@@ -1,6 +1,5 @@
 class TopicsController < ApplicationController
   before_filter :authenticate_user!, :except => [:show]
-  before_filter :fetch_categories, :only => [:edit, :new]
   before_filter :fetch_topic, :only => [:show, :edit, :update, :destroy]
 
   def index
@@ -21,6 +20,7 @@ class TopicsController < ApplicationController
 
   def new
     @topic = Topic.new
+    fetch_categories
 
     respond_to do |format|
       format.html
@@ -29,7 +29,7 @@ class TopicsController < ApplicationController
   end
 
   def edit
-    @topic.current_step = params[:skip_to_step] || session[:topic_step]
+    @topic.current_step = params[:step] || session[:topic_step]
 
     case @topic.current_step
     when 'categories'

@@ -6,7 +6,7 @@
   <ul>
     <% @topic.steps.each do |step| %>
     <li class="<%= 'active' if @topic.current_step?(step) %>">
-        <%= link_to Topic.human_attribute_name(step), :controller => :topics, :action => :edit, :skip_to_step => step %>
+        <%= link_to Topic.human_attribute_name(step), edit_topic_path(@topic, :step => step)  %>
       </li>
     <% end %>
   </ul>
