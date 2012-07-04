@@ -21,14 +21,16 @@
           <th><%= Issue.human_attribute_name :summary %></th>
           <th><%= Vote.human_attribute_name :subject %></th>
           <th><%= Vote.human_attribute_name :enacted %></th>
+          <th><%= VoteDirection.human_attribute_name :matches %></th>
         </tr>
       </thead>
       <tbody>
-      <% @topic.votes.each do |vote| %>
+        <% @topic.vote_directions.each do |dir| %>
         <tr>
-          <td><%= link_to vote.issues.first.summary, vote.issues.first %></td>
-          <td><%= link_to vote.subject, vote %></td>
-          <td><%= vote.enacted_text %></td>
+          <td><%= link_to dir.vote.issues.first.summary, dir.vote.issues.first %></td>
+          <td><%= link_to dir.vote.subject, dir.vote %></td>
+          <td><%= dir.vote.enacted_text %></td>
+          <td><%= dir.matches_text %></td>
         </tr>
       <% end %>
       </tbody>

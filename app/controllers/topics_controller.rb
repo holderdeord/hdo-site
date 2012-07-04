@@ -1,8 +1,6 @@
 class TopicsController < ApplicationController
   before_filter :authenticate_user!, :except => [:show]
-  before_filter :fetch_topic, :only => [:show, :edit, :update, :destroy, :edit_votes_search]
-
-  caches_page :edit_category_votes, :edit_votes
+  before_filter :fetch_topic, :only => [:show, :edit, :update, :destroy]
 
   def index
     @topics = Topic.all
@@ -40,17 +38,10 @@ class TopicsController < ApplicationController
       # better way to do this?
       @promises = @topic.categories.includes(:promises).map(&:promises).compact.flatten
     when 'votes'
-      @votes = Vote.includes(:propositions).limit(50).order("time DESC")
+      @votes = Vote.includes(:issues, :propositions).select { |e| e.issues.all?(&:processed?) }.sort_by { |e| @topic.connected?(e) ? 0 : 1}
     else
       raise "unknown step: #{@topic.current_step.inspect}"
     end
-  end
-
-  def edit_votes_search
-    query = params[:query]
-    @votes = Proposition.includes(:vote).where('LOWER(body) like ?', "%#{query}%").map(&:vote)
-
-    render :edit_votes, :layout => false
   end
 
   def create

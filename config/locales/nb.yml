@@ -142,6 +142,8 @@ nb:
         categories: "Kategorier"
         promises: "Løfter"
         votes: "Voteringer"
+      vote_direction:
+        matches: "Støtter tema?"
   app:
     next: "Neste"
     previous: "Forrige"
@@ -173,6 +175,8 @@ nb:
     absent: 'Ikke tilstede'
     unrelated: 'Urelatert'
     connection: 'Kobling'
+    expand: 'Åpne'
+    collapse: 'Lukke'
     topic_graph_header: 'Hvor ofte har partiet stemt for for %{title}?'
     promises:
       disclaimer: '<p>Vi jobber med å kode alle løftene fra partienes valgprogram.</p> <p>Her kan man foreløpig se noen eksempler på kategoriserte løfter. Vi vil etter planen publisere den ferdigkodede løftedatabasen i løpet av juli.</p>'

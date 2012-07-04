@@ -1,16 +1,41 @@
-<label>
-  Søk etter voteringer:
-  <input type="search" id="vote-search">
-</label>
+<% @votes.each do |vote| %>
+<div class="vote-container">
+  <div class="row vote">
+    <div class="span2">
+      <a data-toggle="collapse" data-target="#proposition-body-<%= vote.id %>"><%= t 'app.expand' %></a>
+    </div>
 
+    <div class="span6">
+      <h4><%= link_to vote.subject, vote, :target => 'topic_new' %></h4>
+      <ul>
+        <% vote.issues.each do |issue| %>
+          <li><%= link_to issue.summary, issue %></li>
+        <% end %>
+      </ul>
+    </div>
 
-<%= spinner_tag %>
+    <div class="pull-right">
+      <%= select_tag "votes_for[#{vote.id}]", vote_options_for(vote) %>
+    </div>
+  </div>
 
-<div id="vote-selector">
+  <div class="row collapse" id="proposition-body-<%= vote.id %>">
+    <div class="span8">
+      <% vote.propositions.each do |prop| %>
+        <%= prop.body.html_safe %>
+      <% end %>
+    </div>
+  </div>
 </div>
+<% end %>
 
 <%= content_for :document_ready do %>
-  <script type="text/javascript" charset="utf-8">
-    new TopicVoteSelector(<%= @topic.id %>).init();
-  </script>
+<script type="text/javascript" charset="utf-8">
+  $(document).ready(function() {
+    $(".vote").collapse()
+    $(".vote").on('shown', function() {
+      alert(this);
+    });
+  });
+</script>
 <% end %>

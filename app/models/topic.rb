@@ -47,6 +47,10 @@ class Topic < ActiveRecord::Base
     vote_directions.any? { |vd| !vd.matches? && vd.vote_id == vote_id }
   end
 
+  def connected?(vote)
+    vote_directions.where(:vote_id => vote.id).any?
+  end
+
   def current_step?(step)
     step == self.current_step
   end
