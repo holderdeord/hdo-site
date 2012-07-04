@@ -104,6 +104,7 @@ nb:
         time: "Dato"
         enacted: "Vedtatt"
         counts: "Stemmegivning"
+        propositions: "Forslag"
       vote_result:
         result: "Stemme"
       promise:

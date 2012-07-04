@@ -1,28 +1,22 @@
 <h2><%= Vote.model_name.human count: 2 %></h2>
-<div class="well topic-vote-table">
+<div class="well">
   <table class="table table-striped">
     <thead>
       <tr>
-        <th><%= Vote.model_name.human %></th>
-        <th><%= Proposition.model_name.human count: 2 %></th>
+        <th><%= Vote.human_attribute_name :subject %></th>
+        <th><%= Vote.human_attribute_name :time %></th>
+        <th><%= Vote.human_attribute_name :propositions %></th>
         <th></th>
         <th></th>
       </tr>
     </thead>
 
     <tbody>
-      <% @votes.each do |vote| %>
+      <% @votes.each_with_index do |vote, index| %>
       <tr>
         <td><%= link_to vote.subject, vote, :target => 'topic_new' %></td>
-        <td>
-          <ul>
-          <% vote.propositions.each  do |prop| %>
-            <li class="prop-row">
-              <%= prop.body.html_safe %>
-            </li>
-          <% end %>
-          </ul>
-        </td>
+        <td><%= l vote.time, format: :short %></td>
+        <td><a rel="popover" data-vote-index="<%= index %>"><%= vote.propositions.count %> <%= Proposition.model_name.human(count: 2).downcase %></a></td>
         <td>
           <i class="icon-thumbs-up"></i>
           <strong><%= t 'app.for' %></strong>
@@ -39,3 +33,28 @@
   </table>
 </div>
 
+<div id="vote-propositions" style="display: none">
+  <% @votes.each_with_index do |vote, index| %>
+    <div id="vote-proposition-<%= index %>">
+      <% vote.propositions.each do |prop| %>
+      <%= prop.body.html_safe %>
+        <hr class="soften">
+      <% end %>
+    </div>
+  <% end %>
+</div>
+
+<%= content_for :document_ready do %>
+<script type="text/javascript" charset="utf-8">
+  $(document).ready(function() {
+    $("a[rel='popover']").popover({
+      content: function() {
+        var index = parseInt($(this).data("vote-index"));
+        return $("#vote-proposition-" + index).html();
+      }, 
+      
+      placement: 'bottom'
+    });
+  });
+</script>
+<% end %>

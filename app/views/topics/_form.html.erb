@@ -2,7 +2,7 @@
   <%= render "#{@topic.current_step}_step", :topic => topic %>
 
   <div class="actions">
-    <%= (topic.submit t('app.previous'), :name => 'prev_button') unless @topic.first_step? %>
+    <%= topic.submit t('app.previous'), :name => 'prev_button' unless @topic.first_step? %>
     <%= topic.submit t('app.next') unless @topic.last_step? or @topic.new_record? %>
     <%= topic.submit t('app.save'), :name => 'finish_button' %>
   </div>

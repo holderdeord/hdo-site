@@ -1,6 +1,7 @@
 class TopicsController < ApplicationController
   before_filter :authenticate_user!, :except => [:show]
   before_filter :fetch_categories, :only => [:edit, :new]
+  before_filter :fetch_topic, :only => [:show, :edit, :update, :destroy]
 
   def index
     @topics = Topic.all
@@ -12,8 +13,6 @@ class TopicsController < ApplicationController
   end
 
   def show
-    @topic = Topic.find(params[:id])
-
     respond_to do |format|
       format.html
       format.json { render json: @topic }
@@ -30,8 +29,6 @@ class TopicsController < ApplicationController
   end
 
   def edit
-    @topic = Topic.find(params[:id])
-
     @topic.current_step = params[:skip_to_step] || session[:topic_step]
 
     case @topic.current_step
@@ -40,7 +37,7 @@ class TopicsController < ApplicationController
     when 'promises'
       @promises = Promise.find_all_by_id(@topic.categories.collect{ |cat| cat.promise_ids })
     when 'votes'
-      @votes = Vote.includes(:propositions).all
+      @votes = Vote.includes(:propositions).limit(50).order("time DESC")
     else
       raise "unknown step: #{@topic.current_step.inspect}"
     end
@@ -56,7 +53,6 @@ class TopicsController < ApplicationController
   end
 
   def update
-    @topic = Topic.find(params[:id])
     @topic.current_step = session[:topic_step]
 
     if params[:prev_button]
@@ -82,7 +78,6 @@ class TopicsController < ApplicationController
   end
 
   def destroy
-    @topic = Topic.find(params[:id])
     @topic.destroy
 
     respond_to do |format|
@@ -95,6 +90,10 @@ class TopicsController < ApplicationController
 
   def fetch_categories
     @categories = Category.column_groups
+  end
+
+  def fetch_topic
+    @topic = Topic.find(params[:id])
   end
 
   def process_vote_directions(topic, params)
