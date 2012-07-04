@@ -45,7 +45,7 @@ class TopicsController < ApplicationController
 
   def create
     @topic = Topic.new(params[:topic])
-    @topic.next_step
+    @topic.next_step!
     session[:topic_step] = @topic.current_step
     @topic.save!
 
@@ -58,7 +58,7 @@ class TopicsController < ApplicationController
     if params[:prev_button]
       @topic.previous_step
     else
-      @topic.next_step
+      @topic.next_step!
     end
 
     session[:topic_step] = @topic.current_step

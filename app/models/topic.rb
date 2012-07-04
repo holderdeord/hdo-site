@@ -19,11 +19,11 @@ class Topic < ActiveRecord::Base
     @current_step || steps.first
   end
 
-  def next_step
+  def next_step!
     self.current_step = steps[steps.index(current_step) + 1]
   end
 
-  def previous_step
+  def previous_step!
     self.current_step = steps[steps.index(current_step) - 1]
   end
 
