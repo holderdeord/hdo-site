@@ -2,7 +2,7 @@ class IssuesController < ApplicationController
   caches_page :index, :show
 
   def index
-    @issues = Issue.order(:last_update).reverse_order.all
+    @issues = Issue.order(:last_update).reverse_order.paginate(:page => params[:page])
 
     respond_to do |format|
       format.html

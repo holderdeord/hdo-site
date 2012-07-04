@@ -4,7 +4,7 @@ class PromisesController < ApplicationController
   before_filter :find_promise, :only => [:show, :edit, :update, :destroy]
 
   def index
-    @promises = Promise.includes(:categories, :party).order(:party_id).all
+    @promises = Promise.includes(:categories, :party).order(:party_id).paginate(:page => params[:page])
 
     respond_to do |format|
       format.html

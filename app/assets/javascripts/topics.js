@@ -54,7 +54,6 @@ TopicSupportGraph.prototype.render = function() {
     },
     tooltip: {
       formatter: function() {
-        console.log(this);
         return ''+
           this.x +': '+ this.y +'%';
       }

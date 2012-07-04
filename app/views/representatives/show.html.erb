@@ -43,21 +43,21 @@
     </div> <!-- end span3 -->
 
     <div class="span9">
-      <h2><%= Vote.model_name.human count: 2 %></h2>
+      <h2><%= Vote.model_name.human(count: 2).capitalize %></h2>
       <p class="pull-right"><%= t('app.counts.vote', count: @vote_results.size).html_safe %></p>
 
       <table class="table table-striped">
         <thead>
           <tr>
             <th class="wide-table-header"><%= Vote.human_attribute_name :time %></th>
-            <th><%= Issue.model_name.human count: 2 %></th>
+            <th><%= Issue.model_name.human(count: 2).capitalize %></th>
             <th><%= Vote.human_attribute_name :subject %></th>
             <th><%= Vote.human_attribute_name :enacted %></th>
             <th><%= VoteResult.model_name.human %></th>
           </tr>
         </thead>
         <tbody>
-          <% @vote_results.reverse_each do |result| %>
+          <% @vote_results.each do |result| %>
             <tr>
               <td><%= result.vote.time_text %></td>
               <td>
@@ -75,6 +75,8 @@
         </tbody>
       </table>
 
+      <%= will_paginate @vote_results %>
     </div>
+
   </div>
 </div>

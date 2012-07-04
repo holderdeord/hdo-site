@@ -1,5 +1,5 @@
 <div class="page-header">
-  <h1><%= Committee.model_name.human count: 2 %></h1>
+  <h1><%= Committee.model_name.human(count: 2).capitalize %></h1>
 </div>
 
 <p class="pull-right"><%= t('app.counts.committee', count: @committees.size).html_safe %></p>

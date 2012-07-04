@@ -2,7 +2,7 @@ class VotesController < ApplicationController
   caches_page :index, :show
 
   def index
-    @votes = Vote.includes(:issues).order(:time).reverse_order
+    @votes = Vote.includes(:issues).paginate(:page => params[:page]).order(:time).reverse_order
 
     respond_to do |format|
       format.html
