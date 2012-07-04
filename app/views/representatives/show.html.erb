@@ -40,18 +40,6 @@
           <li><%= link_to com.name, com %></li>
         <% end %>
       </ul>
-
-      <% if @vote_results.any? %>
-        <dl>
-          <% stats = @representative.stats %>
-          <dt><%= t('app.for')  %></dt>
-          <dd><%= stats.for_percent %>% (<%= stats.for_count %>/<%= stats.total_count %>)</dd>
-          <dt><%= t('app.against') %></dt>
-          <dd><%= stats.against_percent %>% (<%= stats.against_count %>/<%= stats.total_count %>)</dd>
-          <dt><%= t('app.absent') %></dt>
-          <dd><%= stats.absent_percent %>% (<%= stats.absent_count %>/<%= stats.total_count %>)</dd>
-        </dl>
-      <% end %>
     </div> <!-- end span3 -->
 
     <div class="span9">
