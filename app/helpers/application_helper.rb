@@ -16,5 +16,10 @@ module ApplicationHelper
   def active_status_for(*what)
     'active' if what.include? controller_name.to_sym
   end
+
+  def spinner_tag
+    image_tag 'spinner.gif', id: 'spinner', alt: 'Loading...', style: 'display: none';
+  end
+
 end
 

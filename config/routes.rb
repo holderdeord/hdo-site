@@ -12,8 +12,9 @@ Hdo::Application.routes.draw do
   resources :committees,      :only => [:index, :show]
 
   resources :users
-
   resources :topics
+
+  get 'topics/:id/edit/votes/search'   => 'topics#edit_votes_search'
 
   get "home/index"
   get "home/about"

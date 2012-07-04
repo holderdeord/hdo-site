@@ -105,6 +105,7 @@ nb:
         enacted: "Vedtatt"
         counts: "Stemmegivning"
         propositions: "Forslag"
+        issues: "Saker"
       vote_result:
         result: "Stemme"
       promise:
@@ -171,6 +172,7 @@ nb:
     against: 'Mot'
     absent: 'Ikke tilstede'
     unrelated: 'Urelatert'
+    connection: 'Kobling'
     topic_graph_header: 'Hvor ofte har partiet stemt for for %{title}?'
     promises:
       disclaimer: '<p>Vi jobber med å kode alle løftene fra partienes valgprogram.</p> <p>Her kan man foreløpig se noen eksempler på kategoriserte løfter. Vi vil etter planen publisere den ferdigkodede løftedatabasen i løpet av juli.</p>'

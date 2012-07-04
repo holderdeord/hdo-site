@@ -1,6 +1,8 @@
 class TopicsController < ApplicationController
   before_filter :authenticate_user!, :except => [:show]
-  before_filter :fetch_topic, :only => [:show, :edit, :update, :destroy]
+  before_filter :fetch_topic, :only => [:show, :edit, :update, :destroy, :edit_votes_search]
+
+  caches_page :edit_category_votes, :edit_votes
 
   def index
     @topics = Topic.all
@@ -42,6 +44,13 @@ class TopicsController < ApplicationController
     else
       raise "unknown step: #{@topic.current_step.inspect}"
     end
+  end
+
+  def edit_votes_search
+    query = params[:query]
+    @votes = Proposition.includes(:vote).where('LOWER(body) like ?', "%#{query}%").map(&:vote)
+
+    render :edit_votes, :layout => false
   end
 
   def create
@@ -110,6 +119,8 @@ class TopicsController < ApplicationController
       @topic.vote_directions.create! vote_id: vote_id,
                                      matches: value == 'for'
     end
+
+    expire_page :action => [:edit_votes, :edit_category_votes]
   end
 
 end

@@ -23,10 +23,6 @@ module Hdo
     # Custom directories with classes and modules you want to be autoloadable.
     config.autoload_paths += %W(#{config.root}/lib)
 
-    # Change the default page cache directory. The web server in front will need
-    # to be reconfigured (i.e. mod_rewrite for this to work)
-    config.action_controller.page_cache_directory = "#{Rails.root}/public/cache"
-
     # Only load the plugins named here, in the order given (default is alphabetical).
     # :all can be used as a placeholder for all plugins not explicitly named.
     # config.plugins = [ :exception_notification, :ssl_requirement, :all ]
