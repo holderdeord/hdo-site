@@ -35,7 +35,8 @@ class TopicsController < ApplicationController
     when 'categories'
       fetch_categories
     when 'promises'
-      @promises = Promise.find_all_by_id(@topic.categories.collect{ |cat| cat.promise_ids })
+      # better way to do this?
+      @promises = @topic.categories.includes(:promises).map(&:promises).compact.flatten
     when 'votes'
       @votes = Vote.includes(:propositions).limit(50).order("time DESC")
     else
