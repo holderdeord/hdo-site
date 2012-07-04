@@ -69,9 +69,6 @@ class TopicsController < ApplicationController
     session[:topic_step] = @topic.current_step
     process_vote_directions @topic, params
 
-    # if all categories were removed, :category_ids won't be submitted from the browser.
-    params[:topic][:category_ids] ||= []
-
     @topic.update_attributes(params[:topic])
 
     if params[:finish_button]
