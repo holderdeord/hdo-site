@@ -38,7 +38,7 @@ class TopicsController < ApplicationController
       # better way to do this?
       @promises = @topic.categories.includes(:promises).map(&:promises).compact.flatten
     when 'votes'
-      @votes = Vote.includes(:issues, :propositions).select { |e| e.issues.all?(&:processed?) }.sort_by { |e| @topic.connected?(e) ? 0 : 1}
+      @votes = Vote.includes(:issues, :propositions).select { |e| e.issues.all?(&:processed?) }.sort_by { |e| @topic.connected_to?(e) ? 0 : 1}
     else
       raise "unknown step: #{@topic.current_step.inspect}"
     end

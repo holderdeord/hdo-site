@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Topic do
   let(:blank_topic) { Topic.new }
-  let(:valid_topic) { Topic.new(:title => "Topic Title") }
+  let(:valid_topic) { Topic.make! }
 
   it "is invalid without a title" do
     t = blank_topic
@@ -33,9 +33,17 @@ describe Topic do
 
   it "can associate votes with a vote direction" do
     vote = Vote.make!
+    topic = Topic.make!(:vote_directions => [])
 
-    vote_direction = VoteDirection.create!(:vote => vote, :topic => valid_topic, :matches => true)
-    valid_topic.votes.should == [vote]
+    topic.vote_directions.create!(:vote => vote, :matches => true)
+    topic.votes.should == [vote]
+
+    topic.should be_connected_to(vote)
+  end
+
+  it "has a unique title" do
+    Topic.make!(:title => 'a')
+    Topic.make(:title => 'a').should_not be_valid
   end
 
   it "has a stats object" do
