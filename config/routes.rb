@@ -24,6 +24,8 @@ Hdo::Application.routes.draw do
   get "home/index"
   get "home/about"
   get "home/press"
+  get "home/login_status"
+
   get "docs/index"
 
   # The priority is based upon order of creation:

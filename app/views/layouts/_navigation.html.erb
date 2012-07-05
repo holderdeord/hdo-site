@@ -91,18 +91,23 @@
           </li>
         </ul>
 
-        <% if Rails.configuration.show_login_status %>
-          <ul class="nav pull-right">
-            <% if user_signed_in? %>
-              <li><%= link_to User.model_name.human(count: 2).capitalize, users_path %></li>
-              <li><%= link_to Topic.model_name.human(count: 2).capitalize, topics_path %></li>
-              <li><%= link_to t('app.logout'), destroy_user_session_path, method: 'delete' %></li>
-            <% else %>
-                <li><%= link_to t('app.login'), new_user_session_path  %></li>
-            <% end %>
-          </ul>
-        <% end %>
+        <div id="login-status"></div>
+
       </div>
     </div>
   </div>
 </div>
+
+<%= content_for :document_ready do %>
+  <script type="text/javascript" charset="utf-8">
+    $(document).ready(function() {
+      $.ajax({
+        url: "/home/login_status",
+        type: "GET",
+        dataType: "html",
+        success: function(html) { $("#login-status").html(html) },
+        error: function() { console && console.log(arguments); },
+      });
+    });
+  </script>
+<% end %>

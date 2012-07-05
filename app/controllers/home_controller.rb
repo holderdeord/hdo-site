@@ -12,4 +12,8 @@ class HomeController < ApplicationController
 
   def press
   end
+
+  def login_status
+    render layout: false
+  end
 end
