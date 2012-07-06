@@ -1,5 +1,5 @@
 class TopicsController < ApplicationController
-  before_filter :authenticate_user!, :except => [:show]
+  before_filter :authenticate_user!
   before_filter :fetch_topic, :only => [:show, :edit, :update, :destroy]
 
   def index
