@@ -1,6 +1,10 @@
 Hdo::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb
 
+  # Change the default page cache directory. The web server in front will need
+  # to be reconfigured (i.e. mod_rewrite for this to work)
+  config.action_controller.page_cache_directory = "#{Rails.root}/public/cache"
+
   # Code is not reloaded between requests
   config.cache_classes = true
 

@@ -1,6 +1,7 @@
 class Topic < ActiveRecord::Base
   attr_accessible :description, :title, :category_ids, :promise_ids
   validates_presence_of :title
+  validates_uniqueness_of :title
 
   has_and_belongs_to_many :fields
   has_and_belongs_to_many :categories
@@ -19,11 +20,11 @@ class Topic < ActiveRecord::Base
     @current_step || steps.first
   end
 
-  def next_step
+  def next_step!
     self.current_step = steps[steps.index(current_step) + 1]
   end
 
-  def previous_step
+  def previous_step!
     self.current_step = steps[steps.index(current_step) - 1]
   end
 
@@ -45,6 +46,10 @@ class Topic < ActiveRecord::Base
 
   def vote_against?(vote_id)
     vote_directions.any? { |vd| !vd.matches? && vd.vote_id == vote_id }
+  end
+
+  def connected_to?(vote)
+    vote_directions.where(:vote_id => vote.id).any?
   end
 
   def current_step?(step)

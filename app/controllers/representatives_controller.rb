@@ -13,7 +13,8 @@ class RepresentativesController < ApplicationController
 
   def show
     @representative = Representative.includes(:votes => :issues).find(params[:id])
-    @vote_results = @representative.vote_results.sort_by { |result| result.vote.time }
+    @vote_results = @representative.vote_results.sort_by { |result| result.vote.time }.reverse.
+                                                 paginate(:page => params[:page])
 
     respond_to do |format|
       format.html

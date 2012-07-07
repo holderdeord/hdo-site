@@ -1,18 +1,27 @@
-<%= topic.inputs '', :class => 'sign_up' do %>
+<%= form.inputs do %>
+  <%= hidden_field_tag 'topic[category_ids][]' %>
+
   <div class="well">
-    <%= topic.text_field :title %>
-    <%= topic.text_area :description, :rows => 5 %>
+    <%= form.text_field :title %>
+    <%= form.text_area :description, :rows => 5 %>
   </div>
 <% end %>
-<h2><%= Category.model_name.human count: 2 %></h2>
-<div class="well">
-<% @categories.each_slice(3) do |cat_array| %>
-  <div class="row">
-    <% cat_array.each do |category| %>
-      <div class="span3">
-        <%= check_box_tag "topic[category_ids][]", category.id, @topic.categories.include?(category) -%> <%= category.name -%>
-      </div>
-    <% end %>
-  </div>
-<% end %>
+
+<h1><%= Category.model_name.human(count: 2).capitalize %></h2>
+<div class="row">
+  <% @categories.each do |cat_column| %>
+    <div class="span4">
+      <% cat_column.each do |cat_group| %>
+        <div class="well">
+          <h3><%=cat_group.name %></h3>
+          <% [cat_group, cat_group.children].flatten.each do |cat| %>
+          <label class="checkbox">
+            <%= check_box_tag "topic[category_ids][]", cat.id, @topic.categories.include?(cat) %>
+            <%= cat.name %>
+          </label>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
 </div>

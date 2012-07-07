@@ -46,12 +46,24 @@
     .box-shadow(0px -1px 10px -3px @grayDark);
 }
 
-.navbar .nav .active > a, .navbar .nav .active > a:hover {
+.navbar .nav .active > a, 
+.navbar .nav .active > a:hover {
     color: @black;
     text-decoration: none;
     background-color: @white;
     border-top-left-radius: 3px;
     border-top-right-radius: 3px;
+    position: relative;
+
+    &:after {
+        content: '';
+        position: absolute;
+        height: 10px;
+        left: 0;
+        right: 0;
+        bottom: -10px;
+        background-color: #fff;
+    }
 }
 
 @gridColumns: 11;

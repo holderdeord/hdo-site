@@ -1,0 +1,8 @@
+<div class="form-actions">
+  <%= form.submit t('app.previous'), name: 'prev_button' unless @topic.first_step? %>
+
+  <%= link_to t('app.cancel'), topics_path, :class => 'btn btn-danger' %>
+  <%= form.submit t('app.save'), class: 'btn btn-primary', name: 'finish_button' %>
+
+  <%= form.submit t('app.next') unless @topic.last_step? or @topic.new_record? %>
+</div>

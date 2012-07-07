@@ -26,7 +26,7 @@
           <div class="row">
             <div class="span12">
               <% if flash.notice %>
-                <div class="alert alert-info"><%= flash.notice %></div>
+                <div class="alert alert-success"><%= flash.notice %></div>
               <% end %>
 
               <% if flash.alert %>
@@ -38,8 +38,7 @@
           </div>
         </div>
       <footer>
-        <% obscured_email = obscure_email t('app.contact.email') %>
-        <p><%=t 'app.title' %> &copy; 2012 <a href="mailto:<%= obscured_email %>"><%= obscured_email %></a>.</p>
+        <p><%=t 'app.title' %> &copy; 2012. <%= link_to t('app.contact_us'), home_press_path %>.</p>
       </footer>
     </div> <!-- /container -->
 

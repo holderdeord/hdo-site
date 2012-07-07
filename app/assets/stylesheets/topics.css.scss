@@ -1,16 +1,21 @@
-// Place all the styles related to the Representatives controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
 .category-checkbox-list {
 	border-top:1px solid #ccc;
 }
 .category-column {
 	border-right:1px solid #ccc;
 }
-.topic-vote-table {
-	height: 400px;
-	overflow: auto;
+
+.topic-graph-header {
+  text-align: center;
 }
-.prop-row {
-	margin-left: 5px;
+
+#vote-selector {
+  font-size: 10px;
+}
+
+.vote-container {
+  border: 1px solid black;
+  border-radius: 4px;
+  padding: 10px;
+  margin: 3px;
 }
