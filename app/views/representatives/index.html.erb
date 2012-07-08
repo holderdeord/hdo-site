@@ -1,6 +1,7 @@
 <div class="page-header">
   <h1><%= Representative.model_name.human count: 2 %></h1>
 </div>
-
+<!--
 <%= render partial: "shared/representatives_table", locals: { representatives: @representatives, show_party: true } %>
-<%= render partial: "shared/representatives_list", locals: { representatives: @representatives, show_party: true } %>
+-->
+<%= render partial: "shared/representatives_list", locals: { representatives: @representatives, show_party: true, show_district: true} %>

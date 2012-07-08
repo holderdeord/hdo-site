@@ -4,6 +4,9 @@
       <a href="todo">
 	<%= image_tag rep.image, class: 'representative-image'  %>
         <span class="n fn"><%= rep.display_name %></span>
+        <%if show_district %>
+	  <span class="adr district"><%= rep.district.name %></span>
+        <% end %>
       </a>
       <% if show_party %>
 	<%= link_to rep.party.name, rep.party, :class => "org party-" + rep.party.external_id  %>
@@ -11,3 +14,12 @@
     </li>
   <% end %>
 </ul>
+<script type="text/javascript">
+	var HDO = HDO || {};
+	HDO.representatives = HDO.representatives || {};
+
+	// TODO: i18n strings
+	HDO.representatives.sortByDistrictText = 'Sorter etter fylke';
+	HDO.representatives.sortByPartyText = 'Sorter etter parti';
+	HDO.representatives.sortAlphabeticallyText = 'Sorter alfabetisk';
+</script>
