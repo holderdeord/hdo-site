@@ -12,8 +12,6 @@
       <p class="alert alert-warning">
         Vi jobber med å finne ut hvordan vi kan vise hvilke representanter som er mest aktive på Stortinget. Foreløpig vil du kun kunne se oppmøteprosent ved voteringer i Stortingssalen. Det finnes mange grunner til at en representant kan ha lavt oppmøte, for eksempel reisevirksomhet i eget fylke, komitearbeid eller utbytting. For mer informasjon om representantenes oppmøte i Stortinget, les om <a target="_blank" href="http://www.stortinget.no/no/Stortinget-og-demokratiet/Representantene/Hva-gjor-en-representant/">Representantenes arbeidsoppgaver</a> og <a target="_blank" href="http://www.stortinget.no/no/Stortinget-og-demokratiet/Arbeidet/Voteringer/#utbyttingssystemet">Utbyttingssystemet</a>.
       </p>
-
-      <div id="presence-stats-graph"></div>
     </div>
   </div>
 
@@ -94,11 +92,3 @@
 
   </div>
 </div>
-
-<% content_for :document_ready do %>
-  <script type="text/javascript" charset="utf-8">
-    $(document).ready(function() {
-        new PresenceStatsGraph("presence-stats-graph", <%= @activity_stats.presence.to_json.html_safe %>).render();
-    });
-  </script>
-<% end %>
