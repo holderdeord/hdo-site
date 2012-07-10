@@ -8,7 +8,6 @@ class Vote < ActiveRecord::Base
   has_many :representatives, :through => :vote_results, :order => :last_name
 
   has_many :vote_directions
-  has_many :topics, :through => :vote_direction, :order => :title
 
   # should be not_personal
   scope :not_unanimous, where('for_count != 0 AND against_count != 0 AND absent_count != 0')
