@@ -70,11 +70,29 @@
 @gridColumnWidth: 68px;
 @gridGutterWidth: 21px;
 
+a.issue_description{
+  color: black;
+}
+
 h1,
 h2,
 h3,
 h4,
 h5 {
 	font-family: @headingsFontFamily;
+}
+
+.table td {
+  border-top: none;
+}
+
+.table td.issue_last_update {
+  color: #009ea6;
+	font-family: @headingsFontFamily;
+  font-weight: bold;
+}
+
+.table td.issue_description {
+  color: black;
 }
 

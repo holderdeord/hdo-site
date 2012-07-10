@@ -1,4 +1,4 @@
-<table class="table table-striped">
+<table class="table">
   <thead>
     <tr>
       <th class="wide-table-header"><%= Issue.human_attribute_name :last_update %></th>
@@ -10,8 +10,8 @@
   <tbody>
       <% issues.each do |issue| %>
       <tr>
-        <td><%= issue.last_update_text %></td>
-        <td><%= link_to issue.summary, issue %></td>
+        <td class="issue_last_update"><%= issue.last_update_text %></td>
+        <td><%= link_to issue.summary, issue , class: "issue_description" %></td>
         <td><%= issue.status_text %></td>
       </tr>
       <% end %>
