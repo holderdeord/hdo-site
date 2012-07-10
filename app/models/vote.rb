@@ -1,4 +1,5 @@
 class Vote < ActiveRecord::Base
+  extend FriendlyId
   has_and_belongs_to_many :issues
   validates_length_of :issues, :minimum => 1
   validates_presence_of :time
@@ -9,7 +10,6 @@ class Vote < ActiveRecord::Base
 
   has_many :vote_directions
 
-  extend FriendlyId
   friendly_id :external_id, :use => :slugged
 
   def should_generate_new_friendly_id?
