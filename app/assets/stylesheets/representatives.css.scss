@@ -13,10 +13,9 @@
 .representative-view {
   max-width: 25%;
   float: left;
+  position: relative;
+  color: #ddd;
 }
-
-.representative-carousel-view {
-  max-width: 150px;
-  margin-right: 10px;
-}
-
+.representative-view:hover { color: #FCF6CF; }
+.representative-name-label { text-align: center;}
+.representative-name-label:hover { text-decoration: underline;}
