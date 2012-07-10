@@ -2,7 +2,6 @@
   <thead>
     <tr>
       <th class="wide-table-header"><%= Issue.human_attribute_name :last_update %></th>
-      <th><%= Issue.human_attribute_name :summary %></th>
       <th><%= Issue.human_attribute_name :status %></th>
     </tr>
   </thead>
@@ -11,8 +10,8 @@
       <% issues.each do |issue| %>
       <tr>
         <td class="issue_last_update"><%= issue.last_update_text %></td>
+        <td class="issue_status"><%= issue.status_text %></td>
         <td><%= link_to issue.summary, issue , class: "issue_description" %></td>
-        <td><%= issue.status_text %></td>
       </tr>
       <% end %>
   </tbody>
