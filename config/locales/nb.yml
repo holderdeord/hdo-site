@@ -185,6 +185,7 @@ nb:
     details: 'Detaljer'
     back: 'Tilbake'
     cancel: 'Avbryt'
+    done: 'Ferdig'
     save: 'Lagre'
     for: 'For'
     against: 'Mot'
