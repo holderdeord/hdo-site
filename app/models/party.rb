@@ -7,6 +7,13 @@ class Party < ActiveRecord::Base
   validates_uniqueness_of :name
   validates_presence_of :name
 
+  extend FriendlyId
+  friendly_id :external_id, :use => :slugged
+
+  def should_generate_new_friendly_id?
+    new_record?
+  end
+
   def large_logo
     default = "party_logos/unknown_logo_large.jpg"
     party_logo = "party_logos/#{URI.encode external_id}_logo_large.jpg"

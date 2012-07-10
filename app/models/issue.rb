@@ -3,6 +3,13 @@ class Issue < ActiveRecord::Base
   has_and_belongs_to_many :categories
   has_and_belongs_to_many :votes
 
+  extend FriendlyId
+  friendly_id :external_id, :use => :slugged
+
+  def should_generate_new_friendly_id?
+    new_record?
+  end
+
   def status_text
     status.gsub(/_/, ' ').capitalize
   end

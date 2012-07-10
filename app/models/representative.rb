@@ -9,6 +9,13 @@ class Representative < ActiveRecord::Base
 
   validates_uniqueness_of :first_name, :scope => :last_name # TODO: :scope => :period ?!
 
+  extend FriendlyId
+  friendly_id :external_id, :use => :slugged
+
+  def should_generate_new_friendly_id?
+    new_record?
+  end
+
   def image
     default = "representatives/unknown.jpg"
     rep = "representatives/#{URI.encode external_id}.jpg"
