@@ -1,10 +1,11 @@
 <div class="item">
   <% representative_group.each do |representative| %>
-    <%= link_to(representative, :class => "representative-view") do %>
-      <img class="representative-carousel-image",
-           alt="<%= representative.full_name%>",
-           data-src="<%= path_to_image representative.image %>"
-           />
-    <% end %>
+      <%= link_to(representative, :class => "representative-view") do %>
+        <img alt="<%= representative.full_name%>",
+             data-src="<%= path_to_image representative.image %>">
+        <div class="carousel-caption representative-name-label">
+          <%= representative.full_name %>
+        </div>
+      <% end %>
   <% end %>
 </div>
