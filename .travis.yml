@@ -4,7 +4,8 @@ notifications:
   recipients:
     - jari.bakken@gmail.com
   irc: "irc.freenode.net#holderdeord"
-script: "bundle exec rake db:migrate spec:all"
+script: "bundle exec rake db:migrate spec:all buster"
 before_script:
   - "export DISPLAY=:99.0"
   - "sh -e /etc/init.d/xvfb start"
+  - "npm install -g buster"
