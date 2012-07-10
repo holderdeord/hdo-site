@@ -90,7 +90,7 @@ module Hdo
         last_name       = node.css("lastName").first.text
         committee_names = node.css("committees committee").map { |e| e.text }
         district_name   = node.css("district").first.text
-        dob            = Time.parse(node.css("dateOfBirth").first.text)
+        dob             = Time.parse(node.css("dateOfBirth").first.text)
 
 
         dod_node = node.css("dateOfDeath").first
