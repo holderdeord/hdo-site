@@ -5,7 +5,7 @@ task :buster do
   require 'childprocess'
   require 'selenium-webdriver'
 
-  server = ChildProcess.build("buster", "server")
+  server = ChildProcess.build("buster-server")
   server.io.inherit!
 
   begin
