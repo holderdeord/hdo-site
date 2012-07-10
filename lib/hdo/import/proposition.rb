@@ -15,7 +15,7 @@ module Hdo
   <externalId>1</externalId>
   <description>Proposition 1 on behalf of Democratic Party and Green Party</description>
   <deliveredBy>
-#{indent Representative::XML_EXAMPLE, 4}
+#{indent Representative.xml_example, 4}
   </deliveredBy>
   <onBehalfOf>Democratic Party and Green Party</onBehalfOf>
   <body>Full text of the proposition.</body>

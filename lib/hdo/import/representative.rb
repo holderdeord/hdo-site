@@ -1,4 +1,5 @@
 # encoding: utf-8
+require 'builder'
 
 module Hdo
   module Import
@@ -32,6 +33,32 @@ module Hdo
   <dateOfDeath>1969-04-04T00:00:00</dateOfDeath>
 </representative>
       XML
+
+      def self.xml_example(extras = {})
+        xml = Builder::XmlMarkup.new :indent => 2
+        xml.representative { |rep|
+          rep.externalId "DD"
+          rep.firstName "Donald"
+          rep.lastName "Duck"
+          rep.district "Duckburg"
+          rep.party "Democratic Party"
+
+          rep.committees { |coms|
+            coms.committe "A"
+            coms.committe "B"
+          }
+
+          rep.period "2011-2012"
+          rep.dateOfBirth "1969-04-04T00:00:00"
+          rep.dateOfDeath "0001-01-01T00:00:00"
+
+          extras.each { |key, value|
+            rep.__send__(key, value)
+          }
+        }
+
+        xml.target!
+      end
 
       def self.from(node)
         # assumes externalId is unique
