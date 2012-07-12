@@ -82,7 +82,7 @@ $(document).ready(function(){
 		regex_result = district_regex.exec(classes);
 		district_class = regex_result[1];
 		district = HDO.representatives.districts[district_class] = HDO.representatives.districts[district_class] || {};
-		district.name = district.name || $e.find('.district').first().text();
+		district.name = district.name || $e.find('.region').first().text();
 		district.representatives = district.representatives || [];
 		district.representatives.push($e);
 
@@ -99,17 +99,24 @@ $(document).ready(function(){
 		var districts = HDO.representatives.districts, 
                     district_key,
                     sorted_dom_elements = $('<div class="wrapper" />'),
+                    heading,
                     list,  
                     i, j;
 
 		for (district_key in districts) {
 			if(districts.hasOwnProperty(district_key)) {
-				sorted_dom_elements.append($('<h2 class="representatives-sort-criteria-heading">' + districts[district_key].name + '</h2>'));
+			
+			    heading = $('<h2 class="representatives-sort-criteria-heading" />');
+			    heading.text(districts[district_key].name);
+			    heading.addClass(district_key);
+				sorted_dom_elements.append(heading);
+				
 				list = $('<ul class="representatives-list" />');
-                                sorted_dom_elements.append(list);
+				list.addClass(district_key);
+                sorted_dom_elements.append(list);
 				for (i = 0, j = districts[district_key].representatives.length; i < j; i += 1) {
 					list.append(districts[district_key].representatives[i].clone());
-                                }
+                }
 			}
 		}
 		$('.representatives-list').remove();
@@ -124,12 +131,18 @@ $(document).ready(function(){
 
 		for (party_key in parties) {
 			if(parties.hasOwnProperty(party_key)) {
-				sorted_dom_elements.append($('<h2 class="representatives-sort-criteria-heading">' + parties[party_key].name + '</h2>'));
+			
+				heading = $('<h2 class="representatives-sort-criteria-heading" />');
+			    heading.text(parties[party_key].name);
+			    heading.addClass(party_key);
+				sorted_dom_elements.append(heading);
+
 				list = $('<ul class="representatives-list" />');
-                                sorted_dom_elements.append(list);
+				list.addClass(party_key);
+                sorted_dom_elements.append(list);
 				for (i = 0, j = parties[party_key].representatives.length; i < j; i += 1) {
 					list.append(parties[party_key].representatives[i].clone());
-                                }
+                }
 			}
 		}
 		$('.representatives-list').remove();
