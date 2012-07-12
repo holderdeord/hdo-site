@@ -78,18 +78,28 @@ $representative-height: 230px;
             display: none;
         }
     }
-    .org {
+    .region,
+    .org 
+    {
+        background-repeat: no-repeat;
         display: block;
-        width: 40px;
-        height: 40px;
+        overflow: hidden;
         position: absolute;
+        text-indent: -1000em;
+        height: 40px;
         right: 5px;
         top: 115px;
-        overflow: hidden;
+    }
+    
+    .region {
+        display: none;
+        width: 36px;
+        background-size: contain;
+    }
+
+    .org {
         border-radius: 20px 20px;
-        text-indent: -1000em;
-        background-repeat: no-repeat;
-        @include radial-gradient(#{center center, circle cover, #fff , #fff 18px, rgba(255, 255, 255, 0) 20px});
+        width: 40px;
         
         &.party-KrF {
             @include image-and-radial-gradient(
@@ -146,6 +156,79 @@ $representative-height: 230px;
         margin: 5px 10px;
         display: inline-block;
     }
-
+    &[class*='party-'] {
+    	.org {
+    		display: none;
+    	}
+    	.region {
+    		display: block;
+    	}
+    }
 }
 
+.representatives-sort-criteria-heading {
+	padding-left: 30px;
+	background-repeat: no-repeat;
+	background-size: auto 30px;
+}
+
+.representatives-list .region, 
+.representatives-sort-criteria-heading {
+    &.district-Akershus {
+        background-image: url('/assets/district_logos/Akershus.svg');
+    } 
+    &.district-Østfold {
+        background-image: url('/assets/district_logos/Oestfold.svg');
+    }
+    &.district-Oslo {
+        background-image: url('/assets/district_logos/Oslo.svg');
+    } 
+    &.district-Hedmark {
+        background-image: url('/assets/district_logos/Hedmark.svg');
+    } 
+    &.district-Oppland {
+        background-image: url('/assets/district_logos/Oppland.svg');
+    } 
+    &.district-Buskerud {
+        background-image: url('/assets/district_logos/Buskerud.svg');
+    } 
+    &.district-Vestfold {
+        background-image: url('/assets/district_logos/Vestfold.svg');
+    } 
+    &.district-Telemark {
+        background-image: url('/assets/district_logos/Telemark.svg');
+    } 
+    &.district-Aust-Agder {
+        background-image: url('/assets/district_logos/Aust-Agder.svg');
+    } 
+    &.district-Vest-Agder {
+        background-image: url('/assets/district_logos/Vest-Agder.svg');
+    } 
+    &.district-Rogaland {
+        background-image: url('/assets/district_logos/Rogaland.svg');
+    } 
+    &.district-Hordaland {
+        background-image: url('/assets/district_logos/Hordaland.svg');
+    } 
+    &.district-Sogn {
+        background-image: url('/assets/district_logos/Sogn_og_Fjordane.svg');
+    } 
+    &.district-Møre {
+        background-image: url('/assets/district_logos/Moere_og_Romsdal.svg');
+    } 
+    &.district-Sør-Trøndelag {
+        background-image: url('/assets/district_logos/Soer-Troendelag.svg');
+    } 
+    &.district-Nord-Trøndelag {
+        background-image: url('/assets/district_logos/Nord-Troendelag.svg');
+    } 
+    &.district-Nordland {
+        background-image: url('/assets/district_logos/Nordland.svg');
+    } 
+    &.district-Troms {
+        background-image: url('/assets/district_logos/Troms.svg');
+    } 
+    &.district-Finnmark {
+        background-image: url('/assets/district_logos/Finnmark.svg');
+    } 
+}

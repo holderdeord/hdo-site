@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+<svg
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   version="1.0"
+   width="358"
+   height="400"
+   id="svg2">
+  <defs
+     id="defs5">
+    <mask
+       id="mask2793">
+      <path
+         d="M 349.68758,6.3125537 L 349.68758,229.37847 C 349.68758,320.40564 276.67721,393.68745 185.98721,393.68745 L 172.01279,393.68745 C 81.322782,393.68745 8.3124167,320.40564 8.3124167,229.37847 L 8.3124167,6.3125537 L 349.68758,6.3125537 z "
+         style="fill:white;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.62500006;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dashoffset:12.5;stroke-opacity:1"
+         id="rect1893" />
+    </mask>
+  </defs>
+  <g
+     mask="url(#mask2793)"
+     id="g2788">
+    <rect
+       width="358"
+       height="400"
+       x="0"
+       y="0"
+       style="opacity:1;fill:#f80804;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.625;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:12.5;stroke-opacity:1"
+       id="rect2786" />
+    <rect
+       width="358"
+       height="73"
+       x="0"
+       y="93"
+       style="opacity:1;fill:#ffe000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.625;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:12.5;stroke-opacity:1"
+       id="rect2782" />
+    <use
+       transform="translate(0,145)"
+       id="use2784"
+       x="0"
+       y="0"
+       width="358"
+       height="400"
+       xlink:href="#rect2782" />
+  </g>
+</svg>
