@@ -1,0 +1,12 @@
+<h2><%= Field.model_name.human(count: 2).capitalize %></h2>
+<div class="well">
+  <% @fields.each do |field| %>
+    <div class="row">
+      <div class="span6">
+        <label class="checkbox">
+          <%= check_box_tag "topic[field_ids][]", field.id, @topic.fields.include?(field) %> <%= field.name %>
+        </label>
+      </div>
+    </div>
+  <% end %>
+</div>

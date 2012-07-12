@@ -146,6 +146,7 @@ nb:
         categories: "Kategorier"
         promises: "Løfter"
         votes: "Voteringer"
+        fields: "Områder"
       vote_direction:
         matches: "Støtter tema?"
       field:

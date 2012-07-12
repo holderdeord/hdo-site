@@ -1,7 +1,7 @@
 class Topic < ActiveRecord::Base
   extend FriendlyId
 
-  attr_accessible :description, :title, :category_ids, :promise_ids
+  attr_accessible :description, :title, :category_ids, :promise_ids, :field_ids
   validates_presence_of :title
   validates_uniqueness_of :title
 
@@ -17,7 +17,7 @@ class Topic < ActiveRecord::Base
   attr_writer :current_step
 
   def steps
-    %w[categories promises votes]
+    %w[categories promises votes fields]
   end
 
   def current_step
