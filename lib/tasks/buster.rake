@@ -1,4 +1,4 @@
-
+desc 'Run JS tests with Buster'
 task :buster do
   # turn this into a buster-rails gem?
 
