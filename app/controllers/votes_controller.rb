@@ -1,20 +1,14 @@
 class VotesController < ApplicationController
-  caches_page :index, :show
+  caches_page :index, :show, :all
 
   DEFAULT_PER_PAGE = 30
 
   def index
-    per_page = params[:per_page].to_i > 0 ? params[:per_page] : DEFAULT_PER_PAGE
+    render_votes_index :paginate => true
+  end
 
-    @votes = Vote.includes(:issues).
-                  paginate(:page => params[:page], :per_page => per_page).
-                  order(:time).reverse_order
-
-    respond_to do |format|
-      format.html
-      format.json { render json: @votes }
-      format.xml  { render xml:  @votes }
-    end
+  def all
+    render_votes_index :paginate => false
   end
 
   def show
@@ -29,6 +23,26 @@ class VotesController < ApplicationController
       format.html
       format.json { render json: @vote }
       format.xml  { render xml:  @vote }
+    end
+  end
+
+  private
+
+  def render_votes_index(opts = {})
+    @votes = Vote.includes(:issues).order(:time).reverse_order
+
+    if opts[:paginate]
+      per_page = params[:per_page].to_i > 0 ? params[:per_page] : DEFAULT_PER_PAGE
+    else
+      per_page = @votes.count
+    end
+
+    @votes = @votes.paginate(:page => params[:page], :per_page => per_page)
+
+    respond_to do |format|
+      format.html { render :index }
+      format.json { render json: @votes }
+      format.xml  { render xml:  @votes }
     end
   end
 end
