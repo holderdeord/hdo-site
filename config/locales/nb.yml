@@ -19,41 +19,41 @@ nb:
         record_invalid: "Validering feilet: %{errors}"
     models:
       representative:
-        one: "Representant"
-        other: "Representanter"
+        one: "representant"
+        other: "representanter"
       committee:
-        one: "Komite"
-        other: "Komiteer"
+        one: "komite"
+        other: "komiteer"
       party:
-        one: "Parti"
-        other: "Partier"
+        one: "parti"
+        other: "partier"
       category:
-        one: "Kategori"
-        other: "Kategorier"
+        one: "kategori"
+        other: "kategorier"
       district:
-        one: "Fylke"
-        other: "Fylker"
+        one: "fylke"
+        other: "fylker"
       issue:
-        one: "Sak"
-        other: "Saker"
+        one: "sak"
+        other: "saker"
       vote:
-        one: "Votering"
-        other: "Voteringer"
+        one: "votering"
+        other: "voteringer"
       vote_result:
-        one: "Stemme"
-        other: "Stemmer"
+        one: "stemme"
+        other: "stemmer"
       promise:
-        one: "Løfte"
-        other: "Løfter"
+        one: "løfte"
+        other: "løfter"
       proposition:
-        one: "Forslag"
-        other: "Forslag"
+        one: "forslag"
+        other: "forslag"
       user:
-        one: "Bruker"
-        other: "Brukere"
+        one: "bruker"
+        other: "brukere"
       topic:
-        one: "Tema"
-        other: "Tema"
+        one: "tema"
+        other: "tema"
     attributes:
       representative:
         name: "Navn"
@@ -104,6 +104,9 @@ nb:
         time: "Dato"
         enacted: "Vedtatt"
         counts: "Stemmegivning"
+        propositions: "Forslag"
+        issues: "Saker"
+        external_id: "Ekstern id"
       vote_result:
         result: "Stemme"
       promise:
@@ -140,9 +143,27 @@ nb:
         categories: "Kategorier"
         promises: "Løfter"
         votes: "Voteringer"
+      vote_direction:
+        matches: "Støtter tema?"
+  will_paginate:
+    previous_label: "&#8592; Forrige"
+    next_label: "Neste &#8594;"
+    page_gap: "&hellip;"
+    page_entries_info:
+      single_page:
+        zero:  "Ingen %{model} funnet."
+        one:   "Viser 1 %{model}"
+        other: "Viser alle %{count} %{model}"
+      single_page_html:
+        zero:  "Ingen %{model} funnet"
+        one:   "Viser <strong>1</strong> %{model}"
+        other: "Viser <strong>alle&nbsp;%{count}</strong> %{model}"
+      multi_page: "Viser %{from} - %{to} av totalt %{count} %{model}"
+      multi_page_html: "Viser <strong>%{from}&nbsp;-&nbsp;%{to}</strong> av totalt <strong>%{count}</strong> %{model}"
   app:
     next: "Neste"
     previous: "Forrige"
+    show_all: "Vis alle"
     url: 'holderdeord.no'
     urls:
       wiki: "https://holderdeord.atlassian.net/"
@@ -152,8 +173,9 @@ nb:
     description: "Bringer politikken til folket."
     about: "Om oss"
     read_more: "Les mer"
-    contact:
-      email: "kontakt@holderdeord.no"
+    press: "Presse"
+    contact_us: 'Kontakt oss'
+    email: "kontakt@holderdeord.no"
     documentation:
       default: "Dokumentasjon"
       technical: "Teknisk"
@@ -165,14 +187,20 @@ nb:
     details: 'Detaljer'
     back: 'Tilbake'
     cancel: 'Avbryt'
+    done: 'Ferdig'
     save: 'Lagre'
     for: 'For'
     against: 'Mot'
     absent: 'Ikke tilstede'
+    unrelated: 'Ikke relatert'
+    connection: 'Kobling'
+    expand: 'Åpne'
+    collapse: 'Lukke'
+    topic_graph_header: 'Hvor ofte har partiet stemt for %{title}?'
     promises:
-      disclaimer: '<p>Vi jobber med å kode alle løftene fra partienes valgprogram.</p> <p>Her kan man foreløpig se noen eksempler på kategoriserte løfter. Vi vil etter planen publisere den ferdigkodede løftedatabasen i løpet av juni.</p>'
+      disclaimer: '<p>Vi jobber med å kode alle løftene fra partienes valgprogram.</p> <p>Her kan man foreløpig se noen eksempler på kategoriserte løfter. Vi vil etter planen publisere den ferdigkodede løftedatabasen i løpet av juli.</p>'
     votes:
-      unanimous: 'Denne voteringen ble avgjort uten bruk av voteringssystemet.'
+      non_personal: 'Denne voteringen ble avgjort uten bruk av voteringssystemet.'
     external:
       urls:
         issue: "http://stortinget.no/no/Saker-og-publikasjoner/Saker/Sak/?p=%s"

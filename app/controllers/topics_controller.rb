@@ -1,6 +1,6 @@
 class TopicsController < ApplicationController
-  before_filter :authenticate_user!, :except => [:show]
-  before_filter :fetch_categories, :only => [:edit, :new]
+  before_filter :authenticate_user!
+  before_filter :fetch_topic, :only => [:show, :edit, :update, :destroy]
 
   def index
     @topics = Topic.all
@@ -12,8 +12,6 @@ class TopicsController < ApplicationController
   end
 
   def show
-    @topic = Topic.find(params[:id])
-
     respond_to do |format|
       format.html
       format.json { render json: @topic }
@@ -22,6 +20,7 @@ class TopicsController < ApplicationController
 
   def new
     @topic = Topic.new
+    fetch_categories
 
     respond_to do |format|
       format.html
@@ -30,17 +29,16 @@ class TopicsController < ApplicationController
   end
 
   def edit
-    @topic = Topic.find(params[:id])
-
-    @topic.current_step = params[:skip_to_step] || session[:topic_step]
+    @topic.current_step = params[:step] || session[:topic_step]
 
     case @topic.current_step
     when 'categories'
       fetch_categories
     when 'promises'
-      @promises = Promise.find_all_by_id(@topic.categories.collect{ |cat| cat.promise_ids })
+      # better way to do this?
+      @promises = @topic.categories.includes(:promises).map(&:promises).compact.flatten
     when 'votes'
-      @votes = Vote.all
+      @votes = Vote.includes(:issues, :propositions).select { |e| e.issues.all?(&:processed?) }.sort_by { |e| @topic.connected_to?(e) ? 0 : 1}
     else
       raise "unknown step: #{@topic.current_step.inspect}"
     end
@@ -48,25 +46,34 @@ class TopicsController < ApplicationController
 
   def create
     @topic = Topic.new(params[:topic])
-    @topic.next_step
-    session[:topic_step] = @topic.current_step
-    @topic.save!
 
-    redirect_to edit_topic_url(@topic)
+    if @topic.save
+      if params[:finish_button]
+        redirect_to @topic
+      else
+        @topic.next_step!
+        session[:topic_step] = @topic.current_step
+
+        redirect_to edit_topic_url(@topic)
+      end
+    else
+      flash.alert = @topic.errors.full_messages.join(' ')
+      redirect_to new_topic_path(@topic)
+    end
   end
 
   def update
-    @topic = Topic.find(params[:id])
     @topic.current_step = session[:topic_step]
 
     if params[:prev_button]
-      @topic.previous_step
+      @topic.previous_step!
     else
-      @topic.next_step
+      @topic.next_step!
     end
 
     session[:topic_step] = @topic.current_step
-    process_vote_directions @topic, params
+    set_vote_directions params
+
     @topic.update_attributes(params[:topic])
 
     if params[:finish_button]
@@ -78,7 +85,6 @@ class TopicsController < ApplicationController
   end
 
   def destroy
-    @topic = Topic.find(params[:id])
     @topic.destroy
 
     respond_to do |format|
@@ -90,28 +96,26 @@ class TopicsController < ApplicationController
   private
 
   def fetch_categories
-    @categories = Category.all
+    @categories = Category.column_groups
   end
 
-  def process_vote_directions(topic, params)
+  def fetch_topic
+    @topic = Topic.find(params[:id])
+  end
+
+  def set_vote_directions(params)
     return unless params[:votes_for]
 
-    topic.vote_directions = []
-    params[:votes_for].each_pair do |vote_id, matches|
-      vote = Vote.find(vote_id)
-      topic.vote_directions.create! topic: topic,
-                                    vote:  vote,
-                                    matches: matches
-    end
-  end
+    @topic.vote_directions = []
 
-  def set_vote_directions(vote_ids, topic, matches)
-    votes = Vote.find_all_by_id vote_ids
-    votes.each do |vote|
-      topic.vote_directions.create! topic: topic,
-                                    vote: vote,
-                                    matches: matches
+    params[:votes_for].each do |vote_id, value|
+      next unless ['for', 'against'].include? value
+
+      @topic.vote_directions.create! vote_id: vote_id,
+                                     matches: value == 'for'
     end
+
+    expire_page :action => [:edit_votes, :edit_category_votes]
   end
 
 end

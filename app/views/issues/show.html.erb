@@ -60,5 +60,5 @@
   <li><a href="<%= @issue.url %>">Sak</a></li>
 </ul>
 
-<h2><%= Vote.model_name.human count: 2 %></h2>
+<h2><%= Vote.model_name.human(count: 2).capitalize %></h2>
 <%= render partial: "shared/votes_summary_table", locals: {votes: @issue.votes, show_issues: false }%>

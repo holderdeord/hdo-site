@@ -2,15 +2,15 @@
 require 'machinist/active_record'
 
 User.blueprint do
-	name { "user #{sn}" }
-	email { "user#{sn}@email.com}" }
-	password { "abcd1234" }
-	password_confirmation { "abcd1234" }
+  name { "user #{sn}" }
+  email { "user#{sn}@email.com}" }
+  password { "abcd1234" }
+  password_confirmation { "abcd1234" }
 end
 
 Vote.blueprint do
-	issues { [Issue.make] }
-	time { Time.now }
+  issues { [Issue.make] }
+  time { Time.now }
   vote_results { Array.new(10) { VoteResult.make! } }
 end
 

@@ -1,6 +1,8 @@
 <div class="page-header">
-  <h1><%= Issue.model_name.human count: 2 %></h1>
+  <h1><%= Issue.model_name.human(count: 2).capitalize %></h1>
 </div>
 
-<%= render partial: "shared/issue_table", locals: {issues: @issues} %>
+<p class="pull-right"><%= page_entries_info @issues %></p>
+<%= render partial: "shared/issue_table", locals: { issues: @issues } %>
+<%= will_paginate @issues %>
 

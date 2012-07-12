@@ -1,5 +1,14 @@
 <div class="page-header">
-  <h1><%= Vote.model_name.human count: 2 %></h1>
+  <h1><%= Vote.model_name.human(count: 2).capitalize %></h1>
 </div>
 
+<p id="app.counts.vote" class="pull-right">
+  <%= page_entries_info @votes %>.
+</p>
+
+<p>
+  <%= link_to t('app.show_all'), all_votes_path unless @votes.size == @votes.total_entries %>
+</p>
+
 <%= render partial: "shared/votes_summary_table", locals: {votes: @votes, show_issues: true } %>
+<%= will_paginate @votes %>

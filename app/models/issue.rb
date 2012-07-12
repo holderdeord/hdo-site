@@ -1,7 +1,11 @@
 class Issue < ActiveRecord::Base
+  extend FriendlyId
+
   belongs_to :committee
   has_and_belongs_to_many :categories
   has_and_belongs_to_many :votes
+
+  friendly_id :external_id, :use => :slugged
 
   def status_text
     status.gsub(/_/, ' ').capitalize

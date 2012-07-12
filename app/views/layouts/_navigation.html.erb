@@ -1,5 +1,5 @@
-<div class="navbar">
-  <div class="right ribbon-holder">
+<div class="navbar navbar-fixed-top">
+  <div class="left ribbon-holder">
     <div class="red ribbon">
       <span class="text">Under utvikling</span>
     </div>
@@ -25,25 +25,25 @@
 
           <li class="<%= active_status_for(:parties) %>">
           <%= link_to parties_path do %>
-            <%= Party.model_name.human count: 2 %>
+            <%= Party.model_name.human(count: 2).capitalize %>
           <% end %>
           </li>
 
           <li class="<%= active_status_for(:issues) %>">
           <%= link_to issues_path do %>
-            <%= Issue.model_name.human count: 2 %>
+            <%= Issue.model_name.human(count: 2).capitalize %>
           <% end %>
           </li>
 
           <li class="<%= active_status_for(:promises) %>">
           <%= link_to promises_path do %>
-            <%= Promise.model_name.human count: 2 %>
+            <%= Promise.model_name.human(count: 2).capitalize %>
           <% end %>
           </li>
 
           <li class="<%= active_status_for(:representatives) %>">
           <%= link_to representatives_path do %>
-            <%= Representative.model_name.human count: 2 %>
+            <%= Representative.model_name.human(count: 2).capitalize %>
           <% end %>
           </li>
 
@@ -55,53 +55,59 @@
             <ul class="dropdown-menu">
               <li>
               <%= link_to votes_path do %>
-                <i class="icon-envelope icon-white"></i> <%= Vote.model_name.human count: 2 %>
+                <i class="icon-envelope"></i> <%= Vote.model_name.human(count: 2).capitalize %>
               <% end %>
               </li>
               <li>
               <%= link_to categories_path do %>
-                <i class="icon-folder-close icon-white"></i> <%= Category.model_name.human count: 2 %>
+                <i class="icon-folder-close"></i> <%= Category.model_name.human(count: 2).capitalize %>
               <% end %>
               </li>
               <li>
               <%= link_to districts_path do %>
-                <i class="icon-home icon-white"></i> <%= District.model_name.human count: 2 %>
+                <i class="icon-home"></i> <%= District.model_name.human(count: 2).capitalize %>
               <% end %>
               </li>
               <li>
               <%= link_to committees_path do %>
-                <i class="icon-inbox icon-white"></i> <%= Committee.model_name.human count: 2 %>
+                <i class="icon-inbox"></i> <%= Committee.model_name.human(count: 2).capitalize %>
               <% end %>
               </li>
             </ul>
           </li>
 
-          <li class="dropdown" id="Om oss">
+          <li class="dropdown">
             <a class="dropdown-toggle" data-toggle="dropdown" href="#omOss">
               <%= t("app.about") %>
               <b class="caret"></b>
             </a>
 
             <ul class="dropdown-menu">
-              <li><%= link_to 'Wiki', t('app.urls.wiki') %></li>
-              <li><%= link_to t("app.documentation.technical"), docs_index_path %></li>
+              <li><%= link_to t("app.press"), home_press_path %></li>
               <li><%= link_to t("app.about"), home_about_path %></li>
+              <li><%= link_to t("app.documentation.technical"), docs_index_path %></li>
+              <li><%= link_to 'Wiki', t('app.urls.wiki') %></li>
             </ul>
           </li>
         </ul>
 
-        <% if Rails.configuration.show_login_status %>
-          <ul class="nav pull-right">
-            <% if user_signed_in? %>
-              <li><%= link_to User.model_name.human(count: 2), users_path %></li>
-              <li><%= link_to Topic.model_name.human(count: 2), topics_path %></li>
-              <li><%= link_to t('app.logout'), destroy_user_session_path, method: 'delete' %></li>
-            <% else %>
-                <li><%= link_to t('app.login'), new_user_session_path  %></li>
-            <% end %>
-          </ul>
-        <% end %>
+        <div id="login-status"></div>
+
       </div>
     </div>
   </div>
 </div>
+
+<%= content_for :document_ready do %>
+  <script type="text/javascript">
+    $(document).ready(function() {
+      $.ajax({
+        url: "/home/login_status",
+        type: "GET",
+        dataType: "html",
+        success: function(html) { $("#login-status").html(html) },
+        error: function() { console && console.log(arguments); },
+      });
+    });
+  </script>
+<% end %>

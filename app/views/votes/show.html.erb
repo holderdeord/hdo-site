@@ -2,8 +2,8 @@
   <h1><%= @vote.subject %></h1>
 </div>
 
-<% if @vote.unanimous? %>
-  <div class="alert alert-info"><%= I18n.t('app.votes.unanimous') %></div>
+<% unless @vote.personal? %>
+  <div class="alert alert-info"><%= I18n.t('app.votes.non_personal') %></div>
 <% end %>
 
 <div class="well">
@@ -16,7 +16,7 @@
         <dt><%= Vote.human_attribute_name :time %></dt>
         <dd><%= @vote.time %></dd>
 
-        <dt><%= Issue.model_name.human %></dt>
+        <dt><%= Issue.model_name.human.capitalize %></dt>
         <dd>
           <ul>
           <% @issues.each do |issue| %>
@@ -35,7 +35,7 @@
 </div>
 
 <% if @vote.propositions.any? %>
-  <h2><%= Proposition.model_name.human count: @vote.propositions.size %></h2>
+  <h2><%= Proposition.model_name.human(count: @vote.propositions.size).capitalize %></h2>
   <%= render partial: "shared/propositions_table", locals: { propositions: @vote.propositions } %>
 <% end %>
 
@@ -50,7 +50,7 @@
 <table class="table table-striped">
   <thead>
     <tr>
-      <th><%= Representative.model_name.human %></th>
+      <th><%= Representative.model_name.human.capitalize %></th>
       <th><%= Representative.human_attribute_name :party %></th>
       <th><%= VoteResult.human_attribute_name :result %></th>
     </tr>

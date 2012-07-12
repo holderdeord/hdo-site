@@ -47,7 +47,6 @@ module SpecHelper
     timeout = 15
     port_to_use = port()
 
-    # not ideal - won't work on windows or jruby.
     $spec_app = Thread.new do
       Rack::Server.new(:app         => Hdo::Application,
                        :environment => Rails.env,

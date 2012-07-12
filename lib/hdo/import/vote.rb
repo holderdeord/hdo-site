@@ -30,7 +30,7 @@ module Hdo
   <resultType>ikke_spesifisert</resultType>
   <time>2012-02-07T12:40:29.687</time>
   <representatives>
-#{indent Representative::XML_EXAMPLE, 4}
+#{indent Representative.xml_example(:voteResult => 'for'), 4}
   </representatives>
   <propositions>
 #{indent Proposition::XML_EXAMPLE, 4}

@@ -1,6 +1,7 @@
 <div class="page-header">
-  <h1><%= Promise.model_name.human count: 2 %></h1>
+  <h1><%= Promise.model_name.human(count: 2).capitalize %></h1>
 </div>
 
+<p class="pull-right"><%= page_entries_info @promises %></p>
 <%= render partial: "shared/promises_table", locals: { promises: @promises, show_party: true, show_general: true, show_source: true } %>
-
+<%= will_paginate @promises %>

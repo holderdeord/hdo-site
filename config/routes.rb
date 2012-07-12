@@ -1,22 +1,32 @@
 Hdo::Application.routes.draw do
   devise_for :users
 
-  resources :promises,        :only => [:index]        # TODO: :create, :show and :edit behind auth
-  resources :issues,          :only => [:index, :show]
-  resources :votes,           :only => [:index, :show]
-  resources :districts,       :only => [:index, :show]
+  resources :users
+  resources :topics
 
+  resources :districts,       :only => [:index, :show]
   resources :categories,      :only => [:index, :show]
   resources :parties,         :only => [:index, :show]
-  resources :representatives, :only => [:index, :show]
   resources :committees,      :only => [:index, :show]
-  
-  resources :users
 
-  resources :topics
+  resources :promises,        :only => [:index]        # TODO: :create, :show and :edit behind auth
+  get 'promises/page/:page' => 'promises#index'
+
+  resources :issues, :only => [:index, :show]
+  get 'issues/page/:page' => 'issues#index'
+
+  resources :representatives, :only => [:index, :show]
+  get 'representatives/:id/page/:page' => 'representatives#show'
+
+  resources :votes, :only => [:index, :show]
+  get 'votes/page/:page' => 'votes#index'
+  get 'votes/index/all'  => 'votes#all', :as => :all_votes
 
   get "home/index"
   get "home/about"
+  get "home/press"
+  get "home/login_status"
+
   get "docs/index"
 
   # The priority is based upon order of creation:

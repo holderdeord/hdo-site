@@ -1,12 +1,11 @@
-<p id="app.counts.vote" class="pull-right"><%= t('app.counts.vote', count: votes.size).html_safe %></p>
-
 <% if votes.any? %>
   <table id="votes" class="table table-striped">
     <thead>
       <tr>
+        <th class="wide-table-header"><%= Vote.human_attribute_name :external_id %></th>
         <th class="wide-table-header"><%= Vote.human_attribute_name :time %></th>
         <% if show_issues %>
-          <th><%= Issue.model_name.human count: 2 %></th>
+          <th><%= Issue.model_name.human(count: 2).capitalize %></th>
         <% end %>
         <th><%= Vote.human_attribute_name :subject %></th>
         <th><%= Vote.human_attribute_name :enacted %></th>
@@ -18,6 +17,7 @@
     <tbody>
       <% votes.each do |vote| %>
       <tr>
+        <td><%= vote.external_id %></td>
         <td><%= vote.time_text %></td>
         <% if show_issues %>
           <td>
@@ -41,3 +41,4 @@
     </tbody>
   </table>
 <% end %>
+

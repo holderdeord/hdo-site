@@ -1,41 +1,38 @@
-<h2><%= Vote.model_name.human count: 2 %></h2>
-<div class="well topic-vote-table">
-  <table class="table table-striped">
-    <thead>
-      <tr>
-        <th><%= Vote.model_name.human %></th>
-        <th><%= Proposition.model_name.human count: 2 %></th>
-        <th></th>
-        <th></th>
-      </tr>
-    </thead>
+<% @votes.each do |vote| %>
+<div class="vote-container">
+  <div class="row vote">
+    <div class="span2">
+      <a data-toggle="collapse" data-target="#proposition-body-<%= vote.id %>"><%= t 'app.expand' %></a>
+    </div>
 
-    <tbody>
-      <% @votes.each do |vote| %>
-      <tr>
-        <td><%= link_to vote.subject, vote, :target => 'topic_new' %></td>
-        <td>
-          <ul>
-          <% vote.propositions.each  do |prop| %>
-            <li class="prop-row">
-              <%= prop.body.html_safe %>
-            </li>
-          <% end %>
-          </ul>
-        </td>
-        <td>
-          <i class="icon-thumbs-up"></i>
-          <strong><%= t 'app.for' %></strong>
-          <%= radio_button_tag "votes_for[#{vote.id}]", true, @topic.vote_for?(vote.id) -%>
-        </td>
-        <td>
-          <i class="icon-thumbs-down"></i>
-          <strong><%= t 'app.against' %></strong>
-          <%= radio_button_tag "votes_for[#{vote.id}]", false, @topic.vote_against?(vote.id) -%>
-        </td>
-      </tr>
+    <div class="span6">
+      <h4><%= link_to vote.subject, vote, :target => 'topic_new' %></h4>
+      <ul>
+        <% vote.issues.each do |issue| %>
+          <li><%= link_to issue.summary, issue %></li>
+        <% end %>
+      </ul>
+    </div>
+
+    <div class="pull-right">
+      <%= select_tag "votes_for[#{vote.id}]", vote_options_for(vote) %>
+    </div>
+  </div>
+
+  <div class="row collapse" id="proposition-body-<%= vote.id %>">
+    <div class="span8">
+      <% vote.propositions.each do |prop| %>
+        <%= prop.body.html_safe %>
       <% end %>
-    </tbody>
-  </table>
+    </div>
+  </div>
 </div>
+<% end %>
 
+<%= content_for :document_ready do %>
+<script type="text/javascript" charset="utf-8">
+  $(document).ready(function() {
+    $(".vote").collapse()
+  });
+</script>
+<% end %>

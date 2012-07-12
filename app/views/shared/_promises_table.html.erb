@@ -1,6 +1,6 @@
-<div class="alert alert-info"><%= t('app.promises.disclaimer').html_safe %></div>
-
-<p class="pull-right"><%= t('app.counts.promises', count: promises.size).html_safe %></p>
+<div class="span8">
+  <div class="alert alert-info"><%= t('app.promises.disclaimer').html_safe %></div>
+</div>
 
 <table class="table table-striped">
   <thead>
@@ -15,7 +15,7 @@
       <% if show_source %>
       <th><%= Promise.human_attribute_name :source %></th>
       <% end %>
-      <th><%= Category.model_name.human count: 2 %></th>
+      <th><%= Category.model_name.human(count: 2).capitalize %></th>
     </tr>
   </thead>
 

@@ -1,0 +1,10 @@
+<div class="active item">
+  <% representative_group.each do |representative| %>
+    <%= link_to(representative, :class => "representative-view") do %>
+      <%= image_tag representative.image, :alt => representative.full_name %>
+      <div class="carousel-caption representative-name-label">
+        <%= representative.full_name %>
+      </div>
+    <% end %>
+  <% end %>
+</div>

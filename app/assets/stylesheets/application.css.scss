@@ -13,6 +13,12 @@
  *= require_tree .
 */
 
+body {
+  padding-top: 180px;
+}
+
 footer {
+  margin: 10px;
+  text-align: center;
   color: #999;
 }

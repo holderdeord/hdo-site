@@ -1,5 +1,5 @@
 class HomeController < ApplicationController
-  caches_page :index
+  caches_page :index, :press
 
   def index
   end
@@ -8,5 +8,12 @@ class HomeController < ApplicationController
     if params[:lang] == "en"
       render :about, :locale => "en"
     end
+  end
+
+  def press
+  end
+
+  def login_status
+    render layout: false
   end
 end

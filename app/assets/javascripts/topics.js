@@ -1,3 +1,7 @@
+// =====================
+// = TopicSupportGraph =
+// =====================
+
 function TopicSupportGraph(selector, data) {
   this.selector = selector;
   this.data = data;
@@ -29,7 +33,7 @@ TopicSupportGraph.prototype.render = function() {
       text: 'holderdeord.no'
     },
     title: {
-      text: 'Hvor ofte har partiet stemt for temaet?'
+      text: ''
     },
     xAxis: {
       categories: this.categories(),
@@ -50,7 +54,6 @@ TopicSupportGraph.prototype.render = function() {
     },
     tooltip: {
       formatter: function() {
-        console.log(this);
         return ''+
           this.x +': '+ this.y +'%';
       }
@@ -68,4 +71,3 @@ TopicSupportGraph.prototype.render = function() {
 
   return this;
 };
-
