@@ -13,7 +13,7 @@ class Vote < ActiveRecord::Base
 
   friendly_id :external_id, :use => :slugged
 
-  scope :personal, where('for_count != 0 AND against_count != 0 AND absent_count != 0')
+  scope :personal, where('for_count != 0 OR against_count != 0 OR absent_count != 0')
 
   def time_text
     time.strftime("%Y-%m-%d")
@@ -24,7 +24,7 @@ class Vote < ActiveRecord::Base
   end
 
   def personal?
-    for_count != 0 && against_count != 0 && absent_count != 0
+    for_count != 0 || against_count != 0 || absent_count != 0
   end
 
   def stats
