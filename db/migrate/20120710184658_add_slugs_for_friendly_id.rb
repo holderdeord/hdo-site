@@ -26,28 +26,28 @@ class AddSlugsForFriendlyId < ActiveRecord::Migration
   end
 
   def down
-  	remove_index :representatives, :slug
-  	remove_column :representatives, :slug
+    remove_index :representatives, :slug
+    remove_column :representatives, :slug
 
- 	remove_index :committees, :slug
- 	remove_column :committees, :slug
+    remove_index :committees, :slug
+    remove_column :committees, :slug
 
- 	remove_index :categories, :slug
- 	remove_column :categories, :slug
+    remove_index :categories, :slug
+    remove_column :categories, :slug
 
- 	remove_index :districts, :slug
- 	remove_column :districts, :slug
+    remove_index :districts, :slug
+    remove_column :districts, :slug
 
- 	remove_index :fields, :slug
- 	remove_column :fields, :slug
+    remove_index :fields, :slug
+    remove_column :fields, :slug
 
- 	remove_index :issues, :slug
- 	remove_column :issues, :slug
+    remove_index :issues, :slug
+    remove_column :issues, :slug
 
- 	remove_index :parties, :slug
- 	remove_column :parties, :slug
+    remove_index :parties, :slug
+    remove_column :parties, :slug
 
- 	remove_index :votes, :slug
- 	remove_column :votes, :slug
+    remove_index :votes, :slug
+    remove_column :votes, :slug
   end
 end
