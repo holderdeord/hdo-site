@@ -163,6 +163,7 @@ nb:
   app:
     next: "Neste"
     previous: "Forrige"
+    show_all: "Vis alle"
     url: 'holderdeord.no'
     urls:
       wiki: "https://holderdeord.atlassian.net/"

@@ -3,7 +3,7 @@
 </div>
 
 <p id="app.counts.vote" class="pull-right">
-  <%= page_entries_info @votes %>
+  <%= page_entries_info @votes %>. <%= link_to t('app.show_all'), votes_path(:per_page => @votes.total_entries) %>
 </p>
 
 <%= render partial: "shared/votes_summary_table", locals: {votes: @votes, show_issues: true } %>
