@@ -54,6 +54,9 @@ nb:
       topic:
         one: "tema"
         other: "tema"
+      field:
+        one: "område"
+        other: "områder"
     attributes:
       representative:
         name: "Navn"
@@ -145,6 +148,14 @@ nb:
         votes: "Voteringer"
       vote_direction:
         matches: "Støtter tema?"
+      field:
+        name: "Tittel"
+        new: "Nytt område"
+        submit: "Lagre område"
+        edit: "Rediger område"
+        destroy: "Slett område"
+        confirm_destroy: "Er du sikker på at du vil slette område?"
+        topics: "Tema"
   will_paginate:
     previous_label: "&#8592; Forrige"
     next_label: "Neste &#8594;"

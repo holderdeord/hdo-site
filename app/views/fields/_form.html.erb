@@ -1,0 +1,26 @@
+<%= twitter_bootstrap_form_for @field do |form| %>
+  <%# form.inputs do %>
+    <div class="well">
+      <%= form.text_field :name %>
+    </div>
+  <%# end %>
+
+  <h1><%= Topic.model_name.human(count: 2).capitalize %></h1>
+  <div class="well">
+    <% @topics.each do |topic| %>
+      <div class="row">
+        <div class="span6">
+          <label class="checkbox">
+            <%= check_box_tag "field[topic_ids][]", topic.id, @field.topics.include?(topic) %>
+            <strong><%= topic.title.capitalize %></strong>
+          </label>
+        </div>
+      </div>
+    <% end %>
+  </div>
+    <div class="pull-right">
+      <%= link_to t('app.cancel'), topics_path, :class => 'btn btn-danger' %>
+      <%= form.submit t('app.done'), class: 'btn btn-primary', name: 'finish_button' %>
+    </div>
+
+<% end %>
