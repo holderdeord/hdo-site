@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120630125158) do
+ActiveRecord::Schema.define(:version => 20120710184658) do
 
   create_table "categories", :force => true do |t|
     t.string   "external_id"
@@ -20,7 +20,10 @@ ActiveRecord::Schema.define(:version => 20120630125158) do
     t.boolean  "main"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
+    t.string   "slug"
   end
+
+  add_index "categories", ["slug"], :name => "index_categories_on_slug", :unique => true
 
   create_table "categories_issues", :id => false, :force => true do |t|
     t.integer "issue_id"
@@ -48,7 +51,10 @@ ActiveRecord::Schema.define(:version => 20120630125158) do
     t.string   "name"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
+    t.string   "slug"
   end
+
+  add_index "committees", ["slug"], :name => "index_committees_on_slug", :unique => true
 
   create_table "committees_representatives", :id => false, :force => true do |t|
     t.integer "committee_id"
@@ -62,13 +68,19 @@ ActiveRecord::Schema.define(:version => 20120630125158) do
     t.string   "name"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
+    t.string   "slug"
   end
+
+  add_index "districts", ["slug"], :name => "index_districts_on_slug", :unique => true
 
   create_table "fields", :force => true do |t|
     t.string   "name"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.string   "slug"
   end
+
+  add_index "fields", ["slug"], :name => "index_fields_on_slug", :unique => true
 
   create_table "fields_topics", :id => false, :force => true do |t|
     t.integer "field_id"
@@ -89,9 +101,11 @@ ActiveRecord::Schema.define(:version => 20120630125158) do
     t.integer  "committee_id"
     t.datetime "created_at",     :null => false
     t.datetime "updated_at",     :null => false
+    t.string   "slug"
   end
 
   add_index "issues", ["committee_id"], :name => "index_issues_on_committee_id"
+  add_index "issues", ["slug"], :name => "index_issues_on_slug", :unique => true
 
   create_table "issues_votes", :id => false, :force => true do |t|
     t.integer "issue_id"
@@ -105,9 +119,11 @@ ActiveRecord::Schema.define(:version => 20120630125158) do
     t.string   "name"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
+    t.string   "slug"
   end
 
   add_index "parties", ["name"], :name => "index_parties_on_name"
+  add_index "parties", ["slug"], :name => "index_parties_on_slug", :unique => true
 
   create_table "promises", :force => true do |t|
     t.integer  "party_id"
@@ -150,11 +166,13 @@ ActiveRecord::Schema.define(:version => 20120630125158) do
     t.integer  "district_id"
     t.datetime "date_of_birth"
     t.datetime "date_of_death"
+    t.string   "slug"
   end
 
   add_index "representatives", ["district_id"], :name => "index_representatives_on_district_id"
   add_index "representatives", ["last_name"], :name => "index_representatives_on_last_name"
   add_index "representatives", ["party_id"], :name => "index_representatives_on_party_id"
+  add_index "representatives", ["slug"], :name => "index_representatives_on_slug", :unique => true
 
   create_table "topics", :force => true do |t|
     t.string   "title"
@@ -212,6 +230,9 @@ ActiveRecord::Schema.define(:version => 20120630125158) do
     t.datetime "time"
     t.datetime "created_at",    :null => false
     t.datetime "updated_at",    :null => false
+    t.string   "slug"
   end
+
+  add_index "votes", ["slug"], :name => "index_votes_on_slug", :unique => true
 
 end

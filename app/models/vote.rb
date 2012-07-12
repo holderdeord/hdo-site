@@ -1,4 +1,5 @@
 class Vote < ActiveRecord::Base
+  extend FriendlyId
   has_and_belongs_to_many :issues
   validates_length_of :issues, :minimum => 1
   validates_presence_of :time
@@ -8,6 +9,12 @@ class Vote < ActiveRecord::Base
   has_many :representatives, :through => :vote_results, :order => :last_name
 
   has_many :vote_directions
+
+  friendly_id :external_id, :use => :slugged
+
+  def should_generate_new_friendly_id?
+    new_record?
+  end
 
   scope :personal, where('for_count != 0 AND against_count != 0 AND absent_count != 0')
 
@@ -22,7 +29,6 @@ class Vote < ActiveRecord::Base
   def personal?
     for_count != 0 && against_count != 0 && absent_count != 0
   end
-
 
   def stats
     Hdo::Stats::VoteCounts.new self
