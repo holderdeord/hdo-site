@@ -1,5 +1,6 @@
 class Category < ActiveRecord::Base
   extend FriendlyId
+
   has_and_belongs_to_many :issues, :order => "last_update DESC"
   has_and_belongs_to_many :promises
   has_and_belongs_to_many :topics
@@ -9,10 +10,6 @@ class Category < ActiveRecord::Base
   validates_uniqueness_of :name
 
   friendly_id :name, :use => :slugged
-
-  def should_generate_new_friendly_id?
-    new_record?
-  end
 
   def self.column_groups
     column_count = 3
