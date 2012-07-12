@@ -2,6 +2,9 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+$representative-width:  120px;
+$representative-height: 230px;
+
 @mixin clearfix {
 	&:before,
 	&:after {
@@ -13,11 +16,31 @@
 	}
 }
 
+@mixin radial-gradient($gradient) {
+    background-image: -webkit-radial-gradient($gradient);
+    background-image: -moz-radial-gradient($gradient);
+    background-image: -ms-radial-gradient($gradient);
+    background-image: -o-radial-gradient($gradient);
+    background-image: radial-gradient($gradient);
+}
+@mixin image-and-radial-gradient($image, $gradient) {
+    background-image: url($image), -webkit-radial-gradient($gradient);
+    background-image: url($image), -moz-radial-gradient($gradient);
+    background-image: url($image), -ms-radial-gradient($gradient);
+    background-image: url($image), -o-radial-gradient($gradient);
+    background-image: url($image), radial-gradient($gradient);
+}
+@mixin box-shadow($shadow) {
+  -webkit-box-shadow: $shadow;
+  -moz-box-shadow: $shadow;
+  -ms-box-shadow: $shadow;
+  -o-box-shadow: $shadow;
+  box-shadow: $shadow;
+}
+
 .representative-image {
+  @include box-shadow(#{5px 7px 15px #888});
   max-width: 240px;
-  -moz-box-shadow: 5px 7px 15px #888;
-  -webkit-box-shadow: 5px 7px 15px #888;
-  box-shadow: 5px 7px 15px #888;
   border-radius: 6px;
 }
 
@@ -38,8 +61,22 @@
 
     @include clearfix;
 
-    li {
+    > li {
         float: left;
+        margin-bottom: 30px;
+        margin-right: 15px;
+        position: relative;
+
+        & > div {
+		    border-radius: 6px;
+		    min-height: $representative-height;
+		    overflow: hidden;
+		    width: $representative-width;
+            @include box-shadow(#{0 0 5px grey});	
+        }
+        .district {
+            display: none;
+        }
     }
     .org {
         display: block;
@@ -49,63 +86,66 @@
         right: 5px;
         top: 115px;
         overflow: hidden;
-        background-image: -moz-radial-gradient(center center, circle cover, #fff , #fff 18px, rgba(255, 255, 255, 0) 20px);
         border-radius: 20px 20px;
         text-indent: -1000em;
         background-repeat: no-repeat;
+        @include radial-gradient(#{center center, circle cover, #fff , #fff 18px, rgba(255, 255, 255, 0) 20px});
         
         &.party-KrF {
-            background-image: url('/assets/party_logos/KrF_badge_small.jpg'), -moz-radial-gradient(center center, circle cover, #fff , #fff 18px, rgba(255, 255, 255, 0) 20px);
-	}
+            @include image-and-radial-gradient(
+                '/assets/party_logos/KrF_badge_small.jpg', 
+                #{center center, circle cover, #fff , #fff 18px, rgba(255, 255, 255, 0) 20px}
+            );
+        }
         &.party-FrP {
-            background-image: url('/assets/party_logos/FrP_badge_small.jpg'), -moz-radial-gradient(center center, circle cover, #fff , #fff 18px, rgba(255, 255, 255, 0) 20px);
+            @include image-and-radial-gradient(
+                '/assets/party_logos/FrP_badge_small.jpg', 
+                #{center center, circle cover, #fff , #fff 18px, rgba(255, 255, 255, 0) 20px}
+            );
         }
         &.party-A {
-            background-image: url('/assets/party_logos/A_badge_small.jpg'), -moz-radial-gradient(center center, circle cover, #fff , #fff 18px, rgba(255, 255, 255, 0) 20px);
+            @include image-and-radial-gradient(
+                '/assets/party_logos/A_badge_small.jpg', 
+                #{center center, circle cover, #fff , #fff 18px, rgba(255, 255, 255, 0) 20px}
+            );
         }
         &.party-H {
-            background-image: url('/assets/party_logos/H_badge_small.jpg'), -moz-radial-gradient(center center, circle cover, #fff , #fff 18px, rgba(255, 255, 255, 0) 20px);
+            @include image-and-radial-gradient(
+                '/assets/party_logos/H_badge_small.jpg', 
+                #{center center, circle cover, #fff , #fff 18px, rgba(255, 255, 255, 0) 20px}
+            );
         }
         &.party-Sp {
-            background-image: url('/assets/party_logos/Sp_badge_small.jpg'), -moz-radial-gradient(center center, circle cover, #fff , #fff 18px, rgba(255, 255, 255, 0) 20px);
+            @include image-and-radial-gradient(
+                '/assets/party_logos/Sp_badge_small.jpg', 
+                #{center center, circle cover, #fff , #fff 18px, rgba(255, 255, 255, 0) 20px}
+            );
         }
         &.party-SV {
-            background-image: url('/assets/party_logos/SV_badge_small.jpg'), -moz-radial-gradient(center center, circle cover, #fff , #fff 18px, rgba(255, 255, 255, 0) 20px);
+            @include image-and-radial-gradient(
+                '/assets/party_logos/SV_badge_small.jpg', 
+                #{center center, circle cover, #fff , #fff 18px, rgba(255, 255, 255, 0) 20px}
+            );
         }
         &.party-V {
-            background-image: url('/assets/party_logos/V_badge_small.jpg'), -moz-radial-gradient(center center, circle cover, #fff , #fff 18px, rgba(255, 255, 255, 0) 20px);
+            @include image-and-radial-gradient(
+                '/assets/party_logos/V_badge_small.jpg', 
+                #{center center, circle cover, #fff , #fff 18px, rgba(255, 255, 255, 0) 20px}
+            );
         }
 
     }
     img {
-        width: 120px;
+        width: $representative-width;
     }
     .representative-image {
-	box-shadow: none;
-        -moz-box-shadow: none;
-        -webkit-box-shadow: none;
-	border-radius: 0;
-        
+        @include box-shadow(none);
+        border-radius: 0;
     }
     .fn {
         margin: 5px 10px;
         display: inline-block;
     }
-    .vcard {
-        box-shadow: 0 0 5px grey;
-        margin-bottom: 30px;
-        margin-right: 15px;
-	border-radius: 6px;
-        position: relative;
-        width: 120px;
-        overflow: hidden;
-        min-height: 220px;
-        &:hover {
-	    -moz-transform-3d: translate(20,20,10);
-	}
-        .district {
-            display: none;
-        }
-    }
+
 }
 

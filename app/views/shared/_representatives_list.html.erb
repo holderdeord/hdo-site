@@ -1,16 +1,18 @@
 <ul class="representatives-list">
   <% @representatives.each do |rep| %>
-    <li class="vcard representative party-<%= rep.party.external_id %> district-<%= rep.district.name %>">
-      <%= link_to(rep) do %>
-	<%= image_tag rep.image, class: 'representative-image'  %>
-        <span class="n fn"><%= rep.display_name %></span>
-        <%if show_district %>
-	  <span class="adr district"><%= rep.district.name %></span>
+    <li class="representative party-<%= rep.party.external_id %> district-<%= rep.district.name %>">
+      <div class="vcard">
+        <%= link_to(rep) do %>
+          <%= image_tag rep.image, class: 'representative-image'  %>
+          <span class="n fn"><span class="family-name"><%= rep.last_name %></span>, <span class="first-name"><%= rep.first_name %></span></span>
+            <%if show_district %>
+              <span class="adr district"><%= rep.district.name %></span>
+            <% end %>
         <% end %>
-      <% end %>
-      <% if show_party %>
-	<%= link_to rep.party.name, rep.party, :class => "org party-" + rep.party.external_id, :title => rep.party.name %>
-      <% end %>
+        <% if show_party %>
+          <%= link_to rep.party.name, rep.party, :class => "org party-" + rep.party.external_id, :title => rep.party.name %>
+        <% end %>
+      </div>
     </li>
   <% end %>
 </ul>
