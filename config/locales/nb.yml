@@ -106,6 +106,7 @@ nb:
         counts: "Stemmegivning"
         propositions: "Forslag"
         issues: "Saker"
+        external_id: "Ekstern id"
       vote_result:
         result: "Stemme"
       promise:

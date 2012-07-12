@@ -2,6 +2,7 @@
   <table id="votes" class="table table-striped">
     <thead>
       <tr>
+        <th class="wide-table-header"><%= Vote.human_attribute_name :external_id %></th>
         <th class="wide-table-header"><%= Vote.human_attribute_name :time %></th>
         <% if show_issues %>
           <th><%= Issue.model_name.human(count: 2).capitalize %></th>
@@ -16,6 +17,7 @@
     <tbody>
       <% votes.each do |vote| %>
       <tr>
+        <td><%= vote.external_id %></td>
         <td><%= vote.time_text %></td>
         <% if show_issues %>
           <td>
