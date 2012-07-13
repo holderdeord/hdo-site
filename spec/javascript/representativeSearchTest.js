@@ -18,7 +18,7 @@
 
             var result = H.representativeSearch.parse(dataFromServer);
             assert.equals(result, [{
-                id: 110,
+                id: "maaa",
                 name: "Marianne Aasen"
             }]);
         }
