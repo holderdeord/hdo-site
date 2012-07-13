@@ -1,0 +1,13 @@
+<div class="well">
+  <label for="representative-search">Søk etter representant:</label>
+  <input id="representativeSearch" type="search" name="representative-search" class="typeahead">
+</div>
+
+<% content_for :document_ready do %>
+  <script>
+    $(document).ready(function() {
+      var representatives = <%= representatives.to_json.html_safe %>;
+      HDO.representativeSearch.init(document.getElementById("representativeSearch"), representatives);
+    });
+  </script>
+<% end %>

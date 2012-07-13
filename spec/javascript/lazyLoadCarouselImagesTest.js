@@ -1,3 +1,5 @@
+/* global HDO */
+
 (function (H, $) {
   buster.testCase('Lazy Load Carousel Images', {
     setUp: function () {
