@@ -1,4 +1,6 @@
 class Category < ActiveRecord::Base
+  extend FriendlyId
+
   has_and_belongs_to_many :issues, :order => "last_update DESC"
   has_and_belongs_to_many :promises
   has_and_belongs_to_many :topics
@@ -6,6 +8,8 @@ class Category < ActiveRecord::Base
   acts_as_tree :order => :name
 
   validates_uniqueness_of :name
+
+  friendly_id :name, :use => :slugged
 
   def self.column_groups
     column_count = 3

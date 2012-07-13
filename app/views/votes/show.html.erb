@@ -2,8 +2,8 @@
   <h1><%= @vote.subject %></h1>
 </div>
 
-<% if @vote.unanimous? %>
-  <div class="alert alert-info"><%= I18n.t('app.votes.unanimous') %></div>
+<% unless @vote.personal? %>
+  <div class="alert alert-info"><%= I18n.t('app.votes.non_personal') %></div>
 <% end %>
 
 <div class="well">

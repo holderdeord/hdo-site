@@ -1,4 +1,6 @@
 class Party < ActiveRecord::Base
+  extend FriendlyId
+
   include Hdo::ModelHelpers::HasRepresentatives
 
   has_many :representatives, :order => :last_name
@@ -6,6 +8,8 @@ class Party < ActiveRecord::Base
 
   validates_uniqueness_of :name
   validates_presence_of :name
+
+  friendly_id :external_id, :use => :slugged
 
   def large_logo
     default = "party_logos/unknown_logo_large.jpg"

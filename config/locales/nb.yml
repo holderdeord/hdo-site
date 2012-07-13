@@ -106,6 +106,7 @@ nb:
         counts: "Stemmegivning"
         propositions: "Forslag"
         issues: "Saker"
+        external_id: "Ekstern id"
       vote_result:
         result: "Stemme"
       promise:
@@ -162,6 +163,7 @@ nb:
   app:
     next: "Neste"
     previous: "Forrige"
+    show_all: "Vis alle"
     url: 'holderdeord.no'
     urls:
       wiki: "https://holderdeord.atlassian.net/"
@@ -185,6 +187,7 @@ nb:
     details: 'Detaljer'
     back: 'Tilbake'
     cancel: 'Avbryt'
+    done: 'Ferdig'
     save: 'Lagre'
     for: 'For'
     against: 'Mot'
@@ -197,7 +200,7 @@ nb:
     promises:
       disclaimer: '<p>Vi jobber med å kode alle løftene fra partienes valgprogram.</p> <p>Her kan man foreløpig se noen eksempler på kategoriserte løfter. Vi vil etter planen publisere den ferdigkodede løftedatabasen i løpet av juli.</p>'
     votes:
-      unanimous: 'Denne voteringen ble avgjort uten bruk av voteringssystemet.'
+      non_personal: 'Denne voteringen ble avgjort uten bruk av voteringssystemet.'
     external:
       urls:
         issue: "http://stortinget.no/no/Saker-og-publikasjoner/Saker/Sak/?p=%s"

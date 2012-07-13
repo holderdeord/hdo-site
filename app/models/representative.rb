@@ -1,4 +1,6 @@
 class Representative < ActiveRecord::Base
+  extend FriendlyId
+
   belongs_to :party
   belongs_to :district
 
@@ -8,6 +10,8 @@ class Representative < ActiveRecord::Base
   has_and_belongs_to_many :committees, :order => :name
 
   validates_uniqueness_of :first_name, :scope => :last_name # TODO: :scope => :period ?!
+
+  friendly_id :external_id, :use => :slugged
 
   def image
     default = "representatives/unknown.jpg"

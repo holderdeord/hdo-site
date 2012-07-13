@@ -48,10 +48,14 @@ class TopicsController < ApplicationController
     @topic = Topic.new(params[:topic])
 
     if @topic.save
-      @topic.next_step!
-      session[:topic_step] = @topic.current_step
+      if params[:finish_button]
+        redirect_to @topic
+      else
+        @topic.next_step!
+        session[:topic_step] = @topic.current_step
 
-      redirect_to edit_topic_url(@topic)
+        redirect_to edit_topic_url(@topic)
+      end
     else
       flash.alert = @topic.errors.full_messages.join(' ')
       redirect_to new_topic_path(@topic)

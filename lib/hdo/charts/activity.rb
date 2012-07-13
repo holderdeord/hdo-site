@@ -12,7 +12,7 @@ module Hdo
         @start = Time.parse("2011-10-01").utc.midnight
         @stop = Time.parse("2012-07-01").utc.midnight
 
-        @all = ::Vote.not_unanimous.where(:time => @start..@stop).group_by { |v| v.time.midnight }
+        @all = ::Vote.personal.where(:time => @start..@stop).group_by { |v| v.time.midnight }
         @results = results.select { |r| r.vote.time.utc.between?(@start, @stop) }
       end
 

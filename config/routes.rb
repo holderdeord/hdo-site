@@ -10,16 +10,17 @@ Hdo::Application.routes.draw do
   resources :committees,      :only => [:index, :show]
 
   resources :promises,        :only => [:index]        # TODO: :create, :show and :edit behind auth
-  get '/promises/page/:page' => 'promises#index'
+  get 'promises/page/:page' => 'promises#index'
 
   resources :issues, :only => [:index, :show]
-  get '/issues/page/:page' => 'issues#index'
+  get 'issues/page/:page' => 'issues#index'
 
   resources :representatives, :only => [:index, :show]
   get 'representatives/:id/page/:page' => 'representatives#show'
 
   resources :votes, :only => [:index, :show]
   get 'votes/page/:page' => 'votes#index'
+  get 'votes/index/all'  => 'votes#all', :as => :all_votes
 
   get "home/index"
   get "home/about"

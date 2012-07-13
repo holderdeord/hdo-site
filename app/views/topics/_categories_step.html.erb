@@ -10,7 +10,7 @@
 <h1><%= Category.model_name.human(count: 2).capitalize %></h2>
 <div class="row">
   <% @categories.each do |cat_column| %>
-    <div class="span4">
+    <div class="span3">
       <% cat_column.each do |cat_group| %>
         <div class="well">
           <h3><%=cat_group.name %></h3>
