@@ -24,7 +24,7 @@ var HDO = HDO || {};
         parse: function (data) {
             return _.map(data, function (obj) {
                 return {
-                    id: obj.external_id.toLowerCase(),
+                    id: obj.slug,
                     name: [obj.first_name, obj.last_name].join(" ")
                 };
             });

@@ -12,6 +12,7 @@
                 "first_name":"Marianne",
                 "id":110,
                 "last_name":"Aasen",
+                "slug": "maaa",
                 "party_id":1,
                 "updated_at":"2012-06-30T10:12:37Z"
             }];
