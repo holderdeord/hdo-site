@@ -4,15 +4,16 @@
 
 <div class="container-fluid">
   <div class="row-fluid">
-    <div class="span3">
+    <div class="span4">
       <%= image_tag @party.large_logo, alt: @party.name + 's logo' %>
       <dl>
         <dt><%= Representative.model_name.human(count: 2).capitalize %></dt>
         <dd><%= @party.representatives.count %> (<%= @party.percent_of_representatives %>%)</dd>
       </dl>
+      <%= render partial: "representative_search", locals: { representatives: @party.representatives } %>
     </div>
 
-    <div class="span9">
+    <div class="span8">
       <h3><%= Representative.model_name.human(count: 2).capitalize %></h3>
       <%= render partial: "representative_gallery", locals: { representatives: @party.representatives } %>
       <h3><%= Promise.model_name.human(count: 2).capitalize %></h3>
