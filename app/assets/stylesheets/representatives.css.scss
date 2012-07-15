@@ -106,51 +106,50 @@ $representative-height: 230px;
     .org {
         border-radius: 20px 20px;
         width: 40px;
-        
-        &.party-krf {
-            @include image-and-radial-gradient(
-                '/assets/party_logos/KrF_badge_small.jpg', 
-                #{center center, circle cover, #fff , #fff 18px, rgba(255, 255, 255, 0) 20px}
-            );
-        }
-        &.party-frp {
-            @include image-and-radial-gradient(
-                '/assets/party_logos/FrP_badge_small.jpg', 
-                #{center center, circle cover, #fff , #fff 18px, rgba(255, 255, 255, 0) 20px}
-            );
-        }
-        &.party-a {
-            @include image-and-radial-gradient(
-                '/assets/party_logos/A_badge_small.jpg', 
-                #{center center, circle cover, #fff , #fff 18px, rgba(255, 255, 255, 0) 20px}
-            );
-        }
-        &.party-h {
-            @include image-and-radial-gradient(
-                '/assets/party_logos/H_badge_small.jpg', 
-                #{center center, circle cover, #fff , #fff 18px, rgba(255, 255, 255, 0) 20px}
-            );
-        }
-        &.party-sp {
-            @include image-and-radial-gradient(
-                '/assets/party_logos/Sp_badge_small.jpg', 
-                #{center center, circle cover, #fff , #fff 18px, rgba(255, 255, 255, 0) 20px}
-            );
-        }
-        &.party-sv {
-            @include image-and-radial-gradient(
-                '/assets/party_logos/SV_badge_small.jpg', 
-                #{center center, circle cover, #fff , #fff 18px, rgba(255, 255, 255, 0) 20px}
-            );
-        }
-        &.party-v {
-            @include image-and-radial-gradient(
-                '/assets/party_logos/V_badge_small.jpg', 
-                #{center center, circle cover, #fff , #fff 18px, rgba(255, 255, 255, 0) 20px}
-            );
-        }
-
     }
+    
+.party-krf .org {
+    @include image-and-radial-gradient(
+	'/assets/party_logos/KrF_badge_small.jpg', 
+	#{center center, circle cover, #fff , #fff 18px, rgba(255, 255, 255, 0) 20px}
+    );
+}
+.party-frp .org {
+    @include image-and-radial-gradient(
+	'/assets/party_logos/FrP_badge_small.jpg', 
+	#{center center, circle cover, #fff , #fff 18px, rgba(255, 255, 255, 0) 20px}
+    );
+}
+.party-a .org {
+    @include image-and-radial-gradient(
+	'/assets/party_logos/A_badge_small.jpg', 
+	#{center center, circle cover, #fff , #fff 18px, rgba(255, 255, 255, 0) 20px}
+    );
+}
+.party-h .org {
+    @include image-and-radial-gradient(
+	'/assets/party_logos/H_badge_small.jpg', 
+	#{center center, circle cover, #fff , #fff 18px, rgba(255, 255, 255, 0) 20px}
+    );
+}
+.party-sp .org {
+    @include image-and-radial-gradient(
+	'/assets/party_logos/Sp_badge_small.jpg', 
+	#{center center, circle cover, #fff , #fff 18px, rgba(255, 255, 255, 0) 20px}
+    );
+}
+.party-sv .org {
+    @include image-and-radial-gradient(
+	'/assets/party_logos/SV_badge_small.jpg', 
+	#{center center, circle cover, #fff , #fff 18px, rgba(255, 255, 255, 0) 20px}
+    );
+}
+.party-v .org {
+    @include image-and-radial-gradient(
+	'/assets/party_logos/V_badge_small.jpg', 
+	#{center center, circle cover, #fff , #fff 18px, rgba(255, 255, 255, 0) 20px}
+    );
+}
     img {
         width: $representative-width;
     }
@@ -173,69 +172,104 @@ $representative-height: 230px;
 }
 
 .representatives-sort-criteria-heading {
-	padding-left: 30px;
+/*	padding-left: 30px; */
 	background-repeat: no-repeat;
 	background-size: auto 30px;
 }
 
-.representatives-list .region, 
-.representatives-sort-criteria-heading {
-    &.district-akershus {
-        background-image: url('/assets/district_logos/Akershus.svg');
+    .district-akershus {
+	.region {
+            background-image: url('/assets/district_logos/Akershus.svg');
+	}
     } 
-    &.district-ostfold {
-        background-image: url('/assets/district_logos/Oestfold.svg');
+    .district-ostfold {
+	.region {
+            background-image: url('/assets/district_logos/Oestfold.svg');
+	}
     }
-    &.district-oslo {
-        background-image: url('/assets/district_logos/Oslo.svg');
+    .district-oslo {
+	.region {
+            background-image: url('/assets/district_logos/Oslo.svg');
+	}
     } 
-    &.district-hedmark {
-        background-image: url('/assets/district_logos/Hedmark.svg');
+    .district-hedmark {
+	.region {
+            background-image: url('/assets/district_logos/Hedmark.svg');
+	}
     } 
-    &.district-oppland {
-        background-image: url('/assets/district_logos/Oppland.svg');
+    .district-oppland {
+	.region {
+            background-image: url('/assets/district_logos/Oppland.svg');
+	}
     } 
-    &.district-buskerud {
-        background-image: url('/assets/district_logos/Buskerud.svg');
+    .district-buskerud {
+	.region {
+            background-image: url('/assets/district_logos/Buskerud.svg');
+	}
     } 
-    &.district-vestfold {
-        background-image: url('/assets/district_logos/Vestfold.svg');
+    .district-vestfold {
+	.region {
+            background-image: url('/assets/district_logos/Vestfold.svg');
+	}
     } 
-    &.district-telemark {
-        background-image: url('/assets/district_logos/Telemark.svg');
+    .district-telemark {
+	.region {
+            background-image: url('/assets/district_logos/Telemark.svg');
+	}
     } 
-    &.district-aust-agder {
-        background-image: url('/assets/district_logos/Aust-Agder.svg');
+    .district-aust-agder {
+	.region {
+            background-image: url('/assets/district_logos/Aust-Agder.svg');
+	}
     } 
-    &.district-vest-agder {
-        background-image: url('/assets/district_logos/Vest-Agder.svg');
+    .district-vest-agder {
+	.region {
+            background-image: url('/assets/district_logos/Vest-Agder.svg');
+	}
     } 
-    &.district-rogaland {
-        background-image: url('/assets/district_logos/Rogaland.svg');
+    .district-rogaland {
+	.region {
+            background-image: url('/assets/district_logos/Rogaland.svg');
+	}
     } 
-    &.district-hordaland {
-        background-image: url('/assets/district_logos/Hordaland.svg');
+    .district-hordaland {
+	.region {
+            background-image: url('/assets/district_logos/Hordaland.svg');
+	}
     } 
-    &.district-sogn-og-fjordane {
-        background-image: url('/assets/district_logos/Sogn_og_Fjordane.svg');
+    .district-sogn-og-fjordane {
+	.region {
+            background-image: url('/assets/district_logos/Sogn_og_Fjordane.svg');
+	}
     } 
-    &.district-more-og-romsdal {
-        background-image: url('/assets/district_logos/Moere_og_Romsdal.svg');
+    .district-more-og-romsdal {
+	.region {
+            background-image: url('/assets/district_logos/Moere_og_Romsdal.svg');
+	}
     } 
-    &.district-sor-trondelag {
-        background-image: url('/assets/district_logos/Soer-Troendelag.svg');
+    .district-sor-trondelag {
+	.region {
+            background-image: url('/assets/district_logos/Soer-Troendelag.svg');
+	}
     } 
-    &.district-nord-trondelag {
-        background-image: url('/assets/district_logos/Nord-Troendelag.svg');
+    .district-nord-trondelag {
+	.region {
+            background-image: url('/assets/district_logos/Nord-Troendelag.svg');
+	}
     } 
-    &.district-nordland {
-        background-image: url('/assets/district_logos/Nordland.svg');
+    .district-nordland {
+	.region {
+            background-image: url('/assets/district_logos/Nordland.svg');
+	}
     } 
-    &.district-troms {
-        background-image: url('/assets/district_logos/Troms.svg');
+    .district-troms {
+	.region {
+            background-image: url('/assets/district_logos/Troms.svg');
+	}
     } 
-    &.district-finnmark {
-        background-image: url('/assets/district_logos/Finnmark.svg');
+    .district-finnmark {
+	.region {
+            background-image: url('/assets/district_logos/Finnmark.svg');
+	}
     } 
-}
 
