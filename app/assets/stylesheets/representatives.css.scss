@@ -107,43 +107,43 @@ $representative-height: 230px;
         border-radius: 20px 20px;
         width: 40px;
         
-        &.party-KrF {
+        &.party-krf {
             @include image-and-radial-gradient(
                 '/assets/party_logos/KrF_badge_small.jpg', 
                 #{center center, circle cover, #fff , #fff 18px, rgba(255, 255, 255, 0) 20px}
             );
         }
-        &.party-FrP {
+        &.party-frp {
             @include image-and-radial-gradient(
                 '/assets/party_logos/FrP_badge_small.jpg', 
                 #{center center, circle cover, #fff , #fff 18px, rgba(255, 255, 255, 0) 20px}
             );
         }
-        &.party-A {
+        &.party-a {
             @include image-and-radial-gradient(
                 '/assets/party_logos/A_badge_small.jpg', 
                 #{center center, circle cover, #fff , #fff 18px, rgba(255, 255, 255, 0) 20px}
             );
         }
-        &.party-H {
+        &.party-h {
             @include image-and-radial-gradient(
                 '/assets/party_logos/H_badge_small.jpg', 
                 #{center center, circle cover, #fff , #fff 18px, rgba(255, 255, 255, 0) 20px}
             );
         }
-        &.party-Sp {
+        &.party-sp {
             @include image-and-radial-gradient(
                 '/assets/party_logos/Sp_badge_small.jpg', 
                 #{center center, circle cover, #fff , #fff 18px, rgba(255, 255, 255, 0) 20px}
             );
         }
-        &.party-SV {
+        &.party-sv {
             @include image-and-radial-gradient(
                 '/assets/party_logos/SV_badge_small.jpg', 
                 #{center center, circle cover, #fff , #fff 18px, rgba(255, 255, 255, 0) 20px}
             );
         }
-        &.party-V {
+        &.party-v {
             @include image-and-radial-gradient(
                 '/assets/party_logos/V_badge_small.jpg', 
                 #{center center, circle cover, #fff , #fff 18px, rgba(255, 255, 255, 0) 20px}
@@ -180,61 +180,61 @@ $representative-height: 230px;
 
 .representatives-list .region, 
 .representatives-sort-criteria-heading {
-    &.district-Akershus {
+    &.district-akershus {
         background-image: url('/assets/district_logos/Akershus.svg');
     } 
-    &.district-Østfold {
+    &.district-ostfold {
         background-image: url('/assets/district_logos/Oestfold.svg');
     }
-    &.district-Oslo {
+    &.district-oslo {
         background-image: url('/assets/district_logos/Oslo.svg');
     } 
-    &.district-Hedmark {
+    &.district-hedmark {
         background-image: url('/assets/district_logos/Hedmark.svg');
     } 
-    &.district-Oppland {
+    &.district-oppland {
         background-image: url('/assets/district_logos/Oppland.svg');
     } 
-    &.district-Buskerud {
+    &.district-buskerud {
         background-image: url('/assets/district_logos/Buskerud.svg');
     } 
-    &.district-Vestfold {
+    &.district-vestfold {
         background-image: url('/assets/district_logos/Vestfold.svg');
     } 
-    &.district-Telemark {
+    &.district-telemark {
         background-image: url('/assets/district_logos/Telemark.svg');
     } 
-    &.district-Aust-Agder {
+    &.district-aust-agder {
         background-image: url('/assets/district_logos/Aust-Agder.svg');
     } 
-    &.district-Vest-Agder {
+    &.district-vest-agder {
         background-image: url('/assets/district_logos/Vest-Agder.svg');
     } 
-    &.district-Rogaland {
+    &.district-rogaland {
         background-image: url('/assets/district_logos/Rogaland.svg');
     } 
-    &.district-Hordaland {
+    &.district-hordaland {
         background-image: url('/assets/district_logos/Hordaland.svg');
     } 
-    &.district-Sogn {
+    &.district-sogn-og-fjordane {
         background-image: url('/assets/district_logos/Sogn_og_Fjordane.svg');
     } 
-    &.district-Møre {
+    &.district-more-og-romsdal {
         background-image: url('/assets/district_logos/Moere_og_Romsdal.svg');
     } 
-    &.district-Sør-Trøndelag {
+    &.district-sor-trondelag {
         background-image: url('/assets/district_logos/Soer-Troendelag.svg');
     } 
-    &.district-Nord-Trøndelag {
+    &.district-nord-trondelag {
         background-image: url('/assets/district_logos/Nord-Troendelag.svg');
     } 
-    &.district-Nordland {
+    &.district-nordland {
         background-image: url('/assets/district_logos/Nordland.svg');
     } 
-    &.district-Troms {
+    &.district-troms {
         background-image: url('/assets/district_logos/Troms.svg');
     } 
-    &.district-Finnmark {
+    &.district-finnmark {
         background-image: url('/assets/district_logos/Finnmark.svg');
     } 
 }
