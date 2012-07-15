@@ -38,6 +38,8 @@ gem "twitter_bootstrap_form_for", "~> 1.0.5"
 gem "machinist", "~> 2.0"
 gem "will_paginate", "~> 3.0.3"
 gem "friendly_id", "~> 4.0.7"
+gem 'rack-cache', :require => 'rack/cache'
+gem 'dragonfly', '~>0.9.12'
 
 # To use Jbuilder templates for JSON
 # gem 'jbuilder'
