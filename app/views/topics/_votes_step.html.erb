@@ -5,7 +5,9 @@
       <a data-toggle="collapse" data-target="#proposition-body-<%= vote.id %>"><%= t 'app.expand' %></a>
     </div>
 
-    <div class="span6">
+    <div class="span1"><h5><%= vote.external_id %></h5></div>
+
+    <div class="span5">
       <h4><%= link_to vote.subject, vote, :target => 'topic_new' %></h4>
       <ul>
         <% vote.issues.each do |issue| %>
