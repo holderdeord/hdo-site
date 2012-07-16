@@ -3,7 +3,7 @@
     <li class="representative party-<%= rep.party.slug %> district-<%= rep.district.slug %>">
       <div class="vcard">
         <%= link_to(rep) do %>
-          <%= image_tag rep.image.thumb('120x160#').url, class: 'representative-image', alt: rep.full_name if rep.image_uid %>
+          <%= image_tag rep.image.thumb('120x160#').strip.url, class: 'representative-image', alt: rep.full_name if rep.image_uid %>
           <span class="n fn"><span class="family-name"><%= rep.last_name %></span>, <span class="given-name"><%= rep.first_name %></span></span>
             <%if show_district %>
               <span class="adr"><span class="region" title="<%= rep.district.name %>"><%= rep.district.name %></span></span>

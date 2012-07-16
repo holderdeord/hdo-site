@@ -5,7 +5,7 @@
 <div class="container-fluid">
   <div class="row-fluid">
     <div class="span3">
-      <%= image_tag @representative.image.thumb('240x320#').url, class: 'representative-image', alt: @representative.full_name if @representative.image_uid %>
+      <%= image_tag @representative.image.thumb('240x320#').strip.url, class: 'representative-image', alt: @representative.full_name if @representative.image_uid %>
     </div>
 
     <div class="span9">
