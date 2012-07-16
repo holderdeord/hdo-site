@@ -2,41 +2,10 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+@import '_shared';
+
 $representative-width:  120px;
 $representative-height: 230px;
-
-@mixin clearfix {
-	&:before,
-	&:after {
-		content: '';
-		display: table;
-	}
-	&:after {
-		clear: both;
-	}
-}
-
-@mixin radial-gradient($gradient) {
-    background-image: -webkit-radial-gradient($gradient);
-    background-image: -moz-radial-gradient($gradient);
-    background-image: -ms-radial-gradient($gradient);
-    background-image: -o-radial-gradient($gradient);
-    background-image: radial-gradient($gradient);
-}
-@mixin image-and-radial-gradient($image, $gradient) {
-    background-image: url($image), -webkit-radial-gradient($gradient);
-    background-image: url($image), -moz-radial-gradient($gradient);
-    background-image: url($image), -ms-radial-gradient($gradient);
-    background-image: url($image), -o-radial-gradient($gradient);
-    background-image: url($image), radial-gradient($gradient);
-}
-@mixin box-shadow($shadow) {
-  -webkit-box-shadow: $shadow;
-  -moz-box-shadow: $shadow;
-  -ms-box-shadow: $shadow;
-  -o-box-shadow: $shadow;
-  box-shadow: $shadow;
-}
 
 .representative-image {
   @include box-shadow(#{5px 7px 15px #888});
