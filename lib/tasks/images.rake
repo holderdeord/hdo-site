@@ -55,7 +55,8 @@ namespace :images do
         else
           rep.image = Rails.root + generic_image_filename
         end
-        rep.save
+
+        rep.save!
       end
     end
   end
