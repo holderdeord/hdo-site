@@ -32,6 +32,17 @@ namespace :deploy do
   task :restart, :roles => :app, :except => { :no_release => true } do
     run "#{try_sudo} touch #{File.join(current_path,'tmp','restart.txt')}"
   end
+
+  namespace :web do
+    task :disable, :roles => :web do
+      on_rollback { rm "#{shared_path}/system/maintenance.html" }
+
+      require 'erb'
+      maintenance = ERB.new(File.read("./app/views/layouts/maintenance.erb")).result(binding)
+
+      put maintenance, "#{shared_path}/system/maintenance.html", :mode => 0644
+    end
+  end
 end
 
 namespace :db do
@@ -59,24 +70,9 @@ namespace :clear do
 
   desc 'Clear votes'
   task(:votes)    { run(cmd % [current_path, 'votes'])    }
-end
 
-namespace :cache do
   desc 'Clear the page cache.'
   task(:clear) { run "rm -r #{current_path}/public/cache/*"}
-end
-
-namespace :deploy do
-  namespace :web do
-    task :disable, :roles => :web do
-      on_rollback { rm "#{shared_path}/system/maintenance.html" }
-
-      require 'erb'
-      maintenance = ERB.new(File.read("./app/views/layouts/maintenance.erb")).result(binding)
-
-      put maintenance, "#{shared_path}/system/maintenance.html", :mode => 0644
-    end
-  end
 end
 
 namespace :dragonfly do
