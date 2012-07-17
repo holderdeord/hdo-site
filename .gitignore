@@ -16,3 +16,6 @@
 
 /.sass-cache/*
 *.swp
+
+# Ignore dragonfly cache
+/public/system/dragonfly/*

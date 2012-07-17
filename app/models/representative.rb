@@ -13,16 +13,7 @@ class Representative < ActiveRecord::Base
 
   friendly_id :external_id, :use => :slugged
 
-  def image
-    default = "representatives/unknown.jpg"
-    rep = "representatives/#{URI.encode external_id}.jpg"
-
-    if File.exist?(File.join("#{Rails.root}/app/assets/images", rep))
-      rep
-    else
-      default
-    end
-  end
+  image_accessor :image
 
   def display_name
     "#{last_name}, #{first_name}"
