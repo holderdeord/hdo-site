@@ -19,3 +19,7 @@
 
 # Ignore dragonfly cache
 /public/system/dragonfly/*
+
+# Ignore representative images
+/app/assets/images/representatives/*.jpg
+!/app/assets/images/representatives/unknown.jpg
