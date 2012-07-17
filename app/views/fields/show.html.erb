@@ -1,14 +1,16 @@
 <%- model_class = @field.class -%>
 <div class="page-header">
-  <h1><%=t '.title', :default => model_class.model_name.human %></h1>
+  <h1>Mest populære tema relatert til <%= @field.name.downcase %></h1>
 </div>
-
-<dl class="dl-horizontal">
-  <dt><strong><%= model_class.human_attribute_name(:name) %>:</strong></dt>
-  <dd><%= @field.name %></dd>
-  <dt><strong><%= model_class.human_attribute_name(:slug) %>:</strong></dt>
-  <dd><%= @field.slug %></dd>
-</dl>
+<div class="well">
+  <% @field.topics.each do |topic| %>
+    <div class="row">
+      <div class="span6">
+        <%= link_to topic.title, topic %>
+      </div>
+    </div>
+  <% end %>
+</div>
 
 <div class="form-actions">
   <%= link_to t('.back', :default => t("helpers.links.back")),

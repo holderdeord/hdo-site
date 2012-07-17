@@ -1,13 +1,29 @@
 <% fields = Field.all %>
+<% topics = Topic.all order: :title %>
+
 <h1>Sjekk hva partiene har lovet og stemt i saker som er viktig for deg:</h1>
 <div class="well">
-  <% fields.each do |field| %>
-    <div class="vcard">
-      <%= link_to field do %>
-        <%= image_tag field.image_with_fallback.thumb('100x100#').strip.url %>
-        <br/>
-        <span><%= field.name %></span>
+  <div class="row">
+    <% fields.each do |field| %>
+      <div class="vcard field-card">
+        <%= link_to field do %>
+          <%= image_tag field.image_with_fallback.thumb('100x100#').strip.url %>
+          <br/>
+          <span><%= field.name %></span>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+</div>
+<h1>Mest populære tema:</h1>
+<div class="well">
+  <% topics.each do |topic| %>
+    <div class="row">
+      <div class="span6 topic-list">
+      <%= link_to topic do %>
+        <strong><%= topic.title.capitalize %></strong>
       <% end %>
+    </div>
     </div>
   <% end %>
 </div>
