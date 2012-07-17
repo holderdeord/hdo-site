@@ -1,37 +1,16 @@
-<%- model_class = Field.new.class -%>
-<div class="page-header">
-  <h1><%=t Field.model_name.human(count:2) %></h1>
+<% fields = Field.all %>
+<h1>Sjekk hva partiene har lovet og stemt i saker som er viktig for deg:</h1>
+<div class="well">
+  <% fields.each do |field| %>
+    <div class="vcard">
+      <%= link_to field do %>
+        <%= image_tag field.image_with_fallback.thumb('100x100#').strip.url %>
+        <br/>
+        <span><%= field.name %></span>
+      <% end %>
+    </div>
+  <% end %>
 </div>
-<table class="table table-striped">
-  <thead>
-    <tr>
-      <th><%= Field.model_name.human.capitalize %></th>
-      <th><%= Topic.model_name.human(count: 2).capitalize %></th>
-      <th>Icon</th>
-      <th></th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @fields.each do |field| %>
-      <tr>
-        <td><strong><%= field.name %></strong></td>
-        <td>
-          <ul>
-            <% field.topics.each do |topic| %>
-              <li>
-                  <%= topic.title.capitalize %>
-              </li>
-            <% end %>
-          </ul>
-        </td>
-        <td><%= image_tag field.icon, alt: field.name %></td>
-        <td><%= link_to 'Edit', edit_field_path(field), class: 'btn' %></td>
-        <td><%= link_to 'Destroy', field, method: :delete, data: { confirm: Field.human_attribute_name(:confirm_destroy) }, class: 'btn btn-danger' %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
 
 <%= link_to t('.new', :default => t("helpers.links.new")),
             new_field_path,
