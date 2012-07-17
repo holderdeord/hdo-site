@@ -11,7 +11,7 @@ class Field < ActiveRecord::Base
 
   def icon
     field_icon = "field_icons/#{URI.encode name}_icon.jpg"
-    default = 'field_icons/unknown_icon.jpg'
+    default = "representatives/unknown.jpg"
 
     if File.exist?(File.join("#{Rails.root}/app/assets/images", field_icon))
       field_icon

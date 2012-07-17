@@ -1,0 +1,10 @@
+<% fields = Field.all %>
+<h1>Sjekk hva partiene har lovet og stemt i saker som er viktig for deg:</h1>
+<div class="well">
+  <% fields.each do |field| %>
+    <div class="span3">
+      <%= image_tag field.icon %><br/>
+      <%= link_to field.name, field %>
+    </div>
+  <% end %>
+</div>

@@ -31,6 +31,8 @@ Hdo::Application.routes.draw do
 
   get "docs/index"
 
+  get "/fields_home_page" => 'fields_home_page#view'
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
