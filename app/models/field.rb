@@ -1,7 +1,7 @@
 class Field < ActiveRecord::Base
   extend FriendlyId
 
-  attr_accessible :name, :topic_ids
+  attr_accessible :name, :topic_ids, :image
   validates_presence_of :name
   validates_uniqueness_of :name
 
@@ -9,14 +9,16 @@ class Field < ActiveRecord::Base
 
   friendly_id :name, :use => :slugged
 
-  def icon
-    field_icon = "field_icons/#{URI.encode name}_icon.jpg"
-    default = "representatives/unknown.jpg"
+  image_accessor :image
 
-    if File.exist?(File.join("#{Rails.root}/app/assets/images", field_icon))
-      field_icon
-    else
-      default
-    end
+  def default_image 
+    "#{Rails.root}/app/assets/images/field_icons/unknown.jpg"
   end
+
+  def image_with_fallback
+    self.image = File.new(default_image) if self.image_uid == nil 
+    self.save! if self.image_uid_changed?
+    self.image
+  end
+
 end

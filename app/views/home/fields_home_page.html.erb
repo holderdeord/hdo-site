@@ -2,9 +2,12 @@
 <h1>Sjekk hva partiene har lovet og stemt i saker som er viktig for deg:</h1>
 <div class="well">
   <% fields.each do |field| %>
-    <div class="span3">
-      <%= image_tag field.icon %><br/>
-      <%= link_to field.name, field %>
+    <div class="vcard">
+      <%= link_to field do %>
+        <%= image_tag field.image_with_fallback.thumb('100x100#').strip.url %>
+        <br/>
+        <span><%= field.name %></span>
+      <% end %>
     </div>
   <% end %>
 </div>

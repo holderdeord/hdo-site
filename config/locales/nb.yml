@@ -157,6 +157,7 @@ nb:
         destroy: "Slett område"
         confirm_destroy: "Er du sikker på at du vil slette område?"
         topics: "Tema"
+        image: "Ikon"
   will_paginate:
     previous_label: "&#8592; Forrige"
     next_label: "Neste &#8594;"
