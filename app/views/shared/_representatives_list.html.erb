@@ -20,8 +20,7 @@
 	var HDO = HDO || {};
 	HDO.representatives = HDO.representatives || {};
 
-	// TODO: i18n strings
-	HDO.representatives.sortByDistrictText = 'Sorter etter fylke';
-	HDO.representatives.sortByPartyText = 'Sorter etter parti';
-	HDO.representatives.sortAlphabeticallyText = 'Sorter alfabetisk';
+	HDO.representatives.sortByDistrictText = <%= t('app.sort.by_district').to_json.html_safe %>;
+	HDO.representatives.sortByPartyText = <%= t('app.sort.by_party').to_json.html_safe %>;
+	HDO.representatives.sortAlphabeticallyText = <%= t('app.sort.alphabetically').to_json.html_safe %>;
 </script>
