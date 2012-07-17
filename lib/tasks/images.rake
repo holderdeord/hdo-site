@@ -8,12 +8,12 @@ namespace :images do
 
     rep_image_path = "app/assets/images/representatives"
     generic_image_filename = File.join(rep_image_path, "unknown.jpg")
-    
+
     Representative.all.each do |rep|
       url = URI.parse("http://stortinget.no/Personimages/PersonImages_ExtraLarge/#{URI.escape rep.external_id}_ekstrastort.jpg")
-      
+
       filename = File.join(rep_image_path, "#{rep.slug}.jpg")
-      
+
       File.open(Rails.root + filename, "wb") do |destination|
         resp = Net::HTTP.get_response(url) do |response|
           total = response.content_length
@@ -35,14 +35,13 @@ namespace :images do
           end
         end
 
-		destination.close
-		
+        destination.close
 
         unless resp.kind_of? Net::HTTPSuccess
           puts "\nERROR:#{resp.code} for #{url}"
           File.delete(destination.path)
         else
-          if File.zero?(destination.path) 
+          if File.zero?(destination.path)
             puts "\nERROR: url #{url} returned an empty file"
             File.delete(destination.path)
           else
