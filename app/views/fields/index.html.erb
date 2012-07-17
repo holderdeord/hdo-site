@@ -2,31 +2,9 @@
 <% topics = Topic.all order: :title %>
 
 <h1>Sjekk hva partiene har lovet og stemt i saker som er viktig for deg:</h1>
-<div class="well">
-  <div class="row">
-    <% fields.each do |field| %>
-      <div class="vcard field-card">
-        <%= link_to field do %>
-          <%= image_tag field.image_with_fallback.thumb('100x100#').strip.url %>
-          <br/>
-          <span><%= field.name %></span>
-        <% end %>
-      </div>
-    <% end %>
-  </div>
-</div>
+<%= render partial: 'fields_list', locals: { :fields => fields } %>
 <h1>Mest populære tema:</h1>
-<div class="well">
-  <% topics.each do |topic| %>
-    <div class="row">
-      <div class="span6 topic-list">
-      <%= link_to topic do %>
-        <strong><%= topic.title.capitalize %></strong>
-      <% end %>
-    </div>
-    </div>
-  <% end %>
-</div>
+<%= render partial: 'topics_list', locals: { :topics => topics } %>
 
 <%= link_to t('.new', :default => t("helpers.links.new")),
             new_field_path,
