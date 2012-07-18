@@ -1,13 +1,14 @@
-<div class="well">
-  <div class="row">
+  <ul class="fields-list">
     <% fields.each do |field| %>
-      <div class="vcard field-card">
-        <%= link_to field do %>
-          <%= image_tag field.image_with_fallback.thumb('100x100#').strip.url, class: 'field-image' %>
-          <br/><br/>
-          <span><%= field.name %></span>
-        <% end %>
-      </div>
+      <li class="field">
+        <div class="vcard">
+          <%= link_to field do %>
+            <%= image_tag field.image_with_fallback.thumb('120x120#').strip.url, class: 'field-image' %>
+            <span class="n fn">
+              <%= field.name.capitalize %>
+            </span>
+          <% end %>
+        </div>
+      </li>
     <% end %>
-  </div>
-</div>
+  </ul>
