@@ -41,6 +41,9 @@ gem "friendly_id", "~> 4.0.7"
 gem 'rack-cache', :require => 'rack/cache'
 gem 'dragonfly', '~>0.9.12'
 
+# data import
+gem 'hdo-storting-importer', :path => "../hdo-storting-importer"
+
 # To use Jbuilder templates for JSON
 # gem 'jbuilder'
 

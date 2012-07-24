@@ -6,7 +6,9 @@ require File.expand_path('../../config/environment',  __FILE__)
 
 $LOAD_PATH.unshift File.expand_path("../../lib", __FILE__)
 
-require 'hdo/import'
+
+require 'hdo/storting_importer'
+require 'hdo/importer'
 
 I18n.locale = :en
-Hdo::Import::Cli.new(ARGV).run
+Hdo::Importer.new(ARGV).run

@@ -119,25 +119,6 @@ module Hdo
         rec
       end
 
-      ID_CONVERSIONS = {
-        'Æ' => '_AE',
-        'Ø' => '_O',
-        'Å' => '_A'
-      }
-
-      def self.query_param_from(external_id)
-        xid = external_id.dup
-        ID_CONVERSIONS.each { |k, v| xid.gsub!(k, v) }
-
-        xid
-      end
-
-      def self.external_id_from(query_param)
-        q = query_param.dup
-        ID_CONVERSIONS.invert.each { |k, v| q.gsub!(k, v) }
-
-        q
-      end
 
     end
   end

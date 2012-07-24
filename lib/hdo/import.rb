@@ -17,14 +17,15 @@ module Hdo
 end
 
 
-require 'hdo/import/representative'
-require 'hdo/import/proposition'
-require 'hdo/import/party'
-require 'hdo/import/issue'
-require 'hdo/import/category'
-require 'hdo/import/committee'
-require 'hdo/import/district'
-require 'hdo/import/vote'
-require 'hdo/import/promise'
+# require 'hdo/import/representative'
+# require 'hdo/import/proposition'
+# require 'hdo/import/party'
+# require 'hdo/import/issue'
+# require 'hdo/import/category'
+# require 'hdo/import/committee'
+# require 'hdo/import/district'
+# require 'hdo/import/vote'
+# require 'hdo/import/promise'
 
+require 'hdo/storting_importer'
 require 'hdo/import/cli'

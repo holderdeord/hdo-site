@@ -23,4 +23,6 @@ Getting started:
     $ rake db:setup
     $ bundle exec rails server
 
-TODO: Add something about importing data here.
+To import some data for development:
+
+    $ script/import dev
