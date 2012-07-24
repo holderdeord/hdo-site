@@ -1,12 +1,17 @@
 @import '_shared';
 
+$card-padding: 15px;
+$icon-size: 140px;
+$field-columns: 4;
+
 
 .topic-list {
 	font-size: 20px;
 	padding: 10px;
 }
 .field-image {
-  max-width: 120px;
+  max-width: $icon-size
+ ;
   border-radius: 6px;
 }
 
@@ -14,20 +19,22 @@
 	list-style: none;
 	margin: 0;
 	padding: 0;
+	max-width: ($card-padding + $icon-size
+	)*$field-columns;
 
 	@include clearfix;
 
 	> li {
 		float: left;
 		margin-bottom: 30px;
-		margin-right: 15px;
+		margin-right: $card-padding;
 		position: relative;
 
 		> div {
-			border-radius: 6px;
-			min-height: 160px;
+			border-radius: 30px;
+			min-height: $icon-size;
 			overflow: hidden;
-			width: 120px;
+			width: $icon-size;
 		}
 	}
 }
@@ -36,7 +43,12 @@
         display: inline-block;
 		font-weight: bold;
 		color: black;
+		padding: 40px 25px 40px 25px;
 }
 .field-card:hover {
 	@include box-shadow(#{0 0 5px grey});
+}
+.field-card {
+	background-repeat: no-repeat;
+	background-size: 100%;
 }

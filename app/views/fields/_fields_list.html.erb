@@ -1,9 +1,9 @@
   <ul class="fields-list">
     <% fields.each do |field| %>
       <li>
-        <div class="field-card">
+        <div class="field-card" style="background-image: url('<%= field.image_with_fallback.thumb('120x120#').strip.url %>');">
           <%= link_to field do %>
-            <%= image_tag field.image_with_fallback.thumb('120x120#').strip.url, class: 'field-image' %>
+            <%#= image_tag field.image_with_fallback.thumb('120x120#').strip.url, class: 'field-image' %>
             <h4 class="fn">
               <%= field.name.capitalize %>
             </h4>
