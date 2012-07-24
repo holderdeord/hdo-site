@@ -1,4 +1,6 @@
 @import '_shared';
+
+
 .topic-list {
 	font-size: 20px;
 	padding: 10px;
@@ -26,11 +28,15 @@
 			min-height: 160px;
 			overflow: hidden;
 			width: 120px;
-			@include box-shadow(#{0 0 5px grey});
 		}
 	}
 }
 .fn {
         margin: 5px 10px;
         display: inline-block;
-    }
+		font-weight: 200;
+		color: black;
+}
+.field-card:hover {
+	@include box-shadow(#{0 0 5px grey});
+}

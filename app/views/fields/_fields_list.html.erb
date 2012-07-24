@@ -1,12 +1,12 @@
   <ul class="fields-list">
     <% fields.each do |field| %>
-      <li class="field">
-        <div class="vcard">
+      <li>
+        <div class="field-card">
           <%= link_to field do %>
             <%= image_tag field.image_with_fallback.thumb('120x120#').strip.url, class: 'field-image' %>
-            <span class="n fn">
+            <h3 class="fn headings-font">
               <%= field.name.capitalize %>
-            </span>
+            </h3>
           <% end %>
         </div>
       </li>
