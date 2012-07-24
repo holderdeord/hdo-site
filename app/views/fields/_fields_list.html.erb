@@ -4,9 +4,9 @@
         <div class="field-card">
           <%= link_to field do %>
             <%= image_tag field.image_with_fallback.thumb('120x120#').strip.url, class: 'field-image' %>
-            <h3 class="fn headings-font">
+            <h4 class="fn">
               <%= field.name.capitalize %>
-            </h3>
+            </h4>
           <% end %>
         </div>
       </li>
