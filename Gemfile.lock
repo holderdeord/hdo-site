@@ -1,7 +1,7 @@
 PATH
   remote: ../hdo-storting-importer
   specs:
-    hdo-storting-importer (0.0.1)
+    hdo-storting-importer (0.0.2)
       aruba
       builder
       nokogiri

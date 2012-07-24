@@ -63,7 +63,9 @@ module Hdo
     def import_files
       @rest.each do |file|
         print "\nimporting #{file.inspect}:"
-        doc = Nokogiri.XML(File.read(file)).first_element_child
+
+        str = file == "-" ? STDIN.read : File.read(file)
+        doc = Nokogiri.XML(str)
 
         if doc
           import doc
@@ -77,7 +79,7 @@ module Hdo
     def import(doc)
       puts " #{doc.name}"
 
-      case doc.name
+      case doc.first_element_child.name
       when 'representatives'
         import_representatives StrortingImporter::Representative.from_hdo_doc doc
       when 'parties'
@@ -95,7 +97,7 @@ module Hdo
       when 'promises'
         import_promises StortingImporter::Promise.from_hdo_doc doc
       else
-        raise "unknown type: #{doc.name}"
+        raise "unknown type: #{doc.first_element_child.name}"
       end
     end
 
@@ -224,6 +226,10 @@ module Hdo
 
     def import_propositions(propositions)
       propositions.each { |e| import_proposition(e) }
+    end
+
+    def import_promises(promises)
+      promises.each { |e| import_promise(e) }
     end
 
     def import_representative(representative)
