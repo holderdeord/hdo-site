@@ -2,18 +2,18 @@ class DocsController < ApplicationController
   caches_page :index
 
   def index
-    # TODO: split into "main" and "sub" types
+    @representative_example = "<representatives>\n  " + Hdo::StortingImporter::Representative.xml_example.split("\n").join("\n  ") + "\n</representatives>"
 
     @import_types = [
-      Hdo::Import::Party,
-      Hdo::Import::Committee,
-      Hdo::Import::District,
-      Hdo::Import::Representative,
-      Hdo::Import::Category,
-      Hdo::Import::Issue,
-      Hdo::Import::Vote,
-      Hdo::Import::Proposition,
-      Hdo::Import::Promise,
+      Hdo::StortingImporter::Party,
+      Hdo::StortingImporter::Committee,
+      Hdo::StortingImporter::District,
+      Hdo::StortingImporter::Representative,
+      Hdo::StortingImporter::Category,
+      Hdo::StortingImporter::Issue,
+      Hdo::StortingImporter::Vote,
+      Hdo::StortingImporter::Vote::Proposition,
+      Hdo::StortingImporter::Promise,
     ]
   end
 end

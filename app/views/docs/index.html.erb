@@ -6,10 +6,8 @@
     <li class="dropdown">
       <a class="dropdown-toggle" data-toggle="dropdown" href="#">Input formats <b class="caret"></b></a>
       <ul class="dropdown-menu">
-        <% @import_types.each do |type|
-          n = type_name type
-        %>
-          <li><a href="#input-format-<%= n %>"><%= n %></a></li>
+        <% @import_types.each do |type| %>
+          <li><a href="#input-format-<%= type.type_name %>"><%= type.type_name %></a></li>
         <% end %>
       </ul>
     </li>
@@ -35,11 +33,11 @@
   <div class="page-header">
     <h1>Data import</h1>
   </div>
-  <p>To import your data, you should have a file for each of <a href="#input-formats">these XML types</a>, and pass them to <code>script/import</code>, e.g.:</p>
+  <p>To import your data, you should have a file for each of <a href="#input-formats">these XML types</a>, and pass them to <code>script/import xml</code>, e.g.:</p>
   <pre>
 <strong>$</strong> cat /path/to/reps.xml
-<%= "<representatives>\n  " + Hdo::Import::Representative::XML_EXAMPLE.split("\n").join("\n  ") + "\n</representatives>" %>
-<strong>$</strong> script/import /path/to/reps.xml</pre>
+<%= @representative_example %>
+<strong>$</strong> script/import xml /path/to/reps.xml</pre>
 
   <p>XML should be imported in the following order to keep relationships intact:</p>
 
@@ -61,9 +59,9 @@
   <p>Describes the data formats used to import parliamentary data into the application.</p>
 
   <% @import_types.each do |import_type| %>
-  <h2 class="page-header" id="input-format-<%= type_name import_type %>">
-      <%= type_name import_type %>
-      <small><%= import_type::DESC %></small>
+  <h2 class="page-header" id="input-format-<%= import_type.type_name %>">
+      <%= import_type.type_name %>
+      <small><%= import_type.description %></small>
     </h2>
 
     <h3>Fields</h3>
@@ -78,7 +76,7 @@
       </thead>
 
       <tbody>
-        <% import_type::FIELDS.each do |field| %>
+        <% import_type.fields.each do |field| %>
         <tr>
           <td><code><%= field.name %></code></td>
           <td><%= field.required %></td>
@@ -90,6 +88,6 @@
     </table>
 
     <h3>XML example</h3>
-    <pre class=""><%= import_type::XML_EXAMPLE %></pre>
+    <pre class=""><%= import_type.xml_example %></pre>
   <% end %>
 </section>

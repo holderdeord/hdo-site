@@ -28,4 +28,3 @@ end
 # require 'hdo/import/promise'
 
 require 'hdo/storting_importer'
-require 'hdo/import/cli'
