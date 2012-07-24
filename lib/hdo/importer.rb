@@ -20,10 +20,10 @@ module Hdo
         import_files
       when 'daily'
         raise NotImplementedError
-      when 'all'
-        import_all
+      when 'api'
+        import_api
       when 'dev'
-        import_all(30)
+        import_api(30)
       else
         raise ArgumentError, "unknown command: #{@cmd.inspect}"
       end
@@ -31,7 +31,7 @@ module Hdo
 
     private
 
-    def import_all(vote_limit = nil)
+    def import_api(vote_limit = nil)
       ds = Hdo::StortingImporter::ParsingDataSource.new(api_data_source)
 
       import_parties ds.parties
