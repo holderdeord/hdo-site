@@ -58,102 +58,106 @@ PresenceStatsGraph.prototype.render = function() {
   });
 };
 
-var HDO = HDO || {};
-HDO.representatives = HDO.representatives || {};
+function RepresentativeSorter () {
+  this.districts = {};
+  this.parties   = {};
+  this.all       = [];
+}
 
-$(document).ready(function(){
-  var district_regex = /.*(district-[^ \t]+).*/,
-      party_regex = /.*(party-[^ \t]+).*/,
-      sort_by_district_link = $('<a />'),
-      sort_by_party_link = $('<a />');
+RepresentativeSorter.prototype.init = function() {
+  var self = this;
 
-  HDO.representatives.districts = {};
-  HDO.representatives.parties = {};
+  $("#sort-representatives").bind('change', function() {
+    var val = $(this).val();
+    if(val === 'district') {
+      self.sortByDistrict();
+    } else if (val === 'name')  {
+      self.sortByName();
+    } else {
+      self.sortByParty();
+    }
+  })
 
-  sort_by_district_link.text(HDO.representatives.sortByDistrictText);
-  sort_by_party_link.text(HDO.representatives.sortByPartyText);
+  // extract data
+  $('.representatives-list .representative').each(function() {
+    var $e = $(this);
+    self.all.push($e);
 
-  $('.page-header').append(sort_by_district_link);
-  $('.page-header').append(sort_by_party_link);
+    var districtSlug = $e.data('district');
+    var partySlug = $e.data('party');
 
-  $('.representatives-list .representative').each(function(index, element) {
-    var $e, classes, district, party, district_class, party_class, regex_result;
-    $e = $(element);
-    classes = $e.attr('class');
-    regex_result = district_regex.exec(classes);
-    district_class = regex_result[1];
-    district = HDO.representatives.districts[district_class] = HDO.representatives.districts[district_class] || {};
+    var district = self.districts[districtSlug] = self.districts[districtSlug] || {};
+    var party = self.parties[partySlug] = self.parties[partySlug] || {};
+
     district.name = district.name || $e.find('.region').first().text();
     district.representatives = district.representatives || [];
-    district.representatives.push($e);
 
-    regex_result = party_regex.exec(classes);
-    party_class = regex_result[1];
-    party = HDO.representatives.parties[party_class] = HDO.representatives.parties[party_class] || {};
     party.name = party.name || $e.find('.org').first().text();
     party.representatives = party.representatives || [];
+
+    district.representatives.push($e);
     party.representatives.push($e);
   });
+};
 
-  HDO.representatives.sortByDistrict = function() {
-    var districts = HDO.representatives.districts,
-                    district_key,
-                    sorted_dom_elements = $('<div class="wrapper" />'),
-                    heading,
-                    list,
-                    i, j;
+RepresentativeSorter.prototype.sortByDistrict = function() {
+  var districtKey,
+      sortedDomElements = $('<div class="wrapper" />'),
+      heading,
+      list;
 
-    for (district_key in districts) {
-      if(districts.hasOwnProperty(district_key)) {
-        heading = $('<h2 class="representatives-sort-criteria-heading" />');
-        heading.text(districts[district_key].name);
-        heading.addClass(district_key);
-        sorted_dom_elements.append(heading);
+  for (districtKey in this.districts) {
+    if(this.districts.hasOwnProperty(districtKey)) {
+      heading = $('<h2 class="representatives-sort-criteria-heading" />');
+      heading.text(this.districts[districtKey].name);
+      heading.addClass("district-" + districtKey);
+      sortedDomElements.append(heading);
 
-        list = $('<ul class="representatives-list" />');
-        list.addClass(district_key);
-        sorted_dom_elements.append(list);
-        for (i = 0, j = districts[district_key].representatives.length; i < j; i += 1) {
-          list.append(districts[district_key].representatives[i].clone());
-        }
-      }
+      list = $('<ul class="representatives-list" />');
+      list.addClass("district-" + districtKey);
+      sortedDomElements.append(list);
+
+      var reps = this.districts[districtKey].representatives;
+      for (var i=0; i < reps.length; i++) { list.append(reps[i].clone()); };
     }
+  }
 
-    $('.representatives-list').remove();
-    $('.page-header').after(sorted_dom_elements);
-  };
+  $('#representative-list-container').html(sortedDomElements);
+};
 
-  HDO.representatives.sortByParty = function() {
-    var parties = HDO.representatives.parties,
-                    party_key,
-                    sorted_dom_elements = $('<div class="wrapper" />'),
-                    list,
-                    i, j;
+RepresentativeSorter.prototype.sortByParty = function() {
+  var partyKey,
+      sortedDomElements = $('<div class="wrapper" />'),
+      list;
 
-    for (party_key in parties) {
-      if(parties.hasOwnProperty(party_key)) {
+  for (partyKey in this.parties) {
+    if(this.parties.hasOwnProperty(partyKey)) {
+      heading = $('<h2 class="representatives-sort-criteria-heading" />');
+      heading.text(this.parties[partyKey].name);
+      heading.addClass("party-" + partyKey);
+      sortedDomElements.append(heading);
 
-        heading = $('<h2 class="representatives-sort-criteria-heading" />');
-        heading.text(parties[party_key].name);
-        heading.addClass(party_key);
-        sorted_dom_elements.append(heading);
+      list = $('<ul class="representatives-list" />');
+      list.addClass("party-" + partyKey);
+      sortedDomElements.append(list);
 
-        list = $('<ul class="representatives-list" />');
-        list.addClass(party_key);
-        sorted_dom_elements.append(list);
-
-        for (i = 0, j = parties[party_key].representatives.length; i < j; i += 1) {
-          list.append(parties[party_key].representatives[i].clone());
-        }
-      }
+      var reps = this.parties[partyKey].representatives;
+      for (var i=0; i < reps.length; i++) { list.append(reps[i].clone()); };
     }
+  }
 
-    $('.representatives-list').remove();
-    $('.representatives-sort-criteria-heading').remove();
-    $('.page-header').after(sorted_dom_elements);
-  };
+  $('#representative-list-container').html(sortedDomElements);
+};
 
-  sort_by_district_link.bind('click', HDO.representatives.sortByDistrict);
-  sort_by_party_link.bind('click', HDO.representatives.sortByParty);
-});
+RepresentativeSorter.prototype.sortByName = function() {
+  var sortedDomElements = $('<div class="wrapper" />');
 
+  list = $('<ul class="representatives-list" />');
+  sortedDomElements.append(list);
+
+  $.each(this.all, function() {
+    list.append(this.clone());
+  });
+
+  $('#representative-list-container').html(sortedDomElements);
+};

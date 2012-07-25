@@ -244,4 +244,4 @@ nb:
     sort:
       by_party: 'Sorter etter parti'
       by_district: 'Sorter etter fylke'
-      alphabetically: 'Sorter alfabetisk'
+      by_name: 'Sorter etter navn'

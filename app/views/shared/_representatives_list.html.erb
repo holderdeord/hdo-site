@@ -1,26 +1,37 @@
-<ul class="representatives-list">
-  <% @representatives.each do |rep| %>
-    <li class="representative party-<%= rep.party.slug %> district-<%= rep.district.slug %>">
-      <div class="vcard">
-        <%= link_to(rep) do %>
-          <%= image_tag rep.image.thumb('120x160#').strip.url, class: 'representative-image', alt: rep.full_name if rep.image_uid %>
-          <span class="n fn"><span class="family-name"><%= rep.last_name %></span>, <span class="given-name"><%= rep.first_name %></span></span>
-            <%if show_district %>
-              <span class="adr"><span class="region" title="<%= rep.district.name %>"><%= rep.district.name %></span></span>
-            <% end %>
-        <% end %>
-        <% if show_party %>
-          <%= link_to rep.party.name, rep.party, class: 'org', :title => rep.party.name %>
-        <% end %>
-      </div>
-    </li>
-  <% end %>
-</ul>
-<script type="text/javascript">
-	var HDO = HDO || {};
-	HDO.representatives = HDO.representatives || {};
+<div class="row-fluid">
+  <div class="pull-right">
+    <select id="sort-representatives">
+      <option value="name"><%= t('app.sort.by_name') %></option>
+      <option value="district"><%= t('app.sort.by_district') %></option>
+      <option value="party"><%= t('app.sort.by_party') %></option>
+    </select>
+  </div>
+</div>
 
-	HDO.representatives.sortByDistrictText = <%= t('app.sort.by_district').to_json.html_safe %>;
-	HDO.representatives.sortByPartyText = <%= t('app.sort.by_party').to_json.html_safe %>;
-	HDO.representatives.sortAlphabeticallyText = <%= t('app.sort.alphabetically').to_json.html_safe %>;
-</script>
+<div id="representative-list-container" class="row-fluid">
+  <ul class="representatives-list">
+    <% representatives.each do |rep| %>
+    <li class="representative party-<%= rep.party.slug %> district-<%= rep.district.slug %>" data-party="<%= rep.party.slug %>" data-district="<%= rep.district.slug %>">
+        <div class="vcard">
+
+          <%= link_to(rep) do %>
+            <%= image_tag rep.image.thumb('120x160#').strip.url, class: 'representative-image', alt: rep.full_name if rep.image_uid %>
+            <span class="n fn"><span class="family-name"><%= rep.last_name %></span>, <span class="given-name"><%= rep.first_name %></span></span>
+              <%if show_district %>
+                <span class="adr"><span class="region" title="<%= rep.district.name %>"><%= rep.district.name %></span></span>
+              <% end %>
+          <% end %>
+
+          <% if show_party %>
+            <%= link_to rep.party.name, rep.party, class: 'org', :title => rep.party.name %>
+          <% end %>
+
+        </div>
+      </li>
+    <% end %>
+  </ul>
+</div>
+
+<%= content_for :document_ready do %>
+<script type="text/javascript">new RepresentativeSorter().init();</script>
+<% end %>
