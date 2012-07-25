@@ -77,9 +77,10 @@ module Hdo
     end
 
     def import(doc)
-      puts " #{doc.name}"
+      name = doc.first_element_child.name
+      puts " #{name}"
 
-      case doc.first_element_child.name
+      case name
       when 'representatives'
         import_representatives StrortingImporter::Representative.from_hdo_doc doc
       when 'parties'
@@ -97,13 +98,13 @@ module Hdo
       when 'promises'
         import_promises StortingImporter::Promise.from_hdo_doc doc
       else
-        raise "unknown type: #{doc.first_element_child.name}"
+        raise "unknown type: #{name}"
       end
     end
 
     def import_parties(parties)
       parties.each do |party|
-        p = ::Party.find_or_create_by_external_id party.external_id
+        p = Party.find_or_create_by_external_id party.external_id
         p.update_attributes! :name => party.name
 
         print "."
@@ -112,20 +113,22 @@ module Hdo
 
     def import_committees(committees)
       committees.each do |committee|
-        p = ::Committee.find_or_create_by_external_id committee.external_id
+        p = Committee.find_or_create_by_external_id committee.external_id
         p.update_attributes! :name => committee.name
+
+        print "."
       end
     end
 
     def import_categories(categories)
       categories.each do |category|
-        parent = ::Category.find_or_create_by_external_id category.external_id
+        parent = Category.find_or_create_by_external_id category.external_id
         parent.name = category.name
         parent.main = true
         parent.save!
 
         category.children.each do |subcategory|
-          child = ::Category.find_or_create_by_external_id(subcategory.external_id)
+          child = Category.find_or_create_by_external_id(subcategory.external_id)
           child.name = subcategory.name
           child.save!
 
@@ -138,7 +141,7 @@ module Hdo
 
     def import_districts(districts)
       districts.each do |district|
-        p = ::District.find_or_create_by_external_id district.external_id
+        p = District.find_or_create_by_external_id district.external_id
         p.update_attributes! :name => district.name
 
         print "."
@@ -147,27 +150,18 @@ module Hdo
 
     def import_issues(issues)
       issues.each do |issue|
-        external_id    = issue.external_id
-        document_group = issue.document_group
-        issue_type     = issue.type
-        status         = issue.status
-        last_update    = Time.parse issue.last_update
-        reference      = issue.reference
-        summary        = issue.summary
-        description    = issue.description
+        committee = issue.committee && Committee.find_by_name!(issue.committee)
+        categories = issue.categories.map { |e| Category.find_by_name! e }
 
-        committee = issue.committee && ::Committee.find_by_name!(issue.committee)
-        categories = issue.categories.map { |e| ::Category.find_by_name! e }
-
-        issue = ::Issue.find_or_create_by_external_id external_id
-        issue.update_attributes!(
-          :document_group => document_group,
-          :issue_type     => issue_type, # AR doesn't like :type as a column name
-          :status         => status,
-          :last_update    => last_update,
-          :reference      => reference,
-          :summary        => summary,
-          :description    => description,
+        record = Issue.find_or_create_by_external_id issue.external_id
+        record.update_attributes!(
+          :document_group => issue.document_group,
+          :issue_type     => issue.type, # AR doesn't like :type as a column name
+          :status         => issue.status,
+          :last_update    => Time.parse(issue.last_update),
+          :reference      => issue.reference,
+          :summary        => issue.summary,
+          :description    => issue.description,
           :committee      => committee,
           :categories     => categories
         )
@@ -184,19 +178,15 @@ module Hdo
 
     def import_votes(votes)
       votes.each do |xvote|
-        vote  = ::Vote.find_or_create_by_external_id xvote.external_id
-        issue = ::Issue.find_by_external_id! xvote.external_issue_id
-
-        for_count     = Integer(xvote.counts.for)
-        against_count = Integer(xvote.counts.against)
-        absent_count  = Integer(xvote.counts.absent)
+        vote  = Vote.find_or_create_by_external_id xvote.external_id
+        issue = Issue.find_by_external_id! xvote.external_issue_id
 
         vote.issues << issue
 
         vote.update_attributes!(
-          :for_count     => for_count,
-          :against_count => against_count,
-          :absent_count  => absent_count,
+          :for_count     => Integer(xvote.counts.for),
+          :against_count => Integer(xvote.counts.against),
+          :absent_count  => Integer(xvote.counts.absent),
           :enacted       => xvote.enacted?,
           :subject       => xvote.subject,
           :time          => Time.parse(xvote.time)
@@ -211,9 +201,10 @@ module Hdo
           res.save!
         end
 
-        props = vote.propositions.map { |e| import_proposition(e) }
+        xvote.propositions.each do |e|
+          vote.propositions << import_proposition(e)
+        end
 
-        vote.propositions += props
         vote.save!
 
         print "."
@@ -233,13 +224,11 @@ module Hdo
     end
 
     def import_representative(representative)
-      external_id     = representative.external_id
-      party_name      = representative.party
-      first_name      = representative.first_name
-      last_name       = representative.last_name
-      committee_names = representative.committees
-      district_name   = representative.district
-      dob             = Time.parse(representative.date_of_birth)
+      party = Party.find_by_name!(representative.party)
+      committees = representative.committees.map { |name| Committee.find_by_name!(name) }
+      district = District.find_by_name!(representative.district)
+
+      dob = Time.parse(representative.date_of_birth)
 
       if representative.date_of_death
         dod = Time.parse(representative.date_of_death)
@@ -248,15 +237,12 @@ module Hdo
         dod = nil
       end
 
-      party = ::Party.find_by_name!(party_name)
-      committees = committee_names.map { |name| ::Committee.find_by_name!(name) }
-      district = ::District.find_by_name!(district_name)
 
-      rec = ::Representative.find_or_create_by_external_id external_id_from(external_id)
+      rec = Representative.find_or_create_by_external_id external_id_from(representative.external_id)
       rec.update_attributes!(
         :party         => party,
-        :first_name    => first_name,
-        :last_name     => last_name,
+        :first_name    => representative.first_name,
+        :last_name     => representative.last_name,
         :committees    => committees,
         :district      => district,
         :date_of_birth => dob,
@@ -279,50 +265,36 @@ module Hdo
       q
     end
 
-    def import_proposition(prop)
-      external_id  = prop.external_id
-      description  = prop.description
-      on_behalf_of = prop.on_behalf_of
-      body         = prop.body
-
-      rep = import_representative(on_behalf_of) if on_behalf_of
-
-      prop = ::Proposition.find_or_create_by_external_id(external_id)
+    def import_proposition(xprop)
+      prop = Proposition.find_or_create_by_external_id(xprop.external_id)
 
       attributes = {
-        description: description,
-        on_behalf_of: on_behalf_of,
-        body: body
+        description: xprop.description,
+        on_behalf_of: xprop.on_behalf_of,
+        body: xprop.body
       }
 
-      attributes[:representative_id] = rep.id if rep
+      if xprop.delivered_by
+        rep = import_representative(xprop.delivered_by)
+        attributes[:representative_id] = rep.id
+      end
 
-      prop.update_attributes! attributes
+      prop.update_attributes attributes
+      prop.save!
 
       prop
     end
 
     def import_promise(promise)
-      party      = ::Party.find_by_external_id!(promise.party)
-      general    = promise.general?
-      categories = ::Category.where(name: promise.categories)
-      source     = promise.source
-      body       = promise.body
+      Promise.create!(
+        party: Party.find_by_external_id!(promise.party),
+        general: promise.general?,
+        categories: Category.where(name: promise.categories),
+        source: promise.source,
+        body: promise.body
+      )
 
-      begin
-        ::Promise.create!(
-          party: party,
-          general: general,
-          categories: categories,
-          source: source,
-          body: body
-        )
-
-        print "."
-      rescue ActiveRecord::RecordInvalid => ex
-        STDERR.puts "failed to import promise: #{ex.message} for #{party.name}, #{body.inspect}"
-      end
-
+      print "."
     end
 
     def api_data_source

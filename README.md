@@ -19,7 +19,7 @@ Getting started:
 
     $ git clone git://github.com/holderdeord/hdo-site.git
     $ cd hdo-site
-    $ sudo bundle install
+    $ [sudo] bundle install
     $ rake db:setup
     $ bundle exec rails server
 
