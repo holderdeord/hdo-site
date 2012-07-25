@@ -14,6 +14,7 @@ class Representative < ActiveRecord::Base
   friendly_id :external_id, :use => :slugged
 
   image_accessor :image
+  before_save :ensure_image
 
   def display_name
     "#{last_name}, #{first_name}"
@@ -43,5 +44,18 @@ class Representative < ActiveRecord::Base
 
   def stats
     Hdo::Stats::RepresentativeCounts.new self
+  end
+
+  private
+
+  def ensure_image
+    return if image
+
+    root = Pathname.new(Rails.root)
+
+    slug_image = root.join("app/assets/images/representatives/#{slug}.jpg")
+    fallback   = root.join("app/assets/images/representatives/unknown.jpg")
+
+    self.image = slug_image.exist? ? slug_image : fallback
   end
 end

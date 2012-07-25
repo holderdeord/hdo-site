@@ -1,12 +1,10 @@
 require 'net/http'
 require 'uri'
-require 'open-uri'
 
 namespace :images do
   desc 'Fetch representatives images from stortinget.no'
   task :fetch_representatives => :environment do
-
-    rep_image_path = "app/assets/images/representatives"
+    rep_image_path = File.join(Rails.root, "app/assets/images/representatives")
     generic_image_filename = File.join(rep_image_path, "unknown.jpg")
 
     Representative.all.each do |rep|
@@ -14,7 +12,7 @@ namespace :images do
 
       filename = File.join(rep_image_path, "#{rep.slug}.jpg")
 
-      File.open(Rails.root + filename, "wb") do |destination|
+      File.open(filename, "wb") do |destination|
         resp = Net::HTTP.get_response(url) do |response|
           total = response.content_length
           progress = 0
@@ -37,7 +35,7 @@ namespace :images do
 
         destination.close
 
-        unless resp.kind_of? Net::HTTPSuccess
+        if !resp.kind_of?(Net::HTTPSuccess)
           puts "\nERROR:#{resp.code} for #{url}"
           File.delete(destination.path)
         else
@@ -45,15 +43,9 @@ namespace :images do
             puts "\nERROR: url #{url} returned an empty file"
             File.delete(destination.path)
           else
-            print "\rDownloading #{url} finished. Saved as #{rep.slug}.jpg\n"
+            print "\rDownloading #{url} finished. Saved as #{filename}\n"
             $stdout.flush
           end
-        end
-
-        if File.exist?(destination.path)
-          rep.image = Rails.root + filename
-        else
-          rep.image = Rails.root + generic_image_filename
         end
 
         rep.save!
