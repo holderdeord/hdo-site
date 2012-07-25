@@ -13,6 +13,7 @@ Development dependencies
 - LibXML headers (libxml2-dev)
 - LibXSLT headers (libxslt-dev)
 - SQLite headers (libsqlite3-dev)
+- imagemagick
 
 Getting started:
 ================
@@ -21,8 +22,6 @@ Getting started:
     $ cd hdo-site
     $ [sudo] bundle install
     $ rake db:setup
+    $ script/import dev # import some data for development
     $ bundle exec rails server
 
-To import some data for development:
-
-    $ script/import dev
