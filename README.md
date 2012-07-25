@@ -2,18 +2,19 @@ Prototype for holderdeord.no.
 
 [![Build Status](https://secure.travis-ci.org/holderdeord/hdo-site.png)](http://travis-ci.org/holderdeord/hdo-site)
 
-See https://holderdeord.atlassian.net/wiki/pages/viewpage.action?pageId=1310772
+Development environment on Debian/Ubuntu
+========================================
 
-Development dependencies
-========================
+Install package dependencies and set up Ruby 1.9.3 with RVM.
 
-- Ruby 1.9.2 or higher
-- Bundler (`gem install bundler` or ruby-bundler)
-- MySQL client and headers (libmysqlclient-dev)
-- LibXML headers (libxml2-dev)
-- LibXSLT headers (libxslt-dev)
-- SQLite headers (libsqlite3-dev)
-- imagemagick
+    $ apt-get install build-essential openssl libreadline6 libreadline6-dev curl git-core zlib1g zlib1g-dev libssl-dev libyaml-dev libsqlite3-dev sqlite3 libxml2-dev libxslt-dev autoconf libc6-dev ncurses-dev automake libtool bison libmysqlclient-dev imagemagick
+    $ curl -L get.rvm.io | bash -s stable
+    $ rvm install 1.9.3
+    $ rvm use 1.9.3 --default
+    $ ruby -v
+    ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
+
+PS. For RVM to work properly with gnome-terminal, you have to set the 'Run command as login shell' checkbox on the "Title and Command" tab inside of gnome-terminal's Settings page.
 
 Getting started:
 ================
