@@ -22,6 +22,16 @@ Getting started:
     $ cd hdo-site
     $ [sudo] bundle install
     $ rake db:setup
-    $ script/import dev # import some data for development
     $ bundle exec rails server
+
+Import data for development:
+============================
+
+* A subset from data.stortinget.no:
+
+        $ script/import dev
+
+* Import promises:
+
+        $ bundle exec hdo-converter promises http://files.holderdeord.no/promises.csv | script/import xml -
 
