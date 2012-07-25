@@ -53,15 +53,6 @@ end
 
 after "deploy:finalize_update", "db:config"
 
-namespace :import do
-  cmd = "cd %s && RAILS_ENV=production bin/hdo-converter --app-root %s --source api %s"
-
-  [:all, :dld, :promises, :issues, :votes].each do |item|
-    desc "Run production import of #{item}"
-    task(item)     { run(cmd % [import_root, current_path, item.to_s])  }
-  end
-end
-
 namespace :clear do
   cmd = "cd %s && RAILS_ENV=production bundle exec rake db:clear:%s"
 
