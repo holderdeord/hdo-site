@@ -4,7 +4,7 @@ describe Proposition do
   it "can have a large body" do
     body = "a" * 150_000
 
-    prop = Proposition.new(:body => body)
+    prop = Proposition.new(:body => body, :description => "a")
     prop.save!
 
     prop.body.should == body
