@@ -36,3 +36,9 @@ Import data for development:
 
         $ bundle exec hdo-converter promises http://files.holderdeord.no/promises.csv | script/import xml -
 
+Fetch representative images:
+============================
+
+These are not included in the repo by default.
+
+    $ bundle exec rake images:fetch_representatives
