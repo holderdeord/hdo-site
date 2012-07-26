@@ -41,6 +41,7 @@ end
 
 Category.blueprint do
   name { "Category-#{sn}" }
+  main { false }
 end
 
 Representative.blueprint do

@@ -13,28 +13,23 @@ class Category < ActiveRecord::Base
 
   def self.column_groups
     column_count = 3
-    category_count = Category.count
-    cat_groups = Category.where( :main => true).includes(:children) #.in_groups_of(Category.where(:main => true).count / 3, false)
-    column_length = (category_count / column_count)
+    target_size  = Category.count / column_count
+    parents      = Category.where(:main => true).includes(:children).to_a
 
-    lengths = []
-    sum = 0
-    prev_i = 0
-    cat_groups.each_with_index do |cat_group, i|
-      sum += (cat_group.children.count + 1)
-      if(sum >= column_length)
+    groups, sum, prev_idx = [], 0, 0
+
+    parents.dup.each_with_index do |parent, idx|
+      sum += parent.children.size + 1
+
+      if sum >= target_size
         sum = 0
-        lengths << (i - prev_i)
-        prev_i = i
+        groups << parents.shift(idx - prev_idx)
+        prev_idx = idx
       end
     end
 
-    categories = []
+    groups << parents # remainder
 
-    lengths.each do |l|
-      categories << cat_groups.shift(l)
-    end
-
-    categories << cat_groups
+    groups
   end
 end
