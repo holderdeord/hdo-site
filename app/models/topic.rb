@@ -1,6 +1,6 @@
 class Topic < ActiveRecord::Base
   extend FriendlyId
-  
+
   attr_accessible :description, :title, :category_ids, :promise_ids
   validates_presence_of :title
   validates_uniqueness_of :title
@@ -11,7 +11,7 @@ class Topic < ActiveRecord::Base
 
   has_many :vote_directions
   has_many :votes, :through => :vote_directions, :order => :time
-  
+
   friendly_id :title, :use => :slugged
 
   attr_writer :current_step
