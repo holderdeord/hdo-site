@@ -27,7 +27,13 @@
       <tbody>
         <% @topic.vote_directions.each do |dir| %>
         <tr>
-          <td><%= link_to dir.vote.issues.first.summary, dir.vote.issues.first %></td>
+          <td>
+            <ul>
+            <% dir.vote.issues.each do |issue| %>
+              <li><%= link_to issue.summary, issue %></li>
+            <% end %>
+            </ul>
+          </td>
           <td><%= link_to dir.vote.subject, dir.vote %></td>
           <td><%= dir.vote.enacted_text %></td>
           <td><%= dir.matches_text %></td>
