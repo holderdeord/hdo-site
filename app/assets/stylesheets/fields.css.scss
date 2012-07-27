@@ -39,11 +39,12 @@ $field-columns: 4;
 	}
 }
 .field-name {
-        margin: 5px 10px;
-        display: inline-block;
+    margin: 5px 10px;
+    display: inline-block;
 		font-weight: bold;
 		color: black;
 		padding: 40px 25px 40px 25px;
+		max-width: 50px;
 }
 .field-card:hover {
 	@include box-shadow(#{0 0 5px grey});
