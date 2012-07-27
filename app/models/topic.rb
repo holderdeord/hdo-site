@@ -9,8 +9,8 @@ class Topic < ActiveRecord::Base
   has_and_belongs_to_many :categories
   has_and_belongs_to_many :promises
 
-  has_many :vote_directions
-  has_many :votes, :through => :vote_directions, :order => :time
+  has_many :vote_connections
+  has_many :votes, :through => :vote_connections, :order => :time
 
   friendly_id :title, :use => :slugged
 
@@ -45,15 +45,15 @@ class Topic < ActiveRecord::Base
   end
 
   def vote_for?(vote_id)
-    vote_directions.any? { |vd| vd.matches? && vd.vote_id == vote_id  }
+    vote_connections.any? { |vd| vd.matches? && vd.vote_id == vote_id  }
   end
 
   def vote_against?(vote_id)
-    vote_directions.any? { |vd| !vd.matches? && vd.vote_id == vote_id }
+    vote_connections.any? { |vd| !vd.matches? && vd.vote_id == vote_id }
   end
 
   def connected_to?(vote)
-    vote_directions.where(:vote_id => vote.id).any?
+    vote_connections.where(:vote_id => vote.id).any?
   end
 
   def current_step?(step)

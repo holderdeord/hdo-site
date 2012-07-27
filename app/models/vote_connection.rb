@@ -1,4 +1,4 @@
-class VoteDirection < ActiveRecord::Base
+class VoteConnection < ActiveRecord::Base
   belongs_to :vote
   belongs_to :topic
 

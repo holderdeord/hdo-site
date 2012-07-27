@@ -74,7 +74,7 @@ class TopicsController < ApplicationController
     end
 
     session[:topic_step] = @topic.current_step
-    set_vote_directions params
+    set_vote_connections params
 
     @topic.update_attributes(params[:topic])
 
@@ -105,15 +105,15 @@ class TopicsController < ApplicationController
     @topic = Topic.find(params[:id])
   end
 
-  def set_vote_directions(params)
+  def set_vote_connections(params)
     return unless params[:votes_for]
 
-    @topic.vote_directions = []
+    @topic.vote_connections = []
 
     params[:votes_for].each do |vote_id, value|
       next unless ['for', 'against'].include? value
 
-      @topic.vote_directions.create! vote_id: vote_id,
+      @topic.vote_connections.create! vote_id: vote_id,
                                      matches: value == 'for'
     end
 

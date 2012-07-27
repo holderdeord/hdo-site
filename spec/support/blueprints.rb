@@ -53,7 +53,7 @@ end
 Topic.blueprint do
   title { "topic-title-#{sn}" }
   description { "topic-description-#{sn}" }
-  vote_directions {
+  vote_connections {
     Array.new(2) { VoteDirection.make!(:topic => object) }
   }
 end

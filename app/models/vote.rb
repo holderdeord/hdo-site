@@ -9,7 +9,7 @@ class Vote < ActiveRecord::Base
   has_many :vote_results, :dependent => :delete_all
   has_many :representatives, :through => :vote_results, :order => :last_name
 
-  has_many :vote_directions
+  has_many :vote_connections
 
   friendly_id :external_id, :use => :slugged
 

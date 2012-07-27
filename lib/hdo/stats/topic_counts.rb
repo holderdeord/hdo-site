@@ -22,7 +22,7 @@ module Hdo
       end
 
       def compute
-        vote_percentages = @model.vote_directions.map do |vote_direction|
+        vote_percentages = @model.vote_connections.map do |vote_direction|
           vote_percentages_for(vote_direction)
         end
 

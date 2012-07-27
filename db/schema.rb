@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120717160943) do
+ActiveRecord::Schema.define(:version => 20120727143936) do
 
   create_table "categories", :force => true do |t|
     t.string   "external_id"
@@ -207,7 +207,7 @@ ActiveRecord::Schema.define(:version => 20120717160943) do
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
   add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
 
-  create_table "vote_directions", :force => true do |t|
+  create_table "vote_connections", :force => true do |t|
     t.boolean  "matches"
     t.integer  "vote_id"
     t.integer  "topic_id"
@@ -215,7 +215,7 @@ ActiveRecord::Schema.define(:version => 20120717160943) do
     t.datetime "updated_at", :null => false
   end
 
-  add_index "vote_directions", ["vote_id", "topic_id"], :name => "index_vote_directions_on_vote_id_and_topic_id"
+  add_index "vote_connections", ["vote_id", "topic_id"], :name => "index_vote_connections_on_vote_id_and_topic_id"
 
   create_table "vote_results", :force => true do |t|
     t.integer  "representative_id"

@@ -147,7 +147,7 @@ nb:
         promises: "Løfter"
         votes: "Voteringer"
         fields: "Områder"
-      vote_direction:
+      vote_connection:
         matches: "Støtter tema?"
       field:
         name: "Tittel"

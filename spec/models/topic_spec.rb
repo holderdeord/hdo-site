@@ -33,9 +33,9 @@ describe Topic do
 
   it "can associate votes with a vote direction" do
     vote = Vote.make!
-    topic = Topic.make!(:vote_directions => [])
+    topic = Topic.make!(:vote_connections => [])
 
-    topic.vote_directions.create!(:vote => vote, :matches => true)
+    topic.vote_connections.create!(:vote => vote, :matches => true)
     topic.votes.should == [vote]
 
     topic.should be_connected_to(vote)
