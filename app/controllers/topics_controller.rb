@@ -106,18 +106,18 @@ class TopicsController < ApplicationController
   end
 
   def set_vote_connections(params)
-    return unless params[:votes_for]
+    return unless params[:votes]
 
     @topic.vote_connections = []
 
-    params[:votes_for].each do |vote_id, value|
-      next unless ['for', 'against'].include? value
+    params[:votes].each do |vote_id, data|
+      next unless %w[for against].include? data[:direction]
 
       @topic.vote_connections.create! vote_id: vote_id,
-                                     matches: value == 'for'
+                                      matches: data[:direction] == 'for',
+                                      comment: data[:comment],
+                                      weight:  data[:weight]
     end
-
-    expire_page :action => [:edit_votes, :edit_category_votes]
   end
 
 end

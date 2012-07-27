@@ -1,6 +1,6 @@
 <% @votes.each do |vote| %>
 <div class="vote-container">
-  <div class="row vote">
+  <div class="row-fluid vote">
     <div class="span2">
       <a data-toggle="collapse" data-target="#proposition-body-<%= vote.id %>"><%= t 'app.expand' %></a>
     </div>
@@ -17,11 +17,13 @@
     </div>
 
     <div class="pull-right">
-      <%= select_tag "votes_for[#{vote.id}]", vote_options_for(vote) %>
+      <%= select_tag "votes[#{vote.id}][direction]", vote_options_for(vote) %>
+      <%= text_area_tag "votes[#{vote.id}][comment]", @topic.comment_for(vote) %>
+      <%= select_tag "votes[#{vote.id}][weight]", options_for_select([1,2,4], @topic.weight_for(vote)) %>
     </div>
   </div>
 
-  <div class="row collapse" id="proposition-body-<%= vote.id %>">
+  <div class="row-fluid collapse" id="proposition-body-<%= vote.id %>">
     <div class="span8">
       <% vote.propositions.each do |prop| %>
         <%= prop.body.html_safe %>
