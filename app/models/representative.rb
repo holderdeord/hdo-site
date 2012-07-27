@@ -49,7 +49,7 @@ class Representative < ActiveRecord::Base
   private
 
   def ensure_image
-    return if image
+    return if known_image?
 
     root = Pathname.new(Rails.root)
 
@@ -57,5 +57,9 @@ class Representative < ActiveRecord::Base
     fallback   = root.join("app/assets/images/representatives/unknown.jpg")
 
     self.image = slug_image.exist? ? slug_image : fallback
+  end
+
+  def known_image?
+    image and not image_name.start_with?('unknown')
   end
 end
