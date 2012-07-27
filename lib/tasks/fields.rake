@@ -12,7 +12,8 @@ namespace :fields do
       "Utdanning og forskning",
       "Finanser og n\u00e6ringsliv",
       "Arbeidsliv",
-      "Transport og kommunikasjon"
+      "Transport og kommunikasjon",
+      "Diverse"
     ]
     puts 'Deleting all fields!'
     Field.find_each(&:delete)
