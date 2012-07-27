@@ -16,4 +16,7 @@ class HomeController < ApplicationController
   def login_status
     render layout: false
   end
+
+  def join
+  end
 end
