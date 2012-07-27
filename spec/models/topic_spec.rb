@@ -38,7 +38,7 @@ describe Topic do
     topic.vote_connections.create!(:vote => vote, :matches => true)
     topic.votes.should == [vote]
 
-    topic.should be_connected_to(vote)
+    topic.connection_for(vote).should_not be_nil
   end
 
   it "has a unique title" do

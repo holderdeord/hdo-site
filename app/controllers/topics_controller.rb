@@ -38,7 +38,8 @@ class TopicsController < ApplicationController
       # better way to do this?
       @promises = @topic.categories.includes(:promises).map(&:promises).compact.flatten
     when 'votes'
-      @votes = Vote.includes(:issues, :propositions).select { |e| e.issues.all?(&:processed?) }.sort_by { |e| @topic.connected_to?(e) ? 0 : 1}
+      votes = Vote.includes(:issues, :propositions, :vote_connections).select { |e| e.issues.all?(&:processed?) }
+      @votes_and_connections = votes.map { |vote| [vote, @topic.connection_for(vote)] }.sort_by { |vote, connection| connection ? 0 : 1 }
     when 'fields'
       @fields = Field.all
     else
@@ -76,6 +77,7 @@ class TopicsController < ApplicationController
     session[:topic_step] = @topic.current_step
     set_vote_connections params
 
+    # TODO: check result of save
     @topic.update_attributes(params[:topic])
 
     if params[:finish_button]

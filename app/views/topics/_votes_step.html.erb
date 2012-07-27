@@ -1,4 +1,4 @@
-<% @votes.each do |vote| %>
+<% @votes_and_connections.each do |vote, connection| %>
 <div class="vote-container">
   <div class="row-fluid vote">
     <div class="span2">
@@ -16,15 +16,23 @@
       </ul>
     </div>
 
-    <div class="pull-right">
-      <%= select_tag "votes[#{vote.id}][direction]", vote_options_for(vote) %>
-      <%= text_area_tag "votes[#{vote.id}][comment]", @topic.comment_for(vote) %>
-      <%= select_tag "votes[#{vote.id}][weight]", options_for_select([1,2,4], @topic.weight_for(vote)) %>
+    <div class="span2">
+      <%= select_tag "votes[#{vote.id}][direction]", vote_options_for(vote, connection) %>
+
+      <label>
+        <%= VoteConnection.human_attribute_name :comment %>
+        <%= text_area_tag "votes[#{vote.id}][comment]", connection && connection.comment %>
+      </label>
+
+      <label>
+        <%= VoteConnection.human_attribute_name :weight %>
+        <%= select_tag "votes[#{vote.id}][weight]", options_for_select([1,2,4], connection && connection.vote) %>
+      </label>
     </div>
   </div>
 
   <div class="row-fluid collapse" id="proposition-body-<%= vote.id %>">
-    <div class="span8">
+    <div class="span10">
       <% vote.propositions.each do |prop| %>
         <%= prop.body.html_safe %>
       <% end %>

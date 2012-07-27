@@ -1,9 +1,7 @@
 module TopicsHelper
-  def vote_options_for(vote)
-    if @topic.vote_for?(vote.id)
-      selected = 'for'
-    elsif @topic.vote_against?(vote.id)
-      selected = 'against'
+  def vote_options_for(vote, connection)
+    if connection
+      selected = connection.matches? ? 'for' : 'against'
     else
       selected = 'unrelated'
     end

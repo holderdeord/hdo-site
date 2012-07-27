@@ -149,6 +149,8 @@ nb:
         fields: "Områder"
       vote_connection:
         matches: "Støtter tema?"
+        comment: "Kommentar"
+        weight: "Vekting"
       field:
         name: "Tittel"
         new: "Nytt område"

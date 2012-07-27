@@ -14,7 +14,7 @@ Vote.blueprint do
   vote_results { Array.new(10) { VoteResult.make! } }
 end
 
-VoteDirection.blueprint do
+VoteConnection.blueprint do
   topic
   vote
   matches { true }
@@ -54,6 +54,6 @@ Topic.blueprint do
   title { "topic-title-#{sn}" }
   description { "topic-description-#{sn}" }
   vote_connections {
-    Array.new(2) { VoteDirection.make!(:topic => object) }
+    Array.new(2) { VoteConnection.make!(:topic => object) }
   }
 end

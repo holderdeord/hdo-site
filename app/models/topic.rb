@@ -52,25 +52,9 @@ class Topic < ActiveRecord::Base
     vote_connections.any? { |vd| !vd.matches? && vd.vote_id == vote_id }
   end
 
-  def comment_for(vote)
-    conn = connection_for(vote)
-    conn && conn.comment
-  end
-
-  def weight_for(vote)
-    conn = connection_for(vote)
-    conn && conn.weight
-  end
-
-  def connected_to?(vote)
-    vote_connections.where(:vote_id => vote.id).any?
-  end
-
   def current_step?(step)
     step == self.current_step
   end
-
-  private
 
   def connection_for(vote)
     vote_connections.where(:vote_id => vote.id).first
