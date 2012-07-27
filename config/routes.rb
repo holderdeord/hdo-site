@@ -26,6 +26,7 @@ Hdo::Application.routes.draw do
   get "home/about"
   get "home/press"
   get "home/login_status"
+  get "home/join"
 
   get "docs/index"
 
