@@ -1,5 +1,3 @@
-@import '_shared';
-
 @cardPadding: 15px;
 @iconSize: 140px;
 @fieldColumns: 4;
@@ -19,8 +17,7 @@
   margin: 0;
   padding: 0;
   max-width: (@cardPadding + @iconSize)*@fieldColumns;
-
-  @include clearfix;
+  clear: both;
 
   > li {
     float: left;
