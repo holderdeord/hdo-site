@@ -16,7 +16,7 @@ class Field < ActiveRecord::Base
   end
 
   def image_with_fallback
-    self.image = File.new(default_image) if self.image_uid == nil 
+    self.image = Pathname.new(default_image) if self.image_uid == nil 
     self.save! if self.image_uid_changed?
     self.image
   end
