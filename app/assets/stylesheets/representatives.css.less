@@ -1,16 +1,13 @@
 // Place all the styles related to the Representatives controller here.
 // They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
 
-@import '_shared';
-
-$representative-width:  120px;
-$representative-height: 230px;
+@representative-width:  120px;
+@representative-height: 230px;
 
 .representative-image {
-  @include box-shadow(#{5px 7px 15px #888});
   max-width: 240px;
   border-radius: 6px;
+  box-shadow: 5px 7px 15px #888;
 }
 
 .representative-view {
