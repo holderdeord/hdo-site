@@ -98,8 +98,8 @@ class TopicsController < ApplicationController
   end
 
   def show_votes
-    vote_connections = Topic.find(params[:id]).vote_connections
-    render 'votes', locals: { :vote_connections => vote_connections }
+    topic = Topic.find(params[:id])
+    render 'votes', locals: { :topic => topic }
   end
 
   private
