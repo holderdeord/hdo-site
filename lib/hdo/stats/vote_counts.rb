@@ -11,7 +11,7 @@ module Hdo
 
       def as_json(opts = nil)
         {
-          :for     => for_count,
+          :approve => for_count,
           :against => against_count,
           :absent  => absent_count
         }

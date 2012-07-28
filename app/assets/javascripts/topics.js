@@ -1,73 +1,77 @@
-// =====================
-// = TopicSupportGraph =
-// =====================
+/* global HDO, Highcharts */
 
-function TopicSupportGraph(selector, data) {
-  this.selector = selector;
-  this.data = data;
-}
+(function (HDO, Highcharts) {
 
-TopicSupportGraph.prototype.categories = function() {
-  return $.map(this.data, function(entry) { return entry[0]; })
-};
+  HDO.topicSupportGraph = {
+    create: function (selector, data) {
+      var instance = Object.create(this);
+      instance.selector = selector;
+      instance.data = data;
+      return instance;
+    },
 
-TopicSupportGraph.prototype.series = function() {
-  var result = {data: []};
+    categories: function () {
+      return $.map(this.data, function (entry) { return entry[0]; });
+    },
 
-  for (var i=0; i < this.data.length; i++) {
-    var entry = this.data[i]
-    result.data.push(entry[1]);
+    series: function () {
+      var result = {data: []}, i, entry;
+
+      for (i = 0; i < this.data.length; i++) {
+        entry = this.data[i];
+        result.data.push(entry[1]);
+      }
+
+      return [result];
+    },
+
+    render: function () {
+      var chart = {
+        chart: {
+          renderTo: this.selector,
+          type: 'bar'
+        },
+        credits: {
+          text: 'holderdeord.no'
+        },
+        title: {
+          text: ''
+        },
+        xAxis: {
+          categories: this.categories(),
+          title: {
+            text: null
+          }
+        },
+        yAxis: {
+          min: 0,
+          title: {
+            text: 'Prosent voteringer',
+            align: 'high'
+          },
+          labels: {
+            enabled: false,
+            overflow: 'justify'
+          }
+        },
+        tooltip: {
+          formatter: function () {
+            return this.x + ': ' + this.y + '%';
+          }
+        },
+        plotOptions: {
+          bar: {
+            dataLabels: {
+              enabled: true
+            },
+            colorByPoint: true
+          }
+        },
+        series: this.series()
+      };
+
+      this.chart = new Highcharts.Chart(chart);
+    }
   };
 
-  return [result];
-};
-
-
-TopicSupportGraph.prototype.render = function() {
-  this.chart = new Highcharts.Chart({
-    chart: {
-      renderTo: this.selector,
-      type: 'bar'
-    },
-    credits: {
-      text: 'holderdeord.no'
-    },
-    title: {
-      text: ''
-    },
-    xAxis: {
-      categories: this.categories(),
-      title: {
-        text: null
-      }
-    },
-    yAxis: {
-      min: 0,
-      title: {
-        text: 'Prosent voteringer',
-        align: 'high'
-      },
-      labels: {
-        enabled: false,
-        overflow: 'justify'
-      }
-    },
-    tooltip: {
-      formatter: function() {
-        return ''+
-          this.x +': '+ this.y +'%';
-      }
-    },
-    plotOptions: {
-      bar: {
-        dataLabels: {
-          enabled: true
-        },
-        colorByPoint: true
-      }
-    },
-    series: this.series()
-  });
-
-  return this;
-};
+}(HDO, Highcharts));
