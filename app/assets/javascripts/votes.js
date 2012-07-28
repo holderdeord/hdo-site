@@ -8,52 +8,52 @@ function VoteChart (selector, data) {
 
 VoteChart.prototype.render = function() {
   this.chart = new Highcharts.Chart({
-		chart: {
-			renderTo: this.selector,
-			type: 'column',
+    chart: {
+      renderTo: this.selector,
+      type: 'column',
       backgroundColor: null
-		},
+    },
     credits: {
       text: 'holderdeord.no',
     },
-		title: {
-			text: ' '
-		},
-		xAxis: {
-			categories: ['For', 'Mot', 'Ikke tilstede']
-		},
-		yAxis: {
-			min: 0,
-			title: {
-				text: 'Antall representanter'
-			},
-		},
-		legend: {
+    title: {
+      text: ' '
+    },
+    xAxis: {
+      categories: ['For', 'Mot', 'Ikke tilstede']
+    },
+    yAxis: {
+      min: 0,
+      title: {
+        text: 'Antall representanter'
+      },
+    },
+    legend: {
       enabled: false,
-		},
-		tooltip: {
-			formatter: function() {
-				return '<b>'+ this.x +'</b><br/>'+
-					this.series.name +': '+ this.y +'<br/>'
-			}
-		},
-		plotOptions: {
-			column: {
+    },
+    tooltip: {
+      formatter: function() {
+        return '<b>'+ this.x +'</b><br/>'+
+          this.series.name +': '+ this.y +'<br/>'
+      }
+    },
+    plotOptions: {
+      column: {
         colorByPoint: true,
-				stacking: 'normal',
-				dataLabels: {
-					enabled: true,
-					color: (Highcharts.theme && Highcharts.theme.dataLabelsColor) || 'white'
-				}
-			}
-		},
-		series: [{
-			data: [
+        stacking: 'normal',
+        dataLabels: {
+          enabled: true,
+          color: (Highcharts.theme && Highcharts.theme.dataLabelsColor) || 'white'
+        }
+      }
+    },
+    series: [{
+      data: [
         { y: this.data.for,     color: '#89A54E' },
         { y: this.data.against, color: '#AA4643'},
         { y: this.data.absent,  color: 'gray'}
       ]
-		}]
-	});
+    }]
+  });
 };
 
