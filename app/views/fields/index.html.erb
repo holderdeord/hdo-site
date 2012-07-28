@@ -1,7 +1,7 @@
 <% fields = Field.all %>
 <% topics = Topic.all order: :title %>
 <div class="container-fluid">
-  <div class="span6">
+  <div class="span7">
     <div class="page-header"><h1>Sjekk hva partiene har lovet og stemt i saker som er viktig for deg:</h1></div>
     <%= render partial: 'fields_list', locals: { :fields => fields } %>
     <div class=""><h1>Mest populære tema:</h1></div>
@@ -11,7 +11,7 @@
                 new_field_path,
                 :class => 'btn btn-primary' %>
   </div>
-  <div class="span4 hidden-mobile">
+  <div class="span3 hidden-mobile">
     <div class="well">
       <h2><%=t 'app.title' %></h2>
       <p><%=t 'app.description' %></p>

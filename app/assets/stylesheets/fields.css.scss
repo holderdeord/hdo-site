@@ -45,6 +45,7 @@ $field-columns: 4;
 		color: black;
 		padding: 40px 25px 40px 25px;
 		max-width: 50px;
+		text-align: center;
 }
 .field-card:hover {
 	@include box-shadow(#{0 0 5px grey});
