@@ -4,77 +4,32 @@
 </div>
 
 <div class="row-fluid">
-  <div class="span12">
-    <h3 class="topic-graph-header"><%= t 'app.topic_graph_header', title: @topic.title.downcase %></h3>
-    <div id="topic-support-graph"></div>
+  <ul class="nav nav-tabs">
+    <li><%= link_to "Se alle avstemninger om #{@topic.title.downcase}", topic_votes_path(@topic) %></li>
+    <li><%= link_to "Les mer om metoden", home_method_path %></li>
+  </ul>
+</div>
+
+<% @promise_by_party.each do |party, promises| %>
+<div class="row-fluid">
+  <div class="span2"><%= image_tag party.large_logo, alt: "#{party.name}s logo" %></div>
+  <div class="span10">
+    <h2><%= @topic.stats.text_for(party) %> <%= @topic.title.downcase %></h2>
+
+    <h5>I partiprogrammet har <%= party.name %> lovet følgende:</h5>
+    <ul>
+      <% promises.each do |promise| %>
+      <li><%= promise.body %></li>
+      <% end %>
+    </ul>
   </div>
 </div>
 
 <hr class="soften">
-
-<div class="row-fluid">
-  <div class="span6">
-    <h3>Voteringer om temaet</h3>
-    <table class="table-condensed">
-      <thead>
-        <tr>
-          <th><%= Issue.human_attribute_name :summary %></th>
-          <th><%= Vote.human_attribute_name :subject %></th>
-          <th><%= Vote.human_attribute_name :enacted %></th>
-          <th><%= VoteConnection.human_attribute_name :matches %></th>
-        </tr>
-      </thead>
-      <tbody>
-        <% @topic.vote_connections.each do |dir| %>
-        <tr>
-          <td>
-            <ul>
-            <% dir.vote.issues.each do |issue| %>
-              <li><%= link_to issue.summary, issue %></li>
-            <% end %>
-            </ul>
-          </td>
-          <td><%= link_to dir.vote.subject, dir.vote %></td>
-          <td><%= dir.vote.enacted_text %></td>
-          <td><%= dir.matches_text %></td>
-        </tr>
-      <% end %>
-      </tbody>
-    </table>
-  </div>
-
-  <div class="span6">
-    <h3>Partienes løfter om temaet</h3>
-    <table class="table-condensed">
-      <thead>
-        <tr>
-          <th><%= Promise.human_attribute_name :party %></th>
-          <th><%= Promise.human_attribute_name :body %></th>
-        </tr>
-      </thead>
-      <tbody>
-        <% @topic.promises.each do |promise| %>
-        <tr>
-          <td><%= link_to promise.party.name, promise.party %></td>
-          <td><%= promise.body %></td>
-        </tr>
-      <% end %>
-      </tbody>
-    </table>
-  </div>
-</div>
+<% end %>
 
 <% if user_signed_in? %>
   <div class="form-actions">
     <%= link_to t('app.edit'), edit_topic_path(@topic), class: 'btn' %>
   </div>
-<% end %>
-
-<% content_for :document_ready do %>
-<script>
-  $(document).ready(function () {
-    var graph = HDO.topicSupportGraph.create("topic-support-graph", JSON.parse(<%= @topic.stats.to_json.html_safe %>));
-    graph.render();
-  });
-</script>
 <% end %>

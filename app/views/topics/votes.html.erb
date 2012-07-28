@@ -1,30 +1,30 @@
 <div class="row-fluid">
-  <div class="span6">
+  <div class="span12">
     <h3>Voteringer om <%= topic.title.downcase %></h3>
-    <table class="table-condensed">
+    <table class="table">
       <thead>
         <tr>
           <th><%= Issue.human_attribute_name :summary %></th>
           <th><%= Vote.human_attribute_name :subject %></th>
           <th><%= Vote.human_attribute_name :enacted %></th>
           <th><%= VoteConnection.human_attribute_name :matches %></th>
+          <th><%= VoteConnection.human_attribute_name :weight %></th>
         </tr>
       </thead>
       <tbody>
-        <% topic.vote_connections.each do |dir| %>
+        <% topic.vote_connections.each do |connection| %>
         <tr>
           <td>
             <ul>
-              <% dir.vote.issues.each do |issue| %>
-                <li>
-                  <%= link_to issue.summary, issue %>
-                </li>
+              <% connection.vote.issues.each do |issue| %>
+                <li><%= link_to issue.summary, issue %></li>
               <% end %>
             </ul>
           </td>
-          <td><%= link_to dir.vote.subject, dir.vote %></td>
-          <td><%= dir.vote.enacted_text %></td>
-          <td><%= dir.matches_text %></td>
+          <td><%= link_to connection.vote.subject, connection.vote %></td>
+          <td><%= connection.vote.enacted_text %></td>
+          <td><%= connection.matches_text %></td>
+          <td><%= connection.weight %></td>
         </tr>
       <% end %>
       </tbody>

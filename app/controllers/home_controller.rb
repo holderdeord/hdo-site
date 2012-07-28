@@ -22,4 +22,8 @@ class HomeController < ApplicationController
 
   def support
   end
+
+  # don't override Object#method
+  def about_method
+  end
 end

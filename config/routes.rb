@@ -23,7 +23,7 @@ Hdo::Application.routes.draw do
   get 'votes/page/:page' => 'votes#index'
   get 'votes/index/all'  => 'votes#all', :as => :all_votes
 
-  get 'topics/:id/votes' => 'topics#show_votes'
+  get 'topics/:id/votes' => 'topics#show_votes', :as => :topic_votes
 
   get "home/index"
   get "home/about"
@@ -31,6 +31,7 @@ Hdo::Application.routes.draw do
   get "home/login_status"
   get "home/join"
   get "home/support"
+  get "home/method" => "home#about_method", :as => :home_method
 
   get "docs/index"
 

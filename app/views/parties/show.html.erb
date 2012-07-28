@@ -5,7 +5,7 @@
 <div class="container-fluid">
   <div class="row-fluid">
     <div class="span4">
-      <%= image_tag @party.large_logo, alt: @party.name + 's logo' %>
+      <%= image_tag @party.large_logo, alt: "#{@party.name}s logo" %>
       <dl>
         <dt><%= Representative.model_name.human(count: 2).capitalize %></dt>
         <dd><%= @party.representatives.count %> (<%= @party.percent_of_representatives %>%)</dd>

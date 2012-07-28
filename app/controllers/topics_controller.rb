@@ -12,6 +12,8 @@ class TopicsController < ApplicationController
   end
 
   def show
+    @promise_by_party = @topic.promises.group_by { |e| e.party }
+
     respond_to do |format|
       format.html
       format.json { render json: @topic }
