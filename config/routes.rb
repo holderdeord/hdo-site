@@ -15,7 +15,7 @@ Hdo::Application.routes.draw do
   resources :issues, :only => [:index, :show]
   get 'issues/page/:page' => 'issues#index'
 
-  resources :representatives, :only => [:index, :show]
+  resources :representatives, :only => [:show]
   get 'representatives/:id/page/:page' => 'representatives#show'
 
   resources :votes, :only => [:index, :show]

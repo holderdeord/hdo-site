@@ -41,12 +41,6 @@
           <% end %>
           </li>
 
-          <li class="<%= active_status_for(:representatives) %>">
-          <%= link_to representatives_path do %>
-            <%= Representative.model_name.human(count: 2).capitalize %>
-          <% end %>
-          </li>
-
           <li class="dropdown" id="stortinget">
             <a class="dropdown-toggle" data-toggle="dropdown" href="#stortinget">
               Stortinget
