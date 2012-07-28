@@ -45,6 +45,7 @@ namespace :images do
           else
             print "\rDownloading #{url} finished. Saved as #{filename}\n"
             $stdout.flush
+            rep.image = Pathname.new filename
           end
         end
 

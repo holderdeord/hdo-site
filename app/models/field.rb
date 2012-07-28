@@ -1,5 +1,6 @@
 class Field < ActiveRecord::Base
   extend FriendlyId
+  include Hdo::ModelHelpers::HasFallbackImage
 
   attr_accessible :name, :topic_ids, :image
   validates_presence_of :name
@@ -13,12 +14,6 @@ class Field < ActiveRecord::Base
 
   def default_image 
     "#{Rails.root}/app/assets/images/field_icons/snakkeboble_venstre.png"
-  end
-
-  def image_with_fallback
-    self.image = Pathname.new(default_image) if self.image_uid == nil 
-    self.save! if self.image_uid_changed?
-    self.image
   end
 
 end
