@@ -1,5 +1,3 @@
-jQuery(document).ready(function() {
-//   $(".tooltip").tooltip();
-//   $("a[rel=tooltip]").tooltip();
+$(document).ready(function () {
   $("table").tablesorter();
 });
