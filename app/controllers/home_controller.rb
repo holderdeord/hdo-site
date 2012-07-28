@@ -19,4 +19,7 @@ class HomeController < ApplicationController
 
   def join
   end
+
+  def support
+  end
 end
