@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120728085000) do
+ActiveRecord::Schema.define(:version => 20120727144539) do
 
   create_table "categories", :force => true do |t|
     t.string   "external_id"
@@ -75,12 +75,11 @@ ActiveRecord::Schema.define(:version => 20120728085000) do
 
   create_table "fields", :force => true do |t|
     t.string   "name"
-    t.datetime "created_at",                :null => false
-    t.datetime "updated_at",                :null => false
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
     t.string   "slug"
     t.string   "image_uid"
     t.string   "image_name"
-    t.integer  "popularity", :default => 0
   end
 
   add_index "fields", ["slug"], :name => "index_fields_on_slug", :unique => true
@@ -182,10 +181,9 @@ ActiveRecord::Schema.define(:version => 20120728085000) do
   create_table "topics", :force => true do |t|
     t.string   "title"
     t.string   "description"
-    t.datetime "created_at",                 :null => false
-    t.datetime "updated_at",                 :null => false
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
     t.string   "slug"
-    t.integer  "popularity",  :default => 0
   end
 
   add_index "topics", ["slug"], :name => "index_topics_on_slug", :unique => true
