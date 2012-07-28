@@ -8,28 +8,32 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
 unless Rails.env == "production"
+  existing = User.find_by_email("admin@holderdeord.no")
+  existing && existing.destroy
+
   User.create!(:email => "admin@holderdeord.no", :password => "hdo123", :password_confirmation => "hdo123", :remember_me => false)
 end
 
-
 initial_fields_list = [
-      "Offentlig forvaltning",
-      "Familie og tro",
-      "Kultur",
-      "Helse og sosial",
-      "Sj\u00f8 og landbruk",
-      "Energi og milj\u00f8",
-      "Utenriks og sikkerhet",
-      "Utdanning og forskning",
-      "Finanser og n\u00e6ringsliv",
-      "Arbeidsliv",
-      "Transport og komm.",
-      "Diverse"
-    ]
-    puts 'Deleting all fields!'
-    Field.find_each(&:delete)
+  "Offentlig forvaltning",
+  "Familie og tro",
+  "Kultur",
+  "Helse og sosial",
+  "Sjø og landbruk",
+  "Energi og miljø",
+  "Utenriks og sikkerhet",
+  "Utdanning og forskning",
+  "Finanser og næringsliv",
+  "Arbeidsliv",
+  "Transport og komm.",
+  "Diverse"
+]
 
-    initial_fields_list.each do |field_name|
-      puts "Creating field #{field_name}"
-      Field.create name: field_name
-    end
+puts 'Deleting all fields!'
+Field.find_each(&:delete)
+
+initial_fields_list.each do |field_name|
+  puts "Creating field #{field_name}"
+  Field.create! name: field_name
+end
+
