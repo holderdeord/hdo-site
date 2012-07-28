@@ -2,9 +2,9 @@ require 'spec_helper'
 
 module Hdo
   module Stats
-    describe TopicCounts do
+    describe VoteScorer do
       let(:topic) { Topic.make! }
-      let(:topic_counts) { TopicCounts.new topic }
+      let(:topic_counts) { VoteScorer.new topic }
       let(:parties) { Array.new(2) { Party.make! } }
 
       before do

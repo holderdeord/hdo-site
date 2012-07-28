@@ -47,6 +47,6 @@ describe Topic do
   end
 
   it "has a stats object" do
-    valid_topic.stats.should be_kind_of(Hdo::Stats::TopicCounts)
+    valid_topic.stats.should be_kind_of(Hdo::Stats::VoteScorer)
   end
 end

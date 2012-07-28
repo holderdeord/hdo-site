@@ -2,7 +2,7 @@
 
 module Hdo
   module Stats
-    class TopicCounts
+    class VoteScorer
       include Enumerable
 
       def initialize(model)
@@ -77,7 +77,7 @@ module Hdo
           if total.zero?
             res[party] = 0
           else
-            res[party] = for_count / total
+            res[party] = (for_count / total) * vote_connection.weight
           end
         end
 

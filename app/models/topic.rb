@@ -41,7 +41,7 @@ class Topic < ActiveRecord::Base
   end
 
   def stats
-    @stats ||= Hdo::Stats::TopicCounts.new(self)
+    @stats ||= Hdo::Stats::VoteScorer.new(self)
   end
 
   def vote_for?(vote_id)
