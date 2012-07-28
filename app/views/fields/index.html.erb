@@ -3,8 +3,8 @@
 <div class="container-fluid">
   <div class="span7">
     <div class="page-header"><h1>Sjekk hva partiene har lovet og stemt i saker som er viktig for deg:</h1></div>
-    <%= render partial: 'fields_list', locals: { :fields => fields } %>
-    <div class=""><h1>Mest populære tema:</h1></div>
+      <%= render partial: 'fields_list', locals: { :fields => fields } %>
+    <div><h1>Mest populære tema:</h1></div>
     <%= render partial: 'topics_list', locals: { :topics => topics } %>
 
     <%= link_to t('.new', :default => t("helpers.links.new")),
