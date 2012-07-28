@@ -37,8 +37,8 @@ nb:
         one: "sak"
         other: "saker"
       vote:
-        one: "votering"
-        other: "voteringer"
+        one: "avstemning"
+        other: "avstemninger"
       vote_result:
         one: "stemme"
         other: "stemmer"
@@ -145,7 +145,7 @@ nb:
         confirm_destroy: "Er du sikker på at du vil slette tema?"
         categories: "Kategorier"
         promises: "Løfter"
-        votes: "Voteringer"
+        votes: "Avstemninger"
         fields: "Områder"
       vote_connection:
         matches: "Støtter tema?"
@@ -253,8 +253,8 @@ nb:
         one: "Viser <strong>1</strong> saker."
         other: "Viser <strong>%{count}</strong> saker."
       vote:
-        one: "Viser <strong>1</strong> voteringer."
-        other: "Viser <strong>%{count}</strong> voteringer."
+        one: "Viser <strong>1</strong> avstemninger."
+        other: "Viser <strong>%{count}</strong> avstemninger."
       promises:
         one: "Viser <strong>1</strong> løfte."
         other: "Viser <strong>%{count}</strong> løfter."
