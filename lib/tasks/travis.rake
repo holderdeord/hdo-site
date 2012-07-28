@@ -1,2 +1,2 @@
-task :travis => %w[db:drop db:migrate spec:small buster]
+task :travis => %w[check db:drop db:migrate spec:small buster]
 
