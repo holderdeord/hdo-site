@@ -97,6 +97,11 @@ class TopicsController < ApplicationController
     end
   end
 
+  def show_votes
+    vote_connections = Topic.find(params[:id]).vote_connections
+    render 'votes', locals: { :vote_connections => vote_connections }
+  end
+
   private
 
   def fetch_categories

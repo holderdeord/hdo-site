@@ -23,6 +23,8 @@ Hdo::Application.routes.draw do
   get 'votes/page/:page' => 'votes#index'
   get 'votes/index/all'  => 'votes#all', :as => :all_votes
 
+  get 'topics/:id/votes' => 'topics#show_votes'
+
   get "home/index"
   get "home/about"
   get "home/press"
