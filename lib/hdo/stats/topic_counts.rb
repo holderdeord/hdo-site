@@ -9,6 +9,10 @@ module Hdo
         @model = model
       end
 
+      def each(&blk)
+        data.each(&blk)
+      end
+
       def score_for(party)
         data[party]
       end
@@ -25,7 +29,7 @@ module Hdo
         when 67..100
           "#{party.name} har stemt for"
         else
-          "#{party.name} har ikke deltatt i avstemninger om"
+          "#{party.name} har ikke deltatt i avstemninger om tema"
         end
       end
 

@@ -1,8 +1,10 @@
-<%- model_class = @field.class -%>
-<div class="page-header">
+<div class="row-fluid">
   <h1>Mest populære tema relatert til <%= @field.name.downcase %></h1>
 </div>
-<%= render partial: 'topics_list', locals: { :topics => @field.topics } %>
+
+<div class="row-fluid">
+  <%= render partial: 'topics_list', locals: { :topics => @field.topics } %>
+</div>
 
 <div class="form-actions">
   <%= link_to t('.back', :default => t("helpers.links.back")),

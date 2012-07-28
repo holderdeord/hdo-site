@@ -6,10 +6,7 @@
       <%= render partial: 'fields_list', locals: { :fields => fields } %>
     <div><h1>Mest populære tema:</h1></div>
     <%= render partial: 'topics_list', locals: { :topics => topics } %>
-
-    <%= link_to t('.new', :default => t("helpers.links.new")),
-                new_field_path,
-                :class => 'btn btn-primary' %>
+    <%= link_to t('.new', :default => t("helpers.links.new")), new_field_path, :class => 'btn btn-primary' %>
   </div>
   <div class="span3 hidden-mobile">
     <div class="well">

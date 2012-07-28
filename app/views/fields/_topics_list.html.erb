@@ -1,11 +1,9 @@
-  <table class="table table-striped">
-    <% topics.each do |topic| %>
-      <tr>
-        <td class="topic-list">
-          <%= link_to topic do %>
-            <strong><%= topic.title.capitalize %></strong>
-          <% end %>
-        </td>
-      </tr>
-    <% end %>
-  </table>
+<table class="table table-condensed">
+  <% topics.each do |topic| %>
+    <tr>
+      <td class="topic-list">
+        <%= link_to topic.title.capitalize, topic %>
+      </td>
+    </tr>
+  <% end %>
+</table>
