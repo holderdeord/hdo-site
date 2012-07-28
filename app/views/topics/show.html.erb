@@ -14,7 +14,7 @@
 <div class="row-fluid">
   <div class="span2"><%= image_tag party.large_logo, alt: "#{party.name}s logo" %></div>
   <div class="span10">
-    <h2><%= @topic.stats.text_for(party) %> <%= @topic.title.downcase %></h2>
+    <h2><%= @topic.stats.text_for(party) %> <%= @topic.title.downcase %> <small><%= @topic.stats.score_for(party) %>%</small></h2>
 
     <h5>I partiprogrammet har <%= party.name %> lovet følgende:</h5>
     <ul>
