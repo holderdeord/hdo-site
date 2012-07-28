@@ -186,55 +186,62 @@ module Hdo
 
     def import_votes(votes)
       votes.each do |xvote|
-        vote  = Vote.find_or_create_by_external_id xvote.external_id
-        issue = Issue.find_by_external_id! xvote.external_issue_id
-
-        vote.issues << issue
-
-        vote.update_attributes!(
-          :for_count     => Integer(xvote.counts.for),
-          :against_count => Integer(xvote.counts.against),
-          :absent_count  => Integer(xvote.counts.absent),
-          :enacted       => xvote.enacted?,
-          :subject       => xvote.subject,
-          :time          => Time.parse(xvote.time)
-        )
-
-        xvote.representatives.each do |xrep|
-          result = VOTE_RESULTS[xrep.vote_result] or raise "invalid vote result: #{result_text.inspect}"
-          rep = import_representative(xrep)
-
-          res = VoteResult.find_or_create_by_representative_id_and_vote_id(rep.id, vote.id)
-          res.result = result
-          res.save!
-        end
-
-        xvote.propositions.each do |e|
-          vote.propositions << import_proposition(e)
-        end
-
-        vote.save!
-
+        debug_on_error(xvote) { import_vote(xvote) }
         print "."
       end
     end
 
     def import_representatives(reps)
       reps.each do |e|
-        import_representative(e)
+        debug_on_error(e) { import_representative(e) }
         print "."
       end
     end
 
     def import_propositions(propositions)
       propositions.each do |e|
-        import_proposition(e)
+        debug_on_error(e) { import_proposition(e) }
         print "."
       end
     end
 
     def import_promises(promises)
-      promises.each { |e| import_promise(e) }
+      promises.each do |e|
+        debug_on_error(e) { import_promise(e) }
+        print "."
+      end
+    end
+    
+    def import_vote(xvote)
+      puts "importing vote: #{xvote.inspect}"
+      vote  = Vote.find_or_create_by_external_id xvote.external_id
+      issue = Issue.find_by_external_id! xvote.external_issue_id
+
+      vote.issues << issue
+
+      vote.update_attributes!(
+        :for_count     => Integer(xvote.counts.for),
+        :against_count => Integer(xvote.counts.against),
+        :absent_count  => Integer(xvote.counts.absent),
+        :enacted       => xvote.enacted?,
+        :subject       => xvote.subject,
+        :time          => Time.parse(xvote.time)
+      )
+
+      xvote.representatives.each do |xrep|
+        result = VOTE_RESULTS[xrep.vote_result] or raise "invalid vote result: #{result_text.inspect}"
+        rep = import_representative(xrep)
+
+        res = VoteResult.find_or_create_by_representative_id_and_vote_id(rep.id, vote.id)
+        res.result = result
+        res.save!
+      end
+
+      xvote.propositions.each do |e|
+        vote.propositions << import_proposition(e)
+      end
+
+      vote.save!
     end
 
     def import_representative(representative)
@@ -250,7 +257,6 @@ module Hdo
       else
         dod = nil
       end
-
 
       rec = Representative.find_or_create_by_external_id external_id_from(representative.external_id)
       rec.update_attributes!(
@@ -307,8 +313,13 @@ module Hdo
         source: promise.source,
         body: promise.body
       )
+    end
 
-      print "."
+    def debug_on_error(obj, &blk)
+      yield
+    rescue
+      puts obj
+      raise
     end
 
     def api_data_source
