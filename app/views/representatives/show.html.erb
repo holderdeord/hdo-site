@@ -96,9 +96,8 @@
 </div>
 
 <% content_for :document_ready do %>
-  <script type="text/javascript">
-    $(document).ready(function() {
-        new PresenceStatsGraph("presence-stats-graph", <%= @activity_stats.presence.to_json.html_safe %>).render();
-    });
+  <script>
+    var graph = HDO.presenceStatsGraph.create("presence-stats-graph", <%= @activity_stats.presence.to_json.html_safe %>);
+    graph.render();
   </script>
 <% end %>
