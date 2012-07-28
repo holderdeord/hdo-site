@@ -31,6 +31,7 @@ Hdo::Application.routes.draw do
   get "home/login_status"
   get "home/join"
   get "home/support"
+  get "home/people"
   get "home/method" => "home#about_method", :as => :home_method
 
   get "docs/index"

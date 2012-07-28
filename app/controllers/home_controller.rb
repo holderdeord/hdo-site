@@ -23,6 +23,9 @@ class HomeController < ApplicationController
   def support
   end
 
+  def people
+  end
+
   # don't override Object#method
   def about_method
   end

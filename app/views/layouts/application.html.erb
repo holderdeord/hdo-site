@@ -35,11 +35,11 @@
       <%= yield %>
 
       <footer>
-        <p><%=t 'app.title' %> &copy; 2012. <%= link_to t('app.contact_us'), home_press_path %>.</p>
         <p><a href="https://twitter.com/holderdeord" class="twitter-follow-button" data-show-count="false">Følg @holderdeord</a></p>
         <p>
           <div class="fb-like" data-href="https://www.facebook.com/holderdeord" data-send="false" data-layout="button_count" data-width="70" data-show-faces="false"></div>
         </p>
+        <p><%=t 'app.title' %> &copy; 2012. <%= link_to t('app.contact_us'), home_press_path %>.</p>
       </footer>
     </div> <!-- /container -->
 
@@ -47,6 +47,5 @@
     <%= render partial: 'layouts/ga' if Rails.env == 'production'  %>
     <%= render partial: 'layouts/social'%>
     <%= yield :document_ready %>
-
     </body>
 </html>
