@@ -1,50 +1,50 @@
 @import '_shared';
 
-@card-padding: 15px;
-@icon-size: 140px;
-@field-columns: 4;
+@cardPadding: 15px;
+@iconSize: 140px;
+@fieldColumns: 4;
 
 .topic-list {
-	font-size: 20px;
-	padding: 10px;
+  font-size: 20px;
+  padding: 10px;
 }
 
 .field-image {
-  max-width: @icon-size;
+  max-width: @iconSize;
   border-radius: 6px;
 }
 
 .fields-list {
-	list-style: none;
-	margin: 0;
-	padding: 0;
-	max-width: (@card-padding + @icon-size)*@field-columns;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  max-width: (@cardPadding + @iconSize)*@fieldColumns;
 
-	@include clearfix;
+  @include clearfix;
 
-	> li {
-		float: left;
-		margin-bottom: 30px;
-		margin-right: @card-padding;
-		position: relative;
+  > li {
+    float: left;
+    margin-bottom: 30px;
+    margin-right: @cardPadding;
+    position: relative;
 
-		> div {
-			border-radius: 30px;
-			min-height: @icon-size;
-			overflow: hidden;
-			width: @icon-size;
-		}
-	}
+    > div {
+      border-radius: 30px;
+      min-height: @iconSize;
+      overflow: hidden;
+      width: @iconSize;
+    }
+  }
 }
 
 .field-name {
     margin: 5px 10px;
     display: inline-block;
-		font-weight: bold;
-		color: black;
-		padding: 40px 25px 40px 25px;
-		max-width: 50px;
-		text-align: center;
+    font-weight: bold;
+    color: black;
+    padding: 40px 25px 40px 25px;
+    max-width: 50px;
+    text-align: center;
 }
 
 .field-card:hover {
@@ -52,6 +52,6 @@
 }
 
 .field-card {
-	background-repeat: no-repeat;
-	background-size: 100%;
+  background-repeat: no-repeat;
+  background-size: 100%;
 }
