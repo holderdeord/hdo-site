@@ -24,6 +24,8 @@ module Hdo
         import_api
       when 'dev'
         import_api(30)
+      when 'representatives'
+        import_api_representatives
       else
         raise ArgumentError, "unknown command: #{@cmd.inspect}"
       end
@@ -32,21 +34,23 @@ module Hdo
     private
 
     def import_api(vote_limit = nil)
-      ds = Hdo::StortingImporter::ParsingDataSource.new(api_data_source)
+      import_parties parsing_data_source.parties
+      import_committees parsing_data_source.committees
+      import_districts parsing_data_source.districts
 
-      import_parties ds.parties
-      import_committees ds.committees
-      import_districts ds.districts
+      import_api_representatives
 
-      import_representatives ds.representatives
-      import_representatives ds.representatives_today
+      import_categories parsing_data_source.categories
 
-      import_categories ds.categories
-
-      issues = ds.issues
+      issues = parsing_data_source.issues
 
       import_issues issues
-      import_votes votes_for(ds, issues, vote_limit)
+      import_votes votes_for(parsing_data_source, issues, vote_limit)
+    end
+
+    def import_api_representatives
+      import_representatives parsing_data_source.representatives
+      import_representatives parsing_data_source.representatives_today
     end
 
     def votes_for(data_source, issues, limit = nil)
@@ -58,6 +62,10 @@ module Hdo
       end
 
       result
+    end
+
+    def parsing_data_source
+      @parsing_data_source ||= Hdo::StortingImporter::ParsingDataSource.new(api_data_source)
     end
 
     def import_files
@@ -212,11 +220,17 @@ module Hdo
     end
 
     def import_representatives(reps)
-      reps.each { |e| import_representative(e) }
+      reps.each do |e|
+        import_representative(e)
+        print "."
+      end
     end
 
     def import_propositions(propositions)
-      propositions.each { |e| import_proposition(e) }
+      propositions.each do |e|
+        import_proposition(e)
+        print "."
+      end
     end
 
     def import_promises(promises)
