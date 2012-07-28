@@ -23,10 +23,10 @@ describe Proposition do
     prop = Proposition.make(:body => "foo")
     prop.short_body.should == "foo"
 
-    prop.body = "a"*200
-    prop.short_body.should == "#{('a'*97)}..."
+    prop.body = "a"*300
+    prop.short_body.should == "#{('a'*197)}..."
 
-    prop.body = 'a'*100
+    prop.body = 'a'*200
     prop.short_body.should == prop.body
   end
 end

@@ -12,6 +12,6 @@ class Proposition < ActiveRecord::Base
 
   def short_body
     str = plain_body
-    str.size <= 100 ? str : "#{str[0,97]}..."
+    str.size <= 100 ? str : "#{str[0,197]}..."
   end
 end
