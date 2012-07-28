@@ -20,13 +20,13 @@
       <%= select_tag "votes[#{vote.id}][direction]", vote_options_for(vote, connection) %>
 
       <label>
-        <%= VoteConnection.human_attribute_name :comment %>
-        <%= text_area_tag "votes[#{vote.id}][comment]", connection && connection.comment %>
+        <%= VoteConnection.human_attribute_name :weight %>
+        <%= select_tag "votes[#{vote.id}][weight]", options_for_select(VoteConnection::WEIGHTS, connection && connection.weight) %>
       </label>
 
       <label>
-        <%= VoteConnection.human_attribute_name :weight %>
-        <%= select_tag "votes[#{vote.id}][weight]", options_for_select(VoteConnection::WEIGHTS, connection && connection.weight) %>
+        <%= VoteConnection.human_attribute_name :comment %>
+        <%= text_area_tag "votes[#{vote.id}][comment]", connection && connection.comment %>
       </label>
     </div>
   </div>
