@@ -2,26 +2,14 @@
   <h1><%= Party.model_name.human(count: 2).capitalize %></h1>
 </div>
 
-<p class="pull-right"><%= t('app.counts.party', count: @parties.size).html_safe %></p>
-
-<table class="table table-striped">
-  <thead>
-    <tr>
-      <th><%= Party.human_attribute_name :external_id %></th>
-      <th><%= Party.human_attribute_name :name %></th>
-      <th><%= Party.human_attribute_name :representatives %></th>
-      <th><%= Party.human_attribute_name :percent_of_representatives %></th>
-    </tr>
-  </thead>
-
-  <tbody>
-      <% @parties.each do |party| %>
-      <tr>
-        <td><%= party.external_id %></td>
-        <td><%= link_to party.name, party %></td>
-        <td><%= party.representatives.size %></td>
-        <td><%= party.percent_of_representatives %>%</td>
-      </tr>
+<div class="row">
+  <ul class="thumbnails">
+  <% @parties.each do |party| %>
+    <li class="span2">
+      <%= link_to party do %>
+        <%= image_tag party.large_logo, alt: party.name + 's logo' %>
       <% end %>
-  </tbody>
-</table>
+    </li>
+  <% end %>
+  </ul>
+</div>
