@@ -57,3 +57,8 @@ Topic.blueprint do
     Array.new(2) { VoteConnection.make!(:topic => object) }
   }
 end
+
+Proposition.blueprint do
+  body { "proposition-body-#{sn}" }
+  description { "proposition-description-#{sn}" }
+end
