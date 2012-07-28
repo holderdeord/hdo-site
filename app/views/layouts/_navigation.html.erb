@@ -19,7 +19,7 @@
 
       <div class="container nav-collapse">
         <ul class="nav">
-          <li class="<%= active_status_for(:home) %>">
+          <li class="<%= active_status_for(:home_index) %>">
             <a href="/">Forside</a>
           </li>
 
@@ -70,7 +70,7 @@
             </ul>
           </li>
 
-          <li class="dropdown">
+          <li class="dropdown <%= active_status_for(:home_press, :home_about, :home_join, :docs_index)%>">
             <a class="dropdown-toggle" data-toggle="dropdown" href="#omOss">
               <%= t("app.about") %>
               <b class="caret"></b>
@@ -84,6 +84,11 @@
               <li><%= link_to 'Wiki', t('app.urls.wiki') %></li>
             </ul>
           </li>
+
+          <li class="<%= active_status_for(:home_support) %>">
+          <%= link_to 'Støtt Oss', home_support_path %></li>
+            
+
         </ul>
 
         <div id="login-status"></div>
