@@ -36,8 +36,10 @@
 
       <footer>
         <p><%=t 'app.title' %> &copy; 2012. <%= link_to t('app.contact_us'), home_press_path %>.</p>
-        <p><a href="https://twitter.com/holderdeord"><img src="images/twitter.png" width="35px"/>Følg @holderdeord</a>
-        <div class="fb-like" data-href="https://www.facebook.com/holderdeord" data-send="false" data-width="120" data-show-faces="false"></div></p>
+        <p><a href="https://twitter.com/holderdeord"><img src="images/twitter.png" width="35px"/>Følg @holderdeord</a></p>
+        <p>
+          <div class="fb-like" data-href="https://www.facebook.com/holderdeord" data-send="false" data-layout="button_count" data-width="70" data-show-faces="false"></div>
+        </p>
       </footer>
     </div> <!-- /container -->
 
@@ -45,15 +47,19 @@
     <%= render partial: 'layouts/ga' if Rails.env == 'production'  %>
     <%= yield :document_ready %>
     
+    <!-- TWITTER JS -->
     <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
     
+    <!-- FACEBOOK JS -->
     <div id="fb-root"></div>
-    <script>(function(d, s, id) {
-      var js, fjs = d.getElementsByTagName(s)[0];
-      if (d.getElementById(id)) return;
-      js = d.createElement(s); js.id = id;
-      js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
-      fjs.parentNode.insertBefore(js, fjs);
-      }(document, 'script', 'facebook-jssdk'));</script>
+      <script>
+        (function(d, s, id) {
+          var js, fjs = d.getElementsByTagName(s)[0];
+          if (d.getElementById(id)) return;
+          js = d.createElement(s); js.id = id;
+          js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+          fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+      </script>
   </body>
 </html>
