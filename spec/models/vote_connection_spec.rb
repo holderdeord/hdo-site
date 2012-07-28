@@ -11,10 +11,6 @@ describe VoteConnection do
     VoteConnection.make(:vote => nil).should be_invalid
   end
 
-  it 'should be invalid without a direction' do
-    VoteConnection.make(:matches => nil).should be_invalid
-  end
-
   it 'should be invalid without a topic' do
     VoteConnection.make(:topic => nil).should be_invalid
   end

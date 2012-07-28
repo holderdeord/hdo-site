@@ -6,7 +6,7 @@ class VoteConnection < ActiveRecord::Base
 
   attr_accessible :vote, :vote_id, :topic, :matches, :comment, :weight
 
-  validates_presence_of :vote, :topic, :matches, :weight
+  validates_presence_of :vote, :topic, :weight
   validates_inclusion_of :weight, :in => WEIGHTS
 
   def matches_text
