@@ -1,5 +1,6 @@
 class Representative < ActiveRecord::Base
   extend FriendlyId
+  include Hdo::ModelHelpers::HasFallbackImage
 
   belongs_to :party
   belongs_to :district
@@ -14,7 +15,6 @@ class Representative < ActiveRecord::Base
   friendly_id :external_id, :use => :slugged
 
   image_accessor :image
-  before_save :ensure_image
 
   def display_name
     "#{last_name}, #{first_name}"
@@ -46,20 +46,7 @@ class Representative < ActiveRecord::Base
     Hdo::Stats::RepresentativeCounts.new self
   end
 
-  private
-
-  def ensure_image
-    return if known_image?
-
-    root = Pathname.new(Rails.root)
-
-    slug_image = root.join("app/assets/images/representatives/#{slug}.jpg")
-    fallback   = root.join("app/assets/images/representatives/unknown.jpg")
-
-    self.image = slug_image.exist? ? slug_image : fallback
-  end
-
-  def known_image?
-    image and not image_name.start_with?('unknown')
+  def default_image 
+    "#{Rails.root}/app/assets/images/representatives/unknown.jpg"
   end
 end
