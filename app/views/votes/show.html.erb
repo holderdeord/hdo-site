@@ -69,9 +69,10 @@
 
 
 <% content_for :document_ready do %>
-<script type="text/javascript" charset="utf-8">
-  $(document).ready(function() {
-    new VoteChart('for-against-chart', <%= @stats.to_json.html_safe %>).render();
+<script>
+  $(document).ready(function () {
+    var chart = HDO.voteChart.create('for-against-chart', <%= @stats.to_json.html_safe %>);
+    chart.render();
   });
 </script>
 <% end %>

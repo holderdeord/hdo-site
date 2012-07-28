@@ -71,9 +71,10 @@
 <% end %>
 
 <% content_for :document_ready do %>
-<script type="text/javascript" charset="utf-8">
-  $(document).ready(function() {
-    new TopicSupportGraph("topic-support-graph", JSON.parse(<%= @topic.stats.to_json.html_safe %>)).render();
+<script>
+  $(document).ready(function () {
+    var graph = HDO.topicSupportGraph.create("topic-support-graph", JSON.parse(<%= @topic.stats.to_json.html_safe %>));
+    graph.render();
   });
 </script>
 <% end %>
