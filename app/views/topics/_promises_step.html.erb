@@ -3,7 +3,6 @@
     <tr>
       <th><%= Party.model_name.human.capitalize %></th>
       <th><%= Promise.human_attribute_name :body %></th>
-      <th></th>
     </tr>
   </thead>
 
@@ -11,12 +10,10 @@
     <% @promises.each do |promise| %>
     <tr>
       <td><%= promise.party.name %></td>
-      <td><%= promise.body %></td>
-      <td>
-        <label class="checkbox">
-          <%= check_box_tag "topic[promise_ids][]", promise.id, @topic.promises.include?(promise) -%>
+      <td><label class="checkbox">
+        <%= check_box_tag "topic[promise_ids][]", promise.id, @topic.promises.include?(promise) -%>
+        <%= promise.body %></td>
         </label>
-      </td>
     </tr>
     <% end %>
   </tbody>
