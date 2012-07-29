@@ -86,7 +86,7 @@ class TopicsController < ApplicationController
       session.delete :topic_step
       redirect_to @topic
     else
-      redirect_to edit_topic_url(@topic)
+      redirect_to edit_topic_step_url(@topic, step: @topic.current_step)
     end
   end
 
