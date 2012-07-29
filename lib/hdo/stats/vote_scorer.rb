@@ -22,14 +22,16 @@ module Hdo
         score = score_for(party)
 
         case score
-        when 0..33
+        when 0...33
           "#{party.name} har stemt mot"
-        when 34..66
+        when 33...66
           "#{party.name} har stemt både for og mot"
-        when 67..100
+        when 66..100
           "#{party.name} har stemt for"
-        else
+        when nil
           "#{party.name} har ikke deltatt i avstemninger om tema"
+        else
+          raise "unknown score: #{score.inspect}"
         end
       end
 
@@ -40,22 +42,24 @@ module Hdo
       end
 
       def compute
+        weight_sum = 0
         vote_percentages = @model.vote_connections.map do |vote_connection|
+          weight_sum += vote_connection.weight
           vote_percentages_for(vote_connection)
         end
 
-        party_percentages = Hash.new(0)
+        party_totals = Hash.new(0)
 
         vote_percentages.each do |data|
           data.each do |party, percent|
-            party_percentages[party] += percent
+            party_totals[party] += percent
           end
         end
 
         result = {}
 
-        party_percentages.each do |party, total|
-          result[party] = (total * 100 / vote_percentages.size)
+        party_totals.each do |party, total|
+          result[party] = (total * 100 / weight_sum)
         end
 
         result

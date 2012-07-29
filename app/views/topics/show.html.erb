@@ -15,7 +15,7 @@
   <div class="span2"><%= image_tag party.large_logo, alt: "#{party.name}s logo" %></div>
   <div class="span10">
     <h2><%= @topic.stats.text_for(party) %></h2>
-    <h3 class="pull-right">Poeng: <%= @topic.stats.score_for(party) %></h3>
+    <h3 class="pull-right"><%= @topic.stats.score_for(party) %>%</h3>
 
     <% if promises = @promises_by_party[party] %>
     <h5>I partiprogrammet har <%= party.name %> lovet følgende:</h5>
