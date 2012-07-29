@@ -17,7 +17,7 @@ end
 initial_fields_list = [
   "Offentlig forvaltning",
   "Familie og tro",
-  "Kultur",
+  "Kultur og frivillighet",
   "Helse og sosial",
   "Sjø og landbruk",
   "Energi og miljø",
