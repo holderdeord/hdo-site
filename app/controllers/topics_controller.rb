@@ -1,6 +1,7 @@
 class TopicsController < ApplicationController
   before_filter :authenticate_user!
   before_filter :fetch_topic, :only => [:show, :edit, :update, :destroy]
+  before_filter :set_disable_buttons
 
   def index
     @topics = Topic.all
@@ -22,6 +23,7 @@ class TopicsController < ApplicationController
 
   def new
     @topic = Topic.new
+    session[:topic_step] = steps.first
     fetch_categories
 
     respond_to do |format|
@@ -31,9 +33,10 @@ class TopicsController < ApplicationController
   end
 
   def edit
-    @topic.current_step = params[:step] || session[:topic_step]
+    session[:topic_step] = params[:step] || session[:topic_step] || steps.first
+    @topic_steps = steps
 
-    case @topic.current_step
+    case session[:topic_step]
     when 'categories'
       fetch_categories
     when 'promises'
@@ -45,7 +48,7 @@ class TopicsController < ApplicationController
     when 'fields'
       @fields = Field.all
     else
-      raise "unknown step: #{@topic.current_step.inspect}"
+      raise "unknown step: #{session[:topic_step].inspect}"
     end
   end
 
@@ -55,10 +58,9 @@ class TopicsController < ApplicationController
       if params[:finish_button]
         redirect_to @topic
       else
-        @topic.next_step!
-        session[:topic_step] = @topic.current_step
+        session[:topic_step] = next_step
 
-        redirect_to edit_topic_step_url(@topic, :step => @topic.current_step)
+        redirect_to edit_topic_step_url(@topic, :step => session[:topic_step])
       end
     else
       flash.alert = @topic.errors.full_messages.join(' ')
@@ -67,15 +69,15 @@ class TopicsController < ApplicationController
   end
 
   def update
-    @topic.current_step = session[:topic_step]
+    current_step = session[:topic_step]
 
     if params[:prev_button]
-      @topic.previous_step!
+      current_step = previous_step(current_step)
     else
-      @topic.next_step!
+      current_step = next_step(current_step)
     end
 
-    session[:topic_step] = @topic.current_step
+    session[:topic_step] = current_step
     set_vote_connections params
 
     # TODO: check result of save
@@ -85,7 +87,7 @@ class TopicsController < ApplicationController
       session.delete :topic_step
       redirect_to @topic
     else
-      redirect_to edit_topic_step_url(@topic, step: @topic.current_step)
+      redirect_to edit_topic_step_url(@topic, step: current_step)
     end
   end
 
@@ -103,6 +105,26 @@ class TopicsController < ApplicationController
     render 'votes', locals: { :topic => topic }
   end
 
+  def steps
+    %w[categories promises votes fields]
+  end
+
+  def next_step(step = steps.first)
+    steps[steps.index(step) + 1]
+  end
+
+  def previous_step(step)
+    steps[steps.index(step) - 1]
+  end
+
+  def first_step?(step)
+    step == steps.first
+  end
+
+  def last_step?(step)
+    step == steps.last
+  end
+
   private
 
   def fetch_categories
@@ -111,6 +133,11 @@ class TopicsController < ApplicationController
 
   def fetch_topic
     @topic = Topic.find(params[:id])
+  end
+
+  def set_disable_buttons
+    @disable_next = last_step?(params[:step]) or @topic && @topic.new_record?
+    @disable_prev = first_step?(params[:step])
   end
 
   def set_vote_connections(params)
@@ -127,5 +154,6 @@ class TopicsController < ApplicationController
                                       weight:  data[:weight]
     end
   end
+
 
 end

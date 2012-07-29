@@ -14,32 +14,6 @@ class Topic < ActiveRecord::Base
 
   friendly_id :title, :use => :slugged
 
-  attr_writer :current_step
-
-  def steps
-    %w[categories promises votes fields]
-  end
-
-  def current_step
-    @current_step || steps.first
-  end
-
-  def next_step!
-    self.current_step = steps[steps.index(current_step) + 1]
-  end
-
-  def previous_step!
-    self.current_step = steps[steps.index(current_step) - 1]
-  end
-
-  def first_step?
-    current_step == steps.first
-  end
-
-  def last_step?
-    current_step == steps.last
-  end
-
   def stats
     @stats ||= Hdo::Stats::VoteScorer.new(self)
   end
@@ -50,10 +24,6 @@ class Topic < ActiveRecord::Base
 
   def vote_against?(vote_id)
     vote_connections.any? { |vd| !vd.matches? && vd.vote_id == vote_id }
-  end
-
-  def current_step?(step)
-    step == self.current_step
   end
 
   def connection_for(vote)
