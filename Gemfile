@@ -16,6 +16,7 @@ end
 group :test do
   gem "rspec-rails", "~> 2.8"
   gem "selenium-webdriver", "~> 2.0"
+  gem "machinist", "~> 2.0"
 end
 
 group :development do
@@ -35,7 +36,6 @@ gem "jquery-tablesorter", ">= 0.0.5"
 gem "loadable_component", ">= 0.1.1"
 gem "devise", "~> 2.1.2"
 gem "twitter_bootstrap_form_for", "~> 1.0.5"
-gem "machinist", "~> 2.0"
 gem "will_paginate", "~> 3.0.3"
 gem "friendly_id", "~> 4.0.7"
 gem 'rack-cache', :require => 'rack/cache'
