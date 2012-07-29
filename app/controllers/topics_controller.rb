@@ -66,7 +66,8 @@ class TopicsController < ApplicationController
       end
     else
       flash.alert = @topic.errors.full_messages.join(' ')
-      redirect_to new_topic_path(@topic)
+      fetch_categories
+      render :action => :new
     end
   end
 
