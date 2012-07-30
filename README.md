@@ -42,3 +42,26 @@ Fetch representative images:
 These are not included in the repo by default.
 
     $ bundle exec rake images:fetch_representatives
+
+Running specs:
+==============
+
+To run all specs and buster.js tests:
+
+    $ bundle exec rake spec:all
+
+To run all Ruby specs:
+
+    $ bundle exec rake spec
+
+To run only JS tests:
+
+    $ bundle exec rake spec:js
+
+You can also run specific specs, i.e. model, controller or request specs with e.g.:
+
+    $ bundle exec rake spec:models
+
+Run affected specs automatically when files change:
+
+    $ bundle exec guard
