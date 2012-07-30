@@ -17,7 +17,13 @@ module Pages
     end
 
     def text
-      driver.find_element(tag_name: 'body').text
+      wait_until {
+        driver.find_element(tag_name: 'body')
+      }.text
+    end
+
+    def wait_until(timeout = 10, &blk)
+      Selenium::WebDriver::Wait.new(:timeout => timeout).until(&blk)
     end
   end
 end
