@@ -16,6 +16,7 @@ end
 group :test do
   gem "rspec-rails", "~> 2.8"
   gem "selenium-webdriver", "~> 2.0"
+  gem 'simplecov', :require => false
 end
 
 group :development do

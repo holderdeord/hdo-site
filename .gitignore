@@ -23,3 +23,6 @@
 # Ignore representative images
 /app/assets/images/representatives/*.jpg
 !/app/assets/images/representatives/unknown.jpg
+
+# SimpleCov
+coverage/
