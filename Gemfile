@@ -4,7 +4,7 @@ gem 'rails', '3.2.6'
 
 gem 'nokogiri', '~> 1.5.0'
 gem 'acts_as_tree', '~> 0.1.1'
-gem 'capistrano', '~> 2.11.2'
+gem 'capistrano', '~> 2.12.0'
 
 # Gems used only for assets and not required
 # in production environments by default.

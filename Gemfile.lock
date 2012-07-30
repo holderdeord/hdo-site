@@ -38,7 +38,7 @@ GEM
       rspec (>= 2.7.0)
     bcrypt-ruby (3.0.1)
     builder (3.0.0)
-    capistrano (2.11.2)
+    capistrano (2.12.0)
       highline
       net-scp (>= 1.0.0)
       net-sftp (>= 2.0.0)
@@ -202,7 +202,7 @@ PLATFORMS
 
 DEPENDENCIES
   acts_as_tree (~> 0.1.1)
-  capistrano (~> 2.11.2)
+  capistrano (~> 2.12.0)
   devise (~> 2.1.2)
   dragonfly (~> 0.9.12)
   friendly_id (~> 4.0.7)
