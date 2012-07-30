@@ -14,7 +14,6 @@ group :assets do
 end
 
 group :test do
-  gem "rspec-rails", "~> 2.8"
   gem "selenium-webdriver", "~> 2.0"
   gem "machinist", "~> 2.0"
   gem 'simplecov', :require => false
@@ -24,6 +23,10 @@ group :development do
   gem "thin"
   gem 'sqlite3' # TODO: same DB everywhere
   gem "rails-erd"
+end
+
+group :test, :development do
+  gem "rspec-rails", "~> 2.11"
 end
 
 group :production do
