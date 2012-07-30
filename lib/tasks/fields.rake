@@ -4,7 +4,7 @@ namespace :fields do
     initial_fields_list = [
       "Offentlig forvaltning",
       "Familie og tro",
-      "Kultur",
+      "Kultur og frivllighet",
       "Helse og sosial",
       "Sj\u00f8 og landbruk",
       "Energi og milj\u00f8",
