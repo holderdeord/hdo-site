@@ -11,7 +11,7 @@ end
 Vote.blueprint do
   issues { [Issue.make] }
   time { Time.now }
-  vote_results { Array.new(10) { VoteResult.make! } }
+  vote_results { Array.new(1) { VoteResult.make! } }
 end
 
 VoteConnection.blueprint do

@@ -14,6 +14,7 @@ class Topic < ActiveRecord::Base
 
   friendly_id :title, :use => :slugged
 
+  # TODO: rename to #scorer, #scores
   def stats
     @stats ||= Hdo::Stats::VoteScorer.new(self)
   end

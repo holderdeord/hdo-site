@@ -9,10 +9,6 @@ module Hdo
         @model = model
       end
 
-      def each(&blk)
-        data.each(&blk)
-      end
-
       def score_for(party)
         data[party]
       end

@@ -9,7 +9,9 @@ describe Hdo::Application do
   end
 
   it "should show a list of votes" do
-    2.times { Vote.make!(:for_count => 50, :against_count => 50, :absent_count => 69) }
+    2.times do
+      Vote.make!(:for_count => 50, :against_count => 50, :absent_count => 69)
+    end
 
     page = votes_page.get
     page.vote_count.should == 2
