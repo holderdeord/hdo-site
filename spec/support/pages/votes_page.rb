@@ -30,7 +30,7 @@ module Pages
 
     def vote_count
       text = vote_count_element.text
-      Integer(text[/\d+/])
+      text[/\d+/].to_i
     end
 
     private

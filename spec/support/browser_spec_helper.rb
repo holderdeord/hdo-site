@@ -1,19 +1,11 @@
-SimpleCov.command_name 'large'
-
 require 'selenium-webdriver'
 
-require 'large/pages/page'
-require 'large/pages/menu'
-require 'large/pages/front_page'
-require 'large/pages/votes_page'
+require_relative 'pages/page'
+require_relative 'pages/menu'
+require_relative 'pages/front_page'
+require_relative 'pages/votes_page'
 
-if ENV['TRAVIS']
-  ENV['DISPLAY'] = ":99"
-end
-
-Thread.abort_on_exception = true
-
-module SpecHelper
+module BrowserSpecHelper
   extend self
 
   def driver
@@ -25,7 +17,7 @@ module SpecHelper
     )
   end
 
-  def quit_driver
+  def stop
     $spec_driver.quit if $spec_driver
   end
 
@@ -45,9 +37,11 @@ module SpecHelper
     "127.0.0.1"
   end
 
-  def launch_app
+  def start
     timeout = 15
     port_to_use = port()
+
+    Thread.abort_on_exception = true
 
     $spec_app = Thread.new do
       Rack::Server.new(:app         => Hdo::Application,
@@ -63,16 +57,5 @@ module SpecHelper
 
   def port
     $spec_port ||= Selenium::WebDriver::PortProber.above(3000)
-  end
-end
-
-RSpec.configure do |config|
-  config.include SpecHelper
-
-  config.use_transactional_fixtures = false
-
-  config.before(:suite) { SpecHelper.launch_app }
-  config.after(:suite) do
-    SpecHelper.quit_driver
   end
 end
