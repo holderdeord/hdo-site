@@ -258,7 +258,7 @@ module Hdo
         dod = nil
       end
 
-      rec = Representative.find_or_create_by_external_id external_id_from(representative.external_id)
+      rec = Representative.find_or_create_by_external_id representative.external_id
       rec.update_attributes!(
         :party         => party,
         :first_name    => representative.first_name,
@@ -270,19 +270,6 @@ module Hdo
       )
 
       rec
-    end
-
-    ID_CONVERSIONS = {
-      '_AE' => 'Æ',
-      '_O'  => 'Ø',
-      '_A'  => 'Å'
-    }
-
-    def external_id_from(query_param)
-      q = query_param.dup
-      ID_CONVERSIONS.each { |k, v| q.gsub!(k, v) }
-
-      q
     end
 
     def import_proposition(xprop)

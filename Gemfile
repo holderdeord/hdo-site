@@ -43,7 +43,7 @@ gem 'dragonfly', '~>0.9.12'
 
 # data import
 # gem 'hdo-storting-importer', :path => "../hdo-storting-importer"
-gem 'hdo-storting-importer', "~> 0.0.3"
+gem 'hdo-storting-importer', "~> 0.0.4"
 
 # To use Jbuilder templates for JSON
 # gem 'jbuilder'
