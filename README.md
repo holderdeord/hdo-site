@@ -28,7 +28,7 @@ Getting started:
 Import data for development:
 ============================
 
-* A subset from data.stortinget.no:
+* A subset from [data.stortinget.no](http://data.stortinget.no):
 
         $ script/import dev
 

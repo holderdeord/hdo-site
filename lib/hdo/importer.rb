@@ -12,6 +12,8 @@ module Hdo
         @cmd = argv.shift
         @rest = argv
       end
+
+      @log = Hdo::StortingImporter.logger
     end
 
     def run
@@ -70,7 +72,7 @@ module Hdo
 
     def import_files
       @rest.each do |file|
-        print "\nimporting #{file.inspect}:"
+        print "\nimporting #{file.short_inspect}:"
 
         str = file == "-" ? STDIN.read : File.read(file)
         doc = Nokogiri.XML(str)
@@ -112,24 +114,27 @@ module Hdo
 
     def import_parties(parties)
       parties.each do |party|
+        @log.info "importing #{party.short_inspect}"
+
         p = Party.find_or_create_by_external_id party.external_id
         p.update_attributes! :name => party.name
 
-        print "."
       end
     end
 
     def import_committees(committees)
       committees.each do |committee|
+        @log.info "importing #{committee.short_inspect}"
+
         p = Committee.find_or_create_by_external_id committee.external_id
         p.update_attributes! :name => committee.name
-
-        print "."
       end
     end
 
     def import_categories(categories)
       categories.each do |category|
+        @log.info "importing #{category.short_inspect}"
+
         parent = Category.find_or_create_by_external_id category.external_id
         parent.name = category.name
         parent.main = true
@@ -142,22 +147,22 @@ module Hdo
 
           parent.children << child
         end
-
-        print "."
       end
     end
 
     def import_districts(districts)
       districts.each do |district|
+        @log.info "importing #{district.short_inspect}"
+
         p = District.find_or_create_by_external_id district.external_id
         p.update_attributes! :name => district.name
-
-        print "."
       end
     end
 
     def import_issues(issues)
       issues.each do |issue|
+        @log.info "importing #{issue.short_inspect}"
+
         committee = issue.committee && Committee.find_by_name!(issue.committee)
         categories = issue.categories.map { |e| Category.find_by_name! e }
 
@@ -173,8 +178,6 @@ module Hdo
           :committee      => committee,
           :categories     => categories
         )
-
-        print "."
       end
     end
 
@@ -185,35 +188,32 @@ module Hdo
     }
 
     def import_votes(votes)
-      votes.each do |xvote|
-        debug_on_error(xvote) { import_vote(xvote) }
-        print "."
+      votes.each do |e|
+        debug_on_error(e) { import_vote(e) }
       end
     end
 
     def import_representatives(reps)
       reps.each do |e|
         debug_on_error(e) { import_representative(e) }
-        print "."
       end
     end
 
     def import_propositions(propositions)
       propositions.each do |e|
         debug_on_error(e) { import_proposition(e) }
-        print "."
       end
     end
 
     def import_promises(promises)
       promises.each do |e|
         debug_on_error(e) { import_promise(e) }
-        print "."
       end
     end
-    
+
     def import_vote(xvote)
-      puts "importing vote: #{xvote.inspect}"
+      @log.info "importing #{xvote.short_inspect}"
+
       vote  = Vote.find_or_create_by_external_id xvote.external_id
       issue = Issue.find_by_external_id! xvote.external_issue_id
 
@@ -245,6 +245,8 @@ module Hdo
     end
 
     def import_representative(representative)
+      @log.info "importing #{representative.short_inspect}"
+
       party = Party.find_by_name!(representative.party)
       committees = representative.committees.map { |name| Committee.find_by_name!(name) }
       district = District.find_by_name!(representative.district)
@@ -258,7 +260,7 @@ module Hdo
         dod = nil
       end
 
-      rec = Representative.find_or_create_by_external_id external_id_from(representative.external_id)
+      rec = Representative.find_or_create_by_external_id representative.external_id
       rec.update_attributes!(
         :party         => party,
         :first_name    => representative.first_name,
@@ -272,20 +274,9 @@ module Hdo
       rec
     end
 
-    ID_CONVERSIONS = {
-      '_AE' => 'Æ',
-      '_O'  => 'Ø',
-      '_A'  => 'Å'
-    }
-
-    def external_id_from(query_param)
-      q = query_param.dup
-      ID_CONVERSIONS.each { |k, v| q.gsub!(k, v) }
-
-      q
-    end
-
     def import_proposition(xprop)
+      @log.info "importing #{xprop.short_inspect}"
+
       prop = Proposition.find_or_create_by_external_id(xprop.external_id)
 
       attributes = {
@@ -306,6 +297,8 @@ module Hdo
     end
 
     def import_promise(promise)
+      @log.info "importing #{promise.short_inspect}"
+
       Promise.create!(
         party: Party.find_by_external_id!(promise.party),
         general: promise.general?,
