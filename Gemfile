@@ -19,16 +19,19 @@ group :test do
   gem "database_cleaner", "~> 0.8.0"
   gem "loadable_component", ">= 0.1.1"
   gem 'simplecov', :require => false
+  gem 'guard', "~> 1.2.1"
+  gem 'guard-rspec', '~> 1.1'
+  gem 'guard-rails', "~> 0.1"
+end
+
+group :test, :development do
+  gem "rspec-rails", "~> 2.11"
 end
 
 group :development do
   gem "thin"
   gem 'sqlite3' # TODO: same DB everywhere
   gem "rails-erd"
-end
-
-group :test, :development do
-  gem "rspec-rails", "~> 2.11"
 end
 
 group :production do
