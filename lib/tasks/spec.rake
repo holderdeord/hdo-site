@@ -1,6 +1,4 @@
 unless ENV['RAILS_ENV'] == "production"
-  require 'rspec/core/rake_task'
-
   namespace :spec do
     desc 'Run small specs (lib, model, controller)'
     task :small => %w[spec:lib spec:models spec:controllers]
