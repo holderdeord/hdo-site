@@ -1,3 +1,5 @@
+SimpleCov.command_name 'large'
+
 require 'selenium-webdriver'
 
 require 'large/pages/page'
