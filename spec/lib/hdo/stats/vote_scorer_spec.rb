@@ -84,6 +84,14 @@ module Hdo
 
         scorer.stub(:score_for).with(p1).and_return 100
         scorer.text_for(p1).should == "#{p1.name} har stemt for"
+
+        scorer.stub(:score_for).with(p1).and_return nil
+        scorer.text_for(p1).should == "#{p1.name} har ikke deltatt i avstemninger om tema"
+      end
+
+      it 'raises an error if the score is invalid' do
+        scorer.stub(:score_for).and_return :foo
+        lambda { scorer.text_for(:foo) }.should raise_error
       end
 
     end
