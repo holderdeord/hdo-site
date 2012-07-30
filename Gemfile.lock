@@ -69,7 +69,7 @@ GEM
     friendly_id (4.0.7)
     gherkin (2.11.1)
       json (>= 1.4.6)
-    hdo-storting-importer (0.0.4)
+    hdo-storting-importer (0.0.5)
       aruba
       builder
       nokogiri
@@ -206,7 +206,7 @@ DEPENDENCIES
   devise (~> 2.1.2)
   dragonfly (~> 0.9.12)
   friendly_id (~> 4.0.7)
-  hdo-storting-importer (~> 0.0.4)
+  hdo-storting-importer (~> 0.0.5)
   highcharts-rails (~> 2.2)
   jquery-rails
   jquery-tablesorter (>= 0.0.5)
