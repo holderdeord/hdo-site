@@ -34,7 +34,7 @@ module SpecHelper
   end
 
   def front_page
-    @front_page ||= Pages::FrontPage.new(driver)
+    @front_page ||= Pages::FrontPage.new(driver, app_url)
   end
 
   def votes_page
