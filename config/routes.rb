@@ -3,7 +3,7 @@ Hdo::Application.routes.draw do
 
   resources :users
   resources :topics
-  get 'topics/:id/votes' => 'topics#show_votes', :as => :topic_votes
+  get 'topics/:id/votes' => 'topics#votes', :as => :topic_votes
   get 'topics/:id/edit/:step' => 'topics#edit', :as => :edit_topic_step
 
   resources :districts,       :only => [:index, :show]

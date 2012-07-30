@@ -88,7 +88,7 @@ class TopicsController < ApplicationController
     end
   end
 
-  def show_votes
+  def votes
     topic = Topic.find(params[:id])
     render 'votes', locals: { :topic => topic }
   end
