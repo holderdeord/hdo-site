@@ -1,10 +1,10 @@
 <%= link_to 'Tilbake', topic %>
 <div class="row-fluid">
   <div class="span12">
-    <h3><%= Vote.model_name.human(count: 2).capitalize %> om <%= topic.title.downcase %></h3>
+    <h3><%= Vote.model_name.human(count: 2).capitalize %> <%= Vote.human_attribute_name('about') %> <%= topic.title.downcase %></h3>
     <table class="table">
       <thead>
-        <th>Beskrivelse</th>
+        <th><%= VoteConnection.human_attribute_name 'description' %></th>
         <th>Hva har partiene stemt?</th>
         <th>Vedtatt</th>
       </thead>
@@ -13,7 +13,7 @@
           <tr>
             <td>
               <%= link_to connection.vote do %>
-                <%= connection.comment %>
+                <%= connection.description %>
               <% end %>
             </td>
             <td>

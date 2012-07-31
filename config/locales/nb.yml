@@ -110,6 +110,7 @@ nb:
         propositions: "Forslag"
         issues: "Saker"
         external_id: "Ekstern id"
+        about: "om"
       vote_result:
         result: "Stemme"
         voted_for: 'har stemt for.'
@@ -154,6 +155,7 @@ nb:
         matches: "Støtter tema?"
         comment: "Kommentar"
         weight: "Vekting"
+        description: "Beskrivelse"
       field:
         name: "Tittel"
         new: "Nytt område"

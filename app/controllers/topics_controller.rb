@@ -169,10 +169,11 @@ class TopicsController < ApplicationController
     params[:votes].each do |vote_id, data|
       next unless %w[for against].include? data[:direction]
 
-      @topic.vote_connections.create! vote_id: vote_id,
-                                      matches: data[:direction] == 'for',
-                                      comment: data[:comment],
-                                      weight:  data[:weight]
+      @topic.vote_connections.create! vote_id:      vote_id,
+                                      matches:      data[:direction] == 'for',
+                                      comment:      data[:comment],
+                                      weight:       data[:weight],
+                                      description:  data[:description]
     end
   end
 

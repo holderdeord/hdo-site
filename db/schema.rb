@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120728200104) do
+ActiveRecord::Schema.define(:version => 20120731222230) do
 
   create_table "categories", :force => true do |t|
     t.string   "external_id"
@@ -213,10 +213,11 @@ ActiveRecord::Schema.define(:version => 20120728200104) do
     t.boolean  "matches"
     t.integer  "vote_id"
     t.integer  "topic_id"
-    t.datetime "created_at",                :null => false
-    t.datetime "updated_at",                :null => false
-    t.integer  "weight",     :default => 1
+    t.datetime "created_at",                 :null => false
+    t.datetime "updated_at",                 :null => false
+    t.integer  "weight",      :default => 1
     t.string   "comment"
+    t.string   "description"
   end
 
   add_index "vote_connections", ["vote_id", "topic_id"], :name => "index_vote_connections_on_vote_id_and_topic_id"
