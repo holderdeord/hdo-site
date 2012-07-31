@@ -7,6 +7,15 @@ describe FieldsController do
     sign_in @user
   end
 
+  it 'can show index' do
+    field = Field.make!
+
+    get :index
+
+    assigns(:fields).should == [field]
+    assigns(:topics).should_not be_nil
+  end
+
   it 'can show a field' do
     field = Field.make!
 
