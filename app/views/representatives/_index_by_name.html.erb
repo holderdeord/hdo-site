@@ -1,0 +1,13 @@
+<div class="row-fluid">
+  <h4 class="span4"><%= Representative.human_attribute_name :name %></h4>
+  <h4 class="span4"><%= Representative.human_attribute_name :party %></h4>
+  <h4 class="span4"><%= Representative.human_attribute_name :district %></h4>
+</div>
+
+<% representatives.each do |rep| %>
+<div class="row-fluid">
+  <div class="span4"><%= link_to rep.display_name, rep %></div>
+  <div class="span4"><%= link_to rep.party.name, rep.party %></div>
+  <div class="span4"><%= link_to rep.district.name, rep.district %></div>
+</div>
+<% end %>

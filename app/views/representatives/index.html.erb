@@ -1,0 +1,35 @@
+<div class="row-fluid">
+  <div class="well">
+    <select id="sort">
+      <option value="name"><%= t 'app.group.by_name' %></option>
+      <option value="party"><%= t 'app.group.by_party' %></option>
+      <option value="district"><%= t 'app.group.by_district' %></option>
+    </select>
+
+    <div class="pull-right">
+      <%= t('app.counts.representative', count: @representatives.size).html_safe %>
+    </div>
+  </div>
+</div>
+
+<div class="row-fluid" id="representatives">
+  <%= render partial: 'index_by_name', locals: { representatives: @representatives } %>
+</div>
+
+<%= content_for :document_ready do %>
+<script>
+$(document).ready(function() {
+  var index = HDO.representativeIndex.create({
+    sortSelector: '#sort',
+    resultSelector: '#representatives',
+    paths: {
+      name: <%= representatives_by_name_path.to_json.html_safe %>,
+      party: <%= representatives_by_party_path.to_json.html_safe %>,
+      district: <%= representatives_by_district_path.to_json.html_safe %>
+    }
+  });
+
+  index.init();
+});
+</script>
+<% end %>

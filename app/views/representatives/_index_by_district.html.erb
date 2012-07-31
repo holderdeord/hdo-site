@@ -1,0 +1,17 @@
+<% groups.each do |district, representatives| %>
+  <h3><%= district.name %></h3>
+  <div class="row-fluid">
+    <h4 class="span6"><%= Representative.human_attribute_name :name %></h4>
+    <h4 class="span6"><%= Representative.human_attribute_name :party %></h4>
+  </div>
+
+  <% representatives.each do |rep| %>
+  <div class="row-fluid">
+    <div class="span6"><%= link_to rep.display_name, rep %></div>
+    <div class="span6"><%= link_to rep.party.name, rep.party %></div>
+  </div>
+  <% end %>
+
+  <hr class="soften">
+<% end %>
+

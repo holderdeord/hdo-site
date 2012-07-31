@@ -258,7 +258,7 @@ nb:
       promises:
         one: "Viser <strong>1</strong> løfte."
         other: "Viser <strong>%{count}</strong> løfter."
-    sort:
-      by_party: 'Sorter etter parti'
-      by_district: 'Sorter etter fylke'
-      by_name: 'Sorter etter navn'
+    group:
+      by_party: 'Grupper etter parti'
+      by_district: 'Grupper etter fylke'
+      by_name: 'Grupper etter navn'

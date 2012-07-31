@@ -48,6 +48,11 @@
             </a>
             <ul class="dropdown-menu">
               <li>
+              <%= link_to representatives_path do %>
+              <i class="icon-user"></i> <%= Representative.model_name.human(count: 2).capitalize %>
+              <% end %>
+              </li>
+              <li>
               <%= link_to votes_path do %>
                 <i class="icon-envelope"></i> <%= Vote.model_name.human(count: 2).capitalize %>
               <% end %>

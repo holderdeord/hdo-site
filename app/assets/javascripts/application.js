@@ -15,5 +15,6 @@
 //= require twitter/bootstrap
 //= require highcharts
 //= require jquery-tablesorter
+//= require_tree ./lib
 //= require_tree .
 

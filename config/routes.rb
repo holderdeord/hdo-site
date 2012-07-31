@@ -18,7 +18,10 @@ Hdo::Application.routes.draw do
   resources :issues, :only => [:index, :show]
   get 'issues/page/:page' => 'issues#index'
 
-  resources :representatives, :only => [:show]
+  resources :representatives, :only => [:index, :show]
+  get 'representatives/index/name'     => 'representatives#index_by_name', :as => :representatives_by_name
+  get 'representatives/index/party'    => 'representatives#index_by_party', :as => :representatives_by_party
+  get 'representatives/index/district' => 'representatives#index_by_district', :as => :representatives_by_district
   get 'representatives/:id/page/:page' => 'representatives#show'
 
   resources :votes, :only => [:index, :show]
