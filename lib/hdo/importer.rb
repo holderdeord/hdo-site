@@ -299,10 +299,17 @@ module Hdo
     def import_promise(promise)
       @log.info "importing #{promise.short_inspect}"
 
+      categories = Category.where(name: promise.categories)
+      not_found = promise.categories - categories.map(&:name)
+      
+      if not_found.any?
+        raise "could not find category: #{not_found.inspect}"
+      end
+
       Promise.create!(
         party: Party.find_by_external_id!(promise.party),
         general: promise.general?,
-        categories: Category.where(name: promise.categories),
+        categories: categories,
         source: promise.source,
         body: promise.body
       )
@@ -311,7 +318,7 @@ module Hdo
     def debug_on_error(obj, &blk)
       yield
     rescue
-      puts obj
+      p obj
       raise
     end
 
