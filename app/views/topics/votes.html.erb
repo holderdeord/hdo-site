@@ -5,8 +5,9 @@
     <table class="table">
       <thead>
         <th><%= VoteConnection.human_attribute_name 'description' %></th>
-        <th>Hva har partiene stemt?</th>
-        <th>Vedtatt</th>
+        <th><%= Topic.human_attribute_name :party_votes_header %></th>
+        <th><%= Vote.human_attribute_name :enacted %></th>
+        <th><%= VoteConnection.human_attribute_name :weight %></th>
       </thead>
       <tbody>
         <% topic.vote_connections.each do |connection| %>
@@ -36,6 +37,7 @@
                 <%= connection.vote.enacted_text %>
               </span>
             </td>
+            <td><%= connection.weight %></td>
           </tr>
         <% end %>
       </tbody>

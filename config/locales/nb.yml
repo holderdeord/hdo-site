@@ -151,6 +151,7 @@ nb:
         promises: "Løfter"
         votes: "Avstemninger"
         fields: "Områder"
+        party_votes_header: "Hvordan har partiene stemt?"
       vote_connection:
         matches: "Støtter tema?"
         comment: "Kommentar"
