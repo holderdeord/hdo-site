@@ -72,7 +72,7 @@ module Hdo
 
     def import_files
       @rest.each do |file|
-        print "\nimporting #{file.short_inspect}:"
+        print "\nimporting #{file}:"
 
         str = file == "-" ? STDIN.read : File.read(file)
         doc = Nokogiri.XML(str)
