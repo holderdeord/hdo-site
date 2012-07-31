@@ -2,6 +2,12 @@ Prototype for holderdeord.no.
 
 [![Build Status](https://secure.travis-ci.org/holderdeord/hdo-site.png)](http://travis-ci.org/holderdeord/hdo-site)
 
+IRC channel
+===========
+
+Questions? Join us on [#holderdeord on irc.freenode.net](irc://irc.freenode.net/holderdeord)!
+
+
 Development environment on Debian/Ubuntu
 ========================================
 
@@ -22,7 +28,7 @@ Getting started:
     $ git clone git://github.com/holderdeord/hdo-site.git
     $ cd hdo-site
     $ [sudo] bundle install
-    $ rake db:setup
+    $ bundle exec rake db:setup
     $ bundle exec rails server
 
 Import data for development:
