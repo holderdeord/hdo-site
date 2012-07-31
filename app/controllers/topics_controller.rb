@@ -1,6 +1,6 @@
 class TopicsController < ApplicationController
   before_filter :authenticate_user!
-  before_filter :fetch_topic, :only => [:show, :edit, :update, :destroy]
+  before_filter :fetch_topic, :only => [:show, :edit, :update, :destroy, :votes]
 
   STEPS = %w[categories promises votes fields]
 
@@ -89,10 +89,8 @@ class TopicsController < ApplicationController
   end
 
   def votes
-    topic = Topic.find(params[:id])
-    render 'votes', locals: { :topic => topic }
+    render 'votes', locals: { :topic => @topic }
   end
-
 
   private
 
@@ -130,7 +128,7 @@ class TopicsController < ApplicationController
 
   def edit_votes
     votes = Vote.includes(:issues, :propositions, :vote_connections).select { |e| e.issues.all?(&:processed?) }
-      @votes_and_connections = votes.map { |vote| [vote, @topic.connection_for(vote)] }.sort_by { |vote, connection| connection ? 0 : 1 }
+    @votes_and_connections = votes.map { |vote| [vote, @topic.connection_for(vote)] }.sort_by { |vote, connection| connection ? 0 : 1 }
   end
 
   def edit_fields
