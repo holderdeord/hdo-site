@@ -11,8 +11,4 @@ class Promise < ActiveRecord::Base
   def general_text
     I18n.t(general? ? 'app.yes' : 'app.no')
   end
-
-  def category_names
-    categories.map(&:name)
-  end
 end
