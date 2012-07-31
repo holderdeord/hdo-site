@@ -12,7 +12,7 @@ class Field < ActiveRecord::Base
 
   image_accessor :image
 
-  def default_image 
+  def default_image
     "#{Rails.root}/app/assets/images/field_icons/snakkeboble_venstre.png"
   end
 
