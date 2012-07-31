@@ -46,7 +46,7 @@ class Representative < ActiveRecord::Base
     Hdo::Stats::RepresentativeCounts.new self
   end
 
-  def default_image 
+  def default_image
     "#{Rails.root}/app/assets/images/representatives/unknown.jpg"
   end
 end

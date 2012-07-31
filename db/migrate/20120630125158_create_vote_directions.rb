@@ -7,7 +7,7 @@ class CreateVoteDirections < ActiveRecord::Migration
 
       t.timestamps
     end
-    
+
     add_index :vote_directions, [:vote_id, :topic_id]
   end
 end

@@ -1,2 +1,2 @@
 <h1><%= Field.human_attribute_name :edit %></h1>
-<%= render :partial => 'form' %>
+<%= render partial: 'form', locals: { field: @field } %>
