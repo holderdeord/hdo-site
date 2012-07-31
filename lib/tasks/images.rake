@@ -2,7 +2,6 @@ require 'net/http'
 require 'uri'
 
 namespace :images do
-
   desc 'Fetch representatives images from stortinget.no'
   task :fetch_representatives => :environment do
     rep_image_path = Rails.root.join("app/assets/images/representatives")
@@ -66,5 +65,6 @@ namespace :images do
     end
   end
 
+  task :all => %w[images:fetch_representatives images:save_party_logos]
 end
 
