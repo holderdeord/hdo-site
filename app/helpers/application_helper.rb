@@ -16,11 +16,15 @@ module ApplicationHelper
   def active_status_for(*what)
     if what.include?(controller_name.to_sym) || what.include?("#{controller_name}_#{controller.action_name}".to_sym)
       'active'
-    end  
+    end
   end
 
   def spinner_tag
-    image_tag 'spinner.gif', id: 'spinner', alt: 'Loading...', style: 'display: none';
+    str = '<div style="text-align: center;">' +
+          image_tag('spinner.gif', id: 'spinner', alt: 'Loading...', style: 'display: none;') +
+          '</div>'
+
+    str.html_safe
   end
 
 end

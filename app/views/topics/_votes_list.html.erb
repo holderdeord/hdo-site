@@ -1,0 +1,40 @@
+<% votes_and_connections.each do |vote, connection| %>
+  <div class="row-fluid vote">
+    <div class="span2">
+      <a data-toggle="collapse" data-target="#proposition-body-<%= vote.id %>"><%= t 'app.expand' %></a>
+    </div>
+
+    <div class="span1"><h5><%= vote.external_id %></h5></div>
+
+    <div class="span5">
+      <h4><%= link_to vote.subject, vote, :target => 'topic_new' %></h4>
+      <ul>
+        <% vote.issues.each do |issue| %>
+          <li><%= link_to issue.summary, issue %></li>
+        <% end %>
+      </ul>
+    </div>
+
+    <div class="span2">
+      <%= select_tag "votes[#{vote.id}][direction]", vote_options_for(vote, connection) %>
+
+      <label>
+        <%= VoteConnection.human_attribute_name :weight %>
+        <%= select_tag "votes[#{vote.id}][weight]", options_for_select(VoteConnection::WEIGHTS, (connection && connection.weight || 1)) %>
+      </label>
+
+      <label>
+        <%= VoteConnection.human_attribute_name :comment %>
+        <%= text_area_tag "votes[#{vote.id}][comment]", connection && connection.comment %>
+      </label>
+    </div>
+  </div>
+
+  <div class="row-fluid collapse" id="proposition-body-<%= vote.id %>">
+    <div class="span10">
+      <% vote.propositions.each do |prop| %>
+        <%= prop.body.html_safe %>
+      <% end %>
+    </div>
+  </div>
+<% end %>

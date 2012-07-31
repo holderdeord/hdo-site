@@ -1,6 +1,6 @@
 class TopicsController < ApplicationController
   before_filter :authenticate_user!
-  before_filter :fetch_topic, :only => [:show, :edit, :update, :destroy, :votes]
+  before_filter :fetch_topic, :only => [:show, :edit, :update, :destroy, :votes, :votes_search]
 
   STEPS = %w[categories promises votes fields]
 
@@ -92,6 +92,36 @@ class TopicsController < ApplicationController
     render 'votes', locals: { :topic => @topic }
   end
 
+  def votes_search
+    # we really need a search index for this.
+    votes = Vote.includes(:issues, :propositions, :vote_connections)
+
+    case params[:filter]
+    when 'selected-categories'
+      votes.select! do |v|
+        v.issues.any? { |i| (i.categories & @topic.categories).any? }
+      end
+    when 'not-connected'
+      votes.select! { |v| v.vote_connections.empty? }
+    else
+      # ignore 'all' or others
+    end
+
+    if params[:keyword].present?
+      votes.select! do |v|
+        v.propositions.any? { |e| e.plain_body.include? params[:keyword] } ||
+          v.issues.any? { |e| e.description.include? params[:keyword] }
+      end
+    end
+
+    # remove already connected votes
+    votes -= @topic.vote_connections.map { |e| e.vote }
+    votes.select! { |e| e.issues.all?(&:processed?) }
+    votes.map! { |vote| [vote, nil] }
+
+    render partial: 'votes_list', locals: { votes_and_connections: votes }
+  end
+
   private
 
   def step_after(step = STEPS.first)
@@ -127,8 +157,7 @@ class TopicsController < ApplicationController
   end
 
   def edit_votes
-    votes = Vote.includes(:issues, :propositions, :vote_connections).select { |e| e.issues.all?(&:processed?) }
-    @votes_and_connections = votes.map { |vote| [vote, @topic.connection_for(vote)] }.sort_by { |vote, connection| connection ? 0 : 1 }
+    @votes_and_connections = @topic.vote_connections.map { |e| [e.vote, e] }
   end
 
   def edit_fields

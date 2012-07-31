@@ -1,50 +1,50 @@
-<% @votes_and_connections.each do |vote, connection| %>
+<h3>
+  Koblede avstemninger
+  <small class="pull-right"><%= t('app.counts.vote', count: @votes_and_connections.size).html_safe %></small>
+</h3>
+
 <div class="vote-container">
-  <div class="row-fluid vote">
-    <div class="span2">
-      <a data-toggle="collapse" data-target="#proposition-body-<%= vote.id %>"><%= t 'app.expand' %></a>
-    </div>
+  <%= render partial: 'votes_list', locals: { votes_and_connections: @votes_and_connections} %>
+</div>
 
-    <div class="span1"><h5><%= vote.external_id %></h5></div>
+<div class="well form-horizontal">
+  <h3>Finn avstemninger</h3>
 
-    <div class="span5">
-      <h4><%= link_to vote.subject, vote, :target => 'topic_new' %></h4>
-      <ul>
-        <% vote.issues.each do |issue| %>
-          <li><%= link_to issue.summary, issue %></li>
-        <% end %>
-      </ul>
-    </div>
-
-    <div class="span2">
-      <%= select_tag "votes[#{vote.id}][direction]", vote_options_for(vote, connection) %>
-
-      <label>
-        <%= VoteConnection.human_attribute_name :weight %>
-        <%= select_tag "votes[#{vote.id}][weight]", options_for_select(VoteConnection::WEIGHTS, (connection && connection.weight || 1)) %>
-      </label>
-
-      <label>
-        <%= VoteConnection.human_attribute_name :comment %>
-        <%= text_area_tag "votes[#{vote.id}][comment]", connection && connection.comment %>
-      </label>
-    </div>
+  <div class="control-group">
+    <label for="keyword">Nøkkelord:</label>
+    <input id="keyword" type="text" class="input-medium search-query">
   </div>
 
-  <div class="row-fluid collapse" id="proposition-body-<%= vote.id %>">
-    <div class="span10">
-      <% vote.propositions.each do |prop| %>
-        <%= prop.body.html_safe %>
-      <% end %>
-    </div>
+  <div class="control-group">
+    <label for="filter">Filter:</label>
+
+    <select id="filter">
+      <option value="selected-categories">Valgte kategorier</option>
+      <option value="not-connected">Ukoblet</option>
+      <option value="all">Alle</option>
+    </select>
+  </div>
+
+  <div class="control-group">
+    <button id="reset" type="submit" class="btn btn-warning">Reset</button>
+    <button id="fetch-votes" type="submit" class="btn btn-info">Fetch votes</button>
   </div>
 </div>
-<% end %>
+
+<h3>
+  Søkeresultat
+  <small class="pull-right" id="result-count"></small>
+</h3>
+
+
+<%= spinner_tag %>
+<div class="vote-container" id="result"></div>
 
 <%= content_for :document_ready do %>
 <script type="text/javascript" charset="utf-8">
   $(document).ready(function() {
-    $(".vote").collapse()
+    var url = <%= topic_votes_search_path(@topic).to_json.html_safe %>;
+    HDO.voteSearcher.create(url).init();
   });
 </script>
 <% end %>

@@ -37,16 +37,10 @@
         return;
       }
 
-      $("#spinner").show();
-
       $.ajax({
         url: path,
         type: "GET",
         dataType: "html",
-
-        complete: function () {
-          $("#spinner").hide();
-        },
 
         success: function (html) {
           cache[path] = html;
