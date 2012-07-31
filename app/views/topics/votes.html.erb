@@ -19,7 +19,7 @@
             <td>
               <% if connection.vote.personal? %>
                 <% stats = connection.vote.stats %>
-                <% stats.party_votes.each do |party, vote_counts| %>
+                <% Party.all(:order => :name).each do |party, vote_counts = stats.party_votes[party]| %>
                   <p>
                     <%= image_tag party.image.thumb('35x35').strip.url, alt: "#{party.name}s logo" %>
                     <strong><%= party.name.capitalize %></strong>
