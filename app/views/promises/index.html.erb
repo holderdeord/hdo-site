@@ -2,6 +2,46 @@
   <h1><%= Promise.model_name.human(count: 2).capitalize %></h1>
 </div>
 
-<p class="pull-right"><%= page_entries_info @promises %></p>
-<%= render partial: "shared/promises_table", locals: { promises: @promises, show_party: true, show_general: true, show_source: true } %>
-<%= will_paginate @promises %>
+<div class="container-fluid">
+  <div class="row-fluid">
+    <div class="span3">
+      <!-- LEFT COLUMN -->
+      <br><h2><%= Field.model_name.human(count: 2).capitalize %></h2>
+      <div id="fieldsAccordion" class="accordion">
+        <% @fields.each do |field| %>
+          <div class="accordion-group">
+            <div class="accordion-heading">
+              <a class="accordion-toggle" data-parent="fieldsAccordion" data-toggle="collapse" 
+                href="#topicsFor<%= field.id %>" id="<%= field.name %>"><%= field.name %></a>
+            </div>
+
+            <div id ="topicsFor<%= field.id %>" class="accordion-body collapse" style="height: 0px;">
+              <div class="accordion-inner">
+                <% field.topics.each do |topic| %>
+                  <a href=""><%= topic.title  %></a>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="span7">
+      <!-- party logos -->
+      <ul class="nav nav-tabs" id="logos">
+        <% Party.all.each do |party| %>
+          <li><a href="#"><%= image_tag party.image.thumb('40x38#').strip.url, alt: party.name %>&nbsp;&nbsp;&nbsp;</a></li>
+        <% end %>
+      </ul>
+      
+      <div class="row-fluid">
+        <div class="span8">
+          <p id="warning"></p>
+        </div>
+        <div id="what"></div>
+    </div>
+  </div>
+</div>
+
+<%= javascript_include_tag "promises" %>

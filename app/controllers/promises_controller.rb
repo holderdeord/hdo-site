@@ -5,12 +5,15 @@ class PromisesController < ApplicationController
 
   def index
     @promises = Promise.includes(:categories, :party).order(:party_id).paginate(:page => params[:page])
-
+    @fields = Field.all
+    @parties = Party.all
+    
     respond_to do |format|
       format.html
       format.json { render json: @promises }
-      format.xml  { render xml:  @promises }
+      format.xml  { render xml:  @promises }    
     end
+
   end
 
   def show
