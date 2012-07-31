@@ -93,30 +93,14 @@ class TopicsController < ApplicationController
   end
 
   def votes_search
-    # we really need a search index for this.
-    votes = Vote.includes(:issues, :propositions, :vote_connections)
-
-    case params[:filter]
-    when 'selected-categories'
-      votes.select! do |v|
-        v.issues.any? { |i| (i.categories & @topic.categories).any? }
-      end
-    when 'not-connected'
-      votes.select! { |v| v.vote_connections.empty? }
-    else
-      # ignore 'all' or others
-    end
-
-    if params[:keyword].present?
-      votes.select! do |v|
-        v.propositions.any? { |e| e.plain_body.include? params[:keyword] } ||
-          v.issues.any? { |e| e.description.include? params[:keyword] }
-      end
-    end
+    votes = Vote.naive_search(
+      params[:filter],
+      params[:keyword],
+      @topic.categories
+    )
 
     # remove already connected votes
     votes -= @topic.vote_connections.map { |e| e.vote }
-    votes.select! { |e| e.issues.all?(&:processed?) }
     votes.map! { |vote| [vote, nil] }
 
     render partial: 'votes_list', locals: { votes_and_connections: votes }
