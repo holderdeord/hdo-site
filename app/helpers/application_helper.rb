@@ -14,8 +14,6 @@ module ApplicationHelper
   end
 
   def active_status_for(*what)
-    logger.info [what, controller_name, controller.action_name]
-
     if what.include?(controller_name.to_sym) || what.include?("#{controller_name}_#{controller.action_name}".to_sym)
       'active'
     end  
