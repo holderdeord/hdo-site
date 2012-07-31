@@ -16,4 +16,4 @@
 //= require highcharts
 //= require jquery-tablesorter
 //= require_tree .
-$('.dropdown-toggle').dropdown();
+

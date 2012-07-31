@@ -65,3 +65,4 @@
     }
   };
 }(HDO, Highcharts));
+

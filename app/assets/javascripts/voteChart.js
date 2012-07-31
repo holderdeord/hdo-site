@@ -53,7 +53,7 @@
         },
         series: [{
           data: [
-            { y: this.data.approve,     color: '#89A54E' },
+            { y: this.data.approve, color: '#89A54E' },
             { y: this.data.against, color: '#AA4643'},
             { y: this.data.absent,  color: 'gray'}
           ]
