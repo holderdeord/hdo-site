@@ -2,5 +2,5 @@
   <h1><%= @district.name %> <small class="pull-right"><%= @district.external_id %></small></h1>
 </div>
 
-<%= render partial: "shared/representatives_table", locals: { representatives: @district.representatives, show_party: true } %>
+<%= render "shared/representatives_table", locals: { representatives: @district.representatives, show_party: true } %>
 

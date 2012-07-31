@@ -43,7 +43,7 @@ class PromisesController < ApplicationController
         format.json { render json: @promise, status: :created, location: @promise }
         format.xml  { render xml:  @xml,     status: :created, location: @promise }
       else
-        format.html { render action: "new" }
+        format.html { render :new }
         format.json { render json: @promise.errors, status: :unprocessable_entity }
         format.xml  { render xml:  @promise.errors, status: :unprocessable_entity }
       end
@@ -57,7 +57,7 @@ class PromisesController < ApplicationController
         format.json { head :no_content }
         format.xml  { head :no_content }
       else
-        format.html { render action: "edit" }
+        format.html { render :edit }
         format.json { render json: @promise.errors, status: :unprocessable_entity }
         format.xml  { render xml:  @promise.errors, status: :unprocessable_entity }
       end
