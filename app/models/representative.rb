@@ -2,6 +2,9 @@ class Representative < ActiveRecord::Base
   extend FriendlyId
   include Hdo::ModelHelpers::HasFallbackImage
 
+  attr_accessible :party, :first_name, :last_name, :committees,
+                  :district, :date_of_birth, :date_of_death
+
   belongs_to :party
   belongs_to :district
 

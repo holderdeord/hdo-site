@@ -1,6 +1,8 @@
 class Vote < ActiveRecord::Base
   extend FriendlyId
 
+  attr_accessible :for_count, :against_count, :absent_count, :enacted, :subject, :time
+
   has_and_belongs_to_many :issues
   validates_length_of :issues, :minimum => 1
   validates_presence_of :time

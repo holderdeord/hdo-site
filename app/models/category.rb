@@ -1,6 +1,8 @@
 class Category < ActiveRecord::Base
   extend FriendlyId
 
+  attr_accessible :name
+
   has_and_belongs_to_many :issues, :order => "last_update DESC"
   has_and_belongs_to_many :promises
   has_and_belongs_to_many :topics
