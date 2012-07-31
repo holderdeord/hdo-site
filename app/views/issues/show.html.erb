@@ -61,4 +61,4 @@
 </ul>
 
 <h2><%= Vote.model_name.human(count: 2).capitalize %></h2>
-<%= render "shared/votes_summary_table", locals: {votes: @issue.votes, show_issues: false }%>
+<%= render partial: "shared/votes_summary_table", locals: {votes: @issue.votes, show_issues: false }%>

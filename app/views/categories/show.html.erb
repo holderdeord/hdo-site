@@ -27,8 +27,8 @@
 </div>
 
 <h2><%= Promise.model_name.human(count: 2).capitalize %></h2>
-<%= render "shared/promises_table", locals: { promises: @category.promises, show_party: true, show_general: true, show_source: true } %>
+<%= render partial: "shared/promises_table", locals: { promises: @category.promises, show_party: true, show_general: true, show_source: true } %>
 
 <h2><%= Issue.model_name.human(count: 2).capitalize %></h2>
-<%= render "shared/issue_table", locals: { issues: @category.issues } %>
+<%= render partial: "shared/issue_table", locals: { issues: @category.issues } %>
 

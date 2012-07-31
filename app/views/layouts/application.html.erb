@@ -21,7 +21,7 @@
     </script>
   </head>
   <body>
-    <%= render 'layouts/navigation' %>
+    <%= render partial: 'layouts/navigation' %>
 
     <div id="hdo-content" class="container">
       <% if flash.notice %>
@@ -44,8 +44,8 @@
     </div> <!-- /container -->
 
     <%= javascript_include_tag "application" %>
-    <%= render 'layouts/ga' if Rails.env == 'production'  %>
-    <%= render 'layouts/social'%>
+    <%= render partial: 'layouts/ga' if Rails.env == 'production'  %>
+    <%= render partial: 'layouts/social'%>
     <%= yield :document_ready %>
     </body>
 </html>

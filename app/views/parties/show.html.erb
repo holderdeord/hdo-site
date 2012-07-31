@@ -10,14 +10,14 @@
         <dt><%= Representative.model_name.human(count: 2).capitalize %></dt>
         <dd><%= @party.representatives.count %> (<%= @party.percent_of_representatives %>%)</dd>
       </dl>
-      <%= render "representative_search", locals: { representatives: @party.representatives } %>
+      <%= render partial: "representative_search", locals: { representatives: @party.representatives } %>
     </div>
 
     <div class="span8">
       <h3><%= Representative.model_name.human(count: 2).capitalize %></h3>
-      <%= render "representative_gallery", locals: { representatives: @party.representatives } %>
+      <%= render partial: "representative_gallery", locals: { representatives: @party.representatives } %>
       <h3><%= Promise.model_name.human(count: 2).capitalize %></h3>
-      <%= render "shared/promises_table", locals: { promises: @party.promises, show_party: false, show_general: false, show_source: false,} %>
+      <%= render partial: "shared/promises_table", locals: { promises: @party.promises, show_party: false, show_general: false, show_source: false,} %>
     </div>
   </div>
 </div>

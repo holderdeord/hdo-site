@@ -1,8 +1,8 @@
 <div id="representative-carousel" class="carousel slide">
   <div class="carousel-inner">
     <% representatives.each_slice(4).with_index do |representative_group, index| %>
-      <%= render 'active_carousel_item', locals: { representative_group: representative_group } if index == 0 %>
-      <%= render 'lazy_carousel_item', locals: { representative_group: representative_group } unless index == 0 %>
+      <%= render partial: "active_carousel_item", locals: { representative_group: representative_group } if index == 0 %>
+      <%= render partial: "lazy_carousel_item", locals: { representative_group: representative_group } unless index == 0 %>
     <% end %>
   </div>
 

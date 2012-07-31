@@ -49,7 +49,7 @@ class FieldsController < ApplicationController
         format.html { redirect_to @field, notice: 'Field was successfully created.' }
         format.json { render json: @field, status: :created, location: @field }
       else
-        format.html { render :new }
+        format.html { render action: "new" }
         format.json { render json: @field.errors, status: :unprocessable_entity }
       end
     end
@@ -63,7 +63,7 @@ class FieldsController < ApplicationController
         format.html { redirect_to @field, notice: 'Field was successfully updated.' }
         format.json { head :no_content }
       else
-        format.html { render :edit }
+        format.html { render action: "edit" }
         format.json { render json: @field.errors, status: :unprocessable_entity }
       end
     end

@@ -36,7 +36,7 @@
 
 <% if @vote.propositions.any? %>
   <h2><%= Proposition.model_name.human(count: @vote.propositions.size).capitalize %></h2>
-  <%= render "shared/propositions_table", locals: { propositions: @vote.propositions } %>
+  <%= render partial: "shared/propositions_table", locals: { propositions: @vote.propositions } %>
 <% end %>
 
 <h2>stortinget.no</h2>

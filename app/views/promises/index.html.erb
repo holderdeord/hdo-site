@@ -3,5 +3,5 @@
 </div>
 
 <p class="pull-right"><%= page_entries_info @promises %></p>
-<%= render "shared/promises_table", locals: { promises: @promises, show_party: true, show_general: true, show_source: true } %>
+<%= render partial: "shared/promises_table", locals: { promises: @promises, show_party: true, show_general: true, show_source: true } %>
 <%= will_paginate @promises %>

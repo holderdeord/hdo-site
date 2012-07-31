@@ -4,6 +4,6 @@
 
 <p class="pull-right"><%= page_entries_info @issues %></p>
 
-<%= render "shared/issue_table", locals: { issues: @issues } %>
+<%= render partial: "shared/issue_table", locals: { issues: @issues } %>
 <%= will_paginate @issues %>
 
