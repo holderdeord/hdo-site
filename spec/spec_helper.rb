@@ -6,6 +6,7 @@ SimpleCov.start 'rails'
 require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
 require 'rspec/autorun'
+require 'database_cleaner'
 
 if ENV['TRAVIS']
   ENV['DISPLAY'] = ":99"

@@ -1,4 +1,5 @@
 require 'selenium-webdriver'
+require 'loadable_component'
 
 require_relative 'pages/page'
 require_relative 'pages/menu'
