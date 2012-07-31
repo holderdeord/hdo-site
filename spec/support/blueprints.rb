@@ -11,7 +11,7 @@ end
 Vote.blueprint do
   issues { [Issue.make] }
   time { Time.now }
-  vote_results { Array.new(1) { VoteResult.make! } }
+  vote_results { [VoteResult.make!] }
 end
 
 VoteConnection.blueprint do
@@ -37,6 +37,7 @@ Promise.blueprint do
   party
   source { "PP:10" }
   body { "Løftetekst" }
+  categories { [Category.make!] }
 end
 
 Category.blueprint do
