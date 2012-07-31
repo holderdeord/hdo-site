@@ -7,6 +7,7 @@ module Hdo
         @for_count     = vote.for_count     || 0
         @against_count = vote.against_count || 0
         @absent_count  = vote.absent_count  || 0
+        @vote = vote
       end
 
       def as_json(opts = nil)
@@ -39,6 +40,35 @@ module Hdo
 
       def percentage_of(count, total)
         count * 100 / (total.zero? ? 1 : total)
+      end
+
+      def party_votes
+        @party_votes ||= (
+          party_results = @vote.vote_results.group_by { |r| r.representative.party }
+
+          res = {}
+
+          party_results.each do |party, vote_results|
+            res[party] = counts_for(vote_results)
+          end
+
+          res
+        )
+      end
+
+      def party_for?(party)
+        party_votes[party][:for] > party_votes[party][:against]
+      end
+
+      private
+
+      def counts_for(vote_results)
+        res = Hash.new(0)
+        vote_results.each do |vote_result|
+          res[vote_result.state] += 1
+        end
+
+        res
       end
     end
   end
