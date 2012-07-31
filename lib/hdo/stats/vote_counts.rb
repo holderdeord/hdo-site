@@ -56,8 +56,16 @@ module Hdo
         )
       end
 
+      def party_participated?(party)
+        party_votes[party][:for] > 0 || party_votes[party][:against] > 0
+      end
+
       def party_for?(party)
         party_votes[party][:for] > party_votes[party][:against]
+      end
+
+      def party_against?(party)
+        !party_for?(party) && party_participated?(party)
       end
 
       private

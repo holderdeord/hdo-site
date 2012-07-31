@@ -18,12 +18,16 @@
             </td>
             <td>
               <% if connection.vote.personal? %>
-                <p>
-                  <%= image_tag Party.find_by_external_id('A').large_logo, style: "width:45px; height:45px;" %>
-                  Arbeiderpartiet har stemt for
-                </p>
-                <p>Fremskritspartiet har stemt mot</p>
-                <p>...</p>
+                <% stats = connection.vote.stats %>
+                <% stats.party_votes.each do |party, vote_counts| %>
+                  <p>
+                    <%= image_tag party.image.thumb('35x35').strip.url, alt: "#{party.name}s logo" %>
+                    <%= "#{party.name.capitalize} har stemt for." if stats.party_for?(party) %>
+                    <%= "#{party.name.capitalize} har stemt mot." if stats.party_against?(party) %>
+                    <%= "#{party.name.capitalize} har ikke tatt standpunkt." if !stats.party_participated?(party) %>
+                    <small><%= "(#{vote_counts[:for]} for, #{vote_counts[:against]} mot, #{vote_counts[:absent]} ikke tilstede.)" %></small>
+                  </p>
+                <% end %>
               <% else %>
                 <%= I18n.t('app.votes.non_party') %>
               <% end %>
