@@ -24,6 +24,9 @@ RSpec.configure do |config|
   config.use_transactional_fixtures = false
   config.infer_base_class_for_anonymous_controllers = false
 
+  config.include Devise::TestHelpers, type: :controller
+  config.include BrowserSpecHelper, type: :request
+
   config.before :suite do
     DatabaseCleaner.strategy = :transaction
     DatabaseCleaner.clean_with :truncation

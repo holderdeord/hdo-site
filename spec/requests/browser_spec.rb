@@ -2,8 +2,6 @@ require 'spec_helper'
 SimpleCov.command_name 'requests'
 
 describe Hdo::Application do
-  include BrowserSpecHelper
-
   it "should load the front page" do
     front_page.get
   end
