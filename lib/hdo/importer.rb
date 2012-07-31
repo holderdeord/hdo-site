@@ -80,7 +80,7 @@ module Hdo
         if doc
           import doc
         else
-          p file => File.read(file)
+          p file => str
           raise
         end
       end
@@ -301,7 +301,7 @@ module Hdo
 
       categories = Category.where(name: promise.categories)
       not_found = promise.categories - categories.map(&:name)
-      
+
       if not_found.any?
         raise "could not find category: #{not_found.inspect}"
       end
