@@ -1,6 +1,9 @@
 class Issue < ActiveRecord::Base
   extend FriendlyId
 
+  attr_accessible :document_group, :issue_type, :status, :last_update,
+                  :reference, :summary, :description, :committee, :categories
+
   belongs_to :committee
   has_and_belongs_to_many :categories
   has_and_belongs_to_many :votes

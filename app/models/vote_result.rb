@@ -1,4 +1,6 @@
 class VoteResult < ActiveRecord::Base
+  attr_accessible :representative, :result
+
   belongs_to :representative
   belongs_to :vote
 

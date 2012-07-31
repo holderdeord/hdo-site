@@ -1,6 +1,8 @@
 class Committee < ActiveRecord::Base
   extend FriendlyId
 
+  attr_accessible :name
+
   has_and_belongs_to_many :representatives
   has_many :issues, :order => :last_update
 

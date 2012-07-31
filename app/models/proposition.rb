@@ -1,4 +1,6 @@
 class Proposition < ActiveRecord::Base
+  attr_accessible :description, :on_behalf_of, :body
+
   belongs_to :vote
   belongs_to :representative
 
