@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120727144539) do
+ActiveRecord::Schema.define(:version => 20120728200104) do
 
   create_table "categories", :force => true do |t|
     t.string   "external_id"
@@ -122,6 +122,8 @@ ActiveRecord::Schema.define(:version => 20120727144539) do
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
     t.string   "slug"
+    t.string   "image_uid"
+    t.string   "image_name"
   end
 
   add_index "parties", ["name"], :name => "index_parties_on_name"
