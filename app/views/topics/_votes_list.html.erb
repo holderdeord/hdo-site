@@ -24,6 +24,11 @@
       </label>
 
       <label>
+        <%= VoteConnection.human_attribute_name :description %>
+        <%= text_area_tag "votes[#{vote.id}][description]", connection && connection.description %>
+      </label>
+
+      <label>
         <%= VoteConnection.human_attribute_name :comment %>
         <%= text_area_tag "votes[#{vote.id}][comment]", connection && connection.comment %>
       </label>

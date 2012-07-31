@@ -110,8 +110,12 @@ nb:
         propositions: "Forslag"
         issues: "Saker"
         external_id: "Ekstern id"
+        about: "om"
       vote_result:
         result: "Stemme"
+        voted_for: 'har stemt for.'
+        voted_against: 'har stemt mot.'
+        voted_neither: 'har ikke tatt standpunkt.'
       promise:
         party: "Parti"
         body: "Tekst"
@@ -147,10 +151,12 @@ nb:
         promises: "Løfter"
         votes: "Avstemninger"
         fields: "Områder"
+        party_votes_header: "Hvordan har partiene stemt?"
       vote_connection:
         matches: "Støtter tema?"
         comment: "Kommentar"
         weight: "Vekting"
+        description: "Beskrivelse"
       field:
         name: "Tittel"
         new: "Nytt område"
@@ -217,7 +223,8 @@ nb:
     promises:
       disclaimer: '<p>Vi jobber med å kode alle løftene fra partienes valgprogram.</p> <p>Her kan man foreløpig se noen eksempler på kategoriserte løfter. Vi vil etter planen publisere den ferdigkodede løftedatabasen i løpet av juli.</p>'
     votes:
-      non_personal: 'Denne saken ble avgjort uten at voteringsknappene ble brukt. Vi har derfor ikke oversikt over hva den enkelte representant har stemt.'
+      non_personal: 'Denne saken ble avgjort uten at avstemningsknappene ble brukt. Vi har derfor ikke oversikt over hva den enkelte representant har stemt.'
+      non_party: 'Denne avstemningen ble avgjort uten at avstemningsknappene ble brukt. Vi har derfor ikke oversikt over hva det enkelte parti har stempt.'
     external:
       urls:
         issue: "http://stortinget.no/no/Saker-og-publikasjoner/Saker/Sak/?p=%s"
