@@ -1,4 +1,4 @@
-<%= twitter_bootstrap_form_for @field, :html => {:multipart => true} do |form| %>
+<%= twitter_bootstrap_form_for field, :html => {:multipart => true} do |form| %>
   <%# form.inputs do %>
     <div class="well">
       <%= form.text_field :name %>
@@ -11,7 +11,7 @@
       <div class="row">
         <div class="span6">
           <label class="checkbox">
-            <%= check_box_tag "field[topic_ids][]", topic.id, @field.topics.include?(topic) %>
+            <%= check_box_tag "field[topic_ids][]", topic.id, field.topics.include?(topic) %>
             <strong><%= topic.title.capitalize %></strong>
           </label>
         </div>
@@ -21,7 +21,7 @@
   <h1><%= Field.human_attribute_name :image %></h1>
   <div class="well">
     <%= form.file_field :image %>
-    <%= image_tag @field.image.thumb('100x100').url if @field.image_uid %>
+    <%= image_tag field.image.thumb('100x100').url if field.image_uid %>
   </div>
     <div class="pull-right">
       <%= link_to t('app.cancel'), topics_path, :class => 'btn btn-danger' %>
