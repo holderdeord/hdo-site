@@ -1,6 +1,8 @@
 class FieldsController < ApplicationController
   before_filter :authenticate_user!
   before_filter :fetch_topics, :only => [:new, :edit]
+  before_filter :fetch_field, :only => [:show, :edit, :update, :destroy]
+
   # GET /fields
   # GET /fields.json
   def index
@@ -15,8 +17,6 @@ class FieldsController < ApplicationController
   # GET /fields/1
   # GET /fields/1.json
   def show
-    @field = Field.find(params[:id])
-
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @field }
@@ -37,7 +37,6 @@ class FieldsController < ApplicationController
 
   # GET /fields/1/edit
   def edit
-    @field = Field.find(params[:id])
   end
 
   # POST /fields
@@ -59,8 +58,6 @@ class FieldsController < ApplicationController
   # PUT /fields/1
   # PUT /fields/1.json
   def update
-    @field = Field.find(params[:id])
-
     respond_to do |format|
       if @field.update_attributes(params[:field])
         format.html { redirect_to @field, notice: 'Field was successfully updated.' }
@@ -75,7 +72,6 @@ class FieldsController < ApplicationController
   # DELETE /fields/1
   # DELETE /fields/1.json
   def destroy
-    @field = Field.find(params[:id])
     @field.destroy
 
     respond_to do |format|
@@ -84,7 +80,13 @@ class FieldsController < ApplicationController
     end
   end
 
+  private
+
   def fetch_topics
     @topics = Topic.all
+  end
+
+  def fetch_field
+    @field = Field.find(params[:id])
   end
 end

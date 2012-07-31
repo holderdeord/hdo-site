@@ -20,7 +20,10 @@ describe TopicsController do
       :finish_button => true
 
     Topic.count.should eq topic_count_before_create + 1
-    response.should redirect_to topic_path assigns(:topic)
+    topic = assigns(:topic)
+    topic.should be_kind_of(Topic)
+
+    response.should redirect_to topic_path topic
   end
 
   it "should show the promises step when hit next from create" do
