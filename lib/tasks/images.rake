@@ -2,17 +2,17 @@ require 'net/http'
 require 'uri'
 
 namespace :images do
+
   desc 'Fetch representatives images from stortinget.no'
   task :fetch_representatives => :environment do
-    rep_image_path = File.join(Rails.root, "app/assets/images/representatives")
-    generic_image_filename = File.join(rep_image_path, "unknown.jpg")
+    rep_image_path = Rails.root.join("app/assets/images/representatives")
 
     Representative.all.each do |rep|
       url = URI.parse("http://stortinget.no/Personimages/PersonImages_ExtraLarge/#{URI.escape rep.external_id}_ekstrastort.jpg")
 
-      filename = File.join(rep_image_path, "#{rep.slug}.jpg")
+      filename = rep_image_path.join("#{rep.slug}.jpg")
 
-      File.open(filename, "wb") do |destination|
+      File.open(filename.to_s, "wb") do |destination|
         resp = Net::HTTP.get_response(url) do |response|
           total = response.content_length
           progress = 0
@@ -54,15 +54,16 @@ namespace :images do
     end
   end
 
-  task :map_party_logos => :environment do
-   puts "Mapping each party's logo to image attribute"
-   path_to_logos = File.join(Rails.root, "app/assets/images/party_logos")
+  desc 'Save party logos to Party models'
+  task :save_party_logos => :environment do
+    puts "Mapping each party's logo to image attribute"
+    path_to_logos = Rails.root.join("app/assets/images/party_logos")
 
-   Party.all.each do |party|
-    party.image = Pathname.new("#{path_to_logos}/#{party.external_id}_logo_large.jpg")
-    party.save!
-    puts "Logo for #{party.name} mapped."
-   end
+    Party.all.each do |party|
+     party.image = Pathname.new("#{path_to_logos}/#{party.external_id}_logo_large.jpg")
+     party.save!
+     puts "Logo for #{party.name} mapped."
+    end
   end
 
 end
