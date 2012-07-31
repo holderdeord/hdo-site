@@ -53,5 +53,17 @@ namespace :images do
       end
     end
   end
+
+  task :map_party_logos => :environment do
+   puts "Mapping each party's logo to image attribute"
+   path_to_logos = File.join(Rails.root, "app/assets/images/party_logos")
+
+   Party.all.each do |party|
+    party.image = Pathname.new("#{path_to_logos}/#{party.external_id}_logo_large.jpg")
+    party.save!
+    puts "Logo for #{party.name} mapped."
+   end
+  end
+
 end
 
