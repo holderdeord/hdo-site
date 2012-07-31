@@ -68,6 +68,13 @@ module Hdo
         !party_for?(party) && party_participated?(party)
       end
 
+      def text_for(party)
+        return VoteResult.human_attribute_name 'voted_for' if party_for?(party)
+        return VoteResult.human_attribute_name 'voted_against' if party_against?(party)
+        return VoteResult.human_attribute_name 'voted_neither' unless party_participated?(party)
+        raise 'Vote counting error.'
+      end
+
       private
 
       def counts_for(vote_results)

@@ -112,6 +112,9 @@ nb:
         external_id: "Ekstern id"
       vote_result:
         result: "Stemme"
+        voted_for: 'har stemt for.'
+        voted_against: 'har stemt mot.'
+        voted_neither: 'har ikke tatt standpunkt.'
       promise:
         party: "Parti"
         body: "Tekst"
