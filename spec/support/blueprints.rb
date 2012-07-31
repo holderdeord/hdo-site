@@ -29,6 +29,10 @@ Issue.blueprint do
 
 end
 
+Field.blueprint do
+  name { "Field-#{sn}" }
+end
+
 Party.blueprint do
   name { "Party-#{sn}" }
 end

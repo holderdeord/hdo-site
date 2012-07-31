@@ -11,6 +11,9 @@ class Party < ActiveRecord::Base
 
   friendly_id :external_id, :use => :slugged
 
+  image_accessor :image
+  attr_accessible :image, :name
+
   def large_logo
     default = "party_logos/unknown_logo_large.jpg"
     party_logo = "party_logos/#{URI.encode external_id}_logo_large.jpg"

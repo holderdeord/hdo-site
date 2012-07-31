@@ -15,6 +15,31 @@ class Vote < ActiveRecord::Base
 
   scope :personal, where('for_count != 0 OR against_count != 0 OR absent_count != 0')
 
+  def self.naive_search(filter, keyword, selected_categories = [])
+    # TODO: elasticsearch
+    votes = Vote.includes(:issues, :propositions, :vote_connections)
+
+    case filter
+    when 'selected-categories'
+      votes.select! do |v|
+        v.issues.any? { |i| (i.categories & selected_categories).any? }
+      end
+    when 'not-connected'
+      votes.select! { |v| v.vote_connections.empty? }
+    else
+      # ignore 'all' or others
+    end
+
+    if keyword.present?
+      votes.select! do |v|
+        v.propositions.any? { |e| e.plain_body.include? keyword } ||
+          v.issues.any? { |e| e.description.include? keyword }
+      end
+    end
+
+    votes.select { |e| e.issues.all?(&:processed?) }
+  end
+
   def time_text
     time.strftime("%Y-%m-%d")
   end

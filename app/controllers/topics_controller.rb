@@ -1,6 +1,6 @@
 class TopicsController < ApplicationController
   before_filter :authenticate_user!
-  before_filter :fetch_topic, :only => [:show, :edit, :update, :destroy, :votes]
+  before_filter :fetch_topic, :only => [:show, :edit, :update, :destroy, :votes, :votes_search]
 
   STEPS = %w[categories promises votes fields]
 
@@ -92,6 +92,20 @@ class TopicsController < ApplicationController
     render 'votes', locals: { :topic => @topic }
   end
 
+  def votes_search
+    votes = Vote.naive_search(
+      params[:filter],
+      params[:keyword],
+      @topic.categories
+    )
+
+    # remove already connected votes
+    votes -= @topic.vote_connections.map { |e| e.vote }
+    votes.map! { |vote| [vote, nil] }
+
+    render partial: 'votes_list', locals: { votes_and_connections: votes }
+  end
+
   private
 
   def step_after(step = STEPS.first)
@@ -127,8 +141,7 @@ class TopicsController < ApplicationController
   end
 
   def edit_votes
-    votes = Vote.includes(:issues, :propositions, :vote_connections).select { |e| e.issues.all?(&:processed?) }
-    @votes_and_connections = votes.map { |vote| [vote, @topic.connection_for(vote)] }.sort_by { |vote, connection| connection ? 0 : 1 }
+    @votes_and_connections = @topic.vote_connections.map { |e| [e.vote, e] }
   end
 
   def edit_fields

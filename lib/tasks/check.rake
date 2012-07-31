@@ -2,7 +2,7 @@ namespace :check do
   desc 'Check tabs vs spaces'
   task :tabs do
     failures = `git ls-files`.split("\n").select do |path|
-      next unless %w[.rb .less .css .js].include? File.extname(path)
+      next unless %w[.rb .less .css .js .erb].include? File.extname(path)
 
       print "."
       File.read(path).include? "\t"

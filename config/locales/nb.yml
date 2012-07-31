@@ -254,7 +254,7 @@ nb:
         one: "Viser <strong>1</strong> saker."
         other: "Viser <strong>%{count}</strong> saker."
       vote:
-        one: "Viser <strong>1</strong> avstemninger."
+        one: "Viser <strong>1</strong> avstemning."
         other: "Viser <strong>%{count}</strong> avstemninger."
       promises:
         one: "Viser <strong>1</strong> løfte."

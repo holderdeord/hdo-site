@@ -3,8 +3,9 @@ Hdo::Application.routes.draw do
 
   resources :users
   resources :topics
-  get 'topics/:id/votes' => 'topics#votes', :as => :topic_votes
-  get 'topics/:id/edit/:step' => 'topics#edit', :as => :edit_topic_step
+  get 'topics/:id/votes'        => 'topics#votes', :as => :topic_votes
+  get 'topics/:id/edit/:step'   => 'topics#edit', :as => :edit_topic_step
+  get 'topics/:id/votes/search' => "topics#votes_search", :as => :topic_votes_search
 
   resources :districts,       :only => [:index, :show]
   resources :categories,      :only => [:index, :show]
@@ -27,7 +28,6 @@ Hdo::Application.routes.draw do
   resources :votes, :only => [:index, :show]
   get 'votes/page/:page' => 'votes#index'
   get 'votes/index/all'  => 'votes#all', :as => :all_votes
-
 
   get "home/index"
   get "home/about"
