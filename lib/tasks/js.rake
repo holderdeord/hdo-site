@@ -1,4 +1,11 @@
 namespace :js do
+  desc 'Lint the JS files (requires node + autolint)'
+  task :lint do
+    Dir.chdir(Rails.root.join("spec")) do
+      sh "autolint --once"
+    end
+  end
+
   desc 'Run JS tests with Buster (requires node + buster)'
   task :test do
     # turn this into a buster-rails gem?

@@ -72,8 +72,11 @@ Run affected specs automatically when files change:
 
     $ bundle exec guard
 
-JavaScript testing:
-===================
+JavaScript:
+===========
+
+Testing
+-------
 
 We use [buster.js](http://busterjs.org/) for JavaScript testing.
 
@@ -97,3 +100,9 @@ You can also run the buster server in the background and capture
 Then open [http://localhost:1111](localhost:1111) in your favorite browser.
 
 To add more tests, update the config in spec/buster.js.
+
+Linting
+-------
+
+    $ npm install -g autolint
+    $ bundle exec rake js:lint
