@@ -68,3 +68,8 @@ Proposition.blueprint do
   body { "proposition-body-#{sn}" }
   description { "proposition-description-#{sn}" }
 end
+
+GoverningPeriod.blueprint do
+  party { Party.make! }
+  start_date { Date.today }
+end
