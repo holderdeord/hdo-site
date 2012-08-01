@@ -57,4 +57,22 @@ describe Topic do
   it "has a stats object" do
     valid_topic.stats.should be_kind_of(Hdo::Stats::VoteScorer)
   end
+
+  it 'caches the stats object' do
+    Hdo::Stats::VoteScorer.should_receive(:new).once
+
+    Topic.find(valid_topic.id).stats
+    Topic.find(valid_topic.id).stats # cached
+  end
+
+  it 'deletes the cached stats on save' do
+    Hdo::Stats::VoteScorer.should_receive(:new).twice
+
+    Topic.find(valid_topic.id).stats
+    Topic.find(valid_topic.id).stats # cached
+
+    valid_topic.vote_connections << VoteConnection.make!(:topic => valid_topic)
+
+    Topic.find(valid_topic.id).stats # no longer cached
+  end
 end

@@ -6,11 +6,11 @@ module Hdo
       include Enumerable
 
       def initialize(model)
-        @model = model
+        @data = compute(model.vote_connections.includes(:vote))
       end
 
       def score_for(party)
-        data[party]
+        @data[party]
       end
 
       def text_for(party)
@@ -33,13 +33,9 @@ module Hdo
 
       private
 
-      def data
-        @data ||= compute
-      end
-
-      def compute
+      def compute(connections)
         weight_sum = 0
-        vote_percentages = @model.vote_connections.map do |vote_connection|
+        vote_percentages = connections.map do |vote_connection|
           weight_sum += vote_connection.weight
           vote_percentages_for(vote_connection)
         end
@@ -64,11 +60,12 @@ module Hdo
       private
 
       def vote_percentages_for(vote_connection)
-        vote_results = vote_connection.vote.vote_results.group_by { |v| v.representative.party }
+        vote_results = vote_connection.vote.vote_results.includes(:representative => :party)
+        by_party = vote_results.group_by { |v| v.representative.party }
 
         res = {}
 
-        vote_results.each do |party, votes|
+        by_party.each do |party, votes|
           meth = vote_connection.matches? ? :for? : :against?
 
           for_count, against_count = votes.reject(&:absent?).partition(&meth).map(&:size)
