@@ -5,6 +5,7 @@ class Party < ActiveRecord::Base
 
   has_many :representatives, :order => :last_name
   has_many :promises
+  has_many :governing_periods, :order => :start_date
 
   validates_uniqueness_of :name
   validates_presence_of :name
