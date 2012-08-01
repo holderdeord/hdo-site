@@ -1,5 +1,5 @@
 class VoteConnection < ActiveRecord::Base
-  WEIGHTS = [0, 1, 2, 4]
+  WEIGHTS = [0, 0.5, 1, 2, 4]
 
   belongs_to :vote
   belongs_to :topic
