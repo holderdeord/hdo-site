@@ -51,6 +51,8 @@ Data model
 To generate an entity-relationship diagram from the database:
 
         $ bundle exec rake erd
+
+        # or
         $ bundle exec rake erd title="HDO Data Model"
 
 This will generate `ERD.pdf`.
