@@ -191,6 +191,8 @@ nb:
     title: "Holder de ord"
     open_graph:
       description: "Holder de ord gjør det enkelt å sjekke hva som har blitt gjort og lovet i norsk politikk."
+      app_id: "128853573831210"
+      admins: "635985218,525020960,640580233,1562377886"
     login: "Logg inn"
     logout: "Logg ut"
     description: "Bringer politikken til folket."

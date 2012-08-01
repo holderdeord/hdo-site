@@ -10,7 +10,10 @@
     <meta property="og:site_name" content="<%=t 'app.title' %>" />
     <meta property="og:description" content="<%=t 'app.open_graph.description' %>" />
     <meta property="og:type" content="non_profit" />
+    <meta property="og:url" content="<%= root_url %>" />
     <meta property="og:image" content="<%= File.join(root_url, asset_path('og_logo.png')) %>" />
+    <meta property="og:admins" content="<%= t 'app.open_graph.admins' %>" />
+    <meta property="og:app_id" content="<%= t 'app.open_graph.app_id' %>" />
 
     <title><%=t 'app.title' %></title>
 
