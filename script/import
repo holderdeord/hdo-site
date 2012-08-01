@@ -8,7 +8,7 @@ $LOAD_PATH.unshift File.expand_path("../../lib", __FILE__)
 
 
 require 'hdo/storting_importer'
-require 'hdo/importer'
+require 'hdo/import'
 
 I18n.locale = :en
-Hdo::Importer.new(ARGV).run
+Hdo::Import::CLI.new(ARGV).run
