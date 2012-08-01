@@ -10,12 +10,11 @@ namespace :images do
       url = URI.parse("http://stortinget.no/Personimages/PersonImages_ExtraLarge/#{URI.escape rep.external_id}_ekstrastort.jpg")
 
       filename = rep_image_path.join("#{rep.slug}.jpg")
-
+      
       if ENV['FORCE'].nil? && filename.exist?
         puts "skipping download for existing #{filename}, use FORCE=true to override"
-        rep.image = filename
+        rep.image = Pathname.new filename
         rep.save!
-
         next
       end
 
@@ -62,18 +61,17 @@ namespace :images do
   end
 
   desc 'Save party logos to Party models'
-  task :party_logos => :environment do
+  task :save_party_logos => :environment do
     puts "Mapping each party's logo to image attribute"
     path_to_logos = Rails.root.join("app/assets/images/party_logos")
 
     Party.all.each do |party|
-     party.image = path_to_logos.join("#{party.external_id}_logo_large.jpg")
+     party.image = Pathname.new("#{path_to_logos}/#{party.external_id}_logo_large.jpg")
      party.save!
-     puts "\t#{party.name}"
+     puts "Logo for #{party.name} mapped."
     end
   end
 
-  desc 'Set up all images'
-  task :all => %w[images:fetch_representatives images:party_logos]
+  task :all => %w[images:fetch_representatives images:save_party_logos]
 end
 
