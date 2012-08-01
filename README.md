@@ -20,7 +20,22 @@ Install package dependencies and set up Ruby 1.9.3 with RVM.
     $ ruby -v
     ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
 
-PS. For RVM to work properly with gnome-terminal, you have to set the 'Run command as login shell' checkbox on the "Title and Command" tab inside of gnome-terminal's Settings page.
+PS. For RVM to work properly with gnome-terminal, you have to tick the "Run command as login shell" checkbox on the "Title and Command" tab inside of gnome-terminal's Settings page.
+
+Development environment on OS X
+===============================
+
+You'll need [XCode](https://developer.apple.com/xcode/) installed.
+
+Install Ruby 1.9.3 through [RVM](http://rvm.io/):
+
+    $ curl -L https://get.rvm.io | bash -s stable --ruby
+
+Install dependencies through [Homebrew](http://mxcl.github.com/homebrew/):
+
+_This list may be incomplete. Please add any missing libs you find._
+
+    $ brew install git mysql imagemagick
 
 Getting started:
 ================
@@ -53,6 +68,7 @@ To generate an entity-relationship diagram from the database:
         $ bundle exec rake erd
 
         # or
+
         $ bundle exec rake erd title="HDO Data Model"
 
 This will generate `ERD.pdf`.
