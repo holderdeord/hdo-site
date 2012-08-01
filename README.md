@@ -31,16 +31,30 @@ Getting started:
     $ bundle exec rake db:setup
     $ bundle exec rails server
 
+Data
+====
+
 Import data for development:
-============================
+----------------------------
 
 * A subset from [data.stortinget.no](http://data.stortinget.no):
 
-        $ script/import dev
+        $ bundle exec script/import dev
 
 * Import promises:
 
         $ bundle exec hdo-converter promises http://files.holderdeord.no/promises.csv | script/import xml -
+
+Data model
+----------
+
+To generate an entity-relationship diagram from the database:
+
+        $ bundle exec rake erd
+        $ bundle exec rake erd title="HDO Data Model"
+
+This will generate `ERD.pdf`.
+
 
 Set up images:
 ==============
