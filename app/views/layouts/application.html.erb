@@ -5,7 +5,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta property="og:description" content="Holder de ord kartlegger norske politiske partiers løfter og sammenligner disse med partienes stemmegivning og aktivitet på Stortinget og i andre folkevalgte organ." />
+
+    <meta property="og:title" content="<%=t 'app.title' %>" />
+    <meta property="og:site_name" content="<%=t 'app.title' %>" />
+    <meta property="og:description" content="<%=t 'app.open_graph.description' %>" />
+    <meta property="og:type" content="non_profit" />
+    <meta property="og:image" content="<%= File.join(root_url, asset_path('og_logo.png')) %>" />
 
     <title><%=t 'app.title' %></title>
 
