@@ -13,6 +13,8 @@ namespace :images do
       
       if ENV['FORCE'].nil? && filename.exist?
         puts "skipping download for existing #{filename}, use FORCE=true to override"
+        rep.image = Pathname.new filename
+        rep.save!
         next
       end
 
