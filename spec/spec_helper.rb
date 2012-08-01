@@ -8,6 +8,8 @@ require 'rspec/rails'
 require 'rspec/autorun'
 require 'database_cleaner'
 
+require 'hdo/importer'
+
 if ENV['TRAVIS']
   ENV['DISPLAY'] = ":99"
 end
