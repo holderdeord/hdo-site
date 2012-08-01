@@ -29,3 +29,5 @@ coverage/
 
 #Node modules
 node_modules/
+
+chromedriver.log

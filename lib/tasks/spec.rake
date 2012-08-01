@@ -7,9 +7,6 @@ unless ENV['RAILS_ENV'] == "production"
     task :large => %w[spec:requests]
 
     desc 'Run all specs (including buster).'
-    task :all   => %w[spec spec:js]
-
-    desc 'Run buster specs'
-    task :js => :buster
+    task :all   => %w[spec js:test]
   end
 end

@@ -71,3 +71,29 @@ You can also run specific specs, i.e. model, controller or request specs with e.
 Run affected specs automatically when files change:
 
     $ bundle exec guard
+
+JavaScript testing:
+===================
+
+We use [buster.js](http://busterjs.org/) for JavaScript testing.
+
+To run the tests you need to have buster.js installed.
+Buster.JS on the command-line requires Node 0.6.3 or newer and NPM.
+Node 0.6.3 and newer comes with NPM bundled on most platforms.
+
+Install buster and autolint:
+
+    $ npm install -g buster autolint
+
+To run the tests once:
+
+    $ bundle exec rake js:test
+
+You can also run the buster server in the background and capture
+ your local browser:
+
+    $ buster server &
+
+Then open [http://localhost:1111](localhost:1111) in your favorite browser.
+
+To add more tests, update the config in spec/buster.js.
