@@ -41,6 +41,14 @@ describe Topic do
     topic.connection_for(vote).should_not be_nil
   end
 
+  it 'destroys vote connections when destroyed' do
+    topic = Topic.make!
+    topic.vote_connections.size.should == VoteConnection.count
+
+    topic.destroy
+    VoteConnection.count.should == 0
+  end
+
   it "has a unique title" do
     Topic.make!(:title => 'a')
     Topic.make(:title => 'a').should_not be_valid
