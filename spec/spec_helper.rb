@@ -54,4 +54,8 @@ RSpec.configure do |config|
   config.after :all, type: :request do
     BrowserSpecHelper.stop
   end
+  
+  if ENV['FOCUS'] or ENV['focus']
+    config.filter_run_including :focus => true
+  end
 end
