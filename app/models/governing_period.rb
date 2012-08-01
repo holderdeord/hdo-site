@@ -4,4 +4,8 @@ class GoverningPeriod < ActiveRecord::Base
 
   validates_presence_of :party, :start_date
 
+  def include?(date)
+    date >= start_date && (end_date == nil || date < end_date)
+  end
+
 end

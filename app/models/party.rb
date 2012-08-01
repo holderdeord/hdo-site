@@ -15,6 +15,10 @@ class Party < ActiveRecord::Base
   image_accessor :image
   attr_accessible :image, :name
 
+  def in_gov?(date = Date.today)
+    governing_periods.find { |gp| gp.include? date } != nil
+  end
+
   def large_logo
     default = "party_logos/unknown_logo_large.jpg"
     party_logo = "party_logos/#{URI.encode external_id}_logo_large.jpg"

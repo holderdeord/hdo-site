@@ -17,5 +17,11 @@ describe Party do
   it 'is invalid without unique name' do
     party = Party.make!
     Party.make(:name => party.name).should_not be_valid
+  it "knows if it is in the government coalition" do
+    p = Party.make!
+    p.governing_periods << (GoverningPeriod.make! :start_date => Date.yesterday,
+      :party => p)
+
+    p.in_gov?.should be_true
   end
 end
