@@ -1,3 +1,5 @@
+require 'optparse'
+
 module Hdo
   module Import
     class CLI
@@ -5,15 +7,20 @@ module Hdo
       def initialize(argv)
         if argv.empty?
           raise ArgumentError, 'no args'
-        elsif argv.include? "-h" or argv.include? "--help"
-          puts "USAGE: #{PROGRAM_NAME} <xml|all|daily> [opts]"
-          exit 0
         else
+          @options = {}
+
+          OptionParser.new { |opt|
+            opt.on("-s", "--quiet") { @options[:quiet] = true }
+            opt.on("-h", "--help") do
+              puts opt
+              exit 1
+            end
+          }.parse!(argv)
+
           @cmd = argv.shift
           @rest = argv
         end
-
-        @log = Hdo::StortingImporter.logger
       end
 
       def run
@@ -119,9 +126,19 @@ module Hdo
       def persister
         @persister ||= (
           persister = Persister.new
-          persister.log = @log
+          persister.log = log
 
           persister
+        )
+      end
+
+      def log
+        @log ||= (
+          if @options[:quiet]
+            Logger.new(File::NULL)
+          else
+            Hdo::StortingImporter.logger
+          end
         )
       end
 
