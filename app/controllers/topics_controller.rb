@@ -65,7 +65,7 @@ class TopicsController < ApplicationController
     set_vote_connections
 
     if @topic.update_attributes(params[:topic])
-      session[:topic_step] = current_step = next_step current_step
+      session[:topic_step] = current_step = next_step(current_step)
 
       if params[:finish_button]
         session.delete :topic_step
