@@ -1,5 +1,4 @@
 require 'bundler/capistrano'
-require 'capistrano-notification'
 
 set :application, "hdo-site"
 
@@ -75,9 +74,3 @@ namespace :dragonfly do
 end
 
 after 'deploy:update_code', 'dragonfly:symlink'
-
-notification.irc do |irc|
-  irc.host    'irc.freenode.net'
-  irc.channel '#holderdeord'
-  irc.message { "#{local_user} deployed #{application} to #{deploy_target}" }
-end
