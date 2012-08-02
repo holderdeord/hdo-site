@@ -29,7 +29,6 @@ group :test, :development do
 end
 
 group :development do
-  gem "thin"
   gem 'sqlite3' # TODO: same DB everywhere
   gem "rails-erd"
 end
@@ -38,6 +37,7 @@ group :production do
   gem 'pg'
 end
 
+gem "thin"
 gem 'jquery-rails'
 gem "twitter-bootstrap-rails", "~> 2.0"
 gem "highcharts-rails", "~> 2.2"

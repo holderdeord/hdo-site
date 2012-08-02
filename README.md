@@ -61,8 +61,8 @@ Install dependencies through [Homebrew](http://mxcl.github.com/homebrew/):
 _This list may be incomplete. Please add any missing libs you find._
 
     $ brew install git imagemagick postgres
-    
-Follow brew's post-install instructions for PostgreSQL. Typically you want to run the `initdb` 
+
+Follow brew's post-install instructions for PostgreSQL. Typically you want to run the `initdb`
 and the launchtl ("load on login") commands.
 
 Note: If you're on OS X >= 10.7 and get a connection error when preparing the database, try these steps:
@@ -70,7 +70,7 @@ Note: If you're on OS X >= 10.7 and get a connection error when preparing the da
 * Run `echo $PATH | tr ':' '\n'` and make sure /usr/local/bin comes before /usr/bin.
 * Open a new shell and try there.
 * Check [this post](http://www.iainlbc.com/2011/10/osx-lion-postgres-could-not-connect-to-database-postgres-after-homebrew-installation/).
-    
+
 Preparing the database:
 =======================
 
@@ -182,3 +182,16 @@ Linting
 
     $ npm install -g autolint
     $ bundle exec rake js:lint
+
+Deployment
+==========
+
+Our own servers are set up with Puppet, using the code from the [hdo-puppet repo](http://github.com/holderdeord/hdo-puppet).
+
+For test environments, deploying to [Heroku](http://www.heroku.com/) should work just fine:
+
+  $ [sudo] gem install heroku
+  $ heroku login
+  $ heroku create
+  $ git push heroku master
+  $ heroku run rake db:setup import:dev import:promises images:all
