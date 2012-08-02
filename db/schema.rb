@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120731222230) do
+ActiveRecord::Schema.define(:version => 20120802210546) do
 
   create_table "categories", :force => true do |t|
     t.string   "external_id"
@@ -94,7 +94,7 @@ ActiveRecord::Schema.define(:version => 20120731222230) do
   create_table "issues", :force => true do |t|
     t.string   "external_id"
     t.string   "summary"
-    t.string   "description"
+    t.text     "description"
     t.string   "issue_type"
     t.string   "status"
     t.datetime "last_update"
@@ -131,7 +131,7 @@ ActiveRecord::Schema.define(:version => 20120731222230) do
 
   create_table "promises", :force => true do |t|
     t.integer  "party_id"
-    t.string   "body"
+    t.text     "body"
     t.boolean  "general"
     t.string   "source"
     t.datetime "created_at", :null => false
@@ -152,10 +152,10 @@ ActiveRecord::Schema.define(:version => 20120731222230) do
     t.string   "representative_id"
     t.integer  "vote_id"
     t.string   "description"
-    t.text     "body",              :limit => 300000
+    t.text     "body"
     t.string   "on_behalf_of"
-    t.datetime "created_at",                          :null => false
-    t.datetime "updated_at",                          :null => false
+    t.datetime "created_at",        :null => false
+    t.datetime "updated_at",        :null => false
   end
 
   add_index "propositions", ["representative_id", "vote_id"], :name => "index_propositions_on_representative_id_and_vote_id"
