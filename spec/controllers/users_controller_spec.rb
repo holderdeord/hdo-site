@@ -15,14 +15,14 @@ describe UsersController do
     get :show, id: user
 
     assigns(:user).should == user
-    response.should render_template(:show)
+    response.should have_rendered(:show)
   end
 
   it 'can edit a user' do
     get :edit, id: user
 
     assigns(:user).should == user
-    response.should render_template(:edit)
+    response.should have_rendered(:edit)
   end
 
   it 'can update a user' do

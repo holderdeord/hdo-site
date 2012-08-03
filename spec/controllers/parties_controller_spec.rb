@@ -12,7 +12,7 @@ describe PartiesController do
     
     it 'renders the :index view' do
       get :index
-      response.should render_template(:index)
+      response.should have_rendered(:index)
     end
   end
 
@@ -24,7 +24,7 @@ describe PartiesController do
     
     it 'renders the :show template' do
       get :show, id: party
-      response.should render_template(:show)
+      response.should have_rendered(:show)
     end
   end
   
