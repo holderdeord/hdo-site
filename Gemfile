@@ -48,6 +48,7 @@ gem "will_paginate", "~> 3.0.3"
 gem "friendly_id", "~> 4.0.7"
 gem 'rack-cache', :require => 'rack/cache'
 gem 'dragonfly', '~> 0.9.12'
+gem 'lograge'
 
 # data import
 # gem 'hdo-storting-importer', :path => "../hdo-storting-importer"
