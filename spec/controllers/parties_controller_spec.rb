@@ -19,15 +19,13 @@ describe PartiesController do
   describe "GET #show" do
     it 'assigns the requested party to @party' do
       get :show, id: party
+
       assigns(:party).should == party
     end
-    
+
     it 'renders the :show template' do
       get :show, id: party
       response.should have_rendered(:show)
     end
   end
-  
-  
-
 end
