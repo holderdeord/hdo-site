@@ -1,6 +1,6 @@
 task :travis => %w[
   check
-  db:drop
+  db:create
   db:migrate
   tmp:create
   spec:all

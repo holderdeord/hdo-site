@@ -7,7 +7,6 @@ notifications:
   irc: "irc.freenode.net#holderdeord"
 script: "RAILS_ENV=test bundle exec rake travis"
 before_script:
-  - psql -c 'create database hdo_test;' -U postgres
   - sed -i -e 's/username:\ hdo/username:\ postgres/g' config/database.yml
   - sh -e /etc/init.d/xvfb start
   - npm install -g buster autolint
