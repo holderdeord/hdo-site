@@ -8,8 +8,8 @@ notifications:
 script: "RAILS_ENV=test bundle exec rake travis"
 before_script:
   - psql -c 'create database hdo_test;' -U postgres
-  - "ruby -ryaml -e 'c = YAML.load_file(%{config/database.yml}); c[%{test}][%{username}] = %{postgres}; puts YAML.dump(c)' > config/database.yml"
+  - sed -i -e 's/username:\ hdo/username:\ postgres/g'
   - sh -e /etc/init.d/xvfb start
-  - "npm install -g buster autolint"
+  - npm install -g buster autolint
 env:
   - DISPLAY=:99.0 COVERAGE_THRESHOLD=60

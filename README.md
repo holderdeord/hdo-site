@@ -188,10 +188,12 @@ Deployment
 
 Our own servers are set up with Puppet, using the code from the [hdo-puppet repo](http://github.com/holderdeord/hdo-puppet).
 
-For test environments, deploying to [Heroku](http://www.heroku.com/) should work just fine:
+For test environments, deploying to [Heroku](http://www.heroku.com/) should work:
 
   $ [sudo] gem install heroku
   $ heroku login
   $ heroku create
   $ git push heroku master
-  $ heroku run rake db:setup import:dev import:promises images:all
+  $ heroku run rake db:setup import:dev import:promises images:save_party_logos
+
+One caveat: since Heroku doesn't allow writing to the file system, [Dragonfly won't work properly](http://markevans.github.com/dragonfly/file.Heroku.html).
