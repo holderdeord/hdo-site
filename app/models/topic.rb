@@ -10,6 +10,13 @@ class Topic < ActiveRecord::Base
   has_and_belongs_to_many :categories
   has_and_belongs_to_many :promises
 
+  #
+  # Whenever a topic is updated, we remove and re-create all vote_connection associations
+  # That means clearing the cache in before_add and before_remove is good enough.
+  #
+  # If we change how the connections are updated, this will need to be revised.
+  #
+
   has_many :vote_connections, :dependent     => :destroy,
                               :before_add    => :clear_stats_cache,
                               :before_remove => :clear_stats_cache
