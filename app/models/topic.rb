@@ -42,6 +42,10 @@ class Topic < ActiveRecord::Base
     vote_connections.where(:vote_id => vote.id).first
   end
 
+  def downcased_title
+    @downcased_title ||= UnicodeUtils.downcase title
+  end
+
   private
 
   def clear_stats_cache(vote_connection)

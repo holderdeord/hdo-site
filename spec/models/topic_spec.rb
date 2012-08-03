@@ -1,3 +1,4 @@
+# encoding: utf-8
 require 'spec_helper'
 
 describe Topic do
@@ -74,5 +75,9 @@ describe Topic do
     valid_topic.vote_connections << VoteConnection.make!(:topic => valid_topic)
 
     Topic.find(valid_topic.id).stats # no longer cached
+  end
+
+  it 'correctly downcases a title with non-ASCII characters' do
+    Topic.make(:title => "Ærlig").downcased_title.should == "ærlig"
   end
 end
