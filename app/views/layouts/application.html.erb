@@ -52,7 +52,7 @@
     </div> <!-- /container -->
 
     <%= javascript_include_tag "application" %>
-    <%= render partial: 'layouts/ga' if Rails.env == 'production'  %>
+    <%= render partial: 'layouts/ga' if Rails.env.production?  %>
     <%= render partial: 'layouts/social'%>
     <%= yield :document_ready %>
     </body>

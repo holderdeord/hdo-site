@@ -7,7 +7,7 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
-unless Rails.env == "production"
+unless Rails.env.production?
   existing = User.find_by_email("admin@holderdeord.no")
   existing && existing.destroy
 
