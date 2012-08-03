@@ -15,37 +15,51 @@ Development environment
 
 Install package dependencies and set up Ruby 1.9.3 with RVM.
 
-    $ apt-get install \
-          autoconf \
-          automake \
-          bison \
-          build-essential \
-          curl \
-          git-core \
-          imagemagick
-          libc6-dev \
-          libreadline6 \
-          libreadline6-dev \
-          libsqlite3-dev \
-          libssl-dev \
-          libtool \
-          libxml2-dev \
-          libxslt-dev \
-          libyaml-dev \
-          ncurses-dev \
-          openssl \
-          postgresql \
-          postgresql-server \
-          zlib1g \
-          zlib1g-dev \
+    $ sudo apt-get install \
+        autoconf \
+        automake \
+        bison \
+        build-essential \
+        curl \
+        git-core \
+        imagemagick \
+        libc6-dev \
+        libpq-dev \
+        libreadline6 \
+        libreadline6-dev \
+        libsqlite3-dev \
+        libssl-dev \
+        libtool \
+        libxml2-dev \
+        libxslt-dev \
+        libyaml-dev \
+        ncurses-dev \
+        openssl \
+        postgresql \
+        zlib1g \
+        zlib1g-dev
 
-    $ curl -L get.rvm.io | bash -s stable
-    $ rvm install 1.9.3
-    $ rvm use 1.9.3 --default
+    $ curl -L get.rvm.io | bash -s stable --ruby
     $ ruby -v
     ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
 
 PS. For RVM to work properly with gnome-terminal, you have to tick the "Run command as login shell" checkbox on the "Title and Command" tab inside of gnome-terminal's Settings page.
+
+Next, create the database user:
+
+    $ sudo su - postgres
+    $ createuser hdo --no-superuser --no-createrole --createdb
+    $ logout
+
+To allow Rails to connect, edit /etc/postgresql/9.1/main/pg_hba.conf as root and change the line for Unix domain socket from "peer" to "trust":
+
+     # "local" is for Unix domain socket connections only
+    -local   all             all                                     peer
+    +local   all             all                                     trust
+
+Then restart the database:
+
+    $ sudo su postgres -c "/etc/init.d/postgresql restart"
 
 ... on OS X
 -----------
@@ -60,10 +74,14 @@ Install dependencies through [Homebrew](http://mxcl.github.com/homebrew/):
 
 _This list may be incomplete. Please add any missing libs you find._
 
-    $ brew install git imagemagick postgres
+    $ brew install git imagemagick postgresql
 
 Follow brew's post-install instructions for PostgreSQL. Typically you want to run the `initdb`
 and the launchtl ("load on login") commands.
+
+Next, create the database user:
+
+    $ createuser hdo --no-superuser --no-createrole --createdb
 
 Note: If you're on OS X >= 10.7 and get a connection error when preparing the database, try these steps:
 
@@ -76,7 +94,8 @@ Preparing the database:
 
 Create the "hdo" user with the [createuser script](http://www.postgresql.org/docs/9.1/interactive/app-createuser.html):
 
-    $ createuser hdo --no-superuser --no-create-role --createdb
+    $ sudo su - postgres # NB: Linux only.
+    $ createuser hdo --no-superuser --no-createrole --createdb
 
 Starting the application:
 =========================
@@ -118,7 +137,7 @@ This will generate `ERD.pdf`.
 Set up images:
 ==============
 
-To set everything up, run
+Run this task:
 
     $ bundle exec rake images:all
 
