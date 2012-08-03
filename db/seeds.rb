@@ -7,14 +7,18 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
-unless Rails.env.production?
+if Rails.env.development?
   existing = User.find_by_email("admin@holderdeord.no")
   existing && existing.destroy
 
+  puts "creating development user u=admin@holderdeord.no p=hdo123"
   User.create!(:email => "admin@holderdeord.no", :password => "hdo123", :password_confirmation => "hdo123", :remember_me => false)
 end
 
-initial_fields_list = [
+Field.destroy_all
+
+puts "creating fields"
+[
   "Offentlig forvaltning",
   "Familie og tro",
   "Kultur og frivillighet",
@@ -27,13 +31,7 @@ initial_fields_list = [
   "Arbeidsliv",
   "Transport og komm.",
   "Diverse"
-]
-
-puts 'Deleting all fields!'
-Field.find_each(&:delete)
-
-initial_fields_list.each do |field_name|
-  puts "Creating field #{field_name}"
+].each do |field_name|
+  puts "\t#{field_name}"
   Field.create! name: field_name
 end
-
