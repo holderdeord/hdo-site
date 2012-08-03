@@ -13,22 +13,32 @@ module Hdo
         @data[party]
       end
 
-      def text_for(party)
+      def text_for(party, opts = {})
         # TODO: i18n
         score = score_for(party)
 
-        case score
-        when 0...33
-          "#{party.name} har stemt mot"
-        when 33...66
-          "#{party.name} har stemt både for og mot"
-        when 66..100
-          "#{party.name} har stemt for"
-        when nil
-          "#{party.name} har ikke deltatt i avstemninger om tema"
-        else
-          raise "unknown score: #{score.inspect}"
+        if score.nil?
+          return "#{party.name} har ikke deltatt i avstemninger om tema".html_safe
         end
+
+        tmp = if opts[:html]
+                "#{party.name} har stemt <strong>%s</strong>"
+              else
+                "#{party.name} har stemt %s"
+              end
+
+        res = case score
+              when 0...33
+                tmp % "mot"
+              when 33...66
+                tmp % "både for og mot"
+              when 66..100
+                tmp % "for"
+              else
+                raise "unknown score: #{score.inspect}"
+              end
+
+        res.html_safe
       end
 
       private

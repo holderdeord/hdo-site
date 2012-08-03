@@ -9,7 +9,7 @@ describe PartiesController do
       get :index
       assigns(:parties).should == parties
     end
-    
+
     it 'renders the :index view' do
       get :index
       response.should have_rendered(:index)
