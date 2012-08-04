@@ -51,6 +51,7 @@ gem 'rack-cache', :require => 'rack/cache'
 gem 'dragonfly', '~> 0.9.12'
 gem 'lograge'
 gem 'unicode_utils'
+gem 'pry'
 
 # data import
 # gem 'hdo-storting-importer', :path => "../hdo-storting-importer"
