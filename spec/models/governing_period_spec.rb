@@ -7,7 +7,7 @@ describe GoverningPeriod do
 
   it "requires a party association" do
     g = GoverningPeriod.make :start_date => Date.today,
-      :end_date => Date.today,
+      :end_date => Date.tomorrow,
       :party => nil
     g.save.should be_false
   end
@@ -46,5 +46,12 @@ describe GoverningPeriod do
       :end_date => Date.tomorrow
 
       g.include?(Date.today + 1.week).should be_false
+  end
+
+  it "requires that the start date is before the end date" do
+    g = GoverningPeriod.make :start_date => Date.today,
+      :end_date => Date.today,
+      :party => nil
+    g.save.should be_false
   end
 end

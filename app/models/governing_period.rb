@@ -7,7 +7,7 @@ class GoverningPeriod < ActiveRecord::Base
 
   def start_date_must_be_before_end_date
     errors.add(:start_date, "must be before end date") if
-      end_date && start_date >= end_date
+      start_date && end_date && start_date >= end_date
   end
 
   def include?(date)

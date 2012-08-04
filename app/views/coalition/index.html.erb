@@ -24,6 +24,7 @@
         <th>Parti</th>
         <th>Fra</th>
         <th>Til</th>
+        <th></th>
       </thead>
       <tbody>
         <% @governing_periods.each do |gp| %>
@@ -31,6 +32,7 @@
               <td><%= gp.party.name %></td>
               <td><%= text_field_tag "governing_periods[#{gp.id}]start_date", gp.start_date %></td>
               <td><%= text_field_tag "governing_periods[#{gp.id}]end_date", gp.end_date %></td>
+              <td><%= link_to 'Destroy', "/coalition/#{gp.id}", method: :delete, data: { confirm: GoverningPeriod.human_attribute_name(:confirm_destroy) }, class: 'btn btn-danger' %></td>
             </tr>
         <% end %>
       </tbody>

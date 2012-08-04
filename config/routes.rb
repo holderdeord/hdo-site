@@ -15,6 +15,7 @@ Hdo::Application.routes.draw do
 
   get '/coalition' => 'coalition#index',  :as => :view_coalition
   put '/coalition' => 'coalition#update', :as => :update_coalition
+  delete '/coalition/:id' => 'coalition#destroy_governing_period', :as => :governing_period
 
   resources :promises,        :only => [:index]        # TODO: :create, :show and :edit behind auth
   get 'promises/page/:page' => 'promises#index'
