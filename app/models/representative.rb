@@ -14,6 +14,8 @@ class Representative < ActiveRecord::Base
   has_and_belongs_to_many :committees, :order => :name
 
   validates_uniqueness_of :first_name, :scope => :last_name # TODO: :scope => :period ?!
+  validates_presence_of   :external_id
+  validates_uniqueness_of :external_id
 
   friendly_id :external_id, :use => :slugged
 

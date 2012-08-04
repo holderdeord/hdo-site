@@ -5,7 +5,7 @@ describe Party do
     Representative.stub!(:count => 100)
 
     party = Party.create(:name => "Democratic Party")
-    Representative.create(:first_name => "Donald", :last_name => "Duck", :party => party)
+    Representative.make!(:party => party)
 
     party.percent_of_representatives.should == 1
   end
