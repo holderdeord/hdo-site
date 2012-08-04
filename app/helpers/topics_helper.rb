@@ -15,4 +15,9 @@ module TopicsHelper
       selected
     )
   end
+
+  def weight_options_for(connection)
+    options_for_select VoteConnection::WEIGHTS,
+                      (connection && connection.weight) || VoteConnection::DEFAULT_WEIGHT
+  end
 end
