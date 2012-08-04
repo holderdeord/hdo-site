@@ -13,9 +13,8 @@ Hdo::Application.routes.draw do
   resources :committees,      :only => [:index, :show]
   resources :fields
 
-  get '/coalition' => 'coalition#index',  :as => :view_coalition
-  put '/coalition' => 'coalition#update', :as => :update_coalition
-  delete '/coalition/:id' => 'coalition#destroy_governing_period', :as => :governing_period
+  resources :governing_periods, :only => [:index, :destroy]
+  put '/governing_periods' => 'governing_periods#update', :as => :update_governing_periods
 
   resources :promises,        :only => [:index]        # TODO: :create, :show and :edit behind auth
   get 'promises/page/:page' => 'promises#index'

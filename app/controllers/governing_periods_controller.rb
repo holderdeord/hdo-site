@@ -1,4 +1,5 @@
-class CoalitionController < ApplicationController
+class GoverningPeriodsController < ApplicationController
+  before_filter :authenticate_user!
 
   def index
     @coalition_parties = Party.select(&:in_gov?)
@@ -7,12 +8,12 @@ class CoalitionController < ApplicationController
 
   def update
     save_governing_periods
-    redirect_to view_coalition_path
+    redirect_to :index
   end
 
-  def destroy_governing_period
+  def destroy
     GoverningPeriod.find(params[:id]).destroy
-    redirect_to view_coalition_path
+    redirect_to :index
   end
 
   private

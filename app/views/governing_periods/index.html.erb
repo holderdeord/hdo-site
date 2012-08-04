@@ -18,7 +18,7 @@
 
 <div style="padding-top: 20px;">
   <h1>Perioder</h1>
-  <%= form_tag("/coalition", :method => "put")  do %>
+  <%= form_tag(update_governing_periods_url, :method => "put")  do %>
     <table class="table table-striped">
       <thead>
         <th>Parti</th>
@@ -32,7 +32,7 @@
               <td><%= gp.party.name %></td>
               <td><%= text_field_tag "governing_periods[#{gp.id}]start_date", gp.start_date %></td>
               <td><%= text_field_tag "governing_periods[#{gp.id}]end_date", gp.end_date %></td>
-              <td><%= link_to 'Destroy', "/coalition/#{gp.id}", method: :delete, data: { confirm: GoverningPeriod.human_attribute_name(:confirm_destroy) }, class: 'btn btn-danger' %></td>
+              <td><%= link_to 'Destroy', gp, method: :delete, data: { confirm: GoverningPeriod.human_attribute_name(:confirm_destroy) }, class: 'btn btn-danger' %></td>
             </tr>
         <% end %>
       </tbody>
