@@ -11,7 +11,7 @@ class Topic < ActiveRecord::Base
   has_and_belongs_to_many :promises
 
   #
-  # Whenever a topic is updated, we remove and re-create all vote_connection associations
+  # Whenever a topic is updated, we remove and re-create all vote_connection associations.
   # That means clearing the cache in before_add and before_remove is good enough.
   #
   # If we change how the connections are updated, this will need to be revised.
@@ -24,6 +24,8 @@ class Topic < ActiveRecord::Base
   has_many :votes, :through => :vote_connections, :order => :time
 
   friendly_id :title, :use => :slugged
+
+  scope :vote_ordered, includes(:votes).order('votes.time DESC')
 
   # TODO: rename to #scorer, #scores
   def stats

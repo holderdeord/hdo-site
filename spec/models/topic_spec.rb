@@ -80,4 +80,16 @@ describe Topic do
   it 'correctly downcases a title with non-ASCII characters' do
     Topic.make(:title => "Ærlig").downcased_title.should == "ærlig"
   end
+
+  it 'finds the latest topics based on vote time' do
+    t1 = Topic.make!
+    t2 = Topic.make!
+    t3 = Topic.make!
+
+    t1.vote_connections.map { |e| e.vote.update_attributes!(:time => 3.days.ago) }
+    t2.vote_connections.map { |e| e.vote.update_attributes!(:time => 2.days.ago) }
+    t3.vote_connections.map { |e| e.vote.update_attributes!(:time => 1.day.ago) }
+
+    Topic.vote_ordered.should == [t3, t2, t1]
+  end
 end
