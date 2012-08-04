@@ -65,3 +65,8 @@ gem 'hdo-storting-importer', "~> 0.0.7"
 
 # To use debugger
 # gem 'ruby-debug19', :require => 'ruby-debug'
+
+if ENV['HEROKU']
+  ruby '1.9.3'
+end
+
