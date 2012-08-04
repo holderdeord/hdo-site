@@ -43,7 +43,7 @@ class Vote < ActiveRecord::Base
   end
 
   def time_text
-    time.strftime("%Y-%m-%d")
+    I18n.l time, format: :short
   end
 
   def enacted_text

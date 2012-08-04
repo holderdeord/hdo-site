@@ -50,6 +50,7 @@ Category.blueprint do
 end
 
 Representative.blueprint do
+  external_id { sn.to_s }
   party { Party.make! }
   first_name { "first-name-#{sn}" }
   last_name { "last-name-#{sn}" }

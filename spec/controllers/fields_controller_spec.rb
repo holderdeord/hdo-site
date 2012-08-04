@@ -22,7 +22,7 @@ describe FieldsController do
     get :show, id: field
 
     assigns(:field).should == field
-    response.should render_template(:show)
+    response.should have_rendered(:show)
   end
 
   it 'can edit a field' do
@@ -31,7 +31,7 @@ describe FieldsController do
     get :edit, id: field
 
     assigns(:field).should == field
-    response.should render_template(:edit)
+    response.should have_rendered(:edit)
   end
 
   it 'can update a field' do

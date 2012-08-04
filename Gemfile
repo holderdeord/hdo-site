@@ -19,9 +19,10 @@ group :test do
   gem "database_cleaner", "~> 0.8.0"
   gem "loadable_component", ">= 0.1.1"
   gem 'simplecov', :require => false
-  gem 'guard', "~> 1.2.1"
-  gem 'guard-rspec', '~> 1.1'
-  gem 'guard-rails', "~> 0.1"
+  gem 'guard'
+  gem 'guard-rspec'
+  gem 'guard-spork'
+  gem 'ruby_gntp'
 end
 
 group :test, :development do
@@ -48,6 +49,9 @@ gem "will_paginate", "~> 3.0.3"
 gem "friendly_id", "~> 4.0.7"
 gem 'rack-cache', :require => 'rack/cache'
 gem 'dragonfly', '~> 0.9.12'
+gem 'lograge'
+gem 'unicode_utils'
+gem 'pry'
 
 # data import
 # gem 'hdo-storting-importer', :path => "../hdo-storting-importer"

@@ -164,6 +164,15 @@ class TopicsController < ApplicationController
   def set_vote_connections
     return unless params[:votes]
 
+    #
+    # Clear and re-create all connections. This has two benefits:
+    #
+    # * Connections removed by unchecking a checkbox will also be removed.
+    # * Ensures that the TopicsController#stats cache is cleared.
+    #
+    # TODO: make sure the connections are properly deleted from the DB, or
+    # the association table will grow on every edit.
+    #
     @topic.vote_connections = []
 
     params[:votes].each do |vote_id, data|

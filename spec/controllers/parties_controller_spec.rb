@@ -9,25 +9,23 @@ describe PartiesController do
       get :index
       assigns(:parties).should == parties
     end
-    
+
     it 'renders the :index view' do
       get :index
-      response.should render_template(:index)
+      response.should have_rendered(:index)
     end
   end
 
   describe "GET #show" do
     it 'assigns the requested party to @party' do
       get :show, id: party
+
       assigns(:party).should == party
     end
-    
+
     it 'renders the :show template' do
       get :show, id: party
-      response.should render_template(:show)
+      response.should have_rendered(:show)
     end
   end
-  
-  
-
 end

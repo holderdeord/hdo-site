@@ -16,7 +16,7 @@ describe IssuesController do
     get :show, id: issue
 
     assigns(:issue).should == issue
-    response.should render_template(:show)
+    response.should have_rendered(:show)
   end
 
 end

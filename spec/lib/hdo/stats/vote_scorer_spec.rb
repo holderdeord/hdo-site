@@ -89,6 +89,31 @@ module Hdo
         scorer.text_for(p1).should == "#{p1.name} har ikke deltatt i avstemninger om tema"
       end
 
+      it 'returns an HTML version of the description if :html => true' do
+        p1 = Party.make!
+
+        scorer.stub(:score_for).with(p1).and_return 0
+        str = scorer.text_for(p1, :html => true)
+        str.should == "#{p1.name} har stemt <strong>mot</strong>"
+        str.should be_html_safe
+
+        scorer.stub(:score_for).with(p1).and_return 50
+        str = scorer.text_for(p1, :html => true)
+        str.should == "#{p1.name} har stemt <strong>både for og mot</strong>"
+        str.should be_html_safe
+
+        scorer.stub(:score_for).with(p1).and_return 100
+        str = scorer.text_for(p1, :html => true)
+        str.should == "#{p1.name} har stemt <strong>for</strong>"
+        str.should be_html_safe
+
+        scorer.stub(:score_for).with(p1).and_return nil
+        str = scorer.text_for(p1, :html => true)
+        str.should == "#{p1.name} har ikke deltatt i avstemninger om tema"
+        str.should be_html_safe
+      end
+
+
       it 'raises an error if the score is invalid' do
         scorer.stub(:score_for).and_return :foo
         lambda { scorer.text_for(:foo) }.should raise_error
@@ -97,4 +122,3 @@ module Hdo
     end
   end
 end
-
