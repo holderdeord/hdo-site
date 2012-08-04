@@ -1,0 +1,43 @@
+<div>
+  <div class="page-header">
+    <h1>Regjeringen</h1>
+  </div>
+
+  <div class="row-fluid">
+    <% @coalition_parties.each do |party| %>
+      <div class="span4">
+        <%= image_tag party.image.thumb('200x200').strip.url %>
+      </div>
+    <% end %>
+  </div>
+  <div class="row-fluid">
+    <%= link_to 'Rediger', 'edit_gov_path', class: 'btn' %>
+    <%= link_to 'Ny Regjering', 'edit_gov_path', new_gov: true, class: 'btn' %>
+  </div>
+</div>
+
+<div style="padding-top: 20px;">
+  <h1>Perioder</h1>
+  <%= form_tag do %>
+  <table class="table table-striped">
+    <thead>
+      <th>Parti</th>
+      <th>Fra</th>
+      <th>Til</th>
+    </thead>
+    <tbody>
+      <% @governing_periods.each do |gp| %>
+          <tr>
+            <td><%= gp.party.name %></td>
+            <td><%= text_field_tag "governing_periods[#{gp.id}].start_date", gp.start_date %></td>
+            <td><%= text_field_tag "governing_periods[#{gp.id}].end_date", gp.end_date %></td>
+          </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <% end %>
+
+  <div class="row-fluid">
+    <%= link_to 'Lagre', 'save_gov_periods', class: 'btn btn-primary' %>
+  </div>
+</div>
