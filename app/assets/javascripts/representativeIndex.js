@@ -37,18 +37,24 @@
         return;
       }
 
+      $("#spinner").show();
+
       $.ajax({
         url: path,
         type: "GET",
         dataType: "html",
+
+        complete: function () {
+          $("#spinner").hide();
+        },
 
         success: function (html) {
           cache[path] = html;
           resultElement.html(html);
         },
 
-        error: function () {
-          resultElement.html(arguments.toString());
+        error: function (err) {
+          resultElement.html(err);
         }
       });
     }

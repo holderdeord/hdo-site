@@ -1,14 +1,22 @@
 <div class="row-fluid">
   <div class="well">
-    <select id="sort">
-      <option value="name"><%= t 'app.group.by_name' %></option>
-      <option value="party"><%= t 'app.group.by_party' %></option>
-      <option value="district"><%= t 'app.group.by_district' %></option>
-    </select>
 
-    <div class="pull-right">
-      <%= t('app.counts.representative', count: @representatives.size).html_safe %>
+    <div class="span6">
+      <select id="sort">
+        <option value="name"><%= t 'app.group.by_name' %></option>
+        <option value="party"><%= t 'app.group.by_party' %></option>
+        <option value="district"><%= t 'app.group.by_district' %></option>
+      </select>
+
+      <%= spinner_tag class: 'pull-right' %>
     </div>
+
+    <div class="span6">
+      <div class="pull-right">
+        <%= t('app.counts.representative', count: @representatives.size).html_safe %>
+      </div>
+    </div>
+
   </div>
 </div>
 

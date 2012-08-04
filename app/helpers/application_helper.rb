@@ -19,12 +19,13 @@ module ApplicationHelper
     end
   end
 
-  def spinner_tag
-    str = '<div style="text-align: center;">' +
-          image_tag('spinner.gif', id: 'spinner', alt: 'Loading...', style: 'display: none;') +
-          '</div>'
+  def spinner_tag(opts = nil)
+    style = {style: 'text-align: center;'}
+    style.merge!(opts) if opts
 
-    str.html_safe
+    content_tag 'div', opts do
+      image_tag('spinner.gif', id: 'spinner', alt: 'Loading...', style: 'display: none;')
+    end
   end
 
 end
