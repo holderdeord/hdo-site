@@ -15,6 +15,7 @@ nb:
   activerecord:
     errors:
       messages:
+        blank: "er blank."
         taken: "er allerede i bruk."
         record_invalid: "Validering feilet: %{errors}"
     models:

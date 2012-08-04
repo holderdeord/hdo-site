@@ -6,8 +6,8 @@ class Party < ActiveRecord::Base
   has_many :representatives, :order => :last_name
   has_many :promises
 
-  validates_uniqueness_of :name
-  validates_presence_of :name
+  validates_uniqueness_of :name, :external_id
+  validates_presence_of :name, :external_id
 
   friendly_id :external_id, :use => :slugged
 
