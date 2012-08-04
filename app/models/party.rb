@@ -1,6 +1,7 @@
 class Party < ActiveRecord::Base
   extend FriendlyId
 
+  include Hdo::ModelHelpers::HasFallbackImage
   include Hdo::ModelHelpers::HasRepresentatives
 
   has_many :representatives, :order => :last_name
@@ -15,14 +16,14 @@ class Party < ActiveRecord::Base
   attr_accessible :image, :name
 
   def large_logo
-    default = "party_logos/unknown_logo_large.jpg"
-    party_logo = "party_logos/#{URI.encode external_id}_logo_large.jpg"
+    image_with_fallback.strip.url
+  end
 
-    if File.exist?(File.join("#{Rails.root}/app/assets/images", party_logo))
-      party_logo
-    else
-      default
-    end
+  def default_image
+    default_logo = Rails.root.join("app/assets/images/party_logos/unknown_logo_large.jpg")
+    large_logo = Rails.root.join("app/assets/images/party_logos/#{URI.encode external_id}_logo_large.jpg")
+
+    large_logo.exist? ? large_logo : default_logo
   end
 
 end
