@@ -55,7 +55,7 @@ gem 'pry'
 
 # data import
 # gem 'hdo-storting-importer', :path => "../hdo-storting-importer"
-gem 'hdo-storting-importer', "~> 0.0.7"
+gem 'hdo-storting-importer', "~> 0.0.8"
 
 # To use Jbuilder templates for JSON
 # gem 'jbuilder'

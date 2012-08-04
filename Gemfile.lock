@@ -79,9 +79,10 @@ GEM
     guard-spork (1.1.0)
       guard (>= 1.1)
       spork (>= 0.8.4)
-    hdo-storting-importer (0.0.7)
+    hdo-storting-importer (0.0.8)
       aruba
       builder
+      multi_json
       nokogiri
       rake
       rest-client
@@ -246,7 +247,7 @@ DEPENDENCIES
   guard
   guard-rspec
   guard-spork
-  hdo-storting-importer (~> 0.0.7)
+  hdo-storting-importer (~> 0.0.8)
   highcharts-rails (~> 2.2)
   jquery-rails
   jquery-tablesorter (>= 0.0.5)
