@@ -1,6 +1,6 @@
 class GoverningPeriod < ActiveRecord::Base
   belongs_to :party
-  attr_accessible :end_date, :start_date, :party
+  attr_accessible :end_date, :start_date, :party, :party_id
 
   validates_presence_of :party, :start_date
   validate :start_date_must_be_before_end_date

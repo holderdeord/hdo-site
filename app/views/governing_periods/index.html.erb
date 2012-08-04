@@ -19,7 +19,7 @@
 <div style="padding-top: 20px;">
   <h1>Perioder</h1>
   <%= form_tag(update_governing_periods_url, :method => "put")  do %>
-    <table class="table table-striped">
+    <table class="table table-striped" id="governing-periods-table">
       <thead>
         <th>Parti</th>
         <th>Fra</th>
@@ -28,18 +28,24 @@
       </thead>
       <tbody>
         <% @governing_periods.each do |gp| %>
-            <tr>
-              <td><%= gp.party.name %></td>
-              <td><%= text_field_tag "governing_periods[#{gp.id}]start_date", gp.start_date %></td>
-              <td><%= text_field_tag "governing_periods[#{gp.id}]end_date", gp.end_date %></td>
-              <td><%= link_to 'Destroy', gp, method: :delete, data: { confirm: GoverningPeriod.human_attribute_name(:confirm_destroy) }, class: 'btn btn-danger' %></td>
-            </tr>
+          <%= hidden_field_tag "governing_periods[#{gp.id}]party_id", gp.party.id %>
+          <tr>
+            <td><%= gp.party.name %></td>
+            <td><%= text_field_tag "governing_periods[#{gp.id}]start_date", gp.start_date %></td>
+            <td><%= text_field_tag "governing_periods[#{gp.id}]end_date", gp.end_date %></td>
+            <td><%= link_to 'Destroy', gp, method: :delete, data: { confirm: GoverningPeriod.human_attribute_name(:confirm_destroy) }, class: 'btn btn-danger' %></td>
+          </tr>
         <% end %>
+        <tr>
+          <td><%= select("governing_periods[new]", 'party_id', Party.all(:order => :name).collect { |p| [p.name, p.id]}) %></td>
+          <td><%= text_field_tag "governing_periods[new]start_date" %></td>
+          <td><%= text_field_tag "governing_periods[new]end_date" %></td>
+          <td/>
+        </tr>
       </tbody>
     </table>
 
     <div class="row-fluid">
-      <%#= link_to 'Lagre', 'save_gov_periods', class: 'btn btn-primary' %>
       <%= submit_tag 'Lagre', class:'btn btn-primary' %>
     </div>
   <% end %>

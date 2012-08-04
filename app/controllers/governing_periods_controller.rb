@@ -8,12 +8,12 @@ class GoverningPeriodsController < ApplicationController
 
   def update
     save_governing_periods
-    redirect_to :index
+    redirect_to governing_periods_url
   end
 
   def destroy
     GoverningPeriod.find(params[:id]).destroy
-    redirect_to :index
+    redirect_to governing_periods_url
   end
 
   private
@@ -21,7 +21,8 @@ class GoverningPeriodsController < ApplicationController
   def save_governing_periods
     governin_periods_params = params[:governing_periods]
     governin_periods_params.each do |id,params|
-      governing_period = GoverningPeriod.find id
+      id = nil if id.start_with? 'new'
+      governing_period = GoverningPeriod.find_or_create_by_id id
       unless governing_period.update_attributes(params)
         flash.alert = governing_period.errors.full_messages.join(' ')
       end
