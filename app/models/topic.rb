@@ -3,12 +3,12 @@ class Topic < ActiveRecord::Base
 
   attr_accessible :description, :title, :category_ids, :promise_ids, :field_ids
 
-  validates_presence_of :title
+  validates_presence_of   :title
   validates_uniqueness_of :title
 
-  has_and_belongs_to_many :fields
-  has_and_belongs_to_many :categories
-  has_and_belongs_to_many :promises
+  has_and_belongs_to_many :fields,     uniq: true
+  has_and_belongs_to_many :categories, uniq: true
+  has_and_belongs_to_many :promises,   uniq: true
 
   #
   # Whenever a topic is updated, we remove and re-create all vote_connection associations.
