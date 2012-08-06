@@ -27,9 +27,43 @@ describe Topic do
     t.should be_valid
   end
 
+  it "won't add the same category twice" do
+    cat = Category.make!
+
+    valid_topic.categories << cat
+    valid_topic.categories << cat
+
+    valid_topic.categories.size.should == 1
+  end
+
   it "can associate promises" do
     valid_topic.promises << Promise.make!
     valid_topic.promises.first.body.should_not be_empty
+  end
+
+  it "won't add the same promise twice" do
+    promise = Promise.make!
+
+    valid_topic.promises << promise
+    valid_topic.promises << promise
+
+    valid_topic.promises.size.should == 1
+  end
+
+  it "can associate fields" do
+    field = Field.make!
+
+    valid_topic.fields << field
+    valid_topic.fields.first.should == field
+  end
+
+  it "won't add the same field twice" do
+    field = Field.make!
+
+    valid_topic.fields << field
+    valid_topic.fields << field
+
+    valid_topic.fields.size.should == 1
   end
 
   it "can associate votes with a vote direction" do

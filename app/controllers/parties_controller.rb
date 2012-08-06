@@ -2,7 +2,7 @@ class PartiesController < ApplicationController
   caches_page :index, :show
 
   def index
-    @parties = Party.includes(:representatives).all
+    @parties = Party.order(:name).all
 
     respond_to do |format|
       format.html
