@@ -137,7 +137,7 @@ class TopicsController < ApplicationController
   end
 
   def edit_promises
-    @promises = @topic.categories.includes(:promises).map(&:promises).compact.flatten
+    @promises = @topic.categories.includes(:promises).map(&:promises).compact.flatten.uniq
   end
 
   def edit_votes

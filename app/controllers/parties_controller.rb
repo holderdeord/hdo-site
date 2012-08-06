@@ -3,7 +3,7 @@ class PartiesController < ApplicationController
   # hmm, no caching of parties#show. need a sweeper?
 
   def index
-    @parties = Party.includes(:representatives).all
+    @parties = Party.order(:name).all
 
     respond_to do |format|
       format.html
