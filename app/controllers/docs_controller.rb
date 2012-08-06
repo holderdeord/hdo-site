@@ -2,7 +2,7 @@ class DocsController < ApplicationController
   caches_page :index
 
   def index
-    @representative_example = "<representatives>\n  " + Hdo::StortingImporter::Representative.xml_example.split("\n").join("\n  ") + "\n</representatives>"
+    @representative_example = "[\n  " + Hdo::StortingImporter::Representative.json_example.split("\n").join("\n  ") + "\n]"
 
     @import_types = [
       Hdo::StortingImporter::Party,
@@ -12,7 +12,7 @@ class DocsController < ApplicationController
       Hdo::StortingImporter::Category,
       Hdo::StortingImporter::Issue,
       Hdo::StortingImporter::Vote,
-      Hdo::StortingImporter::Vote::Proposition,
+      Hdo::StortingImporter::Proposition,
       Hdo::StortingImporter::Promise,
     ]
   end

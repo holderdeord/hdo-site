@@ -1,3 +1,27 @@
+GIT
+  remote: https://github.com/holderdeord/hdo-storting-importer.git
+  revision: f102477d23c95f1aefea68801243f93d76fe3ed3
+  branch: json-schema
+  specs:
+    hdo-storting-importer (0.0.9)
+      aruba
+      builder
+      jschematic
+      multi_json
+      nokogiri
+      rake
+      rest-client
+      unicode_utils
+      yajl-ruby
+
+GIT
+  remote: https://github.com/jarib/jschematic.git
+  revision: 751bd14adb5a02f464aab72e4a195df599b63f10
+  branch: boolean-fixes
+  specs:
+    jschematic (0.0.9)
+      addressable
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -79,14 +103,6 @@ GEM
     guard-spork (1.1.0)
       guard (>= 1.1)
       spork (>= 0.8.4)
-    hdo-storting-importer (0.0.8)
-      aruba
-      builder
-      multi_json
-      nokogiri
-      rake
-      rest-client
-      unicode_utils
     highcharts-rails (2.2.4)
       railties (~> 3.1)
     highline (1.6.13)
@@ -233,6 +249,7 @@ GEM
     warden (1.2.1)
       rack (>= 1.0)
     will_paginate (3.0.3)
+    yajl-ruby (1.1.0)
 
 PLATFORMS
   ruby
@@ -247,14 +264,16 @@ DEPENDENCIES
   guard
   guard-rspec
   guard-spork
-  hdo-storting-importer (~> 0.0.8)
+  hdo-storting-importer!
   highcharts-rails (~> 2.2)
   jquery-rails
   jquery-tablesorter (>= 0.0.5)
+  jschematic!
   less
   loadable_component (>= 0.1.1)
   lograge
   machinist (~> 2.0)
+  multi_json
   mysql2 (~> 0.3.11)
   nokogiri (~> 1.5.0)
   pry
@@ -272,3 +291,4 @@ DEPENDENCIES
   uglifier (>= 1.0.3)
   unicode_utils
   will_paginate (~> 3.0.3)
+  yajl-ruby
