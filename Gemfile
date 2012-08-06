@@ -52,10 +52,11 @@ gem 'dragonfly', '~> 0.9.12'
 gem 'lograge'
 gem 'unicode_utils'
 gem 'pry'
+gem 'multi_json'
+gem 'yajl-ruby'
 
 # data import
-# gem 'hdo-storting-importer', :path => "../hdo-storting-importer"
-gem 'hdo-storting-importer', "~> 0.0.8"
+gem 'hdo-storting-importer', "~> 0.0.9"
 
 # To use Jbuilder templates for JSON
 # gem 'jbuilder'
