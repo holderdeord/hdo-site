@@ -25,7 +25,7 @@ module Hdo
 
       def run
         case @cmd
-        when 'xml'
+        when 'json'
           import_files
         when 'daily'
           raise NotImplementedError
@@ -78,40 +78,41 @@ module Hdo
           print "\nimporting #{file}:"
 
           str = file == "-" ? STDIN.read : File.read(file)
-          doc = Nokogiri.XML(str)
+          data = MultiJson.decode(str)
 
-          if doc
-            import_doc doc
+          case data
+          when Array
+            data.each { |e| import_hash(e) }
+          when Hash
+            import_hash data
           else
-            p file => str
-            raise
+            raise TypeError, "expected Hash or Array, got: #{data.inspect}"
           end
         end
       end
 
-      def import_doc(doc)
-        name = doc.first_element_child.name
-        puts " #{name}"
+      def import_hash(hash)
+        kind = hash['kind'] or raise ArgumentError, "missing 'kind' property: #{hash.inspect}"
 
-        case name
-        when 'representatives'
-          persister.import_representatives StrortingImporter::Representative.from_hdo_doc(doc)
-        when 'parties'
-          persister.import_parties StortingImporter::Party.from_hdo_doc(doc)
-        when 'committees'
-          persister.import_committees StortingImporter::Committee.from_hdo_doc(doc)
-        when 'categories'
-          persister.import_categories StortingImporter::Categories.from_hdo_doc(doc)
-        when 'districts'
-          persister.import_districts StortingImporter::District.from_hdo_doc(doc)
-        when 'issues'
-          persister.import_issues StortingImporter::Issue.from_hdo_doc(doc)
-        when 'votes'
-          persister.import_votes StortingImporter::Vote.from_hdo_doc(doc)
-        when 'promises'
-          persister.import_promises StortingImporter::Promise.from_hdo_doc(doc)
+        case kind
+        when 'hdo#representative'
+          persister.import_representative StrortingImporter::Representative.from_hash(hash)
+        when 'hdo#party'
+          persister.import_party StortingImporter::Party.from_hash(hash)
+        when 'hdo#committee'
+          persister.import_committee StortingImporter::Committee.from_hash(hash)
+        when 'hdo#category'
+          persister.import_category StortingImporter::Categories.from_hash(hash)
+        when 'hdo#district'
+          persister.import_district StortingImporter::District.from_hash(hash)
+        when 'hdo#issue'
+          persister.import_issue StortingImporter::Issue.from_hash(hash)
+        when 'hdo#vote'
+          persister.import_vote StortingImporter::Vote.from_hash(hash)
+        when 'hdo#promise'
+          persister.import_promise StortingImporter::Promise.from_hash(hash)
         else
-          raise "unknown type: #{name}"
+          raise "unknown type: #{kind}"
         end
       end
 
