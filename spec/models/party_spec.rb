@@ -25,10 +25,9 @@ describe Party do
 
   it "knows if it is in the government coalition" do
     p = Party.make!
-    p.governing_periods << (GoverningPeriod.make! :start_date => Date.yesterday,
-      :party => p)
+    p.governing_periods.make! :start_date => Date.yesterday, :party => p
 
-    p.in_government?.should be_true
+    p.should be_in_government
   end
 
   it 'is invalid without an external_id' do

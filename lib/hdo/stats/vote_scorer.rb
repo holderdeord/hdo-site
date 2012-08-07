@@ -18,7 +18,6 @@ module Hdo
       end
 
       def text_for(party, opts = {})
-        # TODO: i18n
         entity_name = opts[:name] || party.name
         score = score_for(party)
 
@@ -26,7 +25,6 @@ module Hdo
       end
 
       def text_for_group(parties, opts = {})
-        # TODO: i18n
         entity_name = opts.fetch(:name)
         score = score_for_group(parties)
 
@@ -36,6 +34,7 @@ module Hdo
       private
 
       def text_for_entity(score, entity_name, opts)
+        # TODO: i18n
         if score.nil?
           return "#{entity_name} har ikke deltatt i avstemninger om tema".html_safe
         end
