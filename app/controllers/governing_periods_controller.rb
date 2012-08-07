@@ -2,7 +2,7 @@ class GoverningPeriodsController < ApplicationController
   before_filter :authenticate_user!
 
   def index
-    @coalition_parties = Party.select(&:in_gov?)
+    @coalition_parties = Party.select(&:in_government?)
     @governing_periods = GoverningPeriod.all order: :start_date
   end
 

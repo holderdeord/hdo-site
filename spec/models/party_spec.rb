@@ -28,7 +28,7 @@ describe Party do
     p.governing_periods << (GoverningPeriod.make! :start_date => Date.yesterday,
       :party => p)
 
-    p.in_gov?.should be_true
+    p.in_government?.should be_true
   end
 
   it 'is invalid without an external_id' do

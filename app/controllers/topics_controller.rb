@@ -113,7 +113,7 @@ class TopicsController < ApplicationController
   private
 
   def fetch_parties_by_coalition_or_opposition
-    @coalition_parties, @opposition_parties = Party.order(:name).partition(&:in_gov?)
+    @coalition_parties, @opposition_parties = Party.order(:name).partition(&:in_government?)
   end
 
   def step_after(step = STEPS.first)

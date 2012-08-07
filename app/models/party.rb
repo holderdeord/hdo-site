@@ -16,8 +16,8 @@ class Party < ActiveRecord::Base
   image_accessor :image
   attr_accessible :image, :name
 
-  def in_gov?(date = Date.today)
-    governing_periods.find { |gp| gp.include? date } != nil
+  def in_government?(date = Date.today)
+    !governing_periods.where('start_date <= ? and (end_date >= ? || end_date is null)', date, date).empty?
   end
 
   def large_logo
