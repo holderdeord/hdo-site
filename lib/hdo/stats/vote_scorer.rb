@@ -13,18 +13,29 @@ module Hdo
         @data[party]
       end
 
-      def text_for(party, opts = {})
+      def score_for_group(parties)
+        parties.inject(0) { |score, party| score += @data[party] } / parties.count
+      end
+
+      def text_for(parties, opts = {})
         # TODO: i18n
-        score = score_for(party)
+
+        if opts[:group_name]
+          score = score_for_group parties
+          entity_name = opts[:group_name]
+        else
+          score = score_for(parties)
+          entity_name = parties.name
+        end
 
         if score.nil?
-          return "#{party.name} har ikke deltatt i avstemninger om tema".html_safe
+          return "#{entity_name} har ikke deltatt i avstemninger om tema".html_safe
         end
 
         tmp = if opts[:html]
-                "#{party.name} har stemt <strong>%s</strong>"
+                "#{entity_name} har stemt <strong>%s</strong>"
               else
-                "#{party.name} har stemt %s"
+                "#{entity_name} har stemt %s"
               end
 
         res = case score
