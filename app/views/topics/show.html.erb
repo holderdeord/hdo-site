@@ -1,4 +1,4 @@
-<div class="hero-unit">
+<div class="well">
   <h1><%= @topic.title %></h1>
   <p><%= @topic.description %></p>
 </div>
@@ -10,30 +10,13 @@
   </ul>
 </div>
 
-<% Party.order(:name).each do |party| %>
-<div class="row-fluid">
-  <div class="span2"><%= image_tag party.large_logo, alt: "#{party.name}s logo" %></div>
-  <div class="span10">
-    <h2><%= @topic.stats.text_for(party) %></h2>
-    <h3 class="pull-right"><%= @topic.stats.score_for(party) %>%</h3>
-
-    <% if promises = @promises_by_party[party] %>
-    <h5>I partiprogrammet har <%= party.name %> lovet følgende:</h5>
-    <ul>
-      <% promises.each do |promise| %>
-      <li><%= promise.body %></li>
-      <% end %>
-    </ul>
-    <% end %>
-  </div>
-</div>
-
-<div class="row-fluid">
-  <%= link_to "Se alle #{party.external_id}s løfter", party_path(party), class: 'pull-right' %>
-</div>
+<%= render partial: 'parties_group',
+  locals: { parties: @coalition_parties, topic: @topic, promises_by_party: @promises_by_party, group_name: 'Regjeringspartiene' } %>
 
 <hr class="soften">
-<% end %>
+
+<%= render partial: 'parties_group',
+  locals: { parties: @opposition_parties, topic: @topic, promises_by_party: @promises_by_party, group_name: 'Opposisjonspartiene' } %>
 
 <% if user_signed_in? %>
   <div class="form-actions">

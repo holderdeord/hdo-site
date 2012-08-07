@@ -20,7 +20,14 @@ describe Party do
 
   it 'is invalid without unique name' do
     party = Party.make!
-    Party.make(:name => party.name).should be_invalid
+    Party.make(:name => party.name).should_not be_valid
+  end
+
+  it "knows if it is in the government coalition" do
+    p = Party.make!
+    p.governing_periods.make! :start_date => Date.yesterday, :party => p
+
+    p.should be_in_government
   end
 
   it 'is invalid without an external_id' do

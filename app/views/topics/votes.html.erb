@@ -20,13 +20,15 @@
             <td>
               <% if connection.vote.has_results? %>
                 <% stats = connection.vote.stats %>
-                <% Party.all(:order => :name).each do |party, vote_counts = stats.party_votes[party]| %>
-                  <p>
-                    <%= image_tag party.image_with_fallback.thumb('35x35').strip.url, alt: "#{party.name}s logo" %>
-                    <strong><%= party.name.capitalize %></strong>
-                    <%= stats.text_for(party) %>
-                    <small><%= "(#{vote_counts[:for]} for, #{vote_counts[:against]} mot, #{vote_counts[:absent]} ikke tilstede.)" %></small>
-                  </p>
+
+                <h3>Regjeringspartiene:</h3>
+                <% @coalition_parties.each do |party, vote_counts = stats.party_votes[party]| %>
+                  <%= render partial: 'votes_party', locals: { party: party, stats: stats, vote_counts: vote_counts } %>
+                <% end %>
+
+                <h3>Opposisjonspartiene:</h3>
+                <% @opposition_parties.each do |party, vote_counts = stats.party_votes[party]| %>
+                  <%= render partial: 'votes_party', locals: { party: party, stats: stats, vote_counts: vote_counts } %>
                 <% end %>
 
                 <% if connection.vote.inferred? %>
