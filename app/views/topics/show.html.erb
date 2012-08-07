@@ -10,17 +10,17 @@
   </ul>
 </div>
 
-<% parties_alphabetically = Party.order(:name) %>
-<h1>Regjeringspartiene:</h1>
-<% parties_alphabetically.select(&:in_gov?).each do |party| %>
-<%= render partial: 'party', locals: { party: party, topic: @topic, promises: @promises_by_party[party] } %>
-<% end %>
+<div class="page-header">
+  <h1>Regjeringspartiene:</h1>
+</div>
+<%= render partial: 'parties_list',
+  locals: { parties: @coalition_parties, topic: @topic, promises_by_party: @promises_by_party } %>
 
-<h1>Opposisjonspartiene:</h1>
-<% parties_alphabetically.reject(&:in_opposition?).each do |party| %>
-<%= render partial: 'party', locals: { party: party, topic: @topic, promises: @promises_by_party[party] } %>
-<% end %>
-
+<div class="page-header">
+  <h1>Opposisjonspartiene:</h1>
+</div>
+<%= render partial: 'parties_list',
+  locals: { parties: @opposition_parties, topic: @topic, promises_by_party: @promises_by_party } %>
 
 <% if user_signed_in? %>
   <div class="form-actions">

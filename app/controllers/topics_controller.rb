@@ -16,6 +16,8 @@ class TopicsController < ApplicationController
   def show
     @promises_by_party = @topic.promises.group_by { |e| e.party }
 
+    @coalition_parties, @opposition_parties = Party.order(:name).partition(&:in_gov?)
+
     respond_to do |format|
       format.html
       format.json { render json: @topic }
