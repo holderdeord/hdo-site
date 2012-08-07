@@ -17,6 +17,7 @@ class Vote < ActiveRecord::Base
   friendly_id :external_id, :use => :slugged
 
   scope :personal, where(:personal => true)
+  scope :non_personal, where(:personal => false)
 
   def self.naive_search(filter, keyword, selected_categories = [])
     # TODO: elasticsearch

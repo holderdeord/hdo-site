@@ -27,4 +27,11 @@ describe Vote do
 
     Vote.personal.should == [a]
   end
+
+  it "should have a non_personal scope" do
+    a = Vote.make! :personal => true
+    b = Vote.make! :personal => false
+
+    Vote.non_personal.should == [b]
+  end
 end
