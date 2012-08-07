@@ -34,6 +34,7 @@ Spork.prefork do
 
     config.include Devise::TestHelpers, type: :controller
     config.include BrowserSpecHelper, type: :request
+    config.include CacheSpecHelper, :cache
 
     config.before :suite do
       DatabaseCleaner.strategy = :transaction
@@ -60,6 +61,10 @@ Spork.prefork do
 
     config.after :all, type: :request do
       BrowserSpecHelper.stop
+    end
+
+    config.around :each, :cache do |example|
+      CacheSpecHelper.with_caching(example)
     end
 
     if ENV['FOCUS'] or ENV['focus']
