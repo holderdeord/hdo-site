@@ -66,12 +66,13 @@ namespace :images do
     path_to_logos = Rails.root.join("app/assets/images/party_logos")
 
     Party.all.each do |party|
-     party.image = Pathname.new("#{path_to_logos}/#{party.external_id}_logo_large.jpg")
-     party.save!
-     puts "Logo for #{party.name} mapped."
+      path_to_logos.join("#{party.external_id}_logo_large.jpg")
+      party.save!
+      puts "Logo for #{party.name} mapped."
     end
   end
 
+  desc 'Set up all images'
   task :all => %w[images:fetch_representatives images:party_logos]
 end
 
