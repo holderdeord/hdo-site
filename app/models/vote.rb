@@ -48,6 +48,18 @@ class Vote < ActiveRecord::Base
     I18n.l time, format: :short
   end
 
+  def has_results?
+    vote_results.size > 0
+  end
+
+  def inferred?
+    non_personal? && has_results?
+  end
+
+  def non_personal?
+    !personal?
+  end
+
   def enacted_text
     enacted? ? I18n.t('app.yes') : I18n.t('app.no')
   end

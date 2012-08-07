@@ -18,7 +18,7 @@
               <% end %>
             </td>
             <td>
-              <% if connection.vote.personal? %>
+              <% if connection.vote.has_results? %>
                 <% stats = connection.vote.stats %>
                 <% Party.all(:order => :name).each do |party, vote_counts = stats.party_votes[party]| %>
                   <p>
@@ -28,8 +28,12 @@
                     <small><%= "(#{vote_counts[:for]} for, #{vote_counts[:against]} mot, #{vote_counts[:absent]} ikke tilstede.)" %></small>
                   </p>
                 <% end %>
+
+                <% if connection.vote.inferred? %>
+                  <%= I18n.t('app.votes.non_personal.inferred') %>
+                <% end %>
               <% else %>
-                <%= I18n.t('app.votes.non_party') %>
+                <%= I18n.t('app.votes.non_personal.party_unknown') %>
               <% end %>
             </td>
             <td>

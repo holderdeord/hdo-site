@@ -2,8 +2,10 @@
   <h1><%= @vote.subject %></h1>
 </div>
 
-<% unless @vote.personal? %>
-  <div class="alert alert-info"><%= I18n.t('app.votes.non_personal') %></div>
+<% if @vote.inferred? %>
+  <div class="alert alert-info"><%= I18n.t('app.votes.non_personal.inferred') %></div>
+<% elsif @vote.non_personal? %>
+  <div class="alert alert-info"><%= I18n.t('app.votes.non_personal.default') %></div>
 <% end %>
 
 <div class="well">

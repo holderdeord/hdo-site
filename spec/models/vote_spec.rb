@@ -34,4 +34,24 @@ describe Vote do
 
     Vote.non_personal.should == [b]
   end
+
+  it "it knows if it has results" do
+    with    = Vote.make!
+    without = Vote.make!(:vote_results => [])
+
+    with.should have_results
+    without.should_not have_results
+  end
+
+  it 'knows if results were inferred' do
+    inferred     = Vote.make!(:personal => false)
+    not_inferred = Vote.make!(:personal => false, :vote_results => [])
+
+    inferred.should be_inferred
+    not_inferred.should_not be_inferred
+  end
+
+  it 'knows if a result is non-personal' do
+    Vote.make!(:personal => false).should be_non_personal
+  end
 end
