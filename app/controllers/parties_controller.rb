@@ -14,7 +14,11 @@ class PartiesController < ApplicationController
 
   def show
     @party = Party.includes(:representatives, :promises => :categories).find(params[:id])
-    @topics = Topic.vote_ordered.limit(10)
+
+    # TODO: proper feature toggling
+    if Rails.application.config.topic_list_on_parties_show
+      @topics = Topic.vote_ordered.limit(10)
+    end
 
     respond_to do |format|
       format.html

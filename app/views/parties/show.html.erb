@@ -13,7 +13,10 @@
       </dl>
 
       <%= render partial: "representative_search", locals: { representatives: @party.representatives } %>
-      <%= render partial: "topic_list", locals: { party: @party, :topics => @topics } %>
+
+      <% if Rails.application.config.topic_list_on_parties_show %>
+        <%= render partial: "topic_list", locals: { party: @party, :topics => @topics } %>
+      <% end %>
     </div>
 
     <div class="span8">
