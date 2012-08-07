@@ -14,7 +14,7 @@ module Hdo
       end
 
       def score_for_group(parties)
-        parties.inject(0) { |score, party| score += @data[party] } / parties.count
+        @data[parties] ||= parties.inject(0) { |score, party| score += @data[party] } / parties.count
       end
 
       def text_for(parties, opts = {})
