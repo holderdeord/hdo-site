@@ -14,7 +14,10 @@ class TopicsController < ApplicationController
   end
 
   def show
+    flash.notice = "Denne siden viser hva partiene har stemt og lovet om #{@topic.title.downcase}"
     @promises_by_party = @topic.promises.group_by { |e| e.party }
+
+    fetch_parties_by_coalition_or_opposition
 
     respond_to do |format|
       format.html
@@ -89,6 +92,7 @@ class TopicsController < ApplicationController
   end
 
   def votes
+    fetch_parties_by_coalition_or_opposition
     render 'votes', locals: { :topic => @topic }
   end
 
@@ -107,6 +111,10 @@ class TopicsController < ApplicationController
   end
 
   private
+
+  def fetch_parties_by_coalition_or_opposition
+    @coalition_parties, @opposition_parties = Party.order(:name).partition(&:in_government?)
+  end
 
   def step_after(step = STEPS.first)
     STEPS[STEPS.index(step) + 1]

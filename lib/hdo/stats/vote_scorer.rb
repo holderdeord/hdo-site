@@ -13,18 +13,36 @@ module Hdo
         @data[party]
       end
 
+      def score_for_group(parties)
+        @data[parties] ||= parties.inject(0) { |score, party| score += @data[party] } / parties.count
+      end
+
       def text_for(party, opts = {})
-        # TODO: i18n
+        entity_name = opts[:name] || party.name
         score = score_for(party)
 
+        text_for_entity score, entity_name, opts
+      end
+
+      def text_for_group(parties, opts = {})
+        entity_name = opts.fetch(:name)
+        score = score_for_group(parties)
+
+        text_for_entity score, entity_name, opts
+      end
+
+      private
+
+      def text_for_entity(score, entity_name, opts)
+        # TODO: i18n
         if score.nil?
-          return "#{party.name} har ikke deltatt i avstemninger om tema".html_safe
+          return "#{entity_name} har ikke deltatt i avstemninger om tema".html_safe
         end
 
         tmp = if opts[:html]
-                "#{party.name} har stemt <strong>%s</strong>"
+                "#{entity_name} har stemt <strong>%s</strong>"
               else
-                "#{party.name} har stemt %s"
+                "#{entity_name} har stemt %s"
               end
 
         res = case score
@@ -40,8 +58,6 @@ module Hdo
 
         res.html_safe
       end
-
-      private
 
       def compute(connections)
         weight_sum = 0

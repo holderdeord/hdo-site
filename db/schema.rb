@@ -91,6 +91,16 @@ ActiveRecord::Schema.define(:version => 20120806211723) do
 
   add_index "fields_topics", ["field_id", "topic_id"], :name => "index_fields_topics_on_field_id_and_topic_id"
 
+  create_table "governing_periods", :force => true do |t|
+    t.date     "start_date"
+    t.date     "end_date"
+    t.integer  "party_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "governing_periods", ["party_id"], :name => "index_governing_periods_on_party_id"
+
   create_table "issues", :force => true do |t|
     t.string   "external_id"
     t.string   "summary"

@@ -6,6 +6,7 @@ class Party < ActiveRecord::Base
 
   has_many :representatives, :order => :last_name
   has_many :promises
+  has_many :governing_periods, :order => :start_date
 
   validates_uniqueness_of :name, :external_id
   validates_presence_of :name, :external_id
@@ -14,6 +15,10 @@ class Party < ActiveRecord::Base
 
   image_accessor :image
   attr_accessible :image, :name
+
+  def in_government?(date = Date.today)
+    governing_periods.for_date(date).first != nil
+  end
 
   def large_logo
     image_with_fallback.strip.url
