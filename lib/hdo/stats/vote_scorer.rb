@@ -17,17 +17,25 @@ module Hdo
         @data[parties] ||= parties.inject(0) { |score, party| score += @data[party] } / parties.count
       end
 
-      def text_for(parties, opts = {})
+      def text_for(party, opts = {})
         # TODO: i18n
+        entity_name = opts[:name] || party.name
+        score = score_for(party)
 
-        if opts[:group_name]
-          score = score_for_group parties
-          entity_name = opts[:group_name]
-        else
-          score = score_for(parties)
-          entity_name = parties.name
-        end
+        text_for_entity score, entity_name, opts
+      end
 
+      def text_for_group(parties, opts = {})
+        # TODO: i18n
+        entity_name = opts.fetch(:name)
+        score = score_for_group(parties)
+
+        text_for_entity score, entity_name, opts
+      end
+
+      private
+
+      def text_for_entity(score, entity_name, opts)
         if score.nil?
           return "#{entity_name} har ikke deltatt i avstemninger om tema".html_safe
         end
@@ -51,8 +59,6 @@ module Hdo
 
         res.html_safe
       end
-
-      private
 
       def compute(connections)
         weight_sum = 0

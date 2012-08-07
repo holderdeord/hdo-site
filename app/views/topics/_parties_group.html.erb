@@ -1,5 +1,5 @@
 <div class="page-header">
-  <h1><%= topic.stats.text_for(parties, :group_name => group_name) %></h1>
+  <h1><%= topic.stats.text_for_group(parties, :name => group_name) %></h1>
 </div>
 <% parties.each do |party| %>
   <div class="row-fluid">

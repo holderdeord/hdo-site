@@ -140,7 +140,19 @@ module Hdo
         # the vote matches the topic
         topic.vote_connections.create! :vote => vote, :matches => true, :weight => 1
 
-        scorer.text_for([rep1.party, rep2.party], group_name: 'Ze Germans').should start_with 'Ze Germans'
+        scorer.text_for_group([rep1.party, rep2.party], name: 'Ze Germans').should start_with 'Ze Germans'
+      end
+
+      it 'allows you to overwrite the party name' do
+        vote = Vote.make!(:vote_results => [
+          VoteResult.new(:representative => rep1, :result => 1),
+          VoteResult.new(:representative => rep2, :result => -1)
+        ])
+
+        # the vote matches the topic
+        topic.vote_connections.create! :vote => vote, :matches => true, :weight => 1
+
+        scorer.text_for(rep1.party, name: 'Ze Frenchies').should start_with 'Ze Frenchies'
       end
 
     end
