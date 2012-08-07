@@ -118,6 +118,7 @@ module Hdo
         scorer.stub(:score_for).and_return :foo
         lambda { scorer.text_for(:foo) }.should raise_error
       end
+      
       it 'calculates score for a party grouping' do
         vote = Vote.make!(:vote_results => [
           VoteResult.new(:representative => rep1, :result => 1),
@@ -128,6 +129,18 @@ module Hdo
         topic.vote_connections.create! :vote => vote, :matches => true, :weight => 1
 
         scorer.score_for_group([rep1.party, rep2.party]).should eq 50
+      end
+
+      it 'uses group name as a text in text_for when group_name option is given' do
+        vote = Vote.make!(:vote_results => [
+          VoteResult.new(:representative => rep1, :result => 1),
+          VoteResult.new(:representative => rep2, :result => -1)
+        ])
+
+        # the vote matches the topic
+        topic.vote_connections.create! :vote => vote, :matches => true, :weight => 1
+
+        scorer.text_for([rep1.party, rep2.party], group_name: 'Ze Germans').should start_with 'Ze Germans'
       end
 
     end
