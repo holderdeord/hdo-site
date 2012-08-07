@@ -10,30 +10,17 @@
   </ul>
 </div>
 
-<% Party.order(:name).each do |party| %>
-<div class="row-fluid">
-  <div class="span2"><%= image_tag party.large_logo, alt: "#{party.name}s logo" %></div>
-  <div class="span10">
-    <h2><%= @topic.stats.text_for(party) %></h2>
-    <h3 class="pull-right"><%= @topic.stats.score_for(party) %>%</h3>
-
-    <% if promises = @promises_by_party[party] %>
-    <h5>I partiprogrammet har <%= party.name %> lovet følgende:</h5>
-    <ul>
-      <% promises.each do |promise| %>
-      <li><%= promise.body %></li>
-      <% end %>
-    </ul>
-    <% end %>
-  </div>
-</div>
-
-<div class="row-fluid">
-  <%= link_to "Se alle #{party.external_id}s løfter", party_path(party), class: 'pull-right' %>
-</div>
-
-<hr class="soften">
+<% parties_alphabetically = Party.order(:name) %>
+<h1>Regjeringspartiene:</h1>
+<% parties_alphabetically.select(&:in_gov?).each do |party| %>
+<%= render partial: 'party', locals: { party: party, topic: @topic, promises: @promises_by_party[party] } %>
 <% end %>
+
+<h1>Opposisjonspartiene:</h1>
+<% parties_alphabetically.reject(&:in_opposition?).each do |party| %>
+<%= render partial: 'party', locals: { party: party, topic: @topic, promises: @promises_by_party[party] } %>
+<% end %>
+
 
 <% if user_signed_in? %>
   <div class="form-actions">

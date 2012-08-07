@@ -1,0 +1,21 @@
+<div class="row-fluid">
+  <div class="span2"><%= image_tag party.image.thumb('150x150').url, alt: "#{party.name}s logo" %></div>
+  <div class="span10">
+    <h2><%= topic.stats.text_for(party) %></h2>
+    <h3 class="pull-right"><%= topic.stats.score_for(party) %>%</h3>
+
+    <% if promises %>
+    <h5>I partiprogrammet har <%= party.name %> lovet følgende:</h5>
+    <ul>
+      <% promises.each do |promise| %>
+      <li><%= promise.body %></li>
+      <% end %>
+    </ul>
+    <% end %>
+  </div>
+</div>
+<div class="row-fluid">
+  <%= link_to "Se alle #{party.external_id}s løfter", party_path(party), class: 'pull-right' %>
+</div>
+
+<hr class="soften">

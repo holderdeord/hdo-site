@@ -5,7 +5,7 @@
 <% if @vote.inferred? %>
   <div class="alert alert-info"><%= I18n.t('app.votes.non_personal.inferred') %></div>
 <% elsif @vote.non_personal? %>
-  <div class="alert alert-info"><%= I18n.t('app.votes.non_personal.default') %></div>
+  <div class="alert alert-info"><%= I18n.t('app.votes.non_personal.unknown') %></div>
 <% end %>
 
 <div class="well">
