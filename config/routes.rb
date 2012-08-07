@@ -14,7 +14,7 @@ Hdo::Application.routes.draw do
   resources :fields
 
   resources :governing_periods, :only => [:index, :destroy]
-  put '/governing_periods' => 'governing_periods#update', :as => :update_governing_periods
+  put 'governing_periods' => 'governing_periods#update', :as => :update_governing_periods
 
   resources :promises,        :only => [:index]        # TODO: :create, :show and :edit behind auth
   get 'promises/page/:page' => 'promises#index'
