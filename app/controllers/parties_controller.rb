@@ -16,6 +16,7 @@ class PartiesController < ApplicationController
   # * topic's vote_connection added
   # * topic's vote_connection removed
   #
+  # Also need to find a way to test this.
 
   def index
     @parties = Party.order(:name).all
