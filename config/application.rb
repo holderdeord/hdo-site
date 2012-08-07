@@ -62,6 +62,9 @@ module Hdo
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.1'
 
+    # TODO: proper feature toggling
+    config.topic_list_on_parties_show = false
+
     # this is needed on heroku: https://github.com/plataformatec/devise/issues/1339
     config.assets.initialize_on_precompile = false
   end

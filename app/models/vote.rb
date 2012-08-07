@@ -1,7 +1,8 @@
 class Vote < ActiveRecord::Base
   extend FriendlyId
 
-  attr_accessible :for_count, :against_count, :absent_count, :enacted, :subject, :time
+  attr_accessible :for_count, :against_count, :absent_count,
+                  :enacted, :personal, :subject, :time
 
   has_and_belongs_to_many :issues
   validates_length_of :issues, :minimum => 1
@@ -15,7 +16,8 @@ class Vote < ActiveRecord::Base
 
   friendly_id :external_id, :use => :slugged
 
-  scope :personal, where('for_count != 0 OR against_count != 0 OR absent_count != 0')
+  scope :personal, where(:personal => true)
+  scope :non_personal, where(:personal => false)
 
   def self.naive_search(filter, keyword, selected_categories = [])
     # TODO: elasticsearch
@@ -46,12 +48,20 @@ class Vote < ActiveRecord::Base
     I18n.l time, format: :short
   end
 
-  def enacted_text
-    enacted? ? I18n.t('app.yes') : I18n.t('app.no')
+  def has_results?
+    vote_results.size > 0
   end
 
-  def personal?
-    for_count != 0 || against_count != 0 || absent_count != 0
+  def inferred?
+    non_personal? && has_results?
+  end
+
+  def non_personal?
+    !personal?
+  end
+
+  def enacted_text
+    enacted? ? I18n.t('app.yes') : I18n.t('app.no')
   end
 
   def stats

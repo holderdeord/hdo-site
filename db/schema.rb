@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120802210546) do
+ActiveRecord::Schema.define(:version => 20120806211723) do
 
   create_table "categories", :force => true do |t|
     t.string   "external_id"
@@ -240,9 +240,10 @@ ActiveRecord::Schema.define(:version => 20120802210546) do
     t.boolean  "enacted"
     t.string   "subject"
     t.datetime "time"
-    t.datetime "created_at",    :null => false
-    t.datetime "updated_at",    :null => false
+    t.datetime "created_at",                      :null => false
+    t.datetime "updated_at",                      :null => false
     t.string   "slug"
+    t.boolean  "personal",      :default => true
   end
 
   add_index "votes", ["slug"], :name => "index_votes_on_slug", :unique => true

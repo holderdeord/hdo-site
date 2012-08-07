@@ -147,6 +147,7 @@ module Hdo
           :against_count => Integer(xvote.counts.against),
           :absent_count  => Integer(xvote.counts.absent),
           :enacted       => xvote.enacted?,
+          :personal      => xvote.personal?,
           :subject       => xvote.subject,
           :time          => Time.parse(xvote.time)
         )
