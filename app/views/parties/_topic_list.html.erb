@@ -1,0 +1,9 @@
+<h3>Siste tema</h3>
+<ul class="unstyled">
+  <% topics.each do |topic| %>
+    <li>
+      <%= topic.stats.text_for(party, :strong => true) %>
+      <%= link_to topic.downcased_title, topic %>.
+    </li>
+  <% end %>
+</ul>
