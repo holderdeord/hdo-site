@@ -34,6 +34,7 @@ Field.blueprint do
 end
 
 Party.blueprint do
+  external_id { sn.to_s }
   name { "Party-#{sn}" }
 end
 

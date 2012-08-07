@@ -22,7 +22,7 @@
                 <% stats = connection.vote.stats %>
                 <% Party.all(:order => :name).each do |party, vote_counts = stats.party_votes[party]| %>
                   <p>
-                    <%= image_tag party.image.thumb('35x35').strip.url, alt: "#{party.name}s logo" %>
+                    <%= image_tag party.image_with_fallback.thumb('35x35').strip.url, alt: "#{party.name}s logo" %>
                     <strong><%= party.name.capitalize %></strong>
                     <%= stats.text_for(party) %>
                     <small><%= "(#{vote_counts[:for]} for, #{vote_counts[:against]} mot, #{vote_counts[:absent]} ikke tilstede.)" %></small>
