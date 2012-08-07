@@ -28,7 +28,7 @@
       </thead>
       <tbody>
         <% @governing_periods.each do |gp| %>
-          <%= hidden_field_tag "governing_periods[#{gp.id}]party_id", gp.party.id %>
+          <%= hidden_field_tag "governing_periods[#{gp.id}]party_id", gp.party_id %>
           <tr>
             <td><%= gp.party.name %></td>
             <td><%= text_field_tag "governing_periods[#{gp.id}]start_date", gp.start_date %></td>
@@ -36,17 +36,28 @@
             <td><%= link_to 'Destroy', gp, method: :delete, data: { confirm: GoverningPeriod.human_attribute_name(:confirm_destroy) }, class: 'btn btn-danger' %></td>
           </tr>
         <% end %>
+        <% gp = GoverningPeriod.new %>
+        <% gp.party_id=3 %>
         <tr>
           <td><%= select("governing_periods[new]", 'party_id', Party.all(:order => :name).collect { |p| [p.name, p.id]}) %></td>
-          <td><%= text_field_tag "governing_periods[new]start_date" %></td>
-          <td><%= text_field_tag "governing_periods[new]end_date" %></td>
+          <td><%= text_field_tag "governing_periods[new]start_date", gp.start_date %></td>
+          <td><%= text_field_tag "governing_periods[new]end_date", gp.end_date %></td>
           <td/>
         </tr>
       </tbody>
     </table>
 
     <div class="row-fluid">
-      <%= submit_tag 'Lagre', class:'btn btn-primary' %>
+      <%= submit_tag 'Lagre', class: 'btn btn-primary' %>
+      <%= button_tag 'New', id: 'new-governing-period', class: 'btn' %>
     </div>
   <% end %>
 </div>
+
+<%= content_for :document_ready do %>
+<script type="text/javascript" charset="utf-8">
+  $(document).ready(function() {
+    HDO.GoverninPeriodsTable.create().init();
+  });
+</script>
+<% end %>

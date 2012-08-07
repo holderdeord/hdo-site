@@ -14,6 +14,7 @@ class TopicsController < ApplicationController
   end
 
   def show
+    flash.notice = "Denne siden viser hva partiene har stemt og lovet om #{@topic.title.downcase}"
     @promises_by_party = @topic.promises.group_by { |e| e.party }
 
     @coalition_parties, @opposition_parties = Party.order(:name).partition(&:in_gov?)
