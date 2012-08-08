@@ -12,13 +12,17 @@
   </ul>
 </div>
 
-<%= render partial: 'parties_group',
-  locals: { parties: @governing_parties, topic: @topic, promises_by_party: @promises_by_party, group_name: 'Regjeringspartiene' } %>
+<% @party_groups.each_with_index do |(name, parties), idx| %>
+  <%= render partial: 'parties_group',
+             locals: { parties: parties, topic: @topic, promises_by_party: @promises_by_party, name: name } %>
 
-<hr class="soften">
+  <% unless idx + 1 == @party_groups.size %>
+  <hr class="soften">
+<% end %>
 
-<%= render partial: 'parties_group',
-  locals: { parties: @opposition_parties, topic: @topic, promises_by_party: @promises_by_party, group_name: 'Opposisjonspartiene' } %>
+
+<% end %>
+
 
 <% if user_signed_in? %>
   <div class="form-actions">

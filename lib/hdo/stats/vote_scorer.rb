@@ -15,7 +15,7 @@ module Hdo
 
       def score_for_group(parties)
         @data[parties] ||= (
-          if parties.size == 0
+          if parties.size.zero?
             nil
           else
             parties.map { |party| @data[party] || 0 }.sum / parties.size

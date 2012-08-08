@@ -15,7 +15,20 @@ class TopicsController < ApplicationController
 
   def show
     @promises_by_party = @topic.promises.group_by { |e| e.party }
-    fetch_party_groups
+
+    # TODO: scope on Party?
+    government, opposition = Party.order(:name).partition(&:in_government?)
+
+    @parties = [government, opposition].flatten
+    @party_groups = []
+
+    if government.any?
+      @party_groups << [ t('app.parties.group.governing'),  government ]
+      @party_groups << [ t('app.parties.group.opposition'), opposition ]
+    else
+      # if no-one's in government, we only need a single group with no name.
+      @party_groups << ['', opposition]
+    end
 
     respond_to do |format|
       format.html
@@ -111,10 +124,6 @@ class TopicsController < ApplicationController
   end
 
   private
-
-  def fetch_party_groups
-    @governing_parties, @opposition_parties = Party.order(:name).partition(&:in_government?)
-  end
 
   def edit_categories
     fetch_categories

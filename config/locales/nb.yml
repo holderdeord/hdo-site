@@ -248,6 +248,10 @@ nb:
     updated:
       promise: 'Løftet ble oppdatert.'
       topic: 'Tema er oppdatert.'
+    parties:
+      group:
+        governing: 'Regjeringspartiene'
+        opposition: 'Opposisjonspartiene'
     counts:
       representative:
         one: "Viser <strong>1</strong> representant."
