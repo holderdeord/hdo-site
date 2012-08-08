@@ -18,6 +18,15 @@ module Hdo
           com.name.should == xcom.name
         end
 
+        it 'imports multiple committees' do
+          a = StortingImporter::Committee.new('1', 'foo')
+          b = StortingImporter::Committee.new('2', 'bar')
+
+          persister.import_committees [a, b]
+
+          Committee.count.should == 2
+        end
+
         it 'updates an existing committee based on external_id' do
           xcom = StortingImporter::Committee.example
 

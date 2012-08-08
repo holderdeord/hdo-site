@@ -7,6 +7,15 @@ module Hdo
 
         include_context :persister
 
+        it 'imports multiple categories' do
+          a = StortingImporter::Category.new('1', 'foo')
+          b = StortingImporter::Category.new('2', 'bar')
+
+          persister.import_categories [a, b]
+
+          Category.count.should == 2
+        end
+
         it 'imports a category' do
           xcat = StortingImporter::Category.example
 

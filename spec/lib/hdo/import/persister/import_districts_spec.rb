@@ -18,6 +18,15 @@ module Hdo
           dis.name.should == xdis.name
         end
 
+        it 'imports multiple districts' do
+          a = StortingImporter::District.new('1', 'foo')
+          b = StortingImporter::District.new('2', 'bar')
+
+          persister.import_districts [a, b]
+
+          District.count.should == 2
+        end
+
         it 'updates an existing district based on external_id' do
           xdis = StortingImporter::District.example
 
