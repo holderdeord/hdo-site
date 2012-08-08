@@ -66,7 +66,7 @@ namespace :images do
     path_to_logos = Rails.root.join("app/assets/images/party_logos")
 
     Party.all.each do |party|
-      path_to_logos.join("#{party.external_id}_logo_large.jpg")
+      party.image = path_to_logos.join("#{party.external_id}_logo_large.jpg")
       party.save!
       puts "Logo for #{party.name} mapped."
     end

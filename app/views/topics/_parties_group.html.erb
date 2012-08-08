@@ -3,7 +3,7 @@
 </div>
 <% parties.each do |party| %>
   <div class="row-fluid">
-    <div class="span2"><%= image_tag party.image.thumb('100x100').url, alt: "#{party.name}s logo" %></div>
+    <div class="span2"><%= image_tag party.image_with_fallback.thumb('100x100').url, alt: "#{party.name}s logo" %></div>
     <div class="span10">
       <h2><%= topic.stats.text_for(party) %></h2>
 

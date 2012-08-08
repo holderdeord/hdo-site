@@ -6,7 +6,7 @@
   <div class="row-fluid">
     <% @coalition_parties.each do |party| %>
       <div class="span4">
-        <%= image_tag party.image.thumb('200x200').strip.url %>
+        <%= image_tag party.image_with_fallback.thumb('200x200').strip.url %>
       </div>
     <% end %>
   </div>
