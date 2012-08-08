@@ -17,7 +17,7 @@ class Party < ActiveRecord::Base
   attr_accessible :image, :name
 
   def in_government?(date = Date.today)
-    governing_periods.for_date(date).first != nil
+    !!governing_periods.for_date(date).first
   end
 
   def large_logo

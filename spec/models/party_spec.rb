@@ -23,7 +23,7 @@ describe Party do
     Party.make(:name => party.name).should_not be_valid
   end
 
-  it "knows if it is in the government coalition" do
+  it "knows if it is in government" do
     p = Party.make!
     p.governing_periods.make! :start_date => Date.yesterday, :party => p
 

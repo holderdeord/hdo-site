@@ -65,10 +65,24 @@ module Hdo
         log_import party
         party.validate!
 
-        p = Party.find_or_create_by_external_id party.external_id
-        p.update_attributes! :name => party.name
+        record = Party.find_or_create_by_external_id party.external_id
+        record.name = party.name
+        record.save!
 
-        p
+        if party.governing_periods
+          record.governing_periods = []
+
+          Array(party.governing_periods).map do |gp|
+            record.governing_periods.create!(
+              :start_date => gp.start_date,
+              :end_date => gp.end_date
+            )
+          end
+
+          record.save!
+        end
+
+        record
       end
 
       def import_committee(committee)
