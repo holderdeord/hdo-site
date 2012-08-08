@@ -177,7 +177,7 @@ class TopicsController < ApplicationController
   end
 
   def edit_steps
-    Hdo::TopicEditSteps.new(params, session)
+    @edit_steps ||= Hdo::TopicEditSteps.new(params, session)
   end
 
 end
