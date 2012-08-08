@@ -118,7 +118,7 @@ module Hdo
         scorer.stub(:score_for).and_return :foo
         lambda { scorer.text_for(:foo) }.should raise_error
       end
-      
+
       it 'calculates score for a party grouping' do
         vote = Vote.make!(:vote_results => [
           VoteResult.new(:representative => rep1, :result => 1),
@@ -153,6 +153,14 @@ module Hdo
         topic.vote_connections.create! :vote => vote, :matches => true, :weight => 1
 
         scorer.text_for(rep1.party, name: 'Ze Frenchies').should start_with 'Ze Frenchies'
+      end
+
+      it 'returns a nil score for a non-existing party' do
+        scorer.score_for(:foo).should == nil
+      end
+
+      it 'returns a nil score for an empty group' do
+        scorer.score_for_group([]).should == nil
       end
 
     end
