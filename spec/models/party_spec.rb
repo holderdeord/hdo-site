@@ -30,6 +30,18 @@ describe Party do
     p.should be_in_government
   end
 
+  it 'destroys dependent governing periods when emptied' do
+    p = Party.make!
+    gp = p.governing_periods.make! :start_date => Date.yesterday, :party => p
+
+    p.governing_periods = []
+
+    expect {
+      gp.reload
+    }.to raise_error(ActiveRecord::RecordNotFound)
+  end
+
+
   it 'is invalid without an external_id' do
     Party.make(:external_id => nil).should be_invalid
   end
@@ -38,4 +50,54 @@ describe Party do
     party = Party.make!
     Party.make(:external_id => party.external_id).should be_invalid
   end
+
+  it 'will not add the same promise twice' do
+    party = Party.make!
+    promise = Promise.make!
+
+    party.promises << promise
+    party.promises << promise
+
+    party.promises.count.should == 1
+  end
+
+  it 'destroys dependent promises when emptied' do
+    party = Party.make!
+    Promise.make!(:party => party)
+
+    Promise.count.should == 1
+
+    party.promises = []
+    Promise.count.should == 0
+  end
+
+  it 'destroys dependent promises when destroyed' do
+    party = Party.make!
+    Promise.make!(:party => party)
+    Promise.count.should == 1
+
+    party.destroy
+    Promise.count.should == 0
+  end
+
+  it 'destroys dependent representatives when emptied' do
+    party = Party.make!
+    Representative.make!(:party => party)
+    Representative.count.should == 1
+
+    party.representatives = []
+
+    Representative.count.should == 0
+  end
+
+  it 'destroys dependent representatives when destroyed' do
+    party = Party.make!
+    Representative.make!(:party => party)
+    Representative.count.should == 1
+
+    party.destroy
+
+    Representative.count.should == 0
+  end
+
 end

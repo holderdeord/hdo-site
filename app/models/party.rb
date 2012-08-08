@@ -4,9 +4,9 @@ class Party < ActiveRecord::Base
   include Hdo::ModelHelpers::HasFallbackImage
   include Hdo::ModelHelpers::HasRepresentatives
 
-  has_many :representatives, :order => :last_name
-  has_many :promises
-  has_many :governing_periods, :order => :start_date
+  has_many :representatives, :order => :last_name, :dependent => :destroy
+  has_many :promises, :dependent => :destroy
+  has_many :governing_periods, :order => :start_date, :dependent => :destroy
 
   validates_uniqueness_of :name, :external_id
   validates_presence_of :name, :external_id
