@@ -22,7 +22,7 @@
                 <% stats = connection.vote.stats %>
 
                 <h3>Regjeringspartiene:</h3>
-                <% @coalition_parties.each do |party| %>
+                <% @governing_parties.each do |party| %>
                   <%= render partial: 'votes_party', locals: { party: party, stats: stats, vote_counts: stats.party_votes[party] } %>
                 <% end %>
 

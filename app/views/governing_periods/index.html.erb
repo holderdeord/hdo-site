@@ -4,7 +4,7 @@
   </div>
 
   <div class="row-fluid">
-    <% @coalition_parties.each do |party| %>
+    <% @governing_parties.each do |party| %>
       <div class="span4">
         <%= image_tag party.image_with_fallback.thumb('200x200').strip.url %>
       </div>
@@ -18,7 +18,7 @@
 
 <div style="padding-top: 20px;">
   <h1>Perioder</h1>
-  <%= form_tag(update_governing_periods_url, :method => "put")  do %>
+  <%= form_tag(governing_periods_url, :method => "put")  do %>
     <table class="table table-striped" id="governing-periods-table">
       <thead>
         <th>Parti</th>
@@ -36,12 +36,10 @@
             <td><%= link_to 'Destroy', gp, method: :delete, data: { confirm: GoverningPeriod.human_attribute_name(:confirm_destroy) }, class: 'btn btn-danger' %></td>
           </tr>
         <% end %>
-        <% gp = GoverningPeriod.new %>
-        <% gp.party_id=3 %>
         <tr>
-          <td><%= select("governing_periods[new]", 'party_id', Party.all(:order => :name).collect { |p| [p.name, p.id]}) %></td>
-          <td><%= text_field_tag "governing_periods[new]start_date", gp.start_date %></td>
-          <td><%= text_field_tag "governing_periods[new]end_date", gp.end_date %></td>
+          <td><%= select "governing_periods[new]", 'party_id', Party.all(:order => :name).collect { |p| [p.name, p.id]} %></td>
+          <td><%= text_field_tag "governing_periods[new]start_date", @new_period.start_date %></td>
+          <td><%= text_field_tag "governing_periods[new]end_date", @new_period.end_date %></td>
           <td/>
         </tr>
       </tbody>
