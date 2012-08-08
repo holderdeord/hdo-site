@@ -1,5 +1,6 @@
 class HomeController < ApplicationController
-  caches_page :index, :press
+  caches_page :index, :press, :join, :support,
+              :people, :about_method
 
   def index
   end
