@@ -13,10 +13,6 @@ Hdo::Application.routes.draw do
   resources :committees,      :only => [:index, :show]
   resources :fields
 
-  get    'governing-periods'     => 'governing_periods#index', :as => :governing_periods
-  put    'governing-periods/:id' => 'governing_periods#update'
-  delete 'governing-periods/:id' => 'governing_periods#destroy', :as => :governing_period
-
   resources :promises,        :only => [:index]        # TODO: :create, :show and :edit behind auth
   get 'promises/page/:page' => 'promises#index'
 
