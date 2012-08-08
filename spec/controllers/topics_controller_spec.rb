@@ -17,7 +17,7 @@ describe TopicsController do
     topic_count_before_create = Topic.count
 
     post :create, :topic => { :title => 'More Cowbell' },
-      :finish_button => true
+      :finish => true
 
     Topic.count.should eq topic_count_before_create + 1
     topic = assigns(:topic)
@@ -82,7 +82,7 @@ describe TopicsController do
     topic = Topic.make!
     session[:topic_step] = 'votes'
 
-    put :update, :finish_button => true, :topic => topic_params(topic), :id => topic.slug
+    put :update, :finish => true, :topic => topic_params(topic), :id => topic.slug
 
     response.should redirect_to topic_path topic
   end

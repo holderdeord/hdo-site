@@ -50,7 +50,7 @@ class TopicsController < ApplicationController
   def create
     @topic = Topic.new(params[:topic])
     if @topic.save
-      if params[:finish_button]
+      if params[:finish]
         redirect_to @topic
       else
         redirect_to edit_topic_step_url(@topic, :step => step_after)
@@ -70,7 +70,7 @@ class TopicsController < ApplicationController
     if @topic.update_attributes(params[:topic])
       session[:topic_step] = current_step = next_step(current_step)
 
-      if params[:finish_button]
+      if params[:finish]
         session.delete :topic_step
         redirect_to @topic
       else
