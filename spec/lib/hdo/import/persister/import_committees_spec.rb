@@ -27,6 +27,14 @@ module Hdo
           Committee.count.should == 2
         end
 
+        it 'fails if the committees is invalid' do
+          invalid = StortingImporter::Committee.new('1', nil)
+
+          expect do
+            persister.import_committee invalid
+          end.to raise_error(Hdo::StortingImporter::ValidationError)
+        end
+
         it 'updates an existing committee based on external_id' do
           xcom = StortingImporter::Committee.example
 

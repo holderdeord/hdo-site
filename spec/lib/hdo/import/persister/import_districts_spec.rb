@@ -27,6 +27,14 @@ module Hdo
           District.count.should == 2
         end
 
+        it 'fails if the district is invalid' do
+          invalid = StortingImporter::District.new('1', nil)
+
+          expect {
+            persister.import_district invalid
+          }.to raise_error(Hdo::StortingImporter::ValidationError)
+        end
+
         it 'updates an existing district based on external_id' do
           xdis = StortingImporter::District.example
 

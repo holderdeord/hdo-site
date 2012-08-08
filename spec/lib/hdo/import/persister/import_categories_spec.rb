@@ -28,6 +28,14 @@ module Hdo
           cat.children.map(&:name).should == xcat.children.map(&:name)
         end
 
+        it 'fails if the category is invalid' do
+          invalid = StortingImporter::Category.new('1', nil)
+
+          expect {
+            persister.import_category invalid
+          }.to raise_error(Hdo::StortingImporter::ValidationError)
+        end
+
         it 'updates an existing category based on external_id' do
           xcat = StortingImporter::Category.example
 
