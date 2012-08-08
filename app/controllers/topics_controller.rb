@@ -56,7 +56,7 @@ class TopicsController < ApplicationController
         redirect_to edit_topic_step_url(@topic, :step => step_after)
       end
     else
-      flash.alert = @topic.errors.full_messages.join(' ')
+      flash.alert = @topic.errors.full_messages.to_sentence
       fetch_categories
       render :action => :new
     end
@@ -77,7 +77,7 @@ class TopicsController < ApplicationController
         redirect_to edit_topic_step_url(@topic, step: current_step)
       end
     else
-      flash.alert = @topic.errors.full_messages.join(' ')
+      flash.alert = @topic.errors.full_messages.to_sentence
       redirect_to edit_topic_step_url(@topic, :step => current_step)
     end
   end

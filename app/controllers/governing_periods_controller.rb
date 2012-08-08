@@ -24,7 +24,7 @@ class GoverningPeriodsController < ApplicationController
       id = nil if id.start_with? 'new'
       governing_period = GoverningPeriod.find_or_create_by_id id
       unless governing_period.update_attributes(params)
-        flash.alert = governing_period.errors.full_messages.join(' ')
+        flash.alert = governing_period.errors.full_messages.to_sentence
       end
     end
   end
