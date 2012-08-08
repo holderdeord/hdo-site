@@ -16,7 +16,7 @@ module Hdo
     end
 
     def first!
-      @session[:topic_step] = STEPS.first
+      @session[:topic_step] = first
     end
 
     def next!
@@ -32,7 +32,7 @@ module Hdo
     end
 
     def current
-      @session[:topic_step]
+      @session[:topic_step] ||= first
     end
 
     def after(step = STEPS.first)

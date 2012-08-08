@@ -15,7 +15,7 @@ class TopicsController < ApplicationController
 
   def show
     @promises_by_party = @topic.promises.group_by { |e| e.party }
-    fetch_parties_by_coalition_or_opposition
+    fetch_party_groups
 
     respond_to do |format|
       format.html
@@ -50,8 +50,6 @@ class TopicsController < ApplicationController
   def create
     @topic = Topic.new(params[:topic])
 
-    edit_steps.first! unless edit_steps.current
-
     if @topic.save
       if edit_steps.finish?
         redirect_to @topic
@@ -80,7 +78,7 @@ class TopicsController < ApplicationController
       end
     else
       flash.alert = @topic.errors.full_messages.to_sentence
-      redirect_to edit_topic_step_url(@topic, :step => current_step)
+      redirect_to edit_topic_step_url(@topic, :step => edit_steps.current)
     end
   end
 
@@ -114,7 +112,7 @@ class TopicsController < ApplicationController
 
   private
 
-  def fetch_parties_by_coalition_or_opposition
+  def fetch_party_groups
     @governing_parties, @opposition_parties = Party.order(:name).partition(&:in_government?)
   end
 
@@ -140,11 +138,6 @@ class TopicsController < ApplicationController
 
   def fetch_topic
     @topic = Topic.find(params[:id])
-  end
-
-  def set_disable_buttons
-    @disable_next = edit_steps.last?(params[:step]) or @topic && @topic.new_record?
-    @disable_prev = edit_steps.first?(params[:step])
   end
 
   def update_vote_connections
@@ -174,6 +167,11 @@ class TopicsController < ApplicationController
 
   def set_steps_list_for_navigation
     @topic_steps = Hdo::TopicEditSteps::STEPS
+  end
+
+  def set_disable_buttons
+    @disable_next = edit_steps.last?(params[:step]) or @topic && @topic.new_record?
+    @disable_prev = edit_steps.first?(params[:step])
   end
 
   def edit_steps
