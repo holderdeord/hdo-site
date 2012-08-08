@@ -18,7 +18,7 @@ module Hdo
           if parties.size == 0
             nil
           else
-            parties.map { |party| @data[party] || 0 }.sum / parties.count
+            parties.map { |party| @data[party] || 0 }.sum / parties.size
           end
         )
       end
