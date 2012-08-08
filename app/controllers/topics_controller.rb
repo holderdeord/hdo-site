@@ -133,7 +133,7 @@ class TopicsController < ApplicationController
   end
 
   def next_step(current_step)
-    if params[:prev_button]
+    if params[:previous]
       current_step = step_before(current_step)
     else
       current_step = step_after(current_step)
