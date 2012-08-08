@@ -194,4 +194,13 @@ describe TopicsController do
     end
   end
 
+  context "with rendered views" do
+    render_views
+
+    it "should render :show" do
+      get :show, id: Topic.make!
+      response.should have_rendered(:show)
+    end
+  end
+
 end
