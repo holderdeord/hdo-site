@@ -3,6 +3,8 @@
   <p><%= @topic.description %></p>
 </div>
 
+<div class="alert alert-info"><%= t('app.votes.explanation', title: @topic.downcased_title) %></div>
+
 <div class="row-fluid">
   <ul class="nav nav-tabs">
     <li><%= link_to "Se alle avstemninger", topic_votes_path(@topic) %></li>
