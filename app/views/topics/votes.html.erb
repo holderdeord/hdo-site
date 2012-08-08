@@ -22,13 +22,13 @@
                 <% stats = connection.vote.stats %>
 
                 <h3>Regjeringspartiene:</h3>
-                <% @coalition_parties.each do |party, vote_counts = stats.party_votes[party]| %>
-                  <%= render partial: 'votes_party', locals: { party: party, stats: stats, vote_counts: vote_counts } %>
+                <% @coalition_parties.each do |party| %>
+                  <%= render partial: 'votes_party', locals: { party: party, stats: stats, vote_counts: stats.party_votes[party] } %>
                 <% end %>
 
                 <h3>Opposisjonspartiene:</h3>
-                <% @opposition_parties.each do |party, vote_counts = stats.party_votes[party]| %>
-                  <%= render partial: 'votes_party', locals: { party: party, stats: stats, vote_counts: vote_counts } %>
+                <% @opposition_parties.each do |party| %>
+                  <%= render partial: 'votes_party', locals: { party: party, stats: stats, vote_counts: stats.party_votes[party] } %>
                 <% end %>
 
                 <% if connection.vote.inferred? %>
