@@ -2,7 +2,7 @@ class TopicsController < ApplicationController
   before_filter :authenticate_user!
   before_filter :fetch_topic, :only => [:show, :edit, :update, :destroy, :votes, :votes_search]
 
-  STEPS = %w[categories promises votes fields]
+  helper_method :edit_steps
 
   def index
     @topics = Topic.all
@@ -27,7 +27,8 @@ class TopicsController < ApplicationController
 
   def new
     @topic = Topic.new
-    session[:topic_step] = STEPS.first
+    edit_steps.first!
+
     fetch_categories
 
     respond_to do |format|
@@ -37,44 +38,47 @@ class TopicsController < ApplicationController
   end
 
   def edit
-    if params[:step]
+    if edit_steps.from_param
       set_disable_buttons
       set_steps_list_for_navigation
-      step = session[:topic_step] = params[:step]
+
+      step = edit_steps.from_param!
       send "edit_#{step}"
     else
-      redirect_to edit_topic_step_url(@topic, :step => STEPS.first)
+      redirect_to edit_topic_step_url(@topic, :step => edit_steps.first)
     end
   end
 
   def create
     @topic = Topic.new(params[:topic])
+
+    edit_steps.first! unless edit_steps.current
+
     if @topic.save
-      if params[:finish]
+      if edit_steps.finish?
         redirect_to @topic
       else
-        redirect_to edit_topic_step_url(@topic, :step => step_after)
+        redirect_to edit_topic_step_url(@topic, :step => edit_steps.after)
       end
     else
       flash.alert = @topic.errors.full_messages.to_sentence
       fetch_categories
+
       render :action => :new
     end
   end
 
   def update
-    current_step = session[:topic_step]
-
-    set_vote_connections
+    update_vote_connections
 
     if @topic.update_attributes(params[:topic])
-      session[:topic_step] = current_step = next_step(current_step)
+      edit_steps.next!
 
-      if params[:finish]
+      if edit_steps.finish?
         session.delete :topic_step
         redirect_to @topic
       else
-        redirect_to edit_topic_step_url(@topic, step: current_step)
+        redirect_to edit_topic_step_url(@topic, step: edit_steps.current)
       end
     else
       flash.alert = @topic.errors.full_messages.to_sentence
@@ -116,30 +120,6 @@ class TopicsController < ApplicationController
     @coalition_parties, @opposition_parties = Party.order(:name).partition(&:in_government?)
   end
 
-  def step_after(step = STEPS.first)
-    STEPS[STEPS.index(step) + 1]
-  end
-
-  def step_before(step)
-    STEPS[STEPS.index(step) - 1]
-  end
-
-  def first_step?(step)
-    step == STEPS.first
-  end
-
-  def last_step?(step)
-    step == STEPS.last
-  end
-
-  def next_step(current_step)
-    if params[:previous]
-      current_step = step_before(current_step)
-    else
-      current_step = step_after(current_step)
-    end
-  end
-
   def edit_categories
     fetch_categories
   end
@@ -165,11 +145,11 @@ class TopicsController < ApplicationController
   end
 
   def set_disable_buttons
-    @disable_next = last_step?(params[:step]) or @topic && @topic.new_record?
-    @disable_prev = first_step?(params[:step])
+    @disable_next = edit_steps.last?(params[:step]) or @topic && @topic.new_record?
+    @disable_prev = edit_steps.first?(params[:step])
   end
 
-  def set_vote_connections
+  def update_vote_connections
     return unless params[:votes]
 
     #
@@ -195,7 +175,11 @@ class TopicsController < ApplicationController
   end
 
   def set_steps_list_for_navigation
-    @topic_steps = STEPS
+    @topic_steps = Hdo::TopicEditSteps::STEPS
+  end
+
+  def edit_steps
+    Hdo::TopicEditSteps.new(params, session)
   end
 
 end
