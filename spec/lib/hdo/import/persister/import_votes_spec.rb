@@ -27,13 +27,13 @@ module Hdo
         it 'runs the VoteInferrer after importing votes' do
           Issue.make! :external_id => non_personal_vote.external_issue_id
 
-          inferer = mock(VoteInferrer)
+          inferrer = VoteInferrer.new([])
 
           Hdo::VoteInferrer.should_receive(:new).
                            with([kind_of(Vote)]).
-                           and_return(inferer)
+                           and_return(inferrer)
 
-          inferer.should_receive(:infer!)
+          inferrer.should_receive(:infer!)
 
           persister.import_votes [non_personal_vote]
         end
