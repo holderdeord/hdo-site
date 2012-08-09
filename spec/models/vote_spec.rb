@@ -54,4 +54,27 @@ describe Vote do
   it 'knows if a result is non-personal' do
     Vote.make!(:personal => false).should be_non_personal
   end
+
+  it 'caches the stats object' do
+    vote = Vote.make!
+
+    Hdo::Stats::VoteCounts.should_receive(:new).once
+
+    Vote.find(vote.id).stats # 1 - not cached
+    Vote.find(vote.id).stats # 2 - cached
+  end
+
+  it 'deletes the cached stats on save' do
+    vote = Vote.make!
+
+    Hdo::Stats::VoteCounts.should_receive(:new).twice
+
+    Vote.find(vote.id).stats # 1 - not cached
+    Vote.find(vote.id).stats # 2 - cached
+
+    vote.vote_results << VoteResult.make!(:vote => vote)
+
+    Vote.find(vote.id).stats # 3 - no longer cached
+  end
+
 end
