@@ -21,6 +21,9 @@ describe VoteConnection do
     conn.weight = 0
     conn.should be_valid
 
+    conn.weight = 0.5
+    conn.should be_valid
+
     conn.weight = 1
     conn.should be_valid
 

@@ -83,7 +83,7 @@ module Hdo
         result = {}
 
         party_totals.each do |party, total|
-          result[party] = (total * 100 / weight_sum)
+          result[party] = (total * 100 / weight_sum).to_i
         end
 
         result
