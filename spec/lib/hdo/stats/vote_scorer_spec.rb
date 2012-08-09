@@ -163,6 +163,17 @@ module Hdo
         scorer.score_for_group([]).should == nil
       end
 
+      it 'returns 0 scores when all votes are weighted 0' do
+        vote = Vote.make!(:vote_results => [
+          VoteResult.new(:representative => rep1, :result => 1),
+          VoteResult.new(:representative => rep2, :result => -1)
+        ])
+
+        topic.vote_connections.create! :vote => vote, :matches => true, :weight => 0
+
+        scorer.score_for(rep1.party).should == 0
+      end
+
     end
   end
 end
