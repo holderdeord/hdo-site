@@ -10,4 +10,4 @@ before_script:
   - "sh -e /etc/init.d/xvfb start"
   - "npm install -g buster autolint"
 env:
-  - DISPLAY=:99.0 COVERAGE_THRESHOLD=60
+  - DISPLAY=:99.0 COVERAGE_THRESHOLD=63

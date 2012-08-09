@@ -7,7 +7,7 @@ describe RepresentativesController do
 
       get :index
 
-      response.should render_template(:index)
+      response.should have_rendered(:index)
     end
 
     it 'can get #index_by_name' do
@@ -16,7 +16,7 @@ describe RepresentativesController do
       get :index_by_name
 
       assigns(:representatives).should == [rep]
-      response.should render_template(:index_by_name)
+      response.should have_rendered(:index_by_name)
     end
 
     it 'can get #index_by_party' do
@@ -25,7 +25,7 @@ describe RepresentativesController do
       get :index_by_party
 
       assigns(:by_party).should == {rep.party => [rep]}
-      response.should render_template(:index_by_party)
+      response.should have_rendered(:index_by_party)
     end
 
     it 'can get #index_by_district' do
@@ -34,7 +34,7 @@ describe RepresentativesController do
       get :index_by_district
 
       assigns(:by_district).should == {rep.district => [rep]}
-      response.should render_template(:index_by_district)
+      response.should have_rendered(:index_by_district)
     end
   end
 
@@ -46,7 +46,7 @@ describe RepresentativesController do
       get :show, id: rep
 
       assigns(:representative).should == rep
-      response.should render_template(:show)
+      response.should have_rendered(:show)
     end
   end
 

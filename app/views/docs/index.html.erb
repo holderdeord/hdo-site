@@ -7,7 +7,7 @@
       <a class="dropdown-toggle" data-toggle="dropdown" href="#">Input formats <b class="caret"></b></a>
       <ul class="dropdown-menu">
         <% @import_types.each do |type| %>
-          <li><a href="#input-format-<%= type.type_name %>"><%= type.type_name %></a></li>
+        <li><a href="#input-format-<%= base_kind type %>"><%= type.kind %></a></li>
         <% end %>
       </ul>
     </li>
@@ -31,13 +31,13 @@
 
 <section id="data-import">
   <div class="page-header">
-    <h1>Data import</h1>
+    <h1>Importing external data</h1>
   </div>
-  <p>To import your data, you should have a file for each of <a href="#input-formats">these XML types</a>, and pass them to <code>script/import xml</code>, e.g.:</p>
+  <p>To import external data (e.g. from the parliament), you should have a file for each of <a href="#input-formats">these JSON types</a>, and pass them to <code>script/import json</code>, e.g.:</p>
   <pre>
-<strong>$</strong> cat /path/to/reps.xml
+<strong>$</strong> cat /path/to/reps.json
 <%= @representative_example %>
-<strong>$</strong> script/import xml /path/to/reps.xml</pre>
+<strong>$</strong> script/import json /path/to/reps.json</pre>
 
   <p>XML should be imported in the following order to keep relationships intact:</p>
 
@@ -59,8 +59,8 @@
   <p>Describes the data formats used to import parliamentary data into the application.</p>
 
   <% @import_types.each do |import_type| %>
-  <h2 class="page-header" id="input-format-<%= import_type.type_name %>">
-      <%= import_type.type_name %>
+    <h2 class="page-header" id="input-format-<%= base_kind import_type %>">
+      <%= base_kind import_type %>
       <small><%= import_type.description %></small>
     </h2>
 
@@ -87,7 +87,7 @@
       </tbody>
     </table>
 
-    <h3>XML example</h3>
-    <pre class=""><%= import_type.xml_example %></pre>
+    <h3>JSON example</h3>
+    <pre><%= import_type.json_example %></pre>
   <% end %>
 </section>

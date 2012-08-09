@@ -42,26 +42,18 @@ module Hdo
         count * 100 / (total.zero? ? 1 : total)
       end
 
-      def party_votes
-        @party_votes ||= (
-          party_results = @vote.vote_results.group_by { |r| r.representative.party }
-
-          res = {}
-
-          party_results.each do |party, vote_results|
-            res[party] = counts_for(vote_results)
-          end
-
-          res
-        )
+      def party_counts_for(party)
+        party_votes[party] || Hash.new(0)
       end
 
       def party_participated?(party)
-        party_votes[party][:for] > 0 || party_votes[party][:against] > 0
+        counts = party_counts_for(party)
+        counts[:for] > 0 || counts[:against] > 0
       end
 
       def party_for?(party)
-        party_votes[party][:for] > party_votes[party][:against]
+        counts = party_counts_for(party)
+        counts[:for] > counts[:against]
       end
 
       def party_against?(party)
@@ -84,6 +76,20 @@ module Hdo
         end
 
         res
+      end
+
+      def party_votes
+        @party_votes ||= (
+          party_results = @vote.vote_results.group_by { |r| r.representative.party }
+
+          res = {}
+
+          party_results.each do |party, vote_results|
+            res[party] = counts_for(vote_results)
+          end
+
+          res
+        )
       end
     end
   end

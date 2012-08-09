@@ -34,6 +34,7 @@ Field.blueprint do
 end
 
 Party.blueprint do
+  external_id { sn.to_s }
   name { "Party-#{sn}" }
 end
 
@@ -50,6 +51,7 @@ Category.blueprint do
 end
 
 Representative.blueprint do
+  external_id { sn.to_s }
   party { Party.make! }
   first_name { "first-name-#{sn}" }
   last_name { "last-name-#{sn}" }
@@ -66,4 +68,9 @@ end
 Proposition.blueprint do
   body { "proposition-body-#{sn}" }
   description { "proposition-description-#{sn}" }
+end
+
+GoverningPeriod.blueprint do
+  party { Party.make! }
+  start_date { Date.today }
 end

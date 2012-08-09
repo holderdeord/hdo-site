@@ -1,34 +1,32 @@
 require 'bundler/capistrano'
 
-set :application, "hdo-site"
-
-set :scm, :git
-set :repository, "git://github.com/holderdeord/hdo-site"
-set :branch, 'master'
-
-set :use_sudo, false
-set :passenger_restart_strategy, :hard
-set :deploy_via, :remote_cache
-set :import_root, '/code/hdo-storting-importer'
-
 if ENV['VAGRANT']
-  set :user, 'hdo'
+  set :user,   'hdo'
   set :domain, 'localhost'
-  set :port, 2222
+  set :port,    2222
 else
-  set :user, 'hdo'
+  set :user,   'hdo'
   set :domain, 'beta.holderdeord.no'
 end
 
-set :deploy_to, "/webapps/#{application}"
+set :application, 'hdo-site'
+set :scm,         :git
+set :repository,  'git://github.com/holderdeord/hdo-site'
+set :branch,      'master'
+set :deploy_to,   "/webapps/#{application}"
+set :use_sudo,    false
+set :deploy_via,  :remote_cache
+
+set :passenger_restart_strategy, :hard
 
 role :web, domain
 role :app, domain
-role :db, domain, :primary => true
+role :db,  domain, :primary => true
 
 namespace :deploy do
-  task :start do ; end
-  task :stop do ; end
+  task(:start) {}
+  task(:stop) {}
+
   task :restart, :roles => :app, :except => { :no_release => true } do
     run "#{try_sudo} touch #{File.join(current_path,'tmp','restart.txt')}"
   end
@@ -51,8 +49,6 @@ namespace :db do
   end
 end
 
-after "deploy:finalize_update", "db:config"
-
 namespace :clear do
   cmd = "cd %s && RAILS_ENV=production bundle exec rake db:clear:%s"
 
@@ -63,7 +59,7 @@ namespace :clear do
   task(:votes)    { run(cmd % [current_path, 'votes'])    }
 
   desc 'Clear the page cache.'
-  task(:clear) { run "rm -r #{current_path}/public/cache/*"}
+  task(:cache) { run "rm -r #{current_path}/public/cache/*"}
 end
 
 namespace :dragonfly do
@@ -73,4 +69,5 @@ namespace :dragonfly do
   end
 end
 
-after 'deploy:update_code', 'dragonfly:symlink'
+after 'deploy:update_code',     'dragonfly:symlink'
+after 'deploy:finalize_update', 'db:config'

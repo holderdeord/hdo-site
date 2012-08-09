@@ -54,11 +54,11 @@ Import data for development:
 
 * A subset from [data.stortinget.no](http://data.stortinget.no):
 
-        $ bundle exec script/import dev
+        $ bundle exec rake import:dev
 
 * Import promises:
 
-        $ bundle exec hdo-converter promises http://files.holderdeord.no/promises.csv | script/import xml -
+        $ bundle exec rake import:promises
 
 Data model
 ----------

@@ -6,40 +6,68 @@ module Hdo
       include Enumerable
 
       def initialize(model)
-        @model = model
+        @data = compute(model.vote_connections.includes(:vote))
       end
 
       def score_for(party)
-        data[party]
+        @data[party]
       end
 
-      def text_for(party)
-        # TODO: i18n
+      def score_for_group(parties)
+        @data[parties] ||= (
+          if parties.size.zero?
+            nil
+          else
+            parties.map { |party| @data[party] || 0 }.sum / parties.size
+          end
+        )
+      end
+
+      def text_for(party, opts = {})
+        entity_name = opts[:name] || party.name
         score = score_for(party)
 
-        case score
-        when 0...33
-          "#{party.name} har stemt mot"
-        when 33...66
-          "#{party.name} har stemt både for og mot"
-        when 66..100
-          "#{party.name} har stemt for"
-        when nil
-          "#{party.name} har ikke deltatt i avstemninger om tema"
-        else
-          raise "unknown score: #{score.inspect}"
-        end
+        text_for_entity score, entity_name, opts
+      end
+
+      def text_for_group(parties, opts = {})
+        entity_name = opts.fetch(:name)
+        score = score_for_group(parties)
+
+        text_for_entity score, entity_name, opts
       end
 
       private
 
-      def data
-        @data ||= compute
+      def text_for_entity(score, entity_name, opts)
+        # TODO: i18n
+        if score.nil?
+          return "#{entity_name} har ikke deltatt i avstemninger om tema".html_safe
+        end
+
+        tmp = if opts[:html]
+                "#{entity_name} har stemt <strong>%s</strong>"
+              else
+                "#{entity_name} har stemt %s"
+              end
+
+        res = case score
+              when 0...33
+                tmp % "mot"
+              when 33...66
+                tmp % "både for og mot"
+              when 66..100
+                tmp % "for"
+              else
+                raise "unknown score: #{score.inspect}"
+              end
+
+        res.html_safe
       end
 
-      def compute
+      def compute(connections)
         weight_sum = 0
-        vote_percentages = @model.vote_connections.map do |vote_connection|
+        vote_percentages = connections.map do |vote_connection|
           weight_sum += vote_connection.weight
           vote_percentages_for(vote_connection)
         end
@@ -55,7 +83,11 @@ module Hdo
         result = {}
 
         party_totals.each do |party, total|
-          result[party] = (total * 100 / weight_sum)
+          if weight_sum.zero?
+            result[party] = 0
+          else
+            result[party] = (total * 100 / weight_sum).to_i
+          end
         end
 
         result
@@ -64,11 +96,12 @@ module Hdo
       private
 
       def vote_percentages_for(vote_connection)
-        vote_results = vote_connection.vote.vote_results.group_by { |v| v.representative.party }
+        vote_results = vote_connection.vote.vote_results.includes(:representative => :party)
+        by_party = vote_results.group_by { |v| v.representative.party }
 
         res = {}
 
-        vote_results.each do |party, votes|
+        by_party.each do |party, votes|
           meth = vote_connection.matches? ? :for? : :against?
 
           for_count, against_count = votes.reject(&:absent?).partition(&meth).map(&:size)

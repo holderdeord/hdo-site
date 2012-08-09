@@ -1,7 +1,7 @@
 class FieldsController < ApplicationController
   before_filter :authenticate_user!
   before_filter :fetch_topics, :only => [:new, :index, :edit]
-  before_filter :fetch_field, :only => [:show, :edit, :update, :destroy]
+  before_filter :fetch_field,  :only => [:show, :edit, :update, :destroy]
 
   # GET /fields
   # GET /fields.json

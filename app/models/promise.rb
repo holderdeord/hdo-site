@@ -1,6 +1,6 @@
 class Promise < ActiveRecord::Base
   attr_accessible :party, :general, :categories, :source, :body
-  
+
   belongs_to :party
 
   has_and_belongs_to_many :categories, :order => :name

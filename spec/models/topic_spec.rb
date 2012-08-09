@@ -1,3 +1,4 @@
+# encoding: utf-8
 require 'spec_helper'
 
 describe Topic do
@@ -26,9 +27,43 @@ describe Topic do
     t.should be_valid
   end
 
+  it "won't add the same category twice" do
+    cat = Category.make!
+
+    valid_topic.categories << cat
+    valid_topic.categories << cat
+
+    valid_topic.categories.size.should == 1
+  end
+
   it "can associate promises" do
     valid_topic.promises << Promise.make!
     valid_topic.promises.first.body.should_not be_empty
+  end
+
+  it "won't add the same promise twice" do
+    promise = Promise.make!
+
+    valid_topic.promises << promise
+    valid_topic.promises << promise
+
+    valid_topic.promises.size.should == 1
+  end
+
+  it "can associate fields" do
+    field = Field.make!
+
+    valid_topic.fields << field
+    valid_topic.fields.first.should == field
+  end
+
+  it "won't add the same field twice" do
+    field = Field.make!
+
+    valid_topic.fields << field
+    valid_topic.fields << field
+
+    valid_topic.fields.size.should == 1
   end
 
   it "can associate votes with a vote direction" do
@@ -56,5 +91,39 @@ describe Topic do
 
   it "has a stats object" do
     valid_topic.stats.should be_kind_of(Hdo::Stats::VoteScorer)
+  end
+
+  it 'caches the stats object' do
+    Hdo::Stats::VoteScorer.should_receive(:new).once
+
+    Topic.find(valid_topic.id).stats
+    Topic.find(valid_topic.id).stats # cached
+  end
+
+  it 'deletes the cached stats on save' do
+    Hdo::Stats::VoteScorer.should_receive(:new).twice
+
+    Topic.find(valid_topic.id).stats
+    Topic.find(valid_topic.id).stats # cached
+
+    valid_topic.vote_connections << VoteConnection.make!(:topic => valid_topic)
+
+    Topic.find(valid_topic.id).stats # no longer cached
+  end
+
+  it 'correctly downcases a title with non-ASCII characters' do
+    Topic.make(:title => "Ærlig").downcased_title.should == "ærlig"
+  end
+
+  it 'finds the latest topics based on vote time' do
+    t1 = Topic.make!
+    t2 = Topic.make!
+    t3 = Topic.make!
+
+    t1.vote_connections.map { |e| e.vote.update_attributes!(:time => 3.days.ago) }
+    t2.vote_connections.map { |e| e.vote.update_attributes!(:time => 2.days.ago) }
+    t3.vote_connections.map { |e| e.vote.update_attributes!(:time => 1.day.ago) }
+
+    Topic.vote_ordered.should == [t3, t2, t1]
   end
 end

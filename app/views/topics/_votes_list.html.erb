@@ -20,7 +20,7 @@
 
       <label>
         <%= VoteConnection.human_attribute_name :weight %>
-        <%= select_tag "votes[#{vote.id}][weight]", options_for_select(VoteConnection::WEIGHTS, (connection && connection.weight || 1)) %>
+        <%= select_tag "votes[#{vote.id}][weight]", weight_options_for(connection) %>
       </label>
 
       <label>
@@ -42,4 +42,6 @@
       <% end %>
     </div>
   </div>
+
+  <hr class="soften">
 <% end %>

@@ -3,7 +3,7 @@
     <div class="page-header"><h1>Sjekk hva partiene har lovet og stemt i saker som er viktig for deg:</h1></div>
       <%= render partial: 'fields_list', locals: { :fields => @fields } %>
     <div><h1>Mest populære tema:</h1></div>
-    <%= render partial: 'topics_list', locals: { :topics => @topics } %>
+    <%= render partial: 'topic_list', locals: { :topics => @topics } %>
     <%= link_to t('.new', :default => t("helpers.links.new")), new_field_path, :class => 'btn btn-primary' %>
   </div>
   <div class="span3 hidden-mobile">
@@ -23,7 +23,7 @@
 
     <div class="well">
       <h2>Bli med!</h2>
-      <p>Vi er hele tiden på utkikk etter flere drevne medarbeidere. <strong>For tiden søker vi ny teknisk teamleder.</strong></p>
+      <p>Vi er hele tiden på utkikk etter flere drevne medarbeidere. <strong>For tiden søker vi ny produktsjef.</strong></p>
       <p><%= link_to t('app.read_more'), home_join_path, class: 'btn btn-primary' %></p>
     </div>
   </div>
