@@ -19,7 +19,7 @@ module Hdo
 
     def initialize(votes = Vote.non_personal)
       @votes = votes
-      @log = Rails.logger
+      @log   = Rails.logger
     end
 
     def infer!
@@ -34,8 +34,12 @@ module Hdo
       personal_vote = find_personal_vote_for(vote.time)
 
       if personal_vote
-        @log.info "#{self.class}: infering result for vote #{vote.external_id} from #{personal_vote.external_id}"
-        add_result vote, personal_vote
+        @log.info "#{self.class}: inferring result for vote #{vote.external_id} from #{personal_vote.external_id}"
+
+        Vote.transaction do
+          add_result vote, personal_vote
+        end
+
         true
       else
         @log.info "#{self.class}: unable to infer result for vote #{vote.external_id}"

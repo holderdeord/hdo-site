@@ -12,8 +12,7 @@ module Hdo
           votes.map { |e| import_vote(e) }
         end
 
-        non_personal_votes = imported_votes.select { |e| e.non_personal? }
-        VoteInferrer.new(non_personal_votes).infer!
+        infer imported_votes
       end
 
       def import_representatives(reps)
@@ -177,7 +176,7 @@ module Hdo
 
         xvote.representatives.each do |xrep|
           result = VOTE_RESULTS[xrep.vote_result] or raise "invalid vote result: #{result_text.inspect}"
-          rep = import_representative(xrep)
+          rep = Representative.find_by_external_id(xrep.external_id) || import_representative(xrep)
 
           res = VoteResult.find_or_create_by_representative_id_and_vote_id(rep.id, vote.id)
           res.result = result
@@ -274,6 +273,15 @@ module Hdo
 
       def transaction(&blk)
         ActiveRecord::Base.transaction(&blk)
+      end
+
+      def infer(imported_votes)
+        non_personal_votes = imported_votes.select { |e| e.non_personal? }.uniq
+
+        inferrer     = VoteInferrer.new(non_personal_votes)
+        inferrer.log = @log
+
+        inferrer.infer!
       end
 
     end # Persister
