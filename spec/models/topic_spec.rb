@@ -96,19 +96,19 @@ describe Topic do
   it 'caches the stats object' do
     Hdo::Stats::VoteScorer.should_receive(:new).once
 
-    Topic.find(valid_topic.id).stats
-    Topic.find(valid_topic.id).stats # cached
+    Topic.find(valid_topic.id).stats # 1 - not cached
+    Topic.find(valid_topic.id).stats # 2 - cached
   end
 
   it 'deletes the cached stats on save' do
     Hdo::Stats::VoteScorer.should_receive(:new).twice
 
-    Topic.find(valid_topic.id).stats
-    Topic.find(valid_topic.id).stats # cached
+    Topic.find(valid_topic.id).stats # 1 - not cached
+    Topic.find(valid_topic.id).stats # 2 - cached
 
-    valid_topic.vote_connections << VoteConnection.make!(:topic => valid_topic)
+    valid_topic.vote_connections.create! :vote => Vote.make!, :matches => true
 
-    Topic.find(valid_topic.id).stats # no longer cached
+    Topic.find(valid_topic.id).stats # 3 - no longer cached
   end
 
   it 'correctly downcases a title with non-ASCII characters' do
