@@ -77,4 +77,15 @@ describe Vote do
     Vote.find(vote.id).stats # 3 - no longer cached
   end
 
+  it "won't add the same issue twice" do
+    vote = Vote.make :issues => []
+    issue = Issue.make!
+
+    vote.issues << issue
+    vote.issues << issue
+
+    vote.issues.size.should == 1
+    vote.should be_valid
+  end
+
 end

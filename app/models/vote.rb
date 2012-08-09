@@ -5,8 +5,8 @@ class Vote < ActiveRecord::Base
   attr_accessible :for_count, :against_count, :absent_count,
                   :enacted, :personal, :subject, :time
 
-  has_and_belongs_to_many :issues
-  validates_length_of :issues, :minimum => 1
+  has_and_belongs_to_many :issues, uniq: true
+  validates_length_of :issues, minimum: 1
   validates_presence_of :time
 
   has_many :propositions, :dependent => :destroy
