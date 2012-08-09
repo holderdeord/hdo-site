@@ -8,9 +8,12 @@ module Hdo
       end
 
       def import_votes(votes)
-        transaction do
-          votes.each { |e| import_vote(e) }
+        imported_votes = transaction do
+          votes.map { |e| import_vote(e) }
         end
+
+        non_personal_votes = imported_votes.select { |e| e.non_personal? }
+        VoteInferrer.new(non_personal_votes).infer!
       end
 
       def import_representatives(reps)
@@ -186,6 +189,7 @@ module Hdo
         end
 
         vote.save!
+        vote
       end
 
       def import_representative(representative)

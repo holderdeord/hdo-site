@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 module Hdo
-  describe VoteInferer do
+  describe VoteInferrer do
     it 'infers representatives from other votes the same day' do
       rep1 = Representative.make!
       rep2 = Representative.make!

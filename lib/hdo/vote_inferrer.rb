@@ -14,7 +14,7 @@ module Hdo
   # These are ignored.
   #
 
-  class VoteInferer
+  class VoteInferrer
     attr_accessor :log
 
     def initialize(votes = Vote.non_personal)

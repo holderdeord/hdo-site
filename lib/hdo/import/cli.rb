@@ -80,39 +80,46 @@ module Hdo
           str = file == "-" ? STDIN.read : File.read(file)
           data = MultiJson.decode(str)
 
-          case data
-          when Array
-            data.each { |e| import_hash(e) }
-          when Hash
-            import_hash data
-          else
-            raise TypeError, "expected Hash or Array, got: #{data.inspect}"
-          end
+          data = case data
+                 when Array
+                   data
+                 when Hash
+                   [data]
+                 else
+                   raise TypeError, "expected Hash or Array, got: #{data.inspect}"
+                 end
+
+          import_data data
         end
       end
 
-      def import_hash(hash)
-        kind = hash['kind'] or raise ArgumentError, "missing 'kind' property: #{hash.inspect}"
+      def import_data(data)
+        kinds = data.group_by do |hash|
+          hash['kind'] or raise ArgumentError, "missing 'kind' property: #{hash.inspect}"
+        end
 
-        case kind
-        when 'hdo#representative'
-          persister.import_representative StrortingImporter::Representative.from_hash(hash)
-        when 'hdo#party'
-          persister.import_party StortingImporter::Party.from_hash(hash)
-        when 'hdo#committee'
-          persister.import_committee StortingImporter::Committee.from_hash(hash)
-        when 'hdo#category'
-          persister.import_category StortingImporter::Categories.from_hash(hash)
-        when 'hdo#district'
-          persister.import_district StortingImporter::District.from_hash(hash)
-        when 'hdo#issue'
-          persister.import_issue StortingImporter::Issue.from_hash(hash)
-        when 'hdo#vote'
-          persister.import_vote StortingImporter::Vote.from_hash(hash)
-        when 'hdo#promise'
-          persister.import_promise StortingImporter::Promise.from_hash(hash)
-        else
-          raise "unknown type: #{kind}"
+        kinds.each do |kind, hashes|
+          case kind
+          when 'hdo#representative'
+            persister.import_representatives hashes.map { |e| StortingImporter::Representative.from_hash(e) }
+          when 'hdo#party'
+            persister.import_parties hashes.map { |e| StortingImporter::Party.from_hash(e) }
+          when 'hdo#committee'
+            persister.import_committees hashes.map { |e| StortingImporter::Committee.from_hash(e) }
+          when 'hdo#category'
+            persister.import_categories hashes.map { |e| StortingImporter::Categories.from_hash(e) }
+          when 'hdo#district'
+            persister.import_districts hashes.map { |e| StortingImporter::District.from_hash(e) }
+          when 'hdo#issue'
+            persister.import_issues hashes.map { |e| StortingImporter::Issue.from_hash(e) }
+          when 'hdo#vote'
+            # import_votes (plural) will also run VoteInferrer.
+            persister.import_votes hashes.map { |e| StortingImporter::Vote.from_hash(e) }
+          when 'hdo#promise'
+            persister.import_promises hashes.map { |e| StortingImporter::Promise.from_hash(e) }
+          else
+            raise "unknown type: #{kind}"
+          end
         end
       end
 
