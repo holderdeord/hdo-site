@@ -276,7 +276,7 @@ module Hdo
       end
 
       def infer(imported_votes)
-        non_personal_votes = imported_votes.select { |e| e.non_personal? }.uniq
+        non_personal_votes = imported_votes.select { |v| v.non_personal? && !v.inferred? }.uniq
 
         inferrer     = VoteInferrer.new(non_personal_votes)
         inferrer.log = @log
