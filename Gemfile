@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '3.2.7'
+gem 'rails', '3.2.8'
 
 gem 'nokogiri', '~> 1.5.0'
 gem 'acts_as_tree', '~> 0.1.1'
