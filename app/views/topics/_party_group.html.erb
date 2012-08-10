@@ -1,6 +1,6 @@
-<h4 class="pull-right"><%= topic.stats.text_for_group(parties, :name => name) %></h4>
+<h4 class="pull-right"><%= topic.stats.text_for_group(group.parties, :name => group.name) %></h4>
 
-<% parties.each do |party| %>
+<% group.parties.each do |party| %>
   <div class="row-fluid">
 
     <div class="span2">

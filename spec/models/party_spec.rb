@@ -100,4 +100,28 @@ describe Party do
     Representative.count.should == 0
   end
 
+  it 'partitions parties by government and opposition' do
+    a = Party.make!
+    b = Party.make!
+
+    a.governing_periods.create!(:start_date => Date.today)
+
+    governing, opposition = Party.governing_groups
+
+    governing.name.should be_kind_of(String)
+    governing.parties.should == [a]
+
+    opposition.name.should be_kind_of(String)
+    opposition.parties.should == [b]
+  end
+
+  it 'has no group title if there are no one in government' do
+    a = Party.make!
+
+    groups = Party.governing_groups
+    groups.size.should == 1
+    groups.first.name.should be_empty
+    groups.first.parties.should == [a]
+  end
+
 end
