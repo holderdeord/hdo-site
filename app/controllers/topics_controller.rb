@@ -17,6 +17,8 @@ class TopicsController < ApplicationController
     @promises_by_party = @topic.promises.group_by { |e| e.party }
     @party_groups = Party.governing_groups
 
+    @previous_topic, @next_topic = previous_and_next_topics_for @topic
+
     respond_to do |format|
       format.html
       format.json { render json: @topic }
@@ -111,6 +113,14 @@ class TopicsController < ApplicationController
   end
 
   private
+
+  def previous_and_next_topics_for(topic, order = :title)
+    topics = Topic.order(order)
+    previous_topic = topics[topics.index(@topic)-1] if topics.index(@topic) > 0
+    next_topic     = topics[topics.index(@topic)+1] if topics.index(@topic) < topics.count
+
+    [previous_topic, next_topic]
+  end
 
   def edit_categories
     fetch_categories
