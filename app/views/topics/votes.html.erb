@@ -19,11 +19,9 @@
             </td>
             <td>
               <% if connection.vote.has_results? %>
-                <% stats = connection.vote.stats %>
-
-                <% @party_groups.each do |name, parties| %>
-                  <% parties.each do |party| %>
-                    <%= render partial: 'votes_party', locals: { party: party, stats: stats, vote_counts: stats.party_counts_for(party) } %>
+                <% @party_groups.each do |group| %>
+                  <% group.parties.each do |party| %>
+                    <%= render partial: 'votes_party', locals: { party: party, stats: connection.vote.stats } %>
                   <% end %>
                 <% end %>
 

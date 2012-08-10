@@ -27,7 +27,6 @@ class FieldsController < ApplicationController
   # GET /fields/new.json
   def new
     @field = Field.new
-    @topics = Topic.all
 
     respond_to do |format|
       format.html # new.html.erb

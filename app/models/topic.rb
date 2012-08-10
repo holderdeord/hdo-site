@@ -1,4 +1,5 @@
 class Topic < ActiveRecord::Base
+  include Hdo::ModelHelpers::HasStatsCache
   extend FriendlyId
 
   attr_accessible :description, :title, :category_ids, :promise_ids, :field_ids
@@ -27,11 +28,6 @@ class Topic < ActiveRecord::Base
 
   scope :vote_ordered, includes(:votes).order('votes.time DESC')
 
-  # TODO: rename to #scorer, #scores
-  def stats
-    Rails.cache.fetch(stats_cache_key) { Hdo::Stats::VoteScorer.new(self) }
-  end
-
   def vote_for?(vote_id)
     vote_connections.any? { |vd| vd.matches? && vd.vote_id == vote_id  }
   end
@@ -50,12 +46,8 @@ class Topic < ActiveRecord::Base
 
   private
 
-  def clear_stats_cache(vote_connection)
-    Rails.cache.delete stats_cache_key
-  end
-
-  def stats_cache_key
-    "#{cache_key}/stats"
+  def fetch_stats
+    Hdo::Stats::VoteScorer.new(self)
   end
 
 end

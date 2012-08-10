@@ -31,6 +31,11 @@ module Hdo
     private
 
     def infer_result(vote)
+      if vote.inferred?
+        @log.info "#{self.class} ignoring vote #{vote.external_id} since results were already inferred"
+        return false
+      end
+
       personal_vote = find_personal_vote_for(vote.time)
 
       if personal_vote

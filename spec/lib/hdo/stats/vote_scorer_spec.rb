@@ -174,6 +174,17 @@ module Hdo
         scorer.score_for(rep1.party).should == 0
       end
 
+      it "does computation up front" do
+        party     = Party.make!
+        ivar_size = scorer.instance_variables.size
+
+        scorer.score_for(party)
+        scorer.instance_variables.size.should == ivar_size
+
+        scorer.score_for_group [party]
+        scorer.instance_variables.size.should == ivar_size
+      end
+
     end
   end
 end

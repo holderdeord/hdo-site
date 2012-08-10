@@ -3,9 +3,8 @@ require 'spec_helper'
 module Hdo
   module Stats
     describe VoteCounts do
-      let(:vote) { Vote.make! }
+      let(:vote) { Vote.make!(:for_count => 1, :against_count => 2, :absent_count => 3) }
 
-      it "calculates percentages"
       it 'returns a Hash with default 0 when fetching count for a non-existing party' do
         hash = vote.stats.party_counts_for('no-such-party')
 
@@ -17,6 +16,23 @@ module Hdo
       it 'it returns a string for an invalid party' do
         vote.stats.text_for(nil).should be_kind_of(String)
       end
+
+      it "does computation up front" do
+        # TODO: this spec knows too much about the implementation.
+
+        stats = vote.stats
+        ivar_size = stats.instance_variables.size
+
+        stats.for_count.should == 1
+        stats.instance_variables.size.should == ivar_size
+
+        stats.for_percent.should == 33
+        stats.instance_variables.size.should == ivar_size
+
+        stats.party_counts_for(Party.make!)
+        stats.instance_variables.size.should == ivar_size
+      end
+
     end
   end
 end
