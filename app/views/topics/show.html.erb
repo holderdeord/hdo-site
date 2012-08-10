@@ -12,13 +12,9 @@
   </ul>
 </div>
 
-<% @party_groups.each_with_index do |party_group, idx| %>
+<% @party_groups.each do |party_group| %>
   <%= render partial: 'party_group',
              locals: { group: party_group, topic: @topic, promises_by_party: @promises_by_party } %>
-
-  <% unless idx + 1 == @party_groups.size %>
-  <hr class="soften">
-  <% end %>
 <% end %>
 
 
