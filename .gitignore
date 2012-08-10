@@ -27,7 +27,6 @@
 # SimpleCov
 coverage/
 
-#Node modules
-node_modules/
+ERD.pdf
 
 chromedriver.log

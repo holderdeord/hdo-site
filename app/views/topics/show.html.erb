@@ -1,3 +1,8 @@
+<div class="row-fluid">
+  <%= link_to "\u21e6 #{@previous_topic.title}", @previous_topic if @previous_topic %>
+  <%= link_to "#{@next_topic.title} \u21e8", @next_topic, class: "pull-right" if @next_topic %>
+</div>
+
 <div class="well">
   <h1><%= @topic.title %></h1>
   <p><%= @topic.description %></p>
