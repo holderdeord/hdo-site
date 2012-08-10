@@ -4,9 +4,7 @@ class PromisesController < ApplicationController
   before_filter :find_promise, :only => [:show, :edit, :update, :destroy]
 
   def index
-    @promises = Promise.includes(:categories, :party).order(:party_id).paginate(:page => params[:page])
-    @fields = Field.all
-    @parties = Party.all
+    @categories = Category.where(:main => true)
     
     respond_to do |format|
       format.html
@@ -16,6 +14,11 @@ class PromisesController < ApplicationController
 
   end
 
+  def category
+    @grouped_by_party = Category.find(params[:id]).promises.group_by(&:party_id)
+    render 'category', :layout => false
+  end
+
   def show
     respond_to do |format|
       format.html
@@ -23,6 +26,7 @@ class PromisesController < ApplicationController
       format.xml  { render xml:  @promise }
     end
   end
+
 
   def new
     @promise = Promise.new

@@ -1,18 +1,24 @@
 var HDO = HDO || {};
 
+$(document).ready(function(){
 
-$(document).ready(function() {
-  $('.accordion-inner').click(function(){
-    $('#warning').append('Velg et parti for å se deres løfter innenfor valgt tema.');  
-    $('#what').load('topics/1');
-    $('#warning').empty();
-    return false;
+  $('.categories').on('click',function(e){
 
+    e.preventDefault();  
+    
+    var id = $(this).attr('id');
+
+    $('#promisesBody').empty();
+    $('#promisesBody').append('<div id="promisesResults"></div>');
+
+    $.ajax({
+        url : '/promises/category/' + id,
+        success: function(data) {
+          console.log(data);
+          $("#promisesResults").html(data);
+          $(".span3").css('border-right','solid 1px #EEE');
+        }
+    });
   });
-
-  $('#logos').click(function(){
-    //TODO: Get promises for specific party
-    return false;
-  });
-
+  
 });
