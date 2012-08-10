@@ -5,7 +5,7 @@ class TopicsController < ApplicationController
   helper_method :edit_steps
 
   def index
-    @topics = Topic.all
+    @topics = Topic.order(:title)
 
     respond_to do |format|
       format.html
