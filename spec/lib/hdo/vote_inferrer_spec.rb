@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 module Hdo
-  describe VoteInferer do
+  describe VoteInferrer do
     it 'infers representatives from other votes the same day' do
       rep1 = Representative.make!
       rep2 = Representative.make!
@@ -57,6 +57,17 @@ module Hdo
       subject.log.should_receive(:info).with kind_of(String)
 
       subject.infer!.should == [false]
+    end
+
+    it 'ignores already inferred votes' do
+      v = Vote.make!(
+        :enacted      => true,
+        :personal     => false
+      )
+
+      v.stub :inferred? => true
+
+      described_class.new([v]).infer!.should == [false]
     end
   end
 

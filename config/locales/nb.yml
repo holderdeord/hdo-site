@@ -228,6 +228,7 @@ nb:
     promises:
       disclaimer: '<p>Vi jobber med å kode alle løftene fra partienes valgprogram.</p> <p>Her kan man foreløpig se noen eksempler på kategoriserte løfter. Vi vil etter planen publisere den ferdigkodede løftedatabasen i løpet av juli.</p>'
     votes:
+      explanation: "Denne siden viser hva partiene har stemt og lovet om %{title}."
       non_personal:
         unknown: 'Denne saken ble avgjort uten at avstemningsknappene ble brukt. Vi har derfor ikke oversikt over hva den enkelte representant har stemt.'
         inferred: 'Denne saken ble avgjort enstemmig uten at avstemningsknappene ble brukt. Oversikten er utledet fra tilstedeværelse ved andre avstemninger samme dag.'
@@ -247,6 +248,10 @@ nb:
     updated:
       promise: 'Løftet ble oppdatert.'
       topic: 'Tema er oppdatert.'
+    parties:
+      group:
+        governing: 'Regjeringspartiene'
+        opposition: 'Opposisjonspartiene'
     counts:
       representative:
         one: "Viser <strong>1</strong> representant."

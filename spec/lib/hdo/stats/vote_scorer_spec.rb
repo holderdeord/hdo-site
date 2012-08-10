@@ -118,7 +118,7 @@ module Hdo
         scorer.stub(:score_for).and_return :foo
         lambda { scorer.text_for(:foo) }.should raise_error
       end
-      
+
       it 'calculates score for a party grouping' do
         vote = Vote.make!(:vote_results => [
           VoteResult.new(:representative => rep1, :result => 1),
@@ -153,6 +153,36 @@ module Hdo
         topic.vote_connections.create! :vote => vote, :matches => true, :weight => 1
 
         scorer.text_for(rep1.party, name: 'Ze Frenchies').should start_with 'Ze Frenchies'
+      end
+
+      it 'returns a nil score for a non-existing party' do
+        scorer.score_for(:foo).should == nil
+      end
+
+      it 'returns a nil score for an empty group' do
+        scorer.score_for_group([]).should == nil
+      end
+
+      it 'returns 0 scores when all votes are weighted 0' do
+        vote = Vote.make!(:vote_results => [
+          VoteResult.new(:representative => rep1, :result => 1),
+          VoteResult.new(:representative => rep2, :result => -1)
+        ])
+
+        topic.vote_connections.create! :vote => vote, :matches => true, :weight => 0
+
+        scorer.score_for(rep1.party).should == 0
+      end
+
+      it "does computation up front" do
+        party     = Party.make!
+        ivar_size = scorer.instance_variables.size
+
+        scorer.score_for(party)
+        scorer.instance_variables.size.should == ivar_size
+
+        scorer.score_for_group [party]
+        scorer.instance_variables.size.should == ivar_size
       end
 
     end

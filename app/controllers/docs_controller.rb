@@ -2,7 +2,8 @@ class DocsController < ApplicationController
   caches_page :index
 
   def index
-    @representative_example = "[\n  " + Hdo::StortingImporter::Representative.json_example.split("\n").join("\n  ") + "\n]"
+    example = Hdo::StortingImporter::Representative.json_example.split("\n").join("\n  ")
+    @representative_example = "[\n #{example} \n]"
 
     @import_types = [
       Hdo::StortingImporter::Party,

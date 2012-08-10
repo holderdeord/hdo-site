@@ -5,7 +5,7 @@
     <tr>
       <th><%= Topic.human_attribute_name :title %></th>
       <th><%= Topic.human_attribute_name :description %></th>
-      <th></th>
+      <th><%= Field.model_name.human(count: 2).capitalize %></th>
       <th></th>
       <th></th>
     </tr>
@@ -15,6 +15,13 @@
       <tr>
         <td><%= link_to topic.title, topic %></td>
         <td><%= topic.description %></td>
+        <td>
+          <ul>
+          <% topic.fields.each do |field| %>
+            <li><%= link_to field.name, field %></li>
+          <% end %>
+          </ul>
+        </td>
         <td><%= link_to 'Edit', edit_topic_path(topic), class: 'btn' %></td>
         <td><%= link_to 'Destroy', topic, method: :delete, data: { confirm: Topic.human_attribute_name(:confirm_destroy) }, class: 'btn btn-danger' %></td>
       </tr>

@@ -3,6 +3,8 @@
   <p><%= @topic.description %></p>
 </div>
 
+<div class="alert alert-info"><%= t('app.votes.explanation', title: @topic.downcased_title) %></div>
+
 <div class="row-fluid">
   <ul class="nav nav-tabs">
     <li><%= link_to "Se alle avstemninger", topic_votes_path(@topic) %></li>
@@ -10,13 +12,15 @@
   </ul>
 </div>
 
-<%= render partial: 'parties_group',
-  locals: { parties: @coalition_parties, topic: @topic, promises_by_party: @promises_by_party, group_name: 'Regjeringspartiene' } %>
+<% @party_groups.each_with_index do |party_group, idx| %>
+  <%= render partial: 'party_group',
+             locals: { group: party_group, topic: @topic, promises_by_party: @promises_by_party } %>
 
-<hr class="soften">
+  <% unless idx + 1 == @party_groups.size %>
+  <hr class="soften">
+  <% end %>
+<% end %>
 
-<%= render partial: 'parties_group',
-  locals: { parties: @opposition_parties, topic: @topic, promises_by_party: @promises_by_party, group_name: 'Opposisjonspartiene' } %>
 
 <% if user_signed_in? %>
   <div class="form-actions">

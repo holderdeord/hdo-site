@@ -17,7 +17,14 @@ module TopicsHelper
   end
 
   def weight_options_for(connection)
-    options_for_select VoteConnection::WEIGHTS,
-                      (connection && connection.weight) || VoteConnection::DEFAULT_WEIGHT
+    weight_options = {}
+
+    VoteConnection::WEIGHTS.each do |weight|
+      weight_options["%g" % weight] = weight
+    end
+
+    selected = (connection && connection.weight) || VoteConnection::DEFAULT_WEIGHT
+
+    options_for_select weight_options, selected
   end
 end

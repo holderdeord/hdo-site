@@ -7,7 +7,8 @@ module Hdo
         @for_count     = vote.for_count     || 0
         @against_count = vote.against_count || 0
         @absent_count  = vote.absent_count  || 0
-        @vote = vote
+
+        @party_counts = compute_party_counts vote
       end
 
       def as_json(opts = nil)
@@ -19,49 +20,41 @@ module Hdo
       end
 
       def vote_count
-        @vote_count ||= for_count + against_count
+        for_count + against_count
       end
 
       def total_count
-        @total_count ||= vote_count + absent_count
+        vote_count + absent_count
       end
 
       def for_percent
-        @for_percent ||= percentage_of for_count, vote_count
+        percentage_of for_count, vote_count
       end
 
       def against_percent
-        @against_percent ||= percentage_of against_count, vote_count
+        percentage_of against_count, vote_count
       end
 
       def absent_percent
-        @absent_percent ||= percentage_of absent_count, total_count
+        percentage_of absent_count, total_count
       end
 
       def percentage_of(count, total)
         count * 100 / (total.zero? ? 1 : total)
       end
 
-      def party_votes
-        @party_votes ||= (
-          party_results = @vote.vote_results.group_by { |r| r.representative.party }
-
-          res = {}
-
-          party_results.each do |party, vote_results|
-            res[party] = counts_for(vote_results)
-          end
-
-          res
-        )
+      def party_counts_for(party)
+        @party_counts[party] || Hash.new(0)
       end
 
       def party_participated?(party)
-        party_votes[party][:for] > 0 || party_votes[party][:against] > 0
+        counts = party_counts_for(party)
+        counts[:for] > 0 || counts[:against] > 0
       end
 
       def party_for?(party)
-        party_votes[party][:for] > party_votes[party][:against]
+        counts = party_counts_for(party)
+        counts[:for] > counts[:against]
       end
 
       def party_against?(party)
@@ -72,10 +65,23 @@ module Hdo
         return VoteResult.human_attribute_name 'voted_for' if party_for?(party)
         return VoteResult.human_attribute_name 'voted_against' if party_against?(party)
         return VoteResult.human_attribute_name 'voted_neither' unless party_participated?(party)
+
         raise 'Vote counting error.'
       end
 
       private
+
+      def compute_party_counts(vote)
+        party_results = vote.vote_results.group_by { |r| r.representative.party }
+
+        res = {}
+
+        party_results.each do |party, vote_results|
+          res[party] = counts_for(vote_results)
+        end
+
+        res
+      end
 
       def counts_for(vote_results)
         res = Hash.new(0)
@@ -85,6 +91,7 @@ module Hdo
 
         res
       end
+
     end
   end
 end

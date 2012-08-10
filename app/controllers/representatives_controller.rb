@@ -1,5 +1,7 @@
 class RepresentativesController < ApplicationController
-  caches_page :index, :show, :index_by_district, :index_by_party, :index_by_name
+  caches_page :index, :show,
+              :index_by_district, :index_by_party, :index_by_name
+
   before_filter :fetch_representatives, :only => [:index, :index_by_district, :index_by_party, :index_by_name]
 
   def index

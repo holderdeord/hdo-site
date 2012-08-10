@@ -1,0 +1,26 @@
+<h4 class="pull-right"><%= topic.stats.text_for_group(group.parties, :name => group.name) %></h4>
+
+<% group.parties.each do |party| %>
+  <div class="row-fluid">
+
+    <div class="span2">
+      <%= link_to party_path(party) do %>
+        <%= image_tag party.image_with_fallback.thumb('100x100').url, alt: "#{party.name}s logo" %>
+      <% end %>
+    </div>
+
+    <div class="span10">
+      <h3><%= topic.stats.text_for(party) %></h3>
+
+      <% if promises = promises_by_party[party] %>
+        <h5>I partiprogrammet har partiet lovet følgende:</h5>
+        <ul>
+          <% promises.each do |promise| %>
+            <li><%= promise.body %></li>
+          <% end %>
+        </ul>
+      <% end %>
+    </div>
+
+  </div>
+<% end %>

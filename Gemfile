@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '3.2.7'
+gem 'rails', '3.2.8'
 
 gem 'nokogiri', '~> 1.5.0'
 gem 'acts_as_tree', '~> 0.1.1'
@@ -56,7 +56,8 @@ gem 'multi_json'
 gem 'yajl-ruby'
 
 # data import
-gem 'hdo-storting-importer', "~> 0.0.9"
+# gem 'hdo-storting-importer', :path => File.expand_path("../../hdo-storting-importer", __FILE__)
+gem 'hdo-storting-importer', "~> 0.1.2"
 
 # To use Jbuilder templates for JSON
 # gem 'jbuilder'

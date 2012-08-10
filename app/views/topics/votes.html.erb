@@ -1,10 +1,10 @@
-<%= link_to 'Tilbake', topic %>
+<%= link_to t('app.back'), topic %>
 <div class="row-fluid">
   <div class="span12">
-    <h3><%= Vote.model_name.human(count: 2).capitalize %> <%= Vote.human_attribute_name('about') %> <%= topic.title.downcase %></h3>
+    <h3><%= Vote.model_name.human(count: 2).capitalize %> <%= Vote.human_attribute_name(:about) %> <%= topic.downcased_title %></h3>
     <table class="table">
       <thead>
-        <th><%= VoteConnection.human_attribute_name 'description' %></th>
+        <th><%= VoteConnection.human_attribute_name :description %></th>
         <th><%= Topic.human_attribute_name :party_votes_header %></th>
         <th><%= Vote.human_attribute_name :enacted %></th>
         <th><%= VoteConnection.human_attribute_name :weight %></th>
@@ -19,23 +19,17 @@
             </td>
             <td>
               <% if connection.vote.has_results? %>
-                <% stats = connection.vote.stats %>
-
-                <h3>Regjeringspartiene:</h3>
-                <% @coalition_parties.each do |party, vote_counts = stats.party_votes[party]| %>
-                  <%= render partial: 'votes_party', locals: { party: party, stats: stats, vote_counts: vote_counts } %>
-                <% end %>
-
-                <h3>Opposisjonspartiene:</h3>
-                <% @opposition_parties.each do |party, vote_counts = stats.party_votes[party]| %>
-                  <%= render partial: 'votes_party', locals: { party: party, stats: stats, vote_counts: vote_counts } %>
+                <% @party_groups.each do |group| %>
+                  <% group.parties.each do |party| %>
+                    <%= render partial: 'votes_party', locals: { party: party, stats: connection.vote.stats } %>
+                  <% end %>
                 <% end %>
 
                 <% if connection.vote.inferred? %>
-                  <%= I18n.t('app.votes.non_personal.inferred') %>
+                  <div class="alert alert-info"><%= I18n.t('app.votes.non_personal.inferred') %></div>
                 <% end %>
               <% else %>
-                <%= I18n.t('app.votes.non_personal.party_unknown') %>
+                <div class="alert alert-info"><%= I18n.t('app.votes.non_personal.party_unknown') %></div>
               <% end %>
             </td>
             <td>

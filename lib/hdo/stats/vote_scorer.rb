@@ -14,7 +14,13 @@ module Hdo
       end
 
       def score_for_group(parties)
-        @data[parties] ||= parties.inject(0) { |score, party| score += @data[party] } / parties.count
+        @data[parties] ||= (
+          if parties.size.zero?
+            nil
+          else
+            parties.map { |party| @data[party] || 0 }.sum / parties.size
+          end
+        )
       end
 
       def text_for(party, opts = {})
@@ -77,7 +83,11 @@ module Hdo
         result = {}
 
         party_totals.each do |party, total|
-          result[party] = (total * 100 / weight_sum)
+          if weight_sum.zero?
+            result[party] = 0
+          else
+            result[party] = (total * 100 / weight_sum).to_i
+          end
         end
 
         result

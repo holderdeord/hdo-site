@@ -1,6 +1,6 @@
 class VoteConnection < ActiveRecord::Base
-  WEIGHTS        = [0, 0.5, 1, 2, 4]
-  DEFAULT_WEIGHT = 1
+  WEIGHTS        = [0.0, 0.5, 1.0, 2.0, 4.0]
+  DEFAULT_WEIGHT = 1.0
 
   belongs_to :vote
   belongs_to :topic

@@ -8,70 +8,88 @@ module Hdo
       end
 
       def import_votes(votes)
-        votes.each do |e|
-          debug_on_error(e) { import_vote(e) }
+        imported_votes = transaction do
+          votes.map { |e| import_vote(e) }
         end
+
+        infer imported_votes
       end
 
       def import_representatives(reps)
-        reps.each do |e|
-          debug_on_error(e) { import_representative(e) }
+        transaction do
+          reps.each { |e| import_representative(e) }
         end
       end
 
       def import_propositions(propositions)
-        propositions.each do |e|
-          debug_on_error(e) { import_proposition(e) }
+        transaction do
+          propositions.each { |e| import_proposition(e) }
         end
       end
 
       def import_promises(promises)
-        promises.each do |e|
-          debug_on_error(e) { import_promise(e) }
+        transaction do
+          promises.each { |e| import_promise(e) }
         end
       end
 
       def import_parties(parties)
-        parties.each do |e|
-          debug_on_error(e) { import_party(e) }
+        transaction do
+          parties.each { |e| import_party(e) }
         end
       end
 
       def import_committees(committees)
-        committees.each do |e|
-          debug_on_error(e) { import_committee(e) }
+        transaction do
+          committees.each { |e| import_committee(e) }
         end
       end
 
       def import_categories(categories)
-        categories.each do |e|
-          debug_on_error(e) { import_category(e) }
+        transaction do
+          categories.each { |e| import_category(e) }
         end
       end
 
       def import_districts(districts)
-        districts.each do |e|
-          debug_on_error(e) { import_district(e) }
+        transaction do
+          districts.each { |e| import_district(e) }
         end
       end
 
       def import_issues(issues)
-        issues.each do |e|
-          debug_on_error(e) { import_issue(e) }
+        transaction do
+          issues.each { |e| import_issue(e) }
         end
       end
 
       def import_party(party)
-        @log.info "importing #{party.short_inspect}"
+        log_import party
+        party.validate!
 
-        p = Party.find_or_create_by_external_id party.external_id
-        p.update_attributes! :name => party.name
+        record = Party.find_or_create_by_external_id party.external_id
+        record.name = party.name
+        record.save!
 
-        p
+        if party.governing_periods
+          record.governing_periods = []
+
+          Array(party.governing_periods).map do |gp|
+            record.governing_periods.create!(
+              :start_date => gp.start_date,
+              :end_date => gp.end_date
+            )
+          end
+
+          record.save!
+        end
+
+        record
       end
 
       def import_committee(committee)
-        @log.info "importing #{committee.short_inspect}"
+        log_import committee
+        committee.validate!
 
         c = Committee.find_or_create_by_external_id committee.external_id
         c.update_attributes! :name => committee.name
@@ -80,7 +98,8 @@ module Hdo
       end
 
       def import_category(category)
-        @log.info "importing #{category.short_inspect}"
+        log_import category
+        category.validate!
 
         parent = Category.find_or_create_by_external_id category.external_id
         parent.name = category.name
@@ -88,7 +107,7 @@ module Hdo
         parent.save!
 
         category.children.each do |subcategory|
-          @log.info "    importing subcategory: #{subcategory.inspect}"
+          log_import subcategory
           child = Category.find_or_create_by_external_id(subcategory.external_id)
           child.name = subcategory.name
           child.save!
@@ -98,7 +117,8 @@ module Hdo
       end
 
       def import_district(district)
-        @log.info "importing #{district.short_inspect}"
+        log_import district
+        district.validate!
 
         d = District.find_or_create_by_external_id district.external_id
         d.update_attributes! :name => district.name
@@ -107,7 +127,8 @@ module Hdo
       end
 
       def import_issue(issue)
-        @log.info "importing #{issue.short_inspect}"
+        log_import issue
+        issue.validate!
 
         committee = issue.committee && Committee.find_by_name!(issue.committee)
         categories = issue.categories.map { |e| Category.find_by_name! e }
@@ -135,7 +156,8 @@ module Hdo
       }
 
       def import_vote(xvote)
-        @log.info "importing #{xvote.short_inspect}"
+        log_import xvote
+        xvote.validate!
 
         vote  = Vote.find_or_create_by_external_id xvote.external_id
         issue = Issue.find_by_external_id! xvote.external_issue_id
@@ -154,7 +176,7 @@ module Hdo
 
         xvote.representatives.each do |xrep|
           result = VOTE_RESULTS[xrep.vote_result] or raise "invalid vote result: #{result_text.inspect}"
-          rep = import_representative(xrep)
+          rep = Representative.find_by_external_id(xrep.external_id) || import_representative(xrep)
 
           res = VoteResult.find_or_create_by_representative_id_and_vote_id(rep.id, vote.id)
           res.result = result
@@ -166,10 +188,12 @@ module Hdo
         end
 
         vote.save!
+        vote
       end
 
       def import_representative(representative)
-        @log.info "importing #{representative.short_inspect}"
+        log_import representative
+        representative.validate!
 
         party = Party.find_by_name!(representative.party)
         committees = representative.committees.map { |name| Committee.find_by_name!(name) }
@@ -199,7 +223,8 @@ module Hdo
       end
 
       def import_proposition(xprop)
-        @log.info "importing #{xprop.short_inspect}"
+        log_import xprop
+        xprop.validate!
 
         prop = Proposition.find_or_create_by_external_id(xprop.external_id)
 
@@ -221,7 +246,8 @@ module Hdo
       end
 
       def import_promise(promise)
-        @log.info "importing #{promise.short_inspect}"
+        log_import promise
+        promise.validate!
 
         categories = Category.where(name: promise.categories)
         not_found = promise.categories - categories.map(&:name)
@@ -241,11 +267,21 @@ module Hdo
 
       private
 
-      def debug_on_error(obj, &blk)
-        yield
-      rescue
-        @log.error obj.inspect
-        raise
+      def log_import(obj)
+        @log.info "importing #{obj.short_inspect}"
+      end
+
+      def transaction(&blk)
+        ActiveRecord::Base.transaction(&blk)
+      end
+
+      def infer(imported_votes)
+        non_personal_votes = imported_votes.select { |v| v.non_personal? }.uniq
+
+        inferrer     = VoteInferrer.new(non_personal_votes)
+        inferrer.log = @log
+
+        inferrer.infer!
       end
 
     end # Persister
