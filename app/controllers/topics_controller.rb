@@ -17,7 +17,7 @@ class TopicsController < ApplicationController
     @promises_by_party = @topic.promises.group_by { |e| e.party }
     @party_groups = Party.governing_groups
 
-    @previous_topic, @next_topic = previous_and_next_topics_for @topic
+    assign_previous_and_next_topics
 
     respond_to do |format|
       format.html
@@ -39,8 +39,8 @@ class TopicsController < ApplicationController
 
   def edit
     if edit_steps.from_param
-      set_disable_buttons
-      set_steps_list_for_navigation
+      assign_disable_buttons
+      assign_topic_steps
 
       step = edit_steps.from_param!
       send "edit_#{step}"
@@ -114,12 +114,11 @@ class TopicsController < ApplicationController
 
   private
 
-  def previous_and_next_topics_for(topic, order = :title)
+  def assign_previous_and_next_topics(order = :title)
     topics = Topic.order(order)
-    previous_topic = topics[topics.index(@topic)-1] if topics.index(@topic) > 0
-    next_topic     = topics[topics.index(@topic)+1] if topics.index(@topic) < topics.count
-
-    [previous_topic, next_topic]
+    
+    @previous_topic = topics[topics.index(@topic) - 1] if topics.index(@topic) > 0
+    @next_topic     = topics[topics.index(@topic) + 1] if topics.index(@topic) < topics.size
   end
 
   def edit_categories
@@ -171,15 +170,15 @@ class TopicsController < ApplicationController
     end
   end
 
-  def set_steps_list_for_navigation
+  def assign_topic_steps
     @topic_steps = Hdo::TopicEditSteps::STEPS
   end
 
-  def set_disable_buttons
+  def assign_disable_buttons
     @disable_next = edit_steps.last?(params[:step]) or @topic && @topic.new_record?
     @disable_prev = edit_steps.first?(params[:step])
   end
-
+  
   def edit_steps
     @edit_steps ||= Hdo::TopicEditSteps.new(params, session)
   end
