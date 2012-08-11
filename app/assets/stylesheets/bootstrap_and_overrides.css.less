@@ -28,6 +28,7 @@
 @hdoQuaternaryColor: #231f20;
 
 @baseFontFamily: Verdana, "Helvetica Neue", Helvetica, Arial, sans-serif;
+@baseLineHeight: 18px;
 @headingsFontFamily: 'NeoSansStandard', 'Ubuntu', Helvetica, Arial, sans-serif;
 
 @navbarBackground: @hdoPrimaryColor;
@@ -40,30 +41,35 @@
 @logoHeight: 100px;
 @logoMargin: 20px;
 
-#HeaderInner {
+#HeaderNavigation {
     background-image: url('/assets/web_logo_sm.png');
     background-position: left @logoMargin;
     background-repeat: no-repeat;
     min-height: @logoHeight + @logoMargin * 2;
-}
-
-#HeaderNavigation {
-    margin-top: @logoHeight + @logoMargin * 2;
+    .subnav {
+        margin-top: @logoHeight + @logoMargin * 2;
+        .subnav-inner {
+            .clearfix();
+        }
+    }
 }
 
 .navbar {
     font-family: @headingsFontFamily;
     text-transform: uppercase;
+    .navbar-inner {
+        .border-radius(0);
+    }
 }
 
 .navbar .nav .active > a,
 .navbar .nav .active > a:hover,
 .navbar .nav li.dropdown.active .dropdown-toggle,
-.navbar .nav li.dropdown.active .dropdown-toggle:hover {
+.navbar .nav li.dropdown.active .dropdown-toggle:hover,
+.navbar .nav li.dropdown.open .dropdown-toggle {
+    .border-radius(3px 3px 0 0);
+    .box-shadow(inset 0 0 3px @grayDark);
     background-color: @white;
-    border-top-left-radius: 3px;
-    border-top-right-radius: 3px;
-    box-shadow: inset 0 0 3px @grayDark;
     color: @black;
     text-decoration: none;
     .caret {
@@ -83,15 +89,42 @@ h5 {
     font-family: @headingsFontFamily;
 }
 
-@media screen and (min-width:979px) {
+@media screen and (min-width:980px) {
+    @containerWidth: 958px; 
     #HeaderNavigation {
-        margin: 0;
-        padding-top: @logoHeight + @logoMargin * 2;
         position: relative;
+        margin: 0 auto;
+        width: @containerWidth;
         .pull-up {
             position: absolute;
             right: 0;
             top: 0;
+        }
+        .subnav {
+            margin-top: 0;
+            padding-top: @logoHeight + @logoMargin * 2;
+            &.subnav-fixed {
+                background-color: @navbarBackground;
+                left: 0;
+                padding-top: 0;
+                position: fixed;
+                top: 0;
+                width: 100%;
+                .subnav-inner {
+                    margin: 0 auto;
+                    width: @containerWidth;
+                }
+            }
+        }
+    }
+}
+
+@media screen and (min-width:1200px) {
+    @containerWidth: 1070px;
+    #HeaderNavigation {
+        width: @containerWidth;
+        .subnav.subnav-fixed .subnav-inner {
+            width: @containerWidth;
         }
     }
 }
