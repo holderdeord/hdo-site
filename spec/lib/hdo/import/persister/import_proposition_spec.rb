@@ -7,19 +7,36 @@ module Hdo
 
         include_context :persister
 
-        it 'imports a proposition' do
+        let(:example) do
           prop = Hdo::StortingImporter::Proposition.example
+
           Party.make!(:name => prop.delivered_by.party)
           Committee.make!(:name => prop.delivered_by.committees.first)
           District.make!(:name => prop.delivered_by.district)
 
-          persister.import_propositions [prop]
+          prop
+        end
+
+        it 'imports a proposition' do
+          persister.import_propositions [example]
 
           Proposition.count.should == 1
+          prop = Proposition.first
+          prop.delivered_by.should be_kind_of(Representative)
         end
 
         # https://github.com/holderdeord/hdo-site/issues/138
-        it 'imports a proposition with external_id = -1'
+        it 'imports a proposition with external_id -1' do
+          hash = example.to_hash.tap { |e| e['externalId'] = '-1' }
+
+          prop = Hdo::StortingImporter::Proposition.from_hash(hash)
+          persister.import_propositions [prop]
+
+          Proposition.count.should == 1
+
+          imported = Proposition.first
+          imported.external_id.should be_nil
+        end
 
       end
     end

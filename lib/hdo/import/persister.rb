@@ -226,7 +226,12 @@ module Hdo
         log_import xprop
         xprop.validate!
 
-        prop = Proposition.find_or_create_by_external_id(xprop.external_id)
+        if xprop.external_id == "-1"
+          prop = Proposition.new
+        else
+          prop = Proposition.find_or_create_by_external_id(xprop.external_id)
+        end
+
 
         attributes = {
           description: xprop.description,
