@@ -19,16 +19,19 @@
             <a href="/">Forside</a>
           </li>
 
-          <li class="<%= active_status_for(:parties) %>">
-          <%= link_to parties_path do %>
-            <%= Party.model_name.human(count: 2).capitalize %>
-          <% end %>
-          </li>
+          <li class="dropdown <%= active_status_for(:parties_show) %>">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#partier">
+              <%= Party.model_name.human(count: 2).capitalize %>
+              <b class="caret"></b>
+            </a>
 
-          <li class="<%= active_status_for(:issues) %>">
-          <%= link_to issues_path do %>
-            <%= Issue.model_name.human(count: 2).capitalize %>
-          <% end %>
+            <ul class="dropdown-menu">
+              <% parties.each do |party| %>
+                <li>
+                  <%= link_to party do %><%= party.name %><% end %>
+                </li>
+              <% end %>
+            </ul>
           </li>
 
           <li class="<%= active_status_for(:promises) %>">
@@ -66,7 +69,12 @@
             <ul class="dropdown-menu">
               <li>
               <%= link_to representatives_path do %>
-              <i class="icon-user"></i> <%= Representative.model_name.human(count: 2).capitalize %>
+                <i class="icon-user"></i> <%= Representative.model_name.human(count: 2).capitalize %>
+              <% end %>
+              </li>
+              <li>
+              <%= link_to issues_path do %>
+                <i class="icon-tags"></i> <%= Issue.model_name.human(count: 2).capitalize %>
               <% end %>
               </li>
               <li>
