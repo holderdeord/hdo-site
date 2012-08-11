@@ -16,8 +16,10 @@ class PromisesController < ApplicationController
   end
 
   def category
-    @grouped_by_party = Category.find(params[:id]).promises.group_by(&:party_id)
-    render 'category', :layout => false
+    @categories_by_party = Category.find(params[:id]).promises.
+                                                      group_by(&:party).
+                                                      sort_by { |party, promises| [(party.in_government? ? 0 : 1), party.name] }
+    render :layout => false
   end
 
   def show

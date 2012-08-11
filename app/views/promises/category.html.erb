@@ -1,5 +1,5 @@
 <br>
-  <% @grouped_by_party.each do |party, promises| %>
+  <% @categories_by_party.each do |party, promises| %>
   <div id="<%= Party.find(party).external_id %>">
     <h3><%= link_to Party.find(party).name, party_path %></h3>
       <ul>
