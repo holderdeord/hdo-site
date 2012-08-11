@@ -4,22 +4,41 @@
 
 <div class="container-fluid">
   <div class="row-fluid">
-    <div class="span3">
+    <div class="span3 categories">
       <!-- LEFT COLUMN --> 
       <br>
       <h2><%= Category.model_name.human(count: 2).capitalize %></h2>
-      <% @categories.each do |category| %>
-        <p><a href="/promises/category/<%= category.id %>"
-            class="categories" id="<%= category.id %>"><%= category.human_name %></a>
-        </p>
-      <% end %>
+      <ul class="nav nav-stacked nav-pills">
+        <% @categories.each do |category| %>
+        <li>
+          <a href="/promises/category/<%= category.id %>" 
+            id="<%= category.id %>">
+              <%= category.human_name %>
+          </a>
+        </li>
+        <% end %>
+      </ul>
     </div>     
 
-    <!-- RIGHT COLUMN -->
-    <div class="span5">
+    <!-- MIDDLE -->
+    <div class="span6">
       <div id="promisesBody">
         <div id="promisesResults"></div>
       </div>
+    </div>
+
+    <!-- RIGHT COLUMN -->
+    <div class="span2 party-nav"><br>
+      <ul class="nav nav-pills nav-stacked">
+        <li><a href="#" id="showAll">Vis alle</a></li>
+        <% @parties.each do |party| %>
+          <li>
+            <a id="<%= party.external_id %>" href="#">
+              <%= party.name %>
+            </a>
+          </li>
+        <% end %>
+      </ul>
     </div>
   </div>
 </div>

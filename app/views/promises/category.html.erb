@@ -1,9 +1,11 @@
 <br>
   <% @grouped_by_party.each do |party, promises| %>
-      <h3><%= link_to Party.find(party).name, party_path %></h3>
+  <div id="<%= Party.find(party).external_id %>">
+    <h3><%= link_to Party.find(party).name, party_path %></h3>
       <ul>
       <% promises.each do |p| %>
         <li><%= p.body.capitalize %></li>
       <% end %>
       </ul>
-    <% end %>
+    </div>
+  <% end %>
