@@ -1,24 +1,22 @@
 var HDO = HDO || {};
 
-(function (H, $){
-  var categoryId;
-  var results;
-  var bodyName = "promisesBody";
+(function (H, $) {
+  var categoryId, results, bodyName = "promisesBody";
 
   function getData(catId, callback) {
     $.ajax({
-      url: '/promises/category/'+ catId,
-      success: function(data){
+      url: '/promises/category/' + catId,
+      success: function (data) {
         callback(data);
       }
     });
   }
-  
+
   function setResults(data) {
     results = data;
   }
 
-  function getResults(){
+  function getResults() {
     return results;
   }
 
@@ -32,18 +30,17 @@ var HDO = HDO || {};
   function showSpecificParty(catId, partyId) {
     var bodyElement = $('#' + bodyName);
     bodyElement.empty();
-    
-    if(partyId != "showAll") {
-      bodyElement.append(results).css('display','none');
 
-      bodyElement.find('div').each(function() {
-        if($(this).attr('id') != partyId){
+    if (partyId !== "showAll") {
+      bodyElement.append(results).css('display', 'none');
+
+      bodyElement.find('div').each(function () {
+        if ($(this).attr('id') !== partyId) {
           $(this).hide();
         }
       });
       bodyElement.show();
-    }
-    else {
+    } else {
       showAllPromisesInCategory(catId);
     }
   }
@@ -60,39 +57,38 @@ var HDO = HDO || {};
       return instance;
     },
 
-    init: function() {
+    init: function () {
       var self = this;
-      $(self.options.categoriesSelector).css('border-right','solid 1px #EEE');
+      $(self.options.categoriesSelector).css('border-right', 'solid 1px #EEE');
 
 
-      $(self.options.categoriesSelector).find('a').on('click',function(e) {
-    
+      $(self.options.categoriesSelector).find('a').on('click', function (e) {
+
         removeActiveClass(self.options.categoriesSelector);
         $(this).parent().addClass('active');
-    
+
         removeActiveClass(self.options.partiesSelector);
         $('#showAll').parent().addClass('active');
-    
+
         var target = $(self.options.targetSelector);
 
         target.empty().append('<div id="' + bodyName + '"></div>');
 
         categoryId = $(this).attr('id');
-       
         showAllPromisesInCategory(categoryId);
-        
-        e.preventDefault();  
+
+        e.preventDefault();
         return false;
       });
 
-      $(self.options.partiesSelector).find('a').on('click', function(e) {
+      $(self.options.partiesSelector).find('a').on('click', function (e) {
         removeActiveClass(self.options.partiesSelector);
         $(this).parent().addClass('active');
         showSpecificParty(categoryId, $(this).attr('id'));
-    
+
         e.preventDefault();
         return false;
       });
     }
-  }
-}(HDO, jQuery))
+  };
+}(HDO, jQuery));
