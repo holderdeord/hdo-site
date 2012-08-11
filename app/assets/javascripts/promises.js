@@ -1,10 +1,11 @@
 var HDO = HDO || {};
 
-$(document).ready(function(){
+(function (H, $){
   var categoryId;
   var results;
+  var bodyName = "promisesBody";
 
-   function getData(catId) {
+  function getData(catId) {
     $.ajax({
       url: '/promises/category/'+ catId,
       success: function(data){
@@ -12,7 +13,7 @@ $(document).ready(function(){
       }
     });
   }
-
+  
   function setResults(data) {
     results = data;
   }
@@ -20,67 +21,80 @@ $(document).ready(function(){
   function getResults(){
     return results;
   }
- 
-  function showAllPromisesInCategory(divId, catId) {
+
+  function showAllPromisesInCategory(catId) {
 
     getData(catId);
     setTimeout(function(){
-      $('#' + divId).html(results);
-      $('.categories').css('border-right','solid 1px #EEE');
+      $('#' + bodyName).html(results);
+
     },100)
   }
 
-  function showSpecificParty(divId, catId, partyId) {
-    $('#' + divId).empty();
+  function showSpecificParty(catId, partyId) {
+    var bodyElement = $('#' + bodyName);
+    bodyElement.empty();
     
     if(partyId != "showAll") {
-      $('#' + divId).append(results).css('display','none');
+      bodyElement.append(results).css('display','none');
 
-      $('#'+divId + ' div').each(function() {
+      bodyElement.find('div').each(function() {
         if($(this).attr('id') != partyId){
           $(this).hide();
         }
       });
-      $('#' + divId).css('display', 'block');
+      bodyElement.show();
     }
     else {
-      showAllPromisesInCategory(divId,catId);
+      showAllPromisesInCategory(catId);
     }
   }
 
   function removeActiveClass(divClass) {
-    $('.' + divClass).find('li').removeClass('active');
+    $(divClass).find('li').removeClass('active');
   }
 
-  
-  $('.categories a').on('click',function(e) {
-    
-    removeActiveClass("categories");
-    $(this).parent().addClass('active');
-    
-    removeActiveClass("party-nav");
-    $('#showAll').parent().addClass('active');
-    
-    $('#promisesBody').empty();
-    $('#promisesBody').append('<div id="promisesResults"></div>');
+  H.promiseWidget = {
+    create: function (options) {
+      var instance = Object.create(this);
+      instance.options = options;
 
-    categoryId = $(this).attr('id');
+      return instance;
+    },
 
-    showAllPromisesInCategory("promisesResults", categoryId);
+    init: function() {
+      var self = this;
+      $(self.options.categoriesSelector).css('border-right','solid 1px #EEE');
+
+
+      $(self.options.categoriesSelector).find('a').on('click',function(e) {
+    
+        removeActiveClass(self.options.categoriesSelector);
+        $(this).parent().addClass('active');
+    
+        removeActiveClass(self.options.partiesSelector);
+        $('#showAll').parent().addClass('active');
+    
+        var target = $(self.options.targetSelector);
+
+        target.empty().append('<div id="' + bodyName + '"></div>');
+
+        categoryId = $(this).attr('id');
+       
+        showAllPromisesInCategory(categoryId);
         
-    e.preventDefault();  
-    return false;
-  
-  });
+        e.preventDefault();  
+        return false;
+      });
 
-  
-  $('.party-nav a').on('click', function(e) {
-    removeActiveClass("party-nav");
-    $(this).parent().addClass('active');
-    showSpecificParty("promisesResults" , categoryId, $(this).attr('id'));
+      $(self.options.partiesSelector).find('a').on('click', function(e) {
+        removeActiveClass(self.options.partiesSelector);
+        $(this).parent().addClass('active');
+        showSpecificParty(categoryId, $(this).attr('id'));
     
-    e.preventDefault();
-    return false;
-  });
-
-});
+        e.preventDefault();
+        return false;
+      });
+    }
+  }
+}(HDO, jQuery))

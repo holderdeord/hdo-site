@@ -22,8 +22,7 @@
 
     <!-- MIDDLE -->
     <div class="span6">
-      <div id="promisesBody">
-        <div id="promisesResults"></div>
+      <div id="promisesResults">
       </div>
     </div>
 
@@ -42,3 +41,17 @@
     </div>
   </div>
 </div>
+
+<% content_for :document_ready do %>
+  <script>
+    $(document).ready(function () {
+      var widget = HDO.promiseWidget.create({
+        targetSelector: "#promisesResults",
+        categoriesSelector: ".categories",
+        partiesSelector: ".party-nav"     
+      });
+
+      widget.init();
+    });
+  </script>
+<% end %>
