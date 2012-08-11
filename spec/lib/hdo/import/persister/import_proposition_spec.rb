@@ -38,6 +38,17 @@ module Hdo
           imported.external_id.should be_nil
         end
 
+        it 'ignores propositions with external_id=-1, body="" and description=""' do
+          hash = example.to_hash.tap do |e|
+            e.merge!('externalId' => '-1', 'body' => '', 'description' => '')
+          end
+
+          prop = Hdo::StortingImporter::Proposition.from_hash(hash)
+          persister.import_propositions [prop]
+
+          Proposition.count.should == 0
+        end
+
       end
     end
   end
