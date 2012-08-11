@@ -6,6 +6,6 @@ class ApplicationController < ActionController::Base
   private
 
   def parties
-  	@parties ||= Party.order(:name)
+    @parties ||= Party.order(:name)
   end
 end
