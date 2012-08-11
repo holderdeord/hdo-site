@@ -176,7 +176,7 @@ module Hdo
 
         xvote.representatives.each do |xrep|
           result = VOTE_RESULTS[xrep.vote_result] or raise "invalid vote result: #{result_text.inspect}"
-          rep = Representative.find_by_external_id(xrep.external_id) || import_representative(xrep)
+          rep = find_or_import_representative(xrep)
 
           res = VoteResult.find_or_create_by_representative_id_and_vote_id(rep.id, vote.id)
           res.result = result
@@ -235,7 +235,7 @@ module Hdo
         }
 
         if xprop.delivered_by
-          rep = import_representative(xprop.delivered_by)
+          rep = find_or_import_representative(xprop.delivered_by)
           attributes[:representative_id] = rep.id
         end
 
@@ -273,6 +273,10 @@ module Hdo
 
       def transaction(&blk)
         ActiveRecord::Base.transaction(&blk)
+      end
+
+      def find_or_import_representative(xrep)
+        Representative.find_by_external_id(xrep.external_id) || import_representative(xrep)
       end
 
       def infer(imported_votes)

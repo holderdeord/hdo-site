@@ -57,7 +57,7 @@ gem 'yajl-ruby'
 
 # data import
 # gem 'hdo-storting-importer', :path => File.expand_path("../../hdo-storting-importer", __FILE__)
-gem 'hdo-storting-importer', "~> 0.1.2"
+gem 'hdo-storting-importer', "~> 0.1.3"
 
 # To use Jbuilder templates for JSON
 # gem 'jbuilder'

@@ -1,5 +1,5 @@
 class Proposition < ActiveRecord::Base
-  attr_accessible :description, :on_behalf_of, :body
+  attr_accessible :description, :on_behalf_of, :body, :representative_id
 
   belongs_to :vote
   belongs_to :representative
