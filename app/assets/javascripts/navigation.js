@@ -1,14 +1,18 @@
 (function ($, global) {
   $(document).ready(function () {
     // fix sub nav on scroll
-    var $win = $(global);
-    var $nav = $('.subnav');
-    var navTop = $nav.length && $nav.outerHeight() - $nav.height();
-    var isFixed = 0;
+    var $win, $nav, navTop, isFixed, headerHeight;
+
+    headerHeight = 39;
+
+    $win = $(global);
+    $nav = $('.subnav');
+    navTop = $nav.length && $nav.outerHeight() - $nav.height();
+    isFixed = 0;
 
     function processScroll() {
       var scrollTop = $win.scrollTop();
-      console.log(navTop, scrollTop);
+
       if (scrollTop >= navTop && !isFixed) {
         isFixed = 1;
         $nav.addClass('subnav-fixed');
