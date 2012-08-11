@@ -37,6 +37,20 @@
 @navbarLinkBackgroundActive: @white;
 @navbarLinkColorActive: @black;
 
+@logoHeight: 100px;
+@logoMargin: 20px;
+
+#HeaderInner {
+    background-image: url('/assets/web_logo_sm.png');
+    background-position: left @logoMargin;
+    background-repeat: no-repeat;
+    min-height: @logoHeight + @logoMargin * 2;
+}
+
+#HeaderNavigation {
+    margin-top: @logoHeight + @logoMargin * 2;
+}
+
 .navbar {
     font-family: @headingsFontFamily;
     text-transform: uppercase;
@@ -62,4 +76,17 @@ h3,
 h4,
 h5 {
     font-family: @headingsFontFamily;
+}
+
+@media screen and (min-width:979px) {
+    #HeaderNavigation {
+        margin: 0;
+        padding-top: @logoHeight + @logoMargin * 2;
+        position: relative;
+        .pull-up {
+            position: absolute;
+            right: 0;
+            top: 0;
+        }
+    }
 }
