@@ -203,4 +203,17 @@ describe TopicsController do
     end
   end
 
+  context "show" do
+    it "should set variables for previous and next topic" do
+      t1 = Topic.make! title: 'aaaa1'
+      t2 = Topic.make! title: 'aaaa2'
+      t3 = Topic.make! title: 'aaaa3'
+
+      get :show, id: t2
+
+      assigns(:next_topic).should eq t3
+      assigns(:previous_topic).should eq t1
+    end
+  end
+
 end

@@ -1,4 +1,5 @@
 require 'optparse'
+require 'set'
 
 module Hdo
   module Import
@@ -8,18 +9,9 @@ module Hdo
         if argv.empty?
           raise ArgumentError, 'no args'
         else
-          @options = {}
-
-          OptionParser.new { |opt|
-            opt.on("-s", "--quiet") { @options[:quiet] = true }
-            opt.on("-h", "--help") do
-              puts opt
-              exit 1
-            end
-          }.parse!(argv)
-
-          @cmd = argv.shift
-          @rest = argv
+          @options = parse_options argv
+          @cmd     = argv.shift
+          @rest    = argv
         end
       end
 
@@ -35,6 +27,8 @@ module Hdo
           import_api(30)
         when 'representatives'
           import_api_representatives
+        when 'votes'
+          import_api_votes
         else
           raise ArgumentError, "unknown command: #{@cmd.inspect}"
         end
@@ -46,15 +40,10 @@ module Hdo
         persister.import_parties parsing_data_source.parties
         persister.import_committees parsing_data_source.committees
         persister.import_districts parsing_data_source.districts
-
-        import_api_representatives
-
         persister.import_categories parsing_data_source.categories
 
-        issues = parsing_data_source.issues
-
-        persister.import_issues issues
-        persister.import_votes votes_for(parsing_data_source, issues, vote_limit)
+        import_api_representatives
+        import_api_votes(vote_limit)
       end
 
       def import_api_representatives
@@ -62,15 +51,22 @@ module Hdo
         persister.import_representatives parsing_data_source.representatives_today
       end
 
+      def import_api_votes(vote_limit = nil)
+        issues = parsing_data_source.issues
+
+        persister.import_issues issues
+        persister.import_votes votes_for(parsing_data_source, issues, vote_limit)
+      end
+
       def votes_for(data_source, issues, limit = nil)
-        result = []
+        result = Set.new
 
         issues.each do |issue|
           result += data_source.votes_for(issue.external_id)
           break if limit && result.size >= limit
         end
 
-        result
+        result.to_a
       end
 
       def import_files
@@ -124,11 +120,22 @@ module Hdo
       end
 
       def parsing_data_source
-        @parsing_data_source ||= Hdo::StortingImporter::ParsingDataSource.new(api_data_source)
+        @parsing_data_source ||= (
+          ds = Hdo::StortingImporter::ParsingDataSource.new(api_data_source)
+
+          case @options[:cache]
+          when 'rails'
+            Hdo::StortingImporter::CachingDataSource.new(ds, Rails.cache)
+          when true
+            Hdo::StortingImporter::CachingDataSource.new(ds)
+          else
+            ds
+          end
+        )
       end
 
       def api_data_source
-        @api_data_source ||= Hdo::StortingImporter::ApiDataSource.new("http://data.stortinget.no")
+        @api_data_source ||= Hdo::StortingImporter::ApiDataSource.default
       end
 
       def persister
@@ -148,6 +155,26 @@ module Hdo
             Hdo::StortingImporter.logger
           end
         )
+      end
+
+      def parse_options(args)
+        options = {}
+
+        OptionParser.new { |opt|
+          opt.on("-s", "--quiet") { @options[:quiet] = true }
+          opt.on("--cache [rails]", "Cache results of API calls. Defaults to caching in memory, pass 'rails' to use Rails.cache instead.") do |arg|
+            options[:cache] = arg || true
+          end
+
+          opt.on("-h", "--help") do
+            puts opt
+            exit 1
+          end
+        }.parse!(args)
+
+        options[:cache] = ENV['CACHE']
+
+        options
       end
 
     end # CLI

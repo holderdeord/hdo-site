@@ -1,6 +1,6 @@
 class HomeController < ApplicationController
-  caches_page :index, :press, :join, :support,
-              :people, :about_method
+  caches_page :index, :unless => :user_signed_in?
+  caches_page :press, :join, :support, :people, :about_method
 
   def index
   end

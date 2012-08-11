@@ -1,12 +1,12 @@
 class Proposition < ActiveRecord::Base
-  attr_accessible :description, :on_behalf_of, :body
+  attr_accessible :description, :on_behalf_of, :body, :representative_id
 
   belongs_to :vote
   belongs_to :representative
 
   alias_method :delivered_by, :representative
 
-  validates_presence_of :body, :description
+  validates_presence_of :body
 
   def plain_body
     Nokogiri::HTML.parse(body).inner_text.strip

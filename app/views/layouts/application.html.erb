@@ -29,7 +29,14 @@
     </script>
   </head>
   <body>
-    <%= render partial: 'layouts/navigation' %>
+    <div id="Header">
+      <%= render partial: 'layouts/navigation' %>
+      <div class="left ribbon-holder">
+        <div class="red ribbon">
+          <span class="text">Under utvikling</span>
+        </div>
+      </div>
+    </div>
 
     <div id="hdo-content" class="container">
       <% if flash.notice %>

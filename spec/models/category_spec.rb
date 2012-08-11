@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 require 'spec_helper'
 
 describe Category do
@@ -25,5 +27,10 @@ describe Category do
 
     sums.should == [18, 16, 23]
     sums.sum.should == Category.where(:main => false).count
+  end
+
+  it 'correctly creates a human name for categories with non-ASCII characters' do
+    category = Category.create(:name => "SJØFART")
+    category.human_name.should == "Sjøfart"
   end
 end

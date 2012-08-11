@@ -74,3 +74,11 @@ GoverningPeriod.blueprint do
   party { Party.make! }
   start_date { Date.today }
 end
+
+Committee.blueprint do
+  name { "committee-#{sn}" }
+end
+
+District.blueprint do
+  name { "committee-#{sn}" }
+end
