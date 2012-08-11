@@ -6,7 +6,7 @@ class Proposition < ActiveRecord::Base
 
   alias_method :delivered_by, :representative
 
-  validates_presence_of :body, :description
+  validates_presence_of :body
 
   def plain_body
     Nokogiri::HTML.parse(body).inner_text.strip
