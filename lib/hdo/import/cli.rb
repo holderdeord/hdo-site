@@ -172,7 +172,7 @@ module Hdo
           end
         }.parse!(args)
 
-        options[:cache] = 'rails' if ENV['CACHE'].to_s != "false"
+        options[:cache] = ENV['CACHE']
 
         options
       end
