@@ -1,18 +1,14 @@
 <div class="page-header">
-  <h1><%= @party.name %> <small class="pull-right"><%= @party.external_id %></small></h1>
+  <h1>
+    <%= @party.name %>
+    <small><%= render partial: "representative_search", locals: { representatives: @party.representatives } %></small>
+  </h1>
 </div>
 
 <div class="container-fluid">
   <div class="row-fluid">
     <div class="span4">
       <%= image_tag @party.large_logo, alt: "#{@party.name}s logo" %>
-
-      <dl>
-        <dt><%= Representative.model_name.human(count: 2).capitalize %></dt>
-        <dd><%= @party.representatives.count %> (<%= @party.percent_of_representatives %>%)</dd>
-      </dl>
-
-      <%= render partial: "representative_search", locals: { representatives: @party.representatives } %>
 
       <% if Rails.application.config.topic_list_on_parties_show %>
         <%= render partial: "topic_list", locals: { party: @party, :topics => @topics } %>
