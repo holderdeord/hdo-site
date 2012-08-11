@@ -27,10 +27,7 @@ $(document).ready(function(){
     setTimeout(function(){
       $('#' + divId).html(results);
       $('.categories').css('border-right','solid 1px #EEE');
-
     },100)
-    
-    
   }
 
   function showSpecificParty(divId, catId, partyId) {
@@ -59,8 +56,10 @@ $(document).ready(function(){
   $('.categories a').on('click',function(e) {
     
     removeActiveClass("categories");
-    
     $(this).parent().addClass('active');
+    
+    removeActiveClass("party-nav");
+    $('#showAll').parent().addClass('active');
     
     $('#promisesBody').empty();
     $('#promisesBody').append('<div id="promisesResults"></div>');
