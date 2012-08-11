@@ -5,11 +5,11 @@ var HDO = HDO || {};
   var results;
   var bodyName = "promisesBody";
 
-  function getData(catId) {
+  function getData(catId, callback) {
     $.ajax({
       url: '/promises/category/'+ catId,
       success: function(data){
-        setResults(data);
+        callback(data);
       }
     });
   }
@@ -23,12 +23,10 @@ var HDO = HDO || {};
   }
 
   function showAllPromisesInCategory(catId) {
-
-    getData(catId);
-    setTimeout(function(){
+    getData(catId, function (results) {
+      setResults(results);
       $('#' + bodyName).html(results);
-
-    },100)
+    });
   }
 
   function showSpecificParty(catId, partyId) {
