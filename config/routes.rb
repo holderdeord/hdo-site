@@ -15,6 +15,8 @@ Hdo::Application.routes.draw do
 
   resources :promises,        :only => [:index]        # TODO: :create, :show and :edit behind auth
   get 'promises/page/:page' => 'promises#index'
+  get 'promises/show/:id' => 'promises#show'
+  get 'promises/category/:id' => 'promises#category'
 
   resources :issues, :only => [:index, :show]
   get 'issues/page/:page' => 'issues#index'

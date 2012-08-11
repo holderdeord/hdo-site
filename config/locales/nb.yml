@@ -125,6 +125,7 @@ nb:
         new: "Nytt løfte"
         edit: "Endre løfte"
         categories: "Kategorier"
+        main_categories: "Hovedkategorier"
       proposition:
         description: "Beskrivelse"
         on_behalf_of: "På vegne av"

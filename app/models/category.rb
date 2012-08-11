@@ -34,4 +34,8 @@ class Category < ActiveRecord::Base
 
     groups
   end
+
+  def human_name
+    UnicodeUtils.titlecase name
+  end
 end
