@@ -9,22 +9,9 @@ module Hdo
         if argv.empty?
           raise ArgumentError, 'no args'
         else
-          @options = {}
-
-          OptionParser.new { |opt|
-            opt.on("-s", "--quiet") { @options[:quiet] = true }
-            opt.on("--cache [rails]", "Cache results of API calls. Defaults to caching in memory, pass 'rails' to use Rails.cache instead.") do |arg|
-              @options[:cache] = arg || true
-            end
-
-            opt.on("-h", "--help") do
-              puts opt
-              exit 1
-            end
-          }.parse!(argv)
-
-          @cmd = argv.shift
-          @rest = argv
+          @options = parse_options argv
+          @cmd     = argv.shift
+          @rest    = argv
         end
       end
 
@@ -168,6 +155,26 @@ module Hdo
             Hdo::StortingImporter.logger
           end
         )
+      end
+
+      def parse_options(args)
+        options = {}
+
+        OptionParser.new { |opt|
+          opt.on("-s", "--quiet") { @options[:quiet] = true }
+          opt.on("--cache [rails]", "Cache results of API calls. Defaults to caching in memory, pass 'rails' to use Rails.cache instead.") do |arg|
+            options[:cache] = arg || true
+          end
+
+          opt.on("-h", "--help") do
+            puts opt
+            exit 1
+          end
+        }.parse!(args)
+
+        options[:cache] = 'rails' if ENV['CACHE'].to_s != "false"
+
+        options
       end
 
     end # CLI
