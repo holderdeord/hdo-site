@@ -36,6 +36,4 @@ Hdo::Application.configure do
   config.assets.debug = true
 
   config.action_mailer.default_url_options = { :host => 'localhost:3000' }
-
-  config.topic_list_on_parties_show = true
 end

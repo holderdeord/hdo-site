@@ -6,6 +6,7 @@
       <th><%= Topic.human_attribute_name :title %></th>
       <th><%= Topic.human_attribute_name :description %></th>
       <th><%= Field.model_name.human(count: 2).capitalize %></th>
+      <th><%= Topic.human_attribute_name :published %></th>
       <th></th>
       <th></th>
     </tr>
@@ -22,6 +23,7 @@
           <% end %>
           </ul>
         </td>
+        <td><%= topic.published_text %></td>
         <td><%= link_to 'Edit', edit_topic_path(topic), class: 'btn' %></td>
         <td><%= link_to 'Destroy', topic, method: :delete, data: { confirm: Topic.human_attribute_name(:confirm_destroy) }, class: 'btn btn-danger' %></td>
       </tr>
