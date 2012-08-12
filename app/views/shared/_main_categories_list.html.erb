@@ -1,0 +1,13 @@
+<div class="categories">
+  <h2><%= Category.model_name.human(count: 2).capitalize %></h2>
+  <ul class="nav nav-stacked nav-pills">
+    <% @categories.each do |category| %>
+    <li>
+      <a href="/categories/<%= category.id %>/promises" 
+        id="<%= category.id %>">
+          <%= category.human_name %>
+      </a>
+    </li>
+    <% end %>
+  </ul>
+</div>
