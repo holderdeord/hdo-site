@@ -1,6 +1,17 @@
 require 'time'
 require 'hierclust'
 
+module Hierclust
+  class Cluster
+    def distance_to(other)
+      points.inject(Float::INFINITY) do |min_distance, point|
+        distance = other.distance_to point
+        distance < min_distance ? distance : min_distance
+      end
+    end
+  end
+end
+
 module Hdo
   class TimestampClusterer
 

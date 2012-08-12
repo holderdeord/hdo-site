@@ -102,35 +102,43 @@ module Hdo
     end
 
     describe "with 8 timestamps of different distances" do
-      # before do
-      #   @first_cluster = [Time.parse('2012-01-01 09:00:00'),
-      #     Time.parse('2012-01-01 09:14:00'),
-      #     Time.parse('2012-01-01 09:23:00'),
-      #     Time.parse('2012-01-01 09:37:00')]
+      before do
+        @first_cluster = [Time.parse('2012-01-01 09:00:00'),
+          Time.parse('2012-01-01 09:14:00'),
+          Time.parse('2012-01-01 09:23:00'),
+          Time.parse('2012-01-01 09:37:00')]
 
-      #   @second_cluster = [Time.parse('2012-01-01 09:52:00'),
-      #     Time.parse('2012-01-01 10:05:00')]
+        @second_cluster = [Time.parse('2012-01-01 09:54:00'),
+          Time.parse('2012-01-01 10:05:00')]
 
-      #   @third_cluster = Time.parse '2012-01-01 11:00:00'
+        @third_cluster = Time.parse '2012-01-01 11:00:00'
 
-      #   @fourth_cluster = Time.parse '2012-01-01 11:15:00'
+        @fourth_cluster = Time.parse '2012-01-01 11:15:01'
 
-      #   @timestamps = [@first_cluster,
-      #     @second_cluster,
-      #     @third_cluster,
-      #     @fourth_cluster].flatten
+        @timestamps = [@first_cluster,
+          @second_cluster,
+          @third_cluster,
+          @fourth_cluster].flatten
 
-      #   @clusterer = TimestampClusterer.new(@timestamps, 900)
-      # end
+        @clusterer = TimestampClusterer.new(@timestamps, 900)
+      end
 
-      # it "should have 4 clusters" do
-      #   @clusterer.clusters.count.should eq 4
-      # end
+      it "should have 4 clusters" do
+        @clusterer.clusters.count.should eq 4
+      end
 
-      # it "should have 4 timestamps in the first cluster" do
-      #   raise @clusterer.clusters.sort.inspect
-      #   @clusterer.clusters.sort.first.count.should eq 4
-      # end
+      it "should have 4 timestamps in the first cluster" do
+        @clusterer.clusters.sort.first.count.should eq 4
+      end
+
+      it "should have 2 timestamps in the second cluster" do
+        @clusterer.clusters.sort[1].count.should eq 2
+      end
+
+      it "should have 1 timestamp in the two last clusters" do
+        @clusterer.clusters.sort[2].count.should eq 1
+        @clusterer.clusters.sort[3].count.should eq 1
+      end
     end
   end
 end
