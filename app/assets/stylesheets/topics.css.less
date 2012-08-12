@@ -16,3 +16,29 @@
 .topic-navigation {
   padding: 10px 0px;
 }
+
+#Topics {
+  .field-link {
+    padding-left: 1em;
+    &:after {
+      content: ")";
+    }
+    &:before {
+      content: "(";
+    }
+  }
+  .field-votes {
+    table {
+      width: 100%;
+      td.vote-number {
+        width: 5%;
+      }
+      td.vote-bar {
+        width: 20%;
+        span.vote-bar {
+          height: 1em;
+        }
+      }
+    }
+  }
+}

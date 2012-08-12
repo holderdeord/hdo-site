@@ -1,10 +1,15 @@
-<p>
-  <%= image_tag party.image_with_fallback.thumb('35x35').strip.url, alt: "#{party.name}'s logo" %>
-  <strong><%= party.name %></strong>
+<% 
+    vote_counts = stats.party_counts_for(party) 
+    max_vote_count = vote_counts.values.max %>
+<tr>
+  <td class="vote-count"><%= "#{vote_counts[:against]}" %></td>
+  <td class="vote-bar"><div class="vote-bar party-<%= party.external_id %>" style="width: <%= vote_counts[:against] / max_vote_count * 100 %>%">&nbsp;</div></td>
+  <td>
+    <%= image_tag party.image_with_fallback.thumb('35x35').strip.url, alt: "#{party.name}'s logo" %>
+  </td>
+  <td class="vote-bar"><div class="vote-bar party-<%= party.external_id %>" style="width: <%= vote_counts[:for] / max_vote_count * 100 %>%">&nbsp;</div></td>
+  <td class="vote-bar"><%= "#{vote_counts[:for]}" %></td>
+  <td><%= "#{vote_counts[:absent]}" %></td>
+  <td><%= stats.text_for(party) %></td>
+</tr>
 
-  <%= stats.text_for(party) %>
-  <small>
-    <% vote_counts = stats.party_counts_for(party) %>
-    <%= "(#{vote_counts[:for]} for, #{vote_counts[:against]} mot, #{vote_counts[:absent]} ikke tilstede.)" %>
-  </small>
-</p>
