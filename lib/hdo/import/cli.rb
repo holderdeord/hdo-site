@@ -54,6 +54,10 @@ module Hdo
       def import_api_votes(vote_limit = nil)
         issues = parsing_data_source.issues
 
+        if @options[:issue_ids]
+          issues = issues.select { |i| @options[:issue_ids].include? i.external_id }
+        end
+
         persister.import_issues issues
         persister.import_votes votes_for(parsing_data_source, issues, vote_limit)
       end
@@ -164,6 +168,10 @@ module Hdo
           opt.on("-s", "--quiet") { @options[:quiet] = true }
           opt.on("--cache [rails]", "Cache results of API calls. Defaults to caching in memory, pass 'rails' to use Rails.cache instead.") do |arg|
             options[:cache] = arg || true
+          end
+
+          opt.on("--issues ISSUE_IDS", "Only import this comma-sparated list of issues") do |ids|
+            options[:issue_ids] = ids.split(",")
           end
 
           opt.on("-h", "--help") do
