@@ -8,6 +8,6 @@ notifications:
 script: "RAILS_ENV=test bundle exec rake travis"
 before_script:
   - "sh -e /etc/init.d/xvfb start"
-  - "npm install -g buster autolint"
+  # - "npm install -g buster autolint"
 env:
   - DISPLAY=:99.0 COVERAGE_THRESHOLD=73
