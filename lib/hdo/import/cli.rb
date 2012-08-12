@@ -1,5 +1,6 @@
 require 'optparse'
 require 'set'
+require 'open-uri'
 
 module Hdo
   module Import
@@ -29,6 +30,8 @@ module Hdo
           import_api_representatives
         when 'votes'
           import_api_votes
+        when 'promises'
+          import_promises
         else
           raise ArgumentError, "unknown command: #{@cmd.inspect}"
         end
@@ -49,6 +52,13 @@ module Hdo
       def import_api_representatives
         persister.import_representatives parsing_data_source.representatives
         persister.import_representatives parsing_data_source.representatives_today
+      end
+
+      def import_promises
+        api_key = ENV['API_KEY'] or raise "must set API_KEY"
+        promises = Hdo::StortingImporter::Promise.from_fusion_table("1FgEXQW9_bzlN0vykrgiJ7Sq0Bb-PMDToQ37lqNc", api_key)
+
+        persister.import_promises promises
       end
 
       def import_api_votes(vote_limit = nil)
@@ -77,7 +87,12 @@ module Hdo
         @rest.each do |file|
           print "\nimporting #{file}:"
 
-          str = file == "-" ? STDIN.read : File.read(file)
+          if file == "-"
+            str = STDIN.read
+          else
+            str = open(file) { |io| io.read }
+          end
+
           data = MultiJson.decode(str)
 
           data = case data

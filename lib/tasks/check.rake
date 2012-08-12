@@ -23,26 +23,24 @@ namespace :check do
     end
   end
 
-  desc 'Check that promises in the given CSV file has the correct categories'
+  desc 'Check that promises in the given JSON file has the correct categories'
   task :categories => :environment do
-    file = ENV['PROMISES'] or raise "please set PROMISES=/path/to.csv"
+    file = ENV['PROMISES'] or raise "please set PROMISES=/path/to/promises.json"
     require 'hdo/storting_importer'
 
-    promises = Hdo::StortingImporter::Promise.from_csv(File.read(file))
-    failures = []
-    missing_categories = []
+    promises = Hdo::StortingImporter::Promise.from_json(File.read(file))
+    failed = false
 
     promises.each do |promise|
       missing = promise.categories.reject { |e| Category.find_by_name(e) }
       if missing.any?
-        failures << promise
-        missing_categories += missing
+        failed = true
+        puts "promise #{promise.external_id}: invalid categories #{missing.inspect}"
       end
     end
 
-    if failures.any?
-      failures.each { |e| puts "#{e.party}: #{e.body} : #{e.categories.inspect} : #{e.source}:#{e.page}" }
-      raise "found missing categories: #{missing_categories.uniq.sort.join "\n"}"
+    if failed
+      raise "found missing categories"
     end
   end
 end

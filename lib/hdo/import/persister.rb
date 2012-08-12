@@ -266,13 +266,19 @@ module Hdo
           raise "could not find category: #{not_found.inspect}"
         end
 
-        Promise.create!(
+        pr = Promise.find_or_create_by_external_id(promise.external_id)
+
+        pr.update_attributes!(
           party: Party.find_by_external_id!(promise.party),
           general: promise.general?,
           categories: categories,
           source: promise.source,
-          body: promise.body
+          page: promise.page,
+          body: promise.body,
+          date: Date.strptime(promise.date)
         )
+
+        pr
       end
 
       private

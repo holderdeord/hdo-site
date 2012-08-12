@@ -1,5 +1,5 @@
 class Promise < ActiveRecord::Base
-  attr_accessible :party, :general, :categories, :source, :body
+  attr_accessible :party, :general, :categories, :source, :body, :page, :date
 
   belongs_to :party
 
