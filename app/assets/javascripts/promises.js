@@ -5,7 +5,7 @@ var HDO = HDO || {};
 
   function getData(catId, callback) {
     $.ajax({
-      url: '/promises/category/' + catId,
+      url: '/category/' + catId + '/promises',
       success: function (data) {
         callback(data);
       }
