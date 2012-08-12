@@ -39,7 +39,7 @@
 <%= @representative_example %>
 <strong>$</strong> script/import json /path/to/reps.json</pre>
 
-  <p>XML should be imported in the following order to keep relationships intact:</p>
+  <p>JSON should be imported in the following order to keep relationships intact:</p>
 
   <ul>
     <li>party</li>
@@ -88,6 +88,14 @@
     </table>
 
     <h3>JSON example</h3>
-    <pre><%= import_type.json_example %></pre>
+    <div class="row-fluid">
+      <pre class="prettyprint"><code class="language-js"><%= import_type.json_example %></code></pre>
+    </div>
   <% end %>
 </section>
+
+<% content_for :document_ready do %>
+<script>
+  $(document).ready(function() { prettyPrint(); });
+</script>
+<% end %>
