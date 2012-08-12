@@ -1,7 +1,7 @@
 var HDO = HDO || {};
 
 (function (H, $) {
-  var categoryId, partySlug, results, bodyName = "promisesBody";
+  var categoryId, partySlug = null, results, bodyName = "promisesBody";
 
   function getData(catId, partySlug, callback) {
     var correctUrl = partySlug === '' || partySlug === null ? '/categories/' + catId + '/promises' :
