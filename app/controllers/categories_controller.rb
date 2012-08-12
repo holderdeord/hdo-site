@@ -25,7 +25,7 @@ class CategoriesController < ApplicationController
     promises = Category.find(params[:id]).promises
 
     if params[:party]
-      @promises_by_party = promises.includes(:party).
+      promises = promises.includes(:party).
                                   where("parties.slug = ?", params[:party])
     end
 

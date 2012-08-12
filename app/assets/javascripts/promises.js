@@ -3,9 +3,11 @@ var HDO = HDO || {};
 (function (H, $) {
   var categoryId, results, bodyName = "promisesBody";
 
-  function getData(catId, callback) {
+  function getData(catId, partySlug, callback) {
+    var correctUrl = partySlug == '' || partySlug == null ? '/categories/' + catId + '/promises' :
+                                          '/categories/' + catId + '/promises?party=' + partySlug;
     $.ajax({
-      url: '/categories/' + catId + '/promises',
+      url: correctUrl,
       success: function (data) {
         callback(data);
       }
@@ -20,8 +22,8 @@ var HDO = HDO || {};
     return results;
   }
 
-  function showAllPromisesInCategory(catId) {
-    getData(catId, function (results) {
+  function showAllPromisesInCategory(catId, partySlug) {
+    getData(catId, partySlug, function (results) {
       setResults(results);
       $('#' + bodyName).html(results);
     });
@@ -41,7 +43,7 @@ var HDO = HDO || {};
       });
       bodyElement.show();
     } else {
-      showAllPromisesInCategory(catId);
+      showAllPromisesInCategory(catId, null);
     }
   }
 
@@ -61,24 +63,30 @@ var HDO = HDO || {};
       var self = this;
       $(self.options.categoriesSelector).css('border-right', 'solid 1px #EEE');
 
-
       $(self.options.categoriesSelector).find('a').on('click', function (e) {
-
         removeActiveClass(self.options.categoriesSelector);
         $(this).parent().addClass('active');
 
-        removeActiveClass(self.options.partiesSelector);
+        categoryId = $(this).attr('id');
+        partySlug = null;
+
+        if (self.options.partiesSelector == null) {
+          partySlug = document.URL;
+          partySlug = partySlug.substring(partySlug.lastIndexOf('/') + 1)
+        } else {
+          removeActiveClass(self.options.partiesSelector);
+        }
+
         $('#showAll').parent().addClass('active');
 
         var target = $(self.options.targetSelector);
-
         target.empty().append('<div id="' + bodyName + '"></div>');
 
-        categoryId = $(this).attr('id');
-        showAllPromisesInCategory(categoryId);
-
+        showAllPromisesInCategory(categoryId, partySlug );
+        console.log("here");
         e.preventDefault();
         return false;
+
       });
 
       $(self.options.partiesSelector).find('a').on('click', function (e) {
@@ -89,6 +97,6 @@ var HDO = HDO || {};
         e.preventDefault();
         return false;
       });
-    }
+    } // end of init
   };
 }(HDO, jQuery));

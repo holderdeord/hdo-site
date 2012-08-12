@@ -38,18 +38,10 @@
 
           <div class="tab-pane" id="promises_tab">
             <div class="span3 categories">
-              <h2><%= Category.model_name.human(count: 2).capitalize %></h2>
-              <ul class="nav nav-stacked nav-pills">
-                <% @categories.each do |category| %>
-                <li>
-                  <a href="/promises/category/<%= category.id %>"
-                  id="<%= category.id %>">
-                    <%= category.human_name %>
-                  </a>
-                </li>
-                <% end %>
-              </ul>
+              <%= render 'shared/main_categories_list' %>
             </div>
+
+            <div class="span8" id="promisesResults"></div>
           </div>
         </div>
       </div>
@@ -61,7 +53,7 @@
   <script>
     $(document).ready(function () {
       var widget = HDO.promiseWidget.create({
-        targetSelector: "#promises_tab",
+        targetSelector: "#promisesResults",
         categoriesSelector: ".categories",
         partiesSelector: null
       });
