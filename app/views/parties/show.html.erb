@@ -21,9 +21,7 @@
   <div class="row-fluid">
 
     <div class="span4">
-      <% if Rails.application.config.topic_list_on_parties_show %>
-        <%= render partial: "topic_list", locals: { party: @party, :topics => @topics } %>
-      <% end %>
+      <%= render partial: "topic_list", locals: { party: @party, :topics => @topics } %>
     </div>
 
     <div class="span8">

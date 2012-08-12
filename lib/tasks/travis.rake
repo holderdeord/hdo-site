@@ -3,9 +3,7 @@ task :travis => %w[
   db:drop
   db:migrate
   tmp:create
-  spec:all
-  js:test
-  js:lint
+  spec
   spec:coverage:ensure
 ]
 

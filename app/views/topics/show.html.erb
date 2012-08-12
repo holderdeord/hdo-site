@@ -1,3 +1,14 @@
+<% if user_signed_in? %>
+    <div class="alert alert-warning">
+      <% if @topic.published? %>
+        <%= t('app.topics.published') %>
+      <% else %>
+        <%= t('app.topics.not_published') %>
+      <% end %>
+      <%= link_to t('app.edit'), edit_topic_path(@topic), class: 'btn' %>
+    </div>
+<% end %>
+
 <div class="row-fluid topic-navigation">
   <%= link_to "\u21e6 #{@previous_topic.title}", @previous_topic if @previous_topic %>
   <%= link_to "#{@next_topic.title} \u21e8", @next_topic, class: "pull-right" if @next_topic %>
@@ -22,9 +33,3 @@
              locals: { group: party_group, topic: @topic, promises_by_party: @promises_by_party } %>
 <% end %>
 
-
-<% if user_signed_in? %>
-  <div class="form-actions">
-    <%= link_to t('app.edit'), edit_topic_path(@topic), class: 'btn' %>
-  </div>
-<% end %>

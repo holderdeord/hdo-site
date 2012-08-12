@@ -23,14 +23,17 @@ describe PartiesController do
       assigns(:party).should == party
     end
 
-    it 'fetches the latest topics' do
-      t1 = Topic.make!
-      t2 = Topic.make!
+    it 'fetches the latest published topics' do
+      t1 = Topic.make! :published => true
+      t2 = Topic.make! :published => true
+      t3 = Topic.make! :published => false
 
       t1.vote_connections.map { |e| e.vote.update_attributes!(:time => 3.days.ago) }
       t2.vote_connections.map { |e| e.vote.update_attributes!(:time => 2.days.ago) }
+      t3.vote_connections.map { |e| e.vote.update_attributes!(:time => 1.days.ago) }
 
       get :show, id: party
+
       assigns(:topics).should == [t2, t1]
     end
 

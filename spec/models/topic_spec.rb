@@ -126,4 +126,9 @@ describe Topic do
 
     Topic.vote_ordered.should == [t3, t2, t1]
   end
+
+  it 'has a #published_text' do
+    t = Topic.make!
+    t.published_text.should be_kind_of(String)
+  end
 end

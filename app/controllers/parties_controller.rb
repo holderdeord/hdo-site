@@ -1,6 +1,6 @@
 class PartiesController < ApplicationController
   caches_page :index
-  caches_page :show unless Rails.application.config.topic_list_on_parties_show
+  # caches_page :show
   #
   # FIXME: need to look into how to cache the parties page when
   # the topic list is enabled.
@@ -29,7 +29,7 @@ class PartiesController < ApplicationController
 
   def show
     @party  = Party.includes(:representatives, :promises => :categories).find(params[:id])
-    @topics = Topic.vote_ordered.limit(10)
+    @topics = Topic.published.vote_ordered.limit(10)
 
     respond_to do |format|
       format.html
