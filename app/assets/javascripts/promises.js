@@ -1,10 +1,10 @@
 var HDO = HDO || {};
 
 (function (H, $) {
-  var categoryId, results, bodyName = "promisesBody";
+  var categoryId, partySlug, results, bodyName = "promisesBody";
 
   function getData(catId, partySlug, callback) {
-    var correctUrl = partySlug == '' || partySlug == null ? '/categories/' + catId + '/promises' :
+    var correctUrl = partySlug === '' || partySlug === null ? '/categories/' + catId + '/promises' :
                                           '/categories/' + catId + '/promises?party=' + partySlug;
     $.ajax({
       url: correctUrl,
@@ -68,11 +68,10 @@ var HDO = HDO || {};
         $(this).parent().addClass('active');
 
         categoryId = $(this).attr('id');
-        partySlug = null;
 
-        if (self.options.partiesSelector == null) {
+        if (self.options.partiesSelector === null) {
           partySlug = document.URL;
-          partySlug = partySlug.substring(partySlug.lastIndexOf('/') + 1)
+          partySlug = partySlug.substring(partySlug.lastIndexOf('/') + 1);
         } else {
           removeActiveClass(self.options.partiesSelector);
         }
@@ -82,8 +81,7 @@ var HDO = HDO || {};
         var target = $(self.options.targetSelector);
         target.empty().append('<div id="' + bodyName + '"></div>');
 
-        showAllPromisesInCategory(categoryId, partySlug );
-        console.log("here");
+        showAllPromisesInCategory(categoryId, partySlug);
         e.preventDefault();
         return false;
 
