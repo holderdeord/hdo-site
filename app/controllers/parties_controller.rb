@@ -30,6 +30,7 @@ class PartiesController < ApplicationController
   def show
     @party  = Party.includes(:representatives, :promises => :categories).find(params[:id])
     @topics = Topic.vote_ordered.limit(10)
+    @categories = Category.where(:main => true)
 
     respond_to do |format|
       format.html
