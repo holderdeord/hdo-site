@@ -19,29 +19,27 @@
   </div>
 
   <div class="row-fluid">
-    <div class="span11">
-      <div class="tabbable">
-        <ul class="nav nav-tabs">
-          <li class="active span6">
-            <a href="#topics-tab" data-toggle="tab">Siste tema</a>
-          </li>
-          <li class="span6">
-            <a href="#promises-tab" data-toggle="tab"><%= Promise.model_name.human(count: 2).capitalize %></a>
-          </li>
-        </ul>
+    <div class="tabbable">
+      <ul class="nav nav-tabs">
+        <li class="active span6">
+          <a href="#topics-tab" data-toggle="tab">Siste tema</a>
+        </li>
+        <li class="span6">
+          <a href="#promises-tab" data-toggle="tab"><%= Promise.model_name.human(count: 2).capitalize %></a>
+        </li>
+      </ul>
 
-        <div class="tab-content">
-          <div class="tab-pane active" id="topics_tab">
-              <%= render partial: "topic_list", locals: { party: @party, :topics => @topics } %>
+      <div class="tab-content">
+        <div class="tab-pane active" id="topics_tab">
+            <%= render partial: "topic_list", locals: { party: @party, :topics => @topics } %>
+        </div>
+
+        <div class="tab-pane" id="promises-tab">
+          <div class="span3 categories">
+            <%= render 'shared/main_categories_list' %>
           </div>
 
-          <div class="tab-pane" id="promises-tab">
-            <div class="span3 categories">
-              <%= render 'shared/main_categories_list' %>
-            </div>
-
-            <div class="span8" id="promises-results"></div>
-          </div>
+          <div class="span8" id="promises-results"></div>
         </div>
       </div>
     </div>
@@ -62,4 +60,3 @@
     });
   </script>
 <% end %>
-
