@@ -30,7 +30,6 @@
           </li>
         </ul>
 
-
         <div class="tab-content">
           <div class="tab-pane active" id="topics_tab">
               <%= render partial: "topic_list", locals: { party: @party, :topics => @topics } %>
@@ -53,12 +52,22 @@
   <script>
     $(document).ready(function () {
       var widget = HDO.promiseWidget.create({
+<<<<<<< HEAD
         targetSelector: "#promisesResults",
         categoriesSelector: ".categories",
         partiesSelector: null
+=======
+        targetSelector: "#promises_tab",
+        categoriesSelector: ".categories",
+        partiesSelector: null
+>>>>>>> 42f7864ef457d805635358d17011155c4373fe6a
       });
 
       widget.init();
     });
   </script>
+<<<<<<< HEAD
 <% end %>
+=======
+<% end %>
+>>>>>>> 42f7864ef457d805635358d17011155c4373fe6a
