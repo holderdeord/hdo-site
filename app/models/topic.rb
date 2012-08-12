@@ -8,7 +8,7 @@ class Topic < ActiveRecord::Base
   validates_uniqueness_of :title
 
   has_and_belongs_to_many :fields,     uniq: true
-  has_and_belongs_to_many :categories, uniq: true
+  has_and_belongs_to_many :categories, uniq: true, order: :name
   has_and_belongs_to_many :promises,   uniq: true
 
   #

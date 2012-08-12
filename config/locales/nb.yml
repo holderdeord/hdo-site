@@ -125,6 +125,7 @@ nb:
         new: "Nytt løfte"
         edit: "Endre løfte"
         categories: "Kategorier"
+        main_categories: "Hovedkategorier"
       proposition:
         description: "Beskrivelse"
         on_behalf_of: "På vegne av"
@@ -227,6 +228,8 @@ nb:
     topic_graph_header: 'Hvor ofte har partiet stemt for %{title}?'
     promises:
       disclaimer: '<p>Vi jobber med å kode alle løftene fra partienes valgprogram.</p> <p>Her kan man foreløpig se noen eksempler på kategoriserte løfter. Vi vil etter planen publisere den ferdigkodede løftedatabasen i løpet av juli.</p>'
+    topics:
+      back: 'Tilbake til tema'
     votes:
       explanation: "Denne siden viser hva partiene har stemt og lovet om %{title}."
       non_personal:

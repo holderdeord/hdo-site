@@ -2,6 +2,56 @@
   <h1><%= Promise.model_name.human(count: 2).capitalize %></h1>
 </div>
 
-<p class="pull-right"><%= page_entries_info @promises %></p>
-<%= render partial: "shared/promises_table", locals: { promises: @promises, show_party: true, show_general: true, show_source: true } %>
-<%= will_paginate @promises %>
+<div class="container-fluid">
+  <div class="row-fluid">
+    <div class="span3 categories">
+      <!-- LEFT COLUMN --> 
+      <br>
+      <h2><%= Category.model_name.human(count: 2).capitalize %></h2>
+      <ul class="nav nav-stacked nav-pills">
+        <% @categories.each do |category| %>
+        <li>
+          <a href="/promises/category/<%= category.id %>" 
+            id="<%= category.id %>">
+              <%= category.human_name %>
+          </a>
+        </li>
+        <% end %>
+      </ul>
+    </div>     
+
+    <!-- MIDDLE -->
+    <div class="span6">
+      <div id="promisesResults">
+      </div>
+    </div>
+
+    <!-- RIGHT COLUMN -->
+    <div class="span2 party-nav"><br>
+      <ul class="nav nav-pills nav-stacked">
+        <li><a href="#" id="showAll">Vis alle</a></li>
+        <% @parties.each do |party| %>
+          <li>
+            <a id="<%= party.external_id %>" href="#">
+              <%= party.name %>
+            </a>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<% content_for :document_ready do %>
+  <script>
+    $(document).ready(function () {
+      var widget = HDO.promiseWidget.create({
+        targetSelector: "#promisesResults",
+        categoriesSelector: ".categories",
+        partiesSelector: ".party-nav"     
+      });
+
+      widget.init();
+    });
+  </script>
+<% end %>

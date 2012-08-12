@@ -1,10 +1,9 @@
 class PartiesController < ApplicationController
   caches_page :index
-
-  # caches_page :show
+  caches_page :show unless Rails.application.config.topic_list_on_parties_show
   #
-  # FIXME: need to look into how to cache the parties page now
-  # that it also shows topics:
+  # FIXME: need to look into how to cache the parties page when
+  # the topic list is enabled.
   #
   # * sweeper
   # * ActiveRecord::Observer
