@@ -21,4 +21,10 @@ class CategoriesController < ApplicationController
     end
   end
 
+  def promises
+    @promises_by_party = Category.find(params[:id]).promises.group_by(&:party_id)
+    render 'promises', :layout => false
+  end
+
+
 end
