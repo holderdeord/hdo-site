@@ -23,10 +23,10 @@
       <div class="tabbable">
         <ul class="nav nav-tabs">
           <li class="active span6">
-            <a href="#topics_tab" data-toggle="tab">Siste tema</a>
+            <a href="#topics-tab" data-toggle="tab">Siste tema</a>
           </li>
           <li class="span6">
-            <a href="#promises_tab" data-toggle="tab"><%= Promise.model_name.human(count: 2).capitalize %></a>
+            <a href="#promises-tab" data-toggle="tab"><%= Promise.model_name.human(count: 2).capitalize %></a>
           </li>
         </ul>
 
@@ -35,12 +35,12 @@
               <%= render partial: "topic_list", locals: { party: @party, :topics => @topics } %>
           </div>
 
-          <div class="tab-pane" id="promises_tab">
+          <div class="tab-pane" id="promises-tab">
             <div class="span3 categories">
               <%= render 'shared/main_categories_list' %>
             </div>
 
-            <div class="span8" id="promisesResults"></div>
+            <div class="span8" id="promises-results"></div>
           </div>
         </div>
       </div>
@@ -52,22 +52,14 @@
   <script>
     $(document).ready(function () {
       var widget = HDO.promiseWidget.create({
-<<<<<<< HEAD
-        targetSelector: "#promisesResults",
+        targetSelector: "#promises-results",
         categoriesSelector: ".categories",
         partiesSelector: null
-=======
-        targetSelector: "#promises_tab",
-        categoriesSelector: ".categories",
-        partiesSelector: null
->>>>>>> 42f7864ef457d805635358d17011155c4373fe6a
+
       });
 
       widget.init();
     });
   </script>
-<<<<<<< HEAD
 <% end %>
-=======
-<% end %>
->>>>>>> 42f7864ef457d805635358d17011155c4373fe6a
+
