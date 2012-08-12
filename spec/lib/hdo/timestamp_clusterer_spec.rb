@@ -38,6 +38,41 @@ module Hdo
         @clusterer.clusters.first.count.should eq 2
       end
     end
-  end
 
+    describe "with two timestamps further apart than the threshold" do
+      before do
+        @timestamps = [Time.parse('2012-01-01 10:00:00'), Time.parse('2012-01-01 09:00:00')]
+        @threshold = 900
+        @clusterer = TimestampClusterer.new(@timestamps, @threshold)
+      end
+
+      it "should return two clusters" do
+        @clusterer.clusters.count.should eq 2
+      end
+
+      it "should have different timestamps in each cluster" do
+        @clusterer.clusters[0].first.to_i.should_not eq @clusterer.clusters[1].first.to_i
+      end
+    end
+
+    describe "with five timestamps that are all far apart" do
+      before do
+        @timestamps = [Time.parse('2012-01-01 09:00:00'),
+          Time.parse('2012-01-01 10:00:00'),
+          Time.parse('2012-01-01 11:00:00'),
+          Time.parse('2012-01-01 12:00:00'),
+          Time.parse('2012-01-01 13:00:00')]
+        @threshold = 900
+        @clusterer = TimestampClusterer.new(@timestamps, @threshold)
+      end
+
+      it "should return five clusters" do
+        @clusterer.clusters.count.should eq 5
+      end
+
+      it "should know which cluster is the closest to" do
+        
+      end
+    end
+  end
 end
