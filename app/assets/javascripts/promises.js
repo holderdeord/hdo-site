@@ -4,13 +4,17 @@ var HDO = HDO || {};
   var categoryId, partySlug = null, results, bodyName = "promisesBody";
 
   function getData(catId, partySlug, callback) {
-    var correctUrl = partySlug === '' || partySlug === null ? '/categories/' + catId + '/promises' :
-                                          '/categories/' + catId + '/promises?party=' + partySlug;
+    var promiseUrl;
+
+    if (partySlug === '' || partySlug === null) {
+      promiseUrl = '/categories/' + catId + '/promises';
+    } else {
+      promiseUrl = '/categories/' + catId + '/promises?party=' + partySlug;
+    }
+
     $.ajax({
-      url: correctUrl,
-      success: function (data) {
-        callback(data);
-      }
+      url: promiseUrl,
+      success: function (data) { callback(data); }
     });
   }
 
@@ -61,6 +65,7 @@ var HDO = HDO || {};
 
     init: function () {
       var self = this;
+
       $(self.options.categoriesSelector).css('border-right', 'solid 1px #EEE');
 
       $(self.options.categoriesSelector).find('a').on('click', function (e) {
