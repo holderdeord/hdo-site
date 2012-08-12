@@ -21,4 +21,18 @@ class CategoriesController < ApplicationController
     end
   end
 
+  def promises
+    promises = Category.find(params[:id]).promises
+
+    if params[:party]
+      promises = promises.includes(:party).
+                                  where("parties.slug = ?", params[:party])
+    end
+
+    @promises_by_party = promises.group_by(&:party);
+
+    render :layout => false
+  end
+
+
 end
