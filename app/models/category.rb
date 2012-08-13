@@ -36,6 +36,13 @@ class Category < ActiveRecord::Base
   end
 
   def human_name
-    UnicodeUtils.titlecase name
+    n = name
+
+    case n
+    when 'EFTA/EU'
+      n
+    else
+      UnicodeUtils.titlecase name
+    end
   end
 end

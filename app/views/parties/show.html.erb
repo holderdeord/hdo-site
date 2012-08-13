@@ -21,9 +21,11 @@
   <div class="row-fluid">
     <div class="tabbable">
       <ul class="nav nav-tabs">
+
         <li class="active span6">
           <a href="#topics-tab" data-toggle="tab">Siste tema</a>
         </li>
+
         <li class="span6">
           <a href="#promises-tab" data-toggle="tab"><%= Promise.model_name.human(count: 2).capitalize %></a>
         </li>
@@ -36,10 +38,12 @@
 
         <div class="tab-pane" id="promises-tab">
           <div class="span3 categories">
-            <%= render 'shared/main_categories_list' %>
+            <%= render partial: 'shared/main_categories_list', locals: { categories: @categories } %>
           </div>
 
-          <div class="span8" id="promises-results"></div>
+          <div class="span9">
+            <%= render partial: 'shared/promises_results' %>
+          </div>
         </div>
       </div>
     </div>

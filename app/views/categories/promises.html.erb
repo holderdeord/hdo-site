@@ -1,12 +1,14 @@
 <% @promises_by_party.each do |party, promises| %>
-<div id="<%= Party.find(party).external_id %>">
-  <% if @promises_by_party.size > 1 %>
-    <h3><%= link_to Party.find(party).name, party_path %></h3>
-  <% end %>
-  <ul>
-    <% promises.each do |p| %>
-      <li><%= p.body.capitalize %></li>
+  <div data-party-slug="<%= party.slug %>">
+
+    <% if @promises_by_party.size > 1 %>
+      <h3><%= link_to party.name, party_path(party) %></h3>
     <% end %>
-  </ul>
-</div>
+
+    <ul>
+      <% promises.each do |p| %>
+        <li><%= p.body %></li>
+      <% end %>
+    </ul>
+  </div>
 <% end %>

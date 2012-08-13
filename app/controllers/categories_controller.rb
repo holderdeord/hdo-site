@@ -1,5 +1,5 @@
 class CategoriesController < ApplicationController
-  caches_page :index, :show
+  caches_page :index, :show, :promises
 
   def index
     @categories = Category.includes(:children).all(:order => :name)
@@ -22,11 +22,11 @@ class CategoriesController < ApplicationController
   end
 
   def promises
-    promises = Category.find(params[:id]).promises
+    category_id = params[:id] # can't pass a slug here becuase of parent_id in the select below.
+    promises    = Promise.includes(:categories, :party).where("categories.id = ? or categories.parent_id = ?", category_id, category_id)
 
     if params[:party]
-      promises = promises.includes(:party).
-                                  where("parties.slug = ?", params[:party])
+      promises = promises.where("parties.slug = ?", params[:party])
     else
       #  TODO: extract to scope
       promises = promises.sort_by { |e| [e.party.in_government? ? 0 : 1, e.party.name]}
