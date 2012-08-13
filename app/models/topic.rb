@@ -2,7 +2,7 @@ class Topic < ActiveRecord::Base
   include Hdo::ModelHelpers::HasStatsCache
   extend FriendlyId
 
-  attr_accessible :description, :title, :category_ids, :promise_ids, :field_ids
+  attr_accessible :description, :title, :category_ids, :promise_ids, :field_ids, :published
 
   validates_presence_of   :title
   validates_uniqueness_of :title
@@ -27,6 +27,7 @@ class Topic < ActiveRecord::Base
   friendly_id :title, :use => :slugged
 
   scope :vote_ordered, includes(:votes).order('votes.time DESC')
+  scope :published, where(:published => true)
 
   def vote_for?(vote_id)
     vote_connections.any? { |vd| vd.matches? && vd.vote_id == vote_id  }
@@ -42,6 +43,10 @@ class Topic < ActiveRecord::Base
 
   def downcased_title
     @downcased_title ||= UnicodeUtils.downcase title
+  end
+
+  def published_text
+    published? ? I18n.t('app.yes') : I18n.t('app.no')
   end
 
   private

@@ -66,7 +66,7 @@
 .navbar .nav .active > a:hover,
 .navbar .nav li.dropdown.active .dropdown-toggle,
 .navbar .nav li.dropdown.active .dropdown-toggle:hover,
-.navbar .nav li.dropdown.open .dropdown-toggle {
+.navbar .nav li.dropdown.active.open > .dropdown-toggle {
     .border-radius(3px 3px 0 0);
     .box-shadow(inset 0 0 3px @grayDark);
     background-color: @white;
@@ -99,7 +99,8 @@ h5 {
 }
 
 @media screen and (min-width:980px) {
-    @containerWidth: 958px; 
+    @containerWidth: 958px;
+    @navbarHeight: 39px;
     #HeaderNavigation {
         position: relative;
         margin: 0 auto;
@@ -119,11 +120,15 @@ h5 {
                 position: fixed;
                 top: 0;
                 width: 100%;
+                z-index: 1;
                 .subnav-inner {
                     margin: 0 auto;
                     width: @containerWidth;
                 }
             }
+        }
+        &.header-fixed {
+            margin-bottom: @navbarHeight;
         }
     }
 }

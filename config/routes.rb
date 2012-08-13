@@ -9,6 +9,10 @@ Hdo::Application.routes.draw do
 
   resources :districts,       :only => [:index, :show]
   resources :categories,      :only => [:index, :show]
+  resources :categories do
+    get 'promises', :on => :member
+  end
+
   resources :parties,         :only => [:index, :show]
   resources :committees,      :only => [:index, :show]
   resources :fields

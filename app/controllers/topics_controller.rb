@@ -1,5 +1,5 @@
 class TopicsController < ApplicationController
-  before_filter :authenticate_user!
+  before_filter :authenticate_user!, :except => [:show, :votes]
   before_filter :fetch_topic, :only => [:show, :edit, :update, :destroy, :votes, :votes_search]
 
   helper_method :edit_steps
@@ -14,14 +14,19 @@ class TopicsController < ApplicationController
   end
 
   def show
-    @promises_by_party = @topic.promises.group_by { |e| e.party }
-    @party_groups = Party.governing_groups
+    # introduce a policy object?
+    if @topic.published? || user_signed_in?
+      @promises_by_party = @topic.promises.group_by { |e| e.party }
 
-    assign_previous_and_next_topics
+      assign_party_groups
+      assign_previous_and_next_topics
 
-    respond_to do |format|
-      format.html
-      format.json { render json: @topic }
+      respond_to do |format|
+        format.html
+        format.json { render json: @topic }
+      end
+    else
+      redirect_to root_url
     end
   end
 
@@ -94,8 +99,11 @@ class TopicsController < ApplicationController
   end
 
   def votes
-    @party_groups = Party.governing_groups
-    render 'votes', locals: { :topic => @topic }
+    if @topic.published? || user_signed_in?
+      render 'votes', locals: { :topic => @topic }
+    else
+      redirect_to root_path
+    end
   end
 
   def votes_search
@@ -116,9 +124,14 @@ class TopicsController < ApplicationController
 
   def assign_previous_and_next_topics(order = :title)
     topics = Topic.order(order)
-    
+    topics = topics.published unless user_signed_in?
+
     @previous_topic = topics[topics.index(@topic) - 1] if topics.index(@topic) > 0
     @next_topic     = topics[topics.index(@topic) + 1] if topics.index(@topic) < topics.size
+  end
+
+  def assign_party_groups
+    @party_groups = Party.governing_groups
   end
 
   def edit_categories
@@ -178,7 +191,7 @@ class TopicsController < ApplicationController
     @disable_next = edit_steps.last?(params[:step]) or @topic && @topic.new_record?
     @disable_prev = edit_steps.first?(params[:step])
   end
-  
+
   def edit_steps
     @edit_steps ||= Hdo::TopicEditSteps.new(params, session)
   end

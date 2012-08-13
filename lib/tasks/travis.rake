@@ -3,7 +3,7 @@ task :travis => %w[
   db:create
   db:migrate
   tmp:create
-  spec:all
+  spec
   js:test
   js:lint
   spec:coverage:ensure
