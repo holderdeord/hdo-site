@@ -18,9 +18,10 @@ namespace :import do
   desc 'Import a subset of data for development'
   task :dev => %w[import:dev:parliament import:dev:promises]
 
-  desc 'Import all promises. Requires API key to access the master table.'
+  desc 'Import all promises. Set SPREADSHEET to the master .xlsx'
   task :promises  => "import:env" do
-    Hdo::Import::CLI.new(['promises']).run
+    ss = ENV['SPREADSHEET'] or raise "must set SPREADSHEET"
+    Hdo::Import::CLI.new(['promises', ss]).run
   end
 
   desc 'Import default session votes from the API'

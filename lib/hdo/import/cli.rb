@@ -55,9 +55,9 @@ module Hdo
       end
 
       def import_promises
-        api_key = ENV['API_KEY'] or raise "must set API_KEY"
-        promises = Hdo::StortingImporter::Promise.from_fusion_table("1FgEXQW9_bzlN0vykrgiJ7Sq0Bb-PMDToQ37lqNc", api_key)
+        spreadsheet = @rest.first or raise "no spreadsheet path given"
 
+        promises = Hdo::StortingImporter::Promise.from_xlsx(spreadsheet)
         persister.import_promises promises
       end
 
