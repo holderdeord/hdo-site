@@ -235,6 +235,7 @@ describe TopicsController do
       get :votes, id: topic
 
       response.should have_rendered(:votes)
+      assigns(:party_groups).should be_kind_of(Enumerable)
     end
 
     it 'should redirect :show to the front page if the topic is not published' do
