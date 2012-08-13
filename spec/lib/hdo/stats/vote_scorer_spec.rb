@@ -64,56 +64,60 @@ module Hdo
       it 'has a string description of all valid scores' do
         p1 = Party.make!
 
-        scorer.stub(:score_for).with(p1).and_return 0
-        scorer.text_for(p1).should == "#{p1.name} har stemt konsekvent mot"
+        I18n.with_locale :nb do
+          scorer.stub(:score_for).with(p1).and_return 0
+          scorer.text_for(p1).should == "#{p1.name} har stemt konsekvent mot"
 
-        scorer.stub(:score_for).with(p1).and_return 20.1
-        scorer.text_for(p1).should == "#{p1.name} har stemt stort sett mot"
+          scorer.stub(:score_for).with(p1).and_return 20.1
+          scorer.text_for(p1).should == "#{p1.name} har stemt stort sett mot"
 
-        scorer.stub(:score_for).with(p1).and_return 39
-        scorer.text_for(p1).should == "#{p1.name} har stemt stort sett mot"
+          scorer.stub(:score_for).with(p1).and_return 39
+          scorer.text_for(p1).should == "#{p1.name} har stemt stort sett mot"
 
-        scorer.stub(:score_for).with(p1).and_return 40
-        scorer.text_for(p1).should == "#{p1.name} har stemt både for og mot"
+          scorer.stub(:score_for).with(p1).and_return 40
+          scorer.text_for(p1).should == "#{p1.name} har stemt både for og mot"
 
-        scorer.stub(:score_for).with(p1).and_return 60
-        scorer.text_for(p1).should == "#{p1.name} har stemt stort sett for"
+          scorer.stub(:score_for).with(p1).and_return 60
+          scorer.text_for(p1).should == "#{p1.name} har stemt stort sett for"
 
-        scorer.stub(:score_for).with(p1).and_return 79
-        scorer.text_for(p1).should == "#{p1.name} har stemt stort sett for"
+          scorer.stub(:score_for).with(p1).and_return 79
+          scorer.text_for(p1).should == "#{p1.name} har stemt stort sett for"
 
-        scorer.stub(:score_for).with(p1).and_return 80
-        scorer.text_for(p1).should == "#{p1.name} har stemt konsekvent for"
+          scorer.stub(:score_for).with(p1).and_return 80
+          scorer.text_for(p1).should == "#{p1.name} har stemt konsekvent for"
 
-        scorer.stub(:score_for).with(p1).and_return 100
-        scorer.text_for(p1).should == "#{p1.name} har stemt konsekvent for"
+          scorer.stub(:score_for).with(p1).and_return 100
+          scorer.text_for(p1).should == "#{p1.name} har stemt konsekvent for"
 
-        scorer.stub(:score_for).with(p1).and_return nil
-        scorer.text_for(p1).should == "#{p1.name} har ikke deltatt i avstemninger om tema"
+          scorer.stub(:score_for).with(p1).and_return nil
+          scorer.text_for(p1).should == "#{p1.name} har ikke deltatt i avstemninger om tema"
+        end
       end
 
       it 'returns an HTML version of the description if :html => true' do
         p1 = Party.make!
 
-        scorer.stub(:score_for).with(p1).and_return 0
-        str = scorer.text_for(p1, :html => true)
-        str.should == "#{p1.name} har stemt <strong>konsekvent mot</strong>"
-        str.should be_html_safe
+        I18n.with_locale :nb do
+          scorer.stub(:score_for).with(p1).and_return 0
+          str = scorer.text_for(p1, :html => true)
+          str.should == "#{p1.name} har stemt <strong>konsekvent mot</strong>"
+          str.should be_html_safe
 
-        scorer.stub(:score_for).with(p1).and_return 50
-        str = scorer.text_for(p1, :html => true)
-        str.should == "#{p1.name} har stemt <strong>både for og mot</strong>"
-        str.should be_html_safe
+          scorer.stub(:score_for).with(p1).and_return 50
+          str = scorer.text_for(p1, :html => true)
+          str.should == "#{p1.name} har stemt <strong>både for og mot</strong>"
+          str.should be_html_safe
 
-        scorer.stub(:score_for).with(p1).and_return 100
-        str = scorer.text_for(p1, :html => true)
-        str.should == "#{p1.name} har stemt <strong>konsekvent for</strong>"
-        str.should be_html_safe
+          scorer.stub(:score_for).with(p1).and_return 100
+          str = scorer.text_for(p1, :html => true)
+          str.should == "#{p1.name} har stemt <strong>konsekvent for</strong>"
+          str.should be_html_safe
 
-        scorer.stub(:score_for).with(p1).and_return nil
-        str = scorer.text_for(p1, :html => true)
-        str.should == "#{p1.name} har ikke deltatt i avstemninger om tema"
-        str.should be_html_safe
+          scorer.stub(:score_for).with(p1).and_return nil
+          str = scorer.text_for(p1, :html => true)
+          str.should == "#{p1.name} har ikke deltatt i avstemninger om tema"
+          str.should be_html_safe
+        end
       end
 
 

@@ -237,6 +237,18 @@ nb:
         unknown: 'Denne saken ble avgjort uten at avstemningsknappene ble brukt. Vi har derfor ikke oversikt over hva den enkelte representant har stemt.'
         inferred: 'Denne saken ble avgjort enstemmig uten at avstemningsknappene ble brukt. Oversikten er utledet fra tilstedeværelse ved andre avstemninger samme dag.'
         party_unknown: 'Denne avstemningen ble avgjort uten at avstemningsknappene ble brukt. Vi har derfor ikke oversikt over hva det enkelte parti har stemt.'
+      scores:
+        not_participated: "%{name} har ikke deltatt i avstemninger om tema"
+        consistently_for: "%{name} har stemt konsekvent for"
+        mostly_for: "%{name} har stemt stort sett for"
+        for_and_against: "%{name} har stemt både for og mot"
+        mostly_against: "%{name} har stemt stort sett mot"
+        consistently_against: "%{name} har stemt konsekvent mot"
+        consistently_for_html: "%{name} har stemt <strong>konsekvent for</strong>"
+        mostly_for_html: "%{name} har stemt <strong>stort sett for</strong>"
+        for_and_against_html: "%{name} har stemt <strong>både for og mot</strong>"
+        mostly_against_html: "%{name} har <strong>stemt stort sett mot</strong>"
+        consistently_against_html: "%{name} har stemt <strong>konsekvent mot</strong>"
     external:
       urls:
         issue: "http://stortinget.no/no/Saker-og-publikasjoner/Saker/Sak/?p=%s"
