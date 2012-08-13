@@ -257,22 +257,57 @@ module Hdo
 
       def import_promise(promise)
         log_import promise
-        promise.validate!
+
+        unless promise.valid?
+          @log.error "promise is not valid: #{promise.inspect}"
+          return
+        end
 
         categories = Category.where(name: promise.categories)
         not_found = promise.categories - categories.map(&:name)
 
         if not_found.any?
-          raise "could not find category: #{not_found.inspect}"
+          @log.error "invalid categories: #{not_found.inspect}"
+          return
         end
 
-        Promise.create!(
-          party: Party.find_by_external_id!(promise.party),
+        if promise.categories.empty?
+          @log.error "promise #{promise.external_id}: no categories"
+          return
+        end
+
+        party = Party.find_by_external_id(promise.party)
+        unless party
+          @log.error "promise #{promise.external_id}: unknown party: #{promise.party}"
+          return
+        end
+
+        pr = Promise.find_or_create_by_external_id(promise.external_id)
+
+        if pr.new_record?
+          duplicate = Promise.find_by_party_id_and_body(party.id, promise.body)
+          if duplicate
+            @log.error "promise #{promise.external_id}: duplicate of #{duplicate.external_id}"
+            return
+          end
+        end
+
+        pr.update_attributes(
+          party: party,
           general: promise.general?,
           categories: categories,
           source: promise.source,
-          body: promise.body
+          page: promise.page,
+          body: promise.body,
+          date: Date.strptime(promise.date)
         )
+
+        unless pr.save
+          @log.error "promise #{promise.external_id}: #{pr.errors.full_messages.to_sentence}"
+          return
+        end
+
+        pr
       end
 
       private
