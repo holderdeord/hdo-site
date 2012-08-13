@@ -51,13 +51,18 @@ module Hdo
                 "#{entity_name} har stemt %s"
               end
 
+
         res = case score
-              when 0...33
-                tmp % "mot"
-              when 33...66
-                tmp % "både for og mot"
-              when 66..100
-                tmp % "for"
+              when 0...20
+                tmp % 'konsekvent mot'
+              when 20...40
+                tmp % 'stort sett mot'
+              when 40...60
+                tmp % 'både for og mot'
+              when 60...80
+                tmp % 'stort sett for'
+              when 80..100
+                tmp % 'konsekvent for'
               else
                 raise "unknown score: #{score.inspect}"
               end

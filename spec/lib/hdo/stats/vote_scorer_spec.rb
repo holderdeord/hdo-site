@@ -65,25 +65,28 @@ module Hdo
         p1 = Party.make!
 
         scorer.stub(:score_for).with(p1).and_return 0
-        scorer.text_for(p1).should == "#{p1.name} har stemt mot"
+        scorer.text_for(p1).should == "#{p1.name} har stemt konsekvent mot"
 
-        scorer.stub(:score_for).with(p1).and_return 33.4
+        scorer.stub(:score_for).with(p1).and_return 20.1
+        scorer.text_for(p1).should == "#{p1.name} har stemt stort sett mot"
+
+        scorer.stub(:score_for).with(p1).and_return 39
+        scorer.text_for(p1).should == "#{p1.name} har stemt stort sett mot"
+
+        scorer.stub(:score_for).with(p1).and_return 40
         scorer.text_for(p1).should == "#{p1.name} har stemt både for og mot"
 
-        scorer.stub(:score_for).with(p1).and_return 50
-        scorer.text_for(p1).should == "#{p1.name} har stemt både for og mot"
+        scorer.stub(:score_for).with(p1).and_return 60
+        scorer.text_for(p1).should == "#{p1.name} har stemt stort sett for"
 
-        scorer.stub(:score_for).with(p1).and_return 65
-        scorer.text_for(p1).should == "#{p1.name} har stemt både for og mot"
+        scorer.stub(:score_for).with(p1).and_return 79
+        scorer.text_for(p1).should == "#{p1.name} har stemt stort sett for"
 
-        scorer.stub(:score_for).with(p1).and_return 66.2
-        scorer.text_for(p1).should == "#{p1.name} har stemt for"
-
-        scorer.stub(:score_for).with(p1).and_return 67
-        scorer.text_for(p1).should == "#{p1.name} har stemt for"
+        scorer.stub(:score_for).with(p1).and_return 80
+        scorer.text_for(p1).should == "#{p1.name} har stemt konsekvent for"
 
         scorer.stub(:score_for).with(p1).and_return 100
-        scorer.text_for(p1).should == "#{p1.name} har stemt for"
+        scorer.text_for(p1).should == "#{p1.name} har stemt konsekvent for"
 
         scorer.stub(:score_for).with(p1).and_return nil
         scorer.text_for(p1).should == "#{p1.name} har ikke deltatt i avstemninger om tema"
@@ -94,7 +97,7 @@ module Hdo
 
         scorer.stub(:score_for).with(p1).and_return 0
         str = scorer.text_for(p1, :html => true)
-        str.should == "#{p1.name} har stemt <strong>mot</strong>"
+        str.should == "#{p1.name} har stemt <strong>konsekvent mot</strong>"
         str.should be_html_safe
 
         scorer.stub(:score_for).with(p1).and_return 50
@@ -104,7 +107,7 @@ module Hdo
 
         scorer.stub(:score_for).with(p1).and_return 100
         str = scorer.text_for(p1, :html => true)
-        str.should == "#{p1.name} har stemt <strong>for</strong>"
+        str.should == "#{p1.name} har stemt <strong>konsekvent for</strong>"
         str.should be_html_safe
 
         scorer.stub(:score_for).with(p1).and_return nil
