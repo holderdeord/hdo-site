@@ -184,7 +184,8 @@ module Hdo
         end
 
         xvote.propositions.each do |e|
-          vote.propositions << import_proposition(e)
+          prop = import_proposition(e)
+          vote.propositions << prop if prop
         end
 
         vote.save!
