@@ -6,13 +6,6 @@ class PromisesController < ApplicationController
   def index
     @categories = Category.where(:main => true)
     @parties = Party.order(:name)
-    
-    respond_to do |format|
-      format.html
-      format.json { render json: @promises }
-      format.xml  { render xml:  @promises }    
-    end
-
   end
 
   def show

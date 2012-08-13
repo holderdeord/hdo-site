@@ -4,27 +4,23 @@
 
 <div class="container-fluid">
   <div class="row-fluid">
-    <div class="span3 categories">
-      <!-- LEFT COLUMN --> 
-      <br>
-      <%= render 'shared/main_categories_list' %>
-    </div>     
+    <div class="span3">
+      <!-- LEFT COLUMN -->
+      <%= render partial: 'shared/main_categories_list', locals: { categories: @categories } %>
+    </div>
 
     <!-- MIDDLE -->
-    <div class="span6">
-      <div id="promisesResults">
-      </div>
+    <div class="span7">
+      <%= render partial: 'shared/promises_results' %>
     </div>
 
     <!-- RIGHT COLUMN -->
-    <div class="span2 party-nav"><br>
+    <div class="span2 party-nav">
       <ul class="nav nav-pills nav-stacked">
-        <li><a href="#" id="showAll">Vis alle</a></li>
+        <li><a href="#" data-party-slug="show-all">Vis alle</a></li>
         <% @parties.each do |party| %>
           <li>
-            <a id="<%= party.external_id %>" href="#">
-              <%= party.name %>
-            </a>
+            <a data-party-slug="<%= party.slug %>" href="#"><%= party.name %></a>
           </li>
         <% end %>
       </ul>
@@ -36,9 +32,9 @@
   <script>
     $(document).ready(function () {
       var widget = HDO.promiseWidget.create({
-        targetSelector: "#promisesResults",
+        targetSelector: "#promises-results",
         categoriesSelector: ".categories",
-        partiesSelector: ".party-nav"     
+        partiesSelector: ".party-nav"
       });
 
       widget.init();

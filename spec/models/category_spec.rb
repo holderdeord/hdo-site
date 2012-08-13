@@ -33,4 +33,9 @@ describe Category do
     category = Category.create(:name => "SJØFART")
     category.human_name.should == "Sjøfart"
   end
+
+  it 'keeps EFTA/EU in upper case' do
+    category = Category.create(:name => "EFTA/EU")
+    category.human_name.should == "EFTA/EU"
+  end
 end
