@@ -189,8 +189,6 @@ nb:
     previous: "Forrige"
     show_all: "Vis alle"
     url: 'holderdeord.no'
-    urls:
-      wiki: "https://holderdeord.atlassian.net/"
     title: "Holder de ord"
     open_graph:
       description: "Holder de ord gjør det enkelt å sjekke hva som har blitt gjort og lovet i norsk politikk."
