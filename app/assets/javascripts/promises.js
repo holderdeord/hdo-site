@@ -11,7 +11,7 @@ var HDO = HDO || {};
   function getData(catId, partySlug, callback) {
     var promiseUrl;
 
-    if (partySlug === '' || partySlug === null) {
+    if (partySlug === '' || !partySlug) {
       promiseUrl = '/categories/' + catId + '/promises';
     } else {
       promiseUrl = '/categories/' + catId + '/promises/parties/' + partySlug;
@@ -46,6 +46,22 @@ var HDO = HDO || {};
     return results;
   }
 
+  function showSpecificParty(catId, partyId) {
+    var bodyElement = $('#' + bodyName);
+    bodyElement.empty();
+
+    lastPartyFilter = partyId;
+    bodyElement.hide().append(results);
+
+    bodyElement.find('div').each(function () {
+      if ($(this).data('party-slug') !== partyId) {
+        $(this).hide();
+      }
+    });
+
+    bodyElement.show();
+  }
+
   function showAllPromisesInCategory(catId, partySlug) {
     getData(catId, partySlug, function (results) {
       setResults(results);
@@ -56,24 +72,9 @@ var HDO = HDO || {};
     });
   }
 
-  function showSpecificParty(catId, partyId) {
-    var bodyElement = $('#' + bodyName);
-    bodyElement.empty();
-
-    if (partyId === "show-all") {
-      lastPartyFilter = null;
-      showAllPromisesInCategory(catId, null);
-    } else {
-      lastPartyFilter = partyId;
-      bodyElement.hide().append(results);
-
-      bodyElement.find('div').each(function () {
-        if ($(this).data('party-slug') !== partyId) {
-          $(this).hide();
-        }
-      });
-      bodyElement.show();
-    }
+  function showAllParties(catId) {
+    lastPartyFilter = null;
+    showAllPromisesInCategory(catId);
   }
 
   function removeActiveClass(divClass) {
@@ -100,7 +101,6 @@ var HDO = HDO || {};
         categoryId = $(this).data('category-id');
 
         if (self.options.partiesSelector !== null) {
-          // $(self.options.partiesSelector).show();
           if (!lastPartyFilter) {
             removeActiveClass(self.options.partiesSelector);
             $('#show-all').parent().addClass('active');
@@ -113,8 +113,8 @@ var HDO = HDO || {};
 
         var target = $(self.options.targetSelector);
         target.empty().append('<div id="' + bodyName + '"></div>');
-
         showAllPromisesInCategory(categoryId, partySlug);
+
         e.preventDefault();
         return false;
 
@@ -123,7 +123,14 @@ var HDO = HDO || {};
       $(self.options.partiesSelector).find('a').on('click', function (e) {
         removeActiveClass(self.options.partiesSelector);
         $(this).parent().addClass('active');
-        showSpecificParty(categoryId, $(this).data('party-slug'));
+
+        var partySlug = $(this).data('party-slug');
+
+        if (partySlug === 'show-all') {
+          showAllParties(categoryId);
+        } else {
+          showSpecificParty(categoryId, partySlug);
+        }
 
         e.preventDefault();
         return false;
