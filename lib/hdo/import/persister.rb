@@ -268,7 +268,7 @@ module Hdo
         not_found = promise.categories - categories.map(&:name)
 
         if not_found.any?
-          @log.error "invalid categories: #{not_found.inspect}"
+          @log.error "promise #{promise.external_id}: invalid categories #{not_found.inspect}"
           return
         end
 
