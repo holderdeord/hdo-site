@@ -10,45 +10,37 @@
     <ol id="Topics" class="unstyled">
       <% topic.vote_connections.each do |connection| %>
       <li>
-        <div class="field-description">
-          Beskrivelse: <%= connection.description %>
-        </div>
-        <div class="field-result">
-          Resultat:
-          <span class="label label-<%= connection.vote.enacted ? 'success' : 'important' %>">
-            <%= connection.vote.enacted_text %>
-          </span>
-          <span class="field-link">
-            <%= link_to connection.vote do %>
-              Gå til avstemming
-            <% end %>
-          </span>
-        </div>
-        <div class="field-method">
-          Metode:
-          <i class="icon-info-sign" rel="popover" data-original-title="Om metode" data-content="<p>Vekttall: <%= connection.weight %></p><p>Kommentar: <%= connection.comment %></p>"></i>
-        </div>
+        <dl>
+          <dt>Beskrivelse</dt>
+          <dd><%= connection.description %></dd>
+          <dt>Vedtatt</dt>
+          <dd>
+            <span class="label label-<%= connection.vote.enacted ? 'success' : 'important' %>">
+              <%= connection.vote.enacted_text %>
+            </span>
+            <span class="field-link">
+              <%= link_to connection.vote do %>
+                Gå til avstemming
+              <% end %>
+            </span>
+          </dd>
+          <dt>Metode</dt>
+          <dd>
+            <%= connection.weight %> <i class="icon-info-sign" rel="popover" data-original-title="Om metode" data-content="<p>Vekttall: <%= connection.weight %></p><p>Kommentar: <%= connection.comment %></p>"></i>
+          </dd>
+        </dl>
         <div class="field-votes">
           <% if connection.vote.has_results? %>
-            <table>
-              <thead>
-                <td colspan="2">Mot</td>
-                <td class="party-logo">Parti</td>
-                <td colspan="2">For</td>
-                <td class="not-present">Ikke tilstede</td>
-                <td class="result">Resultat</td>
-              </thead>
-              <tbody>
-                <% @party_groups.each do |group| %>
-                  <% group.parties.each do |party| %>
-                    <%= render partial: 'votes_party', locals: { party: party, stats: connection.vote.stats } %>
-                  <% end %>
-                <% end %>
-              </tbody>
-            </table>
-            <% if connection.vote.inferred? %>
-              <div class="alert alert-info"><%= I18n.t('app.votes.non_personal.inferred') %></div>
+          <table>
+            <% @party_groups.each do |group| %>
+              <% group.parties.each do |party| %>
+                <%= render partial: 'votes_party', locals: { party: party, stats: connection.vote.stats } %>
+              <% end %>
             <% end %>
+          </table>
+          <% if connection.vote.inferred? %>
+            <div class="alert alert-info"><%= I18n.t('app.votes.non_personal.inferred') %></div>
+          <% end %>
           <% else %>
             <div class="alert alert-info"><%= I18n.t('app.votes.non_personal.party_unknown') %></div>
           <% end %>
