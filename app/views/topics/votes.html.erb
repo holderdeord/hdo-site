@@ -6,54 +6,55 @@
   <div class="span12">
     
     <h3><%= Vote.model_name.human(count: 2).capitalize %> <%= Vote.human_attribute_name(:about) %> <%= topic.downcased_title %></h3>
-    
-    <table class="table">
 
-      <thead>
-        <th><%= VoteConnection.human_attribute_name :description %></th>
-        <th><%= Topic.human_attribute_name :party_votes_header %></th>
-        <th><%= Vote.human_attribute_name :enacted %></th>
-        <th><%= VoteConnection.human_attribute_name :weight %></th>
-      </thead>
-
-      <tbody>
-        <% topic.vote_connections.each do |connection| %>
-          <tr>
-
-            <td>
+    <ol id="Topics" class="unstyled">
+      <% topic.vote_connections.each do |connection| %>
+      <li>
+        <dl>
+          <dt>Beskrivelse</dt>
+          <dd><%= connection.description %></dd>
+          <dt>Vedtatt</dt>
+          <dd>
+            <span class="label label-<%= connection.vote.enacted ? 'success' : 'important' %>">
+              <%= connection.vote.enacted_text %>
+            </span>
+            <span class="field-link">
               <%= link_to connection.vote do %>
-                <%= connection.description %>
+                Gå til avstemming
               <% end %>
-            </td>
-
-            <td>
-              <% if connection.vote.has_results? %>
-                <% party_groups.each do |group| %>
-                  <% group.parties.each do |party| %>
-                    <%= render partial: 'votes_party', locals: { party: party, stats: connection.vote.stats } %>
-                  <% end %>
-                <% end %>
-
-                <% if connection.vote.inferred? %>
-                  <div class="alert alert-info"><%= I18n.t('app.votes.non_personal.inferred') %></div>
-                <% end %>
-              <% else %>
-                <div class="alert alert-info"><%= I18n.t('app.votes.non_personal.party_unknown') %></div>
+            </span>
+          </dd>
+          <dt>Metode</dt>
+          <dd>
+            <%= connection.weight %> <i class="icon-info-sign" rel="popover" data-original-title="Om metode" data-content="<p>Vekttall: <%= connection.weight %></p><p>Kommentar: <%= connection.comment %></p>"></i>
+          </dd>
+        </dl>
+        <div class="field-votes">
+          <% if connection.vote.has_results? %>
+          <table>
+            <% @party_groups.each do |group| %>
+              <% group.parties.each do |party| %>
+                <%= render partial: 'votes_party', locals: { party: party, stats: connection.vote.stats } %>
               <% end %>
-            </td>
-
-            <td>
-              <span class="label label-<%= connection.vote.enacted ? 'success' : 'important' %>">
-                <%= connection.vote.enacted_text %>
-              </span>
-            </td>
-
-            <td><%= connection.weight %></td>
-
-          </tr>
-        <% end %>
-      </tbody>
-
-    </table>
+            <% end %>
+          </table>
+          <% if connection.vote.inferred? %>
+            <div class="alert alert-info"><%= I18n.t('app.votes.non_personal.inferred') %></div>
+          <% end %>
+          <% else %>
+            <div class="alert alert-info"><%= I18n.t('app.votes.non_personal.party_unknown') %></div>
+          <% end %>
+        </div>
+      </li>
+      <% end %>
+    </ol>
   </div>
 </div>
+
+<%= content_for :document_ready do %>
+  <script>
+    $(document).ready(function() {
+      $("i[rel=popover]").popover();
+    });
+  </script>
+<% end %>
