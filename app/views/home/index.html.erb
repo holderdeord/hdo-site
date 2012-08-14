@@ -1,11 +1,14 @@
 <div class="row-fluid">
   <div class="span9">
     <div class="row-fluid">
-      <% @parties.each do |party| %>
-        <%= link_to party do %>
-          <div class="home-party-logo"><%= image_tag party.image_with_fallback.thumb("250x250").url, alt: party.name %></div>
+      <div class="home-party-list">
+        <% @parties.each do |party| %>
+          <%= link_to party do %>
+            <div class="home-party-logo"><%= image_tag party.image_with_fallback.thumb("250x250").url, alt: party.name %></div>
+          <% end %>
         <% end %>
-      <% end %>
+
+      </div>
     </div>
 
     <hr class="soften">
@@ -43,8 +46,9 @@
     </div>
 
     <div class="well">
-      <h2>Bli med!</h2>
-      <p>Vi er hele tiden på utkikk etter flere drevne medarbeidere. <strong>For tiden søker vi ny produktsjef.</strong></p>
+      <h2>Bli med</h2>
+      <p>Vi er hele tiden på utkikk etter flere drevne medarbeidere.</p>
+      <p><strong>For tiden søker vi ny produktsjef.</strong></p>
       <p><%= link_to t('app.read_more'), home_join_path, class: 'btn btn-primary' %></p>
     </div>
 

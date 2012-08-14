@@ -6,7 +6,6 @@
 </div>
 
 <div class="container-fluid">
-
   <div class="row-fluid">
     <div class="span4">
       <%= image_tag @party.image_with_fallback.thumb("210x290").url, alt: "#{@party.name}s logo" %>
@@ -22,12 +21,12 @@
     <div class="tabbable">
       <ul class="nav nav-tabs">
 
-        <li class="active span6">
-          <a href="#topics-tab" data-toggle="tab">Hva de har stemt</a>
-        </li>
-
         <li class="span6">
           <a href="#promises-tab" data-toggle="tab">Hva de har lovet</a>
+        </li>
+
+        <li class="active span6">
+          <a href="#topics-tab" data-toggle="tab">Hva de har stemt</a>
         </li>
       </ul>
 
