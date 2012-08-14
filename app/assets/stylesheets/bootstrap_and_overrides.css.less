@@ -84,8 +84,6 @@
   background-color: @hdoPrimaryColor;
 }
 
-
-
 @gridColumns: 11;
 @gridColumnWidth: 68px;
 @gridGutterWidth: 21px;
@@ -96,6 +94,14 @@ h3,
 h4,
 h5 {
     font-family: @headingsFontFamily;
+}
+
+@media screen and (min-width: 768px) {
+    @containerWidth: 662px;
+    #HeaderNavigation {
+        margin: 0 auto;
+        width: @containerWidth;
+    }
 }
 
 @media screen and (min-width:980px) {
