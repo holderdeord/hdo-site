@@ -17,6 +17,8 @@ class FieldsController < ApplicationController
   # GET /fields/1
   # GET /fields/1.json
   def show
+    @topics = @field.topics
+
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @field }

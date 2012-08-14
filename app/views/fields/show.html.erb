@@ -1,13 +1,23 @@
-<div class="row-fluid">
-  <h1>Tema relatert til <%= @field.name %></h1>
-</div>
+<% if @topics.empty? %>
 
-<div class="row-fluid">
-  <ul class="unstyled">
-    <% @field.topics.each do |topic| %>
-    <li>
-      <h3><%= link_to topic.title, topic %></h3>
-    </li>
-    <% end %>
-  </ul>
-</div>
+  <div class="page-header">
+    <h2>Ingen tema relatert til <%= @field.name %> enda. Vi jobber med saken!</h2>
+  </div>
+
+<% else %>
+
+  <div class="page-header">
+    <h1>Tema relatert til <%= @field.name %></h1>
+  </div>
+
+  <div class="row-fluid">
+    <ul class="unstyled">
+      <% @topics.each do |topic| %>
+        <li>
+          <h3><%= link_to topic.title, topic %></h3>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+
+<% end %>
