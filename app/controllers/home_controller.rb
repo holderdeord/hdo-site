@@ -3,6 +3,7 @@ class HomeController < ApplicationController
   caches_page :press, :join, :support, :people, :about_method
 
   def index
+    @field_columns = Field.column_groups
   end
 
   def about

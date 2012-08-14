@@ -1,30 +1,29 @@
-<div class="container-fluid">
-  <div class="span7">
-    <div class="page-header"><h1>Sjekk hva partiene har lovet og stemt i saker som er viktig for deg:</h1></div>
-      <%= render partial: 'fields_list', locals: { :fields => @fields } %>
-    <div><h1>Mest populære tema:</h1></div>
-    <%= render partial: 'topic_list', locals: { :topics => @topics } %>
-    <%= link_to t('.new', :default => t("helpers.links.new")), new_field_path, :class => 'btn btn-primary' %>
-  </div>
-  <div class="span3 hidden-mobile">
-    <div class="well">
-      <h2><%=t 'app.title' %></h2>
-      <p><%=t 'app.description' %></p>
-      <p>Denne nettsiden er en prototype. Vi jobber med å utvikle en ny versjon som gjør det enklere å forstå hva som skjer i politikken. Følg oss på <a href="http://twitter.com/holderdeord/">Twitter</a> og <a href="http://www.facebook.com/holderdeord">Facebook</a> for oppdateringer!</p>
+<table class="table table-condensed">
+  <thead>
+    <tr>
+      <th><%= Field.human_attribute_name :name %></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
 
-      <p><%= link_to t('app.read_more'), home_about_path, class: 'btn btn-primary' %></p>
-    </div>
+  <tbody>
 
-    <div class="well">
-      <h2>Gi en gave</h2>
-      <p>Send kodeord <strong>HOLDERDEORD</strong> til <strong>2160</strong> så støtter du oss med 150 kr.</p>
-      <p><%= link_to t('app.read_more'), home_support_path, class: 'btn btn-primary' %></p>
-    </div>
+    <% @fields.each do |field| %>
+      <tr>
+        <td><%= link_to field.name, field %></td>
+        <td>
+          <%= link_to t('.new', :default => t("helpers.links.edit")), edit_field_path(field), :class => 'btn' %>
+        </td>
+        <td>
+          <%= link_to t('.destroy', :default => t("helpers.links.destroy")), field, method: :delete, data: { confirm: Topic.human_attribute_name(:confirm_destroy) }, class: 'btn btn-danger' %>
+        </td>
+      </tr>
+    <% end %>
 
-    <div class="well">
-      <h2>Bli med!</h2>
-      <p>Vi er hele tiden på utkikk etter flere drevne medarbeidere. <strong>For tiden søker vi ny produktsjef.</strong></p>
-      <p><%= link_to t('app.read_more'), home_join_path, class: 'btn btn-primary' %></p>
-    </div>
-  </div>
-</div>
+  </tbody>
+</table>
+
+<%= link_to t('.new', :default => t("helpers.links.new")), new_field_path, :class => 'btn btn-primary' %>
+
+

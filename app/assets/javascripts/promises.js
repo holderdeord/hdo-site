@@ -51,14 +51,9 @@ var HDO = HDO || {};
     bodyElement.empty();
 
     lastPartyFilter = partyId;
+
     bodyElement.hide().append(results);
-
-    bodyElement.find('div').each(function () {
-      if ($(this).data('party-slug') !== partyId) {
-        $(this).hide();
-      }
-    });
-
+    bodyElement.find('div[data-party-slug!=' + partyId + ']').hide();
     bodyElement.show();
   }
 

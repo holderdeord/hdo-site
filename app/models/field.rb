@@ -13,6 +13,16 @@ class Field < ActiveRecord::Base
 
   image_accessor :image
 
+  def self.column_groups
+    all = order(:name)
+
+    if all.size < 3
+      [all.to_a]
+    else
+      all.each_slice(all.size / 3).to_a
+    end
+  end
+
   def default_image
     "#{Rails.root}/app/assets/images/field_icons/snakkeboble_venstre.png"
   end

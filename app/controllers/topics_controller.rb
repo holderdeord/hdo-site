@@ -100,7 +100,8 @@ class TopicsController < ApplicationController
 
   def votes
     if @topic.published? || user_signed_in?
-      render 'votes', locals: { :topic => @topic }
+      assign_party_groups
+      render locals: { topic: @topic, party_groups: @party_groups }
     else
       redirect_to root_path
     end

@@ -13,7 +13,7 @@ module Pages
     end
 
     def loaded?
-      text =~ /bringer politikken til folket/i
+      text =~ /Sjekk hva partiene har lovet og stemt/i
     end
   end
 end

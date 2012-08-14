@@ -40,29 +40,29 @@ module Hdo
       private
 
       def text_for_entity(score, entity_name, opts)
-        # TODO: i18n
         if score.nil?
-          return "#{entity_name} har ikke deltatt i avstemninger om tema".html_safe
+          return I18n.t("app.votes.scores.not_participated", name: entity_name).html_safe
         end
 
-        tmp = if opts[:html]
-                "#{entity_name} har stemt <strong>%s</strong>"
-              else
-                "#{entity_name} har stemt %s"
-              end
-
-        res = case score
-              when 0...33
-                tmp % "mot"
-              when 33...66
-                tmp % "både for og mot"
-              when 66..100
-                tmp % "for"
+        key = case score
+              when 0...20
+                :consistently_against
+              when 20...40
+                :mostly_against
+              when 40...60
+                :for_and_against
+              when 60...80
+                :mostly_for
+              when 80..100
+                :consistently_for
               else
                 raise "unknown score: #{score.inspect}"
               end
 
-        res.html_safe
+        key = "app.votes.scores.#{key}"
+        key << "_html" if opts[:html]
+
+        I18n.t(key, name: entity_name).html_safe
       end
 
       def compute(connections)
