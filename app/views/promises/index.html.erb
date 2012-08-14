@@ -5,29 +5,27 @@
   </h1>
 </div>
 
-<div class="container-fluid">
-  <div class="row-fluid">
-    <div class="span3">
-      <!-- LEFT COLUMN -->
-      <%= render partial: 'shared/main_categories_list', locals: { categories: @categories } %>
-    </div>
+<div class="row-fluid">
+  <div class="span3">
+    <!-- LEFT COLUMN -->
+    <%= render partial: 'shared/main_categories_list', locals: { categories: @categories } %>
+  </div>
 
-    <!-- MIDDLE -->
-    <div class="span7">
-      <%= render partial: 'shared/promises_results' %>
-    </div>
+  <!-- MIDDLE -->
+  <div class="span7">
+    <%= render partial: 'shared/promises_results' %>
+  </div>
 
-    <!-- RIGHT COLUMN -->
-    <div class="span2 party-nav">
-      <ul class="nav nav-pills nav-stacked">
-        <li><a href="#" data-party-slug="show-all">Vis alle</a></li>
-        <% @parties.each do |party| %>
-          <li>
-            <a data-party-slug="<%= party.slug %>" href="#"><%= party.name %></a>
-          </li>
-        <% end %>
-      </ul>
-    </div>
+  <!-- RIGHT COLUMN -->
+  <div class="span2 party-nav">
+    <ul class="nav nav-pills nav-stacked">
+      <li><a href="#" data-party-slug="show-all">Vis alle</a></li>
+      <% @parties.each do |party| %>
+        <li>
+          <a data-party-slug="<%= party.slug %>" href="#"><%= party.name %></a>
+        </li>
+      <% end %>
+    </ul>
   </div>
 </div>
 

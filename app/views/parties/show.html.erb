@@ -5,44 +5,42 @@
   </h1>
 </div>
 
-<div class="container-fluid">
-  <div class="row-fluid">
-    <div class="span4">
-      <%= image_tag @party.image_with_fallback.thumb("210x290").url, alt: "#{@party.name}s logo" %>
-    </div>
-
-    <div class="span8">
-      <h3><%= Representative.model_name.human(count: 2).capitalize %></h3>
-      <%= render partial: "representative_gallery", locals: { representatives: @party.representatives } %>
-    </div>
+<div class="row-fluid">
+  <div class="span4">
+    <%= image_tag @party.image_with_fallback.thumb("210x290").url, alt: "#{@party.name}s logo" %>
   </div>
 
-  <div class="row-fluid">
-    <div class="tabbable">
-      <ul class="nav nav-tabs">
+  <div class="span8">
+    <h3><%= Representative.model_name.human(count: 2).capitalize %></h3>
+    <%= render partial: "representative_gallery", locals: { representatives: @party.representatives } %>
+  </div>
+</div>
 
-        <li class="span6">
-          <a href="#promises-tab" data-toggle="tab">Hva de har lovet</a>
-        </li>
+<div class="row-fluid">
+  <div class="tabbable">
+    <ul class="nav nav-tabs">
 
-        <li class="active span6">
-          <a href="#topics-tab" data-toggle="tab">Hva de har stemt</a>
-        </li>
-      </ul>
+      <li class="span6">
+        <a href="#promises-tab" data-toggle="tab">Hva de har lovet</a>
+      </li>
 
-      <div class="tab-content">
-        <div class="tab-pane active" id="topics-tab">
-            <%= render partial: "topic_list", locals: { party: @party, :topics => @topics } %>
+      <li class="active span6">
+        <a href="#topics-tab" data-toggle="tab">Hva de har stemt</a>
+      </li>
+    </ul>
+
+    <div class="tab-content">
+      <div class="tab-pane active" id="topics-tab">
+          <%= render partial: "topic_list", locals: { party: @party, :topics => @topics } %>
+      </div>
+
+      <div class="tab-pane" id="promises-tab">
+        <div class="span3 categories">
+          <%= render partial: 'shared/main_categories_list', locals: { categories: @categories } %>
         </div>
 
-        <div class="tab-pane" id="promises-tab">
-          <div class="span3 categories">
-            <%= render partial: 'shared/main_categories_list', locals: { categories: @categories } %>
-          </div>
-
-          <div class="span9">
-            <%= render partial: 'shared/promises_results' %>
-          </div>
+        <div class="span9">
+          <%= render partial: 'shared/promises_results' %>
         </div>
       </div>
     </div>
