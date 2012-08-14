@@ -1,12 +1,12 @@
 <% if user_signed_in? %>
-    <div class="alert alert-warning">
-      <% if @topic.published? %>
-        <%= t('app.topics.published') %>
-      <% else %>
-        <%= t('app.topics.not_published') %>
-      <% end %>
-      <%= link_to t('app.edit'), edit_topic_path(@topic), class: 'btn' %>
-    </div>
+  <div class="alert alert-warning">
+    <% if @topic.published? %>
+      <%= t('app.topics.published') %>
+    <% else %>
+      <%= t('app.topics.not_published') %>
+    <% end %>
+    <%= link_to t('app.edit'), edit_topic_path(@topic), class: 'btn' %>
+  </div>
 <% end %>
 
 <div class="row-fluid topic-navigation">
@@ -29,7 +29,11 @@
 </div>
 
 <% @party_groups.each do |party_group| %>
-  <%= render partial: 'party_group',
-             locals: { group: party_group, topic: @topic, promises_by_party: @promises_by_party } %>
+  <div class="row-fluid">
+    <div class="pull-right"><strong><%= party_group.name %></strong></div>
+  </div>
+
+  <%= render partial: 'party_group', locals: { group: party_group, topic: @topic, promises_by_party: @promises_by_party } %>
+  <hr>
 <% end %>
 

@@ -269,8 +269,8 @@ nb:
       topic: 'Tema er oppdatert.'
     parties:
       group:
-        governing: 'Regjeringspartiene'
-        opposition: 'Opposisjonspartiene'
+        governing: 'Regjering'
+        opposition: 'Opposisjon'
     counts:
       representative:
         one: "Viser <strong>1</strong> representant."
