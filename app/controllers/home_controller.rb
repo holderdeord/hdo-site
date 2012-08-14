@@ -4,6 +4,7 @@ class HomeController < ApplicationController
 
   def index
     @field_columns = Field.column_groups
+    @parties = Party.order(:name)
   end
 
   def about
@@ -23,6 +24,9 @@ class HomeController < ApplicationController
   end
 
   def support
+  end
+
+  def member
   end
 
   def people

@@ -22,9 +22,11 @@
                 </a>
 
                 <ul class="dropdown-menu">
-                  <% parties.each do |party| %>
+                  <% Party.order(:name).each do |party| %>
                     <li>
-                      <%= link_to party do %><%= party.name %><% end %>
+                      <%= link_to party do %>
+                      <%= party.name %>
+                    <% end %>
                     </li>
                   <% end %>
                 </ul>
@@ -37,8 +39,8 @@
               </li>
 
               <li class="dropdown <%= active_status_for(:home_press, :home_about, :home_join, :docs_index)%>">
-                <a class="dropdown-toggle" data-toggle="dropdown" href="#omOss">
-                  <%= t("app.about") %>
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#about-us">
+                  <%= t 'app.about' %>
                   <b class="caret"></b>
                 </a>
 
@@ -51,8 +53,18 @@
                 </ul>
               </li>
 
-              <li class="<%= active_status_for(:home_support) %>">
-              <%= link_to 'Støtt Oss', home_support_path %></li>
+              <li class="dropdown <%= active_status_for(:home_support, :home_member) %>">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#support">
+                  <%= t 'app.support' %>
+                  <b class="caret"></b>
+                </a>
+
+                <ul class="dropdown-menu">
+                  <li><%= link_to t('app.donate'), home_support_path %></li></li>
+                  <li><%= link_to t('app.member'), home_member_path %></li></li>
+                </ul>
+              </li>
+              <!-- <%= link_to 'Støtt Oss', home_support_path %></li> -->
             </ul>
 
             <ul class="nav pull-right">
@@ -61,6 +73,7 @@
                   Rådata
                   <b class="caret"></b>
                 </a>
+
                 <ul class="dropdown-menu">
                   <li>
                   <%= link_to representatives_path do %>
@@ -93,6 +106,7 @@
                   <% end %>
                   </li>
                 </ul>
+
               </li>
             </ul>
           </div>
