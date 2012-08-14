@@ -1,19 +1,13 @@
 <div class="row-fluid">
-  <h1>Mest populære tema relatert til <%= @field.name.downcase %></h1>
+  <h1>Tema relatert til <%= @field.name %></h1>
 </div>
 
 <div class="row-fluid">
-  <%= render partial: 'topic_list', locals: { :topics => @field.topics } %>
-</div>
-
-<div class="form-actions">
-  <%= link_to t('.back', :default => t("helpers.links.back")),
-              fields_path, :class => 'btn'  %>
-  <%= link_to t('.edit', :default => t("helpers.links.edit")),
-              edit_field_path(@field), :class => 'btn' %>
-  <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
-              field_path(@field),
-              :method => 'delete',
-              :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')),
-              :class => 'btn btn-danger' %>
+  <ul class="unstyled">
+    <% @field.topics.each do |topic| %>
+    <li>
+      <h3><%= link_to topic.title, topic %></h3>
+    </li>
+    <% end %>
+  </ul>
 </div>

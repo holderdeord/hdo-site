@@ -1,12 +1,12 @@
 class FieldsController < ApplicationController
-  before_filter :authenticate_user!
+  before_filter :authenticate_user!, :except => :show
   before_filter :fetch_topics, :only => [:new, :edit]
   before_filter :fetch_field,  :only => [:show, :edit, :update, :destroy]
 
   # GET /fields
   # GET /fields.json
   def index
-    @fields = Field.all
+    @fields = Field.order(:name)
 
     respond_to do |format|
       format.html # index.html.erb
