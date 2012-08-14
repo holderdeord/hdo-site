@@ -181,6 +181,17 @@ module Hdo
         scorer.score_for(rep1.party).should == 0
       end
 
+      it 'correctly handles rebel votes' do
+        vote = Vote.make!(:vote_results => [
+          VoteResult.new(:representative => rep1, :result => 1),
+          VoteResult.new(:representative => Representative.make!(:party => rep1.party), :result => -1)
+        ])
+
+        topic.vote_connections.create! :vote => vote, :matches => true, :weight => 1
+
+        scorer.score_for(rep1.party).should == 50
+      end
+
       it "does computation up front" do
         party     = Party.make!
         ivar_size = scorer.instance_variables.size
