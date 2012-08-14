@@ -16,15 +16,21 @@ class Field < ActiveRecord::Base
   def self.column_groups
     all = order(:name)
 
-    if all.size < 3
+    column_count = 3
+
+    if all.size < column_count
       [all.to_a]
     else
-      all.each_slice(all.size / 3).to_a
+      all.each_slice(all.size / column_count).to_a
     end
   end
 
   def default_image
     "#{Rails.root}/app/assets/images/field_icons/snakkeboble_venstre.png"
+  end
+
+  def downcased_name
+    UnicodeUtils.downcase name
   end
 
 end

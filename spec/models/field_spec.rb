@@ -1,3 +1,4 @@
+# encoding: UTF-8
 require 'spec_helper'
 
 describe Field do
@@ -20,5 +21,13 @@ describe Field do
 
     f4 = Field.make!
     Field.column_groups.should == [[f1], [f2], [f3], [f4]]
+  end
+
+  it 'has a downcased name' do
+    Field.make!(:name => "Foo").downcased_name.should == 'foo'
+  end
+
+  it 'has a downcased name for non-ASCII titles' do
+    Field.make!(:name => "ÆÅØ").downcased_name.should == 'æåø'
   end
 end
