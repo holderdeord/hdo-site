@@ -20,12 +20,12 @@
 </div>
 
 <div class="alert alert-info">
-  <%= t('app.votes.explanation', title: @issue.downcased_title) %>
-  <%= link_to "Les mer om metoden", home_method_path %>.
+  <p><%= t('app.votes.explanation', title: @issue.downcased_title) %></p>
+  <p><%= link_to "Les mer om metoden", home_method_path %>.</p>
 </div>
 
 <div class="row-fluid">
-    <div class="pull-right"><%= link_to "Se relaterte avstemninger \u21e8", issue_votes_path(@issue) %></div>
+    <div class="pull-right"><%= link_to "Se avstemningene \u21e8", issue_votes_path(@issue) %></div>
 </div>
 
 <% @party_groups.each do |party_group| %>

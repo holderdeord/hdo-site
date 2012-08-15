@@ -203,6 +203,7 @@ nb:
     logout: "Logg ut"
     description: "Bringer politikken til folket."
     about: "Om oss"
+    method: "Om metoden"
     support: "Støtt oss"
     member: "Bli medlem"
     donate: "Gi en gave"
@@ -238,7 +239,7 @@ nb:
       not_published: Denne saken er ikke publisert.
       published: Denne saken er publisert.
     votes:
-      explanation: "Denne siden viser hva partiene har stemt og lovet om %{title}. Oversikten er basert på avstemninger fra oktober 2011 til dagens dato, og løfter fra valgprogrammene 2009-2013."
+      explanation: "Denne siden er basert på avstemninger fra Stortinget i perioden oktober 2011 til dagens dato, og løfter fra valgprogrammene 2009-2013."
       non_personal:
         unknown: 'Denne saken ble avgjort uten at avstemningsknappene ble brukt. Vi har derfor ikke oversikt over hva den enkelte representant har stemt.'
         inferred: 'Denne saken ble avgjort enstemmig uten at avstemningsknappene ble brukt. Oversikten er utledet fra tilstedeværelse ved andre avstemninger samme dag.'
