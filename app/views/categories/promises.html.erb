@@ -15,7 +15,7 @@
     </div>
   <% elsif parties.all? { |e| e.in_government? } %>
     <div data-party-slug="<%= parties.map(&:slug).join(',') %>">
-      <h3>Regjeringen</h3>
+      <h3>Soria Moria II</h3>
       <ul>
         <% promises.each do |p| %>
           <li><%= p.body %></li>

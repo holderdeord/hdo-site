@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120815093233) do
+ActiveRecord::Schema.define(:version => 20120815174110) do
 
   create_table "categories", :force => true do |t|
     t.string   "external_id"
@@ -26,11 +26,18 @@ ActiveRecord::Schema.define(:version => 20120815093233) do
   add_index "categories", ["slug"], :name => "index_categories_on_slug", :unique => true
 
   create_table "categories_issues", :id => false, :force => true do |t|
+    t.integer "category_id"
     t.integer "issue_id"
+  end
+
+  add_index "categories_issues", ["category_id", "issue_id"], :name => "index_categories_issues_on_category_id_and_issue_id"
+
+  create_table "categories_parliament_issues", :id => false, :force => true do |t|
+    t.integer "parliament_issue_id"
     t.integer "category_id"
   end
 
-  add_index "categories_issues", ["issue_id", "category_id"], :name => "index_categories_issues_on_issue_id_and_category_id"
+  add_index "categories_parliament_issues", ["parliament_issue_id", "category_id"], :name => "index_cat_par_issue_on_par_issue_id_cat_id"
 
   create_table "categories_promises", :id => false, :force => true do |t|
     t.integer "promise_id"
@@ -38,13 +45,6 @@ ActiveRecord::Schema.define(:version => 20120815093233) do
   end
 
   add_index "categories_promises", ["promise_id", "category_id"], :name => "index_categories_promises_on_issue_id_and_category_id"
-
-  create_table "categories_topics", :id => false, :force => true do |t|
-    t.integer "category_id"
-    t.integer "topic_id"
-  end
-
-  add_index "categories_topics", ["category_id", "topic_id"], :name => "index_categories_topics_on_category_id_and_topic_id"
 
   create_table "committees", :force => true do |t|
     t.string   "external_id"
@@ -73,24 +73,6 @@ ActiveRecord::Schema.define(:version => 20120815093233) do
 
   add_index "districts", ["slug"], :name => "index_districts_on_slug", :unique => true
 
-  create_table "fields", :force => true do |t|
-    t.string   "name"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-    t.string   "slug"
-    t.string   "image_uid"
-    t.string   "image_name"
-  end
-
-  add_index "fields", ["slug"], :name => "index_fields_on_slug", :unique => true
-
-  create_table "fields_topics", :id => false, :force => true do |t|
-    t.integer "field_id"
-    t.integer "topic_id"
-  end
-
-  add_index "fields_topics", ["field_id", "topic_id"], :name => "index_fields_topics_on_field_id_and_topic_id"
-
   create_table "governing_periods", :force => true do |t|
     t.date     "start_date"
     t.date     "end_date"
@@ -102,6 +84,31 @@ ActiveRecord::Schema.define(:version => 20120815093233) do
   add_index "governing_periods", ["party_id"], :name => "index_governing_periods_on_party_id"
 
   create_table "issues", :force => true do |t|
+    t.string   "title"
+    t.string   "description"
+    t.datetime "created_at",                     :null => false
+    t.datetime "updated_at",                     :null => false
+    t.string   "slug"
+    t.boolean  "published",   :default => false
+  end
+
+  add_index "issues", ["slug"], :name => "index_issues_on_slug", :unique => true
+
+  create_table "issues_promises", :id => false, :force => true do |t|
+    t.integer "promise_id"
+    t.integer "issue_id"
+  end
+
+  add_index "issues_promises", ["issue_id", "promise_id"], :name => "index_issues_promises_on_issue_id_and_promise_id"
+
+  create_table "issues_topics", :id => false, :force => true do |t|
+    t.integer "topic_id"
+    t.integer "issue_id"
+  end
+
+  add_index "issues_topics", ["issue_id", "topic_id"], :name => "index_issues_topics_on_issue_id_and_topic_id"
+
+  create_table "parliament_issues", :force => true do |t|
     t.string   "external_id"
     t.string   "summary"
     t.string   "description"
@@ -116,15 +123,15 @@ ActiveRecord::Schema.define(:version => 20120815093233) do
     t.string   "slug"
   end
 
-  add_index "issues", ["committee_id"], :name => "index_issues_on_committee_id"
-  add_index "issues", ["slug"], :name => "index_issues_on_slug", :unique => true
+  add_index "parliament_issues", ["committee_id"], :name => "index_parliament_issues_on_committee_id"
+  add_index "parliament_issues", ["slug"], :name => "index_parliament_issues_on_slug", :unique => true
 
-  create_table "issues_votes", :id => false, :force => true do |t|
-    t.integer "issue_id"
+  create_table "parliament_issues_votes", :id => false, :force => true do |t|
+    t.integer "parliament_issue_id"
     t.integer "vote_id"
   end
 
-  add_index "issues_votes", ["vote_id", "issue_id"], :name => "index_issues_votes_on_vote_id_and_issue_id"
+  add_index "parliament_issues_votes", ["vote_id", "parliament_issue_id"], :name => "index_parliament_issues_votes_on_vote_id_and_parliament_issue_id"
 
   create_table "parties", :force => true do |t|
     t.string   "external_id"
@@ -156,13 +163,6 @@ ActiveRecord::Schema.define(:version => 20120815093233) do
     t.integer  "page"
     t.date     "date"
   end
-
-  create_table "promises_topics", :id => false, :force => true do |t|
-    t.integer "promise_id"
-    t.integer "topic_id"
-  end
-
-  add_index "promises_topics", ["promise_id", "topic_id"], :name => "index_promises_topics_on_promise_id_and_topic_id"
 
   create_table "propositions", :force => true do |t|
     t.string   "external_id"
@@ -198,12 +198,12 @@ ActiveRecord::Schema.define(:version => 20120815093233) do
   add_index "representatives", ["slug"], :name => "index_representatives_on_slug", :unique => true
 
   create_table "topics", :force => true do |t|
-    t.string   "title"
-    t.string   "description"
-    t.datetime "created_at",                     :null => false
-    t.datetime "updated_at",                     :null => false
+    t.string   "name"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
     t.string   "slug"
-    t.boolean  "published",   :default => false
+    t.string   "image_uid"
+    t.string   "image_name"
   end
 
   add_index "topics", ["slug"], :name => "index_topics_on_slug", :unique => true
@@ -230,7 +230,7 @@ ActiveRecord::Schema.define(:version => 20120815093233) do
   create_table "vote_connections", :force => true do |t|
     t.boolean  "matches"
     t.integer  "vote_id"
-    t.integer  "topic_id"
+    t.integer  "issue_id"
     t.datetime "created_at",                   :null => false
     t.datetime "updated_at",                   :null => false
     t.float    "weight",      :default => 1.0
@@ -238,7 +238,7 @@ ActiveRecord::Schema.define(:version => 20120815093233) do
     t.string   "description"
   end
 
-  add_index "vote_connections", ["vote_id", "topic_id"], :name => "index_vote_connections_on_vote_id_and_topic_id"
+  add_index "vote_connections", ["vote_id", "issue_id"], :name => "index_vote_connections_on_vote_id_and_issue_id"
 
   create_table "vote_results", :force => true do |t|
     t.integer  "representative_id"

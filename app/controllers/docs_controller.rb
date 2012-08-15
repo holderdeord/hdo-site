@@ -11,7 +11,7 @@ class DocsController < ApplicationController
       Hdo::StortingImporter::District,
       Hdo::StortingImporter::Representative,
       Hdo::StortingImporter::Category,
-      Hdo::StortingImporter::Issue,
+      Hdo::StortingImporter::ParliamentIssue,
       Hdo::StortingImporter::Vote,
       Hdo::StortingImporter::Proposition,
       Hdo::StortingImporter::Promise,

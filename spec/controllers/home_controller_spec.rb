@@ -5,7 +5,7 @@ describe HomeController do
     render_views
 
     it 'renders home#index' do
-      Field.make!
+      Topic.make!
 
       get :index
 

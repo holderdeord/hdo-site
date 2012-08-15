@@ -11,6 +11,6 @@ class MultiplePartiesPerPromise < ActiveRecord::Migration
 
   def down
     drop_table :parties_promises
-    add_column :promises, :party_id
+    add_column :promises, :party_id, :integer
   end
 end

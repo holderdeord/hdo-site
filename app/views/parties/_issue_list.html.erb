@@ -1,0 +1,13 @@
+<% if issues.any? %>
+  <ul class="parties-issue-list">
+    <% issues.each do |issue| %>
+      <li>
+        <%= issue.stats.text_for(party, :html => true) %> <%= link_to issue.downcased_title, issue %>.
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+
+  <h3>Ingen saker for øyeblikket</h3>
+
+<% end %>

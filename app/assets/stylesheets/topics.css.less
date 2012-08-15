@@ -1,80 +1,55 @@
+@cardPadding: 15px;
+@iconSize: 140px;
+@topicColumns: 4;
 
-.vote-container {
-  border: 1px solid black;
-  border-radius: 4px;
+.issue-list {
+  font-size: 20px;
   padding: 10px;
-  margin: 3px;
 }
 
-.topics-party {
-  padding: 18px 0px;
+.topic-image {
+  max-width: @iconSize;
+  border-radius: 6px;
 }
 
-.topics-party-position {
-  padding-bottom: 5px;
-}
+.topics-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  max-width: (@cardPadding + @iconSize)*@topicColumns;
+  clear: both;
+  display: inline-block;
 
-.topic-navigation {
-  padding: 10px 0px;
-}
+  > li {
+    float: left;
+    margin-bottom: 30px;
+    margin-right: @cardPadding;
+    position: relative;
 
-#Topics {
-  img {
-    height: 1em;
-  }
-  .bar-vote {
-    &.bar-default {
-      display: inline-block;
-      .label {
-        display: block;
-      }
-    }
-    &.bar-success {
-      text-align: left;
+    > div {
+      border-radius: 30px;
+      min-height: @iconSize;
+      overflow: hidden;
+      width: @iconSize;
     }
   }
-  .bar-votes {
+}
+
+.topic-name {
+    margin: 5px 10px;
+    display: inline-block;
+    font-weight: bold;
+    color: black;
+    padding: 40px 25px 40px 25px;
+    max-width: 50px;
     text-align: center;
-    .bar-vote {
-      display: inline-block;
-      min-width: 1.5em;
-      &.bar-important {
-        text-align: right;
-      }
-    }
-    .label {
-      display: inline-block;
-      min-width: 1.5em;
-      padding: 0;
-      &.label-default {
-        border-radius: 0;
-      }
-      &.label-important {
-        border-radius: 3px 0 0 3px;
-      }
-      &.label-success {
-        border-radius: 0 3px 3px 0;
-      }
-    }
-  }
-  .field-link {
-    padding-left: 1em;
-    &:after {
-      content: ")";
-    }
-    &:before {
-      content: "(";
-    }
-  }
-  .field-votes {
-    table {
-      width: 100%;
-    }
-  }
-  .party-logo {
-    width: 1em;
-  }
-  .result-votes {
-    width: 10em;
-  }
+}
+
+.topic-card:hover {
+  box-shadow: 0px 0px 5px grey;
+}
+
+.topic-card {
+  background-repeat: no-repeat;
+  background-size: 100%;
 }

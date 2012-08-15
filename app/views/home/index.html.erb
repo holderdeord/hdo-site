@@ -21,10 +21,10 @@
       </div>
 
       <div class="row-fluid">
-        <% @field_columns.each do |fields| %>
+        <% @topic_columns.each do |topics| %>
             <div class="span4">
-              <% fields.each do |field| %>
-                <h3><%= link_to field.name, field %></h3>
+              <% topics.each do |topic| %>
+                <h3><%= link_to topic.name, topic %></h3>
               <% end %>
             </div>
         <% end %>

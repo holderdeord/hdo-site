@@ -1,5 +1,5 @@
 <%= form.inputs do %>
-  <%= hidden_field_tag 'topic[category_ids][]' %>
+  <%= hidden_field_tag 'issue[category_ids][]' %>
 
   <div class="well">
     <%= form.text_field :title %>
@@ -17,7 +17,7 @@
           <h3><%=cat_group.name %></h3>
           <% [cat_group, cat_group.children].flatten.each do |cat| %>
           <label class="checkbox">
-            <%= check_box_tag "topic[category_ids][]", cat.id, @topic.categories.include?(cat) %>
+            <%= check_box_tag "issue[category_ids][]", cat.id, @issue.categories.include?(cat) %>
             <%= cat.name %>
           </label>
           <% end %>

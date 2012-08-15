@@ -1,5 +1,5 @@
 <% group.parties.each do |party| %>
-  <div class="row-fluid topics-party">
+  <div class="row-fluid issues-party">
     <div class="span2">
       <%= link_to party_path(party) do %>
         <%= image_tag party.image_with_fallback.thumb('100x100').url, alt: "#{party.name}s logo" %>
@@ -7,7 +7,7 @@
     </div>
 
     <div class="span10">
-      <h3 class="topics-party-position"><%= topic.stats.text_for(party) %></h3>
+      <h3 class="issues-party-position"><%= issue.stats.text_for(party) %></h3>
 
       <% if promise_group = promises_by_party[party] %>
 

@@ -15,9 +15,9 @@ if Rails.env.development?
   User.create!(:email => "admin@holderdeord.no", :password => "hdo123", :password_confirmation => "hdo123", :remember_me => false)
 end
 
-Field.destroy_all
+Topic.destroy_all
 
-puts "creating fields"
+puts "creating topics"
 [
   "Offentlig forvaltning",
   "Familie",
@@ -34,7 +34,7 @@ puts "creating fields"
   "Næringsliv",
   "Arbeidsliv",
   "Transport og kommunikasjon"
-].each do |field_name|
-  puts "\t#{field_name}"
-  Field.create! name: field_name
+].each do |topic_name|
+  puts "\t#{topic_name}"
+  Topic.create! name: topic_name
 end

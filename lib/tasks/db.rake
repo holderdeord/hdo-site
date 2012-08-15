@@ -16,9 +16,9 @@ namespace :db do
       Promise.destroy_all
     end
 
-    desc 'Remove all topics'
-    task :topics => :environment do
-      Promise.destroy_all
+    desc 'Remove all issues'
+    task :issues => :environment do
+      Issue.destroy_all
     end
 
   end

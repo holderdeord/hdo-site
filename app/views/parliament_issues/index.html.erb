@@ -1,0 +1,9 @@
+<div class="page-header">
+  <h1><%= ParliamentIssue.model_name.human(count: 2).capitalize %></h1>
+</div>
+
+<p class="pull-right"><%= page_entries_info @parliament_issues %></p>
+
+<%= render partial: "shared/parliament_issue_table", locals: { parliament_issues: @parliament_issues } %>
+<%= will_paginate @parliament_issues %>
+

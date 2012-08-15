@@ -12,7 +12,7 @@
     <tr>
       <td><%= promise.party_names %></td>
       <td><label for="promise-<%= promise.id %>"><%= promise.body %></label></td>
-      <td><%= check_box_tag "topic[promise_ids][]", promise.id, @topic.promises.include?(promise), id: "promise-#{promise.id}" -%></td>
+      <td><%= check_box_tag "issue[promise_ids][]", promise.id, @issue.promises.include?(promise), id: "promise-#{promise.id}" -%></td>
     </tr>
     <% end %>
   </tbody>

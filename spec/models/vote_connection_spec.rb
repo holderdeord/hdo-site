@@ -11,8 +11,8 @@ describe VoteConnection do
     VoteConnection.make(:vote => nil).should be_invalid
   end
 
-  it 'should be invalid without a topic' do
-    VoteConnection.make(:topic => nil).should be_invalid
+  it 'should be invalid without a issue' do
+    VoteConnection.make(:issue => nil).should be_invalid
   end
 
   it 'validates the weight values' do

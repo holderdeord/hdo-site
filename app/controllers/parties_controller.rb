@@ -3,17 +3,17 @@ class PartiesController < ApplicationController
   # caches_page :show
   #
   # FIXME: need to look into how to cache the parties page when
-  # the topic list is enabled.
+  # the issue list is enabled.
   #
   # * sweeper
   # * ActiveRecord::Observer
   #
   # The party page must be expired on:
   #
-  # * topic saved
-  # * topic's vote_connection updated
-  # * topic's vote_connection added
-  # * topic's vote_connection removed
+  # * issue saved
+  # * issue's vote_connection updated
+  # * issue's vote_connection added
+  # * issue's vote_connection removed
   #
   # Also need to find a way to test this.
 
@@ -30,7 +30,7 @@ class PartiesController < ApplicationController
   def show
     @party  = Party.includes(:representatives, :promises => :categories).find(params[:id])
 
-    @topics = Topic.published.vote_ordered.limit(10)
+    @issues = Issue.published.vote_ordered.limit(10)
     @categories = Category.where(:main => true)
 
     respond_to do |format|

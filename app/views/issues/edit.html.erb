@@ -1,0 +1,15 @@
+<div class="page-header">
+  <h1><%= Issue.human_attribute_name :edit %>: <%= @issue.title %></h1>
+</div>
+
+<div class="pagination">
+  <ul>
+    <% @issue_steps.each do |step| %>
+      <li class="<%= 'active' if params[:step] == step %>">
+        <%= link_to Issue.human_attribute_name(step), edit_issue_step_path(@issue, :step => step)  %>
+      </li>
+    <% end %>
+  </ul>
+</div>
+
+<%= render 'form' %>

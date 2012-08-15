@@ -6,7 +6,7 @@ class Promise < ActiveRecord::Base
   has_and_belongs_to_many :parties, :order => :name
 
   has_and_belongs_to_many :categories, :order => :name
-  has_and_belongs_to_many :topics, :order => :title
+  has_and_belongs_to_many :issues, :order => :title
 
   validates_presence_of :source, :body
   validates_uniqueness_of :body

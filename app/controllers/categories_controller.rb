@@ -12,7 +12,7 @@ class CategoriesController < ApplicationController
   end
 
   def show
-    @category = Category.includes(:issues).find(params[:id])
+    @category = Category.includes(:parliament_issues).find(params[:id])
 
     respond_to do |format|
       format.html
@@ -22,7 +22,7 @@ class CategoriesController < ApplicationController
   end
 
   def promises
-    # TODO: cleanup!
+    # TODO: clean this up https://github.com/holderdeord/hdo-site/issues/182
 
     category_id = params[:id] # can't pass a slug here becuase of parent_id in the select below.
     promises    = Promise.includes(:categories, :parties).where("categories.id = ? or categories.parent_id = ?", category_id, category_id)

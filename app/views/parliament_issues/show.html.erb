@@ -1,0 +1,64 @@
+<div class="page-header">
+  <h1><%= @parliament_issue.summary %></h1>
+</div>
+
+<div class="well">
+  <p>
+    <strong><%= ParliamentIssue.human_attribute_name :external_id %>:</strong>
+    <%= @parliament_issue.external_id %>
+  </p>
+
+  <p>
+    <strong><%= ParliamentIssue.human_attribute_name :last_update %>:</strong>
+    <%= l @parliament_issue.last_update %>
+  </p>
+
+  <p>
+    <strong><%= ParliamentIssue.human_attribute_name :status %>:</strong>
+    <%= @parliament_issue.status_text %>
+  </p>
+
+  <% if @parliament_issue.committee %>
+  <p>
+    <strong><%= ParliamentIssue.human_attribute_name :committee %>:</strong>
+    <%= link_to @parliament_issue.committee.name, @parliament_issue.committee %>
+  </p>
+  <% end %>
+
+  <p>
+    <strong><%= ParliamentIssue.human_attribute_name :type %>:</strong>
+    <%= @parliament_issue.issue_type %>
+  </p>
+
+  <p>
+    <strong><%= ParliamentIssue.human_attribute_name :document_group %>:</strong>
+    <%= @parliament_issue.document_group %>
+  </p>
+
+  <p>
+    <strong><%= ParliamentIssue.human_attribute_name :reference %>:</strong>
+    <%= @parliament_issue.reference %>
+  </p>
+
+  <p>
+    <strong><%= ParliamentIssue.human_attribute_name :description %>:</strong>
+    <%= @parliament_issue.description %>
+  </p>
+
+  <strong><%= ParliamentIssue.human_attribute_name :categories %>:</strong>
+  <ul>
+    <% @parliament_issue.categories.each do |category| %>
+      <li>
+        <%= link_to category.name, category %>
+      </li>
+    <% end %>
+  </ul>
+</div>
+
+<h2>stortinget.no</h2>
+<ul class="nav nav-tabs">
+  <li><a href="<%= @parliament_issue.url %>">Sak</a></li>
+</ul>
+
+<h2><%= Vote.model_name.human(count: 2).capitalize %></h2>
+<%= render partial: "shared/votes_summary_table", locals: {votes: @parliament_issue.votes, show_issues: false }%>

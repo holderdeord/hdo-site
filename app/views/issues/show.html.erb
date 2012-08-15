@@ -1,64 +1,39 @@
-<div class="page-header">
-  <h1><%= @issue.summary %></h1>
+<% if user_signed_in? %>
+  <div class="alert alert-warning">
+    <% if @issue.published? %>
+      <%= t('app.issues.published') %>
+    <% else %>
+      <%= t('app.issues.not_published') %>
+    <% end %>
+    <%= link_to t('app.edit'), edit_issue_path(@issue), class: 'btn' %>
+  </div>
+<% end %>
+
+<div class="row-fluid issue-navigation">
+  <%= link_to "\u21e6 #{@previous_issue.title}", @previous_issue if @previous_issue %>
+  <%= link_to "#{@next_issue.title} \u21e8", @next_issue, class: "pull-right" if @next_issue %>
 </div>
 
 <div class="well">
-  <p>
-    <strong><%= Issue.human_attribute_name :external_id %>:</strong>
-    <%= @issue.external_id %>
-  </p>
-
-  <p>
-    <strong><%= Issue.human_attribute_name :last_update %>:</strong>
-    <%= l @issue.last_update %>
-  </p>
-
-  <p>
-    <strong><%= Issue.human_attribute_name :status %>:</strong>
-    <%= @issue.status_text %>
-  </p>
-
-  <% if @issue.committee %>
-  <p>
-    <strong><%= Issue.human_attribute_name :committee %>:</strong>
-    <%= link_to @issue.committee.name, @issue.committee %>
-  </p>
-  <% end %>
-
-  <p>
-    <strong><%= Issue.human_attribute_name :type %>:</strong>
-    <%= @issue.issue_type %>
-  </p>
-
-  <p>
-    <strong><%= Issue.human_attribute_name :document_group %>:</strong>
-    <%= @issue.document_group %>
-  </p>
-
-  <p>
-    <strong><%= Issue.human_attribute_name :reference %>:</strong>
-    <%= @issue.reference %>
-  </p>
-
-  <p>
-    <strong><%= Issue.human_attribute_name :description %>:</strong>
-    <%= @issue.description %>
-  </p>
-
-  <strong><%= Issue.human_attribute_name :categories %>:</strong>
-  <ul>
-    <% @issue.categories.each do |category| %>
-      <li>
-        <%= link_to category.name, category %>
-      </li>
-    <% end %>
-  </ul>
+  <h1><%= @issue.title %></h1>
+  <p><%= @issue.description %></p>
 </div>
 
-<h2>stortinget.no</h2>
-<ul class="nav nav-tabs">
-  <li><a href="<%= @issue.url %>">Sak</a></li>
-</ul>
+<div class="alert alert-info">
+  <%= t('app.votes.explanation', title: @issue.downcased_title) %>
+  <%= link_to "Les mer om metoden", home_method_path %>.
+</div>
 
-<h2><%= Vote.model_name.human(count: 2).capitalize %></h2>
-<%= render partial: "shared/votes_summary_table", locals: {votes: @issue.votes, show_issues: false }%>
+<div class="row-fluid">
+    <div class="pull-right"><%= link_to "Se relaterte avstemninger \u21e8", issue_votes_path(@issue) %></div>
+</div>
+
+<% @party_groups.each do |party_group| %>
+  <div class="row-fluid">
+    <div><strong><%= party_group.name %></strong></div>
+  </div>
+
+  <%= render partial: 'party_group', locals: { group: party_group, issue: @issue, promises_by_party: @promises_by_party } %>
+  <hr>
+<% end %>
+

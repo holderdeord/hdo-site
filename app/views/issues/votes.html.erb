@@ -1,14 +1,14 @@
-<div class="topic-navigation">
-  <%= link_to "\u21e6 #{t 'app.topics.back'}", topic %>
+<div class="issue-navigation">
+  <%= link_to "\u21e6 #{t 'app.issues.back'}", issue %>
 </div>
 
 <div class="row-fluid">
   <div class="span12">
     
-    <h3><%= Vote.model_name.human(count: 2).capitalize %> <%= Vote.human_attribute_name(:about) %> <%= topic.downcased_title %></h3>
+    <h3><%= Vote.model_name.human(count: 2).capitalize %> <%= Vote.human_attribute_name(:about) %> <%= issue.downcased_title %></h3>
 
-    <ol id="Topics" class="unstyled">
-      <% topic.vote_connections.each do |connection| %>
+    <ol id="Issues" class="unstyled">
+      <% issue.vote_connections.each do |connection| %>
       <li>
         <dl>
           <dt>Beskrivelse</dt>
@@ -18,7 +18,7 @@
             <span class="label label-<%= connection.vote.enacted ? 'success' : 'important' %>">
               <%= connection.vote.enacted_text %>
             </span>
-            <span class="field-link">
+            <span class="topic-link">
               <%= link_to connection.vote do %>
                 Gå til avstemming
               <% end %>
@@ -29,7 +29,7 @@
             <%= connection.weight %> <i class="icon-info-sign" rel="popover" data-original-title="Om metode" data-content="<p>Vekttall: <%= connection.weight %></p><p>Kommentar: <%= connection.comment %></p>"></i>
           </dd>
         </dl>
-        <div class="field-votes">
+        <div class="topic-votes">
           <% if connection.vote.has_results? %>
           <table>
             <% @party_groups.each do |group| %>
