@@ -9,7 +9,16 @@
 
       <ul>
         <% promises.each do |p| %>
-        <li><%= p.body %></li>
+          <li><%= p.body %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% elsif parties.all? { |e| e.in_government? } %>
+    <div data-party-slug="<%= parties.map(&:slug).join(',') %>">
+      <h3>Regjeringen</h3>
+      <ul>
+        <% promises.each do |p| %>
+          <li><%= p.body %></li>
         <% end %>
       </ul>
     </div>

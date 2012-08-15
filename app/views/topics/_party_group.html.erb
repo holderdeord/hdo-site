@@ -9,13 +9,17 @@
     <div class="span10">
       <h3 class="topics-party-position"><%= topic.stats.text_for(party) %></h3>
 
-      <% if promises = promises_by_party[party] %>
-        <h5>I partiprogrammet har partiet lovet følgende:</h5>
-        <ul>
-          <% promises.each do |promise| %>
+      <% if promise_group = promises_by_party[party] %>
+
+        <% promise_group.each do |header, promises| %>
+          <h5><%= header %></h5>
+          <ul>
+            <% promises.each do |promise| %>
             <li><%= promise.body %></li>
-          <% end %>
-        </ul>
+            <% end %>
+          </ul>
+        <% end %>
+
       <% end %>
     </div>
 

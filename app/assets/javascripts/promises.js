@@ -53,7 +53,7 @@ var HDO = HDO || {};
     lastPartyFilter = partyId;
 
     bodyElement.hide().append(results);
-    bodyElement.find('div[data-party-slug!=' + partyId + ']').hide();
+    bodyElement.find('div[data-party-slug!="' + partyId + '"]').hide();
     bodyElement.show();
   }
 

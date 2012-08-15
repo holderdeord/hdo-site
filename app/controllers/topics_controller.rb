@@ -1,3 +1,5 @@
+# encoding: UTF-8
+
 class TopicsController < ApplicationController
   before_filter :authenticate_user!, :except => [:show, :votes]
   before_filter :fetch_topic, :only => [:show, :edit, :update, :destroy, :votes, :votes_search]
@@ -16,8 +18,7 @@ class TopicsController < ApplicationController
   def show
     # introduce a policy object?
     if @topic.published? || user_signed_in?
-      @promises_by_party = @topic.promises.group_by { |e| e.party }
-
+      assign_promises_by_party
       assign_party_groups
       assign_previous_and_next_topics
 
@@ -186,6 +187,22 @@ class TopicsController < ApplicationController
 
   def assign_topic_steps
     @topic_steps = Hdo::TopicEditSteps::STEPS
+  end
+
+  def assign_promises_by_party
+    # {
+    #   'A'    => { 'I partiprogrammet har...' => promises, 'I regjeringserklæring har...' => promises },
+    #   'FrP'  => { 'I partiprogrammet har...' => promises },
+    # }
+
+    @promises_by_party = {}
+
+    @topic.promises.each do |promise|
+      promise.parties.each do |party|
+        data = @promises_by_party[party] ||= {}
+        (data[promise.source_header] ||= []) << promise
+      end
+    end
   end
 
   def assign_disable_buttons
