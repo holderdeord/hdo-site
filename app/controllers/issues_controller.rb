@@ -102,7 +102,10 @@ class IssuesController < ApplicationController
   def votes
     if @issue.published? || user_signed_in?
       assign_party_groups
-      render locals: { issue: @issue, party_groups: @party_groups }
+
+      @issue_votes = @issue.vote_connections.map do |connection|
+        Hdo::Views::IssueVote.new(connection, @party_groups)
+      end
     else
       redirect_to root_path
     end

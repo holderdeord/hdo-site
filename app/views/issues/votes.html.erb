@@ -1,60 +1,46 @@
 <div class="issue-navigation">
-  <%= link_to "\u21e6 #{t 'app.issues.back'}", issue %>
+  <%= link_to "\u21e6 #{t 'app.issues.back'}", @issue %>
 </div>
 
 <div class="row-fluid">
   <div class="span12">
-    
-    <h3><%= Vote.model_name.human(count: 2).capitalize %> <%= Vote.human_attribute_name(:about) %> <%= issue.downcased_title %></h3>
+    <h2 class="page-header">
+      <%= Vote.model_name.human(count: 2).capitalize %> <%= Vote.human_attribute_name(:about) %> <%= @issue.downcased_title %>
+    </h2>
 
-    <ol id="Issues" class="unstyled">
-      <% issue.vote_connections.each do |connection| %>
-      <li>
-        <dl>
-          <dt>Beskrivelse</dt>
-          <dd><%= connection.description %></dd>
-          <dt>Vedtatt</dt>
-          <dd>
-            <span class="label label-<%= connection.vote.enacted ? 'success' : 'important' %>">
-              <%= connection.vote.enacted_text %>
-            </span>
-            <span class="topic-link">
-              <%= link_to connection.vote do %>
-                Gå til avstemming
-              <% end %>
-            </span>
-          </dd>
-          <dt>Metode</dt>
-          <dd>
-            <%= connection.weight %> <i class="icon-info-sign" rel="popover" data-original-title="Om metode" data-content="<p>Vekttall: <%= connection.weight %></p><p>Kommentar: <%= connection.comment %></p>"></i>
-          </dd>
-        </dl>
-        <div class="topic-votes">
-          <% if connection.vote.has_results? %>
-          <table>
-            <% @party_groups.each do |group| %>
-              <% group.parties.each do |party| %>
-                <%= render partial: 'votes_party', locals: { party: party, stats: connection.vote.stats } %>
-              <% end %>
-            <% end %>
-          </table>
-          <% if connection.vote.inferred? %>
-            <div class="alert alert-info"><%= I18n.t('app.votes.non_personal.inferred') %></div>
-          <% end %>
-          <% else %>
-            <div class="alert alert-info"><%= I18n.t('app.votes.non_personal.party_unknown') %></div>
-          <% end %>
+    <% @issue_votes.each do |issue_vote| %>
+      <div class="row-fluid">
+        <div class="span12">
+          <h3><%= issue_vote.description %> <small class="pull-right"><%= link_to "Gå til avstemning \u21e8", issue_vote.vote %></small></h3>
         </div>
-      </li>
-      <% end %>
-    </ol>
+      </div>
+
+      <div class="row-fluid">
+        <div class="span6">
+          <dl>
+            <dt>Kommentar</dt>
+            <dd><%= issue_vote.comment %></dd>
+
+            <dt>Vekting</dt>
+            <dd><%= issue_vote.weight_text %> (<%= issue_vote.weight %>)</dd>
+
+            <dt>Vedtatt</dt>
+            <dd><%= issue_vote.enacted_text %> </dd>
+          </dl>
+        </div>
+
+        <div class="span6">
+          <dl>
+            <% issue_vote.parties.each do |party| %>
+              <dt><%= party.text %></dt>
+              <dd><%= image_tag party.logo.thumb("50x50").url %> <%= party.counts %></dt>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+
+      <hr class="soften">
+    <% end %>
+
   </div>
 </div>
-
-<%= content_for :document_ready do %>
-  <script>
-    $(document).ready(function() {
-      $("i[rel=popover]").popover();
-    });
-  </script>
-<% end %>
