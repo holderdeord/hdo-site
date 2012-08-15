@@ -22,7 +22,7 @@ module Hdo
         @vote_connection.weight
       end
 
-      def label_class
+      def enacted_class
         "label-#{enacted? ? 'success' : 'important'}"
       end
 
@@ -39,6 +39,10 @@ module Hdo
         else
           raise "unknown weight: #{vote_connection.weight}"
         end
+      end
+
+      def matches_text
+        @vote_connection.matches_text
       end
 
       def description

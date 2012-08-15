@@ -18,24 +18,27 @@
       <div class="row-fluid">
         <div class="span6">
           <dl>
+            <% issue_vote.parties.each do |party| %>
+              <dt><%= party.text %></dt>
+              <dd><p><%= image_tag party.logo.thumb("50x50").url %> <small><%= party.counts %></small></p></dt>
+            <% end %>
+          </ul>
+        </div>
+
+        <div class="span6">
+          <dl>
             <dt>Kommentar</dt>
             <dd><%= issue_vote.comment %></dd>
 
             <dt>Vekting</dt>
             <dd><%= issue_vote.weight_text %> (<%= issue_vote.weight %>)</dd>
 
-            <dt>Vedtatt</dt>
-            <dd class="label <%= issue_vote.label_class %>"><%= issue_vote.enacted_text %></dd>
-          </dl>
-        </div>
+            <dt>Støtter saken</dt>
+            <dd><%= issue_vote.matches_text %></dd>
 
-        <div class="span6">
-          <dl>
-            <% issue_vote.parties.each do |party| %>
-              <dt><%= party.text %></dt>
-              <dd><p><%= image_tag party.logo.thumb("50x50").url %> <small><%= party.counts %></small></p></dt>
-            <% end %>
-          </ul>
+            <dt>Vedtatt</dt>
+            <dd class="label <%= issue_vote.enacted_class %>"><%= issue_vote.enacted_text %></dd>
+          </dl>
         </div>
       </div>
 
