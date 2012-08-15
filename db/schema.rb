@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120812201945) do
+ActiveRecord::Schema.define(:version => 20120815093233) do
 
   create_table "categories", :force => true do |t|
     t.string   "external_id"
@@ -139,8 +139,14 @@ ActiveRecord::Schema.define(:version => 20120812201945) do
   add_index "parties", ["name"], :name => "index_parties_on_name"
   add_index "parties", ["slug"], :name => "index_parties_on_slug", :unique => true
 
+  create_table "parties_promises", :id => false, :force => true do |t|
+    t.integer "party_id"
+    t.integer "promise_id"
+  end
+
+  add_index "parties_promises", ["party_id", "promise_id"], :name => "index_parties_promises_on_party_id_and_promise_id"
+
   create_table "promises", :force => true do |t|
-    t.integer  "party_id"
     t.string   "body"
     t.boolean  "general"
     t.string   "source"
@@ -150,8 +156,6 @@ ActiveRecord::Schema.define(:version => 20120812201945) do
     t.integer  "page"
     t.date     "date"
   end
-
-  add_index "promises", ["party_id"], :name => "index_promises_on_party_id"
 
   create_table "promises_topics", :id => false, :force => true do |t|
     t.integer "promise_id"

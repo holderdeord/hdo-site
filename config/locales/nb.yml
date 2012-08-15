@@ -183,6 +183,11 @@ nb:
         other: "Viser <strong>alle&nbsp;%{count}</strong> %{model}"
       multi_page: "Viser %{from} - %{to} av totalt %{count} %{model}"
       multi_page_html: "Viser <strong>%{from}&nbsp;-&nbsp;%{to}</strong> av totalt <strong>%{count}</strong> %{model}"
+  support:
+    array:
+      words_connector: ', '
+      two_words_connector: ' og '
+      last_word_connector: ' og '
   app:
     published: Publisert
     next: "Neste"
@@ -228,8 +233,6 @@ nb:
     expand: 'Åpne'
     collapse: 'Lukke'
     topic_graph_header: 'Hvor ofte har partiet stemt for %{title}?'
-    promises:
-      disclaimer: '<p>Vi jobber med å kode alle løftene fra partienes valgprogram.</p> <p>Her kan man foreløpig se noen eksempler på kategoriserte løfter. Vi vil etter planen publisere den ferdigkodede løftedatabasen i løpet av juli.</p>'
     topics:
       back: Tilbake til tema
       not_published: Dette temaet er ikke publisert.

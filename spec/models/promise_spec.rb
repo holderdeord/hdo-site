@@ -20,15 +20,18 @@ describe Promise do
     Promise.make(:categories => []).should_not be_valid
   end
 
-  it 'has a unique body per party' do
-    b1 = 'body1'
-    p1 = Party.make!
-    p2 = Party.make!
+  it 'has a unique body' do
+    promise = Promise.make!(:body => 'body')
+    Promise.make(:body => promise.body).should_not be_valid
+  end
 
-    Promise.make!(:body => b1, :party => p1)
+  it 'has party names' do
+    parties = [Party.make!(:name => 'A'), Party.make!(:name => 'B')]
+    promise = Promise.make!(:parties => parties)
 
-    Promise.make(:body => b1, :party => p1).should_not be_valid
-    Promise.make(:body => b1, :party => p2).should be_valid
+    I18n.with_locale do
+      promise.party_names.should == 'A og B'
+    end
   end
 
 end

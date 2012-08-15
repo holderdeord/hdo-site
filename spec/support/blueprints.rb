@@ -39,7 +39,7 @@ Party.blueprint do
 end
 
 Promise.blueprint do
-  party
+  parties { [Party.make!] }
   source { "PP:10" }
   body { "Løftetekst" }
   categories { [Category.make!] }

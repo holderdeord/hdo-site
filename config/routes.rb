@@ -20,7 +20,7 @@ Hdo::Application.routes.draw do
   resources :committees,      :only => [:index, :show]
   resources :fields
 
-  resources :promises,        :only => [:index]        # TODO: :create, :show and :edit behind auth
+  resources :promises,        :only => [:index]
   get 'promises/page/:page' => 'promises#index'
   get 'promises/show/:id' => 'promises#show'
   get 'promises/category/:id' => 'promises#category'

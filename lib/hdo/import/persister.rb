@@ -277,16 +277,16 @@ module Hdo
           return
         end
 
-        party = Party.find_by_external_id(promise.party)
-        unless party
-          @log.error "promise #{promise.external_id}: unknown party: #{promise.party}"
+        parties = promise.parties.map { |e| Party.find_by_external_id(e) }
+        unless parties
+          @log.error "promise #{promise.external_id}: unknown party: #{promise.parties}"
           return
         end
 
         pr = Promise.find_or_create_by_external_id(promise.external_id)
 
         if pr.new_record?
-          duplicate = Promise.find_by_party_id_and_body(party.id, promise.body)
+          duplicate = Promise.find_by_body(promise.body)
           if duplicate
             @log.error "promise #{promise.external_id}: duplicate of #{duplicate.external_id}"
             return
@@ -294,7 +294,7 @@ module Hdo
         end
 
         pr.update_attributes(
-          party: party,
+          parties: parties,
           general: promise.general?,
           categories: categories,
           source: promise.source,
