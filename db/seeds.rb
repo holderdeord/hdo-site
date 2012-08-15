@@ -20,17 +20,20 @@ Field.destroy_all
 puts "creating fields"
 [
   "Offentlig forvaltning",
-  "Familie og tro",
+  "Familie",
+  "Trossamfunn",
   "Kultur og frivillighet",
-  "Helse og sosial",
-  "Sjø og landbruk",
-  "Energi og miljø",
-  "Utenriks og sikkerhet",
+  "Helse- og sosialvesen",
+  "Utenriks og forsvar",
+  "Politi og rettsvesen",
   "Utdanning og forskning",
-  "Finanser og næringsliv",
+  "Landbruk og fiskeri",
+  "Energi",
+  "Miljøvern",
+  "Finanser og skatter",
+  "Næringsliv",
   "Arbeidsliv",
-  "Transport og komm.",
-  "Diverse"
+  "Transport og kommunikasjon"
 ].each do |field_name|
   puts "\t#{field_name}"
   Field.create! name: field_name
