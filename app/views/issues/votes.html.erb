@@ -25,7 +25,7 @@
             <dd><%= issue_vote.weight_text %> (<%= issue_vote.weight %>)</dd>
 
             <dt>Vedtatt</dt>
-            <dd><%= issue_vote.enacted_text %> </dd>
+            <dd class="label <%= issue_vote.label_class %>"><%= issue_vote.enacted_text %></dd>
           </dl>
         </div>
 
@@ -33,7 +33,7 @@
           <dl>
             <% issue_vote.parties.each do |party| %>
               <dt><%= party.text %></dt>
-              <dd><%= image_tag party.logo.thumb("50x50").url %> <%= party.counts %></dt>
+              <dd><p><%= image_tag party.logo.thumb("50x50").url %> <small><%= party.counts %></small></p></dt>
             <% end %>
           </ul>
         </div>

@@ -22,6 +22,10 @@ module Hdo
         @vote_connection.weight
       end
 
+      def label_class
+        "label-#{enacted? ? 'success' : 'important'}"
+      end
+
       def weight_text
         case weight
         when 0
@@ -46,7 +50,7 @@ module Hdo
       end
 
       def enacted?
-        @vote_connection.enacted?
+        vote.enacted?
       end
 
       def parties
