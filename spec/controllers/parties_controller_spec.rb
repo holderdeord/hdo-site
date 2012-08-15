@@ -23,10 +23,10 @@ describe PartiesController do
       assigns(:party).should == party
     end
 
-    it 'fetches the latest published topics' do
-      t1 = Topic.make! :published => true
-      t2 = Topic.make! :published => true
-      t3 = Topic.make! :published => false
+    it 'fetches the latest published issues' do
+      t1 = Issue.make! :published => true
+      t2 = Issue.make! :published => true
+      t3 = Issue.make! :published => false
 
       t1.vote_connections.map { |e| e.vote.update_attributes!(:time => 3.days.ago) }
       t2.vote_connections.map { |e| e.vote.update_attributes!(:time => 2.days.ago) }
@@ -34,7 +34,7 @@ describe PartiesController do
 
       get :show, id: party
 
-      assigns(:topics).should == [t2, t1]
+      assigns(:issues).should == [t2, t1]
     end
 
     it 'renders the :show template' do

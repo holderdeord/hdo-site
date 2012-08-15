@@ -56,11 +56,7 @@
   <hr class="soften">
 
   <div class="row-fluid">
-    <div class="span3">
-      
-    </div> <!-- end span3 -->
-
-    <div class="span9">
+    <div class="span12">
       <h2><%= Vote.model_name.human(count: 2).capitalize %></h2>
       <p class="pull-right"><%= page_entries_info @vote_results, model: Vote %></p>
 
@@ -68,7 +64,7 @@
         <thead>
           <tr>
             <th class="wide-table-header"><%= Vote.human_attribute_name :time %></th>
-            <th><%= Issue.model_name.human(count: 2).capitalize %></th>
+            <th><%= ParliamentIssue.model_name.human(count: 2).capitalize %></th>
             <th><%= Vote.human_attribute_name :subject %></th>
             <th><%= Vote.human_attribute_name :enacted %></th>
             <th><%= VoteResult.model_name.human.capitalize %></th>
@@ -80,8 +76,8 @@
               <td><%= result.vote.time_text %></td>
               <td>
                 <ul>
-                  <%- result.vote.issues.each do |issue| -%>
-                    <li><%= link_to issue.summary, issue %></li>
+                  <%- result.vote.parliament_issues.each do |parliament_issue| -%>
+                    <li><%= link_to parliament_issue.summary, parliament_issue %></li>
                   <%- end -%>
                 </ul>
               </td>

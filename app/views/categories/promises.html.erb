@@ -1,14 +1,26 @@
-<% @promises_by_party.each do |party, promises| %>
-  <div data-party-slug="<%= party.slug %>">
+<% @promises_by_parties.each do |parties, promises| %>
+  <% if parties.size == 1
+     party = parties.first %>
+    <div data-party-slug="<%= party.slug %>">
 
-    <% if @promises_by_party.size > 1 %>
-      <h3><%= link_to party.name, party_path(party) %></h3>
-    <% end %>
-
-    <ul>
-      <% promises.each do |p| %>
-        <li><%= p.body %></li>
+      <% if @promises_by_parties.size > 1 %>
+        <h3><%= link_to party.name, party_path(party) %></h3>
       <% end %>
-    </ul>
-  </div>
+
+      <ul>
+        <% promises.each do |p| %>
+          <li><%= p.body %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% elsif parties.all? { |e| e.in_government? } %>
+    <div data-party-slug="<%= parties.map(&:slug).join(',') %>">
+      <h3>Soria Moria II</h3>
+      <ul>
+        <% promises.each do |p| %>
+          <li><%= p.body %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
 <% end %>

@@ -12,7 +12,7 @@ module Hdo
           example.categories.each do |cat|
             Category.make!(:name => cat)
           end
-          Party.make! :external_id => example.party
+          Party.make! :external_id => example.parties.first
 
           persister.import_promises [example]
 
@@ -20,7 +20,7 @@ module Hdo
           promise = Promise.first
 
           promise.external_id.should == example.external_id
-          promise.party.external_id.should == example.party
+          promise.parties.map(&:external_id).should == example.parties
           promise.body.should == example.body
           promise.categories.map(&:name).should == example.categories
           promise.source.should == example.source

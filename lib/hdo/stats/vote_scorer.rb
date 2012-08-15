@@ -110,7 +110,7 @@ module Hdo
           if total.zero?
             res[party] = 0
           else
-            res[party] = (for_count / total) * vote_connection.weight
+            res[party] = (for_count / total.to_f) * vote_connection.weight
           end
         end
 

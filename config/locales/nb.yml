@@ -34,9 +34,9 @@ nb:
       district:
         one: "fylke"
         other: "fylker"
-      issue:
-        one: "sak"
-        other: "saker"
+      parliament_issue:
+        one: "stortingssak"
+        other: "stortingsssaker"
       vote:
         one: "avstemning"
         other: "avstemninger"
@@ -52,12 +52,12 @@ nb:
       user:
         one: "bruker"
         other: "brukere"
+      issue:
+        one: "sak"
+        other: "saker"
       topic:
         one: "tema"
         other: "tema"
-      field:
-        one: "område"
-        other: "områder"
     attributes:
       representative:
         name: "Navn"
@@ -77,7 +77,7 @@ nb:
         name: "Navn"
         representatives: "Representanter"
         external_id: "Ekstern id"
-        issues: "Saker"
+        parliament_issues: "Stortingssaker"
       category:
         name: "Navn"
         external_id: "Ekstern id"
@@ -88,7 +88,7 @@ nb:
         external_id: "Ekstern id"
         representatives: "Representanter"
         percent_of_representatives: "Prosent"
-      issue:
+      parliament_issue:
         summary: "Sammendrag"
         external_id: "Ekstern id"
         status: "Status"
@@ -98,7 +98,7 @@ nb:
         committee: "Komité"
         document_group: "Dokumentgruppe"
         reference: "Henvisning"
-      topic:
+      issue:
         edit: "Rediger"
       vote:
         subject: "Beskrivelse"
@@ -109,7 +109,7 @@ nb:
         enacted: "Vedtatt"
         counts: "Stemmegivning"
         propositions: "Forslag"
-        issues: "Saker"
+        parliament_issues: "Stortingssaker"
         external_id: "Ekstern id"
         about: "om"
       vote_result:
@@ -141,32 +141,32 @@ nb:
         edit: "Rediger bruker"
         destroy: "Slett bruker"
         confirm_destroy: "Er du sikker på at du vil slette brukeren?"
-      topic:
+      issue:
         title: "Tittel"
         description: "Beskrivelse"
+        new: "Ny sak"
+        submit: "Lagre sak"
+        edit: "Rediger sak"
+        destroy: "Slett sak"
+        confirm_destroy: "Er du sikker på at du vil slette saken?"
+        categories: "Kategorier"
+        promises: "Løfter"
+        votes: "Avstemninger"
+        topics: "Tema"
+        party_votes_header: "Hvordan har partiene stemt?"
+      vote_connection:
+        matches: "Støtter saken?"
+        comment: "Kommentar"
+        weight: "Vekting"
+        description: "Beskrivelse"
+      topic:
+        name: "Tittel"
         new: "Nytt tema"
         submit: "Lagre tema"
         edit: "Rediger tema"
         destroy: "Slett tema"
         confirm_destroy: "Er du sikker på at du vil slette tema?"
-        categories: "Kategorier"
-        promises: "Løfter"
-        votes: "Avstemninger"
-        fields: "Områder"
-        party_votes_header: "Hvordan har partiene stemt?"
-      vote_connection:
-        matches: "Støtter tema?"
-        comment: "Kommentar"
-        weight: "Vekting"
-        description: "Beskrivelse"
-      field:
-        name: "Tittel"
-        new: "Nytt område"
-        submit: "Lagre område"
-        edit: "Rediger område"
-        destroy: "Slett område"
-        confirm_destroy: "Er du sikker på at du vil slette område?"
-        topics: "Tema"
+        issues: "Saker"
         image: "Ikon"
   will_paginate:
     previous_label: "&#8592; Forrige"
@@ -183,6 +183,11 @@ nb:
         other: "Viser <strong>alle&nbsp;%{count}</strong> %{model}"
       multi_page: "Viser %{from} - %{to} av totalt %{count} %{model}"
       multi_page_html: "Viser <strong>%{from}&nbsp;-&nbsp;%{to}</strong> av totalt <strong>%{count}</strong> %{model}"
+  support:
+    array:
+      words_connector: ', '
+      two_words_connector: ' og '
+      last_word_connector: ' og '
   app:
     published: Publisert
     next: "Neste"
@@ -198,6 +203,10 @@ nb:
     logout: "Logg ut"
     description: "Bringer politikken til folket."
     about: "Om oss"
+    method: "Om metoden"
+    support: "Støtt oss"
+    member: "Bli medlem"
+    donate: "Gi en gave"
     people: "Menneskene bak"
     read_more: "Les mer"
     press: "Presse"
@@ -224,21 +233,19 @@ nb:
     connection: 'Kobling'
     expand: 'Åpne'
     collapse: 'Lukke'
-    topic_graph_header: 'Hvor ofte har partiet stemt for %{title}?'
-    promises:
-      disclaimer: '<p>Vi jobber med å kode alle løftene fra partienes valgprogram.</p> <p>Her kan man foreløpig se noen eksempler på kategoriserte løfter. Vi vil etter planen publisere den ferdigkodede løftedatabasen i løpet av juli.</p>'
-    topics:
-      back: Tilbake til tema
-      not_published: Dette temaet er ikke publisert.
-      published: Dette temaet er publisert.
+    issue_graph_header: 'Hvor ofte har partiet stemt for %{title}?'
+    issues:
+      back: Tilbake til saken
+      not_published: Denne saken er ikke publisert.
+      published: Denne saken er publisert.
     votes:
-      explanation: "Denne siden viser hva partiene har stemt og lovet om %{title}."
+      explanation: "Denne siden er basert på avstemninger fra Stortinget i perioden oktober 2011 til dagens dato, og løfter fra valgprogrammene 2009-2013."
       non_personal:
         unknown: 'Denne saken ble avgjort uten at avstemningsknappene ble brukt. Vi har derfor ikke oversikt over hva den enkelte representant har stemt.'
         inferred: 'Denne saken ble avgjort enstemmig uten at avstemningsknappene ble brukt. Oversikten er utledet fra tilstedeværelse ved andre avstemninger samme dag.'
         party_unknown: 'Denne avstemningen ble avgjort uten at avstemningsknappene ble brukt. Vi har derfor ikke oversikt over hva det enkelte parti har stemt.'
       scores:
-        not_participated: "%{name} har ikke deltatt i avstemninger om tema"
+        not_participated: "%{name} har ikke deltatt i avstemninger om saken"
         consistently_for: "%{name} har stemt konsekvent for"
         mostly_for: "%{name} har stemt stort sett for"
         for_and_against: "%{name} har stemt både for og mot"
@@ -251,23 +258,23 @@ nb:
         consistently_against_html: "%{name} har stemt <strong>konsekvent mot</strong>"
     external:
       urls:
-        issue: "http://stortinget.no/no/Saker-og-publikasjoner/Saker/Sak/?p=%s"
+        parliament_issue: "http://stortinget.no/no/Saker-og-publikasjoner/Saker/Sak/?p=%s"
         minutes: "http://stortinget.no/no/Saker-og-publikasjoner/Publikasjoner/Referater/Stortinget/%s/%s"
-    issue:
+    parliament_issue:
       states:
         processed: "behandlet"
     time:
       years: "år"
     created:
       promise: 'Løftet ble lagret.'
-      topic: 'Tema er lagret.'
+      issue: 'Saken er lagret.'
     updated:
       promise: 'Løftet ble oppdatert.'
-      topic: 'Tema er oppdatert.'
+      issue: 'Saken er oppdatert.'
     parties:
       group:
-        governing: 'Regjeringspartiene'
-        opposition: 'Opposisjonspartiene'
+        governing: 'Regjering'
+        opposition: 'Opposisjon'
     counts:
       representative:
         one: "Viser <strong>1</strong> representant."
@@ -284,7 +291,7 @@ nb:
       district:
         one: "Viser <strong>ett</strong> fylke."
         other: "Viser <strong>%{count}</strong> fylker."
-      issue:
+      parliament_issue:
         one: "Viser <strong>1</strong> saker."
         other: "Viser <strong>%{count}</strong> saker."
       vote:

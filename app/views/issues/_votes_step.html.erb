@@ -43,7 +43,7 @@
 <%= content_for :document_ready do %>
 <script type="text/javascript" charset="utf-8">
   $(document).ready(function() {
-    var url = <%= topic_votes_search_path(@topic).to_json.html_safe %>;
+    var url = <%= issue_votes_search_path(@issue).to_json.html_safe %>;
     HDO.voteSearcher.create(url).init();
   });
 </script>

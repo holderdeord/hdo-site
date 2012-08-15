@@ -1,4 +1,4 @@
-module TopicsHelper
+module IssuesHelper
   def vote_options_for(vote, connection)
     if connection
       selected = connection.matches? ? 'for' : 'against'

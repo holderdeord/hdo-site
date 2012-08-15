@@ -1,15 +1,2 @@
-<div class="page-header">
-  <h1><%= Topic.human_attribute_name :edit %>: <%= @topic.title %></h1>
-</div>
-
-<div class="pagination">
-  <ul>
-    <% @topic_steps.each do |step| %>
-      <li class="<%= 'active' if params[:step] == step %>">
-        <%= link_to Topic.human_attribute_name(step), edit_topic_step_path(@topic, :step => step)  %>
-      </li>
-    <% end %>
-  </ul>
-</div>
-
-<%= render 'form' %>
+<h1><%= Topic.human_attribute_name :edit %></h1>
+<%= render partial: 'form', locals: { topic: @topic } %>

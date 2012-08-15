@@ -57,9 +57,9 @@ module Hdo
         end
       end
 
-      def import_issues(issues)
+      def import_parliament_issues(parliament_issues)
         transaction do
-          issues.each { |e| import_issue(e) }
+          parliament_issues.each { |e| import_parliament_issue(e) }
         end
       end
 
@@ -126,14 +126,14 @@ module Hdo
         d
       end
 
-      def import_issue(issue)
+      def import_parliament_issue(issue)
         log_import issue
         issue.validate!
 
         committee = issue.committee && Committee.find_by_name!(issue.committee)
         categories = issue.categories.map { |e| Category.find_by_name! e }
 
-        record = Issue.find_or_create_by_external_id issue.external_id
+        record = ParliamentIssue.find_or_create_by_external_id issue.external_id
         record.update_attributes!(
           :document_group => issue.document_group,
           :issue_type     => issue.type, # AR doesn't like :type as a column name
@@ -160,9 +160,9 @@ module Hdo
         xvote.validate!
 
         vote  = Vote.find_or_create_by_external_id xvote.external_id
-        issue = Issue.find_by_external_id! xvote.external_issue_id
+        parliament_issue = ParliamentIssue.find_by_external_id! xvote.external_issue_id
 
-        vote.issues << issue
+        vote.parliament_issues << parliament_issue
 
         vote.update_attributes!(
           :for_count     => Integer(xvote.counts.for),
@@ -268,7 +268,7 @@ module Hdo
         not_found = promise.categories - categories.map(&:name)
 
         if not_found.any?
-          @log.error "invalid categories: #{not_found.inspect}"
+          @log.error "promise #{promise.external_id}: invalid categories #{not_found.inspect}"
           return
         end
 
@@ -277,16 +277,16 @@ module Hdo
           return
         end
 
-        party = Party.find_by_external_id(promise.party)
-        unless party
-          @log.error "promise #{promise.external_id}: unknown party: #{promise.party}"
+        parties = promise.parties.map { |e| Party.find_by_external_id(e) }
+        unless parties
+          @log.error "promise #{promise.external_id}: unknown party: #{promise.parties}"
           return
         end
 
         pr = Promise.find_or_create_by_external_id(promise.external_id)
 
         if pr.new_record?
-          duplicate = Promise.find_by_party_id_and_body(party.id, promise.body)
+          duplicate = Promise.find_by_body(promise.body)
           if duplicate
             @log.error "promise #{promise.external_id}: duplicate of #{duplicate.external_id}"
             return
@@ -294,7 +294,7 @@ module Hdo
         end
 
         pr.update_attributes(
-          party: party,
+          parties: parties,
           general: promise.general?,
           categories: categories,
           source: promise.source,

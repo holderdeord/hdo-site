@@ -62,21 +62,21 @@ module Hdo
       end
 
       def import_api_votes(vote_limit = nil)
-        issues = parsing_data_source.issues
+        parliament_issues = parsing_data_source.parliament_issues
 
-        if @options[:issue_ids]
-          issues = issues.select { |i| @options[:issue_ids].include? i.external_id }
+        if @options[:parliament_issue_ids]
+          issues = issues.select { |i| @options[:parliament_issue_ids].include? i.external_id }
         end
 
-        persister.import_issues issues
-        persister.import_votes votes_for(parsing_data_source, issues, vote_limit)
+        persister.import_parliament_issues parliament_issues
+        persister.import_votes votes_for(parsing_data_source, parliament_issues, vote_limit)
       end
 
-      def votes_for(data_source, issues, limit = nil)
+      def votes_for(data_source, parliament_issues, limit = nil)
         result = Set.new
 
-        issues.each do |issue|
-          result += data_source.votes_for(issue.external_id)
+        parliament_issues.each do |parliament_issue|
+          result += data_source.votes_for(parliament_issue.external_id)
           break if limit && result.size >= limit
         end
 
@@ -126,7 +126,7 @@ module Hdo
           when 'hdo#district'
             persister.import_districts hashes.map { |e| StortingImporter::District.from_hash(e) }
           when 'hdo#issue'
-            persister.import_issues hashes.map { |e| StortingImporter::Issue.from_hash(e) }
+            persister.import_parliament_issues hashes.map { |e| StortingImporter::ParliamentIssue.from_hash(e) }
           when 'hdo#vote'
             # import_votes (plural) will also run VoteInferrer.
             persister.import_votes hashes.map { |e| StortingImporter::Vote.from_hash(e) }
@@ -185,8 +185,8 @@ module Hdo
             options[:cache] = arg || true
           end
 
-          opt.on("--issues ISSUE_IDS", "Only import this comma-sparated list of issues") do |ids|
-            options[:issue_ids] = ids.split(",")
+          opt.on("--parliament-issues ISSUE_IDS", "Only import this comma-sparated list of issue external ids") do |ids|
+            options[:parliament_issue_ids] = ids.split(",")
           end
 
           opt.on("-h", "--help") do

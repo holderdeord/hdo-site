@@ -1,9 +1,36 @@
-<div class="page-header">
-  <h1><%= Issue.model_name.human(count: 2).capitalize %></h1>
-</div>
+<h1><%= Issue.model_name.human(count: 2).capitalize %></h1>
 
-<p class="pull-right"><%= page_entries_info @issues %></p>
+<table class="table">
+  <thead>
+    <tr>
+      <th><%= Issue.human_attribute_name :title %></th>
+      <th><%= Issue.human_attribute_name :description %></th>
+      <th><%= Topic.model_name.human(count: 2).capitalize %></th>
+      <th><%= Issue.human_attribute_name :published %></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @issues.each do |issue| %>
+      <tr>
+        <td><%= link_to issue.title, issue %></td>
+        <td><%= issue.description %></td>
+        <td>
+          <ul>
+          <% issue.topics.each do |topic| %>
+            <li><%= link_to topic.name, topic %></li>
+          <% end %>
+          </ul>
+        </td>
+        <td><%= issue.published_text %></td>
+        <td><%= link_to 'Edit', edit_issue_path(issue), class: 'btn' %></td>
+        <td><%= link_to 'Destroy', issue, method: :delete, data: { confirm: Issue.human_attribute_name(:confirm_destroy) }, class: 'btn btn-danger' %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
 
-<%= render partial: "shared/issue_table", locals: { issues: @issues } %>
-<%= will_paginate @issues %>
+<br />
 
+<%= link_to 'New Issue', new_issue_path, class: 'btn' %>

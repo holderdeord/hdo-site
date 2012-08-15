@@ -1,6 +1,6 @@
 module Hdo
-  class TopicEditSteps
-    STEPS = %w[categories promises votes fields]
+  class IssueEditSteps
+    STEPS = %w[categories promises votes topics]
 
     def initialize(params, session)
       @params  = params
@@ -8,7 +8,7 @@ module Hdo
     end
 
     def from_param!
-      @session[:topic_step] = from_param
+      @session[:issue_step] = from_param
     end
 
     def from_param
@@ -16,11 +16,11 @@ module Hdo
     end
 
     def first!
-      @session[:topic_step] = first
+      @session[:issue_step] = first
     end
 
     def next!
-      @session[:topic_step] = next_step
+      @session[:issue_step] = next_step
     end
 
     def first
@@ -32,7 +32,7 @@ module Hdo
     end
 
     def current
-      @session[:topic_step] ||= first
+      @session[:issue_step] ||= first
     end
 
     def after(step = STEPS.first)

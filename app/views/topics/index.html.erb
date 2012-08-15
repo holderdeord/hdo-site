@@ -1,36 +1,29 @@
-<h1><%= Topic.model_name.human(count: 2).capitalize %></h1>
-
-<table class="table">
+<table class="table table-condensed">
   <thead>
     <tr>
-      <th><%= Topic.human_attribute_name :title %></th>
-      <th><%= Topic.human_attribute_name :description %></th>
-      <th><%= Field.model_name.human(count: 2).capitalize %></th>
-      <th><%= Topic.human_attribute_name :published %></th>
+      <th><%= Topic.human_attribute_name :name %></th>
       <th></th>
       <th></th>
     </tr>
   </thead>
+
   <tbody>
+
     <% @topics.each do |topic| %>
       <tr>
-        <td><%= link_to topic.title, topic %></td>
-        <td><%= topic.description %></td>
+        <td><%= link_to topic.name, topic %></td>
         <td>
-          <ul>
-          <% topic.fields.each do |field| %>
-            <li><%= link_to field.name, field %></li>
-          <% end %>
-          </ul>
+          <%= link_to t('.new', :default => t("helpers.links.edit")), edit_topic_path(topic), :class => 'btn' %>
         </td>
-        <td><%= topic.published_text %></td>
-        <td><%= link_to 'Edit', edit_topic_path(topic), class: 'btn' %></td>
-        <td><%= link_to 'Destroy', topic, method: :delete, data: { confirm: Topic.human_attribute_name(:confirm_destroy) }, class: 'btn btn-danger' %></td>
+        <td>
+          <%= link_to t('.destroy', :default => t("helpers.links.destroy")), topic, method: :delete, data: { confirm: Issue.human_attribute_name(:confirm_destroy) }, class: 'btn btn-danger' %>
+        </td>
       </tr>
     <% end %>
+
   </tbody>
 </table>
 
-<br />
+<%= link_to t('.new', :default => t("helpers.links.new")), new_topic_path, :class => 'btn btn-primary' %>
 
-<%= link_to 'New Topic', new_topic_path, class: 'btn' %>
+

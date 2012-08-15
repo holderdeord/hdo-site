@@ -9,7 +9,7 @@
   <thead>
     <tr>
       <th><%= Committee.human_attribute_name :name %></th>
-      <th><%= Committee.human_attribute_name :issues %></th>
+      <th><%= Committee.human_attribute_name :parliament_issues %></th>
       <th><%= Committee.human_attribute_name :representatives %></th>
     </tr>
   </thead>
@@ -18,7 +18,7 @@
       <% @committees.each do |com| %>
       <tr>
         <td><%= link_to com.name, com %></td>
-        <td><%= com.issues.count %></td>
+        <td><%= com.parliament_issues.count %></td>
         <td><%= com.representatives.count %></td>
       </tr>
       <% end %>

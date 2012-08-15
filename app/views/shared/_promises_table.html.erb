@@ -1,9 +1,3 @@
-<div class="row-fluid">
-  <div class="span12">
-    <div class="alert alert-info"><%= t('app.promises.disclaimer').html_safe %></div>
-  </div>
-</div>
-
 <table class="table table-striped">
   <thead>
     <tr>
@@ -25,7 +19,11 @@
     <% promises.each do |promise| %>
       <tr>
       <% if show_party %>
-        <td><%= link_to promise.party.name, promise.party %></td>
+        <td>
+          <% promise.parties.each do |party| %>
+            <%= link_to party.name, party %>
+          <% end %>
+        </td>
       <% end %>
         <td><%= promise.body %></td>
       <% if show_general %>

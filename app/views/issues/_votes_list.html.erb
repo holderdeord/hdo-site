@@ -7,10 +7,10 @@
     <div class="span1"><h5><%= vote.external_id %></h5></div>
 
     <div class="span5">
-      <h4><%= link_to vote.subject, vote, :target => 'topic_new' %></h4>
+      <h4><%= link_to vote.subject, vote, :target => 'issue_new' %></h4>
       <ul>
-        <% vote.issues.each do |issue| %>
-          <li><%= link_to issue.summary, issue %></li>
+        <% vote.parliament_issues.each do |parliament_issue| %>
+          <li><%= link_to parliament_issue.summary, parliament_issue %></li>
         <% end %>
       </ul>
     </div>

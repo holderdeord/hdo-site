@@ -8,7 +8,7 @@ describe Vote do
   end
 
   it "should be invalid with no issues" do
-    v = Vote.make(:issues => [])
+    v = Vote.make(:parliament_issues => [])
     v.should_not be_valid
   end
 
@@ -78,13 +78,13 @@ describe Vote do
   end
 
   it "won't add the same issue twice" do
-    vote = Vote.make :issues => []
-    issue = Issue.make!
+    vote = Vote.make :parliament_issues => []
+    parliament_issue = ParliamentIssue.make!
 
-    vote.issues << issue
-    vote.issues << issue
+    vote.parliament_issues << parliament_issue
+    vote.parliament_issues << parliament_issue
 
-    vote.issues.size.should == 1
+    vote.parliament_issues.size.should == 1
     vote.should be_valid
   end
 

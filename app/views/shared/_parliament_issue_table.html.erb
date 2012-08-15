@@ -1,0 +1,19 @@
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th class="wide-table-header"><%= ParliamentIssue.human_attribute_name :last_update %></th>
+      <th><%= ParliamentIssue.human_attribute_name :summary %></th>
+      <th><%= ParliamentIssue.human_attribute_name :status %></th>
+    </tr>
+  </thead>
+
+  <tbody>
+      <% parliament_issues.each do |parliament_issue| %>
+      <tr>
+        <td><%= parliament_issue.last_update_text %></td>
+        <td><%= link_to parliament_issue.summary, parliament_issue %></td>
+        <td><%= parliament_issue.status_text %></td>
+      </tr>
+      <% end %>
+  </tbody>
+</table>
