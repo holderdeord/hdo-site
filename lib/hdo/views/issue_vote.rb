@@ -11,11 +11,11 @@ module Hdo
       end
 
       def vote
-      	@vote ||= @vote_connection.vote
+        @vote ||= @vote_connection.vote
       end
 
       def enacted_text
-      	@vote.enacted_text
+        @vote.enacted_text
       end
 
       def weight
@@ -58,24 +58,24 @@ module Hdo
       end
 
       class PartyDetail
-      	def initialize(party, stats)
-      	  @party = party
-      	  @stats = stats
-      	end
+        def initialize(party, stats)
+          @party = party
+          @stats = stats
+        end
 
-      	def logo
-      	  @party.image_with_fallback
-      	end
+        def logo
+          @party.image_with_fallback
+        end
 
-      	def counts
-    	  counts = @stats.party_counts_for(@party)
+        def counts
+        counts = @stats.party_counts_for(@party)
 
-    	  "#{counts[:for]} for, #{counts[:against]} mot, #{counts[:absent]} ikke tilstede"
-      	end
+        "#{counts[:for]} for, #{counts[:against]} mot, #{counts[:absent]} ikke tilstede"
+        end
 
-      	def text
-      	  "#{@party.name} #{@stats.text_for(@party)}"
-      	end
+        def text
+          "#{@party.name} #{@stats.text_for(@party)}"
+        end
       end
 
     end # IssueVote
