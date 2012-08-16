@@ -240,12 +240,12 @@ describe IssuesController do
 
     it 'should redirect :show to the front page if the issue is not published' do
       get :show, id: issue
-      response.should redirect_to(root_path)
+      response.should redirect_to(new_user_session_path)
     end
 
     it 'should redirect :votes to the front page if the issue is not published' do
       get :votes, id: issue
-      response.should redirect_to(root_path)
+      response.should redirect_to(new_user_session_path)
     end
 
     context "with rendered views" do

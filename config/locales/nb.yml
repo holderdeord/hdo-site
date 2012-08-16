@@ -100,6 +100,7 @@ nb:
         reference: "Henvisning"
       issue:
         edit: "Rediger"
+        published: Publisert
       vote:
         subject: "Beskrivelse"
         for_count: "For"
