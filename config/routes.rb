@@ -21,8 +21,8 @@ Hdo::Application.routes.draw do
   resources :topics
 
   resources :promises,        :only => [:index]
-  get 'promises/page/:page' => 'promises#index'
-  get 'promises/show/:id' => 'promises#show'
+  get 'promises/page/:page'   => 'promises#index'
+  get 'promises/show/:id'     => 'promises#show'
   get 'promises/category/:id' => 'promises#category'
 
   resources :parliament_issues, :path => 'parliament-issues', :only => [:index, :show]
