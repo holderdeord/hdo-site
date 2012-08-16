@@ -64,7 +64,7 @@
       <small><%= import_type.description %></small>
     </h2>
 
-    <h3>Topics</h3>
+    <h3>Properties</h3>
     <table class="table table-striped">
       <thead>
         <tr>
@@ -76,12 +76,12 @@
       </thead>
 
       <tbody>
-        <% import_type.topics.each do |topic| %>
+        <% import_type.properties.each do |property| %>
         <tr>
-          <td><code><%= topic.name %></code></td>
-          <td><%= topic.required %></td>
-          <td><%= topic.type %></td>
-          <td><%= topic.description.html_safe %></td>
+          <td><code><%= property.name %></code></td>
+          <td><%= property.required %></td>
+          <td><%= property.type %></td>
+          <td><%= property.description.html_safe %></td>
         </tr>
         <% end %>
       </tbody>
