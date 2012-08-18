@@ -12,7 +12,24 @@ module Hdo
 
     def calculate_clustering
       @clusters = @points
-      # min_distance = find_key_of_min_value_in distances_matrix
+      min_distance = Float::INFINITY
+      # while min_distance > @separation
+      #   @clusters, min_distance = pair_nearest_in @clusters
+      # end
+    end
+
+    def pair_nearest_in(clusters)
+      distance, nearest_pair_indices = find_key_of_min_value_in distances_matrix_for clusters
+      new_cluster = clusters.select { |p|
+        puts "clusters: #{clusters.inspect}"
+        puts "nearest_pair_indices: #{nearest_pair_indices.inspect}"
+        p == clusters[nearest_pair_indices[0]] or p == clusters[nearest_pair_indices[1]]
+      }
+
+      clusters.delete_at clusters.index new_cluster[0]
+      clusters.delete_at clusters.index new_cluster[1]
+
+      clusters << new_cluster.flatten
     end
 
     def find_key_of_min_value_in(hash)
@@ -20,16 +37,14 @@ module Hdo
       hash.each do |k,v|
         min_key = k if hash[min_key] == nil || v < hash[min_key]
       end
-      min_key
+      [hash[min_key], min_key]
     end
 
-    def distances_matrix
+    def distances_matrix_for(clusters)
       distances = Hash.new
-      @clusters.each_with_index do |cluster, i|
-        @clusters.each do |other, j|
-          if cluster != other
-            distances[[i,j]] = distance_between cluster,other
-          end
+      clusters.each_with_index do |cluster, i|
+        clusters[(i+1)..-1].each_with_index do |other, j|
+          distances[[i,j+i+1]] = distance_between cluster,other
         end
       end
       distances
@@ -38,7 +53,7 @@ module Hdo
     def distance_between(cluster,other)
       if Array === cluster
         if Array === other
-          distance_betwee_array_and_array cluster, other
+          distance_between_array_and_array cluster, other
         else
           distance_between_array_and_point cluster, other
         end
