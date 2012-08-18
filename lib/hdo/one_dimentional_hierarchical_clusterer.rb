@@ -5,31 +5,31 @@ module Hdo
     def initialize(points, separation)
       @points = points
       @separation = separation
-      @clusters = calculate_clustering
+      calculate_clustering
     end
 
     private
 
     def calculate_clustering
       @clusters = @points
-      min_distance = Float::INFINITY
-      # while min_distance > @separation
-      #   @clusters, min_distance = pair_nearest_in @clusters
-      # end
+      min_distance, closest_pair = find_key_of_min_value_in distances_matrix_for @clusters
+
+      while min_distance < @separation && @separation != 0
+        min_distance, clusters = pair_nearest_in @clusters.dup
+        @clusters = clusters if min_distance < @separation
+      end
     end
 
     def pair_nearest_in(clusters)
       distance, nearest_pair_indices = find_key_of_min_value_in distances_matrix_for clusters
-      new_cluster = clusters.select { |p|
-        puts "clusters: #{clusters.inspect}"
-        puts "nearest_pair_indices: #{nearest_pair_indices.inspect}"
+      new_cluster = clusters.select do |p|
         p == clusters[nearest_pair_indices[0]] or p == clusters[nearest_pair_indices[1]]
-      }
+      end
 
       clusters.delete_at clusters.index new_cluster[0]
       clusters.delete_at clusters.index new_cluster[1]
 
-      clusters << new_cluster.flatten
+      [distance, clusters << new_cluster.flatten]
     end
 
     def find_key_of_min_value_in(hash)
