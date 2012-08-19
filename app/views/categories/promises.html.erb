@@ -4,14 +4,15 @@
     <div data-party-slug="<%= party.slug %>">
 
       <% if @promises_by_parties.size > 1 %>
-        <h3><%= link_to party.name, party_path(party) %></h3>
+        <h3 class="<%= party.slug %>-title"><%= link_to party.name, party_path(party) %></h3>
       <% end %>
 
-      <ul>
         <% promises.each do |p| %>
-          <li><%= p.body %></li>
+          <ul class="breadcrumb">
+            <li><%= p.body %></li>
+          </ul>
         <% end %>
-      </ul>
+
     </div>
   <% elsif parties.all? { |e| e.in_government? } %>
     <div data-party-slug="<%= parties.map(&:slug).join(',') %>">
