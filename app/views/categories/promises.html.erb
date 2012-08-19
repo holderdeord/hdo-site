@@ -12,7 +12,6 @@
           <%= p.body %>
         </p>
       <% end %>
-
     </div>
   <% elsif parties.all? { |e| e.in_government? } %>
     <div data-party-slug="<%= parties.map(&:slug).join(',') %>">
