@@ -73,7 +73,7 @@ var HDO = HDO || {};
   }
 
   function removeActiveClass(divClass) {
-    $(divClass).find('li').removeClass('active');
+    $(divClass).find('li').removeClass();
   }
 
   H.promiseWidget = {
@@ -116,13 +116,14 @@ var HDO = HDO || {};
       });
 
       $(self.options.partiesSelector).find('a').on('click', function (e) {
-        removeActiveClass(self.options.partiesSelector);
-        $(this).parent().addClass('active');
+        removeActiveClass(self.options.partiesSelector, partySlug);
 
         var partySlug = $(this).data('party-slug');
+        $(this).parent().addClass(partySlug + '-active')
 
         if (partySlug === 'show-all') {
           showAllParties(categoryId);
+          $(this).parent().addClass('active');
         } else {
           showSpecificParty(categoryId, partySlug);
         }
