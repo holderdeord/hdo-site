@@ -67,7 +67,7 @@ module Hdo
     end
 
     def distance_between_point_and_point(a,b)
-      (a - b) ** 2
+      Math.sqrt((a - b) ** 2)
     end
 
     def distance_between_array_and_point(array, point)

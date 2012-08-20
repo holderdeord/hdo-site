@@ -9,7 +9,7 @@ module Hdo
       end
 
       it "knows the distance between two points" do
-        @clusterer.send(:distance_between_point_and_point, 0, 19).should eq (19**2)
+        @clusterer.send(:distance_between_point_and_point, 0, 19).should eq (19)
       end
 
       it "knows the minimum distance between an array and a point" do
@@ -25,17 +25,17 @@ module Hdo
         clusters = [0,2,5]
         distances = @clusterer.send(:distances_matrix_for, clusters)
         distances.count.should eq 3
-        distances[[0,1]].should eq 4
-        distances[[0,2]].should eq 25
-        distances[[1,2]].should eq 9
+        distances[[0,1]].should eq 2
+        distances[[0,2]].should eq 5
+        distances[[1,2]].should eq 3
 
         # for clusters and points
         clusters_with_clusters = [[0, 1], 5, [10,11]]
         distances = @clusterer.send(:distances_matrix_for, clusters_with_clusters)
         distances.count.should eq 3
-        distances[[0,1]].should eq 16
-        distances[[0,2]].should eq 9**2
-        distances[[1,2]].should eq 25
+        distances[[0,1]].should eq 4
+        distances[[0,2]].should eq 9
+        distances[[1,2]].should eq 5
       end
 
       it "finds key of min value in hash" do
@@ -73,7 +73,7 @@ module Hdo
 
         clusters.count.should eq 4
         clusters.last.should eq [10,11,13,15]
-        distance.should eq 2**2
+        distance.should eq 2
       end
     end
 
@@ -100,5 +100,11 @@ module Hdo
       end
 
     end
+
+    it "should cluster some real timestamp data" do
+      points = [1339524157, 1339524157, 1339523967, 1339523967, 1339523998, 1339524040, 1339524040, 1339492435, 1339492435, 1339492460, 1339492479, 1339492490, 1339524069, 1339524069, 1339492595, 1339492617, 1339492634, 1339492650, 1339492667, 1339492686, 1339492701, 1339492735, 1339492735, 1339492758, 1339492777, 1339492792, 1339492801, 1339524099, 1339524124, 1339524124, 1339523804, 1339523804, 1339523866, 1339523866, 1339523818, 1339492387, 1339492393, 1339523727, 1339523743, 1339523757, 1339492539, 1339492539, 1339523677, 1339523692, 1339523919, 1339523919]
+      clusterer = OneDimentionalHierarchicalClusterer.new(points,900)
+    end
+
   end
 end
