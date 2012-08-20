@@ -101,9 +101,78 @@ module Hdo
 
     end
 
-    it "should cluster some real timestamp data" do
-      points = [1339524157, 1339524157, 1339523967, 1339523967, 1339523998, 1339524040, 1339524040, 1339492435, 1339492435, 1339492460, 1339492479, 1339492490, 1339524069, 1339524069, 1339492595, 1339492617, 1339492634, 1339492650, 1339492667, 1339492686, 1339492701, 1339492735, 1339492735, 1339492758, 1339492777, 1339492792, 1339492801, 1339524099, 1339524124, 1339524124, 1339523804, 1339523804, 1339523866, 1339523866, 1339523818, 1339492387, 1339492393, 1339523727, 1339523743, 1339523757, 1339492539, 1339492539, 1339523677, 1339523692, 1339523919, 1339523919]
-      clusterer = OneDimentionalHierarchicalClusterer.new(points,900)
+    describe "with some real timestamp data" do
+      before do
+        @first_cluster_timestamps = [
+          '2012-06-12 09:13:07 UTC',
+          '2012-06-12 09:13:13 UTC',
+          '2012-06-12 09:13:55 UTC',
+          '2012-06-12 09:13:55 UTC',
+          '2012-06-12 09:14:20 UTC',
+          '2012-06-12 09:14:39 UTC',
+          '2012-06-12 09:14:50 UTC',
+          '2012-06-12 09:15:39 UTC',
+          '2012-06-12 09:15:39 UTC',
+          '2012-06-12 09:16:35 UTC',
+          '2012-06-12 09:16:57 UTC',
+          '2012-06-12 09:17:14 UTC',
+          '2012-06-12 09:17:30 UTC',
+          '2012-06-12 09:17:47 UTC',
+          '2012-06-12 09:18:06 UTC',
+          '2012-06-12 09:18:21 UTC',
+          '2012-06-12 09:18:55 UTC',
+          '2012-06-12 09:18:55 UTC',
+          '2012-06-12 09:19:18 UTC',
+          '2012-06-12 09:19:37 UTC',
+          '2012-06-12 09:19:52 UTC',
+          '2012-06-12 09:20:01 UTC'
+        ].map { |e| Time.parse(e).to_i }
+
+        @second_cluster_timestamps = [
+          '2012-06-12 17:54:37 UTC',
+          '2012-06-12 17:54:52 UTC',
+          '2012-06-12 17:55:27 UTC',
+          '2012-06-12 17:55:43 UTC',
+          '2012-06-12 17:55:57 UTC',
+          '2012-06-12 17:56:44 UTC',
+          '2012-06-12 17:56:44 UTC',
+          '2012-06-12 17:56:58 UTC',
+          '2012-06-12 17:57:46 UTC',
+          '2012-06-12 17:57:46 UTC',
+          '2012-06-12 17:58:39 UTC',
+          '2012-06-12 17:58:39 UTC',
+          '2012-06-12 17:59:27 UTC',
+          '2012-06-12 17:59:27 UTC',
+          '2012-06-12 17:59:58 UTC',
+          '2012-06-12 18:00:40 UTC',
+          '2012-06-12 18:00:40 UTC',
+          '2012-06-12 18:01:09 UTC',
+          '2012-06-12 18:01:09 UTC',
+          '2012-06-12 18:01:39 UTC',
+          '2012-06-12 18:02:04 UTC',
+          '2012-06-12 18:02:04 UTC',
+          '2012-06-12 18:02:37 UTC',
+          '2012-06-12 18:02:37 UTC'
+          ].map { |e| Time.parse(e).to_i }
+
+          timestamps = [@first_cluster_timestamps,
+            @second_cluster_timestamps].flatten
+
+          @clusterer = OneDimentionalHierarchicalClusterer.new(timestamps, 900)
+      end
+
+      it "should have two clusters" do
+        @clusterer.clusters.count.should eq 2
+      end
+
+      it "should have the earliest timestamps in the first cluster" do
+        @clusterer.clusters.sort.first.sort.should eq @first_cluster_timestamps.sort
+      end
+
+      it "should put the second cluster in the second cluster (duh)" do
+        @clusterer.clusters.sort[1].sort.should eq @second_cluster_timestamps.sort
+      end
+
     end
 
   end
