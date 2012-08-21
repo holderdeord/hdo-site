@@ -1,4 +1,34 @@
-<%= twitter_bootstrap_form_for @topic do |form| %>
-  <%= render partial: "#{edit_steps.current}_step", locals: { form: form} %>
-  <%= render partial: "edit_buttons", locals: { form: form, disable_prev: @disable_prev, disable_next: @disable_next } %>
+<%= twitter_bootstrap_form_for topic, :html => {:multipart => true} do |form| %>
+  <%# form.inputs do %>
+    <div class="well">
+      <%= form.text_field :name %>
+    </div>
+  <%# end %>
+
+  <h1><%= Issue.model_name.human(count: 2).capitalize %></h1>
+  <div class="well">
+    <% @issues.each do |issue| %>
+      <div class="row">
+        <div class="span6">
+          <label class="checkbox">
+            <%= check_box_tag "topic[issue_ids][]", issue.id, topic.issues.include?(issue) %>
+            <strong><%= issue.title.capitalize %></strong>
+          </label>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+  <h1><%= Topic.human_attribute_name :image %></h1>
+
+  <div class="well">
+    <%= form.file_field :image %>
+    <%= image_tag topic.image.thumb('100x100').url if topic.image_uid %>
+  </div>
+
+  <div class="pull-right">
+    <%= link_to t('app.cancel'), issues_path, :class => 'btn btn-danger' %>
+    <%= form.submit t('app.done'), class: 'btn btn-primary', name: 'finish' %>
+  </div>
+
 <% end %>

@@ -64,7 +64,7 @@
       <small><%= import_type.description %></small>
     </h2>
 
-    <h3>Fields</h3>
+    <h3>Properties</h3>
     <table class="table table-striped">
       <thead>
         <tr>
@@ -76,12 +76,12 @@
       </thead>
 
       <tbody>
-        <% import_type.fields.each do |field| %>
+        <% import_type.properties.each do |property| %>
         <tr>
-          <td><code><%= field.name %></code></td>
-          <td><%= field.required %></td>
-          <td><%= field.type %></td>
-          <td><%= field.description.html_safe %></td>
+          <td><code><%= property.name %></code></td>
+          <td><%= property.required %></td>
+          <td><%= property.type %></td>
+          <td><%= property.description.html_safe %></td>
         </tr>
         <% end %>
       </tbody>

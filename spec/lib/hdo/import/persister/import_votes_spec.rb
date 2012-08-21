@@ -25,7 +25,7 @@ module Hdo
         it 'updates an existing vote based on external_id'
 
         it 'runs the VoteInferrer after importing votes' do
-          Issue.make! :external_id => non_personal_vote.external_issue_id
+          ParliamentIssue.make! :external_id => non_personal_vote.external_issue_id
 
           inferrer = VoteInferrer.new([])
 

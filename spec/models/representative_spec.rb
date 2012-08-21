@@ -26,4 +26,11 @@ describe Representative do
     r = Representative.make!
     Representative.make(:external_id => r.external_id).should_not be_valid
   end
+
+  it 'removes vote results if the representative is destroyed' do
+    v = Vote.make!
+    r = v.vote_results.first.representative
+
+    expect { r.destroy }.to change(VoteResult, :count).from(1).to(0)
+  end
 end

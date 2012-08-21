@@ -53,17 +53,19 @@ describe Party do
 
   it 'will not add the same promise twice' do
     party = Party.make!
-    promise = Promise.make!
+
+    promise = Promise.make!(:parties => [party])
+    party.promises.count.should == 1
 
     party.promises << promise
-    party.promises << promise
-
     party.promises.count.should == 1
   end
 
-  it 'destroys dependent promises when emptied' do
+  it 'destroys dependent promises when and no other parties are associated' do
+    pending "need to figure this out"
+
     party = Party.make!
-    Promise.make!(:party => party)
+    Promise.make!(:parties => [party])
 
     Promise.count.should == 1
 
@@ -71,9 +73,11 @@ describe Party do
     Promise.count.should == 0
   end
 
-  it 'destroys dependent promises when destroyed' do
+  it 'destroys dependent promises when destroyed and no other parties are associated' do
+    pending "need to figure this out"
+
     party = Party.make!
-    Promise.make!(:party => party)
+    Promise.make!(:parties => [party])
     Promise.count.should == 1
 
     party.destroy

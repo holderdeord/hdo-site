@@ -1,5 +1,6 @@
 require 'optparse'
 require 'set'
+require 'open-uri'
 
 module Hdo
   module Import
@@ -29,6 +30,8 @@ module Hdo
           import_api_representatives
         when 'votes'
           import_api_votes
+        when 'promises'
+          import_promises
         else
           raise ArgumentError, "unknown command: #{@cmd.inspect}"
         end
@@ -51,22 +54,29 @@ module Hdo
         persister.import_representatives parsing_data_source.representatives_today
       end
 
-      def import_api_votes(vote_limit = nil)
-        issues = parsing_data_source.issues
+      def import_promises
+        spreadsheet = @rest.first or raise "no spreadsheet path given"
 
-        if @options[:issue_ids]
-          issues = issues.select { |i| @options[:issue_ids].include? i.external_id }
-        end
-
-        persister.import_issues issues
-        persister.import_votes votes_for(parsing_data_source, issues, vote_limit)
+        promises = Hdo::StortingImporter::Promise.from_xlsx(spreadsheet)
+        persister.import_promises promises
       end
 
-      def votes_for(data_source, issues, limit = nil)
+      def import_api_votes(vote_limit = nil)
+        parliament_issues = parsing_data_source.parliament_issues
+
+        if @options[:parliament_issue_ids]
+          issues = issues.select { |i| @options[:parliament_issue_ids].include? i.external_id }
+        end
+
+        persister.import_parliament_issues parliament_issues
+        persister.import_votes votes_for(parsing_data_source, parliament_issues, vote_limit)
+      end
+
+      def votes_for(data_source, parliament_issues, limit = nil)
         result = Set.new
 
-        issues.each do |issue|
-          result += data_source.votes_for(issue.external_id)
+        parliament_issues.each do |parliament_issue|
+          result += data_source.votes_for(parliament_issue.external_id)
           break if limit && result.size >= limit
         end
 
@@ -77,7 +87,12 @@ module Hdo
         @rest.each do |file|
           print "\nimporting #{file}:"
 
-          str = file == "-" ? STDIN.read : File.read(file)
+          if file == "-"
+            str = STDIN.read
+          else
+            str = open(file) { |io| io.read }
+          end
+
           data = MultiJson.decode(str)
 
           data = case data
@@ -111,7 +126,7 @@ module Hdo
           when 'hdo#district'
             persister.import_districts hashes.map { |e| StortingImporter::District.from_hash(e) }
           when 'hdo#issue'
-            persister.import_issues hashes.map { |e| StortingImporter::Issue.from_hash(e) }
+            persister.import_parliament_issues hashes.map { |e| StortingImporter::ParliamentIssue.from_hash(e) }
           when 'hdo#vote'
             # import_votes (plural) will also run VoteInferrer.
             persister.import_votes hashes.map { |e| StortingImporter::Vote.from_hash(e) }
@@ -170,8 +185,8 @@ module Hdo
             options[:cache] = arg || true
           end
 
-          opt.on("--issues ISSUE_IDS", "Only import this comma-sparated list of issues") do |ids|
-            options[:issue_ids] = ids.split(",")
+          opt.on("--parliament-issues ISSUE_IDS", "Only import this comma-sparated list of issue external ids") do |ids|
+            options[:parliament_issue_ids] = ids.split(",")
           end
 
           opt.on("-h", "--help") do

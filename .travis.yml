@@ -4,10 +4,16 @@ rvm:
 notifications:
   recipients:
     - jari.bakken@gmail.com
-  irc: "irc.freenode.net#holderdeord"
+  irc:
+    channels:
+      - "irc.freenode.net#holderdeord"
+    on_success: change
+    on_failure: change
+    template:
+      - "%{author} | %{commit} | %{message} | %{build_url}"
 script: "RAILS_ENV=test bundle exec rake travis"
 before_script:
   - "sh -e /etc/init.d/xvfb start"
-  # - "npm install -g buster autolint"
+  - "npm install -g buster autolint"
 env:
-  - DISPLAY=:99.0 COVERAGE_THRESHOLD=73
+  - DISPLAY=:99.0 COVERAGE_THRESHOLD=74

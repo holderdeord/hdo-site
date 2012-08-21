@@ -14,10 +14,37 @@
  *= require_tree .
 */
 
+@footerHeight: 100px;
+
+body,
+html {
+  height: 100%;
+}
+
+body {
+  padding: 0 !important; /* Override bootstraps default padding */
+}
+
+footer,
+.push {
+  height: @footerHeight;
+}
+
 footer {
-  margin: 10px;
-  text-align: center;
   color: #999;
+  margin: 0 10px;
+  text-align: center;
+}
+
+#hdo-content {
+  padding: 0 20px;
+}
+
+.wrapper {
+  min-height: 100%;
+  height: auto !important;
+  height: 100%;
+  margin: 0 auto @footerHeight * -1; /* the bottom margin is the negative value of the footer's height */
 }
 
 /* Faded out hr */
@@ -30,3 +57,4 @@ hr.soften {
   background-image:      -o-linear-gradient(left, rgba(0,0,0,0), rgba(0,0,0,.1), rgba(0,0,0,0));
   border: 0;
 }
+

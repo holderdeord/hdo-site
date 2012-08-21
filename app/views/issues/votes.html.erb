@@ -1,0 +1,49 @@
+<div class="issue-navigation">
+  <%= link_to "\u21e6 #{t 'app.issues.back'}", @issue %>
+</div>
+
+<div class="row-fluid">
+  <div class="span12">
+    <h2 class="page-header">
+      <%= Vote.model_name.human(count: 2).capitalize %> <%= Vote.human_attribute_name(:about) %> <%= @issue.downcased_title %>
+    </h2>
+
+    <% @issue_votes.each do |issue_vote| %>
+      <div class="row-fluid">
+        <div class="span12">
+          <h3><%= issue_vote.description %> <small class="pull-right"><%= link_to "Gå til avstemning \u21e8", issue_vote.vote %></small></h3>
+        </div>
+      </div>
+
+      <div class="row-fluid">
+        <div class="span6">
+          <dl>
+            <% issue_vote.parties.each do |party| %>
+              <dt><%= party.text %></dt>
+              <dd><p><%= image_tag party.logo.thumb("50x50").url %> <small><%= party.counts %></small></p></dt>
+            <% end %>
+          </ul>
+        </div>
+
+        <div class="span6">
+          <dl>
+            <dt>Kommentar</dt>
+            <dd><%= issue_vote.comment %></dd>
+
+            <dt>Vekting</dt>
+            <dd><%= issue_vote.weight_text %> (<%= issue_vote.weight %>)</dd>
+
+            <dt>Støtter saken</dt>
+            <dd><%= issue_vote.matches_text %></dd>
+
+            <dt>Vedtatt</dt>
+            <dd class="label <%= issue_vote.enacted_class %>"><%= issue_vote.enacted_text %></dd>
+          </dl>
+        </div>
+      </div>
+
+      <hr class="soften">
+    <% end %>
+
+  </div>
+</div>

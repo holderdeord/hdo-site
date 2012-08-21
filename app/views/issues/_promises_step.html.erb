@@ -1,0 +1,20 @@
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th class="wide-table-header"><%= Party.model_name.human.capitalize %></th>
+      <th><%= Promise.human_attribute_name :body %></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @promises.each do |promise| %>
+    <tr>
+      <td><%= promise.party_names %></td>
+      <td><label for="promise-<%= promise.id %>"><%= promise.body %></label></td>
+      <td><%= check_box_tag "issue[promise_ids][]", promise.id, @issue.promises.include?(promise), id: "promise-#{promise.id}" -%></td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
+

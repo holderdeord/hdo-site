@@ -1,44 +1,36 @@
 <div class="page-header">
-  <h1><%= Promise.model_name.human(count: 2).capitalize %></h1>
+  <h1>
+    <%= Promise.model_name.human(count: 2).capitalize %>
+    <small class="pull-right"><%= Promise.count %> løfter fra valgprogrammene 2009-2013</small>
+  </h1>
 </div>
 
-<div class="container-fluid">
-  <div class="row-fluid">
-    <div class="span3 categories">
-      <!-- LEFT COLUMN --> 
-      <br>
-      <h2><%= Category.model_name.human(count: 2).capitalize %></h2>
-      <ul class="nav nav-stacked nav-pills">
-        <% @categories.each do |category| %>
+<div class="alert alert-info">
+  Les mer om <%= link_to 'vår løftedatabase', home_method_path(anchor: 'promises')  %>.
+</div>
+
+<div class="row-fluid">
+  <div class="span3">
+    <!-- LEFT COLUMN -->
+    <%= render partial: 'shared/main_categories_list', locals: { categories: @categories } %>
+  </div>
+
+  <!-- MIDDLE -->
+  <div class="span7">
+    <%= render partial: 'shared/promises_results' %>
+  </div>
+
+  <!-- RIGHT COLUMN -->
+  <div class="span2 party-nav">
+    <ul class="nav nav-pills nav-stacked">
+      <li><a href="#" data-party-slug="show-all">Vis alle</a></li>
+      <% @parties.each do |party| %>
         <li>
-          <a href="/promises/category/<%= category.id %>" 
-            id="<%= category.id %>">
-              <%= category.human_name %>
-          </a>
+          <a data-party-slug="<%= party.slug %>" href="#"><%= party.name %></a>
         </li>
-        <% end %>
-      </ul>
-    </div>     
-
-    <!-- MIDDLE -->
-    <div class="span6">
-      <div id="promisesResults">
-      </div>
-    </div>
-
-    <!-- RIGHT COLUMN -->
-    <div class="span2 party-nav"><br>
-      <ul class="nav nav-pills nav-stacked">
-        <li><a href="#" id="showAll">Vis alle</a></li>
-        <% @parties.each do |party| %>
-          <li>
-            <a id="<%= party.external_id %>" href="#">
-              <%= party.name %>
-            </a>
-          </li>
-        <% end %>
-      </ul>
-    </div>
+      <% end %>
+      <li><a href="#" data-party-slug="<%= @government_slugs %>">Soria Moria II</a></li>
+    </ul>
   </div>
 </div>
 
@@ -46,9 +38,9 @@
   <script>
     $(document).ready(function () {
       var widget = HDO.promiseWidget.create({
-        targetSelector: "#promisesResults",
+        targetSelector: "#promises-results",
         categoriesSelector: ".categories",
-        partiesSelector: ".party-nav"     
+        partiesSelector: ".party-nav"
       });
 
       widget.init();

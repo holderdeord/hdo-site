@@ -8,7 +8,7 @@ class AddPersonalToVote < ActiveRecord::Migration
     # may be run at any time during the project's lifetime and may have
     # changed significantly since the migration was written
     #
-    # In this case, we're only relying only on the schema which should be ok.
+    # If the Vote class is ever changed or renamed, this will break.
     #
     Vote.where(:for_count => 0, :against_count => 0, :absent_count => 0).
          update_all(:personal => false)

@@ -8,7 +8,7 @@ class RepresentativesController < ApplicationController
   end
 
   def show
-    @representative  = Representative.includes(:votes => :issues).find(params[:id])
+    @representative  = Representative.includes(:votes => :parliament_issues).find(params[:id])
 
     all_vote_results = @representative.vote_results.sort_by { |result| result.vote.time }.reverse
     @activity_stats  = Hdo::Charts::Activity.new(@representative.full_name, all_vote_results)

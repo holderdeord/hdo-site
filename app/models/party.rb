@@ -8,8 +8,9 @@ class Party < ActiveRecord::Base
   include Hdo::ModelHelpers::HasRepresentatives
 
   has_many :representatives, :order => :last_name, :dependent => :destroy
-  has_many :promises, :dependent => :destroy
   has_many :governing_periods, :order => :start_date, :dependent => :destroy
+
+  has_and_belongs_to_many :promises, uniq: true
 
   validates_uniqueness_of :name, :external_id
   validates_presence_of :name, :external_id

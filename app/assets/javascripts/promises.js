@@ -1,12 +1,38 @@
 var HDO = HDO || {};
 
 (function (H, $) {
-  var categoryId, results, bodyName = "promisesBody";
+  var categoryId,
+    partySlug = null,
+    results,
+    bodyName = "promisesBody",
+    cache = {},
+    lastPartyFilter = null;
 
-  function getData(catId, callback) {
+  function getData(catId, partySlug, callback) {
+    var promiseUrl;
+
+    if (partySlug === '' || !partySlug) {
+      promiseUrl = '/categories/' + catId + '/promises';
+    } else {
+      promiseUrl = '/categories/' + catId + '/promises/parties/' + partySlug;
+    }
+
+    if (cache[promiseUrl]) {
+      callback(cache[promiseUrl]);
+      return;
+    }
+
+    $("#spinner").show();
+
     $.ajax({
-      url: '/promises/category/' + catId,
+      url: promiseUrl,
+
+      complete: function () {
+        $("#spinner").hide();
+      },
+
       success: function (data) {
+        cache[promiseUrl] = data;
         callback(data);
       }
     });
@@ -20,29 +46,30 @@ var HDO = HDO || {};
     return results;
   }
 
-  function showAllPromisesInCategory(catId) {
-    getData(catId, function (results) {
-      setResults(results);
-      $('#' + bodyName).html(results);
-    });
-  }
-
-  function showSpecificParty(catId, partyId) {
+  function showSpecificParty(catId, partyId) {
     var bodyElement = $('#' + bodyName);
     bodyElement.empty();
 
-    if (partyId !== "showAll") {
-      bodyElement.append(results).css('display', 'none');
+    lastPartyFilter = partyId;
 
-      bodyElement.find('div').each(function () {
-        if ($(this).attr('id') !== partyId) {
-          $(this).hide();
-        }
-      });
-      bodyElement.show();
-    } else {
-      showAllPromisesInCategory(catId);
-    }
+    bodyElement.hide().append(results);
+    bodyElement.find('div[data-party-slug!="' + partyId + '"]').hide();
+    bodyElement.show();
+  }
+
+  function showAllPromisesInCategory(catId, partySlug) {
+    getData(catId, partySlug, function (results) {
+      setResults(results);
+      $('#' + bodyName).html(results);
+      if (lastPartyFilter) {
+        showSpecificParty(catId, lastPartyFilter);
+      }
+    });
+  }
+
+  function showAllParties(catId) {
+    lastPartyFilter = null;
+    showAllPromisesInCategory(catId);
   }
 
   function removeActiveClass(divClass) {
@@ -59,36 +86,50 @@ var HDO = HDO || {};
 
     init: function () {
       var self = this;
+
       $(self.options.categoriesSelector).css('border-right', 'solid 1px #EEE');
 
-
       $(self.options.categoriesSelector).find('a').on('click', function (e) {
-
         removeActiveClass(self.options.categoriesSelector);
         $(this).parent().addClass('active');
 
-        removeActiveClass(self.options.partiesSelector);
-        $('#showAll').parent().addClass('active');
+        categoryId = $(this).data('category-id');
+
+        if (self.options.partiesSelector !== null) {
+          if (!lastPartyFilter) {
+            removeActiveClass(self.options.partiesSelector);
+            $('#show-all').parent().addClass('active');
+          }
+        } else {
+          partySlug = document.URL;
+          partySlug = partySlug.substring(partySlug.lastIndexOf('/') + 1);
+        }
+
 
         var target = $(self.options.targetSelector);
-
         target.empty().append('<div id="' + bodyName + '"></div>');
-
-        categoryId = $(this).attr('id');
-        showAllPromisesInCategory(categoryId);
+        showAllPromisesInCategory(categoryId, partySlug);
 
         e.preventDefault();
         return false;
+
       });
 
       $(self.options.partiesSelector).find('a').on('click', function (e) {
         removeActiveClass(self.options.partiesSelector);
         $(this).parent().addClass('active');
-        showSpecificParty(categoryId, $(this).attr('id'));
+
+        var partySlug = $(this).data('party-slug');
+
+        if (partySlug === 'show-all') {
+          showAllParties(categoryId);
+        } else {
+          showSpecificParty(categoryId, partySlug);
+        }
 
         e.preventDefault();
         return false;
       });
-    }
+    } // end of init
   };
 }(HDO, jQuery));

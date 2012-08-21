@@ -2,23 +2,30 @@ Hdo::Application.routes.draw do
   devise_for :users
 
   resources :users
-  resources :topics
-  get 'topics/:id/votes'        => 'topics#votes', :as => :topic_votes
-  get 'topics/:id/edit/:step'   => 'topics#edit', :as => :edit_topic_step
-  get 'topics/:id/votes/search' => "topics#votes_search", :as => :topic_votes_search
+  resources :issues
+  get 'issues/:id/votes'        => 'issues#votes', :as => :issue_votes
+  get 'issues/:id/edit/:step'   => 'issues#edit', :as => :edit_issue_step
+  get 'issues/:id/votes/search' => "issues#votes_search", :as => :issue_votes_search
 
   resources :districts,       :only => [:index, :show]
   resources :categories,      :only => [:index, :show]
+  resources :categories do
+    member do
+      get 'promises'
+      get 'promises/parties/:party' => 'categories#promises'
+    end
+  end
+
   resources :parties,         :only => [:index, :show]
   resources :committees,      :only => [:index, :show]
-  resources :fields
+  resources :topics
 
-  resources :promises,        :only => [:index]        # TODO: :create, :show and :edit behind auth
-  get 'promises/page/:page' => 'promises#index'
-  get 'promises/show/:id' => 'promises#show'
+  resources :promises,        :only => [:index]
+  get 'promises/page/:page'   => 'promises#index'
+  get 'promises/show/:id'     => 'promises#show'
   get 'promises/category/:id' => 'promises#category'
 
-  resources :issues, :only => [:index, :show]
+  resources :parliament_issues, :path => 'parliament-issues', :only => [:index, :show]
   get 'issues/page/:page' => 'issues#index'
 
   resources :representatives, :only => [:index, :show]
@@ -37,6 +44,7 @@ Hdo::Application.routes.draw do
   get "home/login_status"
   get "home/join"
   get "home/support"
+  get "home/member"
   get "home/people"
   get "home/method" => "home#about_method", :as => :home_method
 

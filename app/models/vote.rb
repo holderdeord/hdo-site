@@ -5,8 +5,8 @@ class Vote < ActiveRecord::Base
   attr_accessible :for_count, :against_count, :absent_count,
                   :enacted, :personal, :subject, :time
 
-  has_and_belongs_to_many :issues, uniq: true
-  validates_length_of :issues, minimum: 1
+  has_and_belongs_to_many :parliament_issues, uniq: true
+  validates_length_of :parliament_issues, minimum: 1
   validates_presence_of :time
 
   has_many :propositions, :dependent => :destroy
@@ -24,12 +24,12 @@ class Vote < ActiveRecord::Base
 
   def self.naive_search(filter, keyword, selected_categories = [])
     # TODO: elasticsearch
-    votes = Vote.includes(:issues, :propositions, :vote_connections)
+    votes = Vote.includes(:parliament_issues, :propositions, :vote_connections)
 
     case filter
     when 'selected-categories'
       votes.select! do |v|
-        v.issues.any? { |i| (i.categories & selected_categories).any? }
+        v.parliament_issues.any? { |i| (i.categories & selected_categories).any? }
       end
     when 'not-connected'
       votes.select! { |v| v.vote_connections.empty? }
@@ -40,11 +40,11 @@ class Vote < ActiveRecord::Base
     if keyword.present?
       votes.select! do |v|
         v.propositions.any? { |e| e.plain_body.include? keyword } ||
-          v.issues.any? { |e| e.description.include? keyword }
+          v.parliament_issues.any? { |e| e.description.include? keyword }
       end
     end
 
-    votes.select { |e| e.issues.all?(&:processed?) }
+    votes.select { |e| e.parliament_issues.all?(&:processed?) }
   end
 
   def time_text

@@ -1,58 +1,36 @@
 class Topic < ActiveRecord::Base
-  include Hdo::ModelHelpers::HasStatsCache
   extend FriendlyId
+  include Hdo::ModelHelpers::HasFallbackImage
 
-  attr_accessible :description, :title, :category_ids, :promise_ids, :field_ids, :published
+  attr_accessible :name, :issue_ids, :image
+  validates_presence_of :name
+  validates_uniqueness_of :name
 
-  validates_presence_of   :title
-  validates_uniqueness_of :title
+  has_and_belongs_to_many :issues
+  has_many :promises, :through => :issues
 
-  has_and_belongs_to_many :fields,     uniq: true
-  has_and_belongs_to_many :categories, uniq: true, order: :name
-  has_and_belongs_to_many :promises,   uniq: true
+  friendly_id :name, :use => :slugged
 
-  #
-  # Whenever a topic is updated, we remove and re-create all vote_connection associations.
-  # That means clearing the cache in before_add and before_remove is good enough.
-  #
-  # If we change how the connections are updated, this will need to be revised.
-  #
+  image_accessor :image
 
-  has_many :vote_connections, :dependent     => :destroy,
-                              :before_add    => :clear_stats_cache,
-                              :before_remove => :clear_stats_cache
+  def self.column_groups
+    all = order(:name)
 
-  has_many :votes, :through => :vote_connections, :order => :time
+    column_count = 3
 
-  friendly_id :title, :use => :slugged
-
-  scope :vote_ordered, includes(:votes).order('votes.time DESC')
-  scope :published, where(:published => true)
-
-  def vote_for?(vote_id)
-    vote_connections.any? { |vd| vd.matches? && vd.vote_id == vote_id  }
+    if all.size < column_count
+      [all.to_a]
+    else
+      all.each_slice(all.size / column_count).to_a
+    end
   end
 
-  def vote_against?(vote_id)
-    vote_connections.any? { |vd| !vd.matches? && vd.vote_id == vote_id }
+  def default_image
+    "#{Rails.root}/app/assets/images/topic_icons/snakkeboble_venstre.png"
   end
 
-  def connection_for(vote)
-    vote_connections.where(:vote_id => vote.id).first
-  end
-
-  def downcased_title
-    @downcased_title ||= UnicodeUtils.downcase title
-  end
-
-  def published_text
-    published? ? I18n.t('app.yes') : I18n.t('app.no')
-  end
-
-  private
-
-  def fetch_stats
-    Hdo::Stats::VoteScorer.new(self)
+  def downcased_name
+    UnicodeUtils.downcase name
   end
 
 end

@@ -5,29 +5,59 @@
   </h1>
 </div>
 
-<div class="container-fluid">
-
-  <div class="row-fluid">
-    <div class="span4">
-      <%= image_tag @party.image_with_fallback.thumb("210x290").url, alt: "#{@party.name}s logo" %>
-    </div>
-
-    <div class="span8">
-      <h3><%= Representative.model_name.human(count: 2).capitalize %></h3>
-      <%= render partial: "representative_gallery", locals: { representatives: @party.representatives } %>
-    </div>
+<div class="row-fluid">
+  <div class="span4">
+    <%= image_tag @party.image_with_fallback.thumb("210x290").url, alt: "#{@party.name}s logo" %>
   </div>
 
-  <div class="row-fluid">
-
-    <div class="span4">
-      <%= render partial: "topic_list", locals: { party: @party, :topics => @topics } %>
-    </div>
-
-    <div class="span8">
-      <h3><%= Promise.model_name.human(count: 2).capitalize %></h3>
-      <%= render partial: "shared/promises_table", locals: { promises: @party.promises, show_party: false, show_general: false, show_source: false,} %>
-    </div>
+  <div class="span8">
+    <h3><%= Representative.model_name.human(count: 2).capitalize %></h3>
+    <%= render partial: "representative_gallery", locals: { representatives: @party.representatives } %>
   </div>
-
 </div>
+
+<div class="row-fluid">
+  <div class="tabbable">
+    <ul class="nav nav-tabs">
+
+      <li class="span6">
+        <a href="#promises-tab" data-toggle="tab">Hva de har lovet</a>
+      </li>
+
+      <li class="active span6">
+        <a href="#issues-tab" data-toggle="tab">Hva de har stemt</a>
+      </li>
+    </ul>
+
+    <div class="tab-content">
+      <div class="tab-pane active" id="issues-tab">
+          <%= render partial: "issue_list", locals: { party: @party, :issues => @issues } %>
+      </div>
+
+      <div class="tab-pane" id="promises-tab">
+        <div class="span3 categories">
+          <%= render partial: 'shared/main_categories_list', locals: { categories: @categories } %>
+        </div>
+
+        <div class="span9">
+          <%= render partial: 'shared/promises_results' %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<% content_for :document_ready do %>
+  <script>
+    $(document).ready(function () {
+      var widget = HDO.promiseWidget.create({
+        targetSelector: "#promises-results",
+        categoriesSelector: ".categories",
+        partiesSelector: null
+
+      });
+
+      widget.init();
+    });
+  </script>
+<% end %>

@@ -1,0 +1,50 @@
+<h3>
+  Koblede avstemninger
+  <small class="pull-right"><%= t('app.counts.vote', count: @votes_and_connections.size).html_safe %></small>
+</h3>
+
+<div class="vote-container">
+  <%= render partial: 'votes_list', locals: { votes_and_connections: @votes_and_connections} %>
+</div>
+
+<div class="well form-horizontal">
+  <h3>Finn avstemninger</h3>
+
+  <div class="control-group">
+    <label for="keyword">Nøkkelord:</label>
+    <input id="keyword" type="text" class="input-medium search-query">
+  </div>
+
+  <div class="control-group">
+    <label for="filter">Filter:</label>
+
+    <select id="filter">
+      <option value="selected-categories">Valgte kategorier</option>
+      <option value="not-connected">Ukoblet</option>
+      <option value="all">Alle</option>
+    </select>
+  </div>
+
+  <div class="control-group">
+    <button id="reset" type="submit" class="btn btn-warning">Reset</button>
+    <button id="fetch-votes" type="submit" class="btn btn-info">Fetch votes</button>
+  </div>
+</div>
+
+<h3>
+  Søkeresultat
+  <small class="pull-right" id="result-count"></small>
+</h3>
+
+
+<%= spinner_tag %>
+<div class="vote-container" id="result"></div>
+
+<%= content_for :document_ready do %>
+<script type="text/javascript" charset="utf-8">
+  $(document).ready(function() {
+    var url = <%= issue_votes_search_path(@issue).to_json.html_safe %>;
+    HDO.voteSearcher.create(url).init();
+  });
+</script>
+<% end %>

@@ -4,7 +4,7 @@
 
 <%= render partial: 'shared/representatives_table', locals: { representatives: @committee.representatives, show_party: true } %>
 
-<h2><%= Issue.model_name.human(count: 2).capitalize %></h2>
-<%= render partial: 'shared/issue_table', locals: { issues: @committee.issues } %>
+<h2><%= ParliamentIssue.model_name.human(count: 2).capitalize %></h2>
+<%= render partial: 'shared/parliament_issue_table', locals: { parliemnt_issues: @committee.parliament_issues } %>
 
 

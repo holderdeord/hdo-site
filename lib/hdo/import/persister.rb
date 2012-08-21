@@ -57,9 +57,9 @@ module Hdo
         end
       end
 
-      def import_issues(issues)
+      def import_parliament_issues(parliament_issues)
         transaction do
-          issues.each { |e| import_issue(e) }
+          parliament_issues.each { |e| import_parliament_issue(e) }
         end
       end
 
@@ -126,14 +126,14 @@ module Hdo
         d
       end
 
-      def import_issue(issue)
+      def import_parliament_issue(issue)
         log_import issue
         issue.validate!
 
         committee = issue.committee && Committee.find_by_name!(issue.committee)
         categories = issue.categories.map { |e| Category.find_by_name! e }
 
-        record = Issue.find_or_create_by_external_id issue.external_id
+        record = ParliamentIssue.find_or_create_by_external_id issue.external_id
         record.update_attributes!(
           :document_group => issue.document_group,
           :issue_type     => issue.type, # AR doesn't like :type as a column name
@@ -160,9 +160,9 @@ module Hdo
         xvote.validate!
 
         vote  = Vote.find_or_create_by_external_id xvote.external_id
-        issue = Issue.find_by_external_id! xvote.external_issue_id
+        parliament_issue = ParliamentIssue.find_by_external_id! xvote.external_issue_id
 
-        vote.issues << issue
+        vote.parliament_issues << parliament_issue
 
         vote.update_attributes!(
           :for_count     => Integer(xvote.counts.for),
@@ -184,7 +184,8 @@ module Hdo
         end
 
         xvote.propositions.each do |e|
-          vote.propositions << import_proposition(e)
+          prop = import_proposition(e)
+          vote.propositions << prop if prop
         end
 
         vote.save!
@@ -257,22 +258,57 @@ module Hdo
 
       def import_promise(promise)
         log_import promise
-        promise.validate!
+
+        unless promise.valid?
+          @log.error "promise is not valid: #{promise.inspect}"
+          return
+        end
 
         categories = Category.where(name: promise.categories)
         not_found = promise.categories - categories.map(&:name)
 
         if not_found.any?
-          raise "could not find category: #{not_found.inspect}"
+          @log.error "promise #{promise.external_id}: invalid categories #{not_found.inspect}"
+          return
         end
 
-        Promise.create!(
-          party: Party.find_by_external_id!(promise.party),
+        if promise.categories.empty?
+          @log.error "promise #{promise.external_id}: no categories"
+          return
+        end
+
+        parties = promise.parties.map { |e| Party.find_by_external_id(e) }
+        unless parties
+          @log.error "promise #{promise.external_id}: unknown party: #{promise.parties}"
+          return
+        end
+
+        pr = Promise.find_or_create_by_external_id(promise.external_id)
+
+        if pr.new_record?
+          duplicate = Promise.find_by_body(promise.body)
+          if duplicate
+            @log.error "promise #{promise.external_id}: duplicate of #{duplicate.external_id}"
+            return
+          end
+        end
+
+        pr.update_attributes(
+          parties: parties,
           general: promise.general?,
           categories: categories,
           source: promise.source,
-          body: promise.body
+          page: promise.page,
+          body: promise.body,
+          date: Date.strptime(promise.date)
         )
+
+        unless pr.save
+          @log.error "promise #{promise.external_id}: #{pr.errors.full_messages.to_sentence}"
+          return
+        end
+
+        pr
       end
 
       private

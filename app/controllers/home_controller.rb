@@ -1,8 +1,10 @@
 class HomeController < ApplicationController
   caches_page :index, :unless => :user_signed_in?
-  caches_page :press, :join, :support, :people, :about_method
+  caches_page :press, :join, :support, :people, :about_method, :member
 
   def index
+    @topic_columns = Topic.column_groups
+    @parties = Party.order(:name)
   end
 
   def about
@@ -22,6 +24,9 @@ class HomeController < ApplicationController
   end
 
   def support
+  end
+
+  def member
   end
 
   def people

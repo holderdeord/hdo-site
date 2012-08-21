@@ -9,13 +9,13 @@ User.blueprint do
 end
 
 Vote.blueprint do
-  issues { [Issue.make] }
+  parliament_issues { [ParliamentIssue.make] }
   time { Time.now }
   vote_results { [VoteResult.make!] }
 end
 
 VoteConnection.blueprint do
-  topic
+  issue
   vote
   matches { true }
 end
@@ -25,12 +25,12 @@ VoteResult.blueprint do
   result { rand(2) - 1 }
 end
 
-Issue.blueprint do
+ParliamentIssue.blueprint do
 
 end
 
-Field.blueprint do
-  name { "Field-#{sn}" }
+Topic.blueprint do
+  name { "Topic-#{sn}" }
 end
 
 Party.blueprint do
@@ -39,7 +39,7 @@ Party.blueprint do
 end
 
 Promise.blueprint do
-  party
+  parties { [Party.make!] }
   source { "PP:10" }
   body { "Løftetekst" }
   categories { [Category.make!] }
@@ -57,11 +57,11 @@ Representative.blueprint do
   last_name { "last-name-#{sn}" }
 end
 
-Topic.blueprint do
-  title { "topic-title-#{sn}" }
-  description { "topic-description-#{sn}" }
+Issue.blueprint do
+  title { "issue-title-#{sn}" }
+  description { "issue-description-#{sn}" }
   vote_connections {
-    Array.new(2) { VoteConnection.make!(:topic => object) }
+    Array.new(2) { VoteConnection.make!(:issue => object) }
   }
 end
 

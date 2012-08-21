@@ -3,13 +3,13 @@ class VoteConnection < ActiveRecord::Base
   DEFAULT_WEIGHT = 1.0
 
   belongs_to :vote
-  belongs_to :topic
+  belongs_to :issue
 
-  attr_accessible :vote, :vote_id, :topic, :matches, :comment, :weight, :description
+  attr_accessible :vote, :vote_id, :issue, :matches, :comment, :weight, :description
 
   validates_inclusion_of :weight, :in => WEIGHTS
   validates_presence_of  :vote,
-                         :topic,
+                         :issue,
                          :weight
 
 

@@ -1,0 +1,27 @@
+<% group.parties.each do |party| %>
+  <div class="row-fluid issues-party">
+    <div class="span2">
+      <%= link_to party_path(party) do %>
+        <%= image_tag party.image_with_fallback.thumb('100x100').url, alt: "#{party.name}s logo" %>
+      <% end %>
+    </div>
+
+    <div class="span10">
+      <h3 class="issues-party-position"><%= issue.stats.text_for(party) %></h3>
+
+      <% if promise_group = promises_by_party[party] %>
+
+        <% promise_group.each do |header, promises| %>
+          <h5><%= header %></h5>
+          <ul>
+            <% promises.each do |promise| %>
+            <li><%= promise.body %></li>
+            <% end %>
+          </ul>
+        <% end %>
+
+      <% end %>
+    </div>
+
+  </div>
+<% end %>
