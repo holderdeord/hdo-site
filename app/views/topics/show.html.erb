@@ -21,3 +21,19 @@
   </div>
 
 <% end %>
+
+<% if @other_issues.any? %>
+  <div class="page-header">
+    <h1>Andre saker</h1>
+  </div>
+
+  <div class="row-fluid">
+    <ul class="unstyled">
+      <% @other_issues.each do |issue| %>
+        <li>
+          <h3><%= link_to issue.title, issue %></h3>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
