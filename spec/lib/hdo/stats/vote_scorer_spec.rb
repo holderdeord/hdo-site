@@ -69,19 +69,19 @@ module Hdo
           scorer.text_for(p1).should == "#{p1.name} har stemt konsekvent mot"
 
           scorer.stub(:score_for).with(p1).and_return 20.1
-          scorer.text_for(p1).should == "#{p1.name} har stemt stort sett mot"
+          scorer.text_for(p1).should == "#{p1.name} har stort sett stemt mot"
 
           scorer.stub(:score_for).with(p1).and_return 39
-          scorer.text_for(p1).should == "#{p1.name} har stemt stort sett mot"
+          scorer.text_for(p1).should == "#{p1.name} har stort sett stemt mot"
 
           scorer.stub(:score_for).with(p1).and_return 40
           scorer.text_for(p1).should == "#{p1.name} har stemt både for og mot"
 
           scorer.stub(:score_for).with(p1).and_return 60
-          scorer.text_for(p1).should == "#{p1.name} har stemt stort sett for"
+          scorer.text_for(p1).should == "#{p1.name} har stort sett stemt for"
 
           scorer.stub(:score_for).with(p1).and_return 79
-          scorer.text_for(p1).should == "#{p1.name} har stemt stort sett for"
+          scorer.text_for(p1).should == "#{p1.name} har stort sett stemt for"
 
           scorer.stub(:score_for).with(p1).and_return 80
           scorer.text_for(p1).should == "#{p1.name} har stemt konsekvent for"
@@ -103,9 +103,19 @@ module Hdo
           str.should == "#{p1.name} har stemt <strong>konsekvent mot</strong>"
           str.should be_html_safe
 
+          scorer.stub(:score_for).with(p1).and_return 25
+          str = scorer.text_for(p1, :html => true)
+          str.should == "#{p1.name} har <strong>stort sett stemt mot</strong>"
+          str.should be_html_safe
+
           scorer.stub(:score_for).with(p1).and_return 50
           str = scorer.text_for(p1, :html => true)
           str.should == "#{p1.name} har stemt <strong>både for og mot</strong>"
+          str.should be_html_safe
+
+          scorer.stub(:score_for).with(p1).and_return 79
+          str = scorer.text_for(p1, :html => true)
+          str.should == "#{p1.name} har <strong>stort sett stemt for</strong>"
           str.should be_html_safe
 
           scorer.stub(:score_for).with(p1).and_return 100
