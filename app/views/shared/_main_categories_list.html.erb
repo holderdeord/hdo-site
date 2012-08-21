@@ -1,26 +1,37 @@
 <div class="categories">
-  <div class="accordion" id="category-accordion">
+  <!-- VISIBLE IN DESKTOP -->
+  <div class="hidden-phone">
+    <div class="accordion" id="category-accordion">
 
-    <% categories.each do |category| %>
-      <div class="accordion-group">
+      <% categories.each do |category| %>
+        <div class="accordion-group">
 
-        <div class="accordion-heading">
-          <p class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#category-accordion" data-target="#<%= category.id %>" >
-            <%= category.human_name %>
-          </p>
-        </div>
+          <div class="accordion-heading">
+            <p class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#category-accordion" data-target="#<%= category.id %>" >
+              <%= category.human_name %>
+            </p>
+          </div>
 
-        <div id="<%= category.id %>" class="accordion-body collapse" style="height: 0px;">
-          <div class="accordion-inner">
-            <ul class="unstyled">
-              <% Category.where(:parent_id => category.id).each do |c| %>
-                <li><a data-category-id="<%= c.id %>" href="#"><%= c.human_name %></a></li>
-              <% end %>
-            </ul>
+          <div id="<%= category.id %>" class="accordion-body collapse" style="height: 0px;">
+            <div class="accordion-inner">
+              <ul class="unstyled">
+                <% Category.where(:parent_id => category.id).each do |c| %>
+                  <li><a data-category-id="<%= c.id %>" href="#"><%= c.human_name %></a></li>
+                <% end %>
+              </ul>
+            </div>
           </div>
         </div>
+      <% end %>
+    </div>
+  </div>
 
-      </div>
-    <% end %>
+  <!-- VISIBLE IN MOBILE -->
+  <div class="hidden-desktop">
+    <select>
+      <% categories.each do |category| %>
+        <option><%= category.human_name %></option>
+      <% end %>
+    </select>
   </div>
 </div>
