@@ -278,6 +278,7 @@ nb:
       promise: 'Løftet ble oppdatert.'
       issue: 'Saken er oppdatert.'
     parties:
+      no_promises: Partiet har ingen løfter om denne saken.
       group:
         governing: 'Regjering'
         opposition: 'Opposisjon'

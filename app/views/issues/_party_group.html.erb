@@ -10,16 +10,16 @@
       <h3 class="issues-party-position"><%= issue.stats.text_for(party) %></h3>
 
       <% if promise_group = promises_by_party[party] %>
-
         <% promise_group.each do |header, promises| %>
-          <h5><%= header %></h5>
+          <p><%= header %></hp>
           <ul>
             <% promises.each do |promise| %>
             <li><%= promise.body %></li>
             <% end %>
           </ul>
         <% end %>
-
+      <% else %>
+        <p><%= t 'app.parties.no_promises' %></p>
       <% end %>
     </div>
 
