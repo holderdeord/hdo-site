@@ -116,6 +116,7 @@ var HDO = HDO || {};
         removeActiveClass(self.options.partiesSelector, partySlug);
 
         partySlug = $(this).data('party-slug');
+
         if(partySlug.indexOf(',') >= 0) {
           $(this).parent().addClass('government-active');
         } else {
