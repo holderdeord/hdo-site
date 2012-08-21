@@ -18,6 +18,7 @@ module Hdo
 
     def calculate_clustering
       @clusters = @points
+      return if @clusters.count <= 1
       min_distance, closest_pair = find_key_of_min_value_in distances_matrix_for @clusters
 
       while min_distance < @separation && @separation != 0
