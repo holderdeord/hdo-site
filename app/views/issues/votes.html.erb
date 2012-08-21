@@ -31,7 +31,7 @@
             <dd><%= issue_vote.comment %></dd>
 
             <dt>Vekting</dt>
-            <dd><%= issue_vote.weight_text %> (<%= issue_vote.weight %>)</dd>
+            <dd><%= issue_vote.weight_text %> (<%= '%g' % issue_vote.weight %>)</dd>
 
             <dt>Støtter saken</dt>
             <dd><%= issue_vote.matches_text %></dd>

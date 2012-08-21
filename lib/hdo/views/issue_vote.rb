@@ -29,15 +29,17 @@ module Hdo
       def weight_text
         case weight
         when 0
+          'Uten formell betydning'
+        when 0.5
           'Lite viktig'
-        when 0.5..1
+        when 1
           'Mindre viktig'
         when 2
           'Viktig'
         when 4
           'Svært viktig'
         else
-          raise "unknown weight: #{vote_connection.weight}"
+          raise "unknown weight: #{@vote_connection.weight}"
         end
       end
 
