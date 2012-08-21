@@ -201,6 +201,8 @@ nb:
     login: "Logg inn"
     logout: "Logg ut"
     description: "Bringer politikken til folket."
+    lang:
+      infinitive_particle: "å"
     about: "Om oss"
     method: "Om metoden"
     support: "Støtt oss"
@@ -249,7 +251,7 @@ nb:
         inferred: 'Denne saken ble avgjort enstemmig uten at avstemningsknappene ble brukt. Oversikten er utledet fra tilstedeværelse ved andre avstemninger samme dag.'
         party_unknown: 'Denne avstemningen ble avgjort uten at avstemningsknappene ble brukt. Vi har derfor ikke oversikt over hva det enkelte parti har stemt.'
       scores:
-        not_participated: "%{name} har ikke deltatt i avstemninger om saken"
+        not_participated: "%{name} har ikke deltatt i avstemninger om"
         consistently_for: "%{name} har stemt konsekvent for"
         mostly_for: "%{name} har stort sett stemt for"
         for_and_against: "%{name} har stemt både for og mot"
@@ -276,6 +278,7 @@ nb:
       promise: 'Løftet ble oppdatert.'
       issue: 'Saken er oppdatert.'
     parties:
+      no_promises: Partiet har ingen løfter om denne saken.
       group:
         governing: 'Regjering'
         opposition: 'Opposisjon'
