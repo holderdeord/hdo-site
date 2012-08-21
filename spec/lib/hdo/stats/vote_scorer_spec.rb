@@ -90,7 +90,7 @@ module Hdo
           scorer.text_for(p1).should == "#{p1.name} har stemt konsekvent for"
 
           scorer.stub(:score_for).with(p1).and_return nil
-          scorer.text_for(p1).should == "#{p1.name} har ikke deltatt i avstemninger om saken"
+          scorer.text_for(p1).should == "#{p1.name} har ikke deltatt i avstemninger om"
         end
       end
 
@@ -125,7 +125,7 @@ module Hdo
 
           scorer.stub(:score_for).with(p1).and_return nil
           str = scorer.text_for(p1, :html => true)
-          str.should == "#{p1.name} har ikke deltatt i avstemninger om saken"
+          str.should == "#{p1.name} har ikke deltatt i avstemninger om"
           str.should be_html_safe
         end
       end

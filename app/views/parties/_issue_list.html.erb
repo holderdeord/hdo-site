@@ -2,7 +2,7 @@
   <ul class="parties-issue-list">
     <% issues.each do |issue| %>
       <li>
-        <%= issue.stats.text_for(party, :html => true) %> <%= link_to issue.downcased_title, issue %>.
+        <%= issue.stats.text_for(party, html: true) %> <%= t 'app.lang.infinitive_particle' %> <%= link_to issue.downcased_title, issue %>.
       </li>
     <% end %>
   </ul>
