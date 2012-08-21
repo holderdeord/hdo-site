@@ -14,15 +14,19 @@
   <%= link_to "#{@next_issue.title} \u21e8", @next_issue, class: "pull-right" if @next_issue %>
 </div>
 
-<div class="well">
-  <h1><%= @issue.title %></h1>
-  <p><%= @issue.description %></p>
+<div class="row-fluid">
+  <div class="span9 well issue-header">
+    <h1><%= @issue.title %></h1>
+    <p><%= @issue.description %></p>
+  </div>
+
+  <div class="span3 alert alert-info">
+    <p><%= t('app.issues.explanation', count: @issue.votes.size) %></p>
+    <p><%= link_to "Les mer om metoden", home_method_path %>.</p>
+  </div>
 </div>
 
-<div class="alert alert-info">
-  <p><%= t('app.issues.explanation', count: @issue.votes.size) %></p>
-  <p><%= link_to "Les mer om metoden", home_method_path %>.</p>
-</div>
+
 
 
 <div class="row-fluid">
