@@ -90,11 +90,13 @@ var HDO = HDO || {};
       $(self.options.categoriesSelector).find('a').on('click', function (e) {
 
         categoryId = $(this).data('category-id');
+        $(self.options.categoriesSelector).find('a').removeClass('active');
+        $(this).addClass('active');
 
         if (self.options.partiesSelector !== null) {
           if (!lastPartyFilter) {
             removeActiveClass(self.options.partiesSelector);
-            $('#show-all').parent().addClass('active');
+            $('[data-party-slug="show-all"]').parent().addClass('active');
           }
         } else {
           partySlug = document.URL;
