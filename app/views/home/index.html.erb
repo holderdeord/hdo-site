@@ -1,23 +1,25 @@
 <div class="row-fluid">
   <div class="span9">
     <div class="row-fluid">
-      <div class="home-party-list">
-        <% @parties.each do |party| %>
-          <%= link_to party do %>
-            <div class="home-party-logo"><%= image_tag party.image_with_fallback.thumb("250x250").url, alt: party.name %></div>
-          <% end %>
-        <% end %>
-
-      </div>
-    </div>
-
-    <hr class="soften">
-
-    <div class="row-fluid">
       <div class="row-fluid">
-        <div class="page-header">
-          <h2>Sjekk hva partiene har stemt og lovet</h2>
+        <div class="row-fluid">
+          <div class="page-header">
+            <h2>Sjekk hva partiene har stemt og lovet</h2>
+          </div>
         </div>
+        <div class="home-party-list">
+          <% @parties.each do |party| %>
+            <%= link_to party do %>
+              <div class="home-party-logo" rel="tooltip"><%= image_tag party.image_with_fallback.thumb("250x250").url, alt: party.name %></div>
+            <% end %>
+          <% end %>
+        </div>
+      </div>
+
+      <hr class="soften">
+
+      <div class="page-header">
+        <h2>Hvilke saker er viktige for deg?</h2>
       </div>
 
       <div class="row-fluid">
@@ -54,3 +56,9 @@
 
   </div>
 </div>
+
+<%= content_for :document_ready do %>
+  <script type="text/javascript" charset="utf-8">
+    $('.home-party-logo').tooltip({title: '<%= t 'app.home.party_logo_tooltip' %>', placement: 'bottom' });
+  </script>
+<% end %>
