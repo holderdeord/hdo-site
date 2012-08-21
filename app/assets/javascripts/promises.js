@@ -113,8 +113,8 @@ var HDO = HDO || {};
       $(self.options.partiesSelector).find('a').on('click', function (e) {
         removeActiveClass(self.options.partiesSelector, partySlug);
 
-        var partySlug = $(this).data('party-slug');
-        $(this).parent().addClass(partySlug + '-active')
+        partySlug = $(this).data('party-slug');
+        $(this).parent().addClass(partySlug + '-active');
 
         if (partySlug === 'show-all') {
           showAllParties(categoryId);
