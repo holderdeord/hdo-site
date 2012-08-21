@@ -239,6 +239,8 @@ module Hdo
       end
 
       it "should put a non-personal vote that is two hours from now in the third cluster" do
+        pending 'see https://github.com/holderdeord/hdo-site/issues/206'
+
         npv = Vote.make!(
           :enacted      => false,
           :personal     => false,
