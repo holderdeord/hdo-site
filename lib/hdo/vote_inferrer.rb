@@ -58,7 +58,6 @@ module Hdo
       clusterer = OneDimentionalHierarchicalClusterer.new(points, 900)
       cluster_for_time = [clusterer.nearest_cluster_for(time.to_i)].flatten
       personal_votes_of_the_day.select { |v| cluster_for_time.include? v.time.to_i }.first
-
     end
 
     def add_result(non_personal, personal)
