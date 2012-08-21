@@ -1,7 +1,4 @@
-<div class="row-fluid issue-navigation">
-  <%= link_to "\u21e6 #{@previous_topic.name}", @previous_topic if @previous_topic %>
-  <%= link_to "#{@next_topic.name} \u21e8", @next_topic, class: "pull-right" if @next_topic %>
-</div>
+<%= render partial: 'shared/previous_next_links', locals: { next_item: @next_topic, previous_item: @previous_topic, item_text_attr: :name } %>
 
 <% if @issues.empty? %>
 
