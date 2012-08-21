@@ -1,0 +1,38 @@
+// TODO: get rid of duplication - figure out how to cleanly share bootstrap across files.
+
+@containerWidth: 958px;
+@navbarHeight: 39px;
+@logoHeight: 100px;
+@logoMargin: 20px;
+@navbarBackground: #009ea6; // hdoPrimaryColor
+
+#HeaderNavigation {
+    position: relative;
+    margin: 0 auto;
+    width: @containerWidth;
+    .pull-up {
+        position: absolute;
+        right: 0;
+        top: 0;
+    }
+    .subnav {
+        margin-top: 0;
+        padding-top: @logoHeight + @logoMargin * 2;
+        &.subnav-fixed {
+            background-color: @navbarBackground;
+            left: 0;
+            padding-top: 0;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1;
+            .subnav-inner {
+                margin: 0 auto;
+                width: @containerWidth;
+            }
+        }
+    }
+    &.header-fixed {
+        margin-bottom: @navbarHeight;
+    }
+}
