@@ -9,10 +9,7 @@
   </div>
 <% end %>
 
-<div class="row-fluid issue-navigation">
-  <%= link_to "\u21e6 #{@previous_issue.title}", @previous_issue if @previous_issue %>
-  <%= link_to "#{@next_issue.title} \u21e8", @next_issue, class: "pull-right" if @next_issue %>
-</div>
+<%= render partial: 'shared/previous_next_links', locals: { next_item: @next_issue, previous_item: @previous_issue, item_text_attr: :title } %>
 
 <div class="row-fluid">
   <div class="span9 well issue-header">

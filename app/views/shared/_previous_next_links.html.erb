@@ -1,0 +1,4 @@
+<div class="row-fluid issue-navigation">
+  <%= link_to "\u21e6 #{previous_item.read_attribute(item_text_attr)}", previous_item if previous_item %>
+  <%= link_to "#{next_item.read_attribute(item_text_attr)} \u21e8", next_item, class: "pull-right" if next_item %>
+</div>
