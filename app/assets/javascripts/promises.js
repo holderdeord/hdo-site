@@ -116,7 +116,11 @@ var HDO = HDO || {};
         removeActiveClass(self.options.partiesSelector, partySlug);
 
         partySlug = $(this).data('party-slug');
-        $(this).parent().addClass(partySlug + '-active');
+        if(partySlug.indexOf(',') >= 0) {
+          $(this).parent().addClass('government-active');
+        } else {
+          $(this).parent().addClass(partySlug + '-active');
+        }
 
         if (partySlug === 'show-all') {
           showAllParties(categoryId);
