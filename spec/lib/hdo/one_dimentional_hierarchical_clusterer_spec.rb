@@ -175,5 +175,12 @@ module Hdo
 
     end
 
+    it "finds the nearest cluster for a point" do
+      points = [1,2,3,8,9,10]
+      clusterer = OneDimentionalHierarchicalClusterer.new(points, 3)
+      clusterer.nearest_cluster_for(4).sort.should eq [1,2,3]
+      clusterer.nearest_cluster_for(6).sort.should eq [8,9,10]
+    end
+
   end
 end

@@ -8,6 +8,12 @@ module Hdo
       calculate_clustering
     end
 
+    def nearest_cluster_for(point)
+      @clusters.reduce do |nearest, cluster|
+        distance_between(cluster, point) < distance_between(nearest, point) ? cluster : nearest
+      end
+    end
+
     private
 
     def calculate_clustering
