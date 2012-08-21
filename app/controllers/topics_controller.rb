@@ -18,6 +18,9 @@ class TopicsController < ApplicationController
   # GET /topics/1.json
   def show
     @issues = @topic.issues
+    @other_issues = Issue.all.reject { |e| e.topics.include? @topic }.shuffle.first(5)
+
+    assign_previous_and_next_topic
 
     respond_to do |format|
       format.html # show.html.erb
@@ -82,6 +85,13 @@ class TopicsController < ApplicationController
   end
 
   private
+
+  def assign_previous_and_next_topic(order = :name)
+    topics = Topic.order(order)
+
+    @previous_topic = topics[topics.index(@topic) - 1] if topics.index(@topic) > 0
+    @next_topic     = topics[topics.index(@topic) + 1] if topics.index(@topic) < topics.size
+  end
 
   def fetch_issues
     @issues = Issue.order :title
