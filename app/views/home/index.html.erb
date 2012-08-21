@@ -1,23 +1,27 @@
 <div class="row-fluid">
   <div class="span9">
     <div class="row-fluid">
-      <div class="home-party-list">
-        <% @parties.each do |party| %>
-          <%= link_to party do %>
-            <div class="home-party-logo"><%= image_tag party.image_with_fallback.thumb("250x250").url, alt: party.name %></div>
-          <% end %>
-        <% end %>
-
-      </div>
-    </div>
-
-    <hr class="soften">
-
-    <div class="row-fluid">
       <div class="row-fluid">
-        <div class="page-header">
-          <h2>Sjekk hva partiene har stemt og lovet</h2>
+        <div class="row-fluid">
+          <div class="page-header">
+            <h2>Sjekk hva partiene har stemt og lovet</h2>
+          </div>
         </div>
+        <div class="home-party-list">
+          <% @parties.each do |party| %>
+            <%= link_to party do %>
+            <div class="home-party-logo" data-title='<%= t 'app.home.party_logo_tooltip', name: party.name %>' rel="tooltip">
+              <%= image_tag party.image_with_fallback.thumb("250x250").url, alt: party.name %>
+            </div>
+            <% end %>
+          <% end %>
+        </div>
+      </div>
+
+      <hr class="soften">
+
+      <div class="page-header">
+        <h2>Hvilke saker er viktige for deg?</h2>
       </div>
 
       <div class="row-fluid">
@@ -34,7 +38,7 @@
 
   <div class="span3 hidden-phone">
     <div class="well">
-      <p>Denne nettsiden er en prototype. Vi jobber med å utvikle en ny versjon som gjør det enklere å forstå hva som skjer i politikken.</p>
+      <p>Holder de ord er en partipolitisk uavhengig organisasjon som gjør det lettere å følge med på hva som skjer i norsk politikk. Denne nettsiden er en prototype under utvikling.</p>
       <p>Følg oss på <a href="http://twitter.com/holderdeord/">Twitter</a> og <a href="http://www.facebook.com/holderdeord">Facebook</a> for oppdateringer!</p>
       <p><%= link_to t('app.read_more'), home_about_path, class: 'btn btn-primary' %></p>
     </div>
@@ -54,3 +58,9 @@
 
   </div>
 </div>
+
+<%= content_for :document_ready do %>
+  <script type="text/javascript" charset="utf-8">
+    $('.home-party-logo').tooltip({placement: 'bottom' });
+  </script>
+<% end %>

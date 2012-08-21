@@ -9,23 +9,22 @@
   </div>
 <% end %>
 
-<div class="row-fluid issue-navigation">
-  <%= link_to "\u21e6 #{@previous_issue.title}", @previous_issue if @previous_issue %>
-  <%= link_to "#{@next_issue.title} \u21e8", @next_issue, class: "pull-right" if @next_issue %>
-</div>
+<%= render partial: 'shared/previous_next_links', locals: { next_item: @next_issue, previous_item: @previous_issue, item_text_attr: :title } %>
 
-<div class="well">
-  <h1><%= @issue.title %></h1>
-  <p><%= @issue.description %></p>
-</div>
+<div class="row-fluid">
+  <div class="span9 well issue-header">
+    <h1><%= @issue.title %></h1>
+    <p><%= @issue.description %></p>
+  </div>
 
-<div class="alert alert-info">
-  <p><%= t('app.votes.explanation', title: @issue.downcased_title) %></p>
-  <p><%= link_to "Les mer om metoden", home_method_path %>.</p>
+  <div class="span3 alert alert-info">
+    <p><%= t('app.issues.explanation', count: @issue.votes.size) %></p>
+    <p><%= link_to "Les mer om metoden", home_method_path %>.</p>
+  </div>
 </div>
 
 <div class="row-fluid">
-    <div class="pull-right"><%= link_to "Se avstemningene \u21e8", issue_votes_path(@issue) %></div>
+  <div class="pull-right"><%= link_to "#{t 'app.issues.view_votes', count: @issue.votes.size } \u21e8", issue_votes_path(@issue) %></div>
 </div>
 
 <% @party_groups.each do |party_group| %>

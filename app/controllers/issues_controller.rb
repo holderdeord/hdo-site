@@ -27,7 +27,7 @@ class IssuesController < ApplicationController
         format.json { render json: @issue }
       end
     else
-      redirect_to root_url
+      redirect_to new_user_session_path
     end
   end
 
@@ -107,7 +107,7 @@ class IssuesController < ApplicationController
         Hdo::Views::IssueVote.new(connection, @party_groups)
       end
     else
-      redirect_to root_path
+      redirect_to new_user_session_path
     end
   end
 

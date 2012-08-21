@@ -19,6 +19,10 @@
 
     <%= csrf_meta_tags %>
     <%= stylesheet_link_tag "application", :media => "all" %>
+    <!--[if lt IE 9]>
+      <%= stylesheet_link_tag "hacks/ie", :media => "all" %>
+    <![endif]-->
+
 
     <link href="/images/favicon.ico" rel="shortcut icon" />
     <link href="/images/apple-touch-icon.png" rel="apple-touch-icon" />
@@ -32,7 +36,7 @@
     <div class="wrapper">
       <div id="Header">
         <%= render partial: 'layouts/navigation' %>
-        <div class="left ribbon-holder">
+        <div class="left ribbon-holder hidden-phone">
           <div class="red ribbon">
             <span class="text">Under utvikling</span>
           </div>

@@ -98,8 +98,6 @@ nb:
         committee: "Komité"
         document_group: "Dokumentgruppe"
         reference: "Henvisning"
-      issue:
-        edit: "Rediger"
       vote:
         subject: "Beskrivelse"
         for_count: "For"
@@ -142,6 +140,8 @@ nb:
         destroy: "Slett bruker"
         confirm_destroy: "Er du sikker på at du vil slette brukeren?"
       issue:
+        edit: "Rediger"
+        published: Publisert
         title: "Tittel"
         description: "Beskrivelse"
         new: "Ny sak"
@@ -153,7 +153,6 @@ nb:
         promises: "Løfter"
         votes: "Avstemninger"
         topics: "Tema"
-        party_votes_header: "Hvordan har partiene stemt?"
       vote_connection:
         matches: "Støtter saken?"
         comment: "Kommentar"
@@ -202,6 +201,8 @@ nb:
     login: "Logg inn"
     logout: "Logg ut"
     description: "Bringer politikken til folket."
+    lang:
+      infinitive_particle: "å"
     about: "Om oss"
     method: "Om metoden"
     support: "Støtt oss"
@@ -235,26 +236,31 @@ nb:
     collapse: 'Lukke'
     issue_graph_header: 'Hvor ofte har partiet stemt for %{title}?'
     issues:
+      explanation:
+        one: "Denne siden er basert på %{count} avstemning på Stortinget i perioden oktober 2011 til dagens dato, og løfter fra valgprogram og regjeringerklæring 2009-2013."
+        other: "Denne siden er basert på %{count} avstemninger på Stortinget i perioden oktober 2011 til dagens dato, og løfter fra valgprogram og regjeringerklæring 2009-2013."
       back: Tilbake til saken
       not_published: Denne saken er ikke publisert.
       published: Denne saken er publisert.
+      view_votes:
+        one: 'Se 1 avstemning om saken'
+        other: 'Se %{count} avstemninger om saken'
     votes:
-      explanation: "Denne siden er basert på avstemninger fra Stortinget i perioden oktober 2011 til dagens dato, og løfter fra valgprogrammene 2009-2013."
       non_personal:
         unknown: 'Denne saken ble avgjort uten at avstemningsknappene ble brukt. Vi har derfor ikke oversikt over hva den enkelte representant har stemt.'
         inferred: 'Denne saken ble avgjort enstemmig uten at avstemningsknappene ble brukt. Oversikten er utledet fra tilstedeværelse ved andre avstemninger samme dag.'
         party_unknown: 'Denne avstemningen ble avgjort uten at avstemningsknappene ble brukt. Vi har derfor ikke oversikt over hva det enkelte parti har stemt.'
       scores:
-        not_participated: "%{name} har ikke deltatt i avstemninger om saken"
+        not_participated: "%{name} har ikke deltatt i avstemninger om"
         consistently_for: "%{name} har stemt konsekvent for"
-        mostly_for: "%{name} har stemt stort sett for"
+        mostly_for: "%{name} har stort sett stemt for"
         for_and_against: "%{name} har stemt både for og mot"
-        mostly_against: "%{name} har stemt stort sett mot"
+        mostly_against: "%{name} har stort sett stemt mot"
         consistently_against: "%{name} har stemt konsekvent mot"
         consistently_for_html: "%{name} har stemt <strong>konsekvent for</strong>"
-        mostly_for_html: "%{name} har stemt <strong>stort sett for</strong>"
+        mostly_for_html: "%{name} har <strong>stort sett stemt for</strong>"
         for_and_against_html: "%{name} har stemt <strong>både for og mot</strong>"
-        mostly_against_html: "%{name} har <strong>stemt stort sett mot</strong>"
+        mostly_against_html: "%{name} har <strong>stort sett stemt mot</strong>"
         consistently_against_html: "%{name} har stemt <strong>konsekvent mot</strong>"
     external:
       urls:
@@ -272,6 +278,7 @@ nb:
       promise: 'Løftet ble oppdatert.'
       issue: 'Saken er oppdatert.'
     parties:
+      no_promises: Partiet har ingen løfter om denne saken.
       group:
         governing: 'Regjering'
         opposition: 'Opposisjon'
@@ -304,3 +311,5 @@ nb:
       by_party: 'Grupper etter parti'
       by_district: 'Grupper etter fylke'
       by_name: 'Grupper etter navn'
+    home:
+      party_logo_tooltip: 'Trykk for å se hva %{name} har stemt og lovet i saker du er opptatt av'
