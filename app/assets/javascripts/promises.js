@@ -87,11 +87,7 @@ var HDO = HDO || {};
     init: function () {
       var self = this;
 
-      $(self.options.categoriesSelector).css('border-right', 'solid 1px #EEE');
-
       $(self.options.categoriesSelector).find('a').on('click', function (e) {
-        removeActiveClass(self.options.categoriesSelector);
-        $(this).parent().addClass('active');
 
         categoryId = $(this).data('category-id');
 
@@ -111,7 +107,6 @@ var HDO = HDO || {};
         showAllPromisesInCategory(categoryId, partySlug);
 
         e.preventDefault();
-        return false;
 
       });
 
@@ -129,7 +124,6 @@ var HDO = HDO || {};
         }
 
         e.preventDefault();
-        return false;
       });
     } // end of init
   };
