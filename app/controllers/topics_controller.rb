@@ -88,7 +88,6 @@ class TopicsController < ApplicationController
 
   def assign_previous_and_next_topic(order = :name)
     topics = Topic.order(order)
-    topics = topics.published unless user_signed_in?
 
     @previous_topic = topics[topics.index(@topic) - 1] if topics.index(@topic) > 0
     @next_topic     = topics[topics.index(@topic) + 1] if topics.index(@topic) < topics.size
