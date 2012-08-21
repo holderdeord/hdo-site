@@ -3,12 +3,16 @@ require 'spec_helper'
 describe TopicsController do
 
   context 'as a normal user' do
-    it 'can show a topic' do
+    it 'can show a topic with published issues' do
       topic = Topic.make!
+      published = Issue.make!(:topics => [topic], :published => true)
+      non_published = Issue.make!(:topics => [topic])
 
       get :show, id: topic
 
       assigns(:topic).should == topic
+      assigns(:issues).should == [published]
+
       response.should have_rendered(:show)
     end
   end
