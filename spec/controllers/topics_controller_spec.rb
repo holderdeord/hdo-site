@@ -35,16 +35,16 @@ describe TopicsController do
       assigns(:topic).should == topic
       response.should have_rendered(:show)
     end
-    
+
     it 'shows other, published issues' do
       topic_a = Topic.make!
       topic_b = Topic.make!
-      
+
       published = Issue.make!(:topics => [topic_b], :published => true)
       non_published = Issue.make!(:topics => [topic_b])
-      
+
       get :show, id: topic_a
-      
+
       assigns(:other_issues).should == [published]
     end
 
