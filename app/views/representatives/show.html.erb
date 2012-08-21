@@ -6,48 +6,54 @@
   <div class="row-fluid">
     <div class="span3">
       <%= image_tag @representative.image_with_fallback.thumb('240x320#').strip.url, class: 'representative-image', alt: @representative.full_name %>
-
-      <section id="representative-short-info">
-        <p>
-          <strong><%= Representative.human_attribute_name :party %>:</strong>
-          <%= link_to @representative.party.name, @representative.party %>
-        </p>
-
-        <p>
-          <strong><%= Representative.human_attribute_name :district %>:</strong>
-          <%= link_to @representative.district.name, @representative.district %>
-        </p>
-
-        <p>
-          <strong><%= Representative.human_attribute_name :date_of_birth %>:</strong>
-          <%= l @representative.date_of_birth, format: :short %> (<%= @representative.age %> <%= t('app.time.years') %>)
-        </p>
-
-        <strong><%= Representative.human_attribute_name :committees %>:</strong>
-        <ul>
-          <% @representative.committees.each do |com| %>
-            <li><%= link_to com.name, com %></li>
-          <% end %>
-        </ul>
-
-        <% if @vote_results.any? %>
-          <dl>
-            <% stats = @representative.stats %>
-            <dt><%= t('app.for')  %></dt>
-            <dd><%= stats.for_percent %>% (<%= stats.for_count %>/<%= stats.total_count %>)</dd>
-            <dt><%= t('app.against') %></dt>
-            <dd><%= stats.against_percent %>% (<%= stats.against_count %>/<%= stats.total_count %>)</dd>
-            <dt><%= t('app.absent') %></dt>
-            <dd><%= stats.absent_percent %>% (<%= stats.absent_count %>/<%= stats.total_count %>)</dd>
-          </dl>
-        <% end %>
-      </section>
     </div>
 
     <div class="span9">
       <p class="alert alert-warning">
         Vi jobber med å finne ut hvordan vi kan vise hvilke representanter som er mest aktive på Stortinget. Foreløpig vil du kun kunne se oppmøteprosent ved voteringer i Stortingssalen. Det finnes mange grunner til at en representant kan ha lavt oppmøte, for eksempel reisevirksomhet i eget fylke, komitearbeid eller utbytting. For mer informasjon om representantenes oppmøte i Stortinget, les om <a target="_blank" href="http://www.stortinget.no/no/Stortinget-og-demokratiet/Representantene/Hva-gjor-en-representant/">Representantenes arbeidsoppgaver</a> og <a target="_blank" href="http://www.stortinget.no/no/Stortinget-og-demokratiet/Arbeidet/Voteringer/#utbyttingssystemet">Utbyttingssystemet</a>.
       </p>
+
+      <div class="row-fluid">
+        <div class="span6">
+          <p>
+            <strong><%= Representative.human_attribute_name :party %>:</strong>
+            <%= link_to @representative.party.name, @representative.party %>
+          </p>
+
+          <p>
+            <strong><%= Representative.human_attribute_name :district %>:</strong>
+            <%= link_to @representative.district.name, @representative.district %>
+          </p>
+
+          <p>
+            <strong><%= Representative.human_attribute_name :date_of_birth %>:</strong>
+            <%= l @representative.date_of_birth, format: :short %> (<%= @representative.age %> <%= t('app.time.years') %>)
+          </p>
+
+          <p>
+            <strong><%= Representative.human_attribute_name :committees %>:</strong>
+            <ul>
+              <% @representative.committees.each do |com| %>
+                <li><%= link_to com.name, com %></li>
+              <% end %>
+            </ul>
+          </p>
+        </div>
+        
+        <div class="span6">
+          <% if @vote_results.any? %>
+            <dl>
+              <% stats = @representative.stats %>
+              <dt><%= t('app.for')  %></dt>
+              <dd><%= stats.for_percent %>% (<%= stats.for_count %>/<%= stats.total_count %>)</dd>
+              <dt><%= t('app.against') %></dt>
+              <dd><%= stats.against_percent %>% (<%= stats.against_count %>/<%= stats.total_count %>)</dd>
+              <dt><%= t('app.absent') %></dt>
+              <dd><%= stats.absent_percent %>% (<%= stats.absent_count %>/<%= stats.total_count %>)</dd>
+            </dl>
+          <% end %>
+        </div>
+      </div>
     </div>
   </div>
 
