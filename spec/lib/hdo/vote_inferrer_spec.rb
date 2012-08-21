@@ -135,6 +135,130 @@ module Hdo
         @non_personal_vote.for_count.should == 0
       end
     end
+
+    describe "with a whole bunch of votes in 3 clusters" do
+      before do
+        @rep1 = Representative.make!
+        @rep2 = Representative.make!
+        @rep3 = Representative.make!
+        @rep4 = Representative.make!
+
+        #cluster 1
+        @first_cluster_votes = []
+        10.times do |i|
+          vote = Vote.make!(
+          :enacted      => true,
+          :personal     => true,
+          :time         => Time.now + i.minutes,
+          :vote_results => []
+          )
+          vote.vote_results.create! :representative => @rep1, :result => 0
+          vote.vote_results.create! :representative => @rep2, :result => 1
+          vote.vote_results.create! :representative => @rep3, :result => 1
+          vote.vote_results.create! :representative => @rep4, :result => 1
+
+          @first_cluster_votes << vote
+        end
+
+        #cluster 2
+        @second_cluster_votes = []
+        9.times do |i|
+          vote = Vote.make!(
+          :enacted      => true,
+          :personal     => true,
+          :time         => Time.now + 1.hour + i.minutes,
+          :vote_results => []
+          )
+          vote.vote_results.create! :representative => @rep1, :result => -1
+          vote.vote_results.create! :representative => @rep2, :result => 0
+          vote.vote_results.create! :representative => @rep3, :result => 0
+          vote.vote_results.create! :representative => @rep4, :result => -1
+
+          @second_cluster_votes << vote
+        end
+
+
+        #cluster 3
+        @third_cluster_votes = []
+        8.times do |i|
+          vote = Vote.make!(
+          :enacted      => true,
+          :personal     => true,
+          :time         => Time.now + 2.hours + i.minutes,
+          :vote_results => []
+          )
+          vote.vote_results.create! :representative => @rep1, :result => 1
+          vote.vote_results.create! :representative => @rep2, :result => 1
+          vote.vote_results.create! :representative => @rep3, :result => -1
+          vote.vote_results.create! :representative => @rep4, :result => -1
+
+          @third_cluster_votes << vote
+        end
+      end
+
+      it "should put a non-personal vote that is now in the first cluster" do
+        npv = Vote.make!(
+          :enacted      => false,
+          :personal     => false,
+          :time         => Time.now,
+          :vote_results => []
+          )
+        subject.infer!.should == [true]
+
+        npv.reload
+
+        npv.vote_results.where(:representative_id => @rep1.id).first.result.should == 0
+        npv.vote_results.where(:representative_id => @rep2.id).first.result.should == -1
+        npv.vote_results.where(:representative_id => @rep3.id).first.result.should == -1
+        npv.vote_results.where(:representative_id => @rep4.id).first.result.should == -1
+
+        npv.absent_count.should == 1
+        npv.against_count.should == 3
+        npv.for_count.should == 0
+      end
+
+      it "should put a non-personal vote that is an hour from now in the second cluster" do
+        npv = Vote.make!(
+          :enacted      => true,
+          :personal     => false,
+          :time         => Time.now + 1.hour,
+          :vote_results => []
+          )
+        subject.infer!.should == [true]
+
+        npv.reload
+
+        npv.vote_results.where(:representative_id => @rep1.id).first.result.should == 1
+        npv.vote_results.where(:representative_id => @rep2.id).first.result.should == 0
+        npv.vote_results.where(:representative_id => @rep3.id).first.result.should == 0
+        npv.vote_results.where(:representative_id => @rep4.id).first.result.should == 1
+
+        npv.absent_count.should == 2
+        npv.against_count.should == 0
+        npv.for_count.should == 2
+      end
+
+      it "should put a non-personal vote that is two hours from now in the third cluster" do
+        npv = Vote.make!(
+          :enacted      => false,
+          :personal     => false,
+          :time         => Time.now + 2.hour,
+          :vote_results => []
+          )
+        subject.infer!.should == [true]
+
+        npv.reload
+
+        npv.vote_results.where(:representative_id => @rep1.id).first.result.should == -1
+        npv.vote_results.where(:representative_id => @rep2.id).first.result.should == -1
+        npv.vote_results.where(:representative_id => @rep3.id).first.result.should == -1
+        npv.vote_results.where(:representative_id => @rep4.id).first.result.should == -1
+
+        npv.absent_count.should == 0
+        npv.against_count.should == 4
+        npv.for_count.should == 0
+      end
+    end
   end
 
 end
