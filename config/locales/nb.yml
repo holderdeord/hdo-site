@@ -236,11 +236,16 @@ nb:
     collapse: 'Lukke'
     issue_graph_header: 'Hvor ofte har partiet stemt for %{title}?'
     issues:
+      explanation:
+        one: "Denne siden er basert på %{count} avstemning på Stortinget i perioden oktober 2011 til dagens dato, og løfter fra valgprogram og regjeringerklæring 2009-2013."
+        other: "Denne siden er basert på %{count} avstemninger på Stortinget i perioden oktober 2011 til dagens dato, og løfter fra valgprogram og regjeringerklæring 2009-2013."
       back: Tilbake til saken
       not_published: Denne saken er ikke publisert.
       published: Denne saken er publisert.
+      view_votes:
+        one: 'Se 1 avstemning om saken'
+        other: 'Se %{count} avstemninger om saken'
     votes:
-      explanation: "Denne siden er basert på avstemninger fra Stortinget i perioden oktober 2011 til dagens dato, og løfter fra valgprogrammene 2009-2013."
       non_personal:
         unknown: 'Denne saken ble avgjort uten at avstemningsknappene ble brukt. Vi har derfor ikke oversikt over hva den enkelte representant har stemt.'
         inferred: 'Denne saken ble avgjort enstemmig uten at avstemningsknappene ble brukt. Oversikten er utledet fra tilstedeværelse ved andre avstemninger samme dag.'
