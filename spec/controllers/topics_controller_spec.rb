@@ -13,7 +13,7 @@ describe TopicsController do
     end
   end
 
-  context 'as an logged in user' do
+  context 'as a logged in user' do
     before :each do
       @user = User.make!
       sign_in @user
@@ -34,6 +34,18 @@ describe TopicsController do
 
       assigns(:topic).should == topic
       response.should have_rendered(:show)
+    end
+    
+    it 'shows other, published issues' do
+      topic_a = Topic.make!
+      topic_b = Topic.make!
+      
+      published = Issue.make!(:topics => [topic_b], :published => true)
+      non_published = Issue.make!(:topics => [topic_b])
+      
+      get :show, id: topic_a
+      
+      assigns(:other_issues).should == [published]
     end
 
     it 'can edit a topic' do

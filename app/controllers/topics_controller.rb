@@ -18,7 +18,7 @@ class TopicsController < ApplicationController
   # GET /topics/1.json
   def show
     @issues = @topic.issues
-    @other_issues = Issue.all.reject { |e| e.topics.include? @topic }.shuffle.first(5)
+    @other_issues = Issue.published.reject { |e| e.topics.include? @topic }.shuffle.first(5)
 
     assign_previous_and_next_topic
 
