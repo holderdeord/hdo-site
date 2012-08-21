@@ -98,9 +98,6 @@ nb:
         committee: "Komité"
         document_group: "Dokumentgruppe"
         reference: "Henvisning"
-      issue:
-        edit: "Rediger"
-        published: Publisert
       vote:
         subject: "Beskrivelse"
         for_count: "For"
@@ -143,6 +140,8 @@ nb:
         destroy: "Slett bruker"
         confirm_destroy: "Er du sikker på at du vil slette brukeren?"
       issue:
+        edit: "Rediger"
+        published: Publisert
         title: "Tittel"
         description: "Beskrivelse"
         new: "Ny sak"
@@ -154,7 +153,6 @@ nb:
         promises: "Løfter"
         votes: "Avstemninger"
         topics: "Tema"
-        party_votes_header: "Hvordan har partiene stemt?"
       vote_connection:
         matches: "Støtter saken?"
         comment: "Kommentar"
