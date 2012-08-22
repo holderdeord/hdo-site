@@ -42,7 +42,7 @@ class Issue < ActiveRecord::Base
   end
 
   def downcased_title
-    @downcased_title ||= UnicodeUtils.downcase title
+    @downcased_title ||= "#{UnicodeUtils.downcase title[0]}#{title[1..-1]}"
   end
 
   def published_text

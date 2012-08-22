@@ -112,7 +112,7 @@ describe Issue do
   end
 
   it 'correctly downcases a title with non-ASCII characters' do
-    Issue.make(:title => "Ærlig").downcased_title.should == "ærlig"
+    Issue.make(:title => "Styrke boligsparing for ungdom (BSU)").downcased_title.should == "styrke boligsparing for ungdom (BSU)"
   end
 
   it 'finds the latest issues based on vote time' do

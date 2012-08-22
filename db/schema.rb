@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120815174110) do
+ActiveRecord::Schema.define(:version => 20120822224200) do
 
   create_table "categories", :force => true do |t|
     t.string   "external_id"
@@ -44,7 +44,7 @@ ActiveRecord::Schema.define(:version => 20120815174110) do
     t.integer "category_id"
   end
 
-  add_index "categories_promises", ["promise_id", "category_id"], :name => "index_categories_promises_on_issue_id_and_category_id"
+  add_index "categories_promises", ["promise_id", "category_id"], :name => "index_categories_promises_on_promise_id_and_category_id"
 
   create_table "committees", :force => true do |t|
     t.string   "external_id"
