@@ -33,7 +33,7 @@ module Hdo
         when 0.5
           'Lite viktig'
         when 1
-          'Mindre viktig'
+          'Noe viktig'
         when 2
           'Viktig'
         when 4
