@@ -12,7 +12,7 @@ end
 set :application, 'hdo-site'
 set :scm,         :git
 set :repository,  'git://github.com/holderdeord/hdo-site'
-set :branch,      'master'
+set :branch,      ENV['PG'] ? 'postgresql' : 'master'
 set :deploy_to,   "/webapps/#{application}"
 set :use_sudo,    false
 set :deploy_via,  :remote_cache
