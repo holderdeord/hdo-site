@@ -7,12 +7,12 @@ module Hdo
         @log = Logger.new(STDOUT)
       end
 
-      def import_votes(votes)
+      def import_votes(votes, opts = {})
         imported_votes = transaction do
           votes.map { |e| import_vote(e) }
         end
 
-        infer imported_votes
+        infer imported_votes if opts[:infer]
       end
 
       def import_representatives(reps)
@@ -309,6 +309,10 @@ module Hdo
         end
 
         pr
+      end
+
+      def infer_all_votes
+        infer Vote.non_personal
       end
 
       private

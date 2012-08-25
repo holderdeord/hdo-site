@@ -69,18 +69,24 @@ module Hdo
         end
 
         persister.import_parliament_issues parliament_issues
-        persister.import_votes votes_for(parsing_data_source, parliament_issues, vote_limit)
-      end
 
-      def votes_for(data_source, parliament_issues, limit = nil)
-        result = Set.new
-
-        parliament_issues.each do |parliament_issue|
-          result += data_source.votes_for(parliament_issue.external_id)
-          break if limit && result.size >= limit
+        each_vote_for(parsing_data_source, parliament_issues, vote_limit) do |votes|
+          persister.import_votes votes, infer: false
         end
 
-        result.to_a
+        persister.infer_all_votes
+      end
+
+      def each_vote_for(data_source, parliament_issues, limit = nil)
+        count = 0
+
+        parliament_issues.each do |parliament_issue|
+          votes = data_source.votes_for(parliament_issue.external_id)
+          count += votes.size
+
+          yield votes
+          break if limit && count >= limit
+        end
       end
 
       def import_files
