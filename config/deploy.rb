@@ -12,7 +12,7 @@ end
 set :application, 'hdo-site'
 set :scm,         :git
 set :repository,  'git://github.com/holderdeord/hdo-site'
-set :branch,      ENV['PG'] ? 'postgresql' : 'master'
+set :branch,      'postgresql'
 set :deploy_to,   "/webapps/#{application}"
 set :use_sudo,    false
 set :deploy_via,  :remote_cache
@@ -45,7 +45,7 @@ end
 
 namespace :db do
   task :config, :except => { :no_release => true }, :role => :app do
-    run "cp -f /home/hdo/.hdo-database.yml #{release_path}/config/database.yml"
+    run "cp -f /home/hdo/.hdo-database-pg.yml #{release_path}/config/database.yml"
   end
 end
 
