@@ -31,3 +31,5 @@ ERD.pdf
 
 chromedriver.log
 .idea
+
+config/database.yml
