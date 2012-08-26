@@ -39,7 +39,8 @@ namespace :db do
             :vote_external_id => e.vote.external_id,
             :weight           => e.weight,
             :comment          => e.comment,
-            :description      => e.description
+            :description      => e.description,
+            :matches          => e.matches?
           }
         end
 
@@ -84,12 +85,14 @@ namespace :db do
           weight      = conn.fetch('weight')
           description = conn.fetch('description')
           comment     = conn.fetch('comment')
+          matches     = conn.fetch('matches')
 
           issue.vote_connections.create!(
             :vote_id     => vote_id,
             :weight      => weight,
             :description => description,
-            :comment     => comment
+            :comment     => comment,
+            :matches     => matches
           )
         end
 
