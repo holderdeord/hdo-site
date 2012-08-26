@@ -75,8 +75,29 @@ namespace :db do
       file = ENV['FILE'] or raise "must set FILE"
       data = MultiJson.decode(open(file).read)
 
-      raise NotImplementedError
-    end
+      data.each do |hash|
+        sql = <<-SQL
+          INSERT INTO users (
+            created_at,
+            updated_at,
+            email,
+            name,
+            encrypted_password
+          ) VALUES (?, ?, ?, ?, ?)
+        SQL
 
+        sql = ActiveRecord::Base.send :sanitize_sql_array, [
+          sql,
+          hash.fetch('created_at'),
+          hash.fetch('updated_at'),
+          hash.fetch('email'),
+          hash.fetch('name'),
+          hash.fetch('encrypted_password')
+        ]
+
+        ActiveRecord::Base.connection.execute sql
+      end
+
+    end
   end
 end
