@@ -80,12 +80,19 @@ module Hdo
       def each_vote_for(data_source, parliament_issues, limit = nil)
         count = 0
 
-        parliament_issues.each do |parliament_issue|
+        parliament_issues.each_with_index do |parliament_issue, index|
           votes = data_source.votes_for(parliament_issue.external_id)
           count += votes.size
 
           yield votes
           break if limit && count >= limit
+
+          parliament_issue_count = index + 1
+          remaining_parliament_issues = parliament_issues.size - parliament_issue_count
+          remaining_votes = (count / parliament_issue_count.to_f) * remaining_parliament_issues
+
+          @log.info "->        #{count} votes for #{parliament_issue_count} parliament issues imported"
+          @log.info "->        about #{remaining_votes.to_i} votes remaining for #{remaining_parliament_issues} parliament issues"
         end
       end
 
