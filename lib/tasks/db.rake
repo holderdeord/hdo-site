@@ -77,11 +77,13 @@ namespace :db do
         issue.topics   = topics
         issue.promises = promises
 
+        issue.save!
+
         vote_connections.each do |conn|
           vote_id     = Vote.find_by_external_id!(conn.fetch('vote_external_id')).id
           weight      = conn.fetch('weight')
           description = conn.fetch('description')
-          comment     = conn.fetch('commend')
+          comment     = conn.fetch('comment')
 
           issue.vote_connections.create!(
             :vote_id     => vote_id,
@@ -91,7 +93,6 @@ namespace :db do
           )
         end
 
-        issue.save!
       end
     end
 
