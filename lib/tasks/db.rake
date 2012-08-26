@@ -32,8 +32,16 @@ namespace :db do
         i.delete('slug')
         i.delete('id')
 
-        i['topic_names'] = issue.topics.map { |e| e.name }
+        i['topic_names']          = issue.topics.map { |e| e.name }
         i['promise_external_ids'] = issue.promises.map { |e| e.external_id }
+        i['vote_connections']     = issue.vote_connections.map do |e|
+          {
+            :vote_external_id => e.vote.external_id,
+            :weight           => e.weight,
+            :comment          => e.comment,
+            :description      => e.description
+          }
+        end
 
         i
       }
@@ -62,10 +70,26 @@ namespace :db do
       data.each do |hash|
         topics = hash.delete('topic_names').map { |name| Topic.find_by_name!(name) }
         promises = hash.delete('promise_external_ids').map { |id| Promise.find_by_external_id!(id) }
+        vote_connections = hash.delete('vote_connections')
 
         issue = Issue.create(hash)
-        issue.topics = topics
+
+        issue.topics   = topics
         issue.promises = promises
+
+        vote_connections.each do |conn|
+          vote_id     = Vote.find_by_external_id!(conn.fetch('vote_external_id')).id
+          weight      = conn.fetch('weight')
+          description = conn.fetch('description')
+          comment     = conn.fetch('commend')
+
+          issue.vote_connections.create!(
+            :vote_id     => vote_id,
+            :weight      => weight,
+            :description => description,
+            :comment     => comment
+          )
+        end
 
         issue.save!
       end
