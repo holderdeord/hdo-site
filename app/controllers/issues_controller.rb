@@ -120,9 +120,16 @@ class IssuesController < ApplicationController
 
     # remove already connected votes
     votes -= @issue.vote_connections.map { |e| e.vote }
-    votes.map! { |vote| [vote, nil] }
 
-    render partial: 'votes_list', locals: { votes_and_connections: votes }
+    # TODO: cleanup
+    by_issue_type = Hash.new { |hash, issue_type| hash[issue_type] = [] }
+    votes.each do |vote|
+      vote.parliament_issues.each do |issue|
+        by_issue_type[issue.issue_type] << vote
+      end
+    end
+
+    render partial: 'votes_search_result', locals: { votes_by_issue_type: by_issue_type }
   end
 
   private
