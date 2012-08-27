@@ -46,7 +46,11 @@ class Issue < ActiveRecord::Base
   end
 
   def published_text
-    published? ? I18n.t('app.yes') : I18n.t('app.no')
+    published? ? I18n.t('app.issues.edit.published') : I18n.t('app.issues.edit.not_published')
+  end
+
+  def published_state
+    published? ? 'published' : 'not-published'
   end
 
   private

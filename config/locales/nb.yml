@@ -142,13 +142,9 @@ nb:
       issue:
         edit: "Rediger"
         published: Publisert
+        state: Status
         title: "Tittel"
         description: "Beskrivelse"
-        new: "Ny sak"
-        submit: "Lagre sak"
-        edit: "Rediger sak"
-        destroy: "Slett sak"
-        confirm_destroy: "Er du sikker på at du vil slette saken?"
         categories: "Kategorier"
         promises: "Løfter"
         votes: "Avstemninger"
@@ -242,6 +238,14 @@ nb:
       back: Tilbake til saken
       not_published: Denne saken er ikke publisert.
       published: Denne saken er publisert.
+      edit:
+        published: Publisert
+        not_published: Under arbeid
+        new: "Ny sak"
+        submit: "Lagre sak"
+        edit: "Rediger sak"
+        destroy: "Slett sak"
+        confirm_destroy: "Er du sikker på at du vil slette saken?"
       view_votes:
         one: 'Se 1 avstemning om saken'
         other: 'Se %{count} avstemninger om saken'

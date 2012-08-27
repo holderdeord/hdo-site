@@ -16,7 +16,7 @@
           <%= link_to t('.new', :default => t("helpers.links.edit")), edit_topic_path(topic), :class => 'btn' %>
         </td>
         <td>
-          <%= link_to t('.destroy', :default => t("helpers.links.destroy")), topic, method: :delete, data: { confirm: Issue.human_attribute_name(:confirm_destroy) }, class: 'btn btn-danger' %>
+          <%= link_to t('.destroy', :default => t("helpers.links.destroy")), topic, method: :delete, data: { confirm: Topic.human_attribute_name(:confirm_destroy) }, class: 'btn btn-danger' %>
         </td>
       </tr>
     <% end %>

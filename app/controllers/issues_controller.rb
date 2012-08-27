@@ -7,7 +7,7 @@ class IssuesController < ApplicationController
   helper_method :edit_steps
 
   def index
-    @issues = Issue.order(:title)
+    @issues = Issue.order(:title).sort_by { |i| [i.published? ? 1 : 0, i.title] }
 
     respond_to do |format|
       format.html

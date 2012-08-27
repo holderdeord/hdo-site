@@ -1,21 +1,22 @@
 <h1><%= Issue.model_name.human(count: 2).capitalize %></h1>
 
-<table class="table">
+<br>
+<p><%= link_to t('app.issues.edit.new'), new_issue_path, class: 'btn btn-primary' %></p>
+<br>
+
+<table class="table table-condensed">
   <thead>
     <tr>
       <th><%= Issue.human_attribute_name :title %></th>
-      <th><%= Issue.human_attribute_name :description %></th>
       <th><%= Topic.model_name.human(count: 2).capitalize %></th>
-      <th><%= Issue.human_attribute_name :published %></th>
-      <th></th>
+      <th><%= Issue.human_attribute_name :state %></th>
       <th></th>
     </tr>
   </thead>
   <tbody>
     <% @issues.each do |issue| %>
-      <tr>
+      <tr class="issue-state-<%= issue.published_state %>">
         <td><%= link_to issue.title, issue %></td>
-        <td><%= issue.description %></td>
         <td>
           <ul>
           <% issue.topics.each do |topic| %>
@@ -24,13 +25,11 @@
           </ul>
         </td>
         <td><%= issue.published_text %></td>
-        <td><%= link_to 'Edit', edit_issue_path(issue), class: 'btn' %></td>
-        <td><%= link_to 'Destroy', issue, method: :delete, data: { confirm: Issue.human_attribute_name(:confirm_destroy) }, class: 'btn btn-danger' %></td>
+        <td>
+          <%= link_to t('app.edit'), edit_issue_path(issue), class: 'btn' %>
+          <%= link_to t('app.destroy'), issue, method: :delete, data: { confirm: t('app.issues.edit.confirm_destroy') }, class: 'btn btn-danger' %>
+        </td>
       </tr>
     <% end %>
   </tbody>
 </table>
-
-<br />
-
-<%= link_to 'New Issue', new_issue_path, class: 'btn' %>
