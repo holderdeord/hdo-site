@@ -1,9 +1,9 @@
 <div class="row-fluid">
   <div class="tabbable">
     <ul class="nav nav-tabs">
-      <% votes_by_issue_type.keys.each_with_index do |issue_type, idx| %>
+      <% votes_by_issue_type.each_with_index do |(issue_type, votes), idx| %>
         <li class="span4 <%= 'active' if idx == 0 %>">
-          <a href="#<%= issue_type %>-tab" data-toggle="tab"><%= issue_type.capitalize %></a>
+          <a href="#<%= issue_type %>-tab" data-toggle="tab"><%= issue_type.capitalize %> (<%= votes.size %>)</a>
         </li>
       <% end %>
     </ul>
