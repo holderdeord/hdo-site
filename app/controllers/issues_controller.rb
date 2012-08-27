@@ -151,7 +151,7 @@ class IssuesController < ApplicationController
   end
 
   def edit_promises
-    @promises = @issue.categories.includes(:promises).map(&:promises).compact.flatten.uniq.sort_by { |e| e.party_names }
+    @promises_by_party = @issue.categories.includes(:promises).map(&:promises).compact.flatten.uniq.group_by { |e| e.short_party_names }
   end
 
   def edit_votes
