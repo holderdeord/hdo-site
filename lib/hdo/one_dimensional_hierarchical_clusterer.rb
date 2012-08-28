@@ -1,5 +1,5 @@
 module Hdo
-  class OneDimentionalHierarchicalClusterer
+  class OnedimensionalHierarchicalClusterer
     attr_reader :clusters
 
     def initialize(points, separation)
