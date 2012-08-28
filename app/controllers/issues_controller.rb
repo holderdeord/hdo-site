@@ -7,7 +7,7 @@ class IssuesController < ApplicationController
   helper_method :edit_steps
 
   def index
-    @issues = Issue.order(:title)
+    @issues = Issue.order(:title).sort_by { |i| [i.published? ? 1 : 0, i.title] }
 
     respond_to do |format|
       format.html
@@ -120,9 +120,16 @@ class IssuesController < ApplicationController
 
     # remove already connected votes
     votes -= @issue.vote_connections.map { |e| e.vote }
-    votes.map! { |vote| [vote, nil] }
 
-    render partial: 'votes_list', locals: { votes_and_connections: votes }
+    # TODO: cleanup
+    by_issue_type = Hash.new { |hash, issue_type| hash[issue_type] = [] }
+    votes.each do |vote|
+      vote.parliament_issues.each do |issue|
+        by_issue_type[issue.issue_type] << vote
+      end
+    end
+
+    render partial: 'votes_search_result', locals: { votes_by_issue_type: by_issue_type }
   end
 
   private
@@ -144,7 +151,7 @@ class IssuesController < ApplicationController
   end
 
   def edit_promises
-    @promises = @issue.categories.includes(:promises).map(&:promises).compact.flatten.uniq.sort_by { |e| e.party_names }
+    @promises_by_party = @issue.categories.includes(:promises).map(&:promises).compact.flatten.uniq.group_by { |e| e.short_party_names }
   end
 
   def edit_votes

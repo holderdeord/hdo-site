@@ -69,7 +69,7 @@ describe IssuesController do
       get :edit, id: issue, step: 'promises'
 
       response.should have_rendered(:edit)
-      assigns(:promises).should_not be_nil
+      assigns(:promises_by_party).should_not be_nil
     end
 
     it 'edits the cateogires step if specified' do

@@ -91,10 +91,10 @@ module Hdo
         @personal_vote_in_other_cluster.vote_results.create! :representative => @rep4, :result => -1
 
         @personal_vote_in_same_cluster = Vote.make!(
-        :enacted      => true,
-        :personal     => true,
-        :time         => Time.parse("2012-08-07 12:56"),
-        :vote_results => []
+          :enacted      => true,
+          :personal     => true,
+          :time         => Time.parse("2012-08-07 12:56"),
+          :vote_results => []
         )
 
         @personal_vote_in_same_cluster.vote_results.create! :representative => @rep1, :result => 1
@@ -147,10 +147,10 @@ module Hdo
         @first_cluster_votes = []
         10.times do |i|
           vote = Vote.make!(
-          :enacted      => true,
-          :personal     => true,
-          :time         => Time.now + i.minutes,
-          :vote_results => []
+            :enacted      => true,
+            :personal     => true,
+            :time         => Time.now + i.minutes,
+            :vote_results => []
           )
           vote.vote_results.create! :representative => @rep1, :result => 0
           vote.vote_results.create! :representative => @rep2, :result => 1
@@ -164,10 +164,10 @@ module Hdo
         @second_cluster_votes = []
         9.times do |i|
           vote = Vote.make!(
-          :enacted      => true,
-          :personal     => true,
-          :time         => Time.now + 1.hour + i.minutes,
-          :vote_results => []
+            :enacted      => true,
+            :personal     => true,
+            :time         => Time.now + 1.hour + i.minutes,
+            :vote_results => []
           )
           vote.vote_results.create! :representative => @rep1, :result => -1
           vote.vote_results.create! :representative => @rep2, :result => 0
@@ -182,10 +182,10 @@ module Hdo
         @third_cluster_votes = []
         8.times do |i|
           vote = Vote.make!(
-          :enacted      => true,
-          :personal     => true,
-          :time         => Time.now + 2.hours + i.minutes,
-          :vote_results => []
+            :enacted      => true,
+            :personal     => true,
+            :time         => Time.now + 2.hours + i.minutes,
+            :vote_results => []
           )
           vote.vote_results.create! :representative => @rep1, :result => 1
           vote.vote_results.create! :representative => @rep2, :result => 1
@@ -197,12 +197,15 @@ module Hdo
       end
 
       it "should put a non-personal vote that is now in the first cluster" do
+        pending 'see https://github.com/holderdeord/hdo-site/issues/206'
+
         npv = Vote.make!(
           :enacted      => false,
           :personal     => false,
           :time         => Time.now,
           :vote_results => []
-          )
+        )
+
         subject.infer!.should == [true]
 
         npv.reload
@@ -239,6 +242,8 @@ module Hdo
       end
 
       it "should put a non-personal vote that is two hours from now in the third cluster" do
+        pending 'see https://github.com/holderdeord/hdo-site/issues/206'
+
         npv = Vote.make!(
           :enacted      => false,
           :personal     => false,

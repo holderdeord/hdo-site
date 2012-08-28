@@ -1,20 +1,31 @@
-<table class="table table-striped">
-  <thead>
-    <tr>
-      <th class="wide-table-header"><%= Party.model_name.human.capitalize %></th>
-      <th><%= Promise.human_attribute_name :body %></th>
-      <th></th>
-    </tr>
-  </thead>
+<div class="row-fluid">
+  <div class="tabbable">
+    <ul class="nav nav-tabs">
+      <% @promises_by_party.keys.each_with_index do |party_names, idx| %>
+        <li class="<%= 'active' if idx == 0 %>">
+          <a href="#<%= party_names.gsub(/\W/, '-') %>-tab" data-toggle="tab"><%= party_names %></a>
+        </li>
+      <% end %>
+    </ul>
 
-  <tbody>
-    <% @promises.each do |promise| %>
-    <tr>
-      <td><%= promise.party_names %></td>
-      <td><label for="promise-<%= promise.id %>"><%= promise.body %></label></td>
-      <td><%= check_box_tag "issue[promise_ids][]", promise.id, @issue.promises.include?(promise), id: "promise-#{promise.id}" -%></td>
-    </tr>
-    <% end %>
-  </tbody>
-</table>
+    <div class="tab-content">
+      <% @promises_by_party.each_with_index do |(party_names, promises), idx| %>
+      <div class="tab-pane <%= 'active' if idx == 0 %>" id="<%= party_names.gsub(/\W/, '-') %>-tab">
+
+          <table class="table table-striped">
+            <tbody>
+              <% promises.each do |promise| %>
+              <tr>
+                <td><label for="promise-<%= promise.id %>"><%= promise.body %></label></td>
+                <td><%= check_box_tag "issue[promise_ids][]", promise.id, @issue.promises.include?(promise), id: "promise-#{promise.id}" -%></td>
+              </tr>
+              <% end %>
+            </tbody>
+          </table>
+
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
 

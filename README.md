@@ -55,10 +55,6 @@ Import data for development:
 
         $ bundle exec rake import:dev
 
-* Import promises:
-
-        $ bundle exec rake import:promises
-
 Data model
 ----------
 

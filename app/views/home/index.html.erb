@@ -10,7 +10,9 @@
         <div class="home-party-list">
           <% @parties.each do |party| %>
             <%= link_to party do %>
-              <div class="home-party-logo" rel="tooltip"><%= image_tag party.image_with_fallback.thumb("250x250").url, alt: party.name %></div>
+            <div class="home-party-logo" data-title='<%= t 'app.home.party_logo_tooltip', name: party.name %>' rel="tooltip">
+              <%= image_tag party.image_with_fallback.thumb("250x250").url, alt: party.name %>
+            </div>
             <% end %>
           <% end %>
         </div>
@@ -42,7 +44,7 @@
     </div>
 
     <div class="well">
-      <h2>Gi en gave</h2>
+      <h2>Vi trenger din hjelp!</h2>
       <p>Send kodeord <strong>HOLDERDEORD</strong> til <strong>2160</strong> så støtter du oss med 150 kr.</p>
       <p><%= link_to t('app.read_more'), home_support_path, class: 'btn btn-primary' %></p>
     </div>
@@ -59,6 +61,6 @@
 
 <%= content_for :document_ready do %>
   <script type="text/javascript" charset="utf-8">
-    $('.home-party-logo').tooltip({title: '<%= t 'app.home.party_logo_tooltip' %>', placement: 'bottom' });
+    $('.home-party-logo').tooltip({placement: 'bottom' });
   </script>
 <% end %>

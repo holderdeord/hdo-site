@@ -142,13 +142,9 @@ nb:
       issue:
         edit: "Rediger"
         published: Publisert
+        state: Status
         title: "Tittel"
         description: "Beskrivelse"
-        new: "Ny sak"
-        submit: "Lagre sak"
-        edit: "Rediger sak"
-        destroy: "Slett sak"
-        confirm_destroy: "Er du sikker på at du vil slette saken?"
         categories: "Kategorier"
         promises: "Løfter"
         votes: "Avstemninger"
@@ -157,7 +153,7 @@ nb:
         matches: "Støtter saken?"
         comment: "Kommentar"
         weight: "Vekting"
-        description: "Beskrivelse"
+        description: "Oppsummering"
       topic:
         name: "Tittel"
         new: "Nytt tema"
@@ -242,6 +238,24 @@ nb:
       back: Tilbake til saken
       not_published: Denne saken er ikke publisert.
       published: Denne saken er publisert.
+      edit:
+        published: Publisert
+        not_published: Under arbeid
+        new: "Ny sak"
+        submit: "Lagre sak"
+        edit: "Rediger sak"
+        destroy: "Slett sak"
+        confirm_destroy: "Er du sikker på at du vil slette saken?"
+        connected_votes: Koblede avstemninger
+        find_votes: Finn avstemninger
+        keyword: Nøkkelord
+        filter: Filter
+        selected_categories: Valgte kategorier
+        not_connected: Ukoblet
+        all: Alle
+        reset: Nullstill
+        fetch_votes: Søk
+        search_result: Søkeresultat
       view_votes:
         one: 'Se 1 avstemning om saken'
         other: 'Se %{count} avstemninger om saken'
@@ -312,4 +326,4 @@ nb:
       by_district: 'Grupper etter fylke'
       by_name: 'Grupper etter navn'
     home:
-      party_logo_tooltip: 'Trykk på partiet for å se hva de har stemt og lovet i saker du er opptatt av'
+      party_logo_tooltip: 'Trykk for å se hva %{name} har stemt og lovet i saker du er opptatt av'

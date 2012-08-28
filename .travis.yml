@@ -3,7 +3,7 @@ rvm:
   - 1.9.3
 notifications:
   recipients:
-    - jari.bakken@gmail.com
+    - jari@holderdeord.no
   irc:
     channels:
       - "irc.freenode.net#holderdeord"
@@ -16,4 +16,4 @@ before_script:
   - "sh -e /etc/init.d/xvfb start"
   - "npm install -g buster autolint"
 env:
-  - DISPLAY=:99.0 COVERAGE_THRESHOLD=74
+  - DISPLAY=:99.0 COVERAGE_THRESHOLD=75

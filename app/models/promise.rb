@@ -33,4 +33,8 @@ class Promise < ActiveRecord::Base
   def party_names
     parties.map(&:name).to_sentence
   end
+
+  def short_party_names
+    parties.map(&:external_id).to_sentence
+  end
 end
