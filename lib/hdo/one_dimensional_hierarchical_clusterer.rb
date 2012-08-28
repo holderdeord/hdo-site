@@ -29,6 +29,8 @@ module Hdo
 
     def pair_nearest_in(clusters)
       distance, nearest_pair_indices = find_key_of_min_value_in distances_matrix_for clusters
+      return [0, clusters] if nearest_pair_indices.nil?
+
       new_cluster = clusters.select do |p|
         p == clusters[nearest_pair_indices[0]] or p == clusters[nearest_pair_indices[1]]
       end
