@@ -122,7 +122,7 @@ var HDO = HDO || {};
 
         partySlug = $(this).data('party-slug');
 
-        if(partySlug.indexOf(',') >= 0) {
+        if (partySlug.indexOf(',') >= 0) {
           $(this).parent().addClass('government-active');
         } else {
           $(this).parent().addClass(partySlug + '-active');
