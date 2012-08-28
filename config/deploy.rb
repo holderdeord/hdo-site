@@ -45,7 +45,7 @@ end
 
 namespace :db do
   task :config, :except => { :no_release => true }, :role => :app do
-    run "cp -f /home/hdo/.hdo-database.yml #{release_path}/config/database.yml"
+    run "cp -f /home/hdo/.hdo-database-pg.yml #{release_path}/config/database.yml"
   end
 end
 

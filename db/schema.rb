@@ -111,7 +111,7 @@ ActiveRecord::Schema.define(:version => 20120822224200) do
   create_table "parliament_issues", :force => true do |t|
     t.string   "external_id"
     t.string   "summary"
-    t.string   "description"
+    t.text     "description"
     t.string   "issue_type"
     t.string   "status"
     t.datetime "last_update"
@@ -131,7 +131,7 @@ ActiveRecord::Schema.define(:version => 20120822224200) do
     t.integer "vote_id"
   end
 
-  add_index "parliament_issues_votes", ["vote_id", "parliament_issue_id"], :name => "index_parliament_issues_votes_on_vote_id_and_parliament_issue_id"
+  add_index "parliament_issues_votes", ["vote_id", "parliament_issue_id"], :name => "index_par_issues_votes_on_vote_id_and_par_issue_id"
 
   create_table "parties", :force => true do |t|
     t.string   "external_id"
@@ -154,11 +154,11 @@ ActiveRecord::Schema.define(:version => 20120822224200) do
   add_index "parties_promises", ["party_id", "promise_id"], :name => "index_parties_promises_on_party_id_and_promise_id"
 
   create_table "promises", :force => true do |t|
-    t.text     "body",        :limit => 255
+    t.text     "body"
     t.boolean  "general"
     t.string   "source"
-    t.datetime "created_at",                 :null => false
-    t.datetime "updated_at",                 :null => false
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
     t.string   "external_id"
     t.integer  "page"
     t.date     "date"
@@ -169,10 +169,10 @@ ActiveRecord::Schema.define(:version => 20120822224200) do
     t.string   "representative_id"
     t.integer  "vote_id"
     t.string   "description"
-    t.text     "body",              :limit => 300000
+    t.text     "body"
     t.string   "on_behalf_of"
-    t.datetime "created_at",                          :null => false
-    t.datetime "updated_at",                          :null => false
+    t.datetime "created_at",        :null => false
+    t.datetime "updated_at",        :null => false
   end
 
   add_index "propositions", ["representative_id", "vote_id"], :name => "index_propositions_on_representative_id_and_vote_id"

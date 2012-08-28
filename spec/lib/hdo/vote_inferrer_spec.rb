@@ -13,7 +13,7 @@ module Hdo
         :personal     => true,
         :time         => Time.parse("2012-08-07 12:56"),
         :vote_results => []
-      )
+        )
 
       v1.vote_results.create! :representative => rep1, :result => 1
       v1.vote_results.create! :representative => rep2, :result => 0
@@ -25,7 +25,7 @@ module Hdo
         :personal     => false,
         :time         => Time.parse("2012-08-07 13:20"),
         :vote_results => []
-      )
+        )
 
       subject.infer!.should == [true]
 
@@ -45,13 +45,13 @@ module Hdo
         :enacted      => true,
         :personal     => true,
         :time         => Time.parse("2012-08-07 12:56"),
-      )
+        )
 
       Vote.make!(
         :enacted      => true,
         :personal     => false,
         :time         => Time.parse("2012-08-08 12:56"),
-      )
+        )
 
       subject.log = mock(Logger)
       subject.log.should_receive(:info).with kind_of(String)
@@ -63,7 +63,7 @@ module Hdo
       v = Vote.make!(
         :enacted      => true,
         :personal     => false
-      )
+        )
 
       v.stub :inferred? => true
 
@@ -83,7 +83,7 @@ module Hdo
           :personal     => true,
           :time         => Time.parse("2012-08-07 18:56"),
           :vote_results => []
-        )
+          )
 
         @personal_vote_in_other_cluster.vote_results.create! :representative => @rep1, :result => 0
         @personal_vote_in_other_cluster.vote_results.create! :representative => @rep2, :result => 0
@@ -95,7 +95,7 @@ module Hdo
           :personal     => true,
           :time         => Time.parse("2012-08-07 12:56"),
           :vote_results => []
-        )
+          )
 
         @personal_vote_in_same_cluster.vote_results.create! :representative => @rep1, :result => 1
         @personal_vote_in_same_cluster.vote_results.create! :representative => @rep2, :result => 0
@@ -107,7 +107,7 @@ module Hdo
           :personal     => false,
           :time         => Time.parse("2012-08-07 13:00"),
           :vote_results => []
-        )
+          )
 
         subject.infer!.should == [true]
 
@@ -138,6 +138,8 @@ module Hdo
 
     describe "with a whole bunch of votes in 3 clusters" do
       before do
+        @now = Time.now
+
         @rep1 = Representative.make!
         @rep2 = Representative.make!
         @rep3 = Representative.make!
@@ -149,9 +151,9 @@ module Hdo
           vote = Vote.make!(
             :enacted      => true,
             :personal     => true,
-            :time         => Time.now + i.minutes,
+            :time         => @now + i.minutes,
             :vote_results => []
-          )
+            )
           vote.vote_results.create! :representative => @rep1, :result => 0
           vote.vote_results.create! :representative => @rep2, :result => 1
           vote.vote_results.create! :representative => @rep3, :result => 1
@@ -166,9 +168,9 @@ module Hdo
           vote = Vote.make!(
             :enacted      => true,
             :personal     => true,
-            :time         => Time.now + 1.hour + i.minutes,
+            :time         => @now + 1.hour + i.minutes,
             :vote_results => []
-          )
+            )
           vote.vote_results.create! :representative => @rep1, :result => -1
           vote.vote_results.create! :representative => @rep2, :result => 0
           vote.vote_results.create! :representative => @rep3, :result => 0
@@ -184,9 +186,9 @@ module Hdo
           vote = Vote.make!(
             :enacted      => true,
             :personal     => true,
-            :time         => Time.now + 2.hours + i.minutes,
+            :time         => @now + 2.hours + i.minutes,
             :vote_results => []
-          )
+            )
           vote.vote_results.create! :representative => @rep1, :result => 1
           vote.vote_results.create! :representative => @rep2, :result => 1
           vote.vote_results.create! :representative => @rep3, :result => -1
@@ -197,14 +199,12 @@ module Hdo
       end
 
       it "should put a non-personal vote that is now in the first cluster" do
-        pending 'see https://github.com/holderdeord/hdo-site/issues/206'
-
         npv = Vote.make!(
           :enacted      => false,
           :personal     => false,
-          :time         => Time.now,
+          :time         => @now,
           :vote_results => []
-        )
+          )
 
         subject.infer!.should == [true]
 
@@ -224,7 +224,7 @@ module Hdo
         npv = Vote.make!(
           :enacted      => true,
           :personal     => false,
-          :time         => Time.now + 1.hour,
+          :time         => @now + 1.hour,
           :vote_results => []
           )
         subject.infer!.should == [true]
@@ -242,12 +242,10 @@ module Hdo
       end
 
       it "should put a non-personal vote that is two hours from now in the third cluster" do
-        pending 'see https://github.com/holderdeord/hdo-site/issues/206'
-
         npv = Vote.make!(
           :enacted      => false,
           :personal     => false,
-          :time         => Time.now + 2.hour,
+          :time         => @now + 2.hour,
           :vote_results => []
           )
         subject.infer!.should == [true]
@@ -264,7 +262,92 @@ module Hdo
         npv.for_count.should == 0
       end
     end
+
+    describe "with the real world data of 2012-06-14" do
+      before do
+        rep = Representative.make!
+
+        personal_vote_timestamps = [
+          '2012-06-14 20:32:07',
+          '2012-06-14 20:32:50',
+          '2012-06-14 20:32:50',
+          '2012-06-14 20:33:23',
+          '2012-06-14 20:33:49',
+          '2012-06-14 20:34:11',
+          '2012-06-14 20:34:36',
+          '2012-06-14 20:35:11',
+          '2012-06-14 20:36:44',
+          '2012-06-14 20:36:44',
+          '2012-06-14 20:38:39',
+          '2012-06-14 20:40:21',
+          '2012-06-14 20:40:48',
+          '2012-06-14 20:41:11',
+          '2012-06-14 20:42:22',
+          '2012-06-14 20:42:51',
+          '2012-06-14 20:43:17',
+          '2012-06-14 20:43:36',
+          '2012-06-14 20:44:02',
+          '2012-06-14 20:44:35',
+          '2012-06-14 20:45:16',
+          '2012-06-14 20:45:38',
+          '2012-06-14 20:46:05',
+          '2012-06-14 20:46:31',
+          '2012-06-14 20:46:31',
+          '2012-06-14 20:47:05',
+          '2012-06-14 20:47:24',
+          '2012-06-14 20:47:55',
+          '2012-06-14 20:49:11',
+          '2012-06-14 20:49:11',
+          ].map { |e| Time.parse e }
+          personal_vote_timestamps.each do |t|
+            v = Vote.make!(
+              :enacted      => true,
+              :personal     => true,
+              :time         => t,
+              :vote_results => []
+              )
+            v.vote_results.create! :representative => rep, :result => 1
+          end
+
+          non_personal_vote_timestamps = [
+            '2012-06-14 20:51:20',
+            '2012-06-14 20:49:33',
+            '2012-06-14 20:35:35',
+            '2012-06-14 20:37:11',
+            '2012-06-14 20:35:54',
+            '2012-06-14 20:38:13',
+            '2012-06-14 20:33:09',
+            '2012-06-14 20:37:46',
+            '2012-06-14 20:37:27',
+            '2012-06-14 20:48:20',
+            '2012-06-14 20:50:30',
+            '2012-06-14 20:39:03',
+          ]
+          @non_personal_votes = []
+          non_personal_vote_timestamps.each do |t|
+            @non_personal_votes << Vote.make!(
+              :enacted      => true,
+              :personal     => false,
+              :time         => t,
+              :vote_results => []
+              )
+          end
+        end
+
+        it "doesn't fail" do
+          subject.infer!.should == [true,true,true,true,true,true,true,true,true,true,true,true]
+        end
+
+        it "infers the correct resuls for those votes" do
+          subject.infer!
+          @non_personal_votes.each do |npv|
+            npv.reload
+
+            npv.inferred?.should be_true
+            npv.for_count.should == 1
+          end
+        end
+      end
+    end
+
   end
-
-end
-

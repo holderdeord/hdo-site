@@ -13,7 +13,9 @@ notifications:
       - "%{author} | %{commit} | %{message} | %{build_url}"
 script: "RAILS_ENV=test bundle exec rake travis"
 before_script:
-  - "sh -e /etc/init.d/xvfb start"
-  - "npm install -g buster autolint"
+  - mv config/database.yml.example config/database.yml
+  - sed -i -e 's/username:\ hdo/username:\ postgres/g' config/database.yml
+  - sh -e /etc/init.d/xvfb start
+  - npm install -g buster autolint
 env:
   - DISPLAY=:99.0 COVERAGE_THRESHOLD=75

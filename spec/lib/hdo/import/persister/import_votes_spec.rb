@@ -35,7 +35,7 @@ module Hdo
 
           inferrer.should_receive(:infer!)
 
-          persister.import_votes [non_personal_vote]
+          persister.import_votes [non_personal_vote], infer: true
         end
 
         it 'does not try to infer results for the same vote twice' do
