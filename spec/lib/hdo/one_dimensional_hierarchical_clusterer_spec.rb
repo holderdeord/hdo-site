@@ -2,10 +2,10 @@ require 'spec_helper'
 require 'time'
 
 module Hdo
-  describe OneDimentionalHierarchicalClusterer do
+  describe OneDimensionalHierarchicalClusterer do
     describe "basic private distance calculators" do
       before do
-        @clusterer = OneDimentionalHierarchicalClusterer.new([1,2],1)
+        @clusterer = OneDimensionalHierarchicalClusterer.new([1,2],1)
       end
 
       it "knows the distance between two points" do
@@ -36,6 +36,46 @@ module Hdo
         distances[[0,1]].should eq 4
         distances[[0,2]].should eq 9
         distances[[1,2]].should eq 5
+      end
+
+      it "calculates a big real-date distance matrix" do
+        timestamps = [
+                      '2012-06-14 20:32:07',
+                      '2012-06-14 20:32:50',
+                      '2012-06-14 20:32:50',
+                      '2012-06-14 20:33:23',
+                      '2012-06-14 20:33:49',
+                      '2012-06-14 20:34:11',
+                      '2012-06-14 20:34:36',
+                      '2012-06-14 20:35:11',
+                      '2012-06-14 20:36:44',
+                      '2012-06-14 20:36:44',
+                      '2012-06-14 20:38:39',
+                      '2012-06-14 20:40:21',
+                      '2012-06-14 20:40:48',
+                      '2012-06-14 20:41:11',
+                      '2012-06-14 20:42:22',
+                      '2012-06-14 20:42:51',
+                      '2012-06-14 20:43:17',
+                      '2012-06-14 20:43:36',
+                      '2012-06-14 20:44:02',
+                      '2012-06-14 20:44:35',
+                      '2012-06-14 20:45:16',
+                      '2012-06-14 20:45:38',
+                      '2012-06-14 20:46:05',
+                      '2012-06-14 20:46:31',
+                      '2012-06-14 20:46:31',
+                      '2012-06-14 20:47:05',
+                      '2012-06-14 20:47:24',
+                      '2012-06-14 20:47:55',
+                      '2012-06-14 20:49:11',
+                      '2012-06-14 20:49:11',
+                    ]
+        points = timestamps.map { |e| Time.parse(e).to_i }
+        distances = @clusterer.send(:distances_matrix_for, points)
+
+        distances[[0,1]].should eq 43
+
       end
 
       it "finds key of min value in hash" do
@@ -80,7 +120,7 @@ module Hdo
     describe "with separation 2" do
       points = [1,2,5,6,9,10]
       before do
-        @clusterer = OneDimentionalHierarchicalClusterer.new(points,2)
+        @clusterer = OneDimensionalHierarchicalClusterer.new(points,2)
       end
 
       it "should have 3 clusters" do
@@ -158,7 +198,7 @@ module Hdo
           timestamps = [@first_cluster_timestamps,
             @second_cluster_timestamps].flatten
 
-          @clusterer = OneDimentionalHierarchicalClusterer.new(timestamps, 900)
+          @clusterer = OneDimensionalHierarchicalClusterer.new(timestamps, 900)
       end
 
       it "should have two clusters" do
@@ -177,7 +217,7 @@ module Hdo
 
     it "finds the nearest cluster for a point" do
       points = [1,2,3,8,9,10]
-      clusterer = OneDimentionalHierarchicalClusterer.new(points, 3)
+      clusterer = OneDimensionalHierarchicalClusterer.new(points, 3)
       clusterer.nearest_cluster_for(4).sort.should eq [1,2,3]
       clusterer.nearest_cluster_for(6).sort.should eq [8,9,10]
     end
