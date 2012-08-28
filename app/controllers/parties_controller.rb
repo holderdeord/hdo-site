@@ -1,5 +1,7 @@
 class PartiesController < ApplicationController
   caches_page :index
+
+  #
   # caches_page :show
   #
   # FIXME: need to look into how to cache the parties page when
@@ -16,6 +18,7 @@ class PartiesController < ApplicationController
   # * issue's vote_connection removed
   #
   # Also need to find a way to test this.
+  #
 
   def index
     @parties = Party.order(:name).all
@@ -30,7 +33,7 @@ class PartiesController < ApplicationController
   def show
     @party  = Party.includes(:representatives, :promises => :categories).find(params[:id])
 
-    @issues = Issue.published.vote_ordered
+    @issues = Issue.published.order(:title)
     @categories = Category.where(:main => true)
 
     respond_to do |format|

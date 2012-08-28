@@ -41,8 +41,9 @@ class HomeController < ApplicationController
       Person.new('Eva Jørgensen', nil, 'tar en mastergrad i politisk økonomi ved Handelshøyskolen BI og skriver sin masteroppgave om lobbyvirksomhet i EU. Hun har to bachelorgrader: en i Europastudier fra Universitetet i Oslo, og en i økonomi og administrasjon fra Høyskolen i Oslo. I Holder de ord jobber hun med nettverksbygging og finansiering.'),
       Person.new('Morten Kjelkenes', nil, '(NUUG) er teknisk ansvarlig og arkitekt. Morten jobber til daglig med prosjektledelse av både telecom- og IT-prosjekter, og har god teknisk erfaring innen konsolidering og virtualisering av tjenester for store kunder. Han har lang erfaring med kompliserte og heterogene miljøer og tjenester, samt fra oppbygging av testmiljøer for disse.'),
       Person.new('Daniel Rees', 'daniel@holderdeord.no', 'er daglig leder og en av grunnleggerne av Holder de ord. Han har en mastergrad i statsvitenskap fra NTNU i Trondheim, og har bakgrunn fra TNS Gallup hvor han har jobbet med opinionsundersøkelser og kommunikasjonsanalyse. Daniel har bred erfaring som frilansjournalist, fra NRK Her & Nå, og har tidligere jobbet med å utvikle nettsteder for FNs informasjonskontor for Norden og landsdekkende organisasjoner i Norge.'),
-      Person.new('Kristofer Rees', nil, ' jobber med metode, faglig innhold og kategorisering av politiske løfter for Holder De Ord. Kristofer har tidligere studert musikk ved NTNU i Trondheim og Det Kgl. Danske Musikkonservatorium i København, og studerer nå statsvitenskap ved Universitetet i Oslo.'),
+      Person.new('Kristofer Rees', 'kristofer@holderdeord.no', ' jobber med metode, faglig innhold og kategorisering av politiske løfter for Holder De Ord. Kristofer har tidligere studert musikk ved NTNU i Trondheim og Det Kgl. Danske Musikkonservatorium i København, og studerer nå statsvitenskap ved Universitetet i Oslo.'),
       Person.new('Tiina Ruohonen', 'tiina@holderdeord.no', 'er en av grunnleggerne av Holder de ord. I dag sitter hun i Holder de ords styre, og har det overordnede ansvaret for kommunikasjon, samfunnskontakt og medierelasjoner. Hun er en selverklært kosmopolitt med fartstid fra flere land, og med en mastergrad i bærekraftig utvikling og etikk. Tiina jobbet i flere år som prosjektleder innenfor klimaområdet, og driver i dag sitt eget konsulentselskap innenfor klima og miljø, etikk, samfunnsansvar, og demokratisk medvirkning.'),
+      Person.new('Linn Skorge', 'linn@holderdeord.no', 'jobber med salg og finansiering i Holder de ord. Linn tar for øyeblikket en mastergrad i politisk økonomi på Handelshøyskolen BI. Fra tidligere har hun en bachelorgrad i internasjonal markedsføring, også fra Handelshøyskolen BI.'),
       Person.new('Guro Øistensen', nil, 'jobber med metode og det faglige innholdet i Holder de ord. Til daglig er hun Communications Manager i IT-bedriften Logica, hvor hun jobber med internett, intranett, PR og intern kommunikasjon. Guro er utdannet sosiolog fra Universitetet i Oslo.')
     ]
 
@@ -54,6 +55,7 @@ class HomeController < ApplicationController
       Person.new('Kristian Bysheim'),
       Person.new('Linn Katrine Erstad'),
       Person.new('Inge Olav Fure'),
+      Person.new('Svein Halvor Halvorsen'),
       Person.new('Arne Hassel'),
       Person.new('Jostein Holje'),
       Person.new('Vegard Karevoll'),
