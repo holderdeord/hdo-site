@@ -7,9 +7,13 @@
         <div class="accordion-group">
 
           <div class="accordion-heading">
-            <p class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#category-accordion" data-target="#<%= category.id %>" >
-              <%= category.human_name %>
-            </p>
+            <% if category.children.empty? %>
+              <span class="accordion-toggle"><%= category.human_name %></span>
+            <% else %>
+              <span class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#category-accordion" data-target="#<%= category.id %>" >
+                <%= category.human_name %>
+              </span>
+            <% end %>
           </div>
 
           <div id="<%= category.id %>" class="accordion-body collapse" style="height: 0px;">
@@ -18,6 +22,8 @@
                 <% Category.where(:parent_id => category.id).each do |c| %>
                   <li><a data-category-id="<%= c.id %>" href="#"><%= c.human_name %></a></li>
                 <% end %>
+                <br />
+                <li><a data-category-id="<%= category.id %>" href="#">Vis alle</a></li>
               </ul>
             </div>
           </div>
