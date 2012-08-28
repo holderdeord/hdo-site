@@ -138,6 +138,8 @@ module Hdo
 
     describe "with a whole bunch of votes in 3 clusters" do
       before do
+        @now = Time.now
+
         @rep1 = Representative.make!
         @rep2 = Representative.make!
         @rep3 = Representative.make!
@@ -149,7 +151,7 @@ module Hdo
           vote = Vote.make!(
             :enacted      => true,
             :personal     => true,
-            :time         => Time.now + i.minutes,
+            :time         => @now + i.minutes,
             :vote_results => []
           )
           vote.vote_results.create! :representative => @rep1, :result => 0
@@ -166,7 +168,7 @@ module Hdo
           vote = Vote.make!(
             :enacted      => true,
             :personal     => true,
-            :time         => Time.now + 1.hour + i.minutes,
+            :time         => @now + 1.hour + i.minutes,
             :vote_results => []
           )
           vote.vote_results.create! :representative => @rep1, :result => -1
@@ -184,7 +186,7 @@ module Hdo
           vote = Vote.make!(
             :enacted      => true,
             :personal     => true,
-            :time         => Time.now + 2.hours + i.minutes,
+            :time         => @now + 2.hours + i.minutes,
             :vote_results => []
           )
           vote.vote_results.create! :representative => @rep1, :result => 1
@@ -200,7 +202,7 @@ module Hdo
         npv = Vote.make!(
           :enacted      => false,
           :personal     => false,
-          :time         => Time.now,
+          :time         => @now,
           :vote_results => []
         )
 
@@ -222,7 +224,7 @@ module Hdo
         npv = Vote.make!(
           :enacted      => true,
           :personal     => false,
-          :time         => Time.now + 1.hour,
+          :time         => @now + 1.hour,
           :vote_results => []
           )
         subject.infer!.should == [true]
@@ -243,7 +245,7 @@ module Hdo
         npv = Vote.make!(
           :enacted      => false,
           :personal     => false,
-          :time         => Time.now + 2.hour,
+          :time         => @now + 2.hour,
           :vote_results => []
           )
         subject.infer!.should == [true]
