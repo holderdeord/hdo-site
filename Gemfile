@@ -54,6 +54,7 @@ gem 'unicode_utils'
 gem 'pry'
 gem 'multi_json'
 gem 'yajl-ruby'
+gem 'rack-mini-profiler'
 
 # data import
 # gem 'hdo-storting-importer', :path => File.expand_path("../../hdo-storting-importer", __FILE__)
