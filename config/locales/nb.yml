@@ -36,7 +36,7 @@ nb:
         other: "fylker"
       parliament_issue:
         one: "stortingssak"
-        other: "stortingsssaker"
+        other: "stortingssaker"
       vote:
         one: "avstemning"
         other: "avstemninger"
