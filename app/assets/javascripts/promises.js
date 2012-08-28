@@ -60,7 +60,12 @@ var HDO = HDO || {};
   function showAllPromisesInCategory(catId, partySlug) {
     getData(catId, partySlug, function (results) {
       setResults(results);
-      $('#' + bodyName).html(results);
+      if (results === '') {
+        $('#' + bodyName).html("Ingen løfter i denne kategorien.");
+      } else {
+        $('#' + bodyName).html(results);
+      }
+
       if (lastPartyFilter) {
         showSpecificParty(catId, lastPartyFilter);
       }
