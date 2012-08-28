@@ -7,13 +7,9 @@
         <div class="accordion-group">
 
           <div class="accordion-heading">
-            <% if category.children.empty? %>
-              <span class="accordion-toggle"><%= category.human_name %></span>
-            <% else %>
-              <span class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#category-accordion" data-target="#<%= category.id %>" >
-                <%= category.human_name %>
-              </span>
-            <% end %>
+            <span class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#category-accordion" data-target="#<%= category.id %>" >
+              <%= category.human_name %>
+            </span>
           </div>
 
           <div id="<%= category.id %>" class="accordion-body collapse" style="height: 0px;">
