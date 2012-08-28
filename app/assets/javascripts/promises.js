@@ -11,7 +11,7 @@ var HDO = HDO || {};
   function getData(catId, partySlug, callback) {
     var promiseUrl;
 
-    if (partySlug === '' || !partySlug) {
+    if (partySlug === '' || !partySlug || partySlug === "show-all") {
       promiseUrl = '/categories/' + catId + '/promises';
     } else {
       promiseUrl = '/categories/' + catId + '/promises/parties/' + partySlug;
