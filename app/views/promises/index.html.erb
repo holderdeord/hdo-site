@@ -26,8 +26,9 @@
   <!-- VISIBLE IN DESKTOP -->
   <div class="hidden-mobile">
     <div class="span2 party-nav">
+      <h4>Vis løftene til:</h4>
       <ul class="nav nav-pills nav-stacked">
-        <li><a href="#" data-party-slug="show-all">Vis alle</a></li>
+        <li><a href="#" data-party-slug="show-all">Alle partiene</a></li>
         <% @parties.each do |party| %>
           <li>
             <a data-party-slug="<%= party.slug %>" href="#"><%= party.name %></a>
