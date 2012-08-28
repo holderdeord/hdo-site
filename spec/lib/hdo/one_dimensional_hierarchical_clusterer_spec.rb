@@ -2,10 +2,10 @@ require 'spec_helper'
 require 'time'
 
 module Hdo
-  describe OnedimensionalHierarchicalClusterer do
+  describe OneDimensionalHierarchicalClusterer do
     describe "basic private distance calculators" do
       before do
-        @clusterer = OnedimensionalHierarchicalClusterer.new([1,2],1)
+        @clusterer = OneDimensionalHierarchicalClusterer.new([1,2],1)
       end
 
       it "knows the distance between two points" do
@@ -80,7 +80,7 @@ module Hdo
     describe "with separation 2" do
       points = [1,2,5,6,9,10]
       before do
-        @clusterer = OnedimensionalHierarchicalClusterer.new(points,2)
+        @clusterer = OneDimensionalHierarchicalClusterer.new(points,2)
       end
 
       it "should have 3 clusters" do
@@ -158,7 +158,7 @@ module Hdo
           timestamps = [@first_cluster_timestamps,
             @second_cluster_timestamps].flatten
 
-          @clusterer = OnedimensionalHierarchicalClusterer.new(timestamps, 900)
+          @clusterer = OneDimensionalHierarchicalClusterer.new(timestamps, 900)
       end
 
       it "should have two clusters" do
@@ -177,7 +177,7 @@ module Hdo
 
     it "finds the nearest cluster for a point" do
       points = [1,2,3,8,9,10]
-      clusterer = OnedimensionalHierarchicalClusterer.new(points, 3)
+      clusterer = OneDimensionalHierarchicalClusterer.new(points, 3)
       clusterer.nearest_cluster_for(4).sort.should eq [1,2,3]
       clusterer.nearest_cluster_for(6).sort.should eq [8,9,10]
     end
