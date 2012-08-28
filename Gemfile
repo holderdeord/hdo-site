@@ -30,7 +30,6 @@ group :test, :development do
 end
 
 group :development do
-  gem 'sqlite3' # TODO: same DB everywhere
   gem "rails-erd"
 end
 
