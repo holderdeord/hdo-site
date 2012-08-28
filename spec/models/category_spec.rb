@@ -34,6 +34,11 @@ describe Category do
     category.human_name.should == "Sjøfart"
   end
 
+  it 'only uppercases the first letter if category name contains more than one word' do
+    category = Category.create(:name => "PRISER OG REGLER")
+    category.human_name.should == "Priser og regler"
+  end
+
   it 'keeps EFTA/EU in upper case' do
     category = Category.create(:name => "EFTA/EU")
     category.human_name.should == "EFTA/EU"
