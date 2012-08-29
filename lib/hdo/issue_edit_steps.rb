@@ -58,8 +58,8 @@ module Hdo
     private
 
     def next_step
-      if @params[:step] && STEPS.include?(@params[:step])
-        @params[:step]
+      if @params[:next_step] && STEPS.include?(@params[:next_step])
+        @params[:next_step]
       elsif @params[:previous]
         before(current)
       else
