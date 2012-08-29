@@ -58,8 +58,8 @@ module Hdo
     private
 
     def next_step
-      if @params[:page_button] && STEPS.include?(@params[:page_button].keys[0])
-        @params[:page_button].keys[0]
+      if @params[:step] && STEPS.include?(@params[:step])
+        @params[:step]
       elsif @params[:previous]
         before(current)
       else
