@@ -23,11 +23,7 @@
 
                 <ul class="dropdown-menu">
                   <% Party.order(:name).each do |party| %>
-                    <li>
-                      <%= link_to party do %>
-                      <%= party.name %>
-                    <% end %>
-                    </li>
+                    <li><%= link_to party.name, party %></li>
                   <% end %>
                 </ul>
               </li>
