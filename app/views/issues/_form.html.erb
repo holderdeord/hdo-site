@@ -1,17 +1,17 @@
 <%= twitter_bootstrap_form_for @issue do |form| %>
-<% if @issue_steps %>
-  <div class="row">
-    <div class="pagination pull-right">
-      <ul>
-        <% @issue_steps.each do |step| %>
-          <li class="<%= 'active' if params[:step] == step %>">
-            <%= link_to Issue.human_attribute_name(step), '#', :onclick => "submitStep('#{step}');"  %>
-          </li>
-        <% end %>
-      </ul>
+  <% if @issue_steps %>
+    <div class="row">
+      <div class="pagination pull-right">
+        <ul>
+          <% @issue_steps.each do |step| %>
+            <li class="<%= 'active' if params[:step] == step %>">
+              <%= link_to Issue.human_attribute_name(step), '#', :onclick => "submitStep('#{step}');"  %>
+            </li>
+          <% end %>
+        </ul>
+      </div>
     </div>
-  </div>
-<% end %>
+  <% end %>
 
   <%= render partial: "edit_buttons", locals: { form: form, disable_prev: @disable_prev, disable_next: @disable_next } %>
   <%= render partial: "#{edit_steps.current}_step", locals: { form: form } %>
