@@ -77,10 +77,6 @@ _This list may be incomplete. Please add any missing libs you find._
 Follow brew's post-install instructions for PostgreSQL. Typically you want to run the `initdb`
 and the launchtl ("load on login") commands.
 
-Next, create the database user:
-
-    $ createuser hdo --no-superuser --no-createrole --createdb
-
 Note: If you're on OS X >= 10.7 and get a connection error when preparing the database, try these steps:
 
 * Run `echo $PATH | tr ':' '\n'` and make sure /usr/local/bin comes before /usr/bin.
