@@ -149,6 +149,7 @@ nb:
         promises: "Løfter"
         votes: "Avstemninger"
         topics: "Tema"
+        last_updated_by: Sist redigert av
       vote_connection:
         matches: "Støtter saken?"
         comment: "Kommentar"
@@ -231,6 +232,7 @@ nb:
     expand: 'Åpne'
     collapse: 'Lukke'
     issue_graph_header: 'Hvor ofte har partiet stemt for %{title}?'
+    nobody: ingen
     issues:
       explanation:
         one: "Denne siden er basert på %{count} avstemning på Stortinget i perioden oktober 2011 til dagens dato, og løfter fra valgprogram og regjeringerklæring 2009-2013."

@@ -57,6 +57,7 @@ class IssuesController < ApplicationController
 
   def create
     @issue = Issue.new(params[:issue])
+    @issue.last_updated_by = current_user
 
     if @issue.save
       if edit_steps.finish?

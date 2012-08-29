@@ -4,7 +4,7 @@
 <p><%= link_to t('app.issues.edit.new'), new_issue_path, class: 'btn btn-primary' %></p>
 <br>
 
-<table class="table table-condensed">
+<table class="table">
   <thead>
     <tr>
       <th><%= Issue.human_attribute_name :title %></th>
@@ -26,8 +26,8 @@
         </td>
         <td><%= issue.published_text %></td>
         <td>
-          <%= link_to t('app.edit'), edit_issue_path(issue), class: 'btn' %>
-          <%= link_to t('app.destroy'), issue, method: :delete, data: { confirm: t('app.issues.edit.confirm_destroy') }, class: 'btn btn-danger' %>
+          <%= link_to t('app.edit'), edit_issue_path(issue), class: 'btn btn-small' %>
+          <%= link_to t('app.destroy'), issue, method: :delete, data: { confirm: t('app.issues.edit.confirm_destroy') }, class: 'btn btn-small btn-danger' %>
         </td>
       </tr>
     <% end %>

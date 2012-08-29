@@ -137,6 +137,7 @@ describe IssuesController do
 
         issue = assigns(:issue)
         issue.should be_kind_of(Issue)
+        issue.last_updated_by.should == @user
 
         expected_url = edit_issue_step_path(id: issue, step: 'promises')
         response.should redirect_to(expected_url)
@@ -211,9 +212,40 @@ describe IssuesController do
       it "should update the published state" do
         put :update, finish: true, issue: issue_params(issue).merge('published' => 'true'), id: issue
 
-        assigns(:issue).should be_published
+        issue = assigns(:issue)
+        issue.should be_published
+
         response.should redirect_to issue_path(issue)
       end
+
+      it 'sets last_updated_by when published state changes' do
+        put :update, issue: issue_params(issue).merge('published' => 'true'), id: issue
+
+        issue = assigns(:issue)
+        issue.last_updated_by.should == @user
+      end
+
+      it 'sets last_updated_by when attributes change' do
+        put :update, issue: issue_params(issue).merge('title' => 'changed-title'), id: issue
+
+        issue = assigns(:issue)
+        issue.last_updated_by.should == @user
+      end
+
+      it 'sets last_updated_by when categories are changed' do
+        category = Category.make!
+
+        put :update, issue: issue_params(issue).merge('category_ids' => [category.id]), id: issue
+
+        issue = assigns(:issue)
+        issue.last_updated_by.should == @user
+      end
+
+      it 'sets last_updated_by when promises are changed'
+      it 'sets last_updated_by when vote connections are changed'
+      it 'sets last_updated_by topics are changed'
+      it 'does not set last_updated_by when update is called with no change to attributes'
+      it 'does not set last_updated_by when update is called with no change to vote connections'
     end
   end # admin user
 

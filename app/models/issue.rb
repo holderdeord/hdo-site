@@ -11,6 +11,8 @@ class Issue < ActiveRecord::Base
   has_and_belongs_to_many :categories, uniq: true, order: :name
   has_and_belongs_to_many :promises,   uniq: true
 
+  belongs_to :last_updated_by, :foreign_key => 'last_updated_by_id', :class_name => 'User'
+
   #
   # Whenever a issue is updated, we remove and re-create all vote_connection associations.
   # That means clearing the cache in before_add and before_remove is good enough.
@@ -51,6 +53,10 @@ class Issue < ActiveRecord::Base
 
   def published_state
     published? ? 'published' : 'not-published'
+  end
+
+  def last_updated_by_name
+    last_updated_by ? last_updated_by.name : I18n.t('app.nobody')
   end
 
   private
