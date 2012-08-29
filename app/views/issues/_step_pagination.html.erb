@@ -1,16 +1,14 @@
-<% if issue_steps %>
-  <div class="row">
-    <div class="pagination pull-right">
-      <ul>
-        <% issue_steps.each do |step| %>
-        <li class="<%= 'active' if params[:step] == step %>">
-          <%= link_to Issue.human_attribute_name(step), '#', :onclick => "submitStep('#{step}');"  %>
-        </li>
-        <% end %>
-      </ul>
-    </div>
+<div class="row">
+  <div class="pagination pull-right">
+    <ul>
+      <% issue_steps.each do |step| %>
+      <li class="<%= 'active' if params[:step] == step %>">
+        <%= link_to Issue.human_attribute_name(step), '#', :onclick => "submitStep('#{step}');"  %>
+      </li>
+      <% end %>
+    </ul>
   </div>
-<% end %>
+</div>
 
 <script>
   function submitStep(step) {
