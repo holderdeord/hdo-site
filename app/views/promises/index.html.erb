@@ -16,7 +16,7 @@
   </div>
 
   <!-- MIDDLE -->
-  <div class="hidden-mobile">
+  <div class="visible-desktop">
     <div class="span7">
       <%= render partial: 'shared/promises_results' %>
     </div>
@@ -24,7 +24,7 @@
 
   <!-- RIGHT COLUMN -->
   <!-- VISIBLE IN DESKTOP -->
-  <div class="hidden-mobile">
+  <div class="visible-desktop">
     <div class="span2 party-nav">
       <h4>Vis løftene til:</h4>
       <ul class="nav nav-pills nav-stacked">
@@ -41,11 +41,19 @@
 
   <!-- VISIBLE IN MOBILE -->
   <div class="hidden-desktop">
-    <select>
+    <select class="party-nav">
+      <option>Velg parti</option>
       <% @parties.each do |party| %>
-        <option><%= party.name %></option>
+        <option data-party-slug="<%= party.slug %>"><%= party.name %></option>
       <% end %>
+      <option data-party-slug="show-all">Alle partiene</option>
     </select>
+
+    <div class="span3">
+      <div class="promises-results">
+        hei
+      </div>
+    </div>
   </div>
 </div>
 
@@ -53,7 +61,7 @@
   <script>
     $(document).ready(function () {
       var widget = HDO.promiseWidget.create({
-        targetSelector: "#promises-results",
+        targetSelector: ".promises-results",
         categoriesSelector: ".categories",
         partiesSelector: ".party-nav"
       });

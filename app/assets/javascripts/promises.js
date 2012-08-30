@@ -47,7 +47,7 @@ var HDO = HDO || {};
   }
 
   function showSpecificParty(catId, partyId) {
-    var bodyElement = $('#' + bodyName);
+    var bodyElement = $('.' + bodyName);
     bodyElement.empty();
 
     lastPartyFilter = partyId;
@@ -61,9 +61,9 @@ var HDO = HDO || {};
     getData(catId, partySlug, function (results) {
       setResults(results);
       if (results === '') {
-        $('#' + bodyName).html("Ingen løfter i denne kategorien.");
+        $('.' + bodyName).html("Ingen løfter i denne kategorien.");
       } else {
-        $('#' + bodyName).html(results);
+        $('.' + bodyName).html(results);
       }
 
       if (lastPartyFilter) {
@@ -110,7 +110,7 @@ var HDO = HDO || {};
 
 
         var target = $(self.options.targetSelector);
-        target.empty().append('<div id="' + bodyName + '"></div>');
+        target.empty().append('<div class="' + bodyName + '"></div>');
         showAllPromisesInCategory(categoryId, partySlug);
 
         e.preventDefault();
@@ -136,6 +136,20 @@ var HDO = HDO || {};
         }
 
         e.preventDefault();
+      });
+
+      //category dropdown list mobil
+      $(self.options.categoriesSelector).on('change', function () {
+        categoryId = $(self.options.categoriesSelector + " option:selected").data("category-id");
+        showAllPromisesInCategory(categoryId, partySlug);
+      });
+
+      //party dropdown list mobile
+      $(self.options.partiesSelector).on('change', function () {
+        partySlug = $(self.options.partiesSelector + " option:selected").data("party-slug");
+        var target = $(self.options.targetSelector);
+        target.empty().append('<div class="' + bodyName + '"></div>');
+        showAllPromisesInCategory(categoryId, partySlug);
       });
     } // end of init
   };
