@@ -141,15 +141,21 @@ var HDO = HDO || {};
       //category dropdown list mobil
       $(self.options.categoriesSelector).on('change', function () {
         categoryId = $(self.options.categoriesSelector + " option:selected").data("category-id");
+        console.log(categoryId + " " + partySlug);
         showAllPromisesInCategory(categoryId, partySlug);
       });
 
       //party dropdown list mobile
       $(self.options.partiesSelector).on('change', function () {
-        partySlug = $(self.options.partiesSelector + " option:selected").data("party-slug");
         var target = $(self.options.targetSelector);
-        target.empty().append('<div class="' + bodyName + '"></div>');
-        showAllPromisesInCategory(categoryId, partySlug);
+        partySlug = $(self.options.partiesSelector + " option:selected").data("party-slug");
+        if (categoryId) {
+          target.empty().append('<div class="' + bodyName + '"></div>');
+          showAllPromisesInCategory(categoryId, partySlug);
+        }
+        else {
+          target.empty().append("Ingen kategori valgt.");
+        }
       });
     } // end of init
   };
