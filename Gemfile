@@ -33,10 +33,7 @@ group :development do
   gem "rails-erd"
 end
 
-group :production do
-  gem 'pg'
-end
-
+gem 'pg'
 gem "thin"
 gem 'jquery-rails'
 gem "twitter-bootstrap-rails", "~> 2.0"

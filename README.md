@@ -13,6 +13,7 @@ Development environment
 
 Install package dependencies and set up Ruby 1.9.3 with RVM.
 
+
     $ sudo apt-get install \
         autoconf \
         automake \
@@ -77,10 +78,6 @@ _This list may be incomplete. Please add any missing libs you find._
 Follow brew's post-install instructions for PostgreSQL. Typically you want to run the `initdb`
 and the launchtl ("load on login") commands.
 
-Next, create the database user:
-
-    $ createuser hdo --no-superuser --no-createrole --createdb
-
 Note: If you're on OS X >= 10.7 and get a connection error when preparing the database, try these steps:
 
 * Run `echo $PATH | tr ':' '\n'` and make sure /usr/local/bin comes before /usr/bin.
@@ -121,11 +118,11 @@ Data model
 
 To generate an entity-relationship diagram from the database:
 
-        $ bundle exec rake erd
+    $ bundle exec rake erd
 
-        # or
+    # or
 
-        $ bundle exec rake erd title="HDO Data Model"
+    $ bundle exec rake erd title="HDO Data Model"
 
 This will generate `ERD.pdf`.
 
@@ -205,10 +202,10 @@ Our own servers are set up with Puppet, using the code from the [hdo-puppet repo
 
 For test environments, deploying to [Heroku](http://www.heroku.com/) should work:
 
-  $ [sudo] gem install heroku
-  $ heroku login
-  $ heroku create
-  $ git push heroku master
-  $ heroku run rake db:setup import:dev import:promises images:save_party_logos
+    $ [sudo] gem install heroku
+    $ heroku login
+    $ heroku create
+    $ git push heroku master
+    $ heroku run rake db:setup import:dev
 
 One caveat: since Heroku doesn't allow writing to the file system, [Dragonfly won't work properly](http://markevans.github.com/dragonfly/file.Heroku.html).
