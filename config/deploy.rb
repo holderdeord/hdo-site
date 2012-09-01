@@ -3,8 +3,8 @@ require 'bundler/capistrano'
 if ENV['VAGRANT']
   set :domain, 'localhost'
   set :port,    2222
-elsif ENV['AZURE']
-  set :domain, "#{ENV['AZURE']}.cloudapp.net"
+elsif ENV['DOMAIN']
+  set :domain, ENV['DOMAIN']
 else
   set :domain, 'beta.holderdeord.no'
 end
@@ -25,11 +25,19 @@ role :app, domain
 role :db,  domain, :primary => true
 
 namespace :deploy do
-  task(:start) {}
-  task(:stop) {}
+  if ENV['UNICORN']
+    task(:start) { run "/etc/init.d/unicorn-hdo start" }
+    task(:stop)  { run "/etc/init.d/unicorn-hdo stop" }
+    task :restart, :roles => :app, :except => { :no_release => true } do
+      run "/etc/init.d/unicorn-hdo upgrade"
+    end
+  else
+    task(:start) {}
+    task(:stop) {}
 
-  task :restart, :roles => :app, :except => { :no_release => true } do
-    run "#{try_sudo} touch #{File.join(current_path,'tmp','restart.txt')}"
+    task :restart, :roles => :app, :except => { :no_release => true } do
+      run "#{try_sudo} touch #{File.join(current_path,'tmp','restart.txt')}"
+    end
   end
 
   namespace :web do
