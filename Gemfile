@@ -33,6 +33,10 @@ group :development do
   gem "rails-erd"
 end
 
+group :production do
+  gem 'unicorn'
+end
+
 gem 'pg'
 gem "thin"
 gem 'jquery-rails'
@@ -55,15 +59,6 @@ gem 'rack-mini-profiler'
 # data import
 # gem 'hdo-storting-importer', :path => File.expand_path("../../hdo-storting-importer", __FILE__)
 gem 'hdo-storting-importer', "~> 0.2.1"
-
-# To use Jbuilder templates for JSON
-# gem 'jbuilder'
-
-# Use unicorn as the web server
-# gem 'unicorn'
-
-# To use debugger
-# gem 'ruby-debug19', :require => 'ruby-debug'
 
 if Gem::Version.new(Bundler::VERSION) >= Gem::Version.new("1.2.0.rc2")
   ruby '1.9.3'
