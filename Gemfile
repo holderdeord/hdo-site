@@ -33,10 +33,6 @@ group :development do
   gem "rails-erd"
 end
 
-group :production do
-  gem 'unicorn'
-end
-
 gem 'pg'
 gem "thin"
 gem 'jquery-rails'

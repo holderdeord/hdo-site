@@ -1,14 +1,15 @@
 require 'bundler/capistrano'
 
 if ENV['VAGRANT']
-  set :user,   'hdo'
   set :domain, 'localhost'
   set :port,    2222
+elsif ENV['AZURE']
+  set :domain, "#{ENV['AZURE']}.cloudapp.net"
 else
-  set :user,   'hdo'
   set :domain, 'beta.holderdeord.no'
 end
 
+set :user,        'hdo'
 set :application, 'hdo-site'
 set :scm,         :git
 set :repository,  'git://github.com/holderdeord/hdo-site'
