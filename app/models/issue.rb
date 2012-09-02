@@ -34,23 +34,22 @@ class Issue < ActiveRecord::Base
   def update_attributes_and_votes_for_user(attributes, votes, user)
     changed = false
 
-    Array(votes).each do |data|
-      existing = VoteConnection.where('vote_id = ? and issue_id = ?', data[:vote_id], id).first
+    Array(votes).each do |vote_id, data|
+      existing = VoteConnection.where('vote_id = ? and issue_id = ?', vote_id, id).first
 
       if existing && data[:direction] == 'unrelated'
         vote_connections.delete existing
         changed = true
       else
+        attrs = data.except(:direction).merge(matches: data[:direction] == 'for', vote_id: vote_id)
+
         if existing
-          existing.attributes = data.except(:direction).merge(matches: data[:direction] == 'for')
+          existing.attributes = attrs
           changed ||= existing.changed?
+
           existing.save!
         else
-          vote_connections.create! vote_id:      vote_id,
-                                   matches:      data[:direction] == 'for',
-                                   comment:      data[:comment],
-                                   weight:       data[:weight],
-                                   description:  data[:description]
+          vote_connections.create!(attrs)
           changed = true
         end
       end
@@ -60,6 +59,16 @@ class Issue < ActiveRecord::Base
 
     # hacky..
     if attributes['category_ids'] && attributes['category_ids'].map(&:to_i).sort != category_ids.sort
+      changed = true
+    end
+
+    # hacky..
+    if attributes['promise_ids'] && attributes['promise_ids'].map(&:to_i).sort != promise_ids.sort
+      changed = true
+    end
+
+    # hacky..
+    if attributes['topic_ids'] && attributes['topic_ids'].map(&:to_i).sort != topic_ids.sort
       changed = true
     end
 

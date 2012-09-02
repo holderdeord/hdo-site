@@ -7,8 +7,19 @@ describe IssuesController do
     issue.as_json.except('created_at', 'id', 'last_updated_by_id', 'slug', 'updated_at')
   end
 
-  def vote_connection_params(vote_connection)
-    vote_connection.as_json.except('created_at', 'id', 'issue_id', 'updated_at')
+  def votes_params(connections)
+    params = {}
+
+    connections.each do |connection|
+      params[connection.vote_id] = {
+        :direction   => connection.matches? ? 'for' : 'against',
+        :weight      => connection.weight,
+        :comment     => connection.comment,
+        :description => connection.description
+      }
+    end
+
+    params
   end
 
   context 'admin user' do
@@ -255,7 +266,7 @@ describe IssuesController do
         issue.last_updated_by.should == @user
       end
 
-      it 'sets last_updated_by topics are changed' do
+      it 'sets last_updated_by when topics are changed' do
         topic = Topic.make!
 
         put :update, issue: issue_params(issue).merge('topic_ids' => [topic.id]), id: issue
@@ -266,12 +277,48 @@ describe IssuesController do
       end
 
       it 'sets last_updated_by when vote connections are removed' do
+        connection = VoteConnection.create(:vote => Vote.make!, matches: true, weight: 1, comment: 'hello', description: 'world')
+        issue.vote_connections = [connection]
 
+        votes = votes_params(issue.vote_connections)
+        votes[connection.vote_id][:direction] = 'unrelated'
+
+        put :update, issue: issue_params(issue), votes: votes, id: issue
+
+        issue = assigns(:issue)
+        issue.vote_connections.should be_empty
+        issue.last_updated_by.should == @user
       end
 
 
-      it 'sets last_updated_by when vote connections are added'
-      it 'sets last_updated_by when vote connections are updated'
+      it 'sets last_updated_by when vote connections are added' do
+        vote = Vote.make!
+        issue.vote_connections = []
+
+        votes_param = {vote.id => {direction: 'for', weight: '1.0', comment: 'hello', description: 'world'}}
+        put :update, issue: issue_params(issue), votes: votes_param, id: issue
+
+        issue = assigns(:issue)
+        issue.vote_connections.size.should == 1
+        issue.last_updated_by.should == @user
+      end
+
+      it 'sets last_updated_by when vote connections are updated' do
+        connection = VoteConnection.create(:vote => Vote.make!, matches: true, weight: 1, comment: 'hello', description: 'world')
+        issue.vote_connections = [connection]
+
+
+        votes = votes_params(issue.vote_connections)
+        votes[connection.vote_id][:weight] = '2.0'
+
+        put :update, issue: issue_params(issue), votes: votes, id: issue
+
+        issue = assigns(:issue)
+
+        issue.vote_connections.size.should == 1
+        issue.vote_connections.first.weight.should == 2.0
+        issue.last_updated_by.should == @user
+      end
 
       it 'does not set last_updated_by when update is called with no change to attributes' do
         issue.last_updated_by = other_user = User.make!
@@ -287,9 +334,10 @@ describe IssuesController do
         issue.last_updated_by = other_user = User.make!
         issue.save!
 
-        vote_connection = issue.vote_connections.create!(matches: true, weight: 1, comment: 'foo', description: 'bar', vote: Vote.make!)
+        vote_connection = VoteConnection.create(matches: true, weight: 1, comment: 'foo', description: 'bar', vote: Vote.make!)
+        issue.vote_connections = [vote_connection]
 
-        put :update, issue: issue_params(issue), votes: [vote_connection_params(vote_connection)], id: issue
+        put :update, issue: issue_params(issue), votes: votes_params(issue.vote_connections), id: issue
 
         issue = assigns(:issue)
         issue.last_updated_by.should == other_user
