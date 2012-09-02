@@ -6,14 +6,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <meta property="og:title" content="<%=t 'app.title' %>" />
-    <meta property="og:site_name" content="<%=t 'app.title' %>" />
-    <meta property="og:description" content="<%=t 'app.open_graph.description' %>" />
-    <meta property="og:type" content="non_profit" />
-    <meta property="og:url" content="<%= "http://#{request.host}#{request.fullpath}" %>" />
-    <meta property="og:image" content="<%= File.join(root_url, asset_path('og_logo.png')) %>" />
-    <meta property="fb:admins" content="<%= t 'app.open_graph.admins' %>" />
-    <meta property="fb:app_id" content="<%= t 'app.open_graph.app_id' %>" />
+    <%= render partial: 'layouts/opengraph' %>
 
     <title><%=t 'app.title' %></title>
 

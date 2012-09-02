@@ -3,8 +3,8 @@
 @topicColumns: 4;
 
 .issue-list {
-  font-size: 20px;
   padding: 10px;
+  font-size: 20px;
 }
 
 .topic-image {
@@ -13,40 +13,40 @@
 }
 
 .topics-list {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  max-width: (@cardPadding + @iconSize)*@topicColumns;
-  clear: both;
   display: inline-block;
+  max-width: (@cardPadding + @iconSize)*@topicColumns;
+  padding: 0;
+  margin: 0;
+  clear: both;
+  list-style: none;
 
   > li {
-    float: left;
-    margin-bottom: 30px;
-    margin-right: @cardPadding;
     position: relative;
+    float: left;
+    margin-right: @cardPadding;
+    margin-bottom: 30px;
 
     > div {
-      border-radius: 30px;
+      width: @iconSize;
       min-height: @iconSize;
       overflow: hidden;
-      width: @iconSize;
+      border-radius: 30px;
     }
   }
 }
 
 .topic-name {
-    margin: 5px 10px;
     display: inline-block;
+    max-width: 50px;
+    padding: 40px 25px 40px 25px;
+    margin: 5px 10px;
     font-weight: bold;
     color: black;
-    padding: 40px 25px 40px 25px;
-    max-width: 50px;
     text-align: center;
 }
 
 .topic-card:hover {
-  box-shadow: 0px 0px 5px grey;
+  box-shadow: 0 0 5px grey;
 }
 
 .topic-card {

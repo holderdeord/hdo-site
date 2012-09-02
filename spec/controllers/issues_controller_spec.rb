@@ -247,6 +247,18 @@ describe IssuesController do
       it 'does not set last_updated_by when update is called with no change to attributes'
       it 'does not set last_updated_by when update is called with no change to vote connections'
     end
+
+    describe "the issue_steps parameter" do
+      it "should be set when editing an issue" do
+        get :edit, id: issue, step: 'categories'
+        assigns(:issue_steps).should_not be_nil
+      end
+
+      it "should not be set when creating a new issue" do
+        get :new
+        assigns(:issue_steps).should be_nil
+      end
+    end
   end # admin user
 
   context 'normal user' do

@@ -7,36 +7,35 @@
 .ribbon-holder {
   position: absolute;
   top: 0;
-  overflow: hidden;
   height: 10em;
+  overflow: hidden;
 }
 
-.right.ribbon-holder {
+.ribbon-holder .right {
   right: 0;
 }
 
-.left.ribbon-holder {
+.ribbon-holder .left {
   left: 0;
 }
 
 .ribbon {
-  letter-spacing: -.1px;
-  opacity: 0.95;
-
-  padding: 0.25em 0;
   position: relative;
   top: 2.5em;
-
-  /* Defaults friendly for white pages. */
-  -moz-box-shadow: 0 0 13px #888;
-  -webkit-box-shadow: 0 0 13px #888;
-  color: @ribbonTextColor;
   display: block;
+  padding: 0.25em 0;
+
   font-size: 15px;
   line-height: 1.35em;
+  letter-spacing: -.1px;
 
-  background-color: @ribbonBackgroundColor;
+  color: @ribbonTextColor;
   background: -webkit-gradient(linear, left bottom, left top, from(@ribbonGradientFrom), to(@ribbonGradientTo));
+  background-color: @ribbonBackgroundColor;
+  opacity: 0.95;
+
+  -moz-box-shadow: 0 0 13px #888;
+  -webkit-box-shadow: 0 0 13px #888;
 }
 
 .ribbon .text {

@@ -15,7 +15,8 @@ module Hdo
         {
           :approve => for_count,
           :against => against_count,
-          :absent  => absent_count
+          :absent  => absent_count,
+          :parties => Hash[@party_counts.map { |party, counts| [party.name, counts] }]
         }
       end
 

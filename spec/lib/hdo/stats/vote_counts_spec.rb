@@ -33,6 +33,10 @@ module Hdo
         stats.instance_variables.size.should == ivar_size
       end
 
+      it 'has a JSON representations' do
+        vote.stats.as_json.should be_kind_of(Hash)
+      end
+
     end
   end
 end
