@@ -246,7 +246,7 @@ nb:
         submit: "Lagre sak"
         edit: "Rediger sak"
         destroy: "Slett sak"
-        confirm_destroy: "Er du sikker på at du vil slette saken?"
+        confirm_destroy: "Er du sikker på at du vil slette '%{title}'?"
         connected_votes: Koblede avstemninger
         find_votes: Finn avstemninger
         keyword: Nøkkelord
