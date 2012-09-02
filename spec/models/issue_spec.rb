@@ -22,7 +22,7 @@ describe Issue do
     t.categories << a
     t.categories << b
 
-    t.categories.map(&:name).should == [a.name, b.name]
+    t.categories.map(&:name).sort.should == [a.name, b.name]
 
     t.should be_valid
   end

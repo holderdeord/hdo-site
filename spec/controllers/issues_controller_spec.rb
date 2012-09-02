@@ -4,8 +4,11 @@ describe IssuesController do
   let(:issue) { Issue.make! }
 
   def issue_params(issue)
-    wanted_keys = %w[id description title category_ids promise_ids topic_ids published]
-    issue.as_json.keep_if { |key| key.in? wanted_keys }
+    issue.as_json.except('created_at', 'id', 'last_updated_by_id', 'slug', 'updated_at')
+  end
+
+  def vote_connection_params(vote_connection)
+    vote_connection.as_json.except('created_at', 'id', 'issue_id', 'updated_at')
   end
 
   context 'admin user' do
@@ -238,14 +241,59 @@ describe IssuesController do
         put :update, issue: issue_params(issue).merge('category_ids' => [category.id]), id: issue
 
         issue = assigns(:issue)
+        issue.categories.should == [category]
         issue.last_updated_by.should == @user
       end
 
-      it 'sets last_updated_by when promises are changed'
-      it 'sets last_updated_by when vote connections are changed'
-      it 'sets last_updated_by topics are changed'
-      it 'does not set last_updated_by when update is called with no change to attributes'
-      it 'does not set last_updated_by when update is called with no change to vote connections'
+      it 'sets last_updated_by when promises are changed' do
+        promise = Promise.make!
+
+        put :update, issue: issue_params(issue).merge('promise_ids' => [promise.id]), id: issue
+
+        issue = assigns(:issue)
+        issue.promises.should == [promise]
+        issue.last_updated_by.should == @user
+      end
+
+      it 'sets last_updated_by topics are changed' do
+        topic = Topic.make!
+
+        put :update, issue: issue_params(issue).merge('topic_ids' => [topic.id]), id: issue
+
+        issue = assigns(:issue)
+        issue.topics.should == [topic]
+        issue.last_updated_by.should == @user
+      end
+
+      it 'sets last_updated_by when vote connections are removed' do
+
+      end
+
+
+      it 'sets last_updated_by when vote connections are added'
+      it 'sets last_updated_by when vote connections are updated'
+
+      it 'does not set last_updated_by when update is called with no change to attributes' do
+        issue.last_updated_by = other_user = User.make!
+        issue.save!
+
+        put :update, issue: issue_params(issue), id: issue
+
+        issue = assigns(:issue)
+        issue.last_updated_by.should == other_user
+      end
+
+      it 'does not set last_updated_by when update is called with no change to vote connections' do
+        issue.last_updated_by = other_user = User.make!
+        issue.save!
+
+        vote_connection = issue.vote_connections.create!(matches: true, weight: 1, comment: 'foo', description: 'bar', vote: Vote.make!)
+
+        put :update, issue: issue_params(issue), votes: [vote_connection_params(vote_connection)], id: issue
+
+        issue = assigns(:issue)
+        issue.last_updated_by.should == other_user
+      end
     end
 
     describe "the issue_steps parameter" do
