@@ -283,7 +283,7 @@ describe IssuesController do
         votes = votes_params(issue.vote_connections)
         votes[connection.vote_id][:direction] = 'unrelated'
 
-        put :update, issue: issue_params(issue), votes: votes, id: issue
+        put :update, votes: votes, id: issue
 
         issue = assigns(:issue)
         issue.vote_connections.should be_empty
@@ -296,7 +296,7 @@ describe IssuesController do
         issue.vote_connections = []
 
         votes_param = {vote.id => {direction: 'for', weight: '1.0', comment: 'hello', description: 'world'}}
-        put :update, issue: issue_params(issue), votes: votes_param, id: issue
+        put :update, votes: votes_param, id: issue
 
         issue = assigns(:issue)
         issue.vote_connections.size.should == 1
@@ -311,7 +311,7 @@ describe IssuesController do
         votes = votes_params(issue.vote_connections)
         votes[connection.vote_id][:weight] = '2.0'
 
-        put :update, issue: issue_params(issue), votes: votes, id: issue
+        put :update, votes: votes, id: issue
 
         issue = assigns(:issue)
 
@@ -337,7 +337,7 @@ describe IssuesController do
         vote_connection = VoteConnection.create(matches: true, weight: 1, comment: 'foo', description: 'bar', vote: Vote.make!)
         issue.vote_connections = [vote_connection]
 
-        put :update, issue: issue_params(issue), votes: votes_params(issue.vote_connections), id: issue
+        put :update, votes: votes_params(issue.vote_connections), id: issue
 
         issue = assigns(:issue)
         issue.last_updated_by.should == other_user

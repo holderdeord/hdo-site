@@ -16,7 +16,10 @@
   <tbody>
     <% @issues.each do |issue| %>
       <tr class="issue-state-<%= issue.published_state %>">
-        <td><%= link_to issue.title, issue %></td>
+        <td>
+          <p><%= link_to issue.title, issue %></p>
+          <p><small><%= Issue.human_attribute_name :last_updated_by %> <strong><%= issue.last_updated_by_name %></strong> <%= l issue.updated_at %></small></p>
+        </td>
         <td>
           <ul>
           <% issue.topics.each do |topic| %>

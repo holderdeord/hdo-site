@@ -57,30 +57,30 @@ class Issue < ActiveRecord::Base
 
     touch if changed
 
-    # hacky..
-    if attributes['category_ids'] && attributes['category_ids'].map(&:to_i).sort != category_ids.sort
-      changed = true
+    if attributes
+      # TODO: find a better way to do this!
+
+      if attributes['category_ids'] && attributes['category_ids'].map(&:to_i).sort != category_ids.sort
+        changed = true
+      end
+
+      if attributes['promise_ids'] && attributes['promise_ids'].map(&:to_i).sort != promise_ids.sort
+        changed = true
+      end
+
+      if attributes['topic_ids'] && attributes['topic_ids'].map(&:to_i).sort != topic_ids.sort
+        changed = true
+      end
+
+      self.attributes = attributes
+      changed ||= self.changed?
     end
-
-    # hacky..
-    if attributes['promise_ids'] && attributes['promise_ids'].map(&:to_i).sort != promise_ids.sort
-      changed = true
-    end
-
-    # hacky..
-    if attributes['topic_ids'] && attributes['topic_ids'].map(&:to_i).sort != topic_ids.sort
-      changed = true
-    end
-
-
-    self.attributes = attributes
-    changed ||= self.changed?
 
     if changed
       self.last_updated_by = user
     end
 
-    valid?
+    save
   end
 
   def vote_for?(vote_id)
