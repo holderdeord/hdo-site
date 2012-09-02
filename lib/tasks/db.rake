@@ -33,6 +33,7 @@ namespace :db do
         i.delete('id')
 
         i['topic_names']          = issue.topics.map { |e| e.name }
+        i['category_external_ids'] = issue.categories.map { |e| e.external_id }
         i['promise_external_ids'] = issue.promises.map { |e| e.external_id }
         i['vote_connections']     = issue.vote_connections.map do |e|
           {
@@ -71,12 +72,14 @@ namespace :db do
       data.each do |hash|
         topics = hash.delete('topic_names').map { |name| Topic.find_by_name!(name) }
         promises = hash.delete('promise_external_ids').map { |id| Promise.find_by_external_id!(id) }
+        categories = hash.delete('category_external_ids').map { |id| Category.find_by_external_id!(id) }
         vote_connections = hash.delete('vote_connections')
 
         issue = Issue.create(hash)
 
-        issue.topics   = topics
-        issue.promises = promises
+        issue.categories = categories
+        issue.topics     = topics
+        issue.promises   = promises
 
         issue.save!
 

@@ -60,15 +60,15 @@ class Issue < ActiveRecord::Base
     if attributes
       # TODO: find a better way to do this!
 
-      if attributes['category_ids'] && attributes['category_ids'].map(&:to_i).sort != category_ids.sort
+      if attributes['category_ids'] && attributes['category_ids'].reject(&:empty?).map(&:to_i).sort != category_ids.sort
         changed = true
       end
 
-      if attributes['promise_ids'] && attributes['promise_ids'].map(&:to_i).sort != promise_ids.sort
+      if attributes['promise_ids'] && attributes['promise_ids'].reject(&:empty?).map(&:to_i).sort != promise_ids.sort
         changed = true
       end
 
-      if attributes['topic_ids'] && attributes['topic_ids'].map(&:to_i).sort != topic_ids.sort
+      if attributes['topic_ids'] && attributes['topic_ids'].reject(&:empty?).map(&:to_i).sort != topic_ids.sort
         changed = true
       end
 
