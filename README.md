@@ -84,6 +84,8 @@ Note: If you're on OS X >= 10.7 and get a connection error when preparing the da
 * Open a new shell and try there.
 * Check [this post](http://www.iainlbc.com/2011/10/osx-lion-postgres-could-not-connect-to-database-postgres-after-homebrew-installation/).
 
+TODO: Try out [Postgres.app](http://postgresapp.com/) and add instructions here.
+
 Preparing the database:
 =======================
 
