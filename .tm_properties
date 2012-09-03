@@ -11,3 +11,5 @@ include = "{$include,$myExtraIncludes}"
 myExtraExcludes = "log,vendor,tmp,db/*.sqlite3,public/system"
 excludeInFileChooser  = "{$excludeInFileChooser,$myExtraExcludes}" 
 excludeInFolderSearch = "{$excludeInFolderSearch,$myExtraExcludes}" 
+
+scmStatus = false
