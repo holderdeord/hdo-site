@@ -42,7 +42,8 @@ class Category < ActiveRecord::Base
     when 'EFTA/EU'
       n
     else
-      UnicodeUtils.titlecase name
+      fixed_name = "#{UnicodeUtils.upcase n[0]}#{UnicodeUtils.downcase n[1..-1]}"
+      fixed_name
     end
   end
 end

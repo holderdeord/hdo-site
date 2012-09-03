@@ -11,7 +11,7 @@ var HDO = HDO || {};
   function getData(catId, partySlug, callback) {
     var promiseUrl;
 
-    if (partySlug === '' || !partySlug) {
+    if (partySlug === '' || !partySlug || partySlug === "show-all") {
       promiseUrl = '/categories/' + catId + '/promises';
     } else {
       promiseUrl = '/categories/' + catId + '/promises/parties/' + partySlug;
@@ -47,7 +47,7 @@ var HDO = HDO || {};
   }
 
   function showSpecificParty(catId, partyId) {
-    var bodyElement = $('#' + bodyName);
+    var bodyElement = $('.' + bodyName);
     bodyElement.empty();
 
     lastPartyFilter = partyId;
@@ -60,7 +60,12 @@ var HDO = HDO || {};
   function showAllPromisesInCategory(catId, partySlug) {
     getData(catId, partySlug, function (results) {
       setResults(results);
-      $('#' + bodyName).html(results);
+      if (results === '') {
+        $('.' + bodyName).html("Ingen løfter i denne kategorien.");
+      } else {
+        $('.' + bodyName).html(results);
+      }
+
       if (lastPartyFilter) {
         showSpecificParty(catId, lastPartyFilter);
       }
@@ -73,7 +78,7 @@ var HDO = HDO || {};
   }
 
   function removeActiveClass(divClass) {
-    $(divClass).find('li').removeClass('active');
+    $(divClass).find('li').removeClass();
   }
 
   H.promiseWidget = {
@@ -87,18 +92,16 @@ var HDO = HDO || {};
     init: function () {
       var self = this;
 
-      $(self.options.categoriesSelector).css('border-right', 'solid 1px #EEE');
-
       $(self.options.categoriesSelector).find('a').on('click', function (e) {
-        removeActiveClass(self.options.categoriesSelector);
-        $(this).parent().addClass('active');
 
         categoryId = $(this).data('category-id');
+        $(self.options.categoriesSelector).find('a').removeClass('active');
+        $(this).addClass('active');
 
         if (self.options.partiesSelector !== null) {
           if (!lastPartyFilter) {
             removeActiveClass(self.options.partiesSelector);
-            $('#show-all').parent().addClass('active');
+            $('[data-party-slug="show-all"]').parent().addClass('active');
           }
         } else {
           partySlug = document.URL;
@@ -107,28 +110,50 @@ var HDO = HDO || {};
 
 
         var target = $(self.options.targetSelector);
-        target.empty().append('<div id="' + bodyName + '"></div>');
+        target.empty().append('<div class="' + bodyName + '"></div>');
         showAllPromisesInCategory(categoryId, partySlug);
 
         e.preventDefault();
-        return false;
 
       });
 
       $(self.options.partiesSelector).find('a').on('click', function (e) {
-        removeActiveClass(self.options.partiesSelector);
-        $(this).parent().addClass('active');
+        removeActiveClass(self.options.partiesSelector, partySlug);
 
-        var partySlug = $(this).data('party-slug');
+        partySlug = $(this).data('party-slug');
+
+        if (partySlug.indexOf(',') >= 0) {
+          $(this).parent().addClass('government-active');
+        } else {
+          $(this).parent().addClass(partySlug + '-active');
+        }
 
         if (partySlug === 'show-all') {
           showAllParties(categoryId);
+          $(this).parent().addClass('active');
         } else {
           showSpecificParty(categoryId, partySlug);
         }
 
         e.preventDefault();
-        return false;
+      });
+
+      //category dropdown list mobil
+      $(self.options.categoriesSelector).on('change', function () {
+        categoryId = $(self.options.categoriesSelector + " option:selected").data("category-id");
+        showAllPromisesInCategory(categoryId, partySlug);
+      });
+
+      //party dropdown list mobile
+      $(self.options.partiesSelector).on('change', function () {
+        var target = $(self.options.targetSelector);
+        partySlug = $(self.options.partiesSelector + " option:selected").data("party-slug");
+        if (categoryId) {
+          target.empty().append('<div class="' + bodyName + '"></div>');
+          showAllPromisesInCategory(categoryId, partySlug);
+        } else {
+          target.empty().append("Ingen kategori valgt.");
+        }
       });
     } // end of init
   };
