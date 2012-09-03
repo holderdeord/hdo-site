@@ -149,6 +149,7 @@ nb:
         promises: "Løfter"
         votes: "Avstemninger"
         topics: "Tema"
+        last_updated_by: Sist redigert av
       vote_connection:
         matches: "Støtter saken?"
         comment: "Kommentar"
@@ -190,10 +191,9 @@ nb:
     show_all: "Vis alle"
     url: 'holderdeord.no'
     title: "Holder de ord"
-    open_graph:
+    opengraph:
       description: "Holder de ord gjør det enkelt å sjekke hva som har blitt gjort og lovet i norsk politikk."
-      app_id: "128853573831210"
-      admins: "635985218,525020960,640580233,1562377886"
+      admins: "635985218:525020960:1562377886:757795452:518536137"
     login: "Logg inn"
     logout: "Logg ut"
     description: "Bringer politikken til folket."
@@ -231,6 +231,7 @@ nb:
     expand: 'Åpne'
     collapse: 'Lukke'
     issue_graph_header: 'Hvor ofte har partiet stemt for %{title}?'
+    nobody: ingen
     issues:
       explanation:
         one: "Denne siden er basert på %{count} avstemning på Stortinget i perioden oktober 2011 til dagens dato, og løfter fra valgprogram og regjeringerklæring 2009-2013."
@@ -245,7 +246,7 @@ nb:
         submit: "Lagre sak"
         edit: "Rediger sak"
         destroy: "Slett sak"
-        confirm_destroy: "Er du sikker på at du vil slette saken?"
+        confirm_destroy: "Er du sikker på at du vil slette '%{title}'?"
         connected_votes: Koblede avstemninger
         find_votes: Finn avstemninger
         keyword: Nøkkelord

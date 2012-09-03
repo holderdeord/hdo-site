@@ -5,7 +5,7 @@
 <div class="row-fluid">
   <div class="span12">
     <h2 class="page-header">
-      <%= Vote.model_name.human(count: 2).capitalize %> <%= Vote.human_attribute_name(:about) %> <%= @issue.downcased_title %>
+      <%= Vote.model_name.human(count: 2).capitalize %> <%= Vote.human_attribute_name(:about) %> <%= t 'app.lang.infinitive_particle' %> <%= @issue.downcased_title %>
     </h2>
 
     <% @issue_votes.each do |issue_vote| %>

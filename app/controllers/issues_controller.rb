@@ -57,6 +57,7 @@ class IssuesController < ApplicationController
 
   def create
     @issue = Issue.new(params[:issue])
+    @issue.last_updated_by = current_user
 
     if @issue.save
       if edit_steps.finish?
@@ -73,9 +74,7 @@ class IssuesController < ApplicationController
   end
 
   def update
-    update_vote_connections
-
-    if @issue.update_attributes(params[:issue])
+    if @issue.update_attributes_and_votes_for_user(params[:issue], params[:votes], current_user)
       edit_steps.next!
 
       if edit_steps.finish?
@@ -168,31 +167,6 @@ class IssuesController < ApplicationController
 
   def fetch_issue
     @issue = Issue.find(params[:id])
-  end
-
-  def update_vote_connections
-    return unless params[:votes]
-
-    #
-    # Clear and re-create all connections. This has two benefits:
-    #
-    # * Connections removed by unchecking a checkbox will also be removed.
-    # * Ensures that the IssuesController#stats cache is cleared.
-    #
-    # TODO: make sure the connections are properly deleted from the DB, or
-    # the association table will grow on every edit.
-    #
-    @issue.vote_connections = []
-
-    params[:votes].each do |vote_id, data|
-      next unless %w[for against].include? data[:direction]
-
-      @issue.vote_connections.create! vote_id:      vote_id,
-                                      matches:      data[:direction] == 'for',
-                                      comment:      data[:comment],
-                                      weight:       data[:weight],
-                                      description:  data[:description]
-    end
   end
 
   def assign_issue_steps

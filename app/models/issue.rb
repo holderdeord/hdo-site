@@ -8,8 +8,10 @@ class Issue < ActiveRecord::Base
   validates_uniqueness_of :title
 
   has_and_belongs_to_many :topics,     uniq: true
-  has_and_belongs_to_many :categories, uniq: true, order: :name
+  has_and_belongs_to_many :categories, uniq: true
   has_and_belongs_to_many :promises,   uniq: true
+
+  belongs_to :last_updated_by, :foreign_key => 'last_updated_by_id', :class_name => 'User'
 
   #
   # Whenever a issue is updated, we remove and re-create all vote_connection associations.
@@ -28,6 +30,58 @@ class Issue < ActiveRecord::Base
 
   scope :vote_ordered, includes(:votes).order('votes.time DESC')
   scope :published, where(:published => true)
+
+  def update_attributes_and_votes_for_user(attributes, votes, user)
+    changed = false
+
+    Array(votes).each do |vote_id, data|
+      existing = VoteConnection.where('vote_id = ? and issue_id = ?', vote_id, id).first
+
+      if existing && data[:direction] == 'unrelated'
+        vote_connections.delete existing
+        changed = true
+      else
+        attrs = data.except(:direction).merge(matches: data[:direction] == 'for', vote_id: vote_id)
+
+        if existing
+          existing.attributes = attrs
+          changed ||= existing.changed?
+
+          existing.save!
+        else
+          vote_connections.create!(attrs)
+          changed = true
+        end
+      end
+    end
+
+    touch if changed
+
+    if attributes
+      # TODO: find a better way to do this!
+
+      if attributes['category_ids'] && attributes['category_ids'].reject(&:empty?).map(&:to_i).sort != category_ids.sort
+        changed = true
+      end
+
+      if attributes['promise_ids'] && attributes['promise_ids'].reject(&:empty?).map(&:to_i).sort != promise_ids.sort
+        changed = true
+      end
+
+      if attributes['topic_ids'] && attributes['topic_ids'].reject(&:empty?).map(&:to_i).sort != topic_ids.sort
+        changed = true
+      end
+
+      self.attributes = attributes
+      changed ||= self.changed?
+    end
+
+    if changed
+      self.last_updated_by = user
+    end
+
+    save
+  end
 
   def vote_for?(vote_id)
     vote_connections.any? { |vd| vd.matches? && vd.vote_id == vote_id  }
@@ -51,6 +105,10 @@ class Issue < ActiveRecord::Base
 
   def published_state
     published? ? 'published' : 'not-published'
+  end
+
+  def last_updated_by_name
+    last_updated_by ? last_updated_by.name : I18n.t('app.nobody')
   end
 
   private

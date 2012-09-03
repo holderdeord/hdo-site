@@ -1,11 +1,14 @@
 <% if user_signed_in? %>
   <div class="alert alert-warning">
     <% if @issue.published? %>
-      <%= t('app.issues.published') %>
+      <%= t 'app.issues.published' %>
     <% else %>
-      <%= t('app.issues.not_published') %>
+      <%= t 'app.issues.not_published' %>
     <% end %>
-    <%= link_to t('app.edit'), edit_issue_path(@issue), class: 'btn' %>
+
+    <%= Issue.human_attribute_name :last_updated_by %> <%= @issue.last_updated_by_name %> <%= l @issue.updated_at %>.
+
+    <%= link_to t('app.edit'), edit_issue_path(@issue), class: 'btn btn-small' %>
   </div>
 <% end %>
 

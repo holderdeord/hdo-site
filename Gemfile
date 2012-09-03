@@ -30,15 +30,11 @@ group :test, :development do
 end
 
 group :development do
-  gem "thin"
-  gem 'sqlite3' # TODO: same DB everywhere
   gem "rails-erd"
 end
 
-group :production do
-  gem 'mysql2', '~> 0.3.11'
-end
-
+gem 'pg'
+gem "thin"
 gem 'jquery-rails'
 gem "twitter-bootstrap-rails", "~> 2.0"
 gem "highcharts-rails", "~> 2.2"
@@ -60,11 +56,7 @@ gem 'rack-mini-profiler'
 # gem 'hdo-storting-importer', :path => File.expand_path("../../hdo-storting-importer", __FILE__)
 gem 'hdo-storting-importer', "~> 0.2.1"
 
-# To use Jbuilder templates for JSON
-# gem 'jbuilder'
+if Gem::Version.new(Bundler::VERSION) >= Gem::Version.new("1.2.0.rc2")
+  ruby '1.9.3'
+end
 
-# Use unicorn as the web server
-# gem 'unicorn'
-
-# To use debugger
-# gem 'ruby-debug19', :require => 'ruby-debug'

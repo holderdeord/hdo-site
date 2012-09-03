@@ -21,7 +21,7 @@ class RenameIssueToParliamentIssue < ActiveRecord::Migration
     add_index :categories_parliament_issues, [:parliament_issue_id, :category_id], name: "index_cat_par_issue_on_par_issue_id_cat_id"
     add_index :parliament_issues, :committee_id
     add_index :parliament_issues, [:slug], unique: true
-    add_index :parliament_issues_votes, [:vote_id, :parliament_issue_id]
+    add_index :parliament_issues_votes, [:vote_id, :parliament_issue_id], name: 'index_par_issues_votes_on_vote_id_and_par_issue_id'
   end
 
   def down

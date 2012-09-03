@@ -42,12 +42,11 @@
 @logoMargin: 20px;
 
 #HeaderNavigation {
-    background-image: url('/assets/web_logo_sm.png');
+    padding-top: @logoMargin;
+    padding-bottom: @logoMargin;
     background-position: left @logoMargin;
     background-repeat: no-repeat;
-    min-height: @logoHeight + @logoMargin * 2;
     .subnav {
-        margin-top: @logoHeight + @logoMargin * 2;
         .subnav-inner {
             .clearfix();
         }
@@ -99,6 +98,7 @@ h5 {
 @media screen and (min-width: 768px) {
     @containerWidth: 662px;
     #HeaderNavigation {
+        padding-bottom: 0;
         margin: 0 auto;
         width: @containerWidth;
     }
@@ -118,7 +118,7 @@ h5 {
         }
         .subnav {
             margin-top: 0;
-            padding-top: @logoHeight + @logoMargin * 2;
+            padding-top: @logoMargin;
             &.subnav-fixed {
                 background-color: @navbarBackground;
                 left: 0;

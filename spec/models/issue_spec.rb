@@ -22,7 +22,7 @@ describe Issue do
     t.categories << a
     t.categories << b
 
-    t.categories.map(&:name).should == [a.name, b.name]
+    t.categories.map(&:name).sort.should == [a.name, b.name]
 
     t.should be_valid
   end
@@ -116,19 +116,38 @@ describe Issue do
   end
 
   it 'finds the latest issues based on vote time' do
-    t1 = Issue.make!
-    t2 = Issue.make!
-    t3 = Issue.make!
+    i1 = Issue.make!
+    i2 = Issue.make!
+    i3 = Issue.make!
 
-    t1.vote_connections.map { |e| e.vote.update_attributes!(:time => 3.days.ago) }
-    t2.vote_connections.map { |e| e.vote.update_attributes!(:time => 2.days.ago) }
-    t3.vote_connections.map { |e| e.vote.update_attributes!(:time => 1.day.ago) }
+    i1.vote_connections.map { |e| e.vote.update_attributes!(:time => 3.days.ago) }
+    i2.vote_connections.map { |e| e.vote.update_attributes!(:time => 2.days.ago) }
+    i3.vote_connections.map { |e| e.vote.update_attributes!(:time => 1.day.ago) }
 
-    Issue.vote_ordered.should == [t3, t2, t1]
+    Issue.vote_ordered.should == [i3, i2, i1]
   end
 
   it 'has a #published_text' do
-    t = Issue.make!
-    t.published_text.should be_kind_of(String)
+    i = Issue.make!
+    i.published_text.should be_kind_of(String)
+  end
+
+  it 'can add who last updated the issue' do
+    u = User.make!
+    i = Issue.make!
+
+    i.last_updated_by = u
+    i.save!
+
+    Issue.first.last_updated_by.should == u
+  end
+
+  it 'fetches the name of who last updated the issue' do
+    u = User.make!
+    i = Issue.make!
+
+    i.last_updated_by_name.should be_kind_of(String)
+    i.last_updated_by = u
+    i.last_updated_by_name.should == u.name
   end
 end

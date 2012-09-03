@@ -3,8 +3,6 @@
 module Hdo
   module Stats
     class VoteScorer
-      include Enumerable
-
       def initialize(model)
         @data = compute(model.vote_connections.includes(:vote))
       end
@@ -21,6 +19,23 @@ module Hdo
             parties.map { |party| @data[party] || 0 }.sum / parties.size
           end
         )
+      end
+
+      def as_json(opts = nil)
+        res = {}
+
+        @data.each do |key, value|
+          name = case key
+                 when Array
+                   key.map { |e| e.name }.join(',')
+                 else
+                   key.name
+                 end
+
+         res[name] = value
+        end
+
+        res
       end
 
       def text_for(party, opts = {})

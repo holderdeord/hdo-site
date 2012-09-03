@@ -1,14 +1,15 @@
 require 'bundler/capistrano'
 
 if ENV['VAGRANT']
-  set :user,   'hdo'
   set :domain, 'localhost'
   set :port,    2222
+elsif ENV['DOMAIN']
+  set :domain, ENV['DOMAIN']
 else
-  set :user,   'hdo'
   set :domain, 'beta.holderdeord.no'
 end
 
+set :user,        'hdo'
 set :application, 'hdo-site'
 set :scm,         :git
 set :repository,  'git://github.com/holderdeord/hdo-site'
@@ -24,11 +25,19 @@ role :app, domain
 role :db,  domain, :primary => true
 
 namespace :deploy do
-  task(:start) {}
-  task(:stop) {}
+  if ENV['UNICORN']
+    task(:start) { run "/etc/init.d/unicorn-hdo start" }
+    task(:stop)  { run "/etc/init.d/unicorn-hdo stop" }
+    task :restart, :roles => :app, :except => { :no_release => true } do
+      run "/etc/init.d/unicorn-hdo upgrade"
+    end
+  else
+    task(:start) {}
+    task(:stop) {}
 
-  task :restart, :roles => :app, :except => { :no_release => true } do
-    run "#{try_sudo} touch #{File.join(current_path,'tmp','restart.txt')}"
+    task :restart, :roles => :app, :except => { :no_release => true } do
+      run "#{try_sudo} touch #{File.join(current_path,'tmp','restart.txt')}"
+    end
   end
 
   namespace :web do
@@ -45,7 +54,7 @@ end
 
 namespace :db do
   task :config, :except => { :no_release => true }, :role => :app do
-    run "cp -f /home/hdo/.hdo-database.yml #{release_path}/config/database.yml"
+    run "cp -f /home/hdo/.hdo-database-pg.yml #{release_path}/config/database.yml"
   end
 end
 

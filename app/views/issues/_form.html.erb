@@ -1,4 +1,7 @@
 <%= twitter_bootstrap_form_for @issue do |form| %>
+  <% if @issue_steps %>
+    <%= render partial: "step_pagination", locals: { form: form, issue_steps: @issue_steps } %>
+  <% end %>
   <%= render partial: "edit_buttons", locals: { form: form, disable_prev: @disable_prev, disable_next: @disable_next } %>
   <%= render partial: "#{edit_steps.current}_step", locals: { form: form } %>
 <% end %>
