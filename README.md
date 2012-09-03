@@ -44,12 +44,6 @@ Install package dependencies and set up Ruby 1.9.3 with RVM.
 
 PS. For RVM to work properly with gnome-terminal, you have to tick the "Run command as login shell" checkbox on the "Title and Command" tab inside of gnome-terminal's Settings page.
 
-Next, create the database user:
-
-    $ sudo su - postgres
-    $ createuser hdo --no-superuser --no-createrole --createdb
-    $ logout
-
 To allow Rails to connect, edit /etc/postgresql/9.1/main/pg_hba.conf as root and change the line for Unix domain socket from "peer" to "trust":
 
      # "local" is for Unix domain socket connections only
