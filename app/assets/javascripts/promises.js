@@ -141,7 +141,6 @@ var HDO = HDO || {};
       //category dropdown list mobil
       $(self.options.categoriesSelector).on('change', function () {
         categoryId = $(self.options.categoriesSelector + " option:selected").data("category-id");
-        console.log(categoryId + " " + partySlug);
         showAllPromisesInCategory(categoryId, partySlug);
       });
 
@@ -152,8 +151,7 @@ var HDO = HDO || {};
         if (categoryId) {
           target.empty().append('<div class="' + bodyName + '"></div>');
           showAllPromisesInCategory(categoryId, partySlug);
-        }
-        else {
+        } else {
           target.empty().append("Ingen kategori valgt.");
         }
       });
