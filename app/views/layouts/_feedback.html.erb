@@ -1,0 +1,32 @@
+<script type="text/javascript">
+  $(function(){
+    $('.slide-out-div').tabSlideOut({
+      tabHandle: '.handle',                     //class of the element that will become your tab
+      pathToTabImage: <%= asset_path('feedback.png').to_json.html_safe %>, //path to the image for the tab //Optionally can be set  css
+      imageHeight: '107px',                     //height of tab image           //Optionally can be set using css
+      imageWidth: '17px',                       //width of tab image            //Optionally can be set using css
+      tabLocation: 'right',                      //side of screen where tab lives, top, right, bottom, or left
+      speed: 300,                               //speed of animation
+      action: 'click',                          //options: 'click' or 'hover', action to trigger animation
+      topPos: '400px',                          //position from the top/ use if tabLocation is left or right
+      leftPos: '20px',                          //position from left/ use if tabLocation is bottom or top
+      fixedPosition: false                      //options: true makes it stick(fixed position) on scroll
+    });
+  });
+</script>
+
+<style type="text/css">
+  .slide-out-div {
+    padding: 20px;
+    width: 250px;
+    background: #eee;
+    border: 1px solid #ddd;
+  }      
+</style>
+                 
+<div class="slide-out-div">
+  <a class="handle" href="http://link-for-non-js-users.html">Content</a>
+  <h3>Contact me</h3>
+  <p>Thanks for checking out my jQuery plugin, I hope you find this useful.</p>
+  <p>This can be a form to submit feedback, or contact info</p>
+</div>      
