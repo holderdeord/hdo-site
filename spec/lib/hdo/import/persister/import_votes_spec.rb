@@ -19,8 +19,22 @@ module Hdo
           vote
         end
 
-        it 'imports multiple votes'
-        it 'imports a vote'
+        it 'imports a vote' do
+          vote = StortingImporter::Vote.example
+
+          vote.representatives.each do |rep|
+            rep.committees.each { |n| Committee.make!(:name => n) }
+            District.make!(:name => rep.district)
+            Party.make!(:name => rep.party)
+          end
+
+          ParliamentIssue.make!(:external_id => vote.external_issue_id)
+
+          persister.import_vote vote
+
+          Vote.count.should == 1
+        end
+
         it 'fails if the vote is invalid'
         it 'updates an existing vote based on external_id'
 
