@@ -7,10 +7,6 @@ class VotesController < ApplicationController
     render_votes_index :paginate => true
   end
 
-  def all
-    render_votes_index :paginate => false
-  end
-
   def show
     @vote = Vote.includes(
       :parliament_issues, :vote_results => {:representative => :party},

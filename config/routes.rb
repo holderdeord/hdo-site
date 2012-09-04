@@ -36,7 +36,6 @@ Hdo::Application.routes.draw do
 
   resources :votes, :only => [:index, :show]
   get 'votes/page/:page' => 'votes#index'
-  get 'votes/index/all'  => 'votes#all', :as => :all_votes
 
   get "home/index"
   get "home/about"
