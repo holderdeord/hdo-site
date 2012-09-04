@@ -13,7 +13,6 @@
 
     function processScroll() {
       var scrollTop = $win.scrollTop();
-      console.log(headerHeight, navTop, scrollTop);
 
       if (scrollTop >= navTop && !isFixed) {
         isFixed = 1;
