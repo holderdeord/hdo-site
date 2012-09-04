@@ -3,7 +3,7 @@ require 'spec_helper'
 module Hdo
   module Import
     describe Persister do
-      context 'commitees' do
+      context 'committees' do
 
         include_context :persister
 

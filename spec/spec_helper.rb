@@ -25,7 +25,7 @@ Spork.prefork do
   require Rails.root.join('spec/support/pages/page')
   require Rails.root.join('spec/support/pages/menu')
 
-  Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| p f; require f }
+  Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
 
   RSpec.configure do |config|
     config.color = $stdout.tty?

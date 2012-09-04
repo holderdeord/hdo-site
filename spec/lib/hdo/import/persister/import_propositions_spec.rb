@@ -3,7 +3,7 @@ require 'spec_helper'
 module Hdo
   module Import
     describe Persister do
-      context 'parties' do
+      context 'propositions' do
 
         include_context :persister
 
