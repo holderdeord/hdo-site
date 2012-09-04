@@ -290,6 +290,25 @@ describe IssuesController do
         issue.last_updated_by.should == @user
       end
 
+      it 'ignores unrelated votes' do
+        issue.vote_connections = []
+
+        vote = Vote.make!
+        votes = {
+          vote.id => {
+            :direction => "unrelated",
+            :weight => "1.0",
+            :description => "",
+            :comment => ""}
+         }
+
+        put :update, votes: votes, id: issue
+
+        issue = assigns(:issue)
+        issue.vote_connections.should be_empty
+        issue.last_updated_by.should be_nil
+      end
+
 
       it 'sets last_updated_by when vote connections are added' do
         vote = Vote.make!

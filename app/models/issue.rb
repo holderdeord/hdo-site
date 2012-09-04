@@ -37,9 +37,11 @@ class Issue < ActiveRecord::Base
     Array(votes).each do |vote_id, data|
       existing = VoteConnection.where('vote_id = ? and issue_id = ?', vote_id, id).first
 
-      if existing && data[:direction] == 'unrelated'
-        vote_connections.delete existing
-        changed = true
+      if data[:direction] == 'unrelated'
+        if existing
+          vote_connections.delete existing
+          changed = true
+        end
       else
         attrs = data.except(:direction).merge(matches: data[:direction] == 'for', vote_id: vote_id)
 
