@@ -5,10 +5,10 @@
 
 
     $win = $(global);
-    $nav = $('.subnav');
     $header = $('#HeaderNavigation');
-    headerHeight = $nav.height();
-    navTop = $nav.length && $nav.outerHeight() - $nav.height();
+    $nav = $header.find('.subnav:first');
+    headerHeight = $header.height();
+    navTop = headerHeight - $nav.height();
     isFixed = 0;
 
     function processScroll() {
