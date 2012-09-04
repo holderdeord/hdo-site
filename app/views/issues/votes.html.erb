@@ -37,7 +37,12 @@
         <div class="span6">
           <dl>
             <dt>Kommentar</dt>
-            <dd><%= issue_vote.comment %></dd>
+            <dd>
+              <p>
+                <%= issue_vote.comment %>
+                <small><%= link_to t('app.method.read_more'), home_method_path %>.</small>
+              </p>
+            </dd>
 
             <dt>Vekting</dt>
             <dd><%= issue_vote.weight_text %> (<%= '%g' % issue_vote.weight %>)</dd>

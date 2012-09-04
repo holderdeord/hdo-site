@@ -22,7 +22,7 @@
 
   <div class="span3 alert alert-info">
     <p><%= t('app.issues.explanation', count: @issue.votes.size) %></p>
-    <p><%= link_to "Les mer om metoden", home_method_path %>.</p>
+    <p><%= link_to t('app.method.read_more'), home_method_path %>.</p>
   </div>
 </div>
 

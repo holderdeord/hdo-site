@@ -200,7 +200,9 @@ nb:
     lang:
       infinitive_particle: "å"
     about: "Om oss"
-    method: "Om metoden"
+    method:
+      about: "Om metoden"
+      read_more: "Les mer om metoden"
     support: "Støtt oss"
     member: "Bli medlem"
     donate: "Gi en gave"
