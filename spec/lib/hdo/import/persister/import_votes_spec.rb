@@ -7,6 +7,16 @@ module Hdo
 
         include_context :persister
 
+        def setup_vote(vote)
+          vote.representatives.each do |rep|
+            rep.committees.each { |n| Committee.make!(:name => n) }
+            District.make!(:name => rep.district)
+            Party.make!(:name => rep.party)
+          end
+
+          ParliamentIssue.make!(:external_id => vote.external_issue_id)
+        end
+
         let :non_personal_vote do
           vote_as_hash = StortingImporter::Vote.example.to_hash
           vote_as_hash['personal'] = false
@@ -21,22 +31,12 @@ module Hdo
 
         it 'imports a vote' do
           vote = StortingImporter::Vote.example
-
-          vote.representatives.each do |rep|
-            rep.committees.each { |n| Committee.make!(:name => n) }
-            District.make!(:name => rep.district)
-            Party.make!(:name => rep.party)
-          end
-
-          ParliamentIssue.make!(:external_id => vote.external_issue_id)
+          setup_vote(vote)
 
           persister.import_vote vote
 
           Vote.count.should == 1
         end
-
-        it 'fails if the vote is invalid'
-        it 'updates an existing vote based on external_id'
 
         it 'runs the VoteInferrer after importing votes' do
           ParliamentIssue.make! :external_id => non_personal_vote.external_issue_id
