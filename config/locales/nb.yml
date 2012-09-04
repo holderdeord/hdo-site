@@ -257,9 +257,11 @@ nb:
         reset: Nullstill
         fetch_votes: Søk
         search_result: Søkeresultat
+      view_vote: 'Gå til avstemning'
       view_votes:
         one: 'Se 1 avstemning om saken'
         other: 'Se %{count} avstemninger om saken'
+
     votes:
       non_personal:
         unknown: 'Denne saken ble avgjort uten at avstemningsknappene ble brukt. Vi har derfor ikke oversikt over hva den enkelte representant har stemt.'
