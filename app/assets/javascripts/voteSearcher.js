@@ -19,6 +19,13 @@
         return false;
       });
 
+      $("#keyword").keypress(function (e) {
+        if (e.keyCode === 13) {
+          e.preventDefault();
+          $("#fetch-votes").click();
+        }
+      });
+
       $('#fetch-votes').click(function () {
         var params = {
           keyword: $('#keyword').val(),
