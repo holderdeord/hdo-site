@@ -78,6 +78,7 @@ class HomeController < ApplicationController
     @alumni = [
       Person.new('Tage Augustson'),
       Person.new('Anne Raaum Christensen'),
+      Person.new('Madeleine Skjelland Eriksen'),
       Person.new('Marte Haabeth Grindaker'),
       Person.new('Vilde Grønn'),
       Person.new('Rigmor Haga'),
@@ -95,9 +96,11 @@ class HomeController < ApplicationController
       Person.new('Liv Arntzen Løchen'),
       Person.new('Magnus Løseth'),
       Person.new('Marit Sjøvaag Marino'),
+      Person.new('Silje Nyløkken'),
       Person.new('Tommy Steinsli'),
       Person.new('Einar Sundin'),
-      Person.new('Eirik Swensen')
+      Person.new('Eirik Swensen'),
+      Person.new('Ole Martin Volle')
      ]
   end
 
