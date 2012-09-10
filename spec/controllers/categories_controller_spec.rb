@@ -8,7 +8,7 @@ describe CategoriesController do
     response.should have_rendered(:index)
   end
 
-  it 'renders home#index' do
+  it 'renders categories#show' do
     get :show, id: Category.make!
     response.should have_rendered(:show)
   end
