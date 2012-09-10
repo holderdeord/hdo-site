@@ -1,30 +1,6 @@
-<script type="text/javascript">
-  $(function(){
-    $('.slide-out-div').tabSlideOut({
-      tabHandle: '.handle',                     //class of the element that will become your tab
-      pathToTabImage: <%= asset_path('feedback.png').to_json.html_safe %>, //path to the image for the tab //Optionally can be set  css
-      imageHeight: '107px',                     //height of tab image           //Optionally can be set using css
-      imageWidth: '17px',                       //width of tab image            //Optionally can be set using css
-      tabLocation: 'right',                      //side of screen where tab lives, top, right, bottom, or left
-      speed: 300,                               //speed of animation
-      action: 'click',                          //options: 'click' or 'hover', action to trigger animation
-      topPos: '400px',                          //position from the top/ use if tabLocation is left or right
-      leftPos: '20px',                          //position from left/ use if tabLocation is bottom or top
-      fixedPosition: true                      //options: true makes it stick(fixed position) on scroll
-    });
-  });
-</script>
-
-<style type="text/css">
-  .slide-out-div {
-    padding: 20px;
-    width: 250px;
-    background: #eee;
-    border: 1px solid #ddd;
-  }      
-</style>
-                 
 <div class="slide-out-div">
   <h3>Kontakt oss</h3>
-  <p>Gi oss tilbakemelding på vår nettside ved å <a class="handle" href="mailto:kontakt@holderdeord.no?subject=Feedback">sende oss en e-post</a>.</p>
-</div>      
+  <p>Gi oss tilbakemelding på vår nettside ved å <a class="handle"><a href="mailto:kontakt@holderdeord.no?subject=Feedback">
+    sende oss en e-post</a></a>.</p>
+  <p>Vi setter pris på alle kommentarer.</p>
+</div>
