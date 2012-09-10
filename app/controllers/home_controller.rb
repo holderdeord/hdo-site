@@ -37,14 +37,14 @@ class HomeController < ApplicationController
 
   def people
     @board = [
-      Person.new('Jari Bakken', 'jari@holderdeord.no', 'arbeider med utvikling i Holder de ord. Han jobber til daglig hos FINN.no, hovedsakelig med interne verktøy og testautomasjon. Jari programmerer for det meste i Ruby og JavaScript, og står bak <a href="http://github.com/jarib">mange populære open source-prosjekt</a> med flere millioner nedlastinger. Han er selvlært som utvikler, og har en bachelor i utøvende jazzgitar fra Norges Musikkhøgskole.'),
-      Person.new('Eva Jørgensen', nil, 'tar en mastergrad i politisk økonomi ved Handelshøyskolen BI og skriver sin masteroppgave om lobbyvirksomhet i EU. Hun har to bachelorgrader: en i Europastudier fra Universitetet i Oslo, og en i økonomi og administrasjon fra Høyskolen i Oslo. I Holder de ord jobber hun med nettverksbygging og finansiering.'),
-      Person.new('Morten Kjelkenes', nil, '(NUUG) er teknisk ansvarlig og arkitekt. Morten jobber til daglig med prosjektledelse av både telecom- og IT-prosjekter, og har god teknisk erfaring innen konsolidering og virtualisering av tjenester for store kunder. Han har lang erfaring med kompliserte og heterogene miljøer og tjenester, samt fra oppbygging av testmiljøer for disse.'),
-      Person.new('Daniel Rees', 'daniel@holderdeord.no', 'er daglig leder og en av grunnleggerne av Holder de ord. Han har en mastergrad i statsvitenskap fra NTNU i Trondheim, og har bakgrunn fra TNS Gallup hvor han har jobbet med opinionsundersøkelser og kommunikasjonsanalyse. Daniel har bred erfaring som frilansjournalist, fra NRK Her & Nå, og har tidligere jobbet med å utvikle nettsteder for FNs informasjonskontor for Norden og landsdekkende organisasjoner i Norge.'),
-      Person.new('Kristofer Rees', 'kristofer@holderdeord.no', ' jobber med metode, faglig innhold og kategorisering av politiske løfter for Holder De Ord. Kristofer har tidligere studert musikk ved NTNU i Trondheim og Det Kgl. Danske Musikkonservatorium i København, og studerer nå statsvitenskap ved Universitetet i Oslo.'),
-      Person.new('Tiina Ruohonen', 'tiina@holderdeord.no', 'er en av grunnleggerne av Holder de ord. I dag sitter hun i Holder de ords styre, og har det overordnede ansvaret for kommunikasjon, samfunnskontakt og medierelasjoner. Hun er en selverklært kosmopolitt med fartstid fra flere land, og med en mastergrad i bærekraftig utvikling og etikk. Tiina jobbet i flere år som prosjektleder innenfor klimaområdet, og driver i dag sitt eget konsulentselskap innenfor klima og miljø, etikk, samfunnsansvar, og demokratisk medvirkning.'),
-      Person.new('Linn Skorge', 'linn@holderdeord.no', 'jobber med salg og finansiering i Holder de ord. Linn tar for øyeblikket en mastergrad i politisk økonomi på Handelshøyskolen BI. Fra tidligere har hun en bachelorgrad i internasjonal markedsføring, også fra Handelshøyskolen BI.'),
-      Person.new('Guro Øistensen', nil, 'jobber med metode og det faglige innholdet i Holder de ord. Til daglig er hun Communications Manager i IT-bedriften Logica, hvor hun jobber med internett, intranett, PR og intern kommunikasjon. Guro er utdannet sosiolog fra Universitetet i Oslo.')
+      Person.new('Jari Bakken', 'jari@holderdeord.no', 'hdo/jari.jpg', 'er sjefsutvikler i Holder de ord. Han jobber til daglig hos FINN.no, hovedsakelig med interne verktøy og testautomasjon. Jari programmerer for det meste i Ruby og JavaScript, og står bak <a href="http://github.com/jarib">mange populære open source-prosjekt</a> med flere millioner nedlastinger. Han er selvlært som utvikler, og har en bachelor i utøvende jazzgitar fra Norges Musikkhøgskole.'),
+      Person.new('Eva Jørgensen', nil, 'hdo/eva-cecilie.jpg', 'jobber med regnskap og økonomistyring i Holder de ord. Hun har en mastergrad i politisk økonomi fra BI i Oslo. Eva har også to bachelorgrader: en i Europastudier fra Universitetet i Oslo, og en i økonomi og administrasjon fra Høyskolen i Oslo. Eva sitter også i Holder de ords styre.'),
+      Person.new('Morten Kjelkenes', nil, nil, 'er teknisk ansvarlig og driftssjef i Holder de ord. Morten jobber til daglig med prosjektledelse av både telecom- og IT-prosjekter, og har god teknisk erfaring innen konsolidering og virtualisering av tjenester for store kunder. Han har lang erfaring med kompliserte og heterogene miljøer og tjenester, samt fra oppbygging av testmiljøer for disse.'),
+      Person.new('Daniel Rees', 'daniel@holderdeord.no', 'hdo/daniel.jpg', 'er daglig leder og en av grunnleggerne av Holder de ord. Han har en mastergrad i statsvitenskap fra NTNU i Trondheim, og har bakgrunn fra TNS Gallup hvor han har jobbet med opinionsundersøkelser og kommunikasjonsanalyse. Daniel har bred erfaring som frilansjournalist, fra NRK Her & Nå, og har tidligere jobbet med å utvikle nettsteder for FNs informasjonskontor for Norden og landsdekkende organisasjoner i Norge. Daniel er også styreleder i Holder de ord.'),
+      Person.new('Kristofer Rees', 'kristofer@holderdeord.no', 'hdo/kristofer.jpg', 'er sjef for metode og analyse i Holder de ord. Han har en bachelorgrad i statsvitenskap, og har tidligere studert musikk ved NTNU i Trondheim og Det Kgl. Danske Musikkonservatorium i København. Kristofer sitter også i Holder de ords styre.'),
+      Person.new('Tiina Ruohonen', 'tiina@holderdeord.no', 'hdo/tiina.jpg', 'er en av grunnleggerne av Holder de ord, nestleder og sjef for kommunikasjon, presse, og partnerskap. Tiina har en Cand. Mag. i statsvitenskap og juss, og en mastergrad i bærekraftig utvikling og etikk. Hun jobbet i flere år som prosjektleder og rådgiver på klimaområdet, og driver i dag sitt eget selskap som hjelper kunder med utfordringer innenfor klimaspørsmål, etikk, samfunnsansvar, og demokratisk medvirkning. Tiina sitter også i Holder de ords styre.'),
+      Person.new('Linn Skorge', 'linn@holderdeord.no',  'hdo/linn.jpg', 'jobber med salg og finansiering i Holder de ord. Linn tar for øyeblikket en mastergrad i politisk økonomi på BI i Oslo. Fra tidligere har hun en bachelorgrad i internasjonal markedsføring, også fra Handelshøyskolen BI. Linn sitter også i Holder de ords styre.'),
+      Person.new('Guro Øistensen', nil, nil, 'jobber med metode og det faglige innholdet i Holder de ord. Til daglig er hun Communications Manager i IT-bedriften Logica, hvor hun jobber med internett, intranett, PR og intern kommunikasjon. Guro er utdannet sosiolog fra Universitetet i Oslo. Hun sitter også i Holder de ords styre.')
     ]
 
     @contributors = [
@@ -105,10 +105,10 @@ class HomeController < ApplicationController
   end
 
   class Person
-    attr_reader :name, :email, :bio
+    attr_reader :name, :image, :email, :bio
 
-    def initialize(name, email = nil, bio = nil)
-      @name, @email, @bio = name, email, bio
+    def initialize(name, email = nil, image = nil, bio = nil)
+      @name, @email, @image, @bio = name, email, image, bio
     end
   end
 

@@ -8,16 +8,24 @@
     <br>
 
     <% @board.each do |person| %>
-      <p>
-        <% if person.email %>
-        <a href="mailto:<%= obscure_email person.email %>"><strong><%= person.name %></strong></a> <%= person.bio.to_s.html_safe %>
-        <% else %>
-          <strong><%= person.name %></strong> <%= person.bio.to_s.html_safe %>
-        <% end %>
-      </p>
+    <div class="row-fluid">
+      <div class="span2">
+        <%= image_tag asset_path(person.image) if person.image %>
+      </div>
+
+      <div class="span10">
+        <p>
+          <% if person.email %>
+          <a href="mailto:<%= obscure_email person.email %>"><strong><%= person.name %></strong></a> <%= person.bio.to_s.html_safe %>
+          <% else %>
+            <strong><%= person.name %></strong> <%= person.bio.to_s.html_safe %>
+          <% end %>
+        </p>
+      </div>
+    </div>
     <% end %>
   </div>
-  
+
   <div class="span3">
     <h3>Bidragsytere</h3>
     <br>
@@ -45,4 +53,7 @@
   </div>
 </div>
 
-<hr class="soften">
+<div class="row-fluid">
+  <p class="pull-right"><small>Foto: Alex Asensi/Holder de ord</small></p>
+</div>
+
