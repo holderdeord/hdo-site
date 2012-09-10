@@ -1,4 +1,4 @@
-$(function(){
+$(function () {
   $('.slide-out-div').tabSlideOut({
     tabHandle: '.handle',                     //class of the element that will become your tab
     pathToTabImage: '/assets/feedback.png', //path to the image for the tab //Optionally can be set  css
