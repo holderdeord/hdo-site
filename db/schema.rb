@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120829121613) do
+ActiveRecord::Schema.define(:version => 20120910161902) do
 
   create_table "categories", :force => true do |t|
     t.string   "external_id"
@@ -235,8 +235,8 @@ ActiveRecord::Schema.define(:version => 20120829121613) do
     t.datetime "created_at",                   :null => false
     t.datetime "updated_at",                   :null => false
     t.float    "weight",      :default => 1.0
-    t.string   "comment"
-    t.string   "description"
+    t.text     "comment"
+    t.text     "description"
   end
 
   add_index "vote_connections", ["vote_id", "issue_id"], :name => "index_vote_connections_on_vote_id_and_issue_id"
