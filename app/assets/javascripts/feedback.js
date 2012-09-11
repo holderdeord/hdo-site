@@ -1,5 +1,5 @@
 $(function () {
-  $('.slide-out-div').tabSlideOut({
+  $('#feedback-content').tabSlideOut({
     tabHandle: '.handle',                     //class of the element that will become your tab
     pathToTabImage: '/assets/feedback.png', //path to the image for the tab //Optionally can be set  css
     imageHeight: '135px',                     //height of tab image           //Optionally can be set using css
