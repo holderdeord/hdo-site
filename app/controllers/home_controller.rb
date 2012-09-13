@@ -48,6 +48,7 @@ class HomeController < ApplicationController
     ]
 
     @contributors = [
+      Person.new('Alex Asensi'),
       Person.new('Kat Aquino'),
       Person.new('Martin Bekkelund'),
       Person.new('Anders Berg Hansen'),
