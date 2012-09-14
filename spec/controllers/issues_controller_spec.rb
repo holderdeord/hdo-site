@@ -418,6 +418,8 @@ describe IssuesController do
 
     context "show" do
       it "should set variables for previous and next issue" do
+        # TODO: move to model spec?
+
         t1 = Issue.make! title: 'aaaa1', :published => true
         t2 = Issue.make! title: 'aaaa2', :published => true
         t3 = Issue.make! title: 'aaaa3', :published => true
@@ -429,6 +431,8 @@ describe IssuesController do
       end
 
       it "ignores non-published issues for the next/previous links" do
+        # TODO: move to model spec?
+
         t1 = Issue.make! title: 'aaaa1', :published => true
         t2 = Issue.make! title: 'aaaa2', :published => true
         t3 = Issue.make! title: 'aaaa3', :published => false

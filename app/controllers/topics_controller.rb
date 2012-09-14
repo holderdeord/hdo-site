@@ -86,11 +86,8 @@ class TopicsController < ApplicationController
 
   private
 
-  def assign_previous_and_next_topic(order = :name)
-    topics = Topic.order(order)
-
-    @previous_topic = topics[topics.index(@topic) - 1] if topics.index(@topic) > 0
-    @next_topic     = topics[topics.index(@topic) + 1] if topics.index(@topic) < topics.size
+  def assign_previous_and_next_topic
+    @previous_topic, @next_topic = @topic.previous_and_next(order: :name)
   end
 
   def fetch_issues

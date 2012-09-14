@@ -133,12 +133,8 @@ class IssuesController < ApplicationController
 
   private
 
-  def assign_previous_and_next_issues(order = :title)
-    issues = Issue.order(order)
-    issues = issues.published unless user_signed_in?
-
-    @previous_issue = issues[issues.index(@issue) - 1] if issues.index(@issue) > 0
-    @next_issue     = issues[issues.index(@issue) + 1] if issues.index(@issue) < issues.size
+  def assign_previous_and_next_issues
+    @previous_issue, @next_issue = @issue.previous_and_next(published_only: !user_signed_in?)
   end
 
   def assign_party_groups

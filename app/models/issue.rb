@@ -31,6 +31,18 @@ class Issue < ActiveRecord::Base
   scope :vote_ordered, includes(:votes).order('votes.time DESC')
   scope :published, where(:published => true)
 
+  def previous_and_next(opts = {})
+    issues = self.class.order(opts[:order] || :title)
+    issues = issues.published if opts[:published_only]
+
+    current_index = issues.index(self)
+
+    prev_issue = issues[current_index - 1] if current_index > 0
+    next_issue = issues[current_index + 1] if current_index < issues.size
+
+    [prev_issue, next_issue]
+  end
+
   def update_attributes_and_votes_for_user(attributes, votes, user)
     changed = false
 

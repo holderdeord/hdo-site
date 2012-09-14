@@ -25,6 +25,17 @@ class Topic < ActiveRecord::Base
     end
   end
 
+  def previous_and_next(opts = {})
+    topics = self.class.order(opts[:order] || :name)
+
+    current_index = topics.index(self)
+
+    prev_topic = topics[current_index - 1] if current_index > 0
+    next_topic = topics[current_index + 1] if current_index < topics.size
+
+    [prev_topic, next_topic]
+  end
+
   def default_image
     "#{Rails.root}/app/assets/images/topic_icons/snakkeboble_venstre.png"
   end
