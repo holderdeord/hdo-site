@@ -2,7 +2,7 @@ class CategoriesController < ApplicationController
   caches_page :index, :show, :promises
 
   def index
-    @categories = Category.includes(:children).all(:order => :name)
+    @categories = Category.all_with_children
 
     respond_to do |format|
       format.html
