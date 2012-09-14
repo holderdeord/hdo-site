@@ -7,9 +7,8 @@ Hdo::Application.routes.draw do
   get 'issues/:id/edit/:step'   => 'issues#edit', :as => :edit_issue_step
   get 'issues/:id/votes/search' => "issues#votes_search", :as => :issue_votes_search
 
-  resources :districts,       :only => [:index, :show]
-  resources :categories,      :only => [:index, :show]
-  resources :categories do
+  resources :districts,  :only => [:index, :show]
+  resources :categories, :only => [:index, :show] do
     member do
       get 'promises'
       get 'promises/parties/:party' => 'categories#promises'
