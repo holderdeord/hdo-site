@@ -2,9 +2,9 @@ var HDO = HDO || {};
 
 (function (H, $) {
   var categoryId,
-    partySlug = null,
+    partySlug = 'show-all',
     results,
-    bodyName = "promisesBody",
+    bodyName = "promises-body",
     cache = {},
     lastPartyFilter = null;
 
@@ -42,32 +42,13 @@ var HDO = HDO || {};
     results = data;
   }
 
-  function getResults() {
-    return results;
-  }
-
-  function showSpecificParty(catId, partyId) {
-    var bodyElement = $('.' + bodyName);
-    bodyElement.empty();
-
-    lastPartyFilter = partyId;
-
-    bodyElement.hide().append(results);
-    bodyElement.find('div[data-party-slug!="' + partyId + '"]').hide();
-    bodyElement.show();
-  }
-
   function showAllPromisesInCategory(catId, partySlug) {
     getData(catId, partySlug, function (results) {
-      setResults(results);
-      if (results === '') {
-        $('.' + bodyName).html("Ingen løfter i denne kategorien.");
-      } else {
+      if (results !== "") {
+        setResults(results);
         $('.' + bodyName).html(results);
-      }
-
-      if (lastPartyFilter) {
-        showSpecificParty(catId, lastPartyFilter);
+      } else {
+        $('.' + bodyName).html("Partiet har ingen løfter i denne kategorien.");
       }
     });
   }
@@ -95,6 +76,7 @@ var HDO = HDO || {};
       $(self.options.categoriesSelector).find('a').on('click', function (e) {
 
         categoryId = $(this).data('category-id');
+
         $(self.options.categoriesSelector).find('a').removeClass('active');
         $(this).addClass('active');
 
@@ -108,7 +90,6 @@ var HDO = HDO || {};
           partySlug = partySlug.substring(partySlug.lastIndexOf('/') + 1);
         }
 
-
         var target = $(self.options.targetSelector);
         target.empty().append('<div class="' + bodyName + '"></div>');
         showAllPromisesInCategory(categoryId, partySlug);
@@ -121,6 +102,7 @@ var HDO = HDO || {};
         removeActiveClass(self.options.partiesSelector, partySlug);
 
         partySlug = $(this).data('party-slug');
+        lastPartyFilter = partySlug;
 
         if (partySlug.indexOf(',') >= 0) {
           $(this).parent().addClass('government-active');
@@ -128,12 +110,7 @@ var HDO = HDO || {};
           $(this).parent().addClass(partySlug + '-active');
         }
 
-        if (partySlug === 'show-all') {
-          showAllParties(categoryId);
-          $(this).parent().addClass('active');
-        } else {
-          showSpecificParty(categoryId, partySlug);
-        }
+        showAllPromisesInCategory(categoryId, partySlug);
 
         e.preventDefault();
       });
