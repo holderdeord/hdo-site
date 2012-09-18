@@ -42,11 +42,19 @@ var HDO = HDO || {};
     results = data;
   }
 
+  function showSpecificParty(partyId) {
+    lastPartyFilter = partyId;
+    var bodyElement = $('.' + bodyName);
+    bodyElement.html(results);
+  }
+
   function showAllPromisesInCategory(catId, partySlug) {
     getData(catId, partySlug, function (results) {
-      if (results !== "") {
+      lastPartyFilter = partySlug;
+      if (results !== '') {
         setResults(results);
         $('.' + bodyName).html(results);
+        showSpecificParty(lastPartyFilter);
       } else {
         $('.' + bodyName).html("Partiet har ingen løfter i denne kategorien.");
       }
@@ -55,11 +63,24 @@ var HDO = HDO || {};
 
   function showAllParties(catId) {
     lastPartyFilter = null;
-    showAllPromisesInCategory(catId);
+    showAllPromisesInCategory(catId, "show-all");
   }
 
   function removeActiveClass(divClass) {
     $(divClass).find('li').removeClass();
+  }
+
+  function showSubCategories(categoryId) {
+    $.ajax({
+      url: "/categories/" + categoryId + "/subcategories",
+
+      success:  function (subcategories) {
+        $('#subcategory-dropdown').empty().append('<option>Velg underkategori</option>').val(0);
+        $.each(subcategories, function (i, value) {
+          $('#subcategory-dropdown').append('<option data-category-id="' + value.id + '">' + value.name + '</option>').show();
+        });
+      }
+    });
   }
 
   H.promiseWidget = {
@@ -79,6 +100,9 @@ var HDO = HDO || {};
 
         $(self.options.categoriesSelector).find('a').removeClass('active');
         $(this).addClass('active');
+
+        var target = $(self.options.targetSelector);
+        target.empty().append('<div class="' + bodyName + '"></div>');
 
         if (self.options.partiesSelector !== null) {
           if (!lastPartyFilter) {
@@ -102,7 +126,6 @@ var HDO = HDO || {};
         removeActiveClass(self.options.partiesSelector, partySlug);
 
         partySlug = $(this).data('party-slug');
-        lastPartyFilter = partySlug;
 
         if (partySlug.indexOf(',') >= 0) {
           $(this).parent().addClass('government-active');
@@ -110,15 +133,28 @@ var HDO = HDO || {};
           $(this).parent().addClass(partySlug + '-active');
         }
 
-        showAllPromisesInCategory(categoryId, partySlug);
+        if(partySlug !== lastPartyFilter) {
+          showAllPromisesInCategory(categoryId, partySlug);
+          showSpecificParty(partySlug);
+        } else { 
+          showSpecificParty(partySlug);
+        }
 
         e.preventDefault();
       });
 
-      //category dropdown list mobil
+      //category dropdown list mobile
       $(self.options.categoriesSelector).on('change', function () {
         categoryId = $(self.options.categoriesSelector + " option:selected").data("category-id");
+        showSubCategories(categoryId);
         showAllPromisesInCategory(categoryId, partySlug);
+      });
+
+      //subcategory dropdown list mobile
+      $('#subcategory-dropdown').on('change', function () {
+        categoryId = $("#subcategory-dropdown option:selected").data("category-id");
+        showAllPromisesInCategory(categoryId, partySlug);
+        $('#subcategory-dropdown option:selected').attr('selected', 'true');
       });
 
       //party dropdown list mobile

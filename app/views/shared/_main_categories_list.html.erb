@@ -28,13 +28,16 @@
     </div>
   </div>
 
-  <!-- VISIBLE IN MOBILE -->
+  <!-- VISIBLE IN MOBILE --> 
   <div class="hidden-desktop">
     <select>
       <option>Velg kategori</option>
       <% categories.each do |category| %>
         <option data-category-id="<%= category.id %>"><%= category.human_name %></option>
       <% end %>
+    </select>
+    <select id="subcategory-dropdown" style="display: none">
+      <option>Velg underkategori</option>
     </select>
   </div>
 
