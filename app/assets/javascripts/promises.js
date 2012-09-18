@@ -114,8 +114,6 @@ var HDO = HDO || {};
           partySlug = partySlug.substring(partySlug.lastIndexOf('/') + 1);
         }
 
-        var target = $(self.options.targetSelector);
-        target.empty().append('<div class="' + bodyName + '"></div>');
         showAllPromisesInCategory(categoryId, partySlug);
 
         e.preventDefault();
