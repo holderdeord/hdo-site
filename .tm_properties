@@ -2,9 +2,9 @@ projectDirectory = "$CWD"
 
 # Extra files to include
 #
-myExtraIncludes = ".tm_properties,.htaccess,.gitignore"
+myExtraIncludes = ".tm_properties,.htaccess,.gitignore,.travis.yml"
 fileBrowserGlob  = "{*,$myExtraIncludes}"
-include = "{$include,$myExtraIncludes}"
+include = "{*,$include,$myExtraIncludes}"
 
 # Hide log, vendor and tmp directories from search popups.
 #
