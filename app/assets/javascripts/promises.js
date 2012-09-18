@@ -5,10 +5,9 @@ var HDO = HDO || {};
     partySlug = 'show-all',
     results,
     bodyName = "promises-body",
-    cache = {},
     lastPartyFilter = null;
 
-  function getData(catId, partySlug, callback) {
+  function getData(cache, catId, partySlug, callback) {
     var promiseUrl;
 
     if (partySlug === '' || !partySlug || partySlug === "show-all") {
@@ -48,8 +47,8 @@ var HDO = HDO || {};
     bodyElement.html(results);
   }
 
-  function showAllPromisesInCategory(catId, partySlug) {
-    getData(catId, partySlug, function (results) {
+  function showAllPromisesInCategory(cache, catId, partySlug) {
+    getData(cache, catId, partySlug, function (results) {
       lastPartyFilter = partySlug;
       if (results !== '') {
         setResults(results);
@@ -87,6 +86,7 @@ var HDO = HDO || {};
     create: function (options) {
       var instance = Object.create(this);
       instance.options = options;
+      instance.cache = {};
 
       return instance;
     },
@@ -114,7 +114,7 @@ var HDO = HDO || {};
           partySlug = partySlug.substring(partySlug.lastIndexOf('/') + 1);
         }
 
-        showAllPromisesInCategory(categoryId, partySlug);
+        showAllPromisesInCategory(self.cache, categoryId, partySlug);
 
         e.preventDefault();
 
@@ -132,7 +132,7 @@ var HDO = HDO || {};
         }
 
         if(partySlug !== lastPartyFilter) {
-          showAllPromisesInCategory(categoryId, partySlug);
+          showAllPromisesInCategory(self.cache, categoryId, partySlug);
           showSpecificParty(partySlug);
         } else { 
           showSpecificParty(partySlug);
@@ -145,13 +145,13 @@ var HDO = HDO || {};
       $(self.options.categoriesSelector).on('change', function () {
         categoryId = $(self.options.categoriesSelector + " option:selected").data("category-id");
         showSubCategories(categoryId);
-        showAllPromisesInCategory(categoryId, partySlug);
+        showAllPromisesInCategory(self.cache, categoryId, partySlug);
       });
 
       //subcategory dropdown list mobile
       $('#subcategory-dropdown').on('change', function () {
         categoryId = $("#subcategory-dropdown option:selected").data("category-id");
-        showAllPromisesInCategory(categoryId, partySlug);
+        showAllPromisesInCategory(self.cache, categoryId, partySlug);
         $('#subcategory-dropdown option:selected').attr('selected', 'true');
       });
 
@@ -161,7 +161,7 @@ var HDO = HDO || {};
         partySlug = $(self.options.partiesSelector + " option:selected").data("party-slug");
         if (categoryId) {
           target.empty().append('<div class="' + bodyName + '"></div>');
-          showAllPromisesInCategory(categoryId, partySlug);
+          showAllPromisesInCategory(self.cache, categoryId, partySlug);
         } else {
           target.empty().append("Ingen kategori valgt.");
         }
