@@ -50,7 +50,7 @@ module Hdo
               links << {
                 source: party_idx,
                 target: party_count + conn_idx,
-                value: value_for(party, conn.vote)
+                value: value_for(party, conn)
               }
 
             end
@@ -68,12 +68,14 @@ module Hdo
         @votes ||= @issue.vote_connections.order(:description).to_a
       end
 
-      def value_for(party, vote)
-        counts = vote.stats.party_counts_for(party)
+      def value_for(party, vote_connection)
+        counts = vote_connection.vote.stats.party_counts_for(party)
 
-        # does not consider absent representatives
-        percent = counts[:for] * 100 / (counts[:for] + counts[:against]).to_f
-        percent.to_i
+        s = counts[:for]
+        t = counts[:for] + counts[:against]
+        v = vote_connection.weight
+
+        v * s / t
       end
 
     end
