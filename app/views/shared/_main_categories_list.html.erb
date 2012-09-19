@@ -15,7 +15,7 @@
           <div id="<%= category.id %>" class="accordion-body collapse" style="height: 0px;">
             <div class="accordion-inner">
               <ul class="unstyled">
-                <% Category.where(:parent_id => category.id).each do |c| %>
+                <% category.children.each do |c| %>
                   <li><a data-category-id="<%= c.id %>" href="#"><%= c.human_name %></a></li>
                 <% end %>
                 <br />

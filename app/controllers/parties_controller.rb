@@ -34,7 +34,7 @@ class PartiesController < ApplicationController
     @party  = Party.includes(:representatives, :promises => :categories).find(params[:id])
 
     @issues = Issue.published.order(:title)
-    @categories = Category.where(:main => true)
+    @categories = Category.where(:main => true).includes(:children)
 
     respond_to do |format|
       format.html
