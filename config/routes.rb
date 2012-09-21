@@ -33,7 +33,12 @@ Hdo::Application.routes.draw do
   get 'representatives/index/district' => 'representatives#index_by_district', :as => :representatives_by_district
   get 'representatives/:id/page/:page' => 'representatives#show'
 
-  resources :votes, :only => [:index, :show]
+  resources :votes, :only => [:index, :show] do
+    member do
+      get 'propositions'
+    end
+  end
+
   get 'votes/page/:page' => 'votes#index'
 
   get "home/index"

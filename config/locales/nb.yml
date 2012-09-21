@@ -326,6 +326,9 @@ nb:
       promises:
         one: "Viser <strong>1</strong> løfte."
         other: "Viser <strong>%{count}</strong> løfter."
+      propositions:
+        one: "Viser <strong>1</strong> forslag."
+        other: "Viser <strong>%{count}</strong> forslag."
     group:
       by_party: 'Grupper etter parti'
       by_district: 'Grupper etter fylke'

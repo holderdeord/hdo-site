@@ -22,6 +22,16 @@ class VotesController < ApplicationController
     end
   end
 
+  def propositions
+    vote = Vote.includes(:propositions).find(params[:id])
+    @propositions = vote ? vote.propositions : []
+
+    respond_to do |format|
+      format.html { render layout: !request.xhr? }
+      format.json { render json: @propositions }
+    end
+  end
+
   private
 
   def render_votes_index(opts = {})
