@@ -76,7 +76,8 @@ var HDO = HDO || {};
       success:  function (subcategories) {
         $('#subcategory-dropdown').empty().append('<option>Velg underkategori</option>').val(0);
         $.each(subcategories, function (i, value) {
-          $('#subcategory-dropdown').append('<option data-category-id="' + value.id + '">' + value.name + '</option>').show();
+          $('#subcategory-dropdown').append('<option data-category-id="' + value.id + '">' +
+            value.name + '</option>').show();
         });
       }
     });
@@ -95,7 +96,6 @@ var HDO = HDO || {};
       var self = this;
 
       $(self.options.categoriesSelector).find('a').on('click', function (e) {
-
         categoryId = $(this).data('category-id');
 
         $(self.options.categoriesSelector).find('a').removeClass('active');
@@ -131,10 +131,10 @@ var HDO = HDO || {};
           $(this).parent().addClass(partySlug + '-active');
         }
 
-        if(partySlug !== lastPartyFilter) {
+        if (partySlug !== lastPartyFilter) {
           showAllPromisesInCategory(self.cache, categoryId, partySlug);
           showSpecificParty(partySlug);
-        } else { 
+        } else {
           showSpecificParty(partySlug);
         }
 
