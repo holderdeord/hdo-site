@@ -47,10 +47,13 @@ module Hdo
           party_count = parties.size
           parties.each_with_index do |party, party_idx|
             vote_connections.each_with_index do |conn, conn_idx|
+              value = value_for(party, conn)
+              next if value <= 0
+
               links << {
                 source: party_idx,
                 target: party_count + conn_idx,
-                value: value_for(party, conn)
+                value: value
               }
 
             end
