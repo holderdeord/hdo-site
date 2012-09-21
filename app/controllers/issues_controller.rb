@@ -146,7 +146,25 @@ class IssuesController < ApplicationController
   end
 
   def edit_promises
+    # TODO: confusing that we use @promises_by_party in both
+    # issue#edit and issue#show, but as wildly different data structures.
     @promises_by_party = @issue.categories.includes(:promises).map(&:promises).compact.flatten.uniq.group_by { |e| e.short_party_names }
+  end
+
+  def assign_promises_by_party
+    # {
+    #   'A'    => { 'I partiprogrammet har...' => promises, 'I regjeringserklæring har...' => promises },
+    #   'FrP'  => { 'I partiprogrammet har...' => promises },
+    # }
+
+    @promises_by_party = {}
+
+    @issue.promises.each do |promise|
+      promise.parties.each do |party|
+        data = @promises_by_party[party] ||= {}
+        (data[promise.source_header] ||= []) << promise
+      end
+    end
   end
 
   def edit_votes
@@ -167,22 +185,6 @@ class IssuesController < ApplicationController
 
   def assign_issue_steps
     @issue_steps = Hdo::IssueEditSteps::STEPS
-  end
-
-  def assign_promises_by_party
-    # {
-    #   'A'    => { 'I partiprogrammet har...' => promises, 'I regjeringserklæring har...' => promises },
-    #   'FrP'  => { 'I partiprogrammet har...' => promises },
-    # }
-
-    @promises_by_party = {}
-
-    @issue.promises.each do |promise|
-      promise.parties.each do |party|
-        data = @promises_by_party[party] ||= {}
-        (data[promise.source_header] ||= []) << promise
-      end
-    end
   end
 
   def assign_disable_buttons
