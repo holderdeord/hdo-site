@@ -10,7 +10,7 @@
       <p class="issues-party-position"><%= issue.stats.text_for(party, html: true) %> <%= t 'app.lang.infinitive_particle' %> <%= issue.downcased_title %></p>
 
       <% if promise_group = promises_by_party[party] %>
-        <% promise_group.each do |header, promises| %>
+        <% promise_group.sort_by { |h, p| h }.each do |header, promises| %>
           <p><%= header %></hp>
           <ul>
             <% promises.each do |promise| %>
