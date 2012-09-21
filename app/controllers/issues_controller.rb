@@ -121,7 +121,7 @@ class IssuesController < ApplicationController
     votes -= @issue.vote_connections.map { |e| e.vote }
 
     # TODO: cleanup
-    by_issue_type = Hash.new { |hash, issue_type| hash[issue_type] = [] }
+    by_issue_type = Hash.new { |hash, issue_type| hash[issue_type] = Set.new }
     votes.each do |vote|
       vote.parliament_issues.each do |issue|
         by_issue_type[issue.issue_type] << vote
