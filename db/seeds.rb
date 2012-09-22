@@ -12,7 +12,14 @@ if Rails.env.development?
   existing && existing.destroy
 
   puts "creating development user u=admin@holderdeord.no p=hdo123"
-  User.create!(:email => "admin@holderdeord.no", :password => "hdo123", :password_confirmation => "hdo123", :remember_me => false)
+
+  User.create!(
+    name: 'admin',
+    email: "admin@holderdeord.no",
+    password: "hdo123",
+    password_confirmation: "hdo123",
+    remember_me: false
+  )
 end
 
 Topic.destroy_all
