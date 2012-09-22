@@ -1,152 +1,108 @@
 /* global HDO*/
 
 (function (H, $) {
-  buster.testCase('Promises page', {
+  buster.testCase('Promises page - Categories', {
     setUp: function () {
-      this.server = sinon.fakeServer.create();
-    },
-
-    tearDown: function () {
-      this.server.restore();
-    },
-
-    "//should render the server response when a category is clicked": function() {
-      var el = $('<div id="categories"><a data-category-id="1">Arbeidsliv</a></div> <div id="target"></div>');
-      $(document.body).append(el);
-      var serverResponse = '<div>some promise</div>';
-
-      this.server.respondWith('GET', '/categories/1/promises',
-        [200, {'Content-Type': 'text/html'}, serverResponse]);
-
-      H.promiseWidget.create({
-        categoriesSelector: '#categories',
-        targetSelector: '#target'
-      }).init();
-
-      el.find('a').click();
-
-      // assert server called
-      assert.match(this.server.requests[0], {
-        method: 'GET',
-        url: '/categories/1/promises'
+      var el = $('<div id="categories">' +
+                  '<li><a data-category-id=1>Arbeidsliv</a></li>' + 
+                  '<li><a data-category-id=2>Finanser</a></li>' +
+               '</div>');
+      this.firstLink = $(el).find('a[data-category-id=1]').get(0);
+      this.secondLink = $(el).find('a[data-category-id=2]').get(0);
+      this.server = {
+        fetchPromises: this.spy()
+      }
+      this.target = document.createElement("div");
+      this.widget = HDO.promiseWidget.create({
+        categoriesSelector: el, 
+        server: this.server,
+        targetEl: this.target
       });
-
-      this.server.respond();
-
-      // assert html response rendered
-      var target = $('#target');
-      var expectedHtml = '<div class="promises-body">' + serverResponse + '</div>';
-
-      assert.equals(target.html(), expectedHtml);
+      this.widget.init();
+      
     },
 
-    "//party filter should not change when choosing other categories": function () {
-      var mockHtmlObject = $('<div id="categories"><a data-category-id="1">Arbeidsliv</a>' + 
-        '<a data-category-id="2">Finanser</a></div><div class="party-nav"><li><a data-party-slug="show-all">Alle partiene</a></li>' + 
-        '<li class="a-active"><a data-party-slug="a">Arbeiderpartiet</a></li></div>');
-      $(document.body).append(mockHtmlObject);   
-      var mockHtml = mockHtmlObject.html();
+    "category has active class when clicked": function () {
+      $(this.firstLink).click();
 
-      this.server.respondWith('GET', 'categories/1/promises',
-        [200, {'Content-Type': 'text/html'}, '']);
-
-      this.server.respondWith('GET', 'categories/1/promises/parties/a',
-        [200, {'Content-Type': 'text/html'}, mockHtml]);
-
-      this.server.respondWith('GET', 'categories/2/promises/parties/a',
-        [200, {'Content-Type': 'text/html'}, mockHtml]);
-
-      H.promiseWidget.create({
-        categoriesSelector: '#categories',
-        partiesSelector: '.party-nav'
-      }).init();
-
-      mockHtmlObject.find('a[data-category-id=1]').click();
-      assert.equals(this.server.requests.length, 1);
-      this.server.respond();
-
-      mockHtmlObject.find('a[data-party-slug=a]').click();
-      assert.equals(this.server.requests.length, 2);
-      this.server.respond();
-
-      mockHtmlObject.find('a[data-category-id=2]').click();
-      assert.equals(this.server.requests.length, 3);
-      this.server.respond();
-
-      assert.match(this.server.requests[1], {
-        method: 'GET',
-        url: '/categories/1/promises/parties/a'
-      });
-
-      assert.match(this.server.requests[2], {
-        method: 'GET',
-        url: '/categories/2/promises/parties/a'
-      });
+      assert.className(this.firstLink, "active");
     },
 
-    "//caches server responses": function() {
-      var mockHtmlObject = $('<div id="categories"><a data-category-id="1">Arbeidsliv</a></div>' + 
-        '<div class="party-nav"><li><a data-party-slug="show-all">Alle partiene</a></li>' + 
-        '<li class="a-active"><a data-party-slug="a">Arbeiderpartiet</a></li></div>');
-      $(document.body).append(mockHtmlObject);   
-      var mockHtml = mockHtmlObject.html();
+    "only one category has active class": function () {
+      $(this.firstLink).click();
+      $(this.secondLink).click();
 
-      this.server.respondWith('GET', 'categories/1/promises',
-        [200, {'Content-Type': 'text/html'}, mockHtml]);
-
-      H.promiseWidget.create({
-        categoriesSelector: '#categories',
-        partiesSelector: '.party-nav'
-      }).init();
-
-      mockHtmlObject.find('a[data-category-id=1]').click();
-      assert.equals(this.server.requests.length, 1);
-      this.server.respond();
-
-      mockHtmlObject.find('a[data-party-slug=a]').click();
-      assert.equals(this.server.requests.length, 2);
-      this.server.respond();
-
-      mockHtmlObject.find('a[data-party-slug=show-all]').click();
-      assert.equals(this.server.requests.length, 2);
-      this.server.respond();
+      refute.className(this.firstLink, "active");
+      assert.className(this.secondLink, "active");
     },
 
-    "//should show message when there are no promises": function () {
-      var mockHtmlObject = $('<div id="categories"><a data-category-id="1">Arbeidsliv</a></div>' + 
-        '<div class="party-nav"><li><a data-party-slug="show-all">Alle partiene</a></li>' + 
-        '<li class="a-active"><a data-party-slug="a">Arbeiderpartiet</a></li></div>');
-      $(document.body).append(mockHtmlObject);
-      var response = "Partiet har ingen løfter i denne kategorien.";
+    "should contact server when clicking on category": function () {
+      $(this.firstLink).click();
 
-      this.server.respondWith('GET', 'categories/1/promises',
-        [200, {'Content-Type': 'text/html'}, '']);
+      assert.calledOnceWith(this.server.fetchPromises, 1);
+    },
 
-      this.server.respondWith('GET', 'categories/1/promises/parties/a',
-        [200, {'Content-Type': 'text/html'}, response]);
+    "should add results to page when category is clicked": function () {
+      $(this.firstLink).click();
 
-      H.promiseWidget.create({
-        categoriesSelector: '#categories',
-        partiesSelector: '.party-nav',
-        targetSelector: '#target'
-      }).init();
+      this.server.fetchPromises.yield("test");
 
-      mockHtmlObject.find('a[data-category-id=1]').click();
-      this.server.respond();
-
-      mockHtmlObject.find('a[data-party-slug=a]').click();
-      assert.match(this.server.requests[1], {
-        method: 'GET',
-        url: '/categories/1/promises/parties/a'
-      });
-      this.server.respond();
-
-      target = $('#target');
-      var expectedHtml = '<div id="promises-body">' + response + '</div>';
-      assert.equals(target.html(), expectedHtml);
+      assert.match(this.target.innerHTML, "test");
     }
   });
 
-    
+  buster.testCase('Promises page - Parties', {
+    setUp: function () {
+      var el = $('<div class="party-nav">' +
+                    '<li><a data-party-slug=a>Arbeiderpartiet</a></li>' +
+                    '<li><a data-party-slug=frp>Fremskritspariet</a></li>' +
+                  '</div>');
 
+      this.targetEl = $('<div id="promises-body">' +
+                          '<div data-party-slug=a>' +
+                            '<h3 class="a-title"><a href="/parties/a">Arbeiderpartiet</a></h3>' +
+                              '<p>Promise 1</p>' +
+                          '</div>' +
+                          '<div data-party-slug=frp>' +
+                            '<h3 class="frp-title"><a href="/parties/frp">Fremskritspariet</a></h3>' +
+                              '<p>Promise 2</p>' +
+                          '</div>' +
+                        '</div>');
+                          
+
+      this.firstLink = $(el).find('a[data-party-slug=a]').get(0);
+      this.firstLi = $(this.firstLink).parent().get(0);
+      
+      this.secondLink = $(el).find('a[data-party-slug=frp]').get(0);
+      this.secondLi = $(this.secondLink).parent().get(0);
+
+      this.widget = HDO.promiseWidget.create({
+        partiesSelector: el, 
+        server: this.server,
+        targetEl: this.targetEl
+      });
+      this.widget.init();
+    },
+
+    "party has active class when clicked": function () {
+      $(this.firstLink).click();
+
+      assert.className(this.firstLi, "active");
+    },
+
+    "only one party has active class": function () {
+      $(this.firstLink).click();
+      $(this.secondLink).click();
+
+      refute.className(this.firstLi, "active");
+      assert.className(this.secondLi, "active");
+    },
+
+    "only show selected party": function () {
+      $(this.firstLink).click();
+
+      assert.className($(this.targetEl).find('div[data-party-slug=frp]').get(0), "hidden");
+      refute.className($(this.targetEl).find('div[data-party-slug=a]').get(0), "hidden");
+    }
+  });
 }(HDO, jQuery));
