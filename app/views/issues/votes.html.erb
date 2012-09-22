@@ -6,57 +6,55 @@
 
 <div class="row-fluid">
   <div class="span12">
-    <h2 class="page-header">
+    <h1 class="page-header">
       <%= Vote.model_name.human(count: 2).capitalize %> <%= Vote.human_attribute_name(:about) %> <%= t 'app.lang.infinitive_particle' %> <%= @issue.downcased_title %>
-    </h2>
+      <p class="pull-right"><small><%= link_to t('app.method.read_more'), home_method_path %>.</small></p>
+    </h1>
 
     <% @issue_votes.each do |issue_vote| %>
       <div class="row-fluid">
-        <div class="span12">
-          <h3>
-            <%= issue_vote.description %>
-            <small class="pull-right">
-              <%= link_to issue_vote.vote do %>
-                <%= t 'app.issues.view_vote' %> &rarr;
+        <h3>
+           <small class="pull-right"><%= issue_vote.time_text %></small>
+          <%= issue_vote.description %>
+        </h3>
+        <br> <!-- ugh -->
+      </div>
+
+      <div class="row-fluid">
+        <div class="span3">
+          <h4>Stemte for</h4>
+          <% issue_vote.parties_for.each do |party| %>
+            <%= link_to party do %>
+              <%= image_tag party.image_with_fallback.thumb("60x60").url %>
+            <% end %>
+          <% end %>
+        </div>
+
+        <div class="span3">
+          <h4>Stemte mot</h4>
+
+            <% issue_vote.parties_against.each do |party| %>
+              <%= link_to party do %>
+                <%= image_tag party.image_with_fallback.thumb("60x60").url %>
               <% end %>
-            </small>
-          </h3>
+            <% end %>
+        </div>
+
+        <div class="span6">
+          <p><%= issue_vote.matches_text.html_safe %> <%= issue_vote.enacted_text.html_safe %></p>
+          <p><%= issue_vote.comment %> <%= issue_vote.weight_text.html_safe %></p>
         </div>
       </div>
 
       <div class="row-fluid">
-        <div class="span6">
-          <dl>
-            <% issue_vote.parties.each do |party| %>
-              <dt><%= party.text %></dt>
-              <dd><p><%= image_tag party.logo.thumb("50x50").url %> <small><%= party.counts %></small></p></dt>
-            <% end %>
-          </ul>
-        </div>
-
-        <div class="span6">
-          <dl>
-            <dt>Kommentar</dt>
-            <dd>
-              <p>
-                <%= issue_vote.comment %>
-                <small><%= link_to t('app.method.read_more'), home_method_path %>.</small>
-              </p>
-            </dd>
-
-            <dt>Vekting</dt>
-            <dd><%= issue_vote.weight_text %> (<%= '%g' % issue_vote.weight %>)</dd>
-
-            <dt>Støtter saken</dt>
-            <dd><%= issue_vote.matches_text %></dd>
-
-            <dt>Vedtatt</dt>
-            <dd class="label <%= issue_vote.enacted_class %>"><%= issue_vote.enacted_text %></dd>
-          </dl>
-        </div>
+        <small class="pull-right">
+          <%= link_to issue_vote.vote do %>
+            <%= t 'app.issues.view_vote' %> &rarr;
+          <% end %>
+        </small>
       </div>
 
-      <hr class="soften">
+      <hr>
     <% end %>
 
   </div>

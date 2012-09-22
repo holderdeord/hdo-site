@@ -7,6 +7,12 @@ nb:
     formats:
       default: "%Y-%m-%d %H:%M:%S"
       short: "%Y-%m-%d"
+      text: "%e. %B %Y"
+  date:
+     day_names: [Søndag, Mandag, Tirsdag, Onsdag, Torsdag, Fredag, Lørdag]
+     abbr_day_names: [Søn, Man, Tir, Ons, Tor, Fre, Lør]
+      # Don't forget the nil at the beginning; there's no such thing as a 0th month
+     month_names: [~, januar, februar, mars, april, mai, juni, juli, august, september, oktober, november, desember]
   datetime:
     distance_in_words:
       x_days:
@@ -259,7 +265,7 @@ nb:
         reset: Nullstill
         fetch_votes: Søk
         search_result: Søkeresultat
-      view_vote: 'Gå til avstemning'
+      view_vote: 'Se hva de stemte'
       view_votes:
         one: 'Se 1 avstemning om saken'
         other: 'Se %{count} avstemninger om saken'

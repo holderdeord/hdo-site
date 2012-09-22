@@ -1,3 +1,5 @@
+# encoding: UTF-8
+
 class VoteConnection < ActiveRecord::Base
   WEIGHTS        = [0.0, 0.5, 1.0, 2.0, 4.0]
   DEFAULT_WEIGHT = 1.0
@@ -16,4 +18,22 @@ class VoteConnection < ActiveRecord::Base
   def matches_text
     matches? ? I18n.t('app.yes') : I18n.t('app.no')
   end
+
+  def weight_text
+    case weight
+    when 0
+      'uten formell betydning'
+    when 0.5
+      'lite viktig'
+    when 1
+      'noe viktig'
+    when 2
+      'viktig'
+    when 4
+      'svært viktig'
+    else
+      raise "unknown weight: #{weight}"
+    end
+  end
+
 end
