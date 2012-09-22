@@ -20,12 +20,16 @@
           return;
         }
 
+        var spinner = target.find(".spinner");
+        spinner.show();
+
         $.ajax({
           url: "/votes/" + voteId + "/propositions",
           type: "GET",
           dataType: "html",
 
           complete: function () {
+            spinner.hide();
           },
 
           success: function (data) {
