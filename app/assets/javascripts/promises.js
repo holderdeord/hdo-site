@@ -3,23 +3,25 @@ var HDO = HDO || {};
 (function (H, $) {
   var categoryId,
     partySlug = 'show-all',
-    results,
-    bodyName = "promises-body",
+    bodyName = 'promises-body',
     lastPartyFilter = null;
 
   function getData(cache, catId, partySlug, callback) {
     var promiseUrl;
 
-    if (partySlug === '' || !partySlug || partySlug === "show-all") {
+    if (!partySlug || partySlug === "show-all") {
       promiseUrl = '/categories/' + catId + '/promises';
     } else {
       promiseUrl = '/categories/' + catId + '/promises/parties/' + partySlug;
     }
 
+    console.log("Get data " + promiseUrl);
     if (cache[promiseUrl]) {
+      console.log("cache hit!");
       callback(cache[promiseUrl]);
       return;
     }
+    console.log("cache miss " + JSON.stringify(cache));
 
     $("#spinner").show();
 
@@ -27,42 +29,25 @@ var HDO = HDO || {};
       url: promiseUrl,
 
       complete: function () {
-        $("#spinner").hide();
+        $('#spinner').hide();
       },
 
       success: function (data) {
         cache[promiseUrl] = data;
+        console.log("Cache write " + promiseUrl + " " + JSON.stringify(cache));
         callback(data);
       }
     });
   }
 
-  function setResults(data) {
-    results = data;
-  }
-
-  function showSpecificParty(partyId) {
-    lastPartyFilter = partyId;
-    var bodyElement = $('.' + bodyName);
-    bodyElement.html(results);
-  }
-
   function showAllPromisesInCategory(cache, catId, partySlug) {
     getData(cache, catId, partySlug, function (results) {
-      lastPartyFilter = partySlug;
-      if (results !== '') {
-        setResults(results);
-        $('.' + bodyName).html(results);
-        showSpecificParty(lastPartyFilter);
+      if (results === "") {
+        $('.' + bodyName).html('Partiet har ingen løfter i denne kategorien.');
       } else {
-        $('.' + bodyName).html("Partiet har ingen løfter i denne kategorien.");
+        $('.' + bodyName).empty().html(results);
       }
     });
-  }
-
-  function showAllParties(catId) {
-    lastPartyFilter = null;
-    showAllPromisesInCategory(catId, "show-all");
   }
 
   function removeActiveClass(divClass) {
@@ -95,6 +80,8 @@ var HDO = HDO || {};
     init: function () {
       var self = this;
 
+      // click on a category
+
       $(self.options.categoriesSelector).find('a').on('click', function (e) {
         categoryId = $(this).data('category-id');
 
@@ -108,22 +95,24 @@ var HDO = HDO || {};
           if (!lastPartyFilter) {
             removeActiveClass(self.options.partiesSelector);
             $('[data-party-slug="show-all"]').parent().addClass('active');
+            lastPartyFilter = 'show-all';
           }
         } else {
           partySlug = document.URL;
           partySlug = partySlug.substring(partySlug.lastIndexOf('/') + 1);
         }
 
-        showAllPromisesInCategory(self.cache, categoryId, partySlug);
-
+        showAllPromisesInCategory(self.cache,categoryId, partySlug);
         e.preventDefault();
 
       });
 
+      // click on a party
       $(self.options.partiesSelector).find('a').on('click', function (e) {
-        removeActiveClass(self.options.partiesSelector, partySlug);
+        removeActiveClass(self.options.partiesSelector);
 
         partySlug = $(this).data('party-slug');
+        lastPartyFilter = partySlug;
 
         if (partySlug.indexOf(',') >= 0) {
           $(this).parent().addClass('government-active');
@@ -131,12 +120,7 @@ var HDO = HDO || {};
           $(this).parent().addClass(partySlug + '-active');
         }
 
-        if (partySlug !== lastPartyFilter) {
-          showAllPromisesInCategory(self.cache, categoryId, partySlug);
-          showSpecificParty(partySlug);
-        } else {
-          showSpecificParty(partySlug);
-        }
+        showAllPromisesInCategory(self.cache, categoryId, lastPartyFilter);
 
         e.preventDefault();
       });
