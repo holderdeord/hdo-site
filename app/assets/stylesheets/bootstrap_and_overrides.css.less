@@ -155,3 +155,19 @@ h5 {
         }
     }
 }
+
+
+// work around fixed header + anchors
+// see http://nicolasgallagher.com/jump-links-and-viewport-positioning/demo/
+
+.anchor-fix {
+  display: block;
+  content: "";
+  height: @navbarHeight;
+  margin: -@navbarHeight 0 0;
+}
+
+
+#method-weights:before {
+  .anchor-fix;
+}

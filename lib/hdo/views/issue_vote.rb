@@ -42,17 +42,16 @@ module Hdo
         str
       end
 
+      def weight_text
+        @vote_connection.weight_text
+      end
+
       def parties_for
         @parties_for ||= all_parties.select { |e| vote.stats.party_for?(e) }
       end
 
       def parties_against
         @parties_against ||= all_parties.select { |e| vote.stats.party_against?(e) }
-      end
-
-      def weight_text
-        # TODO: i18n
-        "Avstemningen er dermed vektet #{@vote_connection.weight}, <strong>#{@vote_connection.weight_text}</strong>."
       end
 
       def vote
