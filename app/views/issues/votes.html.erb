@@ -21,22 +21,27 @@
 
       <div class="row-fluid">
         <div class="span3">
-          <h4>Stemte for</h4>
-          <% issue_vote.parties_for.each do |party| %>
-            <%= link_to party do %>
-              <%= image_tag party.image_with_fallback.thumb("60x60").url %>
+          <% if issue_vote.parties_for.any? %>
+            <h4>Stemte for</h4>
+
+            <% issue_vote.parties_for.each do |party| %>
+              <%= link_to party do %>
+                <%= image_tag party.image_with_fallback.thumb("60x60").url %>
+              <% end %>
             <% end %>
           <% end %>
         </div>
 
         <div class="span3">
-          <h4>Stemte mot</h4>
+          <% if issue_vote.parties_against.any? %>
+            <h4>Stemte mot</h4>
 
             <% issue_vote.parties_against.each do |party| %>
               <%= link_to party do %>
                 <%= image_tag party.image_with_fallback.thumb("60x60").url %>
               <% end %>
             <% end %>
+          <% end %>
         </div>
 
         <div class="span6">
