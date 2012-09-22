@@ -9,7 +9,7 @@
 
     init: function () {
       $(document.body).delegate('[data-vote-id]', 'click', function () {
-        var voteId, target;
+        var voteId, target, spinner;
 
         voteId = $(this).data('vote-id');
         target = $('#proposition-body-' + voteId);
@@ -20,7 +20,7 @@
           return;
         }
 
-        var spinner = target.find(".spinner");
+        spinner = target.find(".spinner");
         spinner.show();
 
         $.ajax({
