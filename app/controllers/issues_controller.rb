@@ -102,11 +102,12 @@ class IssuesController < ApplicationController
     if @issue.published? || user_signed_in?
       assign_party_groups
 
-      @issue_votes = @issue.vote_connections.map do |connection|
+      connections = @issue.vote_connections
+      @issue_votes = connections.map do |connection|
         Hdo::Views::IssueVote.new(connection, @party_groups)
       end
 
-      @issue_votes.sort_by { |e| e.time }.reverse
+      @issue_votes = @issue_votes.sort_by { |e| e.time }.reverse
     else
       redirect_to new_user_session_path
     end

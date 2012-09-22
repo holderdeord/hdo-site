@@ -395,6 +395,7 @@ describe IssuesController do
 
       response.should have_rendered(:votes)
       assigns(:party_groups).should be_kind_of(Enumerable)
+      assigns(:issue_votes).should be_kind_of(Enumerable)
     end
 
     it 'should redirect :show to the front page if the issue is not published' do
