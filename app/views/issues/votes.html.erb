@@ -8,7 +8,6 @@
   <div class="span12">
     <h1 class="page-header">
       <%= Vote.model_name.human(count: 2).capitalize %> <%= Vote.human_attribute_name(:about) %> <%= t 'app.lang.infinitive_particle' %> <%= @issue.downcased_title %>
-      <p class="pull-right"><small><%= link_to t('app.method.read_more'), home_method_path %>.</small></p>
     </h1>
 
     <% @issue_votes.each do |issue_vote| %>
@@ -57,6 +56,5 @@
 
       <hr>
     <% end %>
-
   </div>
 </div>
