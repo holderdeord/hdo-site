@@ -339,5 +339,3 @@ nb:
       by_party: 'Grupper etter parti'
       by_district: 'Grupper etter fylke'
       by_name: 'Grupper etter navn'
-    home:
-      party_logo_tooltip: 'Trykk for å se hva %{name} har stemt og lovet i saker du er opptatt av'
