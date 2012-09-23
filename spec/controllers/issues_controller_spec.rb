@@ -33,7 +33,7 @@ describe IssuesController do
 
       get :index
 
-      assigns(:issues).should == issues
+      assigns(:issues_by_status).should == {'in_progress' => [issue]}
       response.should have_rendered(:index)
     end
 

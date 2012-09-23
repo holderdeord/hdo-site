@@ -9,7 +9,7 @@
     <ul class="nav nav-tabs">
       <% Issue::STATUSES.each do |status| %>
         <li class="span4 <%= 'active' if status == 'in_progress' %>">
-          <a href="#<%= status %>-tab" data-toggle="tab"><%= t("app.issues.statuses.#{status}") %></a>
+          <a href="#<%= status %>-tab" data-toggle="tab"><%= t("app.issues.statuses.#{status}") %> (<%= @issues_by_status[status].size %>)</a>
         </li>
       <% end %>
     </ul>
