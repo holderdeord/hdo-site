@@ -1,117 +1,115 @@
-<div class="navbar">
+<div class="navbar navbar-fixed-top ">
   <div class="navbar-inner">
-    <div id="HeaderNavigation">
-      <a href="/" id="hdo-logo" class="logo">&nbsp;</a>
 
-      <a class="btn btn-navbar" data-target=".nav-collapse" data-toggle="collapse">
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </a>
+    <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </button>
 
-      <div class="nav-collapse">
-        <div class="container subnav">
-          <div class="subnav-inner">
-            <ul class="nav">
-              <li class="<%= active_status_for(:home_index) %>">
-                <a href="/">Forside</a>
-              </li>
+    <a class="brand logo" href="/"><%= image_tag 'logo.png', :width => "200" %></a>
+    <div class="nav-collapse">
+      <div class="container subnav">
+        <div class="subnav-inner">
+          <ul class="nav">
+            <li class="<%= active_status_for(:home_index) %>">
+              <a href="/">Forside</a>
+            </li>
 
-              <li class="dropdown <%= active_status_for(:parties_show) %>">
-                <a class="dropdown-toggle" data-toggle="dropdown" href="#partier">
-                  <%= Party.model_name.human(count: 2).capitalize %>
-                  <b class="caret"></b>
-                </a>
+            <li class="dropdown <%= active_status_for(:parties_show) %>">
+              <a class="dropdown-toggle" data-toggle="dropdown" href="#partier">
+                <%= Party.model_name.human(count: 2).capitalize %>
+                <b class="caret"></b>
+              </a>
 
-                <ul class="dropdown-menu">
-                  <% Party.order(:name).each do |party| %>
-                    <li><%= link_to party.name, party %></li>
-                  <% end %>
-                </ul>
-              </li>
+              <ul class="dropdown-menu">
+                <% Party.order(:name).each do |party| %>
+                  <li><%= link_to party.name, party %></li>
+                <% end %>
+              </ul>
+            </li>
 
-              <li class="<%= active_status_for(:promises) %>">
+            <li class="<%= active_status_for(:promises) %>">
               <%= link_to promises_path do %>
                 <%= Promise.model_name.human(count: 2).capitalize %>
               <% end %>
-              </li>
+            </li>
 
-              <li class="dropdown <%= active_status_for(:home_press, :home_about, :home_join, :home_about_method, :docs_index)%>">
-                <a class="dropdown-toggle" data-toggle="dropdown" href="#about-us">
-                  <%= t 'app.about' %>
-                  <b class="caret"></b>
-                </a>
+            <li class="dropdown <%= active_status_for(:home_press, :home_about, :home_join, :home_about_method, :docs_index)%>">
+              <a class="dropdown-toggle" data-toggle="dropdown" href="#about-us">
+                <%= t 'app.about' %>
+                <b class="caret"></b>
+              </a>
 
-                <ul class="dropdown-menu">
-                  <li><%= link_to t("app.press"), home_press_path %></li>
-                  <li><%= link_to t("app.about"), home_about_path %></li>
-                  <li><%= link_to t("app.method.about"), home_method_path %></li>
-                  <li><%= link_to t("app.people"), home_people_path %></li>
-                  <li><%= link_to t("app.join"), home_join_path %></li>
-                  <li><%= link_to t("app.documentation.technical"), docs_index_path %></li>
-                </ul>
-              </li>
+              <ul class="dropdown-menu">
+                <li><%= link_to t("app.press"), home_press_path %></li>
+                <li><%= link_to t("app.about"), home_about_path %></li>
+                <li><%= link_to t("app.method.about"), home_method_path %></li>
+                <li><%= link_to t("app.people"), home_people_path %></li>
+                <li><%= link_to t("app.join"), home_join_path %></li>
+                <li><%= link_to t("app.documentation.technical"), docs_index_path %></li>
+              </ul>
+            </li>
 
-              <li class="dropdown <%= active_status_for(:home_support, :home_member) %>">
-                <a class="dropdown-toggle" data-toggle="dropdown" href="#support">
-                  <%= t 'app.support' %>
-                  <b class="caret"></b>
-                </a>
+            <li class="dropdown <%= active_status_for(:home_support, :home_member) %>">
+              <a class="dropdown-toggle" data-toggle="dropdown" href="#support">
+                <%= t 'app.support' %>
+                <b class="caret"></b>
+              </a>
 
-                <ul class="dropdown-menu">
-                  <li><%= link_to t('app.donate'), home_support_path %></li>
-                  <li><%= link_to t('app.member'), home_member_path %></li>
-                </ul>
-              </li>
-            </ul>
+              <ul class="dropdown-menu">
+                <li><%= link_to t('app.donate'), home_support_path %></li>
+                <li><%= link_to t('app.member'), home_member_path %></li>
+              </ul>
+            </li>
+          </ul>
 
-            <ul class="nav pull-right">
-              <li class="dropdown <%= active_status_for(:representatives, :parliament_issues, :votes, :categories, :districts, :committees)%>" id="stortinget">
-                <a class="dropdown-toggle" data-toggle="dropdown" href="#stortinget">
-                  Rådata
-                  <b class="caret"></b>
-                </a>
+          <ul class="nav pull-right">
+            <li class="dropdown <%= active_status_for(:representatives, :parliament_issues, :votes, :categories, :districts, :committees)%>" id="stortinget">
+              <a class="dropdown-toggle" data-toggle="dropdown" href="#stortinget">
+                Rådata
+                <b class="caret"></b>
+              </a>
 
-                <ul class="dropdown-menu">
-                  <li>
+              <ul class="dropdown-menu">
+                <li>
                   <%= link_to representatives_path do %>
                     <i class="icon-user"></i> <%= Representative.model_name.human(count: 2).capitalize %>
                   <% end %>
-                  </li>
-                  <li>
+                </li>
+                <li>
                   <%= link_to parliament_issues_path do %>
                     <i class="icon-tags"></i> <%= ParliamentIssue.model_name.human(count: 2).capitalize %>
                   <% end %>
-                  </li>
-                  <li>
+                </li>
+                <li>
                   <%= link_to votes_path do %>
                     <i class="icon-envelope"></i> <%= Vote.model_name.human(count: 2).capitalize %>
                   <% end %>
-                  </li>
-                  <li>
+                </li>
+                <li>
                   <%= link_to categories_path do %>
                     <i class="icon-folder-close"></i> <%= Category.model_name.human(count: 2).capitalize %>
                   <% end %>
-                  </li>
-                  <li>
+                </li>
+                <li>
                   <%= link_to districts_path do %>
                     <i class="icon-home"></i> <%= District.model_name.human(count: 2).capitalize %>
                   <% end %>
-                  </li>
-                  <li>
+                </li>
+                <li>
                   <%= link_to committees_path do %>
                     <i class="icon-inbox"></i> <%= Committee.model_name.human(count: 2).capitalize %>
                   <% end %>
-                  </li>
-                </ul>
+                </li>
+              </ul>
 
-              </li>
-            </ul>
-          </div>
+            </li>
+            <li id="login-status"></li>
+          </ul>
         </div>
-
-        <div class="pull-up" id="login-status"></div>
       </div>
+
     </div>
   </div>
 </div>
@@ -119,13 +117,13 @@
 <%= content_for :document_ready do %>
   <script type="text/javascript">
     $(document).ready(function() {
-      $.ajax({
-        url: "/home/login_status",
-        type: "GET",
-        dataType: "html",
-        success: function(html) { $("#login-status").html(html) },
-        error: function() { console && console.log(arguments); }
-      });
+    $.ajax({
+    url: "/home/login_status",
+    type: "GET",
+    dataType: "html",
+    success: function(html) { $("#login-status").html(html) },
+    error: function() { console && console.log(arguments); }
+    });
     });
   </script>
 <% end %>
