@@ -20,6 +20,10 @@ class Party < ActiveRecord::Base
   image_accessor :image
   attr_accessible :image, :name
 
+  def self.in_government
+    all.to_a.select(&:in_government?)
+  end
+
   # TODO: find a better name for this
   def self.governing_groups
     government, opposition = order(:name).partition(&:in_government?)

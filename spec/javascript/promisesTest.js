@@ -53,56 +53,109 @@
 
   buster.testCase('Promises page - Parties', {
     setUp: function () {
-      var el = $('<div class="party-nav">' +
+      var partyEl = $('<div class="party-nav">' +
+                    '<li class="show-all-active"><a data-party-slug=show-all>Alle partiene</a></li>' +
                     '<li><a data-party-slug=a>Arbeiderpartiet</a></li>' +
                     '<li><a data-party-slug=frp>Fremskritspariet</a></li>' +
+                    '<li><a data-party-slug=government>Soria Moria</a></li>' +
+                  '</div>' +
+                  '<div id="categories">' + 
+                    '<li><a data-category-id=1>Arbeidsliv</a></li>' + 
+                    '<li><a data-category-id=2>Finanser</a></li>' +
                   '</div>');
 
       this.targetEl = $('<div id="promises-body">' +
                           '<div data-party-slug=a>' +
-                            '<h3 class="a-title"><a href="/parties/a">Arbeiderpartiet</a></h3>' +
-                              '<p>Promise 1</p>' +
+                            '<p>Promise 1</p>' +
                           '</div>' +
                           '<div data-party-slug=frp>' +
-                            '<h3 class="frp-title"><a href="/parties/frp">Fremskritspariet</a></h3>' +
-                              '<p>Promise 2</p>' +
+                            '<p>Promise 2</p>' +
                           '</div>' +
+                          '<div data-party-slug=government>' +
+                            '<p>Promsie 3</p>' +
                         '</div>');
                           
+      this.server = {
+        fetchPromises: this.spy()
+      }
 
-      this.firstLink = $(el).find('a[data-party-slug=a]').get(0);
-      this.firstLi = $(this.firstLink).parent().get(0);
+      this.firstPartyLink = $(partyEl).find('a[data-party-slug=a]').get(0);
+      this.firstPartyLi = $(this.firstPartyLink).parent().get(0);
       
-      this.secondLink = $(el).find('a[data-party-slug=frp]').get(0);
-      this.secondLi = $(this.secondLink).parent().get(0);
+      this.secondPartyLink = $(partyEl).find('a[data-party-slug=frp]').get(0);
+      this.secondPartyLi = $(this.secondPartyLink).parent().get(0);
+
+      this.showAllLink = $(partyEl).find('a[data-party-slug="show-all"]').get(0);
+      this.showAllLi = $(this.showAllLink).parent().get(0);
+
+      this.soriaMoriaLink = $(partyEl).find('a[data-party-slug=government]').get(0);
+      this.soriaMoriaLi = $(this.soriaMoriaLink).parent().get(0);
+
+      this.firstCategoryLink = $('#categories').find('a[data-category-id=1]').get(0);
+      this.secondCategoryLink = $('#categories').find('a[data-category-id=2]').get(0);
 
       this.widget = HDO.promiseWidget.create({
-        partiesSelector: el, 
+        categoriesSelector: $('#categories'),
+        partiesSelector: partyEl, 
         server: this.server,
-        targetEl: this.targetEl
+        targetEl: this.targetEl,
+        activeParty: this.showAllLi
       });
       this.widget.init();
     },
 
     "party has active class when clicked": function () {
-      $(this.firstLink).click();
+      $(this.firstPartyLink).click();
 
-      assert.className(this.firstLi, "active");
+      assert.className(this.firstPartyLi, "a-active");
+      refute.className(this.showAllLi, "show-all-active");
     },
 
     "only one party has active class": function () {
-      $(this.firstLink).click();
-      $(this.secondLink).click();
+      $(this.firstPartyLink).click();
+      $(this.secondPartyLink).click();
 
-      refute.className(this.firstLi, "active");
-      assert.className(this.secondLi, "active");
+      refute.className(this.firstPartyLi, "a-active");
+      assert.className(this.secondPartyLi, "frp-active");
     },
 
     "only show selected party": function () {
-      $(this.firstLink).click();
+      $(this.firstPartyLink).click();
 
       assert.className($(this.targetEl).find('div[data-party-slug=frp]').get(0), "hidden");
       refute.className($(this.targetEl).find('div[data-party-slug=a]').get(0), "hidden");
+
+      $(this.secondPartyLink).click();
+
+      assert.className($(this.targetEl).find('div[data-party-slug=a]').get(0), "hidden");
+      refute.className($(this.targetEl).find('div[data-party-slug=frp]').get(0), "hidden");
+    },
+
+    "should give Soria Moria party government-active class when selected": function () {
+      $(this.soriaMoriaLink).click();
+
+      assert.className(this.soriaMoriaLi, "government-active");  
+    },
+
+    "should show all hidden divs when show all parties is selected": function () {
+      $(this.firstCategoryLink).click();
+      $(this.firstPartyLink).click();
+
+      assert.className($(this.targetEl).find('div[data-party-slug=frp]').get(0), "hidden");
+      
+      $(this.showAllLink).click();
+
+      refute.className($(this.targetEl).find('div[data-party-slug=a]').get(0), "hidden");
+      refute.className($(this.targetEl).find('div[data-party-slug=frp]').get(0), "hidden");
+    },
+
+    "should show promises from selected party when categories are changed": function () {
+      $(this.firstPartyLink).click();
+      
+      $(this.firstCategoryLink).click();
+
+      assert.className($(this.targetEl).find('div[data-party-slug=frp]').get(0), "hidden");
+      assert.className($(this.targetEl).find('div[data-party-slug=government]').get(0), "hidden");
     }
   });
 }(HDO, jQuery));

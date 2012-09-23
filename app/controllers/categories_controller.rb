@@ -28,9 +28,9 @@ class CategoriesController < ApplicationController
     promises    = Promise.includes(:categories, :parties).where("categories.id = ? or categories.parent_id = ?", category_id, category_id)
 
     if params[:party]
-      if params[:party].include?(",")
-        parties = params[:party].split(",")
-        promises = promises.where("parties.slug in (?)", parties).select { |e| e.parties.size == parties.size }
+      if params[:party] == "government"
+        slugs = Party.in_government.map { |e| e.slug }
+        promises = promises.where("parties.slug in (?)", slugs).select { |e| e.parties.size == slugs.size }
       else
         promises = promises.where("parties.slug = ?", params[:party])
       end

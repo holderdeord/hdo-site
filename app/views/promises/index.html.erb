@@ -28,13 +28,13 @@
     <div class="span2 party-nav">
       <h4>Vis løftene til:</h4>
       <ul class="nav nav-pills nav-stacked">
-        <li><a href="#" data-party-slug="show-all">Alle partiene</a></li>
+        <li class="show-all-active"><a href="#" data-party-slug="show-all">Alle partiene</a></li>
         <% @parties.each do |party| %>
           <li>
             <a data-party-slug="<%= party.slug %>" href="#"><%= party.name %></a>
           </li>
         <% end %>
-        <li><a href="#" data-party-slug="<%= @government_slugs %>">Soria Moria II</a></li>
+        <li><a href="#" data-party-slug="<%= @government_slug %>">Soria Moria II</a></li>
       </ul>
     </div>
   </div>
@@ -62,7 +62,8 @@
         targetEl: document.getElementById("promises-results"),
         categoriesSelector: $(".categories"),
         partiesSelector: $(".party-nav"),
-        server: HDO.promiseServerFacade
+        server: HDO.promiseServerFacade,
+        activeParty: $(".show-all-active").get(0)
       });
 
       widget.init();
