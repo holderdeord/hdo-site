@@ -5,16 +5,6 @@
 @iconSpritePath: asset-path('twitter/bootstrap/glyphicons-halflings.png');
 @iconWhiteSpritePath: asset-path('twitter/bootstrap/glyphicons-halflings-white.png');
 
-// Your custom LESS stylesheets goes here
-//
-// Since bootstrap was imported above you have access to its mixins which
-// you may use and inherit here
-//
-// If you'd like to override bootstrap's own variables, you can do so here as well
-// See http://twitter.github.com/bootstrap/less.html for their names and documentation
-//
-
-
 @font-face {
     font-family: "Neo Sans";
     src: url('/fonts/NeoSansStd-Regular.otf');
@@ -38,28 +28,6 @@
 @navbarLinkBackgroundActive: @white;
 @navbarLinkColorActive: @black;
 
-@logoHeight: 100px;
-@logoMargin: 20px;
-
-#HeaderNavigation {
-    padding-top: @logoMargin;
-    padding-bottom: @logoMargin;
-    background-position: left @logoMargin;
-    background-repeat: no-repeat;
-    .logo {
-        background: transparent url('web_logo_sm.png') no-repeat left top;
-        display: block;
-        height: 100px;
-        text-decoration: none;
-        width: 163px;
-    }
-    .subnav {
-        .subnav-inner {
-            .clearfix();
-        }
-    }
-}
-
 .navbar {
     font-family: @headingsFontFamily;
     text-transform: uppercase;
@@ -82,7 +50,7 @@
         border-top-color: @black;
     }
 }
-
+.logo img { margin-left: 20px;}
 // Active state
 .nav-pills > .active > a,
 .nav-pills > .active > a:hover {
@@ -100,74 +68,4 @@ h3,
 h4,
 h5 {
     font-family: @headingsFontFamily;
-}
-
-@media screen and (min-width: 768px) {
-    @containerWidth: 662px;
-    #HeaderNavigation {
-        padding-bottom: 0;
-        margin: 0 auto;
-        width: @containerWidth;
-    }
-}
-
-@media screen and (min-width:980px) {
-    @containerWidth: 958px;
-    @navbarHeight: 39px;
-    #HeaderNavigation {
-        position: relative;
-        margin: 0 auto;
-        width: @containerWidth;
-        .pull-up {
-            position: absolute;
-            right: 0;
-            top: 0;
-        }
-        .subnav {
-            margin-top: 0;
-            padding-top: @logoMargin;
-            &.subnav-fixed {
-                background-color: @navbarBackground;
-                left: 0;
-                padding-top: 0;
-                position: fixed;
-                top: 0;
-                width: 100%;
-                z-index: 1;
-                .subnav-inner {
-                    margin: 0 auto;
-                    width: @containerWidth;
-                }
-            }
-        }
-        &.header-fixed {
-            margin-bottom: @navbarHeight;
-        }
-    }
-}
-
-@media screen and (min-width:1200px) {
-    @containerWidth: 1070px;
-    #HeaderNavigation {
-        width: @containerWidth;
-        .subnav.subnav-fixed .subnav-inner {
-            width: @containerWidth;
-        }
-    }
-}
-
-
-// work around fixed header + anchors
-// see http://nicolasgallagher.com/jump-links-and-viewport-positioning/demo/
-
-.anchor-fix {
-  display: block;
-  content: "";
-  height: @navbarHeight;
-  margin: -@navbarHeight 0 0;
-}
-
-
-#method-weights:before {
-  .anchor-fix;
 }
