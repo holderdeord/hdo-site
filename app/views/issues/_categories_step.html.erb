@@ -1,10 +1,23 @@
 <%= form.inputs do %>
   <%= hidden_field_tag 'issue[category_ids][]' %>
 
-  <div class="well">
-    <%= form.text_field :title %>
-    <%= form.text_area :description, :rows => 5 %>
-    <%= form.check_box :published, t('app.published') %>
+  <div class="row-fluid well">
+    <div class="span4">
+      <%= form.text_field :title %>
+    </div>
+
+    <div class="span4">
+      <%= form.text_area :description, :rows => 5 %>
+    </div>
+
+    <div class="span4">
+      <ul class="unstyled">
+        <% Issue::STATUSES.each do |status| %>
+          <%= form.radio_button :status, t("app.issues.statuses.#{status}"), status, checked: @issue.status == status %>
+        <% end %>
+      </ul>
+    </div>
+
   </div>
 <% end %>
 

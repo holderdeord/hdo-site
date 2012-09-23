@@ -24,13 +24,15 @@ describe PartiesController do
     end
 
     it 'fetches published issues' do
-      t1 = Issue.make! :published => true,  :title => 'a'
-      t2 = Issue.make! :published => true,  :title => 'b'
-      t3 = Issue.make! :published => false, :title => 'c'
+      t1 = Issue.make! status: 'published',   title: 'a'
+      t2 = Issue.make! status: 'published',   title: 'b'
+      t3 = Issue.make! status: 'in_progress', title: 'c'
+      t4 = Issue.make! status: 'shelved',     title: 'd'
 
-      t1.vote_connections.map { |e| e.vote.update_attributes!(:time => 3.days.ago) }
-      t2.vote_connections.map { |e| e.vote.update_attributes!(:time => 2.days.ago) }
-      t3.vote_connections.map { |e| e.vote.update_attributes!(:time => 1.days.ago) }
+      t1.vote_connections.map { |e| e.vote.update_attributes!(:time => 4.days.ago) }
+      t2.vote_connections.map { |e| e.vote.update_attributes!(:time => 3.days.ago) }
+      t3.vote_connections.map { |e| e.vote.update_attributes!(:time => 2.days.ago) }
+      t3.vote_connections.map { |e| e.vote.update_attributes!(:time => 1.day.ago) }
 
       get :show, id: party
 

@@ -1,0 +1,31 @@
+<table class="table">
+  <thead>
+    <tr>
+      <th><%= Issue.human_attribute_name :title %></th>
+      <th><%= Issue.human_attribute_name :updated_at %></th>
+      <th><%= Topic.model_name.human(count: 2).capitalize %></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% issues.each do |issue| %>
+      <tr>
+        <td>
+          <p><%= link_to issue.title, issue %></p>
+        </td>
+        <td><p><%= l issue.updated_at.localtime %></p> <small class="muted"><%= issue.last_updated_by_name %></small></td>
+        <td>
+          <ul>
+          <% issue.topics.each do |topic| %>
+            <li><%= link_to topic.name, topic %></li>
+          <% end %>
+          </ul>
+        </td>
+        <td>
+          <%= link_to t('app.edit'), edit_issue_path(issue), class: 'btn btn-small' %>
+          <%= link_to t('app.destroy'), issue, method: :delete, data: { confirm: t('app.issues.edit.confirm_destroy', title: issue.title) }, class: 'btn btn-small btn-danger' %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

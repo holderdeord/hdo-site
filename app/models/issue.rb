@@ -2,10 +2,13 @@ class Issue < ActiveRecord::Base
   include Hdo::ModelHelpers::HasStatsCache
   extend FriendlyId
 
-  attr_accessible :description, :title, :category_ids, :promise_ids, :topic_ids, :published
+  attr_accessible :description, :title, :category_ids, :promise_ids, :topic_ids, :status
 
   validates_presence_of   :title
   validates_uniqueness_of :title
+
+  STATUSES = %w[in_progress shelved published]
+  validates_inclusion_of :status, in: STATUSES
 
   has_and_belongs_to_many :topics,     uniq: true
   has_and_belongs_to_many :categories, uniq: true
@@ -29,7 +32,7 @@ class Issue < ActiveRecord::Base
   friendly_id :title, :use => :slugged
 
   scope :vote_ordered, includes(:votes).order('votes.time DESC')
-  scope :published, where(:published => true)
+  scope :published, where(:status => 'published')
 
   def previous_and_next(opts = {})
     issues = self.class.order(opts[:order] || :title)
@@ -113,12 +116,16 @@ class Issue < ActiveRecord::Base
     @downcased_title ||= "#{UnicodeUtils.downcase title[0]}#{title[1..-1]}"
   end
 
-  def published_text
-    published? ? I18n.t('app.issues.edit.published') : I18n.t('app.issues.edit.not_published')
+  def status_text
+    I18n.t("app.issues.statuses.#{status}")
   end
 
   def published_state
     published? ? 'published' : 'not-published'
+  end
+
+  def published?
+    status == 'published'
   end
 
   def last_updated_by_name
