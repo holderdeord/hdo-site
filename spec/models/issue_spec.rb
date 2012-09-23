@@ -27,6 +27,26 @@ describe Issue do
     t.should be_valid
   end
 
+  it 'validates status strings' do
+    issue = valid_issue
+
+    issue.status = 'published'
+    issue.should be_valid
+
+    issue.status = 'in_progress'
+    issue.should be_valid
+
+    issue.status = 'shelved'
+    issue.should be_valid
+
+    issue.status = 'foobar'
+    issue.should_not be_valid
+  end
+
+  it 'has in_progress status by default' do
+    blank_issue.status.should == 'in_progress'
+  end
+
   it "won't add the same category twice" do
     cat = Category.make!
 
@@ -112,7 +132,7 @@ describe Issue do
   end
 
   it 'correctly downcases a title with non-ASCII characters' do
-    Issue.make(:title => "Styrke boligsparing for ungdom (BSU)").downcased_title.should == "styrke boligsparing for ungdom (BSU)"
+    Issue.make(:title => "Øke ditt og datt").downcased_title.should == "øke ditt og datt"
   end
 
   it 'finds the latest issues based on vote time' do
@@ -127,9 +147,9 @@ describe Issue do
     Issue.vote_ordered.should == [i3, i2, i1]
   end
 
-  it 'has a #published_text' do
+  it 'has a #status_text' do
     i = Issue.make!
-    i.published_text.should be_kind_of(String)
+    i.status_text.should be_kind_of(String)
   end
 
   it 'can add who last updated the issue' do

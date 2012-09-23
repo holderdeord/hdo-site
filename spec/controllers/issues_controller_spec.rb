@@ -46,14 +46,20 @@ describe IssuesController do
     end
 
     it "shows also non-published issues for the next/previous links" do
-      t1 = Issue.make! title: 'aaaa1', :published => true
-      t2 = Issue.make! title: 'aaaa2', :published => true
-      t3 = Issue.make! title: 'aaaa3', :published => false
+      t1 = Issue.make! title: 'aaaa1', status: 'published'
+      t2 = Issue.make! title: 'aaaa2', status: 'published'
+      t3 = Issue.make! title: 'aaaa3', status: 'in_progress'
+      t4 = Issue.make! title: 'aaaa4', status: 'shelved'
 
       get :show, id: t2
 
       assigns(:previous_issue).should eq t1
       assigns(:next_issue).should eq t3
+
+      get :show, id: t3
+
+      assigns(:previous_issue).should eq t2
+      assigns(:next_issue).should eq t4
     end
 
 
@@ -224,7 +230,7 @@ describe IssuesController do
 
     context "update" do
       it "should update the published state" do
-        put :update, finish: true, issue: issue_params(issue).merge('published' => 'true'), id: issue
+        put :update, finish: true, issue: issue_params(issue).merge('status' => 'published'), id: issue
 
         issue = assigns(:issue)
         issue.should be_published
@@ -233,7 +239,7 @@ describe IssuesController do
       end
 
       it 'sets last_updated_by when published state changes' do
-        put :update, issue: issue_params(issue).merge('published' => 'true'), id: issue
+        put :update, issue: issue_params(issue).merge('status' => 'published'), id: issue
 
         issue = assigns(:issue)
         issue.last_updated_by.should == @user
@@ -378,7 +384,7 @@ describe IssuesController do
 
   context 'normal user' do
     it 'should get :show if the issue is published' do
-      issue.update_attributes! published: true
+      issue.update_attributes! status: 'published'
 
       get :show, id: issue
 
@@ -389,7 +395,7 @@ describe IssuesController do
     end
 
     it 'should get :votes if the issue is published' do
-      issue.update_attributes! published: true
+      issue.update_attributes! status: 'published'
 
       get :votes, id: issue
 
@@ -412,7 +418,7 @@ describe IssuesController do
       render_views
 
       it "should render :show" do
-        get :show, id: Issue.make!(:published => true)
+        get :show, id: Issue.make!(status: 'published')
         response.should have_rendered(:show)
       end
     end
@@ -421,9 +427,9 @@ describe IssuesController do
       it "should set variables for previous and next issue" do
         # TODO: move to model spec?
 
-        t1 = Issue.make! title: 'aaaa1', :published => true
-        t2 = Issue.make! title: 'aaaa2', :published => true
-        t3 = Issue.make! title: 'aaaa3', :published => true
+        t1 = Issue.make! title: 'aaaa1', status: 'published'
+        t2 = Issue.make! title: 'aaaa2', status: 'published'
+        t3 = Issue.make! title: 'aaaa3', status: 'published'
 
         get :show, id: t2
 
@@ -434,9 +440,9 @@ describe IssuesController do
       it "ignores non-published issues for the next/previous links" do
         # TODO: move to model spec?
 
-        t1 = Issue.make! title: 'aaaa1', :published => true
-        t2 = Issue.make! title: 'aaaa2', :published => true
-        t3 = Issue.make! title: 'aaaa3', :published => false
+        t1 = Issue.make! title: 'aaaa1', status: 'published'
+        t2 = Issue.make! title: 'aaaa2', status: 'published'
+        t3 = Issue.make! title: 'aaaa3', status: 'in_progress'
 
         get :show, id: t2
 

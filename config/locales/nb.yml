@@ -148,7 +148,7 @@ nb:
       issue:
         edit: "Rediger"
         published: Publisert
-        state: Status
+        status: Status
         title: "Tittel"
         description: "Beskrivelse"
         categories: "Kategorier"
@@ -156,6 +156,7 @@ nb:
         votes: "Avstemninger"
         topics: "Tema"
         last_updated_by: Sist redigert av
+        updated_at: Sist redigert
       vote_connection:
         matches: "Støtter saken?"
         comment: "Kommentar"
@@ -247,9 +248,11 @@ nb:
       back: Tilbake til saken
       not_published: Denne saken er ikke publisert.
       published: Denne saken er publisert.
-      edit:
+      statuses:
         published: Publisert
-        not_published: Under arbeid
+        in_progress: Under arbeid
+        shelved: Lagt på is
+      edit:
         new: "Ny sak"
         submit: "Lagre sak"
         edit: "Rediger sak"

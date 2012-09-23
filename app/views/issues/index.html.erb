@@ -4,35 +4,22 @@
 <p><%= link_to t('app.issues.edit.new'), new_issue_path, class: 'btn btn-primary' %></p>
 <br>
 
-<table class="table">
-  <thead>
-    <tr>
-      <th><%= Issue.human_attribute_name :title %></th>
-      <th><%= Topic.model_name.human(count: 2).capitalize %></th>
-      <th><%= Issue.human_attribute_name :state %></th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @issues.each do |issue| %>
-      <tr class="issue-state-<%= issue.published_state %>">
-        <td>
-          <p><%= link_to issue.title, issue %></p>
-          <p><small><%= Issue.human_attribute_name :last_updated_by %> <strong><%= issue.last_updated_by_name %></strong> <%= l issue.updated_at %></small></p>
-        </td>
-        <td>
-          <ul>
-          <% issue.topics.each do |topic| %>
-            <li><%= link_to topic.name, topic %></li>
-          <% end %>
-          </ul>
-        </td>
-        <td><%= issue.published_text %></td>
-        <td>
-          <%= link_to t('app.edit'), edit_issue_path(issue), class: 'btn btn-small' %>
-          <%= link_to t('app.destroy'), issue, method: :delete, data: { confirm: t('app.issues.edit.confirm_destroy', title: issue.title) }, class: 'btn btn-small btn-danger' %>
-        </td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+<div class="row-fluid">
+  <div class="tabbable">
+    <ul class="nav nav-tabs">
+      <% Issue::STATUSES.each do |status| %>
+        <li class="span4 <%= 'active' if status == 'in_progress' %>">
+          <a href="#<%= status %>-tab" data-toggle="tab"><%= t("app.issues.statuses.#{status}") %></a>
+        </li>
+      <% end %>
+    </ul>
+
+    <div class="tab-content">
+      <% Issue::STATUSES.each do |status| %>
+        <div id="<%= status %>-tab" class="tab-pane <%= 'active' if status == 'in_progress' %>">
+          <%= render partial: 'issue_index_table', locals: { issues: @issues_by_status[status] } %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

@@ -7,11 +7,11 @@ class IssuesController < ApplicationController
   helper_method :edit_steps
 
   def index
-    @issues = Issue.order(:title).sort_by { |i| [i.published? ? 1 : 0, i.title] }
+    @issues_by_status = Issue.order(:title).group_by { |e| e.status }
 
     respond_to do |format|
       format.html
-      format.json { render json: @issues }
+      format.json { render json: @issues_by_status.values.flatten }
     end
   end
 
