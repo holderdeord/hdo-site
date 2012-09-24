@@ -3,6 +3,7 @@
     <% issues.each do |issue| %>
       <li>
         <%= issue.stats.text_for(party, html: true) %> <%= t 'app.lang.infinitive_particle' %> <%= link_to issue.downcased_title, issue %>.
+        <span class="muted">Score: <%= issue.stats.score_for(@party) %></span>
       </li>
     <% end %>
   </ul>
