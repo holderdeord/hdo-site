@@ -60,15 +60,15 @@ module Hdo
         end
 
         key = case score
-              when 0...20
+              when 0...5
                 :consistently_against
-              when 20...40
+              when 5...35
                 :mostly_against
-              when 40...60
+              when 35...65
                 :for_and_against
-              when 60...80
+              when 65...95
                 :mostly_for
-              when 80..100
+              when 95..100
                 :consistently_for
               else
                 raise "unknown score: #{score.inspect}"

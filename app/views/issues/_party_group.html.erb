@@ -7,7 +7,11 @@
     </div>
 
     <div class="span10">
-      <p class="issues-party-position"><%= issue.stats.text_for(party, html: true) %> <%= t 'app.lang.infinitive_particle' %> <%= issue.downcased_title %></p>
+      <p class="issues-party-position">
+        <%= issue.stats.text_for(party, html: true) %> <%= t 'app.lang.infinitive_particle' %> <%= issue.downcased_title %>
+      </p>
+
+      <p class="muted">Score: <%= issue.stats.score_for(party) %></p>
 
       <% if promise_group = promises_by_party[party] %>
         <% promise_group.sort_by { |h, p| h }.each do |header, promises| %>
