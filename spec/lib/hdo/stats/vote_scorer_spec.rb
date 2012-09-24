@@ -72,19 +72,19 @@ module Hdo
           scorer.text_for(p1).should == "#{p1.name} har stort sett stemt mot"
 
           scorer.stub(:score_for).with(p1).and_return 39
-          scorer.text_for(p1).should == "#{p1.name} har stort sett stemt mot"
+          scorer.text_for(p1).should == "#{p1.name} har stemt både for og mot"
 
           scorer.stub(:score_for).with(p1).and_return 40
           scorer.text_for(p1).should == "#{p1.name} har stemt både for og mot"
 
           scorer.stub(:score_for).with(p1).and_return 60
-          scorer.text_for(p1).should == "#{p1.name} har stort sett stemt for"
+          scorer.text_for(p1).should == "#{p1.name} har stemt både for og mot"
 
           scorer.stub(:score_for).with(p1).and_return 79
           scorer.text_for(p1).should == "#{p1.name} har stort sett stemt for"
 
           scorer.stub(:score_for).with(p1).and_return 80
-          scorer.text_for(p1).should == "#{p1.name} har stemt konsekvent for"
+          scorer.text_for(p1).should == "#{p1.name} har stort sett stemt for"
 
           scorer.stub(:score_for).with(p1).and_return 100
           scorer.text_for(p1).should == "#{p1.name} har stemt konsekvent for"
