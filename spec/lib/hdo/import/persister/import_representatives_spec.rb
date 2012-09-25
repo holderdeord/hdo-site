@@ -35,7 +35,7 @@ module Hdo
 
           Representative.count.should == 1
 
-          update = StortingImporter::Representative.from_hash(example.to_hash.merge('firstName' => 'changed-name'))
+          update = StortingImporter::Representative.example('firstName' => 'changed-name')
           persister.import_representative update
 
           Representative.count.should == 1

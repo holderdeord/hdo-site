@@ -18,12 +18,10 @@ module Hdo
         end
 
         let :non_personal_vote do
-          vote_as_hash = StortingImporter::Vote.example.to_hash
-          vote_as_hash['personal'] = false
-          vote_as_hash.delete 'representatives'
+          vote_as_hash = StortingImporter::Vote.example('personal' => false, 'representatives' => []).to_hash
           vote_as_hash['propositions'][0]['deliveredBy'] = nil # less stubbing.
-
           vote = StortingImporter::Vote.from_hash vote_as_hash
+
           vote.should be_valid
 
           vote

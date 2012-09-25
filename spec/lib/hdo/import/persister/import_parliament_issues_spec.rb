@@ -22,9 +22,7 @@ module Hdo
 
         it 'imports multiple parliament issues' do
           first  = StortingImporter::ParliamentIssue.example
-          second = StortingImporter::ParliamentIssue.from_hash(
-            StortingImporter::ParliamentIssue.example.to_hash.merge('externalId' => '1234', 'status' => 'behandlet')
-          )
+          second = StortingImporter::ParliamentIssue.example('externalId' => '1234', 'status' => 'behandlet')
 
           setup_parliament_issue(first)
           setup_parliament_issue(second)
@@ -41,9 +39,7 @@ module Hdo
           persister.import_parliament_issue parliament_issue
           ParliamentIssue.count.should == 1
 
-          update = StortingImporter::ParliamentIssue.from_hash(
-            parliament_issue.to_hash.merge('status' => 'behandlet')
-          )
+          update = StortingImporter::ParliamentIssue.example('status' => 'behandlet')
 
           persister.import_parliament_issue update
           ParliamentIssue.count.should == 1
