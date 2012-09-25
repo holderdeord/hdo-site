@@ -1,5 +1,6 @@
 class Category < ActiveRecord::Base
   extend FriendlyId
+  include ActsAsTree
 
   attr_accessible :name
 
