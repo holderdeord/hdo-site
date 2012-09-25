@@ -18,13 +18,9 @@ Spork.prefork do
     ENV['DISPLAY'] = ":99"
   end
 
-  # Requires supporting ruby files with custom matchers and macros, etc,
-  # in spec/support/ and its subdirectories.
-
   # ensure correct require order
   require Rails.root.join('spec/support/pages/page')
   require Rails.root.join('spec/support/pages/menu')
-
   Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
 
   RSpec.configure do |config|

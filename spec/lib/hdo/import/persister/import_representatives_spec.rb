@@ -8,7 +8,6 @@ module Hdo
         include_context :persister
 
         def setup_representative(rep)
-          # party, district and committees must already be imported
           Party.make!(:name => rep.party)
           District.make!(:name => rep.district)
           rep.committees.map { |e| Committee.make!(:name => e) }
