@@ -38,8 +38,8 @@ module Hdo
 
         it 'ignores propositions with external_id=-1, body="" and description=""' do
           prop = Hdo::StortingImporter::Proposition.example(
-            'externalId' => '-1',
-            'body' => '',
+            'externalId'  => '-1',
+            'body'        => '',
             'description' => ''
           )
 

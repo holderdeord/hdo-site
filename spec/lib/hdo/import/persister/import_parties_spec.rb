@@ -47,7 +47,7 @@ module Hdo
           persister.import_party xparty
           Party.count.should == 1
 
-          update = StortingImporter::Party.new(xparty.external_id, 'changed-name')
+          update = StortingImporter::Party.example('name' => 'changed-name')
           persister.import_party update
 
           Party.count.should == 1
