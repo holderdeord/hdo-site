@@ -38,7 +38,7 @@ GEM
       rspec (>= 2.7.0)
     bcrypt-ruby (3.0.1)
     builder (3.0.3)
-    capistrano (2.12.0)
+    capistrano (2.13.4)
       highline
       net-scp (>= 1.0.0)
       net-sftp (>= 2.0.0)
@@ -101,7 +101,7 @@ GEM
       yajl-ruby
     highcharts-rails (2.2.4)
       railties (~> 3.1)
-    highline (1.6.13)
+    highline (1.6.15)
     hike (1.2.1)
     httpauth (0.2.0)
     i18n (0.6.1)
@@ -111,6 +111,7 @@ GEM
       thor (~> 0.14)
     jquery-tablesorter (1.0.4)
       railties (~> 3.1)
+    jruby-pageant (1.1.1)
     jschematic (0.1.0)
       addressable
     json (1.7.5)
@@ -146,7 +147,8 @@ GEM
       net-ssh (>= 1.99.1)
     net-sftp (2.0.5)
       net-ssh (>= 2.0.9)
-    net-ssh (2.5.2)
+    net-ssh (2.6.0)
+      jruby-pageant (>= 1.1.1)
     net-ssh-gateway (1.1.0)
       net-ssh (>= 1.99.1)
     nokogiri (1.5.5)
@@ -279,7 +281,7 @@ PLATFORMS
 
 DEPENDENCIES
   acts_as_tree (~> 0.1.1)
-  capistrano (~> 2.12.0)
+  capistrano (~> 2.13)
   database_cleaner (~> 0.8.0)
   devise (~> 2.1.2)
   dragonfly (~> 0.9.12)
