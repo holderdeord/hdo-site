@@ -52,10 +52,6 @@ module Hdo
           persister.import_votes [non_personal_vote], infer: true
         end
 
-        it 'does not try to infer results for the same vote twice' do
-          pending "make sure #uniq is called on the result of import"
-        end
-
       end
     end
   end

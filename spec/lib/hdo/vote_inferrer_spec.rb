@@ -70,6 +70,13 @@ module Hdo
       described_class.new([v]).infer!.should == [false]
     end
 
+    it 'removes duplicates from the given votes' do
+      v1, v2 = Vote.make!(personal: false), Vote.make!(personal: false)
+
+      vi = VoteInferrer.new([v1, v2, v1])
+      vi.infer!.should == [false, false]
+    end
+
     describe "with multiple voting sessions in the same day" do
       before do
         @rep1 = Representative.make!

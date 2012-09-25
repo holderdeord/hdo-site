@@ -18,7 +18,7 @@ module Hdo
     attr_accessor :log
 
     def initialize(votes = Vote.non_personal)
-      @votes = votes
+      @votes = votes.uniq
       @log   = Rails.logger
     end
 
