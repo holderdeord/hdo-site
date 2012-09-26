@@ -12,7 +12,7 @@
       this.server = {
         fetchPromises: this.spy()
       }
-      this.target = document.createElement("div");
+      this.target = $(document.createElement("div"));
       this.widget = HDO.promiseWidget.create({
         categoriesSelector: el, 
         server: this.server,
@@ -47,8 +47,8 @@
 
       this.server.fetchPromises.yield("test");
 
-      assert.match(this.target.innerHTML, "test");
-    }
+      assert.match(this.target.html(), "test");
+    } 
   });
 
   buster.testCase('Promises page - Parties', {
@@ -56,13 +56,14 @@
       var partyEl = $('<div class="party-nav">' +
                     '<li class="show-all-active"><a data-party-slug=show-all>Alle partiene</a></li>' +
                     '<li><a data-party-slug=a>Arbeiderpartiet</a></li>' +
-                    '<li><a data-party-slug=frp>Fremskritspariet</a></li>' +
+                    '<li><a data-party-slug=frp>Fremskrittspariet</a></li>' +
                     '<li><a data-party-slug=government>Soria Moria</a></li>' +
-                  '</div>' +
-                  '<div id="categories">' + 
-                    '<li><a data-category-id=1>Arbeidsliv</a></li>' + 
-                    '<li><a data-category-id=2>Finanser</a></li>' +
                   '</div>');
+
+      var categoryEl = $('<div id="categories">' + 
+                          '<li><a data-category-id=1>Arbeidsliv</a></li>' + 
+                          '<li><a data-category-id=2>Finanser</a></li>' +
+                        '</div>');
 
       this.targetEl = $('<div id="promises-body">' +
                           '<div data-party-slug=a>' +
@@ -91,11 +92,11 @@
       this.soriaMoriaLink = $(partyEl).find('a[data-party-slug=government]').get(0);
       this.soriaMoriaLi = $(this.soriaMoriaLink).parent().get(0);
 
-      this.firstCategoryLink = $('#categories').find('a[data-category-id=1]').get(0);
-      this.secondCategoryLink = $('#categories').find('a[data-category-id=2]').get(0);
+      this.firstCategoryLink = $(categoryEl).find('a[data-category-id=1]').get(0);
+      this.secondCategoryLink = $(categoryEl).find('a[data-category-id=2]').get(0);
 
       this.widget = HDO.promiseWidget.create({
-        categoriesSelector: $('#categories'),
+        categoriesSelector: categoryEl,
         partiesSelector: partyEl, 
         server: this.server,
         targetEl: this.targetEl,
@@ -122,8 +123,8 @@
     "only show selected party": function () {
       $(this.firstPartyLink).click();
 
-      assert.className($(this.targetEl).find('div[data-party-slug=frp]').get(0), "hidden");
-      refute.className($(this.targetEl).find('div[data-party-slug=a]').get(0), "hidden");
+      assert.className(this.targetEl.find('div[data-party-slug=frp]').get(0), "hidden");
+      refute.className(this.targetEl.find('div[data-party-slug=a]').get(0), "hidden");
 
       $(this.secondPartyLink).click();
 
@@ -149,13 +150,17 @@
       refute.className($(this.targetEl).find('div[data-party-slug=frp]').get(0), "hidden");
     },
 
-    "should show promises from selected party when categories are changed": function () {
+    "should filter server response by selected party after selecting a new category":  function () {
+      var responseHtml = $(this.targetEl).html(); 
+      $(this.targetEl).html(''); // remove current promises to make sure we're filtering the server response
+
       $(this.firstPartyLink).click();
-      
       $(this.firstCategoryLink).click();
+
+      this.server.fetchPromises.yield(responseHtml);
 
       assert.className($(this.targetEl).find('div[data-party-slug=frp]').get(0), "hidden");
       assert.className($(this.targetEl).find('div[data-party-slug=government]').get(0), "hidden");
-    }
+   }
   });
 }(HDO, jQuery));
