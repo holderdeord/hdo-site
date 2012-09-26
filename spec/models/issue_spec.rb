@@ -13,7 +13,7 @@ describe Issue do
     t.should be_valid
   end
 
-  it "can associate categories" do
+  it "can add categories" do
     a = Category.make!
     b = Category.make!
 
@@ -56,7 +56,7 @@ describe Issue do
     valid_issue.categories.size.should == 1
   end
 
-  it "can associate promises" do
+  it "can add promises" do
     valid_issue.promises << Promise.make!
     valid_issue.promises.first.body.should_not be_empty
   end
@@ -70,7 +70,7 @@ describe Issue do
     valid_issue.promises.size.should == 1
   end
 
-  it "can associate topics" do
+  it "can add topics" do
     topic = Topic.make!
 
     valid_issue.topics << topic
@@ -86,11 +86,11 @@ describe Issue do
     valid_issue.topics.size.should == 1
   end
 
-  it "can associate votes with a vote direction" do
+  it "can add votes with a vote connection" do
     vote = Vote.make!
-    issue = Issue.make!(:vote_connections => [])
+    issue = Issue.make!(vote_connections: [])
 
-    issue.vote_connections.create!(:vote => vote, :matches => true)
+    issue.vote_connections.create!(vote: vote, matches: true)
     issue.votes.should == [vote]
 
     issue.connection_for(vote).should_not be_nil

@@ -3,10 +3,10 @@ class Committee < ActiveRecord::Base
 
   attr_accessible :name
 
-  has_and_belongs_to_many :representatives
-  has_many :parliament_issues, :order => :last_update
+  has_and_belongs_to_many :representatives, uniq: true
+  has_many :parliament_issues, order: :last_update
 
   validates_uniqueness_of :name
 
-  friendly_id :external_id, :use => :slugged
+  friendly_id :external_id, use: :slugged
 end

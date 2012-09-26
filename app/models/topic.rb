@@ -6,8 +6,8 @@ class Topic < ActiveRecord::Base
   validates_presence_of :name
   validates_uniqueness_of :name
 
-  has_and_belongs_to_many :issues
-  has_many :promises, :through => :issues
+  has_and_belongs_to_many :issues, uniq: true
+  has_many :promises, through: :issues
 
   friendly_id :name, :use => :slugged
 

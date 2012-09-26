@@ -16,13 +16,6 @@ class Issue < ActiveRecord::Base
 
   belongs_to :last_updated_by, :foreign_key => 'last_updated_by_id', :class_name => 'User'
 
-  #
-  # Whenever a issue is updated, we remove and re-create all vote_connection associations.
-  # That means clearing the cache in before_add and before_remove is good enough.
-  #
-  # If we change how the connections are updated, this will need to be revised.
-  #
-
   has_many :vote_connections, :dependent     => :destroy,
                               :before_add    => :clear_stats_cache,
                               :before_remove => :clear_stats_cache

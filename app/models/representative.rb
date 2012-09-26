@@ -8,11 +8,11 @@ class Representative < ActiveRecord::Base
   belongs_to :party
   belongs_to :district
 
-  has_many :vote_results, :dependent => :destroy
-  has_many :votes,        :through   => :vote_results
+  has_many :vote_results, dependent: :destroy
+  has_many :votes,        through:   :vote_results
   has_many :propositions
 
-  has_and_belongs_to_many :committees, :order => :name
+  has_and_belongs_to_many :committees, order: :name, uniq: true
 
   validates_uniqueness_of :first_name, :scope => :last_name # TODO: :scope => :period ?!
   validates_presence_of   :external_id
