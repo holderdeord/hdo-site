@@ -1,0 +1,31 @@
+<header class="megaBigHeader grayBackground">
+  <div class="container" style="position: relative;">
+    <h1>Holder de ord</h1>
+    <h4 class="mbl">En partipolitisk uavhengig organisasjon som gjør det lettere å følge med på hva som skjer i norsk politikk.</h4>
+    <div class="row">
+      <div class="span6 hidden-phone">
+        <div class="well">
+          <h2><%= link_to 'Vi trenger din hjelp!', home_support_path %></h2>
+          <p>
+            Send kodeord <strong>HOLDERDEORD</strong> til <strong>2160</strong> så støtter du oss med 150 kr.
+          </p>
+        </div>
+      </div>
+      <div class="span6 hidden-phone">
+        <div class="well">
+          <h2><%= link_to 'Bli med!', home_join_path %></h2>
+          <p>
+            Vi er hele tiden på utkikk etter flere drevne medarbeidere.
+            <br>
+            <strong>For tiden søker vi ny produktsjef.</strong>
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      Denne nettsiden er en prototype under utvikling.
+      <br>
+      <%= link_to t('app.read_more'), home_about_path %>.
+    </div>
+  </div>
+</header>
