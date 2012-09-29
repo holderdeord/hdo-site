@@ -1,0 +1,32 @@
+.megaBigHeader {
+    padding: 70px 0 80px 0;
+    margin-bottom: 0;
+    color: #000;
+}
+
+.megaBigHeader h1 {font-size: 3em; line-height: 1;}
+
+.grayBackground {
+    position: relative;
+    padding: 40px 0;
+    text-align: center;
+    background: #ddd; /* Old browsers */
+    background: -moz-linear-gradient(45deg,  #ddd 0%, #fff 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left bottom, right top, color-stop(0%,#ddd), color-stop(100%,#fff)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(45deg,  #ddd 0%,#fff 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(45deg,  #ddd 0%,#fff 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(45deg,  #ddd 0%,#fff 100%); /* IE10+ */
+    background: linear-gradient(45deg,  #ddd 0%,#fff 100%); /* W3C */
+}
+
+@media screen and (min-width: 700px ) {
+    .megaBigHeader h1 {font-size: 7em;}
+}
+
+@media (max-width: 979px) {
+    .megaBigHeader { margin-top: -18px; margin-left: -20px; margin-right: -20px; padding: 40px 20px;}
+}
+
+@media screen and (min-width: 1000px ) {
+    .megaBigHeader h1 {font-size: 10em;}
+}
