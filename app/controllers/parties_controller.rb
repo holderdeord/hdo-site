@@ -32,6 +32,7 @@ class PartiesController < ApplicationController
 
   def show
     @party  = Party.includes(:representatives, :promises => :categories).find(params[:id])
+    @representatives = @party.current_representatives
 
     @issues = Issue.published.order(:title)
     @categories = Category.where(:main => true).includes(:children)

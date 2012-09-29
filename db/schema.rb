@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120923111901) do
+ActiveRecord::Schema.define(:version => 20120929154842) do
 
   create_table "categories", :force => true do |t|
     t.string   "external_id"
@@ -154,6 +154,17 @@ ActiveRecord::Schema.define(:version => 20120923111901) do
 
   add_index "parties_promises", ["party_id", "promise_id"], :name => "index_parties_promises_on_party_id_and_promise_id"
 
+  create_table "party_memberships", :force => true do |t|
+    t.integer  "representative_id", :null => false
+    t.integer  "party_id",          :null => false
+    t.date     "start_date",        :null => false
+    t.date     "end_date"
+    t.datetime "created_at",        :null => false
+    t.datetime "updated_at",        :null => false
+  end
+
+  add_index "party_memberships", ["representative_id", "party_id", "start_date", "end_date"], :name => "index_party_memberships_on_all"
+
   create_table "promises", :force => true do |t|
     t.text     "body"
     t.boolean  "general"
@@ -184,7 +195,6 @@ ActiveRecord::Schema.define(:version => 20120923111901) do
     t.string   "last_name"
     t.datetime "created_at",    :null => false
     t.datetime "updated_at",    :null => false
-    t.integer  "party_id"
     t.integer  "district_id"
     t.datetime "date_of_birth"
     t.datetime "date_of_death"
@@ -195,7 +205,6 @@ ActiveRecord::Schema.define(:version => 20120923111901) do
 
   add_index "representatives", ["district_id"], :name => "index_representatives_on_district_id"
   add_index "representatives", ["last_name"], :name => "index_representatives_on_last_name"
-  add_index "representatives", ["party_id"], :name => "index_representatives_on_party_id"
   add_index "representatives", ["slug"], :name => "index_representatives_on_slug", :unique => true
 
   create_table "topics", :force => true do |t|

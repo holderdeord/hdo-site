@@ -21,6 +21,7 @@ class Vote < ActiveRecord::Base
 
   scope :personal, where(:personal => true)
   scope :non_personal, where(:personal => false)
+  scope :with_results, includes(:parliament_issues, vote_results: {representative: {party_memberships: :party}})
 
   def self.naive_search(filter, keyword, selected_categories = [])
     # TODO: elasticsearch

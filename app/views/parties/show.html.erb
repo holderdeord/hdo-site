@@ -1,7 +1,7 @@
 <div class="page-header">
   <h1>
     <%= @party.name %>
-    <small><%= render partial: "representative_search", locals: { representatives: @party.representatives } %></small>
+    <small><%= render partial: "representative_search", locals: { representatives: @representatives } %></small>
   </h1>
 </div>
 
@@ -12,7 +12,7 @@
 
   <div class="span8">
     <h3><%= Representative.model_name.human(count: 2).capitalize %></h3>
-    <%= render partial: "representative_gallery", locals: { representatives: @party.representatives } %>
+    <%= render partial: "representative_gallery", locals: { representatives: @representatives } %>
   </div>
 </div>
 

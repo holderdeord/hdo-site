@@ -54,7 +54,7 @@ gem 'rack-mini-profiler'
 
 # data import
 # gem 'hdo-storting-importer', :path => File.expand_path("../../hdo-storting-importer", __FILE__)
-gem 'hdo-storting-importer', "~> 0.2.2"
+gem 'hdo-storting-importer', "~> 0.2.3"
 
 if Gem::Version.new(Bundler::VERSION) >= Gem::Version.new("1.2.0.rc2")
   ruby '1.9.3'

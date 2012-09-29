@@ -4,7 +4,7 @@ module Hdo
   module Stats
     class VoteScorer
       def initialize(model)
-        @data = compute(model.vote_connections.includes(:vote))
+        @data = compute(model.vote_connections.includes(vote: {vote_results: {representative: {party_memberships: :party}}}))
       end
 
       def score_for(party)
@@ -111,8 +111,8 @@ module Hdo
       private
 
       def vote_percentages_for(vote_connection)
-        vote_results = vote_connection.vote.vote_results.includes(:representative => :party)
-        by_party = vote_results.group_by { |v| v.representative.party }
+        vote_results = vote_connection.vote.vote_results
+        by_party = vote_results.group_by { |v| v.representative.current_party }
 
         res = {}
 

@@ -17,7 +17,7 @@
         <div class="span6">
           <p>
             <strong><%= Representative.human_attribute_name :party %>:</strong>
-            <%= link_to @representative.party.name, @representative.party %>
+            <%= link_to @representative.current_party.try(:name), @representative.current_party %>
           </p>
 
           <p>

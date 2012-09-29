@@ -8,9 +8,11 @@ module Hdo
         include_context :persister
 
         def setup_proposition(prop)
-          Party.make!(:name => prop.delivered_by.party)
-          Committee.make!(:name => prop.delivered_by.committees.first)
-          District.make!(:name => prop.delivered_by.district)
+          rep = prop.delivered_by
+          rep.parties.each { |p| Party.make!(:external_id => p.external_id) }
+          rep.committees.each { |c| Committee.make!(:name => c) }
+
+          District.make!(:name => rep.district)
         end
 
         it 'imports a proposition' do

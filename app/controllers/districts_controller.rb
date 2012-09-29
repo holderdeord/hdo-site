@@ -12,7 +12,7 @@ class DistrictsController < ApplicationController
   end
 
   def show
-    @district = District.includes(:representatives => :party).find(params[:id])
+    @district = District.includes(representatives: {party_memberships: :party}).find(params[:id])
 
     respond_to do |format|
       format.html # show.html.erb

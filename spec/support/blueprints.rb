@@ -50,9 +50,15 @@ Category.blueprint do
   main { false }
 end
 
+PartyMembership.blueprint do
+  party { Party.make! }
+  start_date { 1.month.ago }
+  end_date { nil }
+end
+
 Representative.blueprint do
   external_id { sn.to_s }
-  party { Party.make! }
+  party_memberships(1)
   first_name { "first-name-#{sn}" }
   last_name { "last-name-#{sn}" }
 end

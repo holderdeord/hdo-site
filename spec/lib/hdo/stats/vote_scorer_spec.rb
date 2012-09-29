@@ -21,8 +21,8 @@ module Hdo
         # the vote matches the issue
         issue.vote_connections.create! :vote => vote, :matches => true, :weight => 1
 
-        scorer.score_for(rep1.party).should == 100
-        scorer.score_for(rep2.party).should == 0
+        scorer.score_for(rep1.current_party).should == 100
+        scorer.score_for(rep2.current_party).should == 0
       end
 
       it "calculates scores for a single vote that doesn't match the issue" do
@@ -35,8 +35,8 @@ module Hdo
         # the vote does not match the issue
         issue.vote_connections.create! :vote => vote, :matches => false, :weight => 1
 
-        scorer.score_for(rep1.party).should == 0
-        scorer.score_for(rep2.party).should == 100
+        scorer.score_for(rep1.current_party).should == 0
+        scorer.score_for(rep2.current_party).should == 100
       end
 
       it 'calculates scores for a two votes with different weights' do
@@ -57,8 +57,8 @@ module Hdo
         # the vote does not match the issue
         issue.vote_connections.create! :vote => vote, :matches => false, :weight => 1
 
-        scorer.score_for(rep1.party).should == 66
-        scorer.score_for(rep2.party).should == 0
+        scorer.score_for(rep1.current_party).should == 66
+        scorer.score_for(rep2.current_party).should == 0
       end
 
       it 'has a string description of all valid scores' do
@@ -145,7 +145,7 @@ module Hdo
         # the vote matches the issue
         issue.vote_connections.create! :vote => vote, :matches => true, :weight => 1
 
-        scorer.score_for_group([rep1.party, rep2.party]).should eq 50
+        scorer.score_for_group([rep1.current_party, rep2.current_party]).should eq 50
       end
 
       it 'uses group name as a text in text_for when group_name option is given' do
@@ -157,7 +157,7 @@ module Hdo
         # the vote matches the issue
         issue.vote_connections.create! :vote => vote, :matches => true, :weight => 1
 
-        scorer.text_for_group([rep1.party, rep2.party], name: 'Ze Germans').should start_with 'Ze Germans'
+        scorer.text_for_group([rep1.current_party, rep2.current_party], name: 'Ze Germans').should start_with 'Ze Germans'
       end
 
       it 'allows you to overwrite the party name' do
@@ -169,7 +169,7 @@ module Hdo
         # the vote matches the issue
         issue.vote_connections.create! :vote => vote, :matches => true, :weight => 1
 
-        scorer.text_for(rep1.party, name: 'Ze Frenchies').should start_with 'Ze Frenchies'
+        scorer.text_for(rep1.current_party, name: 'Ze Frenchies').should start_with 'Ze Frenchies'
       end
 
       it 'returns a nil score for a non-existing party' do
@@ -188,18 +188,21 @@ module Hdo
 
         issue.vote_connections.create! :vote => vote, :matches => true, :weight => 0
 
-        scorer.score_for(rep1.party).should == 0
+        scorer.score_for(rep1.current_party).should == 0
       end
 
       it 'correctly handles rebel votes' do
+        rep2 = Representative.make!(:party_memberships => [])
+        rep2.party_memberships.make!(:party => rep1.current_party)
+
         vote = Vote.make!(:vote_results => [
           VoteResult.new(:representative => rep1, :result => 1),
-          VoteResult.new(:representative => Representative.make!(:party => rep1.party), :result => -1)
+          VoteResult.new(:representative => rep2, :result => -1)
         ])
 
         issue.vote_connections.create! :vote => vote, :matches => true, :weight => 1
 
-        scorer.score_for(rep1.party).should == 50
+        scorer.score_for(rep1.current_party).should == 50
       end
 
       it "does computation up front" do

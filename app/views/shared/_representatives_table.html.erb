@@ -14,7 +14,7 @@
       <tr>
         <td><%= link_to rep.display_name, rep %></td>
         <% if show_party %>
-          <td><%= link_to rep.party.name, rep.party %></td>
+          <td><%= link_to rep.current_party.try(:name), rep.current_party %></td>
         <% end %>
       </tr>
       <% end %>
