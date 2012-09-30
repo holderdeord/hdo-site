@@ -7,7 +7,6 @@ class HomeController < ApplicationController
   def index
     @topic_columns = Topic.column_groups
     @parties = Party.order(:name)
-    @header_partial = "/home/header"
   end
 
   def about
