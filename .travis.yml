@@ -13,7 +13,7 @@ notifications:
     on_failure: change
     template:
       - "%{author} | %{commit} | %{message} | %{build_url}"
-script: "RAILS_ENV=test bundle exec rake travis"
+script: "RAILS_ENV=test SPEC_OPTS=--backtrace bundle exec rake travis"
 before_script:
   - mv config/database.yml.example config/database.yml
   - sed -i -e 's/username:\ hdo/username:\ postgres/g' config/database.yml
