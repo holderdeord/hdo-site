@@ -21,7 +21,7 @@ VoteConnection.blueprint do
 end
 
 VoteResult.blueprint do
-  representative { Representative.make! }
+  representative { Representative.make!(:full) }
   result { rand(2) - 1 }
 end
 
@@ -56,11 +56,28 @@ PartyMembership.blueprint do
   end_date { nil }
 end
 
+PartyMembership.blueprint :full do
+  representative
+end
+
+CommitteeMembership.blueprint do
+  committee { Committee.make! }
+  start_date { 1.month.ago }
+  end_date { nil }
+end
+
+CommitteeMembership.blueprint :full do
+  representative
+end
+
 Representative.blueprint do
   external_id { sn.to_s }
-  party_memberships(1)
   first_name { "first-name-#{sn}" }
   last_name { "last-name-#{sn}" }
+end
+
+Representative.blueprint :full do
+  party_memberships(1)
 end
 
 Issue.blueprint do

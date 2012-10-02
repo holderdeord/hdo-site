@@ -15,7 +15,7 @@ module Hdo
           end
 
           rep.committees.map do |c|
-            Committee.make!(:name => c) unless Committee.find_by_name(c)
+            Committee.make!(:external_id => c.external_id) unless Committee.find_by_external_id(c.external_id)
           end
         end
 
@@ -31,6 +31,7 @@ module Hdo
           rep.first_name.should == example.first_name
           rep.last_name.should == example.last_name
           rep.current_party.external_id.should == example.parties.first.external_id
+          rep.committees.map { |e| e.external_id }.should == example.committees.map { |e| e.external_id }
         end
 
         it 'updates an existing representative based on external id' do
@@ -48,6 +49,117 @@ module Hdo
           Representative.first.first_name.should == 'changed-name'
         end
 
+        context 'committee memberships' do
+          def membership_to_a(ms)
+            [
+              ms.committee.external_id,
+              ms.start_date.strftime("%Y-%m-%d"),
+              ms.end_date.try(:strftime, "%Y-%m-%d")
+            ]
+          end
+
+          def import(*memberships)
+            hashes = memberships.map do |e|
+              raise ArgumentError, "expected 3 elements, got #{e.inspect}" unless e.size == 3
+              {
+                'kind'       => 'hdo#committeeMembership',
+                'externalId' => e[0],
+                'startDate'  => e[1],
+                'endDate'    => e[2]
+              }
+            end
+
+            example = StortingImporter::Representative.example('committees' => hashes)
+            setup_representative(example)
+
+            persister.import_representative(example)
+          end
+
+          def representative
+            Representative.count.should == 1
+            Representative.first
+          end
+
+          def actual_memberships
+            ms = representative.committee_memberships
+            ms.sort_by { |e| e.start_date }.map { |e| membership_to_a(e) }
+          end
+
+          it 'adds current memberships' do
+            import ['JUSTIS', '2008-01-01', nil],
+                   ['ARBSOS', '2008-01-01', nil]
+
+            actual_memberships.should == [
+              ['JUSTIS', '2008-01-01', nil],
+              ['ARBSOS', '2008-01-01', nil]
+            ]
+          end
+
+          it 'closes current memberships if new ones are added' do
+            import ['JUSTIS', '2008-01-01', nil],
+                   ['UUFK', '2010-01-01', nil]
+
+            import ['UUFK', '2010-01-01', nil]
+
+            actual_memberships.should == [
+              ['JUSTIS', '2008-01-01', (Date.today - 1).strftime("%Y-%m-%d")],
+              ['UUFK', '2010-01-01', nil]
+            ]
+          end
+
+          it 'extends existing memberships' do
+            import ['JUSTIS', '2008-01-01', nil]
+            import ['JUSTIS', '2010-01-01', nil]
+
+            actual_memberships.should == [
+              ['JUSTIS', '2008-01-01', nil],
+            ]
+          end
+
+          it "can leave a committee for a while" do
+            Date.stub(today: Date.new(2010, 6, 2))
+
+            import ['JUSTIS', '2008-01-01', nil]
+            import ['ARBSOS', '2009-01-01', nil]
+
+            actual_memberships.should == [
+              ['JUSTIS', '2008-01-01', '2010-06-01'],
+              ['ARBSOS', '2009-01-01', nil]
+            ]
+
+            Date.stub(today: Date.new(2011, 1, 1))
+
+            import ['JUSTIS', '2011-01-01', nil],
+                   ['ARBSOS', '2011-01-01', nil]
+
+            actual_memberships.should == [
+              ['JUSTIS', '2008-01-01', '2010-06-01'],
+              ['ARBSOS', '2009-01-01', nil],
+              ['JUSTIS', '2011-01-01', nil]
+            ]
+          end
+
+          it 'does not accept start dates in the future' do
+            start_date = 1.month.from_now.strftime("%Y-%m-%d")
+
+            expect {
+              import ['JUSTIS', start_date, nil]
+            }.to raise_error(IncompatibleCommitteeMembershipError, "start date #{start_date} is in the future")
+          end
+
+          it 'can both close and extend' do
+            import ['JUSTIS', '2008-01-01', nil],
+                   ['UUFK', '2010-01-01', nil]
+
+            import ['UUFK', '2008-01-01', nil]
+
+            actual_memberships.should == [
+              ['JUSTIS', '2008-01-01', (Date.today - 1).strftime("%Y-%m-%d")],
+              ['UUFK', '2008-01-01', nil]
+            ]
+          end
+        end
+
         context 'party membership' do
           def membership_to_a(ms)
             [
@@ -60,10 +172,15 @@ module Hdo
           def import(*memberships)
             hashes = memberships.map do |e|
               raise ArgumentError, "expected 3 elements, got #{e.inspect}" unless e.size == 3
-              {'kind' => 'hdo#partyMembership', 'externalId' => e[0], 'startDate' => e[1], 'endDate' => e[2]}
+              {
+                'kind'       => 'hdo#partyMembership',
+                'externalId' => e[0],
+                'startDate'  => e[1],
+                'endDate'    => e[2]
+              }
             end
 
-            example = StortingImporter::Representative.example('parties' => hashes)
+            example = StortingImporter::Representative.example('parties' => hashes, 'committees' => [])
             setup_representative(example)
 
             persister.import_representative(example)
@@ -290,9 +407,7 @@ module Hdo
             expect {
               import ['A', '2009-12-31', nil]
             }.to raise_error(IncompatiblePartyMembershipError)
-
           end
-
         end
 
       end

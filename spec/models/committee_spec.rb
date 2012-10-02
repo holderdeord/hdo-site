@@ -24,16 +24,21 @@ describe Committee do
   end
 
   it 'can add representatives' do
-    valid_committee.representatives << Representative.make!
+    rep   = Representative.make!
+    start = 1.month.ago
+
+    valid_committee.committee_memberships.create(:representative => rep, :start_date => start)
     valid_committee.representatives.size.should == 1
   end
 
   it "won't add the same representative twice" do
-    rep = Representative.make!
+    com   = valid_committee
+    rep   = Representative.make!
+    start = 1.month.ago
 
-    valid_committee.representatives << rep
-    valid_committee.representatives << rep
+    com.committee_memberships.create(:representative => rep, :start_date => start)
+    com.committee_memberships.create(:representative => rep, :start_date => start)
 
-    valid_committee.representatives.size.should == 1
+    com.should_not be_valid
   end
 end

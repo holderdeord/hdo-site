@@ -13,5 +13,8 @@ module Hdo
 
     class IncompatiblePartyMembershipError < Error
     end
+
+    class IncompatibleCommitteeMembershipError < Error
+    end
   end
 end

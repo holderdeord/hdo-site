@@ -8,10 +8,9 @@ class AddPartyMemberships < ActiveRecord::Migration
       t.timestamps
     end
 
-    add_index :party_memberships, [:representative_id, :party_id, :start_date, :end_date], :name => "index_party_memberships_on_all"
+    add_index :party_memberships, [:representative_id, :party_id, :start_date, :end_date], name: "index_party_memberships_on_all"
 
-    # move data
-    #
+    # move data to the new relation
     # no way of knowing what dates we *should* be adding, so just assume the current session
     start_date = current_start_date.strftime("%Y-%m-%d")
 
@@ -26,6 +25,8 @@ class AddPartyMemberships < ActiveRecord::Migration
   def down
     add_column :representatives, :party_id, :integer
 
+    # we're bound to lose data here, just keep the most recent association
+
     execute <<-SQL
       UPDATE representatives
       SET party_id = ( SELECT party_memberships.party_id
@@ -34,7 +35,7 @@ class AddPartyMemberships < ActiveRecord::Migration
                        ORDER BY start_date DESC LIMIT 1)
     SQL
 
-    remove_index :party_memberships, :name => "index_party_memberships_on_all"
+    remove_index :party_memberships, name: "index_party_memberships_on_all"
     drop_table :party_memberships
   end
 

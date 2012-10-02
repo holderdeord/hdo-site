@@ -197,9 +197,7 @@ module Hdo
         log_import representative
         representative.validate!
 
-        committees = representative.committees.map { |name| Committee.find_by_name!(name) }
         district = District.find_by_name!(representative.district)
-
         dob = Time.parse(representative.date_of_birth)
 
         if representative.date_of_death
@@ -213,13 +211,13 @@ module Hdo
         rec.update_attributes!(
           :first_name    => representative.first_name,
           :last_name     => representative.last_name,
-          :committees    => committees,
           :district      => district,
           :date_of_birth => dob,
           :date_of_death => dod
         )
 
-        add_party_memberships(rec, representative.parties)
+        PartyMembershipUpdater.new(rec, representative.parties).update
+        CommitteeMembershipUpdater.new(rec, representative.committees).update
 
         rec
       end
@@ -328,10 +326,6 @@ module Hdo
 
       def find_or_import_representative(xrep)
         @representative_cache[xrep.external_id] ||= (Representative.find_by_external_id(xrep.external_id) || import_representative(xrep))
-      end
-
-      def add_party_memberships(representative, memberships)
-        PartyMembershipUpdater.new(representative, memberships).update
       end
 
       def infer(imported_votes)

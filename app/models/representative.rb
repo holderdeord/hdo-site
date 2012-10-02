@@ -16,7 +16,8 @@ class Representative < ActiveRecord::Base
   has_many :party_memberships, dependent: :destroy
   has_many :parties, through: :party_memberships
 
-  has_and_belongs_to_many :committees, order: :name, uniq: true
+  has_many :committee_memberships, dependent: :destroy
+  has_many :committees, through: :committee_memberships
 
   validates_uniqueness_of :first_name, :scope => :last_name # TODO: :scope => :period ?!
   validates_presence_of   :external_id

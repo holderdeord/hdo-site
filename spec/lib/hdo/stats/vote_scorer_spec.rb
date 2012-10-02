@@ -8,8 +8,8 @@ module Hdo
       let(:issue)  { Issue.create!(:title => "issue") }
       let(:scorer) { VoteScorer.new issue }
 
-      let(:rep1) { Representative.make! }
-      let(:rep2) { Representative.make! }
+      let(:rep1) { Representative.make!(:full) }
+      let(:rep2) { Representative.make!(:full) }
 
       it 'calculates scores for a single vote' do
         # issue has one vote, with one rep for and one against

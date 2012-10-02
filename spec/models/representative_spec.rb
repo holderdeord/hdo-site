@@ -12,7 +12,16 @@ describe Representative do
     rep.display_name.should == "Duck, Donald"
   end
 
-  it "can add party associations" do
+  it 'is invalid with multiple parties at the same time' do
+    rep = Representative.make!(:party_memberships => [])
+
+    rep.party_memberships.create(:party => Party.make!, :start_date => 2.months.ago)
+    rep.party_memberships.create(:party => Party.make!, :start_date => 1.months.ago)
+
+    rep.should_not be_valid
+  end
+
+  it "can add party memberships" do
     previous_party = Party.make!
     current_party = Party.make!
 
@@ -30,6 +39,7 @@ describe Representative do
     rep.party_at(40.days.ago).should == previous_party
     rep.party_membership_at(40.days.ago).should == previous_membership
   end
+
 
   it "should have stats" do
     representative.stats.should be_kind_of(Hdo::Stats::RepresentativeCounts)
@@ -52,25 +62,17 @@ describe Representative do
   end
 
   it 'can add committees' do
-    representative.committees << Committee.make!
+    representative.committee_memberships.create! committee: Committee.make!, start_date: 1.month.ago
     representative.committees.size.should == 1
   end
 
   it "won't add the same committee twice" do
-    c = Committee.make!
+    c     = Committee.make!
+    start = 1.month.ago
 
-    representative.committees << c
-    representative.committees << c
+    representative.committee_memberships.create committee: c, start_date: start
+    representative.committee_memberships.create committee: c, start_date: start
 
-    representative.committees.size.should == 1
-  end
-
-  it 'is invalid with multiple parties at the same time' do
-    rep = Representative.make!(:party_memberships => [])
-
-    rep.party_memberships.create(:party => Party.make!, :start_date => 2.months.ago)
-    rep.party_memberships.create(:party => Party.make!, :start_date => 1.months.ago)
-
-    rep.should_not be_valid
+    representative.should_not be_valid
   end
 end

@@ -9,7 +9,7 @@ module Hdo
 
         def setup_vote(vote)
           vote.representatives.each do |rep|
-            rep.committees.each { |n| Committee.make!(:name => n) }
+            rep.committees.each { |c| Committee.make!(:external_id => c.external_id) }
             rep.parties.each { |p| Party.make!(:external_id => p.external_id )}
             District.make!(:name => rep.district)
           end

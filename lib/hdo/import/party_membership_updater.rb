@@ -32,7 +32,7 @@ module Hdo
           create_new_membership(membership)
         end
       rescue ActiveRecord::RecordInvalid => ex
-        raise IncompatiblePartyMembershipError, "#{ex.message} for #{ex.record} / #{@representative.inspect}"
+        raise IncompatiblePartyMembershipError, "#{ex.message} for #{ex.record.inspect} / #{inspect_representative}"
       end
 
       def party_for(membership)
@@ -78,7 +78,7 @@ module Hdo
           updates[:end_date] = membership.end_date
         end
 
-        existing.update_attributes!(updates)
+        existing.update_attributes!(updates) unless updates.empty?
       end
 
       def current_memberships
