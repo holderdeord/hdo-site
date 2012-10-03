@@ -74,7 +74,7 @@ module Hdo
           end_date:   membership.end_date
         )
       rescue ActiveRecord::RecordInvalid => ex
-        incompatible "#{membership.inspect} is incompatible with #{inspect_existing current_memberships} for #{inspect_representative}"
+        incompatible "#{membership.inspect} is incompatible with #{inspect_existing current_memberships} for #{inspect_representative} (#{ex.class}: #{ex.inspect})"
       end
 
       def committee_for(membership)

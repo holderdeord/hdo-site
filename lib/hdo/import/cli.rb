@@ -50,8 +50,20 @@ module Hdo
       end
 
       def import_api_representatives
-        persister.import_representatives parsing_data_source.representatives
-        persister.import_representatives parsing_data_source.representatives_today
+        representatives = {}
+
+        # the information in 'representatives_today' is more complete,
+        # so it takes precedence
+
+        parsing_data_source.representatives_today.each do |rep|
+          representatives[rep.external_id] = rep
+        end
+
+        parsing_data_source.representatives.each do |rep|
+          representatives[rep.external_id] ||= rep
+        end
+
+        persister.import_representatives representatives.values
       end
 
       def import_promises
