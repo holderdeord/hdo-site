@@ -192,7 +192,8 @@ module Hdo
           end
 
           def actual_memberships
-            representative.party_memberships.map { |e| membership_to_a(e) }
+            ms = representative.party_memberships
+            ms.sort_by { |e| e.start_date }.map { |e| membership_to_a(e) }
           end
 
           it 'adds multiple party memberships' do
