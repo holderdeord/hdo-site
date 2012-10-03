@@ -25,7 +25,7 @@
     <div class="wrapper">
       <%= render partial: 'layouts/navigation' %>
 
-      <%= yield :mega_header %>
+      <%= render partial: @header_partial unless @header_partial.nil? %>
 
       <div id="hdo-content" class="container">
         <% if flash.notice %>
