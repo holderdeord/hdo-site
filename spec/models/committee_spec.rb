@@ -27,7 +27,7 @@ describe Committee do
     rep   = Representative.make!
     start = 1.month.ago
 
-    valid_committee.committee_memberships.create(:representative => rep, :start_date => start)
+    valid_committee.committee_memberships.create(representative: rep, start_date: start)
     valid_committee.representatives.size.should == 1
   end
 
@@ -36,9 +36,21 @@ describe Committee do
     rep   = Representative.make!
     start = 1.month.ago
 
-    com.committee_memberships.create(:representative => rep, :start_date => start)
-    com.committee_memberships.create(:representative => rep, :start_date => start)
+    com.committee_memberships.create(representative: rep, start_date: start)
+    com.committee_memberships.create(representative: rep, start_date: start)
 
     com.should_not be_valid
+  end
+
+  it 'knows its current memberships' do
+    rep1 = Representative.make!
+    rep2 = Representative.make!
+    com = valid_committee
+
+    com.committee_memberships.create!(representative: rep1, start_date: 1.month.ago)
+    com.committee_memberships.create!(representative: rep2, start_date: 1.month.ago, end_date: 3.days.ago)
+
+    com.current_representatives.should == [rep1]
+    com.representatives_at(5.days.ago).should == [rep1, rep2]
   end
 end

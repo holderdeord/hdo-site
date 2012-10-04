@@ -33,7 +33,7 @@
           <p>
             <strong><%= Representative.human_attribute_name :committees %>:</strong>
             <ul>
-              <% @representative.committees.each do |com| %>
+              <% @representative.current_committees.each do |com| %>
                 <li><%= link_to com.name, com %></li>
               <% end %>
             </ul>

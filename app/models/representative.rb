@@ -62,6 +62,23 @@ class Representative < ActiveRecord::Base
     end
   end
 
+  def current_committees
+    committees_at Date.today
+  end
+
+  def committees_at(date)
+    memberships = committee_memberships_at(date)
+    memberships.map { |e| e.committee }
+  end
+
+  def committee_memberships_at(date)
+    if committee_memberships.loaded?
+      committee_memberships.select { |e| e.include?(date) }
+    else
+      committee_memberships.for_date(date)
+    end
+  end
+
   def age
     dob = date_of_birth or return -1
 

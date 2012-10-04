@@ -66,6 +66,20 @@ describe Representative do
     representative.committees.size.should == 1
   end
 
+  it 'can fetch the current committees' do
+    c1 = Committee.make!
+    c2 = Committee.make!
+    c3 = Committee.make!
+
+    representative.committee_memberships.create! committee: c1, start_date: 1.month.ago
+    representative.committee_memberships.create! committee: c2, start_date: 2.months.ago
+    representative.committee_memberships.create! committee: c3, start_date: 3.months.ago, end_date: 1.month.ago
+
+    representative.current_committees.should == [c1, c2]
+    representative.committees_at(Date.today).should == [c1, c2]
+    representative.committees_at(2.months.ago).should == [c2, c3]
+  end
+
   it "won't add the same committee twice" do
     c     = Committee.make!
     start = 1.month.ago
