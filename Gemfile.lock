@@ -89,7 +89,7 @@ GEM
     guard-spork (1.1.0)
       guard (>= 1.1)
       spork (>= 0.8.4)
-    hdo-storting-importer (0.2.4)
+    hdo-storting-importer (0.2.6)
       aruba
       builder
       jschematic (>= 0.1.0)
@@ -291,7 +291,7 @@ DEPENDENCIES
   guard
   guard-rspec
   guard-spork
-  hdo-storting-importer (~> 0.2.4)
+  hdo-storting-importer (~> 0.2.6)
   highcharts-rails (~> 2.2)
   jquery-rails
   jquery-tablesorter (>= 0.0.5)

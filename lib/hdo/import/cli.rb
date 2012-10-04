@@ -40,8 +40,8 @@ module Hdo
       private
 
       def import_api(vote_limit = nil)
-        persister.import_parties parsing_data_source.parties
-        persister.import_committees parsing_data_source.committees
+        persister.import_parties parsing_data_source.parties(@options[:session])
+        persister.import_committees parsing_data_source.committees(@options[:session])
         persister.import_districts parsing_data_source.districts
         persister.import_categories parsing_data_source.categories
 
@@ -59,7 +59,7 @@ module Hdo
           representatives[rep.external_id] = rep
         end
 
-        parsing_data_source.representatives.each do |rep|
+        parsing_data_source.representatives(@options[:period]).each do |rep|
           representatives[rep.external_id] ||= rep
         end
 
@@ -74,7 +74,7 @@ module Hdo
       end
 
       def import_api_votes(vote_limit = nil)
-        parliament_issues = parsing_data_source.parliament_issues
+        parliament_issues = parsing_data_source.parliament_issues(@options[:session])
 
         if @options[:parliament_issue_ids]
           issues = issues.select { |i| @options[:parliament_issue_ids].include? i.external_id }
@@ -202,7 +202,7 @@ module Hdo
       end
 
       def parse_options(args)
-        options = {}
+        options = {:period => '2009-2013', :session => '2012-2013'}
 
         OptionParser.new { |opt|
           opt.on("-s", "--quiet") { @options[:quiet] = true }
@@ -214,13 +214,21 @@ module Hdo
             options[:parliament_issue_ids] = ids.split(",")
           end
 
+          opt.on("--period PERIOD", %Q{The parliamentary period to import data for. Note that "today's representatives" will always be imported. Default: #{options[:period]}}) do |period|
+            options[:period] = period
+          end
+
+          opt.on("--session SESSION", %Q{The parliamentary session to import data for. Note that "today's representatives" will always be imported. Default: #{options[:session]}}) do |session|
+            options[:session] = session
+          end
+
           opt.on("-h", "--help") do
             puts opt
             exit 1
           end
         }.parse!(args)
 
-        options[:cache] = ENV['CACHE']
+        options[:cache] ||= ENV['CACHE']
 
         options
       end
