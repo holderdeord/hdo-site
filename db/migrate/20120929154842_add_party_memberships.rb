@@ -11,8 +11,8 @@ class AddPartyMemberships < ActiveRecord::Migration
     add_index :party_memberships, [:representative_id, :party_id, :start_date, :end_date], name: "index_party_memberships_on_all"
 
     # move data to the new relation
-    # no way of knowing what dates we *should* be adding, so just assume the current session
-    start_date = current_start_date.strftime("%Y-%m-%d")
+    # no way of knowing what dates we *should* be adding, so just assume what's valid when this migration was written
+    start_date = Date.new(2011, 10, 1).strftime("%Y-%m-%d")
 
     execute <<-SQL
       INSERT INTO party_memberships (representative_id, party_id, start_date, created_at, updated_at)
@@ -39,16 +39,4 @@ class AddPartyMemberships < ActiveRecord::Migration
     drop_table :party_memberships
   end
 
-  private
-
-  def current_start_date
-    now = Time.now
-    new_session_start = Time.new(now.year, 10, 1)
-
-    if now >= new_session_start
-      new_session_start
-    else
-      Time.new(now.year - 1, 10, 1)
-    end
-  end
 end

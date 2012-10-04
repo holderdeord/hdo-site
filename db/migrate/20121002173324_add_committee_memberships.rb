@@ -11,8 +11,8 @@ class AddCommitteeMemberships < ActiveRecord::Migration
     add_index :committee_memberships, [:representative_id, :committee_id, :start_date, :end_date], name: "index_committee_memberships_on_all"
 
     # move data
-    # we can't know what data we're moving, so just assume the current session
-    start_date = current_start_date.strftime("%Y-%m-%d")
+    # no way of knowing what dates we *should* be adding, so just assume what's valid when this migration was written
+    start_date = Date.new(2011, 10, 1).strftime("%Y-%m-%d")
 
     execute <<-SQL
       INSERT INTO committee_memberships (representative_id, committee_id, start_date, created_at, updated_at)
@@ -38,18 +38,5 @@ class AddCommitteeMemberships < ActiveRecord::Migration
 
     remove_index :committee_memberships, name: 'index_committee_memberships_on_all'
     drop_table :committee_memberships
-  end
-
-  private
-
-  def current_start_date
-    now = Time.now
-    new_session_start = Time.new(now.year, 10, 1)
-
-    if now >= new_session_start
-      new_session_start
-    else
-      Time.new(now.year - 1, 10, 1)
-    end
   end
 end
