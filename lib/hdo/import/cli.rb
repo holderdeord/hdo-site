@@ -5,6 +5,7 @@ require 'open-uri'
 module Hdo
   module Import
     class CLI
+      attr_reader :options
 
       def initialize(argv)
         if argv.empty?

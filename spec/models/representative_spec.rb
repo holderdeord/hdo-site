@@ -21,6 +21,13 @@ describe Representative do
     rep.should_not be_valid
   end
 
+  it "knows the age" do
+    rep = Representative.make!(:date_of_birth => Date.parse("1980-01-01"))
+    Date.stub(today: Date.parse("2012-01-01"))
+
+    rep.age.should == 32
+  end
+
   it "can add party memberships" do
     previous_party = Party.make!
     current_party = Party.make!
