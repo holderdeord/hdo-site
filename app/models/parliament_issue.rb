@@ -10,6 +10,8 @@ class ParliamentIssue < ActiveRecord::Base
 
   friendly_id :external_id, :use => :slugged
 
+  scope :processed, where("status = ?", I18n.t("app.parliament_issue.states.processed"))
+
   def status_text
     status.gsub(/_/, ' ').capitalize
   end

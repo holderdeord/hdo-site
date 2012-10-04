@@ -5,7 +5,6 @@ module Hdo
 
       def initialize
         @log = Logger.new(STDOUT)
-        @representative_cache = {}
       end
 
       def import_votes(votes, opts = {})
@@ -325,7 +324,7 @@ module Hdo
       end
 
       def find_or_import_representative(xrep)
-        @representative_cache[xrep.external_id] ||= (Representative.find_by_external_id(xrep.external_id) || import_representative(xrep))
+        Representative.find_by_external_id(xrep.external_id) || import_representative(xrep)
       end
 
       def infer(imported_votes)

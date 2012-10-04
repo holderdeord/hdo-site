@@ -21,7 +21,7 @@ module Hdo
         when 'json'
           import_files
         when 'daily'
-          raise NotImplementedError
+          import_daily
         when 'api'
           import_api
         when 'dev'
@@ -49,6 +49,44 @@ module Hdo
         import_api_votes(vote_limit)
       end
 
+      def import_daily
+        persister.import_parties parsing_data_source.parties(@options[:session])
+        persister.import_committees parsing_data_source.committees(@options[:session])
+        persister.import_districts parsing_data_source.districts
+        persister.import_categories parsing_data_source.categories
+
+        import_api_representatives
+
+        parliament_issues = parsing_data_source.parliament_issues(@options[:session])
+        # ignore issues that we already have in its final 'processed' state
+
+        ignored_xids = ParliamentIssue.processed.map(&:external_id).sort
+        needs_update = parliament_issues.reject { |pi| ignored_xids.include?(pi.external_id) }
+        persister.import_parliament_issues needs_update
+
+        each_vote_for(parsing_data_source, needs_update) do |votes|
+          persister.import_votes votes, infer: false
+        end
+
+        persister.infer_all_votes
+      end
+
+      def import_api_votes(vote_limit = nil)
+        parliament_issues = parsing_data_source.parliament_issues(@options[:session])
+
+        if @options[:parliament_issue_ids]
+          issues = issues.select { |i| @options[:parliament_issue_ids].include? i.external_id }
+        end
+
+        persister.import_parliament_issues parliament_issues
+
+        each_vote_for(parsing_data_source, parliament_issues, vote_limit) do |votes|
+          persister.import_votes votes, infer: false
+        end
+
+        persister.infer_all_votes
+      end
+
       def import_api_representatives
         representatives = {}
 
@@ -71,22 +109,6 @@ module Hdo
 
         promises = Hdo::StortingImporter::Promise.from_xlsx(spreadsheet)
         persister.import_promises promises
-      end
-
-      def import_api_votes(vote_limit = nil)
-        parliament_issues = parsing_data_source.parliament_issues(@options[:session])
-
-        if @options[:parliament_issue_ids]
-          issues = issues.select { |i| @options[:parliament_issue_ids].include? i.external_id }
-        end
-
-        persister.import_parliament_issues parliament_issues
-
-        each_vote_for(parsing_data_source, parliament_issues, vote_limit) do |votes|
-          persister.import_votes votes, infer: false
-        end
-
-        persister.infer_all_votes
       end
 
       def each_vote_for(data_source, parliament_issues, limit = nil)

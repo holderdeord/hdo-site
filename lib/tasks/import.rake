@@ -34,4 +34,9 @@ namespace :import do
     Hdo::Import::CLI.new(['api']).run
   end
 
+  desc 'Run the daily import.'
+  task :daily => "import:env" do
+    Hdo::Import::CLI.new(['daily']).run
+  end
+
 end
