@@ -37,6 +37,15 @@ module Hdo
         vote.stats.as_json.should be_kind_of(Hash)
       end
 
+      it 'handles representatives with no party' do
+        rep = Representative.make!
+        vote.vote_results.create!(representative: rep, result: 1)
+        rep.party_at(vote.time).should be_nil
+
+        vote.stats.party_counts_for(nil).should == {:for => 1}
+        vote.stats.as_json.fetch(:parties).should include(nil => {:for => 1})
+      end
+
     end
   end
 end

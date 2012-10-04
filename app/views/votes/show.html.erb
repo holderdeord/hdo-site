@@ -61,7 +61,10 @@
       <% @vote_results.each do |result| %>
       <tr>
         <td><%= link_to result.representative.display_name, result.representative %></td>
-        <td><%= link_to result.representative.current_party.try(:name), result.representative.current_party %></td>
+        <td>
+          <% party = result.representative.party_at(@vote.time) %>
+          <%= party && link_to(party.name, party) %>
+        </td>
         <td class="vote-<%= result.state %>"><%= result.human %></td>
       </tr>
       <% end %>

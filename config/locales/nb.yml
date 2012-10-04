@@ -309,7 +309,7 @@ nb:
       group:
         governing: 'Regjering'
         opposition: 'Opposisjon'
-      none: 'Ukjent parti'
+      none: 'Inget parti'
     counts:
       representative:
         one: "Viser <strong>1</strong> representant."

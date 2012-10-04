@@ -8,7 +8,7 @@
   <% representatives.each do |rep| %>
   <div class="row-fluid">
     <div class="span6"><%= link_to rep.display_name, rep %></div>
-    <div class="span6"><%= link_to rep.current_party.try(:name), rep.current_party %></div>
+    <div class="span6"><%= (party = rep.current_party) && link_to(party.name, party) %></div>
   </div>
   <% end %>
 

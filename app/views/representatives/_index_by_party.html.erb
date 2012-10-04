@@ -1,10 +1,14 @@
 <% groups.each do |party, representatives| %>
   <div class="row-fluid">
     <h2>
-      <%= link_to party do %>
-        <%= image_tag party.image_with_fallback.thumb("200x200").strip.url %>
+      <% if party # TODO: Party::NULL? %>
+        <%= link_to party do %>
+          <%= image_tag party.image_with_fallback.thumb("200x200").strip.url %>
+        <% end %>
       <% end %>
-      <%= party.name %>
+
+      <%= party.try(:name) || t('app.parties.none') %>
+
     </h2>
   </div>
 
