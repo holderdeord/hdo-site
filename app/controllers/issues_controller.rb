@@ -66,6 +66,8 @@ class IssuesController < ApplicationController
         redirect_to edit_issue_step_url(@issue, :step => edit_steps.after)
       end
     else
+      logger.warn "failed to create issue: #{@issue.inspect}: #{@issue.errors.full_messages}"
+
       flash.alert = @issue.errors.full_messages.to_sentence
       fetch_categories
 
@@ -84,6 +86,8 @@ class IssuesController < ApplicationController
         redirect_to edit_issue_step_url(@issue, step: edit_steps.current)
       end
     else
+      logger.warn "failed to update issue: #{@issue.inspect}: #{@issue.errors.full_messages}"
+
       flash.alert = @issue.errors.full_messages.to_sentence
       redirect_to edit_issue_step_url(@issue, :step => edit_steps.current)
     end
