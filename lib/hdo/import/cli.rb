@@ -1,6 +1,7 @@
 require 'optparse'
 require 'set'
 require 'open-uri'
+require 'fileutils'
 
 module Hdo
   module Import
@@ -70,6 +71,8 @@ module Hdo
         end
 
         persister.infer_all_votes
+
+        purge_cache
       end
 
       def import_api_votes(vote_limit = nil)
@@ -222,6 +225,11 @@ module Hdo
             Hdo::StortingImporter.logger
           end
         )
+      end
+
+      def purge_cache
+        # crude cache purge for now
+        FileUtils.rm_rf Rails.root.join('public/cache' )
       end
 
       def parse_options(args)

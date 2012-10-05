@@ -37,9 +37,6 @@ namespace :import do
   desc 'Run the daily import.'
   task :daily => "import:env" do
     Hdo::Import::CLI.new(['daily']).run
-
-    # crude cache purge for now
-    rm_rf Rails.root.join('public/cache' )
   end
 
 end
