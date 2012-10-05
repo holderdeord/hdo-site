@@ -11,7 +11,7 @@ var HDO = HDO || {};
   }
 
   function setActiveParty(self, slug, partyElement) {
-    var className = slug + "-active";             
+    var className = slug + "-active";
     if (self.activeParty) {
       $(self.activeParty).removeClass();
     }
@@ -23,16 +23,34 @@ var HDO = HDO || {};
     return $(ev.currentTarget).data("party-slug");
   }
 
-  function partyClicked(ev) {
-    var partySlug = getSlugname(ev);
-    var partyElement = $(ev.currentTarget).parent().get(0);
+  function filterResults(ev, index, el) {
+    var lastSelectedSlug = $(this.activeParty).find("a").data("party-slug"),
+      selectedSlug = $(ev).data("party-slug"),
+      element = $(el[index]).get(0);
 
-    setActiveParty(this, partySlug, partyElement);
-    filterByParty(this, partySlug);
+    if (selectedSlug === lastSelectedSlug || lastSelectedSlug === 'show-all') {
+      $(element).removeClass("hidden");
+    } else {
+      $(element).addClass("hidden");
+    }
+  }
+
+  function filterByParty(self) {
+    var result = $(self.targetEl).find("div[data-party-slug]").get();
+    result.forEach(filterResults, self);
     return false;
   }
 
-  function renderAndFilterResults (data) {
+  function partyClicked(ev) {
+    var partySlug = getSlugname(ev),
+      partyElement = $(ev.currentTarget).parent().get(0);
+
+    setActiveParty(this, partySlug, partyElement);
+    filterByParty(this);
+    return false;
+  }
+
+  function renderAndFilterResults(data) {
     this.targetEl.html(data);
     var result = $(this.targetEl).find("div").get();
     result.forEach(filterResults, this);
@@ -44,24 +62,6 @@ var HDO = HDO || {};
     this.server.fetchPromises(categoryId, renderAndFilterResults.bind(this));
 
     return false;
-  }
-
-  function filterByParty(self) {
-    var result = $(self.targetEl).find("div[data-party-slug]").get();
-    result.forEach(filterResults, self);
-    return false;
-  }
-
-  function filterResults(ev, index, el) {
-    var lastSelectedSlug = $(this.activeParty).find("a").data("party-slug");
-    var selectedSlug = $(ev).data("party-slug");
-    var element = $(el[index]).get(0);
-    
-    if (selectedSlug === lastSelectedSlug || lastSelectedSlug === 'show-all') {
-      $(element).removeClass("hidden");
-    } else {
-      $(element).addClass("hidden");
-    }  
   }
 
   HDO.promiseWidget = {
