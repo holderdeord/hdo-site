@@ -23,7 +23,13 @@ var HDO = HDO || {};
     return $(ev.currentTarget).data("party-slug");
   }
 
+  function showEmptyResultsMessage(self) {
+    self.targetEl.find('#empty-results-message').html('<h3>Partiet har ingen løfter i denne kategorien.</h3>')
+      .removeClass('hidden');
+  }
+
   function filterResults(ev, index, el) {
+
     var lastSelectedSlug = $(this.activeParty).find("a").data("party-slug"),
       selectedSlug = $(ev).data("party-slug"),
       element = $(el[index]).get(0);
@@ -36,8 +42,13 @@ var HDO = HDO || {};
   }
 
   function filterByParty(self) {
+    $('#empty-results-message').html('');
     var result = $(self.targetEl).find("div[data-party-slug]").get();
     result.forEach(filterResults, self);
+
+    if (self.targetEl.find('div').not('.hidden').length === 1) {
+      showEmptyResultsMessage(self);
+    }
     return false;
   }
 
@@ -52,6 +63,7 @@ var HDO = HDO || {};
 
   function renderAndFilterResults(data) {
     this.targetEl.html(data);
+    this.targetEl.append('<div id=empty-results-message></div>');
     var result = $(this.targetEl).find("div").get();
     result.forEach(filterResults, this);
   }
@@ -79,7 +91,7 @@ var HDO = HDO || {};
       $(this.categoriesSelector).on("click", "a[data-category-id]", categoryClicked.bind(this));
       $(this.partiesSelector).on("click", "a[data-party-slug]", partyClicked.bind(this));
     }
-  }
+  };
 
 }(HDO, jQuery));
 
