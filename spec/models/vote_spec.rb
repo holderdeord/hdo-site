@@ -7,7 +7,7 @@ describe Vote do
     vote.should be_valid
   end
 
-  it "should be invalid with no issues" do
+  it "is invalid with no issues" do
     v = Vote.make(:parliament_issues => [])
     v.should_not be_valid
   end
@@ -15,6 +15,18 @@ describe Vote do
   it "should be invalid without a time" do
     v = Vote.make(:time => nil)
     v.should_not be_valid
+  end
+  
+  it 'is invalid without an external id' do
+    vote.external_id = nil
+    vote.should_not be_valid
+  end
+
+  it 'is invalid without a unique external id' do
+    invalid = Vote.make
+    invalid.external_id = vote.external_id
+    
+    invalid.should_not be_valid
   end
 
   it "should have a stats object" do

@@ -9,6 +9,13 @@ describe Committee do
     valid_committee.should be_valid
     invalid_committee.should_not be_valid
   end
+  
+  it "should have a unique external id" do
+    invalid = Committee.make!
+    invalid.external_id = valid_committee.external_id
+
+    invalid.should_not be_valid
+  end
 
   it "can add parliament issues" do
     a = ParliamentIssue.make! last_update: 2.hours.ago

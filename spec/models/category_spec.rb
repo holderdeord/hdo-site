@@ -5,9 +5,14 @@ require 'spec_helper'
 describe Category do
   let(:valid_category) { Category.make! }
 
-  it "should have unique names" do
-    valid = Category.create!(:name => "foo")
-    invalid = Category.create(:name => "foo")
+  it "should have a unique name" do
+    invalid = Category.make(:name => valid_category.name)
+    invalid.should_not be_valid
+  end
+  
+  it "should have a unique external id" do
+    invalid = Category.make!
+    invalid.external_id = valid_category.external_id
 
     invalid.should_not be_valid
   end

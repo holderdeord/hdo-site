@@ -1,8 +1,26 @@
 require 'spec_helper'
 
 describe Proposition do
+  
   it 'has a valid blueprint' do
     Proposition.make.should be_valid
+  end
+  
+  it 'is invalid without a body' do
+    Proposition.make(:body => nil).should_not be_valid
+  end
+  
+  it 'is invalid without a unique external id' do
+    invalid = Proposition.make
+    
+    invalid.external_id = nil
+    invalid.should_not be_valid
+    
+    invalid.external_id = Proposition.make!.external_id
+    invalid.should_not be_valid
+    
+    invalid.external_id = "9191"
+    invalid.should be_valid
   end
 
   it "can have a large body" do
@@ -29,4 +47,5 @@ describe Proposition do
     prop.body = 'a'*200
     prop.short_body.should == prop.body
   end
+  
 end
