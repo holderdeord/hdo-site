@@ -14,7 +14,7 @@
         <td><%= prop.description %></td>
         <td><%= prop.on_behalf_of %></td>
         <% if rep = prop.delivered_by %>
-          <td><%= link_to rep.display_name, rep %> (<%= rep.party_at(vote.time).try(:external_id) %>)</td>
+          <td><%= link_to rep.display_name, rep %> (<%= rep.party_at(vote.time).try(:external_id) || t('app.parties.none') %>)</td>
         <% else %>
           <td></td>
         <% end %>

@@ -7,7 +7,7 @@ class Promise < ActiveRecord::Base
   has_and_belongs_to_many :categories, order: :name, uniq: true
   has_and_belongs_to_many :issues, order: :title, uniq: true
 
-  validates_presence_of :source, :body
+  validates_presence_of :source, :body, :external_id
   validates_uniqueness_of :external_id, :body
   validates_length_of :categories, minimum: 1
   validates_length_of :parties, minimum: 1

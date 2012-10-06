@@ -16,16 +16,18 @@ describe Vote do
     v = Vote.make(:time => nil)
     v.should_not be_valid
   end
-  
+
   it 'is invalid without an external id' do
     vote.external_id = nil
     vote.should_not be_valid
   end
 
   it 'is invalid without a unique external id' do
+    vote.save!
+
     invalid = Vote.make
     invalid.external_id = vote.external_id
-    
+
     invalid.should_not be_valid
   end
 

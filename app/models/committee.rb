@@ -1,7 +1,7 @@
 class Committee < ActiveRecord::Base
   extend FriendlyId
 
-  attr_accessible :name
+  attr_accessible :name, :external_id
 
   has_many :committee_memberships, dependent: :destroy
   has_many :representatives, through: :committee_memberships

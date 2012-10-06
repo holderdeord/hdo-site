@@ -9,6 +9,7 @@ User.blueprint do
 end
 
 Vote.blueprint do
+  external_id { sn.to_s }
   parliament_issues { [ParliamentIssue.make] }
   time { Time.now }
   vote_results { [VoteResult.make!] }
@@ -91,6 +92,7 @@ Issue.blueprint do
 end
 
 Proposition.blueprint do
+  external_id { sn.to_s }
   body { "proposition-body-#{sn}" }
   description { "proposition-description-#{sn}" }
 end

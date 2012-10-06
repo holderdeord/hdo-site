@@ -6,7 +6,7 @@ class Proposition < ActiveRecord::Base
 
   alias_method :delivered_by, :representative
 
-  validates_presence_of :external_id, :body
+  validates_presence_of :body
   validates_uniqueness_of :external_id
 
   def plain_body

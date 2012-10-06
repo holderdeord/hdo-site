@@ -39,11 +39,11 @@ describe Promise do
     promise = Promise.make!(:body => 'body')
     Promise.make(:body => promise.body).should_not be_valid
   end
-  
+
   it 'has a unique external id' do
     invalid = Promise.make
     invalid.external_id = promise.external_id
-    
+
     invalid.should_not be_valid
   end
 
