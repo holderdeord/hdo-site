@@ -53,4 +53,16 @@ describe Committee do
     com.current_representatives.should == [rep1]
     com.representatives_at(5.days.ago).should == [rep1, rep2]
   end
+  
+  it 'destroys dependent memeberships when destroyed' do
+    com = Committee.make!
+    rep = Representative.make!
+
+    com.committee_memberships.create!(representative: rep, start_date: 1.month.ago)
+    rep.committee_memberships.size.should == 1
+
+    com.destroy
+
+    rep.party_memberships.should == []
+  end
 end

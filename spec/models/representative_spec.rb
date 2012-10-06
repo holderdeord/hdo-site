@@ -13,7 +13,7 @@ describe Representative do
   end
 
   it 'is invalid with multiple parties at the same time' do
-    rep = Representative.make!(:party_memberships => [])
+    rep = Representative.make!
 
     rep.party_memberships.create(:party => Party.make!, :start_date => 2.months.ago)
     rep.party_memberships.create(:party => Party.make!, :start_date => 1.months.ago)
@@ -32,7 +32,7 @@ describe Representative do
     previous_party = Party.make!
     current_party = Party.make!
 
-    rep = Representative.make!(:party_memberships => [])
+    rep = Representative.make!
 
     previous_membership = rep.party_memberships.create!(:party => previous_party, :start_date => 2.months.ago, :end_date => 1.month.ago)
     current_membership  = rep.party_memberships.create!(:party => current_party, :start_date => 29.days.ago)

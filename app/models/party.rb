@@ -1,12 +1,11 @@
 class Party < ActiveRecord::Base
+  include Hdo::ModelHelpers::HasFallbackImage
+  extend FriendlyId
+
   class PartyGroup < Struct.new(:name, :parties)
   end
 
-  extend FriendlyId
-
-  include Hdo::ModelHelpers::HasFallbackImage
-
-  has_many :party_memberships
+  has_many :party_memberships, dependent: :destroy
   has_many :representatives, through: :party_memberships
   has_many :governing_periods, order: :start_date, dependent: :destroy
 
@@ -38,7 +37,7 @@ class Party < ActiveRecord::Base
   end
 
   def in_government?(date = Date.today)
-    !!governing_periods.for_date(date).any?
+    governing_periods.for_date(date).any?
   end
 
   def large_logo

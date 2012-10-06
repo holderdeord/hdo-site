@@ -2,7 +2,7 @@ require 'spec_helper'
 require 'models/shared_examples_for_model_with_date_range'
 
 describe PartyMembership do
-  let(:representative) { Representative.make!(:party_memberships => [])}
+  let(:representative) { Representative.make! }
   let(:party) { Party.make! }
 
   it_behaves_like 'model with date range'

@@ -192,7 +192,7 @@ module Hdo
       end
 
       it 'correctly handles rebel votes' do
-        rep2 = Representative.make!(:party_memberships => [])
+        rep2 = Representative.make!
         rep2.party_memberships.make!(:party => rep1.current_party)
 
         vote = Vote.make!(:vote_results => [

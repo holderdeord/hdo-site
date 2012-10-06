@@ -78,10 +78,10 @@ describe Party do
   it 'knows its current representatives' do
     party = Party.make!
 
-    current_rep = Representative.make!(:party_memberships => [])
+    current_rep = Representative.make!
     current_rep.party_memberships.create!(:party => party, :start_date => 1.month.ago)
 
-    previous_rep = Representative.make!(:party_memberships => [])
+    previous_rep = Representative.make!
     previous_rep.party_memberships.create!(:party => party, :start_date => 2.months.ago, :end_date => 1.month.ago)
 
     party.current_representatives.should == [current_rep]
@@ -90,6 +90,17 @@ describe Party do
     party.representatives.should == [current_rep, previous_rep]
   end
 
+  it 'destroys dependent memeberships when destroyed' do
+    party = Party.make!
+    rep = Representative.make!
+
+    party.party_memberships.create!(representative: rep, start_date: 1.month.ago)
+    rep.party_memberships.size.should == 1
+
+    party.destroy
+
+    rep.party_memberships.should == []
+  end
 
   it 'partitions parties by government and opposition' do
     a = Party.make!
