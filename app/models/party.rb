@@ -14,7 +14,7 @@ class Party < ActiveRecord::Base
   validates_uniqueness_of :name, :external_id
   validates_presence_of :name, :external_id
 
-  friendly_id :external_id, :use => :slugged
+  friendly_id :external_id, use: :slugged
 
   image_accessor :image
   attr_accessible :image, :name

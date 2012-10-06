@@ -23,7 +23,7 @@ class Representative < ActiveRecord::Base
   validates_presence_of   :external_id
   validates_uniqueness_of :external_id
 
-  friendly_id :external_id, :use => :slugged
+  friendly_id :external_id, use: :slugged
 
   image_accessor :image
 

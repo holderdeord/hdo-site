@@ -9,7 +9,7 @@ class Topic < ActiveRecord::Base
   has_and_belongs_to_many :issues, uniq: true
   has_many :promises, through: :issues
 
-  friendly_id :name, :use => :slugged
+  friendly_id :name, use: :slugged
 
   image_accessor :image
 
