@@ -8,11 +8,11 @@ describe ParliamentIssue do
   end
 
   it 'humanizes the status string' do
-    ParliamentIssue.make!(:status => 'ikke_behandlet').status_text.should == 'Ikke behandlet'
+    ParliamentIssue.make!(status: 'ikke_behandlet').status_text.should == 'Ikke behandlet'
   end
 
   it 'knows if the issue was processed' do
-    ParliamentIssue.make!(:status => "behandlet").should be_processed
+    ParliamentIssue.make!(status: "behandlet").should be_processed
   end
 
   it 'can add categories' do
