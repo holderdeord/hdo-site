@@ -26,7 +26,7 @@ VoteResult.blueprint do
 end
 
 ParliamentIssue.blueprint do
-
+  external_id { sn.to_s }
 end
 
 Topic.blueprint do
@@ -39,6 +39,7 @@ Party.blueprint do
 end
 
 Promise.blueprint do
+  external_id { sn.to_s }
   parties { [Party.make!] }
   source { "PP:10" }
   body { "Løftetekst" }
@@ -46,6 +47,7 @@ Promise.blueprint do
 end
 
 Category.blueprint do
+  external_id { sn.to_s }
   name { "Category-#{sn}" }
   main { false }
 end
@@ -102,9 +104,11 @@ GoverningPeriod.blueprint :full do
 end
 
 Committee.blueprint do
+  external_id { sn.to_s }
   name { "committee-#{sn}" }
 end
 
 District.blueprint do
+  external_id { sn.to_s }
   name { "committee-#{sn}" }
 end

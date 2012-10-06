@@ -7,7 +7,8 @@ class Committee < ActiveRecord::Base
   has_many :representatives, through: :committee_memberships
   has_many :parliament_issues, order: 'last_update DESC'
 
-  validates_uniqueness_of :name # :external_id
+  validates :name,        presence: true, uniqueness: true
+  validates :external_id, presence: true, uniqueness: true
 
   friendly_id :external_id, use: :slugged
 
