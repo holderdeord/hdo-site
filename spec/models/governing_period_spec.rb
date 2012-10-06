@@ -1,6 +1,9 @@
 require 'spec_helper'
+require 'models/shared_examples_for_model_with_date_range'
 
 describe GoverningPeriod do
+  it_behaves_like 'model with date range'
+
   it "has a valid blueprint" do
     GoverningPeriod.make.should be_valid
   end
@@ -12,16 +15,6 @@ describe GoverningPeriod do
       :party      => nil
     )
     g.should_not be_valid
-  end
-
-  it "requires a start_date" do
-    g = GoverningPeriod.make(
-      :start_date => nil,
-      :end_date   => Date.today,
-      :party      => Party.make!
-    )
-
-    g.save.should be_false
   end
 
   it "knows if today is included when it should be" do

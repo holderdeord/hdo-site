@@ -98,6 +98,9 @@ GoverningPeriod.blueprint do
   start_date { Date.today }
 end
 
+GoverningPeriod.blueprint :full do
+end
+
 Committee.blueprint do
   name { "committee-#{sn}" }
 end

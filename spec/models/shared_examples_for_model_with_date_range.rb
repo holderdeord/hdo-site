@@ -1,6 +1,11 @@
 require 'spec_helper'
 
 shared_examples 'model with date range' do
+
+  it "requires a start_date" do
+    described_class.make(:full, :start_date => nil).should_not be_valid
+  end
+
   it 'knows if itself is current' do
     obj = described_class.new(:start_date => 1.month.ago, :end_date => nil)
     obj.should be_current
