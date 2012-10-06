@@ -3,14 +3,14 @@ require 'spec_helper'
 describe Committee do
   let(:valid_committee) { Committee.make! }
 
-  it "should have unique names" do
+  it "has a unique of names" do
     invalid_committee = Committee.create(:name => valid_committee.name)
 
     valid_committee.should be_valid
     invalid_committee.should_not be_valid
   end
   
-  it "should have a unique external id" do
+  it "has a unique external id" do
     invalid = Committee.make!
     invalid.external_id = valid_committee.external_id
 
