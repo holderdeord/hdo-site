@@ -8,6 +8,8 @@ class ParliamentIssue < ActiveRecord::Base
   has_and_belongs_to_many :categories, uniq: true
   has_and_belongs_to_many :votes, uniq: true
 
+  validates_uniqueness_of :external_id
+
   friendly_id :external_id, use: :slugged
 
   scope :processed, where("status = ?", I18n.t("app.parliament_issue.states.processed"))

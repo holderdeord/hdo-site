@@ -6,7 +6,7 @@ describe Category do
   let(:valid_category) { Category.make! }
 
   it "should have unique names" do
-    valid = Category.create!(:name => "foo")
+    valid = Category.make!(:name => "foo")
     invalid = Category.create(:name => "foo")
 
     invalid.should_not be_valid
