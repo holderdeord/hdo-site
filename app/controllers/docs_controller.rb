@@ -7,7 +7,9 @@ class DocsController < ApplicationController
 
     @import_types = [
       Hdo::StortingImporter::Party,
+      Hdo::StortingImporter::PartyMembership,
       Hdo::StortingImporter::Committee,
+      Hdo::StortingImporter::CommitteeMembership,
       Hdo::StortingImporter::District,
       Hdo::StortingImporter::Representative,
       Hdo::StortingImporter::Category,
