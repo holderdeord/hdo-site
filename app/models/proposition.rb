@@ -7,7 +7,7 @@ class Proposition < ActiveRecord::Base
   alias_method :delivered_by, :representative
 
   validates_presence_of :body
-  validates_uniqueness_of :external_id
+  validates_uniqueness_of :external_id, allow_nil: true # https://github.com/holderdeord/hdo-site/issues/138
 
   def plain_body
     Nokogiri::HTML.parse(body).inner_text.strip
