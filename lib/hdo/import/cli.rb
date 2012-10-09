@@ -60,13 +60,12 @@ module Hdo
         import_api_representatives
 
         parliament_issues = parsing_data_source.parliament_issues(@options[:session])
-        # ignore issues that we already have in its final 'processed' state
+        persister.import_parliament_issues parliament_issues
 
-        ignored_xids = ParliamentIssue.processed.map(&:external_id).sort
-        needs_update = parliament_issues.reject { |pi| ignored_xids.include?(pi.external_id) }
-        persister.import_parliament_issues needs_update
+        existing_votes = Vote.pluck(:external_id)
 
-        each_vote_for(parsing_data_source, needs_update) do |votes|
+        each_vote_for(parsing_data_source, parliament_issues) do |votes|
+          votes = votes.reject { |v| existing_votes.include? v.external_id }
           persister.import_votes votes, infer: false
         end
 
