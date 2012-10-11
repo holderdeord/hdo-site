@@ -17,7 +17,9 @@
         <div class="span6">
           <p>
             <strong><%= Representative.human_attribute_name :party %>:</strong>
-            <%= link_to @representative.party.name, @representative.party %>
+
+            <% party = @representative.current_party %>
+            <%= party && link_to(party.name, party) %>
           </p>
 
           <p>
@@ -33,7 +35,7 @@
           <p>
             <strong><%= Representative.human_attribute_name :committees %>:</strong>
             <ul>
-              <% @representative.committees.each do |com| %>
+              <% @representative.current_committees.each do |com| %>
                 <li><%= link_to com.name, com %></li>
               <% end %>
             </ul>

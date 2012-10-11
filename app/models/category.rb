@@ -2,7 +2,7 @@ class Category < ActiveRecord::Base
   extend FriendlyId
   include ActsAsTree
 
-  attr_accessible :name
+  attr_accessible :name, :external_id
 
   has_and_belongs_to_many :parliament_issues, order: "last_update DESC", uniq: true
   has_and_belongs_to_many :promises, uniq: true
@@ -10,7 +10,8 @@ class Category < ActiveRecord::Base
 
   acts_as_tree order: :name
 
-  validates_uniqueness_of :name
+  validates_presence_of :name, :external_id
+  validates_uniqueness_of :name, :external_id
 
   friendly_id :name, use: :slugged
 

@@ -16,7 +16,7 @@ end
 guard 'rspec', :version => 2, :spec_paths => %w[spec/models spec/controllers spec/lib spec/helpers] do
   watch(%r{^spec/.+_spec\.rb$})
   watch(%r{^lib/(.+)\.rb$})                 { |m| "spec/lib/#{m[1]}_spec.rb" }
-  watch(%r{^lib/hdo/import/persister\.rb$}) { |m| "spec/lib/hdo/import/persister" }
+  watch(%r{^lib/hdo/import/(persister|party_membership_updater)\.rb$}) { |m| "spec/lib/hdo/import/persister" }
   watch('spec/spec_helper.rb')              { "spec" }
 
   # Rails example

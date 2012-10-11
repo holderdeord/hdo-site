@@ -14,15 +14,15 @@ class Issue < ActiveRecord::Base
   has_and_belongs_to_many :categories, uniq: true
   has_and_belongs_to_many :promises,   uniq: true
 
-  belongs_to :last_updated_by, :foreign_key => 'last_updated_by_id', :class_name => 'User'
+  belongs_to :last_updated_by, foreign_key: 'last_updated_by_id', class_name: 'User'
 
-  has_many :vote_connections, :dependent     => :destroy,
-                              :before_add    => :clear_stats_cache,
-                              :before_remove => :clear_stats_cache
+  has_many :vote_connections, dependent:     :destroy,
+                              before_add:    :clear_stats_cache,
+                              before_remove: :clear_stats_cache
 
-  has_many :votes, :through => :vote_connections, :order => :time
+  has_many :votes, through: :vote_connections, order: :time
 
-  friendly_id :title, :use => :slugged
+  friendly_id :title, use: :slugged
 
   scope :vote_ordered, includes(:votes).order('votes.time DESC')
   scope :published, where(:status => 'published')

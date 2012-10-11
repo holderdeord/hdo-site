@@ -8,8 +8,8 @@ module Hdo
         include_context :persister
 
         def setup_parliament_issue(issue)
-          Committee.find_or_create_by_name(issue.committee)
-          issue.categories.each { |c| Category.find_or_create_by_name(c) }
+          Committee.find_or_create_by_name!(issue.committee, external_id: issue.committee[0..5])
+          issue.categories.each { |c| Category.find_or_create_by_name!(c, external_id: c[0..5]) }
         end
 
         it 'imports a parliament issue' do

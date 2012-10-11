@@ -6,13 +6,20 @@ describe ParliamentIssue do
   it 'has a valid blueprint' do
     parliament_issue.should be_valid
   end
+  
+  it 'has a unique external id' do
+    invalid = ParliamentIssue.make!
+    invalid.external_id = parliament_issue.external_id
+    
+    invalid.should_not be_valid
+  end
 
   it 'humanizes the status string' do
-    ParliamentIssue.make!(:status => 'ikke_behandlet').status_text.should == 'Ikke behandlet'
+    ParliamentIssue.make!(status: 'ikke_behandlet').status_text.should == 'Ikke behandlet'
   end
 
   it 'knows if the issue was processed' do
-    ParliamentIssue.make!(:status => "behandlet").should be_processed
+    ParliamentIssue.make!(status: "behandlet").should be_processed
   end
 
   it 'can add categories' do

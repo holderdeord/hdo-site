@@ -34,7 +34,7 @@ class RepresentativesController < ApplicationController
 
   def index_by_party
     # fail on non-XHR?
-    @by_party = @representatives.group_by { |e| e.party }
+    @by_party = @representatives.group_by { |e| e.current_party }
     render partial: 'index_by_party', locals: { groups: @by_party }
   end
 
@@ -46,6 +46,6 @@ class RepresentativesController < ApplicationController
   private
 
   def fetch_representatives
-    @representatives = Representative.includes(:party, :district).order(:last_name)
+    @representatives = Representative.includes(:district, :party_memberships => :party).order(:last_name)
   end
 end

@@ -1,4 +1,4 @@
-[![Build Status](https://secure.travis-ci.org/holderdeord/hdo-site.png)](http://travis-ci.org/holderdeord/hdo-site)
+[![Build Status](https://secure.travis-ci.org/holderdeord/hdo-site.png?branch=master)](http://travis-ci.org/holderdeord/hdo-site)
 
 IRC channel
 ===========

@@ -4,8 +4,10 @@ class District < ActiveRecord::Base
 
   attr_accessible :name
 
-  has_many :representatives, :order => :last_name
-  validates_uniqueness_of :name
+  has_many :representatives, order: :last_name
 
-  friendly_id :name, :use => :slugged
+  validates :name,        presence: true, uniqueness: true
+  validates :external_id, presence: true, uniqueness: true
+
+  friendly_id :name, use: :slugged
 end

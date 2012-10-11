@@ -8,12 +8,10 @@ class VotesController < ApplicationController
   end
 
   def show
-    @vote = Vote.includes(
-      :parliament_issues, :vote_results => {:representative => :party},
-    ).find(params[:id])
-
+    @vote              = Vote.with_results.find(params[:id])
     @parliament_issues = @vote.parliament_issues
-    @stats  = @vote.stats
+    @stats             = @vote.stats
+    @vote_results      = @vote.vote_results.includes(representative: {party_memberships: :party})
 
     respond_to do |format|
       format.html
@@ -35,7 +33,7 @@ class VotesController < ApplicationController
   private
 
   def render_votes_index(opts = {})
-    @votes = Vote.includes(:parliament_issues).order(:time).reverse_order
+    @votes = Vote.with_results.includes(:parliament_issues).order(:time).reverse_order
 
     if opts[:paginate]
       per_page = params[:per_page].to_i > 0 ? params[:per_page] : DEFAULT_PER_PAGE

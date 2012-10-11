@@ -21,6 +21,7 @@ Spork.prefork do
   # ensure correct require order
   require Rails.root.join('spec/support/pages/page')
   require Rails.root.join('spec/support/pages/menu')
+
   Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
 
   RSpec.configure do |config|

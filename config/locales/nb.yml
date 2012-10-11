@@ -78,7 +78,6 @@ nb:
         name: "Navn"
         representatives: "Representanter"
         external_id: "Ekstern id"
-        percent_of_representatives: "Prosent"
       committee:
         name: "Navn"
         representatives: "Representanter"
@@ -314,6 +313,7 @@ nb:
       group:
         governing: 'Regjering'
         opposition: 'Opposisjon'
+      none: 'Inget parti'
     counts:
       representative:
         one: "Viser <strong>1</strong> representant."

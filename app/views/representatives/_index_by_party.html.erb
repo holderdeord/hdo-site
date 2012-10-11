@@ -1,16 +1,20 @@
 <% groups.each do |party, representatives| %>
   <div class="row-fluid">
     <h2>
-      <%= link_to party do %>
-        <%= image_tag party.image_with_fallback.thumb("200x200").strip.url %>
+      <% if party # TODO: Party::NULL? %>
+        <%= link_to party do %>
+          <%= image_tag party.image_with_fallback.thumb("200x200").strip.url %>
+        <% end %>
       <% end %>
-      <%= party.name %>
+
+      <%= party.try(:name) || t('app.parties.none') %>
+
     </h2>
   </div>
 
   <div class="row-fluid">
-    <h4 class="span6"><%= Representative.human_attribute_name :name %></h4>
-    <h4 class="span6"><%= Representative.human_attribute_name :district %></h4>
+    <div class="span6"><h5><%= Representative.human_attribute_name :name %></h5></div>
+    <div class="span6"><h5><%= Representative.human_attribute_name :district %></h5></div>
   </div>
 
   <% representatives.each do |rep| %>

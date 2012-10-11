@@ -5,7 +5,6 @@ module Hdo
 
       def initialize
         @log = Logger.new(STDOUT)
-        @representative_cache = {}
       end
 
       def import_votes(votes, opts = {})
@@ -197,10 +196,7 @@ module Hdo
         log_import representative
         representative.validate!
 
-        party = Party.find_by_name!(representative.party)
-        committees = representative.committees.map { |name| Committee.find_by_name!(name) }
         district = District.find_by_name!(representative.district)
-
         dob = Time.parse(representative.date_of_birth)
 
         if representative.date_of_death
@@ -212,14 +208,15 @@ module Hdo
 
         rec = Representative.find_or_create_by_external_id representative.external_id
         rec.update_attributes!(
-          :party         => party,
           :first_name    => representative.first_name,
           :last_name     => representative.last_name,
-          :committees    => committees,
           :district      => district,
           :date_of_birth => dob,
           :date_of_death => dod
         )
+
+        PartyMembershipUpdater.new(rec, representative.parties).update
+        CommitteeMembershipUpdater.new(rec, representative.committees).update
 
         rec
       end
@@ -327,7 +324,7 @@ module Hdo
       end
 
       def find_or_import_representative(xrep)
-        @representative_cache[xrep.external_id] ||= (Representative.find_by_external_id(xrep.external_id) || import_representative(xrep))
+        Representative.find_by_external_id(xrep.external_id) || import_representative(xrep)
       end
 
       def infer(imported_votes)

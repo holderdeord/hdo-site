@@ -5,15 +5,6 @@ describe Party do
     Party.make!
   end
 
-  it "returns its percentage of the parliament" do
-    Representative.stub!(:count => 100)
-
-    party = Party.make!(:name => "Democratic Party")
-    Representative.make!(:party => party)
-
-    party.percent_of_representatives.should == 1
-  end
-
   it 'is invalid without a name' do
     Party.make(:name => nil).should be_invalid
   end
@@ -84,24 +75,31 @@ describe Party do
     Promise.count.should == 0
   end
 
-  it 'destroys dependent representatives when emptied' do
+  it 'knows its current representatives' do
     party = Party.make!
-    Representative.make!(:party => party)
-    Representative.count.should == 1
 
-    party.representatives = []
+    current_rep = Representative.make!
+    current_rep.party_memberships.create!(:party => party, :start_date => 1.month.ago)
 
-    Representative.count.should == 0
+    previous_rep = Representative.make!
+    previous_rep.party_memberships.create!(:party => party, :start_date => 2.months.ago, :end_date => 1.month.ago)
+
+    party.current_representatives.should == [current_rep]
+    party.representatives_at(Time.now).should == [current_rep]
+    party.representatives_at(40.days.ago).should == [previous_rep]
+    party.representatives.should == [current_rep, previous_rep]
   end
 
-  it 'destroys dependent representatives when destroyed' do
+  it 'destroys dependent memeberships when destroyed' do
     party = Party.make!
-    Representative.make!(:party => party)
-    Representative.count.should == 1
+    rep = Representative.make!
+
+    party.party_memberships.create!(representative: rep, start_date: 1.month.ago)
+    rep.party_memberships.size.should == 1
 
     party.destroy
 
-    Representative.count.should == 0
+    rep.party_memberships.should == []
   end
 
   it 'partitions parties by government and opposition' do
@@ -127,5 +125,4 @@ describe Party do
     groups.first.name.should be_empty
     groups.first.parties.should == [a]
   end
-
 end

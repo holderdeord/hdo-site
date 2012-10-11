@@ -25,12 +25,26 @@ describe Promise do
   end
 
   it 'is invalid without at least one category' do
-    Promise.make(:categories => []).should_not be_valid
+    promise_without_categories.should_not be_valid
+  end
+
+  it 'is invalid without an external_id' do
+    invalid = Promise.make
+    invalid.external_id = nil
+
+    invalid.should_not be_valid
   end
 
   it 'has a unique body' do
     promise = Promise.make!(:body => 'body')
     Promise.make(:body => promise.body).should_not be_valid
+  end
+
+  it 'has a unique external id' do
+    invalid = Promise.make
+    invalid.external_id = promise.external_id
+
+    invalid.should_not be_valid
   end
 
   it 'has party names' do
