@@ -62,10 +62,7 @@ module Hdo
         parliament_issues = parsing_data_source.parliament_issues(@options[:session])
         persister.import_parliament_issues parliament_issues
 
-        existing_votes = Vote.pluck(:external_id)
-
         each_vote_for(parsing_data_source, parliament_issues) do |votes|
-          votes = votes.reject { |v| existing_votes.include? v.external_id }
           persister.import_votes votes, infer: false
         end
 
