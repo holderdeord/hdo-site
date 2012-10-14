@@ -162,7 +162,9 @@ module Hdo
         vote  = Vote.find_or_create_by_external_id xvote.external_id
         parliament_issue = ParliamentIssue.find_by_external_id! xvote.external_issue_id
 
-        vote.parliament_issues << parliament_issue
+        unless vote.parliament_issues.include?(parliament_issue)
+          vote.parliament_issues << parliament_issue
+        end
 
         vote.update_attributes!(
           :for_count     => Integer(xvote.counts.for),

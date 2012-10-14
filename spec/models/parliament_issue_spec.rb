@@ -6,11 +6,11 @@ describe ParliamentIssue do
   it 'has a valid blueprint' do
     parliament_issue.should be_valid
   end
-  
+
   it 'has a unique external id' do
     invalid = ParliamentIssue.make!
     invalid.external_id = parliament_issue.external_id
-    
+
     invalid.should_not be_valid
   end
 
@@ -51,7 +51,9 @@ describe ParliamentIssue do
     v = Vote.make!
 
     parliament_issue.votes << v
-    parliament_issue.votes << v
+    expect {
+      parliament_issue.votes << v
+    }.to raise_error(ActiveRecord::RecordNotUnique)
 
     parliament_issue.votes.size.should == 1
   end
