@@ -166,15 +166,24 @@ module Hdo
           vote.parliament_issues << parliament_issue
         end
 
-        vote.update_attributes!(
-          :for_count     => Integer(xvote.counts.for),
-          :against_count => Integer(xvote.counts.against),
-          :absent_count  => Integer(xvote.counts.absent),
+        attributes = {
           :enacted       => xvote.enacted?,
           :personal      => xvote.personal?,
           :subject       => xvote.subject,
           :time          => Time.parse(xvote.time)
-        )
+        }
+
+        unless vote.inferred?
+          # don't overwrite inferred counts.
+
+          attributes.merge!(
+            :for_count     => Integer(xvote.counts.for),
+            :against_count => Integer(xvote.counts.against),
+            :absent_count  => Integer(xvote.counts.absent),
+          )
+        end
+
+        vote.update_attributes!(attributes)
 
         xvote.representatives.each do |xrep|
           result = VOTE_RESULTS[xrep.vote_result] or raise "invalid vote result: #{result_text.inspect}"

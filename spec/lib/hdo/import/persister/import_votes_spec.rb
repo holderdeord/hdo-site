@@ -20,8 +20,9 @@ module Hdo
         let :non_personal_vote do
           vote_as_hash = StortingImporter::Vote.example('personal' => false, 'representatives' => []).to_hash
           vote_as_hash['propositions'][0]['deliveredBy'] = nil # less stubbing.
-          vote = StortingImporter::Vote.from_hash vote_as_hash
+          vote_as_hash['counts'] = {'for' => 0, 'against' => 0, 'absent' => 0}
 
+          vote = StortingImporter::Vote.from_hash vote_as_hash
           vote.should be_valid
 
           vote
@@ -48,6 +49,22 @@ module Hdo
           inferrer.should_receive(:infer!)
 
           persister.import_votes [non_personal_vote], infer: true
+        end
+
+        it 'does not overwrite vote counts for already inferred votes' do
+          setup_vote non_personal_vote
+          persister.import_votes [non_personal_vote]
+
+          Vote.count.should == 1
+          vote = Vote.first
+
+          # a non personal vote is inferred if it has vote_results
+          vote.vote_results.create!(representative: Representative.make!, result: 1)
+          vote.update_attributes!(for_count: 1)
+
+          persister.import_votes [non_personal_vote]
+
+          vote.reload.for_count.should == 1
         end
 
       end
