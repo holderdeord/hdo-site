@@ -63,7 +63,16 @@ Install dependencies through [Homebrew](http://mxcl.github.com/homebrew/):
 
 _This list may be incomplete. Please add any missing libs you find._
 
-    $ brew install git imagemagick postgresql
+    $ brew install git imagemagick
+
+If you're on Lion or later, use [Postgres.app](http://postgresapp.com/):
+
+* Download the app, drag it to /Applications and launch it.
+* Set up your path to point to the command line tools as described [here](http://postgresapp.com/documentation).
+
+Otherwise, use Homebrew to install PostgreSQL:
+
+    $ brew install postgresql
 
 Follow brew's post-install instructions for PostgreSQL. Typically you want to run the `initdb`
 and the launchtl ("load on login") commands.
@@ -74,14 +83,14 @@ Note: If you're on OS X >= 10.7 and get a connection error when preparing the da
 * Open a new shell and try there.
 * Check [this post](http://www.iainlbc.com/2011/10/osx-lion-postgres-could-not-connect-to-database-postgres-after-homebrew-installation/).
 
-TODO: Try out [Postgres.app](http://postgresapp.com/) and add instructions here.
-
 # Preparing the database:
 
-Create the "hdo" user with the [createuser script](http://www.postgresql.org/docs/9.1/interactive/app-createuser.html):
+Create the "hdo" user with the [createuser command](http://www.postgresql.org/docs/9.1/interactive/app-createuser.html):
 
-    $ sudo su - postgres # NB: Linux only.
+    $ sudo su - postgres # Only needed on Linux.
     $ createuser hdo --no-superuser --no-createrole --createdb
+
+If you used [Postgres.app](http://postgresapp.com/), make sure you've set up the [command line tools](http://postgresapp.com/documentation) correctly. Otherwise you'll be using the older PostgreSQL version that ships with OS X >= 10.7.
 
 # Starting the application:
 
