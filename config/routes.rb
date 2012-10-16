@@ -27,7 +27,7 @@ Hdo::Application.routes.draw do
   get 'promises/category/:id' => 'promises#category'
 
   resources :parliament_issues, :path => 'parliament-issues', :only => [:index, :show]
-  get 'issues/page/:page' => 'issues#index'
+  get 'parliament-issues/page/:page' => 'parliament_issues#index'
 
   resources :representatives, :only => [:index, :show]
   get 'representatives/index/name'     => 'representatives#index_by_name', :as => :representatives_by_name
@@ -35,7 +35,12 @@ Hdo::Application.routes.draw do
   get 'representatives/index/district' => 'representatives#index_by_district', :as => :representatives_by_district
   get 'representatives/:id/page/:page' => 'representatives#show'
 
-  resources :votes, :only => [:index, :show]
+  resources :votes, :only => [:index, :show] do
+    member do
+      get 'propositions'
+    end
+  end
+
   get 'votes/page/:page' => 'votes#index'
 
   get "home/index"

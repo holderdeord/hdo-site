@@ -42,7 +42,7 @@ module Hdo
           persister.import_category xcat
           Category.count.should == 2 # has 1 child
 
-          update = StortingImporter::Category.new(xcat.external_id, 'changed-name')
+          update = StortingImporter::Category.example('name' => 'changed-name')
           persister.import_category update
 
           Category.count.should == 2

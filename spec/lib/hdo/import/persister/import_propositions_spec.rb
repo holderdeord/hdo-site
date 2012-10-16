@@ -7,31 +7,31 @@ module Hdo
 
         include_context :persister
 
-        let(:example) do
-          prop = Hdo::StortingImporter::Proposition.example
+        def setup_proposition(prop)
+          rep = prop.delivered_by
+          rep.parties.each { |p| Party.make!(:external_id => p.external_id) }
+          rep.committees.each { |c| Committee.make!(:external_id => c.external_id) }
 
-          Party.make!(:name => prop.delivered_by.party)
-          Committee.make!(:name => prop.delivered_by.committees.first)
-          District.make!(:name => prop.delivered_by.district)
-
-          prop
+          District.make!(:name => rep.district)
         end
 
         it 'imports a proposition' do
-          persister.import_propositions [example]
+          example = StortingImporter::Proposition.example
+          setup_proposition example
 
+          persister.import_propositions [example]
           Proposition.count.should == 1
+
           prop = Proposition.first
           prop.delivered_by.should be_kind_of(Representative)
         end
 
         # https://github.com/holderdeord/hdo-site/issues/138
         it 'imports a proposition with external_id -1' do
-          hash = example.to_hash.tap { |e| e['externalId'] = '-1' }
+          prop = StortingImporter::Proposition.example('externalId' => '-1')
+          setup_proposition(prop)
 
-          prop = Hdo::StortingImporter::Proposition.from_hash(hash)
           persister.import_propositions [prop]
-
           Proposition.count.should == 1
 
           imported = Proposition.first
@@ -39,11 +39,12 @@ module Hdo
         end
 
         it 'ignores propositions with external_id=-1, body="" and description=""' do
-          hash = example.to_hash.tap do |e|
-            e.merge!('externalId' => '-1', 'body' => '', 'description' => '')
-          end
+          prop = Hdo::StortingImporter::Proposition.example(
+            'externalId'  => '-1',
+            'body'        => '',
+            'description' => ''
+          )
 
-          prop = Hdo::StortingImporter::Proposition.from_hash(hash)
           persister.import_propositions [prop]
 
           Proposition.count.should == 0

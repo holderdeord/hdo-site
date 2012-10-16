@@ -14,7 +14,7 @@
  *= require_directory .
 */
 
-@footerHeight: 100px;
+@footerHeight: 180px;
 
 body,
 html {
@@ -22,7 +22,8 @@ html {
 }
 
 body {
-  padding: 0 !important; /* Override bootstraps default padding */
+  position: relative;
+  padding-top: 50px;
 }
 
 footer,
@@ -34,10 +35,6 @@ footer {
   color: #999;
   margin: 0 10px;
   text-align: center;
-}
-
-#hdo-content {
-  padding: 0 20px;
 }
 
 .wrapper {
@@ -57,4 +54,3 @@ hr.soften {
   background-image:      -o-linear-gradient(left, rgba(0,0,0,0), rgba(0,0,0,.1), rgba(0,0,0,0));
   border: 0;
 }
-

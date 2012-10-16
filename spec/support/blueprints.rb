@@ -9,6 +9,7 @@ User.blueprint do
 end
 
 Vote.blueprint do
+  external_id { sn.to_s }
   parliament_issues { [ParliamentIssue.make] }
   time { Time.now }
   vote_results { [VoteResult.make!] }
@@ -21,12 +22,12 @@ VoteConnection.blueprint do
 end
 
 VoteResult.blueprint do
-  representative { Representative.make! }
+  representative { Representative.make!(:full) }
   result { rand(2) - 1 }
 end
 
 ParliamentIssue.blueprint do
-
+  external_id { sn.to_s }
 end
 
 Topic.blueprint do
@@ -39,6 +40,7 @@ Party.blueprint do
 end
 
 Promise.blueprint do
+  external_id { sn.to_s }
   parties { [Party.make!] }
   source { "PP:10" }
   body { "Løftetekst" }
@@ -46,15 +48,39 @@ Promise.blueprint do
 end
 
 Category.blueprint do
+  external_id { sn.to_s }
   name { "Category-#{sn}" }
   main { false }
 end
 
+PartyMembership.blueprint do
+  party { Party.make! }
+  start_date { 1.month.ago }
+  end_date { nil }
+end
+
+PartyMembership.blueprint :full do
+  representative
+end
+
+CommitteeMembership.blueprint do
+  committee { Committee.make! }
+  start_date { 1.month.ago }
+  end_date { nil }
+end
+
+CommitteeMembership.blueprint :full do
+  representative
+end
+
 Representative.blueprint do
   external_id { sn.to_s }
-  party { Party.make! }
   first_name { "first-name-#{sn}" }
   last_name { "last-name-#{sn}" }
+end
+
+Representative.blueprint :full do
+  party_memberships(1)
 end
 
 Issue.blueprint do
@@ -66,6 +92,7 @@ Issue.blueprint do
 end
 
 Proposition.blueprint do
+  external_id { sn.to_s }
   body { "proposition-body-#{sn}" }
   description { "proposition-description-#{sn}" }
 end
@@ -75,10 +102,15 @@ GoverningPeriod.blueprint do
   start_date { Date.today }
 end
 
+GoverningPeriod.blueprint :full do
+end
+
 Committee.blueprint do
+  external_id { sn.to_s }
   name { "committee-#{sn}" }
 end
 
 District.blueprint do
+  external_id { sn.to_s }
   name { "committee-#{sn}" }
 end

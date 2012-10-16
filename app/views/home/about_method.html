@@ -18,14 +18,14 @@
   <p>Partiene får dermed en skår på hver sak basert på hvor mange ganger de har stemt for eller mot saken i de individuelle avstemningene. Denne skåren brukes til å gi en samlet oversikt over hvordan partiene har stemt i saken totalt sett. Holder de ord opererer med fem graderinger:</p>
 
   <ul>
-    <li>konsekvent for (80-100%)</li>
-    <li>stort sett for (60-79%)</li>
-    <li>både for og mot (40-59%)</li>
-    <li>stort sett mot (20-39%)</li>
-    <li>konsekvent mot (0-19%)</li>
+    <li>konsekvent for (95-100%)</li>
+    <li>stort sett for (67-94%)</li>
+    <li>både for og mot (34-66%)</li>
+    <li>stort sett mot (5-33%)</li>
+    <li>konsekvent mot (0-4%)</li>
   </ul>
 
-  <h3>Vekting av saker</h3>
+  <h3 id="method-weights">Vekting av saker</h3>
   <p>Alle avstemninger i Stortinget er ikke like viktige. Noen avstemninger, slik som representantforslag fra opposisjonen, kan ofte fremmes for å markere egen politikk, særlig når det er en flertallsregjering og man vet at forslaget ikke kommer til å bli vedtatt. Andre avstemninger, slik som statsbudsjettet eller lovsaker, gir faktiske konsekvenser for samfunnet i form av tilskudd og bevilgninger eller innførte lover.</p>
 
   <p>For å gjøre presentasjonen av politikken mer representativ, vekter vi derfor avstemningene etter deres faktiske betydning. En vektet avstemning får større relativ tyngde i forhold til andre avstemninger i samme sak. Man får da et resultat som i større grad speiler den faktiske politikkutformingen på Stortinget. Vekting medfører enkelte skjønnsmessige vurderinger, og Holder de ord opererer med tre kriterier som kan gjøre at en sak blir vektet opp eller ned:</p>
@@ -35,7 +35,7 @@
     <dd>Forskjellige stortingssaker har forskjellig betydning. I stortingsmeldinger gjøres ingen reelle politiske vedtak, og disse vektes derfor lavt. Forslag som vedlegges protokollen vektes noe høyere. Når en avstemning vedlegges protokollen, betyr det ofte at flertallet er enige i innholdet, men at den er under arbeid i Regjeringen, eller at den skal opp til behandling i en annen form senere. Representantforslag vektes høyere, men anses fremdeles som mindre viktige, siden terskelen for å fremme slike ikke er særlig høy og de ofte er gjenstand for politisk spill. Lovforslag vektes høyere siden disse ofte danner rammene for handling. Statsbudsjettavstemninger vektes høyest siden de fører til direkte, bevilgningsmessige konsekvenser.</dd>
 
     <dt>Samsvar mellom sak og avstemning</dt>
-    <dd>En avstemning kan vektes opp eller ned, avhengig av hvor viktig den er for den konkrete saken. Er innholdet i forslaget svært sentral for avstemningen, kan for eksempel et lovforslag vektes høyere.</dd>
+    <dd>En avstemning kan vektes opp eller ned, avhengig av hvor viktig den er for den konkrete saken. Er innholdet i forslaget svært sentralt for saken, kan for eksempel et lovforslag vektes høyere.</dd>
 
     <dt>Gjennomførte forslag</dt>
     <dd>Et forslag som faktisk gjennomføres kan vektes opp. Hvis for eksempel representantforslag fra opposisjonen blir vedtatt og gjennomført har dette mer betydning enn bare et fremsatt forslag.</dd>
@@ -49,8 +49,7 @@
         <th>Vekt</th>
         <th>Hva betyr vekten?</th>
         <th>Hvilke sakstyper fra Stortinget faller under vekten?</th>
-        <th>Samsvar mellom sak og avstemning</th>
-        <th>Forslaget leder til gjennomført politikk</th>
+        <th>Avvik fra standardvekting</th>
       </tr>
     </thead>
     <tbody>
@@ -59,31 +58,27 @@
         <td>Uten formell betydning</td>
         <td>Stortingsmeldinger</td>
         <td></td>
-        <td></td>
       </tr>
 
       <tr>
         <td>0.5</td>
         <td>Lite viktig</td>
-        <td>Forslag som vedlegges protokollen</td>
+        <td>Forslag som vedlegges protokollen, alternative statsbudsjett</td>
         <td>Representatforslag som i mindre grad er relevant for sak</td>
-        <td></td>
       </tr>
 
       <tr>
         <td>1</td>
         <td>Noe viktig</td>
-        <td>Representantforslag</td>
-        <td></td>
+        <td>Representantforslag inkludert de som fremmes i forbindelse med stortingsmeldinger og statsbudsjett</td>
         <td></td>
       </tr>
 
       <tr>
         <td>2</td>
         <td>Viktig</td>
-        <td>Lovforslag, Alternative statsbudsjett</td>
-        <td></td>
-        <td>Representantforslag som blir gjennomført politisk.</td>
+        <td>Lovforslag, regjeringsproposisjoner</td>
+        <td>Representantforslag som blir gjennomført politisk</td>
       </tr>
 
       <tr>
@@ -91,7 +86,6 @@
         <td>Svært viktig</td>
         <td>Statsbudsjett</td>
         <td>Særdeles viktige lovsaker</td>
-        <td></td>
       </tr>
     </tbody>
   </table>
@@ -99,7 +93,7 @@
 
 </div>
 
-<div class="row-fluid" id="promises">
+<div class="row-fluid" id="method-promises">
   <h2>Valgløfter</h2>
 
   <h3>Hva er et valgløfte?</h3>

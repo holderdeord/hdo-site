@@ -1,0 +1,7 @@
+<div class="row-fluid">
+  <div class="muted"><%= t('app.counts.propositions', count: @propositions.size).html_safe %></div>
+  
+  <% @propositions.each do |prop| %>
+    <%= prop.body.html_safe %>
+  <% end %>
+</div>

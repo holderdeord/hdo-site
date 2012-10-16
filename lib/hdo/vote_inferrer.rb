@@ -18,7 +18,7 @@ module Hdo
     attr_accessor :log
 
     def initialize(votes = Vote.non_personal)
-      @votes = votes
+      @votes = votes.uniq
       @log   = Rails.logger
     end
 
@@ -38,12 +38,15 @@ module Hdo
 
       personal_vote = find_personal_vote_for(vote.time)
 
+
       if personal_vote
         @log.info "#{self.class}: inferring result for vote #{vote.external_id} from #{personal_vote.external_id}"
 
         Vote.transaction do
           add_result vote, personal_vote
         end
+
+        @log.info "#{self.class}: inferred: #{vote.reload.inspect}"
 
         true
       else

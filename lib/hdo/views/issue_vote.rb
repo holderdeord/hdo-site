@@ -10,41 +10,52 @@ module Hdo
         @party_groups = party_groups
       end
 
-      def vote
-        @vote ||= @vote_connection.vote
-      end
-
       def enacted_text
-        @vote.enacted_text
-      end
+        # TODO: i18n
+        str = "Forslaget ble <strong>"
 
-      def weight
-        @vote_connection.weight
-      end
-
-      def enacted_class
-        "label-#{enacted? ? 'success' : 'important'}"
-      end
-
-      def weight_text
-        case weight
-        when 0
-          'Uten formell betydning'
-        when 0.5
-          'Lite viktig'
-        when 1
-          'Noe viktig'
-        when 2
-          'Viktig'
-        when 4
-          'Svært viktig'
+        if enacted?
+          str << "vedtatt"
         else
-          raise "unknown weight: #{@vote_connection.weight}"
+          str << "ikke vedtatt"
         end
+
+        str << "</strong>."
+
+        str
+      end
+
+      def time_text
+        I18n.l time, format: :text
+      end
+
+      def time
+        vote.time
       end
 
       def matches_text
-        @vote_connection.matches_text
+        # TODO: i18n
+        str = 'Avstemningen er <strong>'
+        str << 'ikke ' unless matches?
+        str << "i tråd med å #{issue.downcased_title}</strong>."
+
+        str
+      end
+
+      def weight_text
+        @vote_connection.weight_text
+      end
+
+      def parties_for
+        @parties_for ||= all_parties.select { |e| vote.stats.party_for?(e) }
+      end
+
+      def parties_against
+        @parties_against ||= all_parties.select { |e| vote.stats.party_against?(e) }
+      end
+
+      def vote
+        @vote ||= @vote_connection.vote
       end
 
       def description
@@ -55,33 +66,22 @@ module Hdo
         @vote_connection.comment
       end
 
+      private
+
+      def issue
+        @issue ||= @vote_connection.issue
+      end
+
       def enacted?
         vote.enacted?
       end
 
-      def parties
-        @party_groups.map { |e| e.parties }.flatten.map { |e| PartyDetail.new(e, vote.stats) }
+      def matches?
+        @vote_connection.matches?
       end
 
-      class PartyDetail
-        def initialize(party, stats)
-          @party = party
-          @stats = stats
-        end
-
-        def logo
-          @party.image_with_fallback
-        end
-
-        def counts
-        counts = @stats.party_counts_for(@party)
-
-        "#{counts[:for]} for, #{counts[:against]} mot, #{counts[:absent]} ikke tilstede"
-        end
-
-        def text
-          "#{@party.name} #{@stats.text_for(@party)}"
-        end
+      def all_parties
+        @all_parties ||= @party_groups.map { |e| e.parties }.flatten
       end
 
     end # IssueVote

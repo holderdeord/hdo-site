@@ -5,8 +5,8 @@ describe TopicsController do
   context 'as a normal user' do
     it 'can show a topic with published issues' do
       topic = Topic.make!
-      published = Issue.make!(:topics => [topic], :published => true)
-      non_published = Issue.make!(:topics => [topic])
+      published = Issue.make!(topics: [topic], status: 'published')
+      non_published = Issue.make!(topics: [topic])
 
       get :show, id: topic
 
@@ -44,8 +44,8 @@ describe TopicsController do
       topic_a = Topic.make!
       topic_b = Topic.make!
 
-      published = Issue.make!(:topics => [topic_b], :published => true)
-      non_published = Issue.make!(:topics => [topic_b])
+      published = Issue.make!(topics: [topic_b], status: 'published')
+      non_published = Issue.make!(topics: [topic_b])
 
       get :show, id: topic_a
 

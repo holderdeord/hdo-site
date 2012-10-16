@@ -6,21 +6,24 @@ class Vote < ActiveRecord::Base
                   :enacted, :personal, :subject, :time
 
   has_and_belongs_to_many :parliament_issues, uniq: true
-  validates_length_of :parliament_issues, minimum: 1
-  validates_presence_of :time
+  validates_length_of     :parliament_issues, minimum: 1
+  validates_presence_of   :time, :external_id
+  validates_uniqueness_of :external_id
 
-  has_many :propositions, :dependent => :destroy
-  has_many :vote_results, :dependent     => :destroy,
-                          :before_add    => :clear_stats_cache,
-                          :before_remove => :clear_stats_cache
+  has_many :propositions, dependent: :destroy
 
-  has_many :representatives, :through => :vote_results, :order => :last_name
+  has_many :vote_results, dependent: :destroy,
+                          before_add: :clear_stats_cache,
+                          before_remove: :clear_stats_cache
+
+  has_many :representatives, through: :vote_results, order: :last_name
   has_many :vote_connections
 
-  friendly_id :external_id, :use => :slugged
+  friendly_id :external_id, use: :slugged
 
   scope :personal, where(:personal => true)
   scope :non_personal, where(:personal => false)
+  scope :with_results, includes(:parliament_issues, vote_results: {representative: {party_memberships: :party}})
 
   def self.naive_search(filter, keyword, selected_categories = [])
     # TODO: elasticsearch

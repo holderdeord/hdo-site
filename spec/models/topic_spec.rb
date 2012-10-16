@@ -2,11 +2,28 @@
 require 'spec_helper'
 
 describe Topic do
-  it "can create an issue" do
+  it "can add issues" do
     f = Topic.create!(:name => "Education")
     f.issues.create(:title => "Scores")
 
     f.issues.first.title.should == "Scores"
+  end
+
+  it 'can add issues' do
+    t = Topic.make!
+
+    t.issues << Issue.make!
+    t.issues.size.should == 1
+  end
+
+  it "won't add the same issue twice" do
+    t = Topic.make!
+    i = Issue.make!
+
+    t.issues << i
+    t.issues << i
+
+    t.issues.size.should == 1
   end
 
   it 'has creates column groups' do

@@ -59,7 +59,7 @@ class HomeController < ApplicationController
       Person.new('Svein Halvor Halvorsen'),
       Person.new('Arne Hassel'),
       Person.new('Jostein Holje'),
-      Person.new('Vegard Karevoll'),
+      Person.new('Vegard Karevold'),
       Person.new('Markus Krüger'),
       Person.new('Joanna Merker'),
       Person.new('Sara Mjelva'),

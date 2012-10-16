@@ -7,6 +7,12 @@ nb:
     formats:
       default: "%Y-%m-%d %H:%M:%S"
       short: "%Y-%m-%d"
+      text: "%e. %B %Y"
+  date:
+     day_names: [Søndag, Mandag, Tirsdag, Onsdag, Torsdag, Fredag, Lørdag]
+     abbr_day_names: [Søn, Man, Tir, Ons, Tor, Fre, Lør]
+      # Don't forget the nil at the beginning; there's no such thing as a 0th month
+     month_names: [~, januar, februar, mars, april, mai, juni, juli, august, september, oktober, november, desember]
   datetime:
     distance_in_words:
       x_days:
@@ -72,7 +78,6 @@ nb:
         name: "Navn"
         representatives: "Representanter"
         external_id: "Ekstern id"
-        percent_of_representatives: "Prosent"
       committee:
         name: "Navn"
         representatives: "Representanter"
@@ -142,7 +147,7 @@ nb:
       issue:
         edit: "Rediger"
         published: Publisert
-        state: Status
+        status: Status
         title: "Tittel"
         description: "Beskrivelse"
         categories: "Kategorier"
@@ -150,6 +155,7 @@ nb:
         votes: "Avstemninger"
         topics: "Tema"
         last_updated_by: Sist redigert av
+        updated_at: Sist redigert
       vote_connection:
         matches: "Støtter saken?"
         comment: "Kommentar"
@@ -241,9 +247,11 @@ nb:
       back: Tilbake til saken
       not_published: Denne saken er ikke publisert.
       published: Denne saken er publisert.
-      edit:
+      statuses:
         published: Publisert
-        not_published: Under arbeid
+        in_progress: Under arbeid
+        shelved: Lagt på is
+      edit:
         new: "Ny sak"
         submit: "Lagre sak"
         edit: "Rediger sak"
@@ -259,7 +267,7 @@ nb:
         reset: Nullstill
         fetch_votes: Søk
         search_result: Søkeresultat
-      view_vote: 'Gå til avstemning'
+      view_vote: 'Se hva de stemte'
       view_votes:
         one: 'Se 1 avstemning om saken'
         other: 'Se %{count} avstemninger om saken'
@@ -270,17 +278,17 @@ nb:
         inferred: 'Denne saken ble avgjort enstemmig uten at avstemningsknappene ble brukt. Oversikten er utledet fra tilstedeværelse ved andre avstemninger samme dag.'
         party_unknown: 'Denne avstemningen ble avgjort uten at avstemningsknappene ble brukt. Vi har derfor ikke oversikt over hva det enkelte parti har stemt.'
       scores:
-        not_participated: "%{name} har ikke deltatt i avstemninger om"
-        consistently_for: "%{name} har stemt konsekvent for"
-        mostly_for: "%{name} har stort sett stemt for"
-        for_and_against: "%{name} har stemt både for og mot"
-        mostly_against: "%{name} har stort sett stemt mot"
         consistently_against: "%{name} har stemt konsekvent mot"
-        consistently_for_html: "%{name} har stemt <strong>konsekvent for</strong>"
-        mostly_for_html: "%{name} har <strong>stort sett stemt for</strong>"
-        for_and_against_html: "%{name} har stemt <strong>både for og mot</strong>"
-        mostly_against_html: "%{name} har <strong>stort sett stemt mot</strong>"
         consistently_against_html: "%{name} har stemt <strong>konsekvent mot</strong>"
+        consistently_for: "%{name} har stemt konsekvent for"
+        consistently_for_html: "%{name} har stemt <strong>konsekvent for</strong>"
+        for_and_against: "%{name} har stemt både for og mot"
+        for_and_against_html: "%{name} har stemt <strong>både for og mot</strong>"
+        mostly_against: "%{name} har stort sett stemt mot"
+        mostly_against_html: "%{name} har <strong>stort sett stemt mot</strong>"
+        mostly_for: "%{name} har stort sett stemt for"
+        mostly_for_html: "%{name} har <strong>stort sett stemt for</strong>"
+        not_participated: "%{name} har ikke deltatt i avstemninger om"
     external:
       urls:
         parliament_issue: "http://stortinget.no/no/Saker-og-publikasjoner/Saker/Sak/?p=%s"
@@ -301,6 +309,7 @@ nb:
       group:
         governing: 'Regjering'
         opposition: 'Opposisjon'
+      none: 'Inget parti'
     counts:
       representative:
         one: "Viser <strong>1</strong> representant."
@@ -326,9 +335,10 @@ nb:
       promises:
         one: "Viser <strong>1</strong> løfte."
         other: "Viser <strong>%{count}</strong> løfter."
+      propositions:
+        one: "Viser <strong>1</strong> forslag."
+        other: "Viser <strong>%{count}</strong> forslag."
     group:
       by_party: 'Grupper etter parti'
       by_district: 'Grupper etter fylke'
       by_name: 'Grupper etter navn'
-    home:
-      party_logo_tooltip: 'Trykk for å se hva %{name} har stemt og lovet i saker du er opptatt av'

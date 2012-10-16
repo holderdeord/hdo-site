@@ -2,7 +2,7 @@ class PromisesController < ApplicationController
   caches_page :index
 
   def index
-    @categories       = Category.where(:main => true)
+    @categories       = Category.where(:main => true).includes(:children)
     @parties          = Party.order(:name)
     # @government_slugs = @parties.select(&:in_government?).map(&:slug).join(",")
     @government_slug = "government"

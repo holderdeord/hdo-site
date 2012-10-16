@@ -9,19 +9,18 @@ module Hdo
 
         def setup_vote(vote)
           vote.representatives.each do |rep|
-            rep.committees.each { |n| Committee.make!(:name => n) }
+            rep.committees.each { |c| Committee.make!(:external_id => c.external_id) }
+            rep.parties.each { |p| Party.make!(:external_id => p.external_id )}
             District.make!(:name => rep.district)
-            Party.make!(:name => rep.party)
           end
 
           ParliamentIssue.make!(:external_id => vote.external_issue_id)
         end
 
         let :non_personal_vote do
-          vote_as_hash = StortingImporter::Vote.example.to_hash
-          vote_as_hash['personal'] = false
-          vote_as_hash.delete 'representatives'
+          vote_as_hash = StortingImporter::Vote.example('personal' => false, 'representatives' => []).to_hash
           vote_as_hash['propositions'][0]['deliveredBy'] = nil # less stubbing.
+          vote_as_hash['counts'] = {'for' => 0, 'against' => 0, 'absent' => 0}
 
           vote = StortingImporter::Vote.from_hash vote_as_hash
           vote.should be_valid
@@ -52,8 +51,20 @@ module Hdo
           persister.import_votes [non_personal_vote], infer: true
         end
 
-        it 'does not try to infer results for the same vote twice' do
-          pending "make sure #uniq is called on the result of import"
+        it 'does not overwrite vote counts for already inferred votes' do
+          setup_vote non_personal_vote
+          persister.import_votes [non_personal_vote]
+
+          Vote.count.should == 1
+          vote = Vote.first
+
+          # a non personal vote is inferred if it has vote_results
+          vote.vote_results.create!(representative: Representative.make!, result: 1)
+          vote.update_attributes!(for_count: 1)
+
+          persister.import_votes [non_personal_vote]
+
+          vote.reload.for_count.should == 1
         end
 
       end

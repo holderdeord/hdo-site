@@ -4,13 +4,13 @@
       <div class="row-fluid">
         <div class="row-fluid">
           <div class="page-header">
-            <h2>Sjekk hva partiene har stemt og lovet</h2>
+            <h3>Sjekk hva partiene har stemt og lovet</h3>
           </div>
         </div>
         <div class="home-party-list">
           <% @parties.each do |party| %>
             <%= link_to party do %>
-            <div class="home-party-logo" data-title='<%= t 'app.home.party_logo_tooltip', name: party.name %>' rel="tooltip">
+            <div class="home-party-logo">
               <%= image_tag party.image_with_fallback.thumb("250x250").url, alt: party.name %>
             </div>
             <% end %>
@@ -21,14 +21,14 @@
       <hr class="soften">
 
       <div class="page-header">
-        <h2>Hvilke saker er viktige for deg?</h2>
+        <h3>Hvilke saker er viktige for deg?</h3>
       </div>
 
       <div class="row-fluid">
         <% @topic_columns.each do |topics| %>
             <div class="span4">
               <% topics.each do |topic| %>
-                <h3><%= link_to topic.name, topic %></h3>
+                <h4><%= link_to topic.name, topic %></h4>
               <% end %>
             </div>
         <% end %>
@@ -44,13 +44,13 @@
     </div>
 
     <div class="well">
-      <h2>Vi trenger din hjelp!</h2>
+      <h3>Vi trenger din hjelp!</h3>
       <p>Send kodeord <strong>HOLDERDEORD</strong> til <strong>2160</strong> så støtter du oss med 150 kr.</p>
       <p><%= link_to t('app.read_more'), home_support_path, class: 'btn btn-primary' %></p>
     </div>
 
     <div class="well">
-      <h2>Bli med</h2>
+      <h3>Bli med</h3>
       <p>Vi er hele tiden på utkikk etter flere drevne medarbeidere.</p>
       <p><strong>For tiden søker vi ny produktsjef.</strong></p>
       <p><%= link_to t('app.read_more'), home_join_path, class: 'btn btn-primary' %></p>
@@ -58,9 +58,3 @@
 
   </div>
 </div>
-
-<%= content_for :document_ready do %>
-  <script type="text/javascript" charset="utf-8">
-    $('.home-party-logo').tooltip({placement: 'bottom' });
-  </script>
-<% end %>

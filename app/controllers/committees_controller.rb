@@ -12,7 +12,7 @@ class CommitteesController < ApplicationController
   end
 
   def show
-    @committee = Committee.includes(:parliament_issues, :representatives => :party).find(params[:id])
+    @committee = Committee.includes(:parliament_issues, representatives: {party_memberships: :party} ).find(params[:id])
 
     respond_to do |format|
       format.html # show.html.erb

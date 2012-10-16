@@ -8,8 +8,8 @@ module Hdo
       let(:issue)  { Issue.create!(:title => "issue") }
       let(:scorer) { VoteScorer.new issue }
 
-      let(:rep1) { Representative.make! }
-      let(:rep2) { Representative.make! }
+      let(:rep1) { Representative.make!(:full) }
+      let(:rep2) { Representative.make!(:full) }
 
       it 'calculates scores for a single vote' do
         # issue has one vote, with one rep for and one against
@@ -21,8 +21,8 @@ module Hdo
         # the vote matches the issue
         issue.vote_connections.create! :vote => vote, :matches => true, :weight => 1
 
-        scorer.score_for(rep1.party).should == 100
-        scorer.score_for(rep2.party).should == 0
+        scorer.score_for(rep1.current_party).should == 100
+        scorer.score_for(rep2.current_party).should == 0
       end
 
       it "calculates scores for a single vote that doesn't match the issue" do
@@ -35,8 +35,8 @@ module Hdo
         # the vote does not match the issue
         issue.vote_connections.create! :vote => vote, :matches => false, :weight => 1
 
-        scorer.score_for(rep1.party).should == 0
-        scorer.score_for(rep2.party).should == 100
+        scorer.score_for(rep1.current_party).should == 0
+        scorer.score_for(rep2.current_party).should == 100
       end
 
       it 'calculates scores for a two votes with different weights' do
@@ -57,8 +57,8 @@ module Hdo
         # the vote does not match the issue
         issue.vote_connections.create! :vote => vote, :matches => false, :weight => 1
 
-        scorer.score_for(rep1.party).should == 66
-        scorer.score_for(rep2.party).should == 0
+        scorer.score_for(rep1.current_party).should == 66
+        scorer.score_for(rep2.current_party).should == 0
       end
 
       it 'has a string description of all valid scores' do
@@ -68,22 +68,28 @@ module Hdo
           scorer.stub(:score_for).with(p1).and_return 0
           scorer.text_for(p1).should == "#{p1.name} har stemt konsekvent mot"
 
-          scorer.stub(:score_for).with(p1).and_return 20.1
+          scorer.stub(:score_for).with(p1).and_return 5
           scorer.text_for(p1).should == "#{p1.name} har stort sett stemt mot"
 
-          scorer.stub(:score_for).with(p1).and_return 39
+          scorer.stub(:score_for).with(p1).and_return 33.1
           scorer.text_for(p1).should == "#{p1.name} har stort sett stemt mot"
+
+          scorer.stub(:score_for).with(p1).and_return 34
+          scorer.text_for(p1).should == "#{p1.name} har stemt både for og mot"
 
           scorer.stub(:score_for).with(p1).and_return 40
           scorer.text_for(p1).should == "#{p1.name} har stemt både for og mot"
 
-          scorer.stub(:score_for).with(p1).and_return 60
+          scorer.stub(:score_for).with(p1).and_return 66.1
+          scorer.text_for(p1).should == "#{p1.name} har stemt både for og mot"
+
+          scorer.stub(:score_for).with(p1).and_return 67
           scorer.text_for(p1).should == "#{p1.name} har stort sett stemt for"
 
-          scorer.stub(:score_for).with(p1).and_return 79
+          scorer.stub(:score_for).with(p1).and_return 90
           scorer.text_for(p1).should == "#{p1.name} har stort sett stemt for"
 
-          scorer.stub(:score_for).with(p1).and_return 80
+          scorer.stub(:score_for).with(p1).and_return 95
           scorer.text_for(p1).should == "#{p1.name} har stemt konsekvent for"
 
           scorer.stub(:score_for).with(p1).and_return 100
@@ -99,32 +105,57 @@ module Hdo
 
         I18n.with_locale :nb do
           scorer.stub(:score_for).with(p1).and_return 0
-          str = scorer.text_for(p1, :html => true)
+          str = scorer.text_for(p1, html: true)
           str.should == "#{p1.name} har stemt <strong>konsekvent mot</strong>"
           str.should be_html_safe
 
-          scorer.stub(:score_for).with(p1).and_return 25
-          str = scorer.text_for(p1, :html => true)
+          scorer.stub(:score_for).with(p1).and_return 4.5
+          str = scorer.text_for(p1, html: true)
+          str.should == "#{p1.name} har stemt <strong>konsekvent mot</strong>"
+          str.should be_html_safe
+
+          scorer.stub(:score_for).with(p1).and_return 5
+          str = scorer.text_for(p1, html: true)
           str.should == "#{p1.name} har <strong>stort sett stemt mot</strong>"
           str.should be_html_safe
 
-          scorer.stub(:score_for).with(p1).and_return 50
-          str = scorer.text_for(p1, :html => true)
+          scorer.stub(:score_for).with(p1).and_return 33.5
+          str = scorer.text_for(p1, html: true)
+          str.should == "#{p1.name} har <strong>stort sett stemt mot</strong>"
+          str.should be_html_safe
+
+          scorer.stub(:score_for).with(p1).and_return 34
+          str = scorer.text_for(p1, html: true)
           str.should == "#{p1.name} har stemt <strong>både for og mot</strong>"
           str.should be_html_safe
 
-          scorer.stub(:score_for).with(p1).and_return 79
-          str = scorer.text_for(p1, :html => true)
+          scorer.stub(:score_for).with(p1).and_return 66.5
+          str = scorer.text_for(p1, html: true)
+          str.should == "#{p1.name} har stemt <strong>både for og mot</strong>"
+          str.should be_html_safe
+
+          scorer.stub(:score_for).with(p1).and_return 67
+          str = scorer.text_for(p1, html: true)
           str.should == "#{p1.name} har <strong>stort sett stemt for</strong>"
           str.should be_html_safe
 
+          scorer.stub(:score_for).with(p1).and_return 94.5
+          str = scorer.text_for(p1, html: true)
+          str.should == "#{p1.name} har <strong>stort sett stemt for</strong>"
+          str.should be_html_safe
+
+          scorer.stub(:score_for).with(p1).and_return 95
+          str = scorer.text_for(p1, html: true)
+          str.should == "#{p1.name} har stemt <strong>konsekvent for</strong>"
+          str.should be_html_safe
+
           scorer.stub(:score_for).with(p1).and_return 100
-          str = scorer.text_for(p1, :html => true)
+          str = scorer.text_for(p1, html: true)
           str.should == "#{p1.name} har stemt <strong>konsekvent for</strong>"
           str.should be_html_safe
 
           scorer.stub(:score_for).with(p1).and_return nil
-          str = scorer.text_for(p1, :html => true)
+          str = scorer.text_for(p1, html: true)
           str.should == "#{p1.name} har ikke deltatt i avstemninger om"
           str.should be_html_safe
         end
@@ -145,7 +176,7 @@ module Hdo
         # the vote matches the issue
         issue.vote_connections.create! :vote => vote, :matches => true, :weight => 1
 
-        scorer.score_for_group([rep1.party, rep2.party]).should eq 50
+        scorer.score_for_group([rep1.current_party, rep2.current_party]).should eq 50
       end
 
       it 'uses group name as a text in text_for when group_name option is given' do
@@ -157,7 +188,7 @@ module Hdo
         # the vote matches the issue
         issue.vote_connections.create! :vote => vote, :matches => true, :weight => 1
 
-        scorer.text_for_group([rep1.party, rep2.party], name: 'Ze Germans').should start_with 'Ze Germans'
+        scorer.text_for_group([rep1.current_party, rep2.current_party], name: 'Ze Germans').should start_with 'Ze Germans'
       end
 
       it 'allows you to overwrite the party name' do
@@ -169,7 +200,7 @@ module Hdo
         # the vote matches the issue
         issue.vote_connections.create! :vote => vote, :matches => true, :weight => 1
 
-        scorer.text_for(rep1.party, name: 'Ze Frenchies').should start_with 'Ze Frenchies'
+        scorer.text_for(rep1.current_party, name: 'Ze Frenchies').should start_with 'Ze Frenchies'
       end
 
       it 'returns a nil score for a non-existing party' do
@@ -188,18 +219,21 @@ module Hdo
 
         issue.vote_connections.create! :vote => vote, :matches => true, :weight => 0
 
-        scorer.score_for(rep1.party).should == 0
+        scorer.score_for(rep1.current_party).should == 0
       end
 
       it 'correctly handles rebel votes' do
+        rep2 = Representative.make!
+        rep2.party_memberships.make!(:party => rep1.current_party)
+
         vote = Vote.make!(:vote_results => [
           VoteResult.new(:representative => rep1, :result => 1),
-          VoteResult.new(:representative => Representative.make!(:party => rep1.party), :result => -1)
+          VoteResult.new(:representative => rep2, :result => -1)
         ])
 
         issue.vote_connections.create! :vote => vote, :matches => true, :weight => 1
 
-        scorer.score_for(rep1.party).should == 50
+        scorer.score_for(rep1.current_party).should == 50
       end
 
       it "does computation up front" do

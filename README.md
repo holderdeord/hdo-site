@@ -1,15 +1,12 @@
-[![Build Status](https://secure.travis-ci.org/holderdeord/hdo-site.png)](http://travis-ci.org/holderdeord/hdo-site)
+[![Build Status](https://secure.travis-ci.org/holderdeord/hdo-site.png?branch=master)](http://travis-ci.org/holderdeord/hdo-site)
 
-IRC channel
-===========
+# IRC channel
 
 Questions? Join us on [#holderdeord on irc.freenode.net](irc://irc.freenode.net/holderdeord)!
 
-Development environment
-=======================
+# Development environment
 
-... on Debian/Ubuntu
---------------------
+## ... on Debian/Ubuntu
 
 Install package dependencies and set up Ruby 1.9.3 with RVM.
 
@@ -54,8 +51,7 @@ Then restart the database:
 
     $ sudo su postgres -c "/etc/init.d/postgresql restart"
 
-... on OS X
------------
+## ... on OS X
 
 You'll need [XCode](https://developer.apple.com/xcode/) installed.
 
@@ -67,7 +63,16 @@ Install dependencies through [Homebrew](http://mxcl.github.com/homebrew/):
 
 _This list may be incomplete. Please add any missing libs you find._
 
-    $ brew install git imagemagick postgresql
+    $ brew install git imagemagick
+
+If you're on Lion or later, use [Postgres.app](http://postgresapp.com/):
+
+* Download the app, drag it to /Applications and launch it.
+* Set up your path to point to the command line tools as described [here](http://postgresapp.com/documentation).
+
+Otherwise, use Homebrew to install PostgreSQL:
+
+    $ brew install postgresql
 
 Follow brew's post-install instructions for PostgreSQL. Typically you want to run the `initdb`
 and the launchtl ("load on login") commands.
@@ -78,18 +83,16 @@ Note: If you're on OS X >= 10.7 and get a connection error when preparing the da
 * Open a new shell and try there.
 * Check [this post](http://www.iainlbc.com/2011/10/osx-lion-postgres-could-not-connect-to-database-postgres-after-homebrew-installation/).
 
-TODO: Try out [Postgres.app](http://postgresapp.com/) and add instructions here.
+# Preparing the database:
 
-Preparing the database:
-=======================
+Create the "hdo" user with the [createuser command](http://www.postgresql.org/docs/9.1/interactive/app-createuser.html):
 
-Create the "hdo" user with the [createuser script](http://www.postgresql.org/docs/9.1/interactive/app-createuser.html):
-
-    $ sudo su - postgres # NB: Linux only.
+    $ sudo su - postgres # Only needed on Linux.
     $ createuser hdo --no-superuser --no-createrole --createdb
 
-Starting the application:
-=========================
+If you used [Postgres.app](http://postgresapp.com/), make sure you've set up the [command line tools](http://postgresapp.com/documentation) correctly. Otherwise you'll be using the older PostgreSQL version that ships with OS X >= 10.7.
+
+# Starting the application:
 
     $ git clone git://github.com/holderdeord/hdo-site.git
     $ cd hdo-site
@@ -99,18 +102,15 @@ Starting the application:
     $ bundle exec rake db:setup
     $ bundle exec rails server
 
-Data
-====
+# Data
 
-Import data for development:
-----------------------------
+## Import data for development:
 
 * A subset from [data.stortinget.no](http://data.stortinget.no):
 
         $ bundle exec rake import:dev
 
-Data model
-----------
+## Data model
 
 To generate an entity-relationship diagram from the database:
 
@@ -123,8 +123,7 @@ To generate an entity-relationship diagram from the database:
 This will generate `ERD.pdf`.
 
 
-Set up images:
-==============
+# Set up images:
 
 Run this task:
 
@@ -133,8 +132,7 @@ Run this task:
 This will download representative images and associate party logos with the imported parties.
 
 
-Running specs:
-==============
+# Running specs:
 
 To run all specs and buster.js tests:
 
@@ -156,11 +154,9 @@ Run affected specs automatically when files change:
 
     $ bundle exec guard
 
-JavaScript:
-===========
+# JavaScript:
 
-Testing
--------
+## Testing
 
 We use [buster.js](http://busterjs.org/) for JavaScript testing.
 
@@ -185,14 +181,12 @@ Then open [http://localhost:1111](localhost:1111) in your favorite browser.
 
 To add more tests, update the config in spec/buster.js.
 
-Linting
--------
+## Linting
 
     $ npm install -g autolint
     $ bundle exec rake js:lint
 
-Deployment
-==========
+# Deployment
 
 Our own servers are set up with Puppet, using the code from the [hdo-puppet repo](http://github.com/holderdeord/hdo-puppet).
 

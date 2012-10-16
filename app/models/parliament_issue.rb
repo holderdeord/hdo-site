@@ -5,10 +5,14 @@ class ParliamentIssue < ActiveRecord::Base
                   :reference, :summary, :description, :committee, :categories
 
   belongs_to :committee
-  has_and_belongs_to_many :categories
-  has_and_belongs_to_many :votes
+  has_and_belongs_to_many :categories, uniq: true
+  has_and_belongs_to_many :votes, uniq: true
 
-  friendly_id :external_id, :use => :slugged
+  validates_uniqueness_of :external_id
+
+  friendly_id :external_id, use: :slugged
+
+  scope :processed, where("status = ?", I18n.t("app.parliament_issue.states.processed"))
 
   def status_text
     status.gsub(/_/, ' ').capitalize

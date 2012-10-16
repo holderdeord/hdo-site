@@ -24,7 +24,7 @@ describe RepresentativesController do
 
       get :index_by_party
 
-      assigns(:by_party).should == {rep.party => [rep]}
+      assigns(:by_party).should == {rep.current_party => [rep]}
       response.should have_rendered(:index_by_party)
     end
 

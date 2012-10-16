@@ -4,7 +4,7 @@ module Hdo
   module Stats
     class VoteScorer
       def initialize(model)
-        @data = compute(model.vote_connections.includes(:vote))
+        @data = compute(model.vote_connections.includes(vote: {vote_results: {representative: {party_memberships: :party}}}))
       end
 
       def score_for(party)
@@ -60,15 +60,15 @@ module Hdo
         end
 
         key = case score
-              when 0...20
+              when 0...5
                 :consistently_against
-              when 20...40
+              when 5...34
                 :mostly_against
-              when 40...60
+              when 34...67
                 :for_and_against
-              when 60...80
+              when 67...95
                 :mostly_for
-              when 80..100
+              when 95..100
                 :consistently_for
               else
                 raise "unknown score: #{score.inspect}"
@@ -111,8 +111,8 @@ module Hdo
       private
 
       def vote_percentages_for(vote_connection)
-        vote_results = vote_connection.vote.vote_results.includes(:representative => :party)
-        by_party = vote_results.group_by { |v| v.representative.party }
+        vote_results = vote_connection.vote.vote_results
+        by_party = vote_results.group_by { |v| v.representative.current_party }
 
         res = {}
 

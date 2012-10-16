@@ -3,9 +3,16 @@
 require 'spec_helper'
 
 describe Category do
-  it "should have unique names" do
-    valid = Category.create!(:name => "foo")
-    invalid = Category.create(:name => "foo")
+  let(:valid_category) { Category.make! }
+
+  it "should have a unique name" do
+    invalid = Category.make(:name => valid_category.name)
+    invalid.should_not be_valid
+  end
+  
+  it "should have a unique external id" do
+    invalid = Category.make!
+    invalid.external_id = valid_category.external_id
 
     invalid.should_not be_valid
   end
@@ -42,5 +49,57 @@ describe Category do
   it 'keeps EFTA/EU in upper case' do
     category = Category.create(:name => "EFTA/EU")
     category.human_name.should == "EFTA/EU"
+  end
+
+  it 'can add parliament issues' do
+    p1 = ParliamentIssue.make!
+    p2 = ParliamentIssue.make!
+
+    valid_category.parliament_issues << p1
+    valid_category.parliament_issues << p2
+
+    valid_category.parliament_issues.size.should == 2
+    valid_category.should be_valid
+  end
+
+  it "won't add the same parliament issue twice" do
+    pi = ParliamentIssue.make!
+
+    valid_category.parliament_issues << pi
+    valid_category.parliament_issues << pi
+
+    valid_category.parliament_issues.size.should == 1
+  end
+
+  it 'can add promises' do
+    promise = Promise.make!
+
+    valid_category.promises << promise
+    valid_category.promises.size.should == 1
+  end
+
+  it "won't add the same promise twice" do
+    promise = Promise.make!
+
+    valid_category.promises << promise
+    valid_category.promises << promise
+
+    valid_category.promises.size.should == 1
+  end
+
+  it 'can add issues' do
+    issue = Issue.make!
+
+    valid_category.issues << issue
+    valid_category.issues.size.should == 1
+  end
+
+  it "won't add the same issue twice" do
+    issue = Issue.make!
+
+    valid_category.issues << issue
+    valid_category.issues << issue
+
+    valid_category.issues.size.should == 1
   end
 end

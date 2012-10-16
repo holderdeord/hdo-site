@@ -1,14 +1,14 @@
 <% groups.each do |district, representatives| %>
   <h3><%= district.name %></h3>
   <div class="row-fluid">
-    <h4 class="span6"><%= Representative.human_attribute_name :name %></h4>
-    <h4 class="span6"><%= Representative.human_attribute_name :party %></h4>
+    <div class="span6"><h4><%= Representative.human_attribute_name :name %></h4></div>
+    <div class="span6"><h4><%= Representative.human_attribute_name :party %></h4></div>
   </div>
 
   <% representatives.each do |rep| %>
   <div class="row-fluid">
     <div class="span6"><%= link_to rep.display_name, rep %></div>
-    <div class="span6"><%= link_to rep.party.name, rep.party %></div>
+    <div class="span6"><%= (party = rep.current_party) && link_to(party.name, party) %></div>
   </div>
   <% end %>
 

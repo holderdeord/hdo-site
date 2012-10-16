@@ -41,7 +41,7 @@ module Hdo
           persister.import_committee xcom
           Committee.count.should == 1
 
-          update = StortingImporter::Committee.new(xcom.external_id, 'changed-name')
+          update = StortingImporter::Committee.example('name' => 'changed-name')
           persister.import_committee update
 
           Committee.count.should == 1

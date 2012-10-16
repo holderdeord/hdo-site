@@ -41,7 +41,7 @@ module Hdo
           persister.import_district xdis
           District.count.should == 1
 
-          update = StortingImporter::District.new(xdis.external_id, 'changed-name')
+          update = StortingImporter::District.example('name' => 'changed-name')
           persister.import_district update
 
           District.count.should == 1

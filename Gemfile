@@ -3,8 +3,8 @@ source 'https://rubygems.org'
 gem 'rails', '3.2.8'
 
 gem 'nokogiri', '~> 1.5.0'
-gem 'acts_as_tree', '~> 0.1.1'
-gem 'capistrano', '~> 2.12.0'
+gem 'acts_as_tree', '~> 1.1'
+gem 'capistrano', '~> 2.13'
 
 # Gems used only for assets and not required
 # in production environments by default.
@@ -36,13 +36,13 @@ end
 gem 'pg'
 gem "thin"
 gem 'jquery-rails'
-gem "twitter-bootstrap-rails", "~> 2.0"
-gem "highcharts-rails", "~> 2.2"
-gem "jquery-tablesorter", ">= 0.0.5"
-gem "devise", "~> 2.1.2"
-gem "twitter_bootstrap_form_for", "~> 1.0.5"
-gem "will_paginate", "~> 3.0.3"
-gem "friendly_id", "~> 4.0.7"
+gem 'twitter-bootstrap-rails', "~> 2.1"
+gem 'highcharts-rails', "~> 2.2"
+gem 'jquery-tablesorter', ">= 0.0.5"
+gem 'devise', "~> 2.1.2"
+gem 'twitter_bootstrap_form_for', "~> 1.0.5"
+gem 'will_paginate', "~> 3.0.3"
+gem 'friendly_id', "~> 4.0.7"
 gem 'rack-cache', :require => 'rack/cache'
 gem 'dragonfly', '~> 0.9.12'
 gem 'lograge'
@@ -54,9 +54,8 @@ gem 'rack-mini-profiler'
 
 # data import
 # gem 'hdo-storting-importer', :path => File.expand_path("../../hdo-storting-importer", __FILE__)
-gem 'hdo-storting-importer', "~> 0.2.1"
+gem 'hdo-storting-importer', "~> 0.3.0"
 
 if Gem::Version.new(Bundler::VERSION) >= Gem::Version.new("1.2.0.rc2")
   ruby '1.9.3'
 end
-

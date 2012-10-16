@@ -5,6 +5,10 @@ class RepresentativesController < ApplicationController
   before_filter :fetch_representatives, :only => [:index, :index_by_district, :index_by_party, :index_by_name]
 
   def index
+    respond_to do |format|
+      format.html
+      format.json { render json: Representative.order(:last_name) }
+    end
   end
 
   def show
@@ -24,12 +28,13 @@ class RepresentativesController < ApplicationController
   def index_by_district
     # fail on non-XHR?
     @by_district = @representatives.group_by { |e| e.district }
+
     render partial: 'index_by_district', locals: { groups: @by_district }
   end
 
   def index_by_party
     # fail on non-XHR?
-    @by_party = @representatives.group_by { |e| e.party }
+    @by_party = @representatives.group_by { |e| e.current_party }
     render partial: 'index_by_party', locals: { groups: @by_party }
   end
 
@@ -41,6 +46,6 @@ class RepresentativesController < ApplicationController
   private
 
   def fetch_representatives
-    @representatives = Representative.includes(:party, :district).order(:last_name)
+    @representatives = Representative.includes(:district, :party_memberships => :party).order(:last_name)
   end
 end

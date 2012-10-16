@@ -38,7 +38,7 @@
 
 <% if @vote.propositions.any? %>
   <h2><%= Proposition.model_name.human(count: @vote.propositions.size).capitalize %></h2>
-  <%= render partial: "shared/propositions_table", locals: { propositions: @vote.propositions } %>
+  <%= render partial: "shared/propositions_table", locals: { vote: @vote } %>
 <% end %>
 
 <h2>stortinget.no</h2>
@@ -58,10 +58,13 @@
     </tr>
   </thead>
   <tbody>
-      <% @vote.vote_results.sort_by { |r| r.representative.last_name }.each do |result| %>
+      <% @vote_results.each do |result| %>
       <tr>
         <td><%= link_to result.representative.display_name, result.representative %></td>
-        <td><%= link_to result.representative.party.name, result.representative.party %></td>
+        <td>
+          <% party = result.representative.party_at(@vote.time) %>
+          <%= party && link_to(party.name, party) %>
+        </td>
         <td class="vote-<%= result.state %>"><%= result.human %></td>
       </tr>
       <% end %>

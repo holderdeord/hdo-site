@@ -1,10 +1,12 @@
 require 'optparse'
 require 'set'
 require 'open-uri'
+require 'fileutils'
 
 module Hdo
   module Import
     class CLI
+      attr_reader :options
 
       def initialize(argv)
         if argv.empty?
@@ -21,7 +23,7 @@ module Hdo
         when 'json'
           import_files
         when 'daily'
-          raise NotImplementedError
+          import_daily
         when 'api'
           import_api
         when 'dev'
@@ -40,8 +42,8 @@ module Hdo
       private
 
       def import_api(vote_limit = nil)
-        persister.import_parties parsing_data_source.parties
-        persister.import_committees parsing_data_source.committees
+        persister.import_parties parsing_data_source.parties(@options[:session])
+        persister.import_committees parsing_data_source.committees(@options[:session])
         persister.import_districts parsing_data_source.districts
         persister.import_categories parsing_data_source.categories
 
@@ -49,20 +51,28 @@ module Hdo
         import_api_votes(vote_limit)
       end
 
-      def import_api_representatives
-        persister.import_representatives parsing_data_source.representatives
-        persister.import_representatives parsing_data_source.representatives_today
-      end
+      def import_daily
+        persister.import_parties parsing_data_source.parties(@options[:session])
+        persister.import_committees parsing_data_source.committees(@options[:session])
+        persister.import_districts parsing_data_source.districts
+        persister.import_categories parsing_data_source.categories
 
-      def import_promises
-        spreadsheet = @rest.first or raise "no spreadsheet path given"
+        import_api_representatives
 
-        promises = Hdo::StortingImporter::Promise.from_xlsx(spreadsheet)
-        persister.import_promises promises
+        parliament_issues = parsing_data_source.parliament_issues(@options[:session])
+        persister.import_parliament_issues parliament_issues
+
+        each_vote_for(parsing_data_source, parliament_issues) do |votes|
+          persister.import_votes votes, infer: false
+        end
+
+        persister.infer_all_votes
+
+        purge_cache
       end
 
       def import_api_votes(vote_limit = nil)
-        parliament_issues = parsing_data_source.parliament_issues
+        parliament_issues = parsing_data_source.parliament_issues(@options[:session])
 
         if @options[:parliament_issue_ids]
           issues = issues.select { |i| @options[:parliament_issue_ids].include? i.external_id }
@@ -75,6 +85,30 @@ module Hdo
         end
 
         persister.infer_all_votes
+      end
+
+      def import_api_representatives
+        representatives = {}
+
+        # the information in 'representatives_today' is more complete,
+        # so it takes precedence
+
+        parsing_data_source.representatives_today.each do |rep|
+          representatives[rep.external_id] = rep
+        end
+
+        parsing_data_source.representatives(@options[:period]).each do |rep|
+          representatives[rep.external_id] ||= rep
+        end
+
+        persister.import_representatives representatives.values
+      end
+
+      def import_promises
+        spreadsheet = @rest.first or raise "no spreadsheet path given"
+
+        promises = Hdo::StortingImporter::Promise.from_xlsx(spreadsheet)
+        persister.import_promises promises
       end
 
       def each_vote_for(data_source, parliament_issues, limit = nil)
@@ -189,8 +223,13 @@ module Hdo
         )
       end
 
+      def purge_cache
+        # crude cache purge for now
+        FileUtils.rm_rf Rails.root.join('public/cache' )
+      end
+
       def parse_options(args)
-        options = {}
+        options = {:period => '2009-2013', :session => '2012-2013'}
 
         OptionParser.new { |opt|
           opt.on("-s", "--quiet") { @options[:quiet] = true }
@@ -202,13 +241,21 @@ module Hdo
             options[:parliament_issue_ids] = ids.split(",")
           end
 
+          opt.on("--period PERIOD", %Q{The parliamentary period to import data for. Note that "today's representatives" will always be imported. Default: #{options[:period]}}) do |period|
+            options[:period] = period
+          end
+
+          opt.on("--session SESSION", %Q{The parliamentary session to import data for. Note that "today's representatives" will always be imported. Default: #{options[:session]}}) do |session|
+            options[:session] = session
+          end
+
           opt.on("-h", "--help") do
             puts opt
             exit 1
           end
         }.parse!(args)
 
-        options[:cache] = ENV['CACHE']
+        options[:cache] ||= ENV['CACHE']
 
         options
       end

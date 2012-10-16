@@ -16,7 +16,7 @@ module Hdo
           :approve => for_count,
           :against => against_count,
           :absent  => absent_count,
-          :parties => Hash[@party_counts.map { |party, counts| [party.name, counts] }]
+          :parties => Hash[@party_counts.map { |party, counts| [party && party.name, counts] }]
         }
       end
 
@@ -73,7 +73,8 @@ module Hdo
       private
 
       def compute_party_counts(vote)
-        party_results = vote.vote_results.group_by { |r| r.representative.party }
+        time = vote.time
+        party_results = vote.vote_results.includes(representative: {party_memberships: :party}).group_by { |r| r.representative.party_at(time) }
 
         res = {}
 

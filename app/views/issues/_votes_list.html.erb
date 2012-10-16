@@ -1,7 +1,7 @@
 <% votes_and_connections.each do |vote, connection| %>
   <div class="row-fluid vote">
     <div class="span2">
-      <a data-toggle="collapse" data-target="#proposition-body-<%= vote.id %>"><%= t 'app.expand' %></a>
+      <a data-vote-id="<%= vote.id %>"><%= t 'app.expand' %></a>
     </div>
 
     <div class="span1"><h5><%= vote.external_id %></h5></div>
@@ -35,11 +35,9 @@
     </div>
   </div>
 
-  <div class="row-fluid collapse" id="proposition-body-<%= vote.id %>">
-    <div class="span10">
-      <% vote.propositions.each do |prop| %>
-        <%= prop.body.html_safe %>
-      <% end %>
+  <div class="row-fluid">
+    <div class="proposition-body" id="proposition-body-<%= vote.id %>">
+      <%= image_tag 'spinner.gif', class: 'spinner' %>
     </div>
   </div>
 
