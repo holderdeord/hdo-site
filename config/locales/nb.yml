@@ -272,7 +272,6 @@ nb:
       view_votes:
         one: 'Se avstemningen'
         other: 'Se avstemningene'
-
     votes:
       non_personal:
         unknown: 'Denne saken ble avgjort uten at avstemningsknappene ble brukt. Vi har derfor ikke oversikt over hva den enkelte representant har stemt.'

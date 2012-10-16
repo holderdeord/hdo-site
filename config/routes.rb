@@ -16,7 +16,6 @@ Hdo::Application.routes.draw do
   end
   get 'categories/:id/subcategories' => "categories#subcategories"
 
-
   resources :parties,         :only => [:index, :show]
   resources :committees,      :only => [:index, :show]
   resources :topics
