@@ -51,9 +51,10 @@
   <script>
     $(document).ready(function () {
       var widget = HDO.promiseWidget.create({
-        targetSelector: ".promises-results",
-        categoriesSelector: ".categories",
-        partiesSelector: null
+        targetEl: $("#promises-results"),
+        categoriesSelector: $(".categories"),
+        server: HDO.promiseServerFacade,
+        activeParty: '<li class="<%= @party.slug %>-active"><a href="#" data-party-slug="<%= @party.slug %>"></a></li>'
 
       });
 

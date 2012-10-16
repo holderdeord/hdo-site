@@ -7,7 +7,8 @@ config["HDO javascript tests"] = {
         "spec/javascript/lib/*.js",
         "app/assets/javascripts/lib/*.js",
         "app/assets/javascripts/lazyLoadCarouselImages.js",
-        "app/assets/javascripts/representativeSearch.js"
+        "app/assets/javascripts/representativeSearch.js",
+        "app/assets/javascripts/promises.js"
     ],
     tests: [
         "spec/javascript/*Test.js"

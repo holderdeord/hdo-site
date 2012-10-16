@@ -28,13 +28,13 @@
     <div class="span2 party-nav">
       <h4>Vis løftene til:</h4>
       <ul class="nav nav-pills nav-stacked">
-        <li><a href="#" data-party-slug="show-all">Alle partiene</a></li>
+        <li class="show-all-active"><a href="#" data-party-slug="show-all">Alle partiene</a></li>
         <% @parties.each do |party| %>
           <li>
             <a data-party-slug="<%= party.slug %>" href="#"><%= party.name %></a>
           </li>
         <% end %>
-        <li><a href="#" data-party-slug="<%= @government_slugs %>">Soria Moria II</a></li>
+        <li><a href="#" data-party-slug="<%= @government_slug %>">Soria Moria II</a></li>
       </ul>
     </div>
   </div>
@@ -42,11 +42,10 @@
   <!-- VISIBLE IN MOBILE -->
   <div class="hidden-desktop">
     <select class="party-nav">
-      <option>Velg parti</option>
+      <option class="show-all-active" data-party-slug="show-all">Alle partiene</option>
       <% @parties.each do |party| %>
         <option data-party-slug="<%= party.slug %>"><%= party.name %></option>
       <% end %>
-      <option data-party-slug="show-all">Alle partiene</option>
     </select>
 
     <div class="span3">
@@ -59,9 +58,12 @@
   <script>
     $(document).ready(function () {
       var widget = HDO.promiseWidget.create({
-        targetSelector: ".promises-results",
-        categoriesSelector: ".categories",
-        partiesSelector: ".party-nav"
+        targetEl: $(".promises-results"),
+        categoriesSelector: $(".categories"),
+        partiesSelector: $(".party-nav"),
+        subCategoriesSelector: $("#subcategory-dropdown"),
+        server: HDO.promiseServerFacade,
+        activeParty: $(".show-all-active").get(0)
       });
 
       widget.init();

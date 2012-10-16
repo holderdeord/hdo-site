@@ -1,160 +1,163 @@
 var HDO = HDO || {};
 
 (function (H, $) {
-  var categoryId,
-    partySlug = null,
-    results,
-    bodyName = "promisesBody",
-    cache = {},
-    lastPartyFilter = null;
 
-  function getData(catId, partySlug, callback) {
-    var promiseUrl;
+  function setActiveCategory(self, targetElement) {
+    if (self.activeCategory) {
+      $(self.activeCategory).removeClass("active");
+    }
+    self.activeCategory = targetElement;
+    $(self.activeCategory).addClass("active");
+  }
 
-    if (partySlug === '' || !partySlug || partySlug === "show-all") {
-      promiseUrl = '/categories/' + catId + '/promises';
+  function setActiveParty(self, slug, partyElement) {
+    var className = slug + "-active";
+    if (self.activeParty) {
+      $(self.activeParty).removeClass();
+    }
+    self.activeParty = partyElement;
+    $(self.activeParty).addClass(className);
+  }
+
+  function getSlugname(ev) {
+    return $(ev.currentTarget).data("party-slug");
+  }
+
+  function showEmptyResultsMessage(self) {
+    self.targetEl.find('#empty-results-message').html('<h3>Partiet har ingen løfter i denne kategorien.</h3>')
+      .removeClass('hidden');
+  }
+
+  function filterResults(ev, index, el) {
+    var lastSelectedSlug = $(this.activeParty).find("a").data("party-slug"),
+      selectedSlug = $(ev).data("party-slug"),
+      element = $(el[index]).get(0);
+
+    if (selectedSlug === lastSelectedSlug || lastSelectedSlug === 'show-all') {
+      $(element).removeClass("hidden");
     } else {
-      promiseUrl = '/categories/' + catId + '/promises/parties/' + partySlug;
+      $(element).addClass("hidden");
+    }
+  }
+
+  function filterResultsForMobile(ev, index, el) {
+    var selectedSlug = $(this.partiesSelector).find('option:selected').data('party-slug'),
+      element = $(el[index]).get(0);
+
+    if ($(element).data('party-slug') === selectedSlug || selectedSlug === 'show-all') {
+      $(element).removeClass("hidden");
+    } else {
+      $(element).addClass("hidden");
     }
 
-    if (cache[promiseUrl]) {
-      callback(cache[promiseUrl]);
-      return;
+  }
+
+  function filterByParty(self, ev) {
+    $('#empty-results-message').html('');
+    var result = $(self.targetEl).find("div[data-party-slug]").get();
+
+    if (ev.type === 'change') {
+      result.forEach(filterResultsForMobile, self);
+    } else {
+      result.forEach(filterResults, self);
     }
 
-    $("#spinner").show();
-
-    $.ajax({
-      url: promiseUrl,
-
-      complete: function () {
-        $("#spinner").hide();
-      },
-
-      success: function (data) {
-        cache[promiseUrl] = data;
-        callback(data);
-      }
-    });
+    if (self.targetEl.find('div').not('.hidden').length === 2) {
+      showEmptyResultsMessage(self);
+    }
+    return false;
   }
 
-  function setResults(data) {
-    results = data;
+  function partyClicked(ev) {
+    var partySlug, partyElement;
+
+    if (ev.type === 'change') {
+      partySlug = $(ev.srcElement).find(':selected').data('a[party-slug]');
+      partyElement = $(ev.srcElement).find(':selected').get(0);
+    } else {
+      partySlug = getSlugname(ev);
+      partyElement = $(ev.currentTarget).parent().get(0);
+    }
+    setActiveParty(this, partySlug, partyElement);
+    filterByParty(this, ev);
+
+    return false;
   }
 
-  function getResults() {
-    return results;
+  function renderAndFilterResults(data) {
+    this.targetEl.html(data);
+    this.targetEl.append('<div id=empty-results-message></div>');
+    var result = $(this.targetEl).find("div").get();
+    result.forEach(filterResults, this);
   }
 
-  function showSpecificParty(catId, partyId) {
-    var bodyElement = $('.' + bodyName);
-    bodyElement.empty();
-
-    lastPartyFilter = partyId;
-
-    bodyElement.hide().append(results);
-    bodyElement.find('div[data-party-slug!="' + partyId + '"]').hide();
-    bodyElement.show();
+  function renderAndFilterResultsForMobile(data) {
+    this.targetEl.css('padding-left', '0px');
+    this.targetEl.html(data);
+    this.targetEl.append('<div id=empty-results-message></div>');
+    var result = $(this.targetEl).find("div").get();
+    result.forEach(filterResultsForMobile, this);
   }
 
-  function showAllPromisesInCategory(catId, partySlug) {
-    getData(catId, partySlug, function (results) {
-      setResults(results);
-      if (results === '') {
-        $('.' + bodyName).html("Ingen løfter i denne kategorien.");
-      } else {
-        $('.' + bodyName).html(results);
-      }
+  function fillSubcategorySelector(categories) {
+    var self = this,
+      categoriesObject = $.parseJSON(categories),
+      i;
 
-      if (lastPartyFilter) {
-        showSpecificParty(catId, lastPartyFilter);
-      }
-    });
+    $(self.getSubCategories).empty();
+
+    for (i = 0; i < categoriesObject.length; i++) {
+      $(self.subCategoriesSelector).append('<option data-category-id=' +
+        categoriesObject[i].id + '>' + categoriesObject[i].name + '</option>');
+    }
+
   }
 
-  function showAllParties(catId) {
-    lastPartyFilter = null;
-    showAllPromisesInCategory(catId);
+  function categoryClicked(ev) {
+    var categoryId;
+
+    if (ev.type === 'change') {
+      categoryId = $(ev.srcElement).find(':selected').data('category-id');
+      this.server.getSubCategories(categoryId, fillSubcategorySelector.bind(this));
+
+      this.subCategoriesSelector.removeClass('hidden');
+      this.server.fetchPromises(categoryId, renderAndFilterResultsForMobile.bind(this));
+    } else {
+      setActiveCategory(this, ev.currentTarget);
+      categoryId = $(this.activeCategory).data("category-id");
+      this.server.fetchPromises(categoryId, renderAndFilterResults.bind(this));
+    }
+
+    return false;
   }
 
-  function removeActiveClass(divClass) {
-    $(divClass).find('li').removeClass();
+  function subCategoryClicked(ev) {
+    var categoryId = $(ev.srcElement).find(':selected').data('category-id');
+    this.server.fetchPromises(categoryId, renderAndFilterResultsForMobile.bind(this));
   }
 
-  H.promiseWidget = {
-    create: function (options) {
+  HDO.promiseWidget = {
+    create: function (params) {
       var instance = Object.create(this);
-      instance.options = options;
-
+      instance.server = params.server;
+      instance.categoriesSelector = params.categoriesSelector;
+      instance.activeParty = params.activeParty;
+      instance.targetEl = params.targetEl;
+      instance.partiesSelector = params.partiesSelector;
+      instance.subCategoriesSelector = params.subCategoriesSelector;
       return instance;
     },
 
     init: function () {
-      var self = this;
+      $(this.categoriesSelector).on("click", "a[data-category-id]", categoryClicked.bind(this));
+      $(this.categoriesSelector).on("change", categoryClicked.bind(this));
+      $(this.partiesSelector).on("click", "a[data-party-slug]", partyClicked.bind(this));
+      $(this.partiesSelector).on("change", partyClicked.bind(this));
+      $(this.subCategoriesSelector).on("change", subCategoryClicked.bind(this));
 
-      $(self.options.categoriesSelector).find('a').on('click', function (e) {
-
-        categoryId = $(this).data('category-id');
-        $(self.options.categoriesSelector).find('a').removeClass('active');
-        $(this).addClass('active');
-
-        if (self.options.partiesSelector !== null) {
-          if (!lastPartyFilter) {
-            removeActiveClass(self.options.partiesSelector);
-            $('[data-party-slug="show-all"]').parent().addClass('active');
-          }
-        } else {
-          partySlug = document.URL;
-          partySlug = partySlug.substring(partySlug.lastIndexOf('/') + 1);
-        }
-
-
-        var target = $(self.options.targetSelector);
-        target.empty().append('<div class="' + bodyName + '"></div>');
-        showAllPromisesInCategory(categoryId, partySlug);
-
-        e.preventDefault();
-
-      });
-
-      $(self.options.partiesSelector).find('a').on('click', function (e) {
-        removeActiveClass(self.options.partiesSelector, partySlug);
-
-        partySlug = $(this).data('party-slug');
-
-        if (partySlug.indexOf(',') >= 0) {
-          $(this).parent().addClass('government-active');
-        } else {
-          $(this).parent().addClass(partySlug + '-active');
-        }
-
-        if (partySlug === 'show-all') {
-          showAllParties(categoryId);
-          $(this).parent().addClass('active');
-        } else {
-          showSpecificParty(categoryId, partySlug);
-        }
-
-        e.preventDefault();
-      });
-
-      //category dropdown list mobil
-      $(self.options.categoriesSelector).on('change', function () {
-        categoryId = $(self.options.categoriesSelector + " option:selected").data("category-id");
-        showAllPromisesInCategory(categoryId, partySlug);
-      });
-
-      //party dropdown list mobile
-      $(self.options.partiesSelector).on('change', function () {
-        var target = $(self.options.targetSelector);
-        partySlug = $(self.options.partiesSelector + " option:selected").data("party-slug");
-        if (categoryId) {
-          target.empty().append('<div class="' + bodyName + '"></div>');
-          showAllPromisesInCategory(categoryId, partySlug);
-        } else {
-          target.empty().append("Ingen kategori valgt.");
-        }
-      });
-    } // end of init
+    }
   };
+
 }(HDO, jQuery));
+
+
