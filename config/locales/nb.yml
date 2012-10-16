@@ -209,6 +209,7 @@ nb:
     method:
       about: "Om metoden"
       read_more: "Les mer om metoden"
+      read: "Les om metoden"
     support: "Støtt oss"
     member: "Bli medlem"
     donate: "Gi en gave"
@@ -242,8 +243,8 @@ nb:
     nobody: ingen
     issues:
       explanation:
-        one: "Denne siden er basert på %{count} avstemning på Stortinget i perioden oktober 2011 til dagens dato, og løfter fra valgprogram og regjeringerklæring 2009-2013."
-        other: "Denne siden er basert på %{count} avstemninger på Stortinget i perioden oktober 2011 til dagens dato, og løfter fra valgprogram og regjeringerklæring 2009-2013."
+        one: "Denne siden er basert på <strong>%{count} avstemning</strong> på Stortinget i perioden <strong>oktober 2011 til dagens dato</strong>, og løfter fra valgprogram og regjeringerklæring 2009-2013."
+        other: "Denne siden er basert på <strong>%{count} avstemninger</strong> på Stortinget i perioden <strong>oktober 2011 til dagens dato</strong>, og løfter fra valgprogram og regjeringerklæring 2009-2013."
       back: Tilbake til saken
       not_published: Denne saken er ikke publisert.
       published: Denne saken er publisert.
@@ -269,8 +270,8 @@ nb:
         search_result: Søkeresultat
       view_vote: 'Se hva de stemte'
       view_votes:
-        one: 'Se 1 avstemning om saken'
-        other: 'Se %{count} avstemninger om saken'
+        one: 'Se avstemningen'
+        other: 'Se avstemningene'
 
     votes:
       non_personal:
@@ -307,8 +308,8 @@ nb:
     parties:
       no_promises: Partiet har ingen løfter om denne saken.
       group:
-        governing: 'Regjering'
-        opposition: 'Opposisjon'
+        governing: 'Regjeringspartiene'
+        opposition: 'Opposisjonspartiene'
       none: 'Inget parti'
     counts:
       representative:
