@@ -24,6 +24,9 @@
 
 <div class="row-fluid">
   <hr class="span9">
+  <div class="span3 visible-phone">
+    <div class="alert alert-info"><%= @issue_explanation %></div>
+  </div>
 </div>
 
 <div class="row-fluid">
@@ -39,10 +42,8 @@
   </div>
 
   <div class="span3">
-    <div class="alert alert-info"><%= t('app.issues.explanation', count: @issue.votes.size).html_safe %></div>
-  </div>
+    <div class="hidden-phone alert alert-info"><%= @issue_explanation %></div>
 
-  <div class="span3">
     <div class="well well-small">
       <p>Har du et forslag til en sak vi burde lage?</p>
       <p>Kontakt oss <a href="mailto:<%= obscure_email t('app.email') %>">her</a>!</p>

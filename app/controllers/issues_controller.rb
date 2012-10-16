@@ -22,6 +22,11 @@ class IssuesController < ApplicationController
       assign_party_groups
       assign_previous_and_next_issues
 
+      @issue_explanation = t('app.issues.explanation',
+        count: @issue.votes.size,
+        url: issue_votes_path(@issue)
+      ).html_safe
+
       respond_to do |format|
         format.html
         format.json { render json: @issue }

@@ -1,13 +1,17 @@
 <div class="row-fluid issue-navigation">
   <% if previous_item %>
-    <%= link_to previous_item do %>
-      &larr; <%= previous_item.read_attribute(item_text_attr) %>
-    <% end %>
+    <p class="pull-left">
+      <%= link_to previous_item do %>
+        &larr; <%= previous_item.read_attribute(item_text_attr) %>
+      <% end %>
+    </p>
   <% end %>
 
   <% if next_item %>
-    <%= link_to next_item, class: 'pull-right' do %>
-      <%= next_item.read_attribute(item_text_attr) %> &rarr;
-    <% end %>
+    <p class="pull-right">
+      <%= link_to next_item do %>
+        <%= next_item.read_attribute(item_text_attr) %> &rarr;
+      <% end %>
+    </p>
   <% end %>
 </div>
