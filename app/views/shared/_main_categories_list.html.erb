@@ -19,7 +19,7 @@
                   <li><a data-category-id="<%= c.id %>" href="#"><%= c.human_name %></a> (<%= c.promises.count %>)</li>
                 <% end %>
                 <br />
-                //TO DO: get correct total for Vis Alle
+                <!--TO DO: get correct total for Vis Alle -->
                 <li><a data-category-id="<%= category.id %>" href="#">Vis alle</a></li>
               </ul>
             </div>
@@ -28,18 +28,17 @@
       <% end %>
     </div>
   </div>
+</div>
 
   <!-- VISIBLE IN MOBILE --> 
-  <div class="hidden-desktop">
-    <select>
-      <option>Velg kategori</option>
-      <% categories.each do |category| %>
-        <option data-category-id="<%= category.id %>"><%= category.human_name %></option>
-      <% end %>
-    </select>
-    <select id="subcategory-dropdown" style="display: none">
-      <option>Velg underkategori</option>
-    </select>
-  </div>
-
+<div class="hidden-desktop">
+  <select class="categories">
+    <option>Velg kategori</option>
+    <% categories.each do |category| %>
+      <option data-category-id="<%= category.id %>"><%= category.human_name %></option>
+    <% end %>
+  </select>
+  <select id="subcategory-dropdown" class="hidden">
+    <option>Velg underkategori</option>
+  </select>
 </div>

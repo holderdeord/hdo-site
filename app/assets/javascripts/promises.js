@@ -29,7 +29,6 @@ var HDO = HDO || {};
   }
 
   function filterResults(ev, index, el) {
-
     var lastSelectedSlug = $(this.activeParty).find("a").data("party-slug"),
       selectedSlug = $(ev).data("party-slug"),
       element = $(el[index]).get(0);
@@ -41,23 +40,47 @@ var HDO = HDO || {};
     }
   }
 
-  function filterByParty(self) {
+  function filterResultsForMobile(ev, index, el) {
+    var selectedSlug = $(this.partiesSelector).find('option:selected').data('party-slug'),
+      element = $(el[index]).get(0);
+
+    if ($(element).data('party-slug') === selectedSlug || selectedSlug === 'show-all') {
+      $(element).removeClass("hidden");
+    } else {
+      $(element).addClass("hidden");
+    }
+
+  }
+
+  function filterByParty(self, ev) {
     $('#empty-results-message').html('');
     var result = $(self.targetEl).find("div[data-party-slug]").get();
-    result.forEach(filterResults, self);
 
-    if (self.targetEl.find('div').not('.hidden').length === 1) {
+    if (ev.type === 'change') {
+      result.forEach(filterResultsForMobile, self);
+    } else {
+      result.forEach(filterResults, self);
+    }
+
+    if (self.targetEl.find('div').not('.hidden').length === 2) {
       showEmptyResultsMessage(self);
     }
     return false;
   }
 
   function partyClicked(ev) {
-    var partySlug = getSlugname(ev),
-      partyElement = $(ev.currentTarget).parent().get(0);
+    var partySlug, partyElement;
 
+    if (ev.type === 'change') {
+      partySlug = $(ev.srcElement).find(':selected').data('a[party-slug]');
+      partyElement = $(ev.srcElement).find(':selected').get(0);
+    } else {
+      partySlug = getSlugname(ev);
+      partyElement = $(ev.currentTarget).parent().get(0);
+    }
     setActiveParty(this, partySlug, partyElement);
-    filterByParty(this);
+    filterByParty(this, ev);
+
     return false;
   }
 
@@ -68,12 +91,49 @@ var HDO = HDO || {};
     result.forEach(filterResults, this);
   }
 
+  function renderAndFilterResultsForMobile(data) {
+    this.targetEl.css('padding-left', '0px');
+    this.targetEl.html(data);
+    this.targetEl.append('<div id=empty-results-message></div>');
+    var result = $(this.targetEl).find("div").get();
+    result.forEach(filterResultsForMobile, this);
+  }
+
+  function fillSubcategorySelector(categories) {
+    var self = this,
+      categoriesObject = $.parseJSON(categories),
+      i;
+
+    $(self.getSubCategories).empty();
+
+    for (i = 0; i < categoriesObject.length; i++) {
+      $(self.subCategoriesSelector).append('<option data-category-id=' +
+        categoriesObject[i].id + '>' + categoriesObject[i].name + '</option>');
+    }
+
+  }
+
   function categoryClicked(ev) {
-    setActiveCategory(this, ev.currentTarget);
-    var categoryId = $(this.activeCategory).data("category-id");
-    this.server.fetchPromises(categoryId, renderAndFilterResults.bind(this));
+    var categoryId;
+
+    if (ev.type === 'change') {
+      categoryId = $(ev.srcElement).find(':selected').data('category-id');
+      this.server.getSubCategories(categoryId, fillSubcategorySelector.bind(this));
+
+      this.subCategoriesSelector.removeClass('hidden');
+      this.server.fetchPromises(categoryId, renderAndFilterResultsForMobile.bind(this));
+    } else {
+      setActiveCategory(this, ev.currentTarget);
+      categoryId = $(this.activeCategory).data("category-id");
+      this.server.fetchPromises(categoryId, renderAndFilterResults.bind(this));
+    }
 
     return false;
+  }
+
+  function subCategoryClicked(ev) {
+    var categoryId = $(ev.srcElement).find(':selected').data('category-id');
+    this.server.fetchPromises(categoryId, renderAndFilterResultsForMobile.bind(this));
   }
 
   HDO.promiseWidget = {
@@ -84,12 +144,17 @@ var HDO = HDO || {};
       instance.activeParty = params.activeParty;
       instance.targetEl = params.targetEl;
       instance.partiesSelector = params.partiesSelector;
+      instance.subCategoriesSelector = params.subCategoriesSelector;
       return instance;
     },
 
     init: function () {
       $(this.categoriesSelector).on("click", "a[data-category-id]", categoryClicked.bind(this));
+      $(this.categoriesSelector).on("change", categoryClicked.bind(this));
       $(this.partiesSelector).on("click", "a[data-party-slug]", partyClicked.bind(this));
+      $(this.partiesSelector).on("change", partyClicked.bind(this));
+      $(this.subCategoriesSelector).on("change", subCategoryClicked.bind(this));
+
     }
   };
 

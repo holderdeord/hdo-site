@@ -66,7 +66,7 @@
                           '<li><a data-category-id=2>Finanser</a></li>' +
                         '</div>');
 
-      this.targetEl = $('<div id="promises-results">' +
+      this.targetEl = $('<div class="promises-results">' +
                           '<div data-party-slug=a class="hidden">' +
                             '<p>Promise 1</p>' +
                           '</div>' +
@@ -76,7 +76,8 @@
                           '<div data-party-slug=government class="hidden">' +
                             '<p>Promsie 3</p>' +
                           '<div id=empty-results-message></div>' +
-                        '</div>');
+                        '</div>' +
+                        '<div class="promises-results"></div>');
 
       this.server = {
         fetchPromises: this.spy()
@@ -172,5 +173,50 @@
       $(this.thirdPartyLink).click();
       assert.match(this.targetEl.html(), "Partiet har ingen løfter i denne kategorien.");
    }
+  });
+
+  buster.testCase('Promises mobile page',{
+    setUp: function () {
+      this.categoryEl = $('<select class="categories">' +
+                          '<option data-category-id=1>Arbeidsliv</option>' +
+                          '<option data-category-id=2>Finanser</option>' +
+                         '</select>"');
+
+      this.subCategoriesEl = $('<select id="subcategory-dropdown" class="hidden"></select>');
+
+      var partyEl = $('<select class="party-nav"' +
+                        '<option data-party-slug=show-all selected=true></option>' +
+                        '<option data-party-slug=a>Arbeiderpartiet</option>' +
+                        '<option data-party-slug=frp>Fremskrittspariet</option>' +
+                      '</select>');
+
+      var targetEl = $('<div id=promises-results></div>');
+
+      this.server = {
+        fetchPromises: this.spy(),
+        getSubCategories: this.spy()
+      }
+
+      this.widget = HDO.promiseWidget.create({
+        categoriesSelector: this.categoryEl,
+        partiesSelector: partyEl,
+        server: this.server,
+        targetEl: this.targetEl,
+        activeParty: this.showAllLi,
+        subCategoriesSelector: this.subCategoriesEl
+      });
+      this.widget.init();
+    },
+
+    "selected category should give correct category id": function () {
+      this.categoryEl.val("Finanser").change();
+      assert.equals(this.categoryEl.find('option:selected').data('category-id'), 2);
+
+    },
+
+    "when category is selected, subcategories should be visible": function () {
+      this.categoryEl.val("Finanser").change();
+      refute.className(this.subCategoriesEl.get(0), 'hidden');
+    }
   });
 }(HDO, jQuery));

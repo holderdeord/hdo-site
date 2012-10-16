@@ -42,11 +42,10 @@
   <!-- VISIBLE IN MOBILE -->
   <div class="hidden-desktop">
     <select class="party-nav">
-      <option>Velg parti</option>
+      <option class="show-all-active" data-party-slug="show-all">Alle partiene</option>
       <% @parties.each do |party| %>
         <option data-party-slug="<%= party.slug %>"><%= party.name %></option>
       <% end %>
-      <option data-party-slug="show-all">Alle partiene</option>
     </select>
 
     <div class="span3">
@@ -59,9 +58,10 @@
   <script>
     $(document).ready(function () {
       var widget = HDO.promiseWidget.create({
-        targetEl: $("#promises-results"),
+        targetEl: $(".promises-results"),
         categoriesSelector: $(".categories"),
         partiesSelector: $(".party-nav"),
+        subCategoriesSelector: $("#subcategory-dropdown"),
         server: HDO.promiseServerFacade,
         activeParty: $(".show-all-active").get(0)
       });
