@@ -13,6 +13,7 @@ Vote.blueprint do
   parliament_issues { [ParliamentIssue.make] }
   time { Time.now }
   vote_results { [VoteResult.make!] }
+  subject { "vote-subject-#{sn}" }
 end
 
 VoteConnection.blueprint do

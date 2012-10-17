@@ -102,4 +102,43 @@ describe Vote do
     vote.should be_valid
   end
 
+  it 'is invalid if it has the same subject as an existing non-alternate vote' do
+    time = 2.days.ago
+
+    valid  = Vote.make!(enacted: true, time: time, subject: 'a')
+
+    Vote.make(
+      enacted: true,
+      time: time,
+      subject: 'a'
+    ).should_not be_valid
+
+    Vote.make(
+      enacted: false,
+      time: time,
+      subject: 'a'
+    ).should be_valid
+  end
+
+  it 'knows if two votes are alternates' do
+    time = 2.days.ago
+    v1 = Vote.make(for_count: 10, against_count: 20, absent_count: 10, time: time, enacted: true)
+    v2 = Vote.make(for_count: 20, against_count: 10, absent_count: 10, time: time, enacted: false)
+
+    unrelated_by_counts1 = Vote.make(time: time, for_count: 5, against_count: 20, absent_count: 10)
+    unrelated_by_counts2 = Vote.make(time: time, for_count: 10, against_count: 2, absent_count: 10)
+    unrelated_by_counts3 = Vote.make(time: time, for_count: 20, against_count: 10, absent_count: 5)
+    unrelated_by_enacted = Vote.make(time: time, for_count: 20, against_count: 10, absent_count: 10, enacted: true)
+    unrelated_by_time    = Vote.make(time: 1.month.ago, for_count: 10, against_count: 20)
+
+    v1.should be_alternate_of v2
+    v2.should be_alternate_of v1
+
+    v1.should_not be_alternate_of unrelated_by_time
+    v1.should_not be_alternate_of unrelated_by_counts1
+    v1.should_not be_alternate_of unrelated_by_counts2
+    v1.should_not be_alternate_of unrelated_by_counts3
+    v1.should_not be_alternate_of unrelated_by_enacted
+  end
+
 end

@@ -9,6 +9,7 @@ class Vote < ActiveRecord::Base
   validates_length_of     :parliament_issues, minimum: 1
   validates_presence_of   :time, :external_id
   validates_uniqueness_of :external_id
+  validates_uniqueness_of :subject, scope: [:time, :enacted]
 
   has_many :propositions, dependent: :destroy
 
@@ -73,6 +74,14 @@ class Vote < ActiveRecord::Base
   def minutes_url
     # FIXME: hardcoded session
     I18n.t("app.external.urls.minutes") % ['2011-2012', time.strftime("%y%m%d")]
+  end
+
+  def alternate_of?(other)
+    time == other.time &&
+      for_count == other.against_count &&
+      against_count == other.for_count &&
+      absent_count == other.absent_count &&
+      enacted? != other.enacted?
   end
 
   private
