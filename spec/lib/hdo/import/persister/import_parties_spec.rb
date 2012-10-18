@@ -57,11 +57,7 @@ module Hdo
 
         it 'overwrites existing governing periods' do
           persister.import_party StortingImporter::Party.example
-
-          changed = StortingImporter::Party.example
-          changed.governing_periods = []
-
-          persister.import_party changed
+          persister.import_party StortingImporter::Party.example('governingPeriods' => [])
 
           GoverningPeriod.count.should == 0
         end
