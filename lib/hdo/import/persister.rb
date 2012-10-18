@@ -159,7 +159,23 @@ module Hdo
         log_import xvote
         xvote.validate!
 
-        vote  = Vote.find_or_create_by_external_id xvote.external_id
+        vote = Vote.find_by_external_id xvote.external_id
+
+        unless vote
+          # https://github.com/holderdeord/hdo-site/issues/317
+          # using enacted here handles the case of alternate votes
+          vote = Vote.where(time: Time.parse(xvote.time), enacted: xvote.enacted).first
+
+          if vote
+            vote.update_attributes!(external_id: xvote.external_id)
+          end
+        end
+
+        unless vote
+          vote = Vote.new
+          vote.external_id = xvote.external_id
+        end
+
         parliament_issue = ParliamentIssue.find_by_external_id! xvote.external_issue_id
 
         unless vote.parliament_issues.include?(parliament_issue)
@@ -167,19 +183,19 @@ module Hdo
         end
 
         attributes = {
-          :enacted       => xvote.enacted?,
-          :personal      => xvote.personal?,
-          :subject       => xvote.subject,
-          :time          => Time.parse(xvote.time)
+          enacted:  xvote.enacted?,
+          personal: xvote.personal?,
+          subject:  xvote.subject,
+          time:     Time.parse(xvote.time)
         }
 
         unless vote.inferred?
           # don't overwrite inferred counts.
 
           attributes.merge!(
-            :for_count     => Integer(xvote.counts.for),
-            :against_count => Integer(xvote.counts.against),
-            :absent_count  => Integer(xvote.counts.absent),
+            for_count:     Integer(xvote.counts.for),
+            against_count: Integer(xvote.counts.against),
+            absent_count:  Integer(xvote.counts.absent),
           )
         end
 
