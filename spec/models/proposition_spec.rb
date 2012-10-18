@@ -7,7 +7,7 @@ describe Proposition do
   end
 
   it 'is invalid without a body' do
-    Proposition.make(:body => nil).should_not be_valid
+    Proposition.make(body: nil).should_not be_valid
   end
 
   it 'is invalid without a unique external id' do
@@ -20,19 +20,19 @@ describe Proposition do
   it "can have a large body" do
     body = "a" * 150_000
 
-    prop = Proposition.make(:body => body, :description => "a")
+    prop = Proposition.make(body: body, description: "a")
     prop.save!
 
     prop.body.should == body
   end
 
   it '#plain_body removes HTML' do
-    plain = Proposition.make(:body => "<p>foo</p>").plain_body
+    plain = Proposition.make(body: "<p>foo</p>").plain_body
     plain.should == 'foo'
   end
 
   it '#short_body limits body to 100 characters' do
-    prop = Proposition.make(:body => "foo")
+    prop = Proposition.make(body: "foo")
     prop.short_body.should == "foo"
 
     prop.body = "a"*300

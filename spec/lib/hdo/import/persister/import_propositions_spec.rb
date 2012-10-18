@@ -9,10 +9,9 @@ module Hdo
 
         def setup_proposition(prop)
           rep = prop.delivered_by
-          rep.parties.each { |p| Party.make!(:external_id => p.external_id) }
-          rep.committees.each { |c| Committee.make!(:external_id => c.external_id) }
-
-          District.make!(:name => rep.district)
+          rep.parties.each { |p| Party.make!(external_id: p.external_id) }
+          rep.committees.each { |c| Committee.make!(external_id: c.external_id) }
+          District.make!(name: rep.district)
         end
 
         it 'imports a proposition' do
