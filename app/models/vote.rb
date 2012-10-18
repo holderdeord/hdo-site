@@ -3,13 +3,15 @@ class Vote < ActiveRecord::Base
   extend FriendlyId
 
   attr_accessible :for_count, :against_count, :absent_count,
-                  :enacted, :personal, :subject, :time
+                  :enacted, :personal, :subject, :time, :external_id
 
   has_and_belongs_to_many :parliament_issues, uniq: true
   validates_length_of     :parliament_issues, minimum: 1
   validates_presence_of   :time, :external_id
   validates_uniqueness_of :external_id
-  validates_uniqueness_of :subject, scope: [:time, :enacted]
+
+  # timestamps are unique unless it's an alternate vote, in which case 'enacted' will not be the same
+  validates_uniqueness_of :time, scope: :enacted
 
   has_many :propositions, dependent: :destroy
 
