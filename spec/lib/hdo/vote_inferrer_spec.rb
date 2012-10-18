@@ -160,7 +160,7 @@ module Hdo
             time: @now + i.minutes,
             vote_results: []
           )
-          
+
           vote.vote_results.create! representative: @rep1, result: 0
           vote.vote_results.create! representative: @rep2, result: 1
           vote.vote_results.create! representative: @rep3, result: 1
@@ -178,7 +178,7 @@ module Hdo
             time: @now + 1.hour + i.minutes,
             vote_results: []
           )
-          
+
           vote.vote_results.create! representative: @rep1, result: -1
           vote.vote_results.create! representative: @rep2, result: 0
           vote.vote_results.create! representative: @rep3, result: 0
@@ -210,7 +210,7 @@ module Hdo
         npv = Vote.make!(
           :enacted      => false,
           :personal     => false,
-          :time         => @now,
+          :time         => @now + 1.second,
           :vote_results => []
         )
 
@@ -232,7 +232,7 @@ module Hdo
         npv = Vote.make!(
           enacted: true,
           personal: false,
-          time: @now + 1.hour,
+          time: @now + 1.hour + 1.second,
           vote_results: []
         )
         subject.infer!.should == [true]
@@ -253,7 +253,7 @@ module Hdo
         npv = Vote.make!(
           enacted: false,
           personal: false,
-          time: @now + 2.hour,
+          time: @now + 2.hour + 1.second,
           vote_results: []
         )
         subject.infer!.should == [true]
@@ -275,64 +275,65 @@ module Hdo
       before do
         rep = Representative.make!
 
-        personal_vote_timestamps = [
-          '2012-06-14 20:32:07',
-          '2012-06-14 20:32:50',
-          '2012-06-14 20:32:50',
-          '2012-06-14 20:33:23',
-          '2012-06-14 20:33:49',
-          '2012-06-14 20:34:11',
-          '2012-06-14 20:34:36',
-          '2012-06-14 20:35:11',
-          '2012-06-14 20:36:44',
-          '2012-06-14 20:36:44',
-          '2012-06-14 20:38:39',
-          '2012-06-14 20:40:21',
-          '2012-06-14 20:40:48',
-          '2012-06-14 20:41:11',
-          '2012-06-14 20:42:22',
-          '2012-06-14 20:42:51',
-          '2012-06-14 20:43:17',
-          '2012-06-14 20:43:36',
-          '2012-06-14 20:44:02',
-          '2012-06-14 20:44:35',
-          '2012-06-14 20:45:16',
-          '2012-06-14 20:45:38',
-          '2012-06-14 20:46:05',
-          '2012-06-14 20:46:31',
-          '2012-06-14 20:46:31',
-          '2012-06-14 20:47:05',
-          '2012-06-14 20:47:24',
-          '2012-06-14 20:47:55',
-          '2012-06-14 20:49:11',
-          '2012-06-14 20:49:11',
-          ].map { |e| Time.parse e }
-          
-          personal_vote_timestamps.each do |t|
+        personal_votes = [
+          # timestamp,            enacted
+          ['2012-06-14 20:32:07', true],
+          ['2012-06-14 20:32:50', true],
+          ['2012-06-14 20:32:50', false],
+          ['2012-06-14 20:33:23', true],
+          ['2012-06-14 20:33:49', true],
+          ['2012-06-14 20:34:11', true],
+          ['2012-06-14 20:34:36', true],
+          ['2012-06-14 20:35:11', true],
+          ['2012-06-14 20:36:44', true],
+          ['2012-06-14 20:36:44', false],
+          ['2012-06-14 20:38:39', true],
+          ['2012-06-14 20:40:21', true],
+          ['2012-06-14 20:40:48', true],
+          ['2012-06-14 20:41:11', true],
+          ['2012-06-14 20:42:22', true],
+          ['2012-06-14 20:42:51', true],
+          ['2012-06-14 20:43:17', true],
+          ['2012-06-14 20:43:36', true],
+          ['2012-06-14 20:44:02', true],
+          ['2012-06-14 20:44:35', true],
+          ['2012-06-14 20:45:16', true],
+          ['2012-06-14 20:45:38', true],
+          ['2012-06-14 20:46:05', true],
+          ['2012-06-14 20:46:31', true],
+          ['2012-06-14 20:46:31', false],
+          ['2012-06-14 20:47:05', true],
+          ['2012-06-14 20:47:24', true],
+          ['2012-06-14 20:47:55', true],
+          ['2012-06-14 20:49:11', true],
+          ['2012-06-14 20:49:11', false],
+        ]
+
+          personal_votes.each do |t, enacted|
             Vote.make!(
-              enacted: true,
+              enacted: enacted,
               personal: true,
-              time: t,
+              time: Time.parse(t),
               vote_results: [VoteResult.create!(representative: rep, result: 1)]
             )
           end
 
-          non_personal_vote_timestamps = [
-            '2012-06-14 20:51:20',
-            '2012-06-14 20:49:33',
-            '2012-06-14 20:35:35',
-            '2012-06-14 20:37:11',
-            '2012-06-14 20:35:54',
-            '2012-06-14 20:38:13',
+          non_personal_votes = [
             '2012-06-14 20:33:09',
-            '2012-06-14 20:37:46',
+            '2012-06-14 20:35:35',
+            '2012-06-14 20:35:54',
+            '2012-06-14 20:37:11',
             '2012-06-14 20:37:27',
-            '2012-06-14 20:48:20',
-            '2012-06-14 20:50:30',
+            '2012-06-14 20:37:46',
+            '2012-06-14 20:38:13',
             '2012-06-14 20:39:03',
+            '2012-06-14 20:48:20',
+            '2012-06-14 20:49:33',
+            '2012-06-14 20:50:30',
+            '2012-06-14 20:51:20',
           ]
-          
-          @non_personal_votes = non_personal_vote_timestamps.map do |t|
+
+          @non_personal_votes = non_personal_votes.map do |t|
             Vote.make!(
               enacted: true,
               personal: false,
