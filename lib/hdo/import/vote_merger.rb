@@ -24,7 +24,7 @@ module Hdo
           dup.vote_connections.each do |vc|
             new_vc = master.vote_connections.find_or_create_by_issue_id!(vc.issue_id)
 
-            attrs = vc.attributes.keys(:matches, :issue_id, :weight, :comment, :description)
+            attrs = vc.attributes.slice(:matches, :issue_id, :weight, :comment, :description)
             new_vc.update_attributes!(attrs)
           end
 
