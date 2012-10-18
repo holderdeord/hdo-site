@@ -3,7 +3,7 @@ var JZ = this.JZ || {};
 (function ($) {
 
   var defaultOptions = {
-    timeout: 10000,
+    timeout: console && console.log('timeout'),
     contentType: 'application/x-www-form-urlencoded;charset=UTF-8'
   };
   

@@ -75,9 +75,9 @@
                           '</div>' +
                           '<div data-party-slug=government class="hidden">' +
                             '<p>Promsie 3</p>' +
-                          '<div id=empty-results-message></div>' +
-                        '</div>' +
-                        '<div class="promises-results"></div>');
+                          '</div>' + 
+                          '<div class="empty-results-message hidden">Partiet har ingen løfter i denne kategorien.</div>' +
+                        '</div>');
 
       this.server = {
         fetchPromises: this.spy()
@@ -100,6 +100,8 @@
 
       this.firstCategoryLink = categoryEl.find('a[data-category-id=1]').get(0);
       this.secondCategoryLink = categoryEl.find('a[data-category-id=2]').get(0);
+
+      this.messageDiv = this.targetEl.find('.empty-results-message').get(0);
 
       this.widget = HDO.promiseWidget.create({
         categoriesSelector: categoryEl,
@@ -170,8 +172,11 @@
    },
 
    "should give a message if there are no promises to show": function () {
+      $(this.firstPartyLink).click();
+      assert.className(this.messageDiv, "hidden");
+
       $(this.thirdPartyLink).click();
-      assert.match(this.targetEl.html(), "Partiet har ingen løfter i denne kategorien.");
+      refute.className(this.messageDiv, "hidden");
    }
   });
 
