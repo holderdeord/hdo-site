@@ -24,8 +24,9 @@
   <body>
     <div class="wrapper">
       <%= render partial: 'layouts/navigation' %>
-
       <div class="ribbon visible-desktop">Under utvikling</div>
+
+      <%= yield :mega_header %>
 
       <div id="hdo-content" class="container">
         <% if flash.notice %>
