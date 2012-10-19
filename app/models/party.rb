@@ -49,8 +49,8 @@ class Party < ActiveRecord::Base
   end
 
   def default_image
-    default_logo = Rails.root.join("app/assets/images/party_logos/unknown_logo_large.jpg")
-    large_logo = Rails.root.join("app/assets/images/party_logos/#{URI.encode external_id}_logo_large.jpg")
+    default_logo = Rails.root.join("app/assets/images/party-logos/unknown.png")
+    large_logo = Rails.root.join("app/assets/images/party-logos/#{URI.encode slug}.png")
 
     large_logo.exist? ? large_logo : default_logo
   end

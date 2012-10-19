@@ -17,6 +17,9 @@
 /.sass-cache/*
 *.swp
 
+# OS X finder.
+.DS_Store
+
 # Ignore dragonfly cache
 /public/system/dragonfly/*
 
