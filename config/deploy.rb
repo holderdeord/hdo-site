@@ -3,6 +3,7 @@ require 'bundler/capistrano'
 if ENV['VAGRANT']
   set :domain, 'localhost'
   set :port,    2222
+  set :git_shallow_clone, 1
 elsif ENV['DOMAIN']
   set :domain, ENV['DOMAIN']
 else
