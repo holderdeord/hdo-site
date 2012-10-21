@@ -56,7 +56,7 @@ GEM
       gherkin (~> 2.11.0)
       json (>= 1.4.6)
     daemons (1.1.9)
-    database_cleaner (0.8.0)
+    database_cleaner (0.9.1)
     devise (2.1.2)
       bcrypt-ruby (~> 3.0)
       orm_adapter (~> 0.1)
@@ -284,7 +284,7 @@ PLATFORMS
 DEPENDENCIES
   acts_as_tree (~> 1.1)
   capistrano (~> 2.13)
-  database_cleaner (~> 0.8.0)
+  database_cleaner (~> 0.9.1)
   devise (~> 2.1.2)
   dragonfly (~> 0.9.12)
   friendly_id (~> 4.0.7)
