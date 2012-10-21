@@ -1,8 +1,9 @@
 # encoding: UTF-8
 
 class IssuesController < ApplicationController
-  before_filter :authenticate_user!, :except => [:show, :votes]
-  before_filter :fetch_issue, :only => [:show, :edit, :update, :destroy, :votes, :votes_search]
+  before_filter :authenticate_user!, except: [:show, :votes]
+  before_filter :ensure_editable, except: [:show, :votes, :index]
+  before_filter :fetch_issue, only: [:show, :edit, :update, :destroy, :votes, :votes_search]
 
   helper_method :edit_steps
 
@@ -206,6 +207,13 @@ class IssuesController < ApplicationController
 
   def edit_steps
     @edit_steps ||= Hdo::IssueEditSteps.new(params, session)
+  end
+
+  def ensure_editable
+    unless Rails.application.config.issue_editing_enabled
+      flash.alert = t('app.issues.edit.disabled')
+      redirect_to home_index_path
+    end
   end
 
 end
