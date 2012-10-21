@@ -1,3 +1,5 @@
+require 'loadable_component'
+
 module Pages
   class Page
     include LoadableComponent
