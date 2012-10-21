@@ -1,3 +1,4 @@
+desc 'Run the full Travis build'
 task :travis => %w[
   check
   db:create
