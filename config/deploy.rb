@@ -26,19 +26,11 @@ role :app, domain
 role :db,  domain, :primary => true
 
 namespace :deploy do
-  if ENV['UNICORN']
-    task(:start) { run "/etc/init.d/unicorn-hdo start" }
-    task(:stop)  { run "/etc/init.d/unicorn-hdo stop" }
-    task :restart, :roles => :app, :except => { :no_release => true } do
-      run "/etc/init.d/unicorn-hdo upgrade"
-    end
-  else
-    task(:start) {}
-    task(:stop) {}
+  task(:start) {}
+  task(:stop) {}
 
-    task :restart, :roles => :app, :except => { :no_release => true } do
-      run "#{try_sudo} touch #{File.join(current_path,'tmp','restart.txt')}"
-    end
+  task :restart, :roles => :app, :except => { :no_release => true } do
+    run "#{try_sudo} touch #{File.join(current_path,'tmp','restart.txt')}"
   end
 
   namespace :web do
