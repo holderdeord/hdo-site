@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe VotesController do
   render_views
-  
+
   it "should set the votes variable on index" do
     get :index
 

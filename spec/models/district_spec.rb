@@ -7,7 +7,7 @@ describe District do
     invalid = District.make(:name => valid_district.name)
     invalid.should_not be_valid
   end
-  
+
   it "should have a unique external id" do
     invalid = District.make!
     invalid.external_id = valid_district.external_id

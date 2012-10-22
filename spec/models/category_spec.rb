@@ -9,7 +9,7 @@ describe Category do
     invalid = Category.make(:name => valid_category.name)
     invalid.should_not be_valid
   end
-  
+
   it "should have a unique external id" do
     invalid = Category.make!
     invalid.external_id = valid_category.external_id
