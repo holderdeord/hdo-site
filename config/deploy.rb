@@ -3,6 +3,7 @@ require 'bundler/capistrano'
 if ENV['VAGRANT']
   set :domain, 'localhost'
   set :port,    2222
+  set :git_shallow_clone, 1
 elsif ENV['DOMAIN']
   set :domain, ENV['DOMAIN']
 else
@@ -25,19 +26,11 @@ role :app, domain
 role :db,  domain, :primary => true
 
 namespace :deploy do
-  if ENV['UNICORN']
-    task(:start) { run "/etc/init.d/unicorn-hdo start" }
-    task(:stop)  { run "/etc/init.d/unicorn-hdo stop" }
-    task :restart, :roles => :app, :except => { :no_release => true } do
-      run "/etc/init.d/unicorn-hdo upgrade"
-    end
-  else
-    task(:start) {}
-    task(:stop) {}
+  task(:start) {}
+  task(:stop) {}
 
-    task :restart, :roles => :app, :except => { :no_release => true } do
-      run "#{try_sudo} touch #{File.join(current_path,'tmp','restart.txt')}"
-    end
+  task :restart, :roles => :app, :except => { :no_release => true } do
+    run "#{try_sudo} touch #{File.join(current_path,'tmp','restart.txt')}"
   end
 
   namespace :web do

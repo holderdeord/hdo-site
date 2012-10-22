@@ -16,7 +16,7 @@ end
 group :test do
   gem "selenium-webdriver", "~> 2.0"
   gem "machinist", "~> 2.0"
-  gem "database_cleaner", "~> 0.8.0"
+  gem "database_cleaner", "~> 0.9.1"
   gem "loadable_component", ">= 0.1.1"
   gem 'simplecov', :require => false
   gem 'guard'

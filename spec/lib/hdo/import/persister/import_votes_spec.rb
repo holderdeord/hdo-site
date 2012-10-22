@@ -97,8 +97,10 @@ module Hdo
           vote = Vote.first
           vote.for_count.should == update['counts']['for']
 
-          names = vote.vote_results.map { |e| e.representative.last_name }
-          names.should == [example.representatives.first.last_name, 'Doe']
+          expected = [example.representatives.first.last_name, 'Doe'].sort
+          actual   = vote.vote_results.map { |e| e.representative.last_name }.sort
+
+          actual.should == expected
         end
 
         it "updates an existing vote based on timestamp if it's not an alternate vote" do
@@ -116,7 +118,6 @@ module Hdo
 
           Vote.count.should == 1
         end
-
 
         it 'updates an existing alternate vote' do
           time    = 2.days.ago.to_s

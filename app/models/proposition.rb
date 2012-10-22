@@ -14,7 +14,6 @@ class Proposition < ActiveRecord::Base
   end
 
   def short_body
-    str = plain_body
-    str.size <= 200 ? str : "#{str[0,197]}..."
+    plain_body.truncate(200)
   end
 end
