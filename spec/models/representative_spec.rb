@@ -40,8 +40,8 @@ describe Representative do
     rep.current_party.should == current_party
     rep.current_party_membership.should == current_membership
 
-    rep.party_at(Time.now).should == current_party
-    rep.party_membership_at(Time.now).should == current_membership
+    rep.party_at(Time.current).should == current_party
+    rep.party_membership_at(Time.current).should == current_membership
 
     rep.party_at(40.days.ago).should == previous_party
     rep.party_membership_at(40.days.ago).should == previous_membership

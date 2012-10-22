@@ -1,8 +1,8 @@
 class Topic < ActiveRecord::Base
   extend FriendlyId
-  
+
   include Hdo::ModelHelpers::HasFallbackImage
-  
+
   include Tire::Model::Search
   include Tire::Model::Callbacks
 
@@ -32,7 +32,7 @@ class Topic < ActiveRecord::Base
   def previous_and_next(opts = {})
     topics = self.class.order(opts[:order] || :name)
 
-    current_index = topics.index(self)
+    current_index = topics.to_a.index(self)
 
     prev_topic = topics[current_index - 1] if current_index > 0
     next_topic = topics[current_index + 1] if current_index < topics.size

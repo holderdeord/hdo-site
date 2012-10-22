@@ -35,7 +35,7 @@ class Issue < ActiveRecord::Base
     issues = self.class.order(opts[:order] || :title)
     issues = issues.published if opts[:published_only]
 
-    current_index = issues.index(self)
+    current_index = issues.to_a.index(self)
 
     prev_issue = issues[current_index - 1] if current_index > 0
     next_issue = issues[current_index + 1] if current_index < issues.size

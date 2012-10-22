@@ -43,11 +43,11 @@ class Representative < ActiveRecord::Base
   end
 
   def current_party
-    party_at Date.today
+    party_at Time.current
   end
 
   def current_party_membership
-    party_membership_at Date.today
+    party_membership_at Time.current
   end
 
   def party_at(date)
@@ -66,7 +66,7 @@ class Representative < ActiveRecord::Base
   end
 
   def current_committees
-    committees_at Date.today
+    committees_at Time.current
   end
 
   def committees_at(date)

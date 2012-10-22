@@ -85,7 +85,7 @@ describe Party do
     previous_rep.party_memberships.create!(party: party, start_date: 2.months.ago, end_date: 1.month.ago)
 
     party.current_representatives.should == [current_rep]
-    party.representatives_at(Time.now).should == [current_rep]
+    party.representatives_at(Time.current).should == [current_rep]
     party.representatives_at(40.days.ago).should == [previous_rep]
     party.representatives.should == [current_rep, previous_rep]
   end

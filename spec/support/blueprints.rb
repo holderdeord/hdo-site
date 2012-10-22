@@ -11,7 +11,7 @@ end
 Vote.blueprint do
   external_id { sn.to_s }
   parliament_issues { [ParliamentIssue.make] }
-  time { Time.now }
+  time { Time.current }
   vote_results { [VoteResult.make!] }
   subject { "vote-subject-#{sn}" }
 end

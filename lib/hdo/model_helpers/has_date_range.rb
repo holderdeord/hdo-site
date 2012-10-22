@@ -7,11 +7,11 @@ module Hdo
         base.validates_presence_of :start_date
 
         base.scope :for_date, lambda { |date| base.where('start_date <= date(?) AND (end_date >= date(?) OR end_date IS NULL)', date, date) }
-        base.scope :current, lambda { base.for_date(Time.now) }
+        base.scope :current, lambda { base.for_date(Time.current) }
       end
 
       def current?
-        include? Time.now
+        include? Time.current
       end
 
       def include?(date)

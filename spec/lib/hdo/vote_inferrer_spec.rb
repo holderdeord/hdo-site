@@ -144,7 +144,7 @@ module Hdo
 
     describe "with a whole bunch of votes in 3 clusters" do
       before do
-        @now = Time.now
+        @now = Time.current
 
         @rep1 = Representative.make!
         @rep2 = Representative.make!
