@@ -76,5 +76,5 @@ Hdo::Application.configure do
   #
 
   # Toggle issue editing temporarily (e.g. while moving database)
-  config.issue_editing_enabled = false
+  config.issue_editing_enabled = true
 end

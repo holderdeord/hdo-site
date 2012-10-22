@@ -20,7 +20,7 @@ class Party < ActiveRecord::Base
   attr_accessible :image, :name
 
   def self.in_government
-    all.to_a.select(&:in_government?)
+    joins(:governing_periods).where("governing_periods.start_date < ? AND (end_date >= ? or end_date IS NULL)", Date.today, Date.today)
   end
 
   # TODO: find a better name for this

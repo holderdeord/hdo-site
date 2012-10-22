@@ -38,7 +38,7 @@ class CategoriesController < ApplicationController
       promises = promises.sort_by do |e|
         if e.parties.size == 1 && e.parties.first.in_government?
           [0, e.parties.first.name] # government first
-        elsif e.parties.size > 1 && e.parties.all?(&:in_government?)
+        elsif e.parties.size > 1 && e.parties == Party.in_government
           [100, ''] # last
         else
           [1, e.parties.first.name]
