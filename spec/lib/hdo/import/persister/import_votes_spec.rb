@@ -119,7 +119,6 @@ module Hdo
           Vote.count.should == 1
         end
 
-
         it 'updates an existing alternate vote' do
           time    = 2.days.ago.to_s
           subject = 'Alternativ votering'

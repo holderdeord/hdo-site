@@ -21,7 +21,7 @@ var JZ = this.JZ || {};
       handle(result, response, callbacks);
     };
   }
-  
+
   function errorHandler(callbacks) {
     return function (xhr, status) {
       var result = status === 'timeout' ? status : errorCodes[xhr.status];
@@ -42,10 +42,10 @@ var JZ = this.JZ || {};
     opts.error = errorHandler(callbacks);
     $.ajax(opts);
   }
-  
+
   JZ.ajax = {
     postJSON: postJSON,
     get: get
   };
-  
+
 }(jQuery));

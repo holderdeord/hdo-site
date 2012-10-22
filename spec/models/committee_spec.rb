@@ -9,7 +9,7 @@ describe Committee do
     valid_committee.should be_valid
     invalid_committee.should_not be_valid
   end
-  
+
   it "has a unique external id" do
     invalid = Committee.make!
     invalid.external_id = valid_committee.external_id
@@ -60,7 +60,7 @@ describe Committee do
     com.current_representatives.should == [rep1]
     com.representatives_at(5.days.ago).should == [rep1, rep2]
   end
-  
+
   it 'destroys dependent memeberships when destroyed' do
     com = Committee.make!
     rep = Representative.make!
