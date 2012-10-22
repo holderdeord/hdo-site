@@ -212,7 +212,7 @@ class IssuesController < ApplicationController
   def ensure_editable
     unless Rails.application.config.issue_editing_enabled
       flash.alert = t('app.issues.edit.disabled')
-      redirect_to home_index_path
+      redirect_to root_path
     end
   end
 
