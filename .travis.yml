@@ -3,6 +3,7 @@ rvm:
   - 1.9.3
 services:
   - postgresql
+  - elasticsearch
 notifications:
   recipients:
     - jari@holderdeord.no
