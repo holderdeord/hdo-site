@@ -1,18 +1,20 @@
 var HDO = HDO || {};
 
 (function (H, $) {
-  function keyUp (ev) {
-    if (ev.target.value == '') {
+  function keyUp(ev) {
+    if (ev.target.value === '') {
       $(this.target).hide();
-    };
+    }
   }
-  
-  function search (ev) {
+
+  function search(ev) {
     ev.preventDefault();
-    
-    var q = $(ev.target).find("input[type=text]").val();
-    var self = this;
-    
+
+    var q, self;
+
+    q = $(ev.target).find("input[type=text]").val();
+    self = this;
+
     $(self.target).html('');
     $(self.spinner).show();
 
@@ -21,21 +23,21 @@ var HDO = HDO || {};
       type: "GET",
       dataType: "html",
 
-      complete: function() {
+      complete: function () {
         $(self.spinner).hide();
         $(self.target).show();
       },
 
-      success: function(html) {
+      success: function (html) {
         $(self.target).html(html);
       },
 
-      error: function(xhr, textStatus) {
+      error: function (xhr, textStatus) {
         $(self.target).html(textStatus);
-      },
+      }
     });
   }
-  
+
   HDO.globalSearchWidget = {
     create: function (params) {
       var instance = Object.create(this);
