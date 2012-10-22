@@ -54,6 +54,9 @@ Hdo::Application.routes.draw do
 
   get "docs/index"
 
+  # global search
+  get 'search/all/:query' => 'search#all'
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

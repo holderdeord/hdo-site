@@ -2,6 +2,9 @@ class Representative < ActiveRecord::Base
   extend FriendlyId
   include Hdo::ModelHelpers::HasFallbackImage
 
+  include Tire::Model::Search
+  include Tire::Model::Callbacks
+
   attr_accessible :party, :first_name, :last_name, :committees,
                   :district, :date_of_birth, :date_of_death
 
@@ -99,5 +102,9 @@ class Representative < ActiveRecord::Base
 
   def default_image
     "#{Rails.root}/app/assets/images/representatives/unknown.jpg"
+  end
+
+  def to_indexed_json
+    to_json methods: [:current_party, :full_name]
   end
 end

@@ -41,6 +41,14 @@ Install package dependencies and set up Ruby 1.9.3 with RVM.
 
 PS. For RVM to work properly with gnome-terminal, you have to tick the "Run command as login shell" checkbox on the "Title and Command" tab inside of gnome-terminal's Settings page.
 
+### ElasticSearch
+
+Follow the link to the latest stable release [here](http://www.elasticsearch.org/download/) and download the appropriate distribution. For apt, download the linked `.deb` and run:
+
+    $ sudo dpkg -i elasticsearch.deb
+
+### Database
+
 To allow Rails to connect, edit /etc/postgresql/9.1/main/pg_hba.conf as root and change the line for Unix domain socket from "peer" to "trust":
 
      # "local" is for Unix domain socket connections only
@@ -63,7 +71,11 @@ Install dependencies through [Homebrew](http://mxcl.github.com/homebrew/):
 
 _This list may be incomplete. Please add any missing libs you find._
 
-    $ brew install git imagemagick
+    $ brew install git imagemagick elasticsearch
+
+Follow the post-install instructions (`brew info elasticsearch`) on how to start ElasticSearch on login.
+
+### Database
 
 If you're on Lion or later, use [Postgres.app](http://postgresapp.com/):
 
@@ -83,6 +95,7 @@ Note: If you're on OS X >= 10.7 and get a connection error when preparing the da
 * Open a new shell and try there.
 * Check [this post](http://www.iainlbc.com/2011/10/osx-lion-postgres-could-not-connect-to-database-postgres-after-homebrew-installation/).
 
+
 # Preparing the database:
 
 Create the "hdo" user with the [createuser command](http://www.postgresql.org/docs/9.1/interactive/app-createuser.html):
@@ -99,8 +112,8 @@ If you used [Postgres.app](http://postgresapp.com/), make sure you've set up the
     $ gem install bundler
     $ [sudo] bundle install
     $ cp config/database.yml.example config/database.yml
-    $ bundle exec rake db:setup
-    $ bundle exec rails server
+    $ rake db:setup
+    $ rails server
 
 # Data
 
@@ -108,47 +121,51 @@ If you used [Postgres.app](http://postgresapp.com/), make sure you've set up the
 
 * A subset from [data.stortinget.no](http://data.stortinget.no):
 
-        $ bundle exec rake import:dev
+    $ rake import:dev
 
-## Data model
+## Create ElasticSearch indeces
 
-To generate an entity-relationship diagram from the database:
+    $ rake search:reindex
 
-    $ bundle exec rake erd
-
-    # or
-
-    $ bundle exec rake erd title="HDO Data Model"
-
-This will generate `ERD.pdf`.
-
-
-# Set up images:
+## Set up images:
 
 Run this task:
 
-    $ bundle exec rake images:all
+    $ rake images:all
 
 This will download representative images and associate party logos with the imported parties.
+
+
+## Data model
+
+To see an entity-relationship diagram of the database:
+
+    $ rake erd
+
+    # or
+
+    $ rake erd title="HDO Data Model"
+
+This will generate `ERD.pdf`.
 
 
 # Running specs:
 
 To run all specs and buster.js tests:
 
-    $ bundle exec rake spec:all
+    $ rake spec:all
 
 To run all Ruby specs:
 
-    $ bundle exec rake spec
+    $ rake spec
 
 To run only JS tests:
 
-    $ bundle exec rake spec:js
+    $ rake spec:js
 
 You can also run specific specs, i.e. model, controller or request specs with e.g.:
 
-    $ bundle exec rake spec:models
+    $ rake spec:models
 
 Run affected specs automatically when files change:
 
@@ -170,7 +187,7 @@ Install buster and autolint:
 
 To run the tests once:
 
-    $ bundle exec rake js:test
+    $ rake js:test
 
 You can also run the buster server in the background and capture
  your local browser:
@@ -184,7 +201,7 @@ To add more tests, update the config in spec/buster.js.
 ## Linting
 
     $ npm install -g autolint
-    $ bundle exec rake js:lint
+    $ rake js:lint
 
 # Deployment
 

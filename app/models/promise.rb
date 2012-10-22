@@ -1,6 +1,9 @@
 # encoding: UTF-8
 
 class Promise < ActiveRecord::Base
+  include Tire::Model::Search
+  include Tire::Model::Callbacks
+
   attr_accessible :parties, :general, :categories, :source, :body, :page, :date
 
   has_and_belongs_to_many :parties, order: :name, uniq: true
@@ -35,5 +38,9 @@ class Promise < ActiveRecord::Base
 
   def short_party_names
     parties.map(&:external_id).to_sentence
+  end
+
+  def to_indexed_json
+    to_json methods: :party_names
   end
 end

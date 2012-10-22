@@ -2,6 +2,9 @@ class Party < ActiveRecord::Base
   include Hdo::ModelHelpers::HasFallbackImage
   extend FriendlyId
 
+  include Tire::Model::Search
+  include Tire::Model::Callbacks
+
   class PartyGroup < Struct.new(:name, :parties)
   end
 

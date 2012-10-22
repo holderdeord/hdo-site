@@ -241,6 +241,7 @@ nb:
     collapse: 'Lukke'
     issue_graph_header: 'Hvor ofte har partiet stemt for %{title}?'
     nobody: ingen
+    search: Søk
     issues:
       explanation:
         one: 'Denne siden er basert på <a href="%{url}"><strong>%{count} avstemning</strong></a> på Stortinget i perioden oktober 2011 til dagens dato, og løfter fra valgprogram og regjeringserklæring 2009-2013.'

@@ -1,0 +1,2 @@
+Tire.configure do
+end
