@@ -1,6 +1,6 @@
 class Issue < ActiveRecord::Base
-  include Hdo::ModelHelpers::HasStatsCache
-  include Hdo::ModelHelpers::Searchable
+  include Hdo::Model::HasStatsCache
+  include Hdo::Model::Searchable
 
   extend FriendlyId
 

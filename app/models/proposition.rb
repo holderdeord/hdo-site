@@ -1,5 +1,5 @@
 class Proposition < ActiveRecord::Base
-  include Hdo::ModelHelpers::Searchable
+  include Hdo::Model::Searchable
 
   attr_accessible :description, :on_behalf_of, :body, :representative_id
 

@@ -1,5 +1,5 @@
 module Hdo
-  module ModelHelpers
+  module Model
     module HasDateRange
 
       def self.included(base)

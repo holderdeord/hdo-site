@@ -1,7 +1,7 @@
 # encoding: UTF-8
 
 class Promise < ActiveRecord::Base
-  include Hdo::ModelHelpers::Searchable
+  include Hdo::Model::Searchable
 
   attr_accessible :parties, :general, :categories, :source, :body, :page, :date
 

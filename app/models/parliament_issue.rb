@@ -1,5 +1,5 @@
 class ParliamentIssue < ActiveRecord::Base
-  include Hdo::ModelHelpers::Searchable
+  include Hdo::Model::Searchable
   extend FriendlyId
 
   attr_accessible :document_group, :issue_type, :status, :last_update,
