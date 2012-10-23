@@ -67,13 +67,13 @@
                         '</div>');
 
       this.targetEl = $('<div class="promises-results">' +
-                          '<div data-party-slug=a class="hidden">' +
+                          '<div data-party-slug=a>' +
                             '<p>Promise 1</p>' +
                           '</div>' +
-                          '<div data-party-slug=frp class="hidden">' +
+                          '<div data-party-slug=frp>' +
                             '<p>Promise 2</p>' +
                           '</div>' +
-                          '<div data-party-slug=government class="hidden">' +
+                          '<div data-party-slug=government>' +
                             '<p>Promsie 3</p>' +
                           '</div>' +
                           '<div class="empty-results-message hidden">Partiet har ingen løfter i denne kategorien.</div>' +
@@ -174,7 +174,7 @@
       assert.className(this.targetEl.find('div[data-party-slug=government]').get(0), "hidden");
    },
 
-   "//should give a message if there are no promises to show": function () {
+   "should give a message if there are no promises to show": function () {
       $(this.firstPartyLink).click();
       assert.className(this.messageDiv, "hidden");
 

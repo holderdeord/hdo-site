@@ -27,31 +27,19 @@ var HDO = HDO || {};
     return $(ev.currentTarget).data("party-slug");
   }
 
-  function showEmptyResultsMessage() {
-    $('.empty-results-message').removeClass('hidden');
-  }
-
-  function hideEmptyResultsMessage() {
-    $('.empty-results-message').addClass('hidden');
-  }
 
   function toggleEmptyResultsMessage(self) {
-    hideEmptyResultsMessage();
-    var numberOfDivs = self.targetEl.find('div').length,
-      counter = 0;
+    var emptyResultsElement = $(self.targetEl).find('.empty-results-message');
+    emptyResultsElement.addClass('hidden');
 
-    self.targetEl.find('div').each(function () {
-      if ($(this).hasClass('hidden')) {
-        counter++;
-      }
-    });
+    var partyCount = self.targetEl.find('div[data-party-slug]').size();
+    var hiddenPartyCount = self.targetEl.find('div[data-party-slug].hidden').size();
 
-    if (counter === numberOfDivs) {
-      showEmptyResultsMessage();
+    if (partyCount === hiddenPartyCount) {
+      emptyResultsElement.removeClass('hidden');
     } else {
-      hideEmptyResultsMessage();
+      emptyResultsElement.addClass('hidden');
     }
-
   }
 
   function filterResults(ev, index, el) {
@@ -82,12 +70,7 @@ var HDO = HDO || {};
   function filterByParty(self, ev) {
     var result = $(self.targetEl).find("div[data-party-slug]").get();
 
-    if (ev.type === 'change') {
-      result.forEach(filterResultsForMobile, self);
-    } else {
-      result.forEach(filterResults, self);
-    }
-
+    result.forEach(ev.type == 'change' ? filterResultsForMobile : filterResults, self);
     toggleEmptyResultsMessage(self);
 
     return false;
@@ -97,9 +80,11 @@ var HDO = HDO || {};
     var partySlug, partyElement;
 
     if (ev.type === 'change') {
+      // mobile
       partySlug = $(ev.target).find(':selected').data('a[party-slug]');
       partyElement = $(ev.target).find(':selected').get(0);
     } else {
+      // desktop
       partySlug = getSlugname(ev);
       partyElement = $(ev.currentTarget).parent().get(0);
     }
