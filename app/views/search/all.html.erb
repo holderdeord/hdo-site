@@ -8,7 +8,7 @@
       <% when 'parliament_issue' %>
         <%= link_to r.summary, r %>
       <% when 'proposition' %>
-        <% if r.on_behalf_of %>
+        <% unless r.on_behalf_of.empty? %>
           <strong><%= r.on_behalf_of %></strong>:
         <% end %>
         <%= link_to r.short_body, vote_path(r.vote.slug) %>

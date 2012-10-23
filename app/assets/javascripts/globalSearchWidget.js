@@ -16,6 +16,11 @@ var HDO = HDO || {};
     self = this;
 
     $(self.target).html('');
+
+    if (!q.length) {
+      return;
+    }
+
     $(self.spinner).show();
 
     $.ajax({
