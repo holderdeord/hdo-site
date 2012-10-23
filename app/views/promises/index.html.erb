@@ -3,6 +3,7 @@
     <%= Promise.model_name.human(count: 2).capitalize %>
     <small class="hidden-phone pull-right"><%= Promise.count %> løfter fra valgprogrammene 2009-2013</small>
   </h1>
+
 </div>
 
 <div class="alert alert-info">
@@ -67,7 +68,8 @@
         partiesSelector: $(".party-nav"),
         subCategoriesSelector: $("#subcategory-dropdown"),
         server: HDO.promiseServerFacade,
-        activeParty: $(".show-all-active").get(0)
+        activeParty: $(".show-all-active").get(0),
+        spinnerEl: $("#spinner")
       });
 
       widget.init();

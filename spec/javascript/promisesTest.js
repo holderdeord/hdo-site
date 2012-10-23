@@ -75,7 +75,7 @@
                           '</div>' +
                           '<div data-party-slug=government class="hidden">' +
                             '<p>Promsie 3</p>' +
-                          '</div>' + 
+                          '</div>' +
                           '<div class="empty-results-message hidden">Partiet har ingen løfter i denne kategorien.</div>' +
                         '</div>');
 
@@ -147,7 +147,10 @@
     },
 
     "should show all hidden divs when show all parties is selected": function () {
+      var responseHtml = this.targetEl.html();
       $(this.firstCategoryLink).click();
+      this.server.fetchPromises.yield(responseHtml);
+
       $(this.firstPartyLink).click();
 
       assert.className(this.targetEl.find('div[data-party-slug=frp]').get(0), "hidden");
@@ -195,7 +198,7 @@
                         '<option data-party-slug=frp>Fremskrittspariet</option>' +
                       '</select>');
 
-      var targetEl = $('<div id=promises-results></div>');
+      this.targetEl = $('<div id="promises-results"></div>');
 
       this.server = {
         fetchPromises: this.spy(),

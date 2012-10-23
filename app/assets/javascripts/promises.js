@@ -141,6 +141,11 @@ var HDO = HDO || {};
   function categoryClicked(ev) {
     var categoryId;
 
+    this.targetEl.html('');
+    if (this.spinnerEl) {
+      this.spinnerEl.show();
+    }
+
     if (ev.type === 'change') {
       // mobile
       categoryId = $(ev.target).find(':selected').data('category-id');
@@ -172,6 +177,7 @@ var HDO = HDO || {};
       instance.targetEl = params.targetEl;
       instance.partiesSelector = params.partiesSelector;
       instance.subCategoriesSelector = params.subCategoriesSelector;
+      instance.spinnerEl = params.spinnerEl;
       return instance;
     },
 
@@ -182,6 +188,9 @@ var HDO = HDO || {};
       $(this.partiesSelector).on("change", partyClicked.bind(this));
       $(this.subCategoriesSelector).on("change", subCategoryClicked.bind(this));
 
+      if (this.spinnerEl) {
+        $(document).ajaxStop(function () { this.spinnerEl.hide(); }.bind(this));
+      }
     }
   };
 

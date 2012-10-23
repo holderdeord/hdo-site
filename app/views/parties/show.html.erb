@@ -54,7 +54,8 @@
         targetEl: $(".promises-results"),
         categoriesSelector: $(".categories"),
         server: HDO.promiseServerFacade,
-        activeParty: '<li class="<%= @party.slug %>-active"><a href="#" data-party-slug="<%= @party.slug %>"></a></li>'
+        activeParty: '<li class="<%= @party.slug %>-active"><a href="#" data-party-slug="<%= @party.slug %>"></a></li>',
+        spinnerEl: $("#spinner")
       });
 
       widget.init();
