@@ -7,11 +7,10 @@ class Topic < ActiveRecord::Base
   include Tire::Model::Callbacks
 
   attr_accessible :name, :issue_ids, :image
-  validates_presence_of :name
-  validates_uniqueness_of :name
+  validates :name, presence: true, uniqueness: true
 
-  has_and_belongs_to_many :issues, uniq: true
-  has_many :promises, through: :issues
+  has_and_belongs_to_many :issues,   uniq: true
+  has_many                :promises, through: :issues
 
   friendly_id :name, use: :slugged
 

@@ -17,14 +17,13 @@ class Representative < ActiveRecord::Base
   has_many :propositions
 
   has_many :party_memberships, dependent: :destroy
-  has_many :parties, through: :party_memberships
+  has_many :parties,           through: :party_memberships
 
   has_many :committee_memberships, dependent: :destroy
-  has_many :committees, through: :committee_memberships
+  has_many :committees,            through: :committee_memberships
 
-  validates_uniqueness_of :first_name, :scope => :last_name # TODO: :scope => :period ?!
-  validates_presence_of   :external_id
-  validates_uniqueness_of :external_id
+  validates_uniqueness_of :first_name, scope: :last_name # TODO: scope: :period ?!
+  validates :external_id, presence: true, uniqueness: true
 
   friendly_id :external_id, use: :slugged
 

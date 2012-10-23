@@ -4,5 +4,5 @@ class GoverningPeriod < ActiveRecord::Base
   belongs_to :party
   attr_accessible :start_date, :end_date, :party, :party_id
 
-  validates_presence_of :party
+  validates :party, presence: true
 end

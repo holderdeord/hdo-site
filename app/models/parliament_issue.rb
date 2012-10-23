@@ -9,9 +9,9 @@ class ParliamentIssue < ActiveRecord::Base
 
   belongs_to :committee
   has_and_belongs_to_many :categories, uniq: true
-  has_and_belongs_to_many :votes, uniq: true
+  has_and_belongs_to_many :votes,      uniq: true
 
-  validates_uniqueness_of :external_id
+  validates :external_id, uniqueness: true
 
   friendly_id :external_id, use: :slugged
 

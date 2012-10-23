@@ -8,8 +8,7 @@ class Issue < ActiveRecord::Base
 
   attr_accessible :description, :title, :category_ids, :promise_ids, :topic_ids, :status
 
-  validates_presence_of   :title
-  validates_uniqueness_of :title
+  validates :title, presence: true, uniqueness: true
 
   STATUSES = %w[in_progress shelved published]
   validates_inclusion_of :status, in: STATUSES

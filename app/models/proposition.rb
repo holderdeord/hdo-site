@@ -9,7 +9,7 @@ class Proposition < ActiveRecord::Base
 
   alias_method :delivered_by, :representative
 
-  validates_presence_of :body
+  validates :body, presence: true
   validates_uniqueness_of :external_id, allow_nil: true # https://github.com/holderdeord/hdo-site/issues/138
 
   def plain_body

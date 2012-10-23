@@ -8,14 +8,14 @@ class Party < ActiveRecord::Base
   class PartyGroup < Struct.new(:name, :parties)
   end
 
-  has_many :party_memberships, dependent: :destroy
-  has_many :representatives, through: :party_memberships
-  has_many :governing_periods, order: :start_date, dependent: :destroy
+  has_many :governing_periods,  dependent: :destroy, order: :start_date
+  has_many :party_memberships,  dependent: :destroy
+  has_many :representatives,    through:   :party_memberships
 
   has_and_belongs_to_many :promises, uniq: true
 
-  validates_uniqueness_of :name, :external_id
-  validates_presence_of :name, :external_id
+  validates :name,        presence: true, uniqueness: true
+  validates :external_id, presence: true, uniqueness: true
 
   friendly_id :external_id, use: :slugged
 
