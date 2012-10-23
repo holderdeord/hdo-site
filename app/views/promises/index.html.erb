@@ -34,7 +34,7 @@
             <a data-party-slug="<%= party.slug %>" href="#"><%= party.name %></a>
           </li>
         <% end %>
-        <li><a href="#" data-party-slug="<%= @government_slug %>">Soria Moria II</a></li>
+        <li><a href="#" data-party-slug="government">Soria Moria II</a></li>
       </ul>
     </div>
   </div>
@@ -49,7 +49,11 @@
     </select>
 
     <div class="span3">
-      <div class="promises-results"></div>
+      <div class="promises-results">
+        <div class="empty-results-message hidden">
+          <h3>Partiet har ingen løfter i denne kategorien.</h3>
+        </div>
+      </div>
     </div>
   </div>
 </div>
