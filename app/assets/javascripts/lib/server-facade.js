@@ -3,15 +3,15 @@ var JZ = this.JZ || {};
 (function ($) {
 
   var defaultOptions = {
-    timeout: console && console.log('timeout'),
+    timeout: 10000,
     contentType: 'application/x-www-form-urlencoded;charset=UTF-8'
   };
   
   var globalErrorHandlers = {
-    loginRequired: function () { alert('loginRequired'); },
-    accessDenied: function () { alert('accessDenied'); },
-    timeout: function () { alert('timeout'); },
-    error: function () { alert('error'); }
+    loginRequired: function () { console && console.log('loginRequired'); },
+    accessDenied: function () { console && console.log('accessDenied'); },
+    timeout: function () { console && console.log('timeout'); },
+    error: function () { console && console.log('error'); }
   };
 
   function create(methods) {
