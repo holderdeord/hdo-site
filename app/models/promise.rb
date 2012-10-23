@@ -1,8 +1,7 @@
 # encoding: UTF-8
 
 class Promise < ActiveRecord::Base
-  include Tire::Model::Search
-  include Tire::Model::Callbacks
+  include Hdo::ModelHelpers::Searchable
 
   attr_accessible :parties, :general, :categories, :source, :body, :page, :date
 

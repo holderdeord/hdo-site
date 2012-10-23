@@ -1,10 +1,8 @@
 class Issue < ActiveRecord::Base
   include Hdo::ModelHelpers::HasStatsCache
+  include Hdo::ModelHelpers::Searchable
 
   extend FriendlyId
-
-  include Tire::Model::Search
-  include Tire::Model::Callbacks
 
   attr_accessible :description, :title, :category_ids, :promise_ids, :topic_ids, :status
 

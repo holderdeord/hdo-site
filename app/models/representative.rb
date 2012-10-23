@@ -1,9 +1,7 @@
 class Representative < ActiveRecord::Base
   extend FriendlyId
   include Hdo::ModelHelpers::HasFallbackImage
-
-  include Tire::Model::Search
-  include Tire::Model::Callbacks
+  include Hdo::ModelHelpers::Searchable
 
   attr_accessible :party, :first_name, :last_name, :committees,
                   :district, :date_of_birth, :date_of_death

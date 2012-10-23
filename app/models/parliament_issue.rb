@@ -1,8 +1,6 @@
 class ParliamentIssue < ActiveRecord::Base
+  include Hdo::ModelHelpers::Searchable
   extend FriendlyId
-
-  include Tire::Model::Search
-  include Tire::Model::Callbacks
 
   attr_accessible :document_group, :issue_type, :status, :last_update,
                   :reference, :summary, :description, :committee, :categories

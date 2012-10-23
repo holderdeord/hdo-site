@@ -2,9 +2,7 @@ class Topic < ActiveRecord::Base
   extend FriendlyId
 
   include Hdo::ModelHelpers::HasFallbackImage
-
-  include Tire::Model::Search
-  include Tire::Model::Callbacks
+  include Hdo::ModelHelpers::Searchable
 
   attr_accessible :name, :issue_ids, :image
   validates :name, presence: true, uniqueness: true

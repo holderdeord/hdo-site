@@ -1,6 +1,5 @@
 class Proposition < ActiveRecord::Base
-  include Tire::Model::Search
-  include Tire::Model::Callbacks
+  include Hdo::ModelHelpers::Searchable
 
   attr_accessible :description, :on_behalf_of, :body, :representative_id
 
