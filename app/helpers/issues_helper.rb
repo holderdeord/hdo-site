@@ -29,7 +29,7 @@ module IssuesHelper
   end
 
    def topic_options_for(issue)
-    options_for_select( Topic.all.inject(Hash.new) { |h,i| {i.name => i.id}.merge(h) }.sort_by { |name, id| name },
+    options_for_select( Topic.all.inject(Hash.new) { |options,topic| { topic.name => topic.id }.merge(options) }.sort_by { |name, id| name },
       issue.topic_ids)
   end
 end
