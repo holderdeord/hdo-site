@@ -119,7 +119,7 @@ If you used [Postgres.app](http://postgresapp.com/), make sure you've set up the
 
 ## Import data for development:
 
-* A subset from [data.stortinget.no](http://data.stortinget.no):
+A subset from [data.stortinget.no](http://data.stortinget.no):
 
     $ rake import:dev
 
@@ -133,8 +133,9 @@ Run this task:
 
     $ rake images:all
 
-This will download representative images and associate party logos with the imported parties.
+This will download representative images and associate party logos with the imported parties. If you have broken images, try:
 
+    $ rake images:representatives:reset images:all
 
 ## Data model
 
@@ -147,7 +148,6 @@ To see an entity-relationship diagram of the database:
     $ rake erd title="HDO Data Model"
 
 This will generate `ERD.pdf`.
-
 
 # Running specs:
 
@@ -202,6 +202,10 @@ To add more tests, update the config in spec/buster.js.
 
     $ npm install -g autolint
     $ rake js:lint
+
+or
+
+    $ cd spec && autolint
 
 # Deployment
 
