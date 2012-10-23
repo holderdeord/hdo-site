@@ -27,13 +27,14 @@ var HDO = HDO || {};
     return $(ev.currentTarget).data("party-slug");
   }
 
-
   function toggleEmptyResultsMessage(self) {
-    var emptyResultsElement = $(self.targetEl).find('.empty-results-message');
+    var emptyResultsElement, partyCount, hiddenPartyCount;
+
+    emptyResultsElement = $(self.targetEl).find('.empty-results-message');
     emptyResultsElement.addClass('hidden');
 
-    var partyCount = self.targetEl.find('div[data-party-slug]').size();
-    var hiddenPartyCount = self.targetEl.find('div[data-party-slug].hidden').size();
+    partyCount = self.targetEl.find('div[data-party-slug]').size();
+    hiddenPartyCount = self.targetEl.find('div[data-party-slug].hidden').size();
 
     if (partyCount === hiddenPartyCount) {
       emptyResultsElement.removeClass('hidden');
@@ -70,7 +71,7 @@ var HDO = HDO || {};
   function filterByParty(self, ev) {
     var result = $(self.targetEl).find("div[data-party-slug]").get();
 
-    result.forEach(ev.type == 'change' ? filterResultsForMobile : filterResults, self);
+    result.forEach(ev.type === 'change' ? filterResultsForMobile : filterResults, self);
     toggleEmptyResultsMessage(self);
 
     return false;
