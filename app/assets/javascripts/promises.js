@@ -97,8 +97,8 @@ var HDO = HDO || {};
     var partySlug, partyElement;
 
     if (ev.type === 'change') {
-      partySlug = $(ev.srcElement).find(':selected').data('a[party-slug]');
-      partyElement = $(ev.srcElement).find(':selected').get(0);
+      partySlug = $(ev.target).find(':selected').data('a[party-slug]');
+      partyElement = $(ev.target).find(':selected').get(0);
     } else {
       partySlug = getSlugname(ev);
       partyElement = $(ev.currentTarget).parent().get(0);
@@ -142,12 +142,14 @@ var HDO = HDO || {};
     var categoryId;
 
     if (ev.type === 'change') {
-      categoryId = $(ev.srcElement).find(':selected').data('category-id');
+      // mobile
+      categoryId = $(ev.target).find(':selected').data('category-id');
       this.server.getSubCategories(categoryId, fillSubcategorySelector.bind(this));
 
       this.subCategoriesSelector.removeClass('hidden');
       this.server.fetchPromises(categoryId, renderAndFilterResultsForMobile.bind(this));
     } else {
+      // desktop
       setActiveCategory(this, ev.currentTarget);
       categoryId = $(this.activeCategory).data("category-id");
       this.server.fetchPromises(categoryId, renderAndFilterResults.bind(this));
@@ -157,7 +159,7 @@ var HDO = HDO || {};
   }
 
   function subCategoryClicked(ev) {
-    var categoryId = $(ev.srcElement).find(':selected').data('category-id');
+    var categoryId = $(ev.target).find(':selected').data('category-id');
     this.server.fetchPromises(categoryId, renderAndFilterResultsForMobile.bind(this));
   }
 
