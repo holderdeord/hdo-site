@@ -1,5 +1,5 @@
 module Hdo
-  module ModelHelpers
+  module Model
     module Searchable
       def self.included(base)
         base.extend ClassMethods
