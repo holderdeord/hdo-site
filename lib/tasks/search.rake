@@ -12,6 +12,7 @@ namespace :search do
       puts "\n#{klass}"
       total = klass.count.to_f
 
+      klass.index.delete
       klass.import do |docs|
         puts "\t#{docs.to_a.size}"
         docs # must be returned

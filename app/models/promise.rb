@@ -1,7 +1,15 @@
 # encoding: UTF-8
 
 class Promise < ActiveRecord::Base
-  include Hdo::Model::Searchable
+  include Tire::Model::Search
+  include Tire::Model::Callbacks
+
+  tire.settings(TireSettings) do
+    mapping {
+      indexes :body, type: :string, analyzer: :snowball_no
+      indexes :party_names, type: :string
+    }
+  end
 
   attr_accessible :parties, :general, :categories, :source, :body, :page, :date
 
@@ -42,6 +50,6 @@ class Promise < ActiveRecord::Base
   end
 
   def to_indexed_json
-    to_json methods: :party_names
+    to_json methods: :party_names, only: :body
   end
 end

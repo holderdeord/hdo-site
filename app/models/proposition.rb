@@ -1,5 +1,19 @@
 class Proposition < ActiveRecord::Base
-  include Hdo::Model::Searchable
+  include Tire::Model::Search
+  include Tire::Model::Callbacks
+
+  tire.settings(TireSettings) {
+    mapping {
+      indexes :description, type: :string, analyzer: :snowball_no
+      indexes :plain_body, type: :string, analyzer: :snowball_no
+      indexes :short_body, type: :string
+      indexes :on_behalf_of, type: :string
+
+      indexes :vote do
+        indexes :slug
+      end
+    }
+  }
 
   attr_accessible :description, :on_behalf_of, :body, :representative_id
 
@@ -20,6 +34,8 @@ class Proposition < ActiveRecord::Base
   end
 
   def to_indexed_json
-    to_json methods: [:short_body], include: [:vote]
+    to_json methods: [:plain_body, :short_body],
+            include: {vote: {only: [:slug]} },
+            only:    [:description, :on_behalf_of]
   end
 end

@@ -1,7 +1,17 @@
 class Party < ActiveRecord::Base
-  include Hdo::Model::HasFallbackImage
-  include Hdo::Model::Searchable
   extend FriendlyId
+
+  include Hdo::Model::HasFallbackImage
+
+  include Tire::Model::Search
+  include Tire::Model::Callbacks
+
+  tire.settings(TireSettings) {
+    mapping {
+      indexes :name,        type: :string, boost: 20
+      indexes :external_id, type: :string, boost: 20
+    }
+  }
 
   class PartyGroup < Struct.new(:name, :parties)
   end

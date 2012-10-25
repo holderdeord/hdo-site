@@ -1,8 +1,16 @@
 class Issue < ActiveRecord::Base
-  include Hdo::Model::HasStatsCache
-  include Hdo::Model::Searchable
-
   extend FriendlyId
+  include Hdo::Model::HasStatsCache
+
+  include Tire::Model::Search
+  include Tire::Model::Callbacks
+
+  tire.settings(TireSettings) {
+    mapping {
+      indexes :description, type: :string, analyzer: :snowball_no
+      indexes :title, type: :string, analyzer: :snowball_no, boost: 100
+    }
+  }
 
   attr_accessible :description, :title, :category_ids, :promise_ids, :topic_ids, :status
 

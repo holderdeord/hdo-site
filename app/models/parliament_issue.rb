@@ -1,6 +1,16 @@
 class ParliamentIssue < ActiveRecord::Base
-  include Hdo::Model::Searchable
   extend FriendlyId
+
+  include Tire::Model::Search
+  include Tire::Model::Callbacks
+
+  tire.settings(TireSettings) {
+    mapping {
+      indexes :summary, type: :string, analyzer: :snowball_no
+      indexes :description, type: :string, analyzer: :snowball_no
+      indexes :status, type: :string
+    }
+  }
 
   attr_accessible :document_group, :issue_type, :status, :last_update,
                   :reference, :summary, :description, :committee, :categories
