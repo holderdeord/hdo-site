@@ -46,6 +46,8 @@ module Hdo
         persister.import_committees parsing_data_source.committees(@options[:session])
         persister.import_districts parsing_data_source.districts
         persister.import_categories parsing_data_source.categories
+        persister.import_parliament_periods parsing_data_source.parliament_periods
+        persister.import_parliament_sessions parsing_data_source.parliament_sessions
 
         import_api_representatives
         import_api_votes(vote_limit)
@@ -56,6 +58,8 @@ module Hdo
         persister.import_committees parsing_data_source.committees(@options[:session])
         persister.import_districts parsing_data_source.districts
         persister.import_categories parsing_data_source.categories
+        persister.import_parliament_periods parsing_data_source.parliament_periods
+        persister.import_parliament_sessions parsing_data_source.parliament_sessions
 
         import_api_representatives
 
@@ -67,7 +71,6 @@ module Hdo
         end
 
         persister.infer_all_votes
-
         purge_cache
       end
 

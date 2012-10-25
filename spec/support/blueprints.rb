@@ -74,6 +74,19 @@ CommitteeMembership.blueprint :full do
   representative
 end
 
+ParliamentSession.blueprint do
+  external_id { "2012-2013-#{sn}" }
+  start_date { Date.new(2012, 10, 1) }
+  end_date { Date.new(2013, 9, 30) }
+end
+
+ParliamentPeriod.blueprint :full do
+  external_id { "2009-2013-#{sn}" }
+  start_date { Date.new(2009, 10, 1) }
+  end_date { Date.new(2013, 9, 30) }
+end
+
+
 Representative.blueprint do
   external_id { sn.to_s }
   first_name { "first-name-#{sn}" }

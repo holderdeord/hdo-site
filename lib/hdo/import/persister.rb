@@ -63,6 +63,40 @@ module Hdo
         end
       end
 
+      def import_parliament_periods(parliament_periods)
+        transaction do
+          parliament_periods.each { |e| import_parliament_period(e) }
+        end
+      end
+
+      def import_parliament_sessions(parliament_sessions)
+        transaction do
+          parliament_sessions.each { |e| import_parliament_session(e) }
+        end
+      end
+
+      def import_parliament_period(period)
+        log_import period
+        period.validate!
+
+        record = ParliamentPeriod.find_or_initialize_by_external_id(period.external_id)
+        record.start_date = period.start_date
+        record.end_date = period.end_date
+
+        record.save!
+      end
+
+      def import_parliament_session(session)
+        log_import session
+        session.validate!
+
+        record = ParliamentSession.find_or_initialize_by_external_id(session.external_id)
+        record.start_date = session.start_date
+        record.end_date = session.end_date
+
+        record.save!
+      end
+
       def import_party(party)
         log_import party
         party.validate!
