@@ -2,6 +2,10 @@ var HDO = HDO || {};
 
 (function (H, $) {
 
+  var emptyResultsMessage = '<div class="empty-results-message hidden">' +
+                              '<h3>Partiet har ingen løfter i denne kategorien.</h3>' +
+                            '</div>';
+
   function setActiveCategory(self, targetElement) {
     if (self.activeCategory) {
       $(self.activeCategory).removeClass("active");
@@ -23,9 +27,20 @@ var HDO = HDO || {};
     return $(ev.currentTarget).data("party-slug");
   }
 
-  function showEmptyResultsMessage(self) {
-    self.targetEl.find('#empty-results-message').html('<h3>Partiet har ingen løfter i denne kategorien.</h3>')
-      .removeClass('hidden');
+  function toggleEmptyResultsMessage(self) {
+    var emptyResultsElement, partyCount, hiddenPartyCount;
+
+    emptyResultsElement = $(self.targetEl).find('.empty-results-message');
+    emptyResultsElement.addClass('hidden');
+
+    partyCount = self.targetEl.find('div[data-party-slug]').size();
+    hiddenPartyCount = self.targetEl.find('div[data-party-slug].hidden').size();
+
+    if (partyCount === hiddenPartyCount) {
+      emptyResultsElement.removeClass('hidden');
+    } else {
+      emptyResultsElement.addClass('hidden');
+    }
   }
 
   function filterResults(ev, index, el) {
@@ -38,6 +53,7 @@ var HDO = HDO || {};
     } else {
       $(element).addClass("hidden");
     }
+
   }
 
   function filterResultsForMobile(ev, index, el) {
@@ -53,18 +69,11 @@ var HDO = HDO || {};
   }
 
   function filterByParty(self, ev) {
-    $('#empty-results-message').html('');
     var result = $(self.targetEl).find("div[data-party-slug]").get();
 
-    if (ev.type === 'change') {
-      result.forEach(filterResultsForMobile, self);
-    } else {
-      result.forEach(filterResults, self);
-    }
+    result.forEach(ev.type === 'change' ? filterResultsForMobile : filterResults, self);
+    toggleEmptyResultsMessage(self);
 
-    if (self.targetEl.find('div').not('.hidden').length === 2) {
-      showEmptyResultsMessage(self);
-    }
     return false;
   }
 
@@ -72,9 +81,11 @@ var HDO = HDO || {};
     var partySlug, partyElement;
 
     if (ev.type === 'change') {
-      partySlug = $(ev.srcElement).find(':selected').data('a[party-slug]');
-      partyElement = $(ev.srcElement).find(':selected').get(0);
+      // mobile
+      partySlug = $(ev.target).find(':selected').data('a[party-slug]');
+      partyElement = $(ev.target).find(':selected').get(0);
     } else {
+      // desktop
       partySlug = getSlugname(ev);
       partyElement = $(ev.currentTarget).parent().get(0);
     }
@@ -85,18 +96,18 @@ var HDO = HDO || {};
   }
 
   function renderAndFilterResults(data) {
-    this.targetEl.html(data);
-    this.targetEl.append('<div id=empty-results-message></div>');
+    this.targetEl.html(data).append(emptyResultsMessage);
     var result = $(this.targetEl).find("div").get();
     result.forEach(filterResults, this);
+    toggleEmptyResultsMessage(this);
   }
 
   function renderAndFilterResultsForMobile(data) {
     this.targetEl.css('padding-left', '0px');
-    this.targetEl.html(data);
-    this.targetEl.append('<div id=empty-results-message></div>');
+    this.targetEl.html(data).append(emptyResultsMessage);
     var result = $(this.targetEl).find("div").get();
     result.forEach(filterResultsForMobile, this);
+    toggleEmptyResultsMessage(this);
   }
 
   function fillSubcategorySelector(categories) {
@@ -104,11 +115,11 @@ var HDO = HDO || {};
       categoriesObject = $.parseJSON(categories),
       i;
 
-    $(self.getSubCategories).empty();
+    $(self.subCategoriesSelector).empty();
 
     for (i = 0; i < categoriesObject.length; i++) {
       $(self.subCategoriesSelector).append('<option data-category-id=' +
-        categoriesObject[i].id + '>' + categoriesObject[i].name + '</option>');
+        categoriesObject[i].id + '>' + categoriesObject[i].human_name + '</option>');
     }
 
   }
@@ -116,13 +127,20 @@ var HDO = HDO || {};
   function categoryClicked(ev) {
     var categoryId;
 
+    this.targetEl.html('');
+    if (this.spinnerEl) {
+      this.spinnerEl.show();
+    }
+
     if (ev.type === 'change') {
-      categoryId = $(ev.srcElement).find(':selected').data('category-id');
+      // mobile
+      categoryId = $(ev.target).find(':selected').data('category-id');
       this.server.getSubCategories(categoryId, fillSubcategorySelector.bind(this));
 
       this.subCategoriesSelector.removeClass('hidden');
       this.server.fetchPromises(categoryId, renderAndFilterResultsForMobile.bind(this));
     } else {
+      // desktop
       setActiveCategory(this, ev.currentTarget);
       categoryId = $(this.activeCategory).data("category-id");
       this.server.fetchPromises(categoryId, renderAndFilterResults.bind(this));
@@ -132,7 +150,7 @@ var HDO = HDO || {};
   }
 
   function subCategoryClicked(ev) {
-    var categoryId = $(ev.srcElement).find(':selected').data('category-id');
+    var categoryId = $(ev.target).find(':selected').data('category-id');
     this.server.fetchPromises(categoryId, renderAndFilterResultsForMobile.bind(this));
   }
 
@@ -145,6 +163,7 @@ var HDO = HDO || {};
       instance.targetEl = params.targetEl;
       instance.partiesSelector = params.partiesSelector;
       instance.subCategoriesSelector = params.subCategoriesSelector;
+      instance.spinnerEl = params.spinnerEl;
       return instance;
     },
 
@@ -155,6 +174,9 @@ var HDO = HDO || {};
       $(this.partiesSelector).on("change", partyClicked.bind(this));
       $(this.subCategoriesSelector).on("change", subCategoryClicked.bind(this));
 
+      if (this.spinnerEl) {
+        $(document).ajaxStop(function () { this.spinnerEl.hide(); }.bind(this));
+      }
     }
   };
 
