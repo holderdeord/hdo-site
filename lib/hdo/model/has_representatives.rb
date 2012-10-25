@@ -1,5 +1,5 @@
 module Hdo
-  module ModelHelpers
+  module Model
     module HasRepresentatives
 
       def percent_of_representatives

@@ -52,13 +52,7 @@ class CategoriesController < ApplicationController
   end
 
   def subcategories
-    category_id = params[:id]
-    subcategories = Category.where(:parent_id => category_id).select("id, name")
-    subcategories.each do |s|
-      s.name = s.human_name
-    end
-
-    render :json => subcategories.to_json
+    render :json => Category.where(parent_id: params[:id]).to_json(only: :id, methods: :human_name)
   end
 
 end

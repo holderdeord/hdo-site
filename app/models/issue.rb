@@ -1,5 +1,5 @@
 class Issue < ActiveRecord::Base
-  include Hdo::ModelHelpers::HasStatsCache
+  include Hdo::Model::HasStatsCache
   extend FriendlyId
 
   attr_accessible :description, :title, :category_ids, :promise_ids, :topic_ids, :status

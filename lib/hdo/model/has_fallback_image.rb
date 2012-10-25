@@ -1,5 +1,5 @@
 module Hdo
-  module ModelHelpers
+  module Model
     module HasFallbackImage
       def image_with_fallback
         self.image = Pathname.new(self.default_image) if self.image_uid == nil

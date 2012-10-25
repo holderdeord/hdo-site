@@ -1,5 +1,5 @@
 class Vote < ActiveRecord::Base
-  include Hdo::ModelHelpers::HasStatsCache
+  include Hdo::Model::HasStatsCache
   extend FriendlyId
 
   attr_accessible :for_count, :against_count, :absent_count,
