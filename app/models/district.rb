@@ -1,6 +1,6 @@
 class District < ActiveRecord::Base
   extend FriendlyId
-  include Hdo::ModelHelpers::HasRepresentatives
+  include Hdo::Model::HasRepresentatives
 
   attr_accessible :name
 

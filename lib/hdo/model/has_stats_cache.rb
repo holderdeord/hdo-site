@@ -1,5 +1,5 @@
 module Hdo
-  module ModelHelpers
+  module Model
 
     #
     # including model must define #fetch_stats

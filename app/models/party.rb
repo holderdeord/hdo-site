@@ -1,5 +1,5 @@
 class Party < ActiveRecord::Base
-  include Hdo::ModelHelpers::HasFallbackImage
+  include Hdo::Model::HasFallbackImage
   extend FriendlyId
 
   class PartyGroup < Struct.new(:name, :parties)

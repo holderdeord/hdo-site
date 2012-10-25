@@ -1,6 +1,6 @@
 class Topic < ActiveRecord::Base
   extend FriendlyId
-  include Hdo::ModelHelpers::HasFallbackImage
+  include Hdo::Model::HasFallbackImage
 
   attr_accessible :name, :issue_ids, :image
   validates_presence_of :name
