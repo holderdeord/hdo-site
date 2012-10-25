@@ -1,6 +1,9 @@
 require 'spec_helper'
+require 'models/shared_examples_for_model_with_date_range'
 
 describe CommitteeMembership do
+  it 'behaves like model with date range'
+
   it 'is invalid with overlapping memberships in the same committee' do
     c = Committee.make!
     r = Representative.make!

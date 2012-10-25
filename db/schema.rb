@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121014153621) do
+ActiveRecord::Schema.define(:version => 20121024190921) do
 
   create_table "categories", :force => true do |t|
     t.string   "external_id"
@@ -137,6 +137,26 @@ ActiveRecord::Schema.define(:version => 20121014153621) do
   end
 
   add_index "parliament_issues_votes", ["vote_id", "parliament_issue_id"], :name => "index_par_issues_votes_on_vote_id_and_par_issue_id", :unique => true
+
+  create_table "parliament_periods", :force => true do |t|
+    t.string   "external_id"
+    t.date     "start_date",  :null => false
+    t.date     "end_date",    :null => false
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
+
+  add_index "parliament_periods", ["external_id"], :name => "index_parliament_periods_on_external_id"
+
+  create_table "parliament_sessions", :force => true do |t|
+    t.string   "external_id"
+    t.date     "start_date",  :null => false
+    t.date     "end_date",    :null => false
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
+
+  add_index "parliament_sessions", ["external_id"], :name => "index_parliament_sessions_on_external_id"
 
   create_table "parties", :force => true do |t|
     t.string   "external_id"
