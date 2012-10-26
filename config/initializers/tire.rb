@@ -9,7 +9,7 @@ module TireSettings
     {
       analysis: {
         analyzer: {
-          norwegian_snowball: {
+          default: {
             type: 'snowball',
             language: 'Norwegian'
           }
@@ -19,7 +19,7 @@ module TireSettings
   end
 
   def default_analyzer
-    'norwegian_snowball'
+    'default'
   end
 end
 
