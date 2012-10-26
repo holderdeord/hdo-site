@@ -281,6 +281,7 @@ GEM
       rack (>= 1.0)
     will_paginate (3.0.3)
     yajl-ruby (1.1.0)
+    yaml_db (0.2.3)
 
 PLATFORMS
   ruby
@@ -323,3 +324,4 @@ DEPENDENCIES
   unicode_utils
   will_paginate (~> 3.0.3)
   yajl-ruby
+  yaml_db
