@@ -81,5 +81,8 @@ namespace :images do
 
   desc 'Set up all images'
   task :all => %w[images:representatives:fetch images:party_logos]
+
+  desc 'Reset and set up all images'
+  task :reset => %w[representatives:reset all]
 end
 
