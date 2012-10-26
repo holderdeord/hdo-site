@@ -16,7 +16,7 @@ class SearchController < ApplicationController
       s.size 25
 
       s.query do |query|
-        query.string @query
+        query.string @query, default_operator: 'AND'
       end
 
       s.sort { by :_score }
