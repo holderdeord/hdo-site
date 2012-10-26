@@ -173,29 +173,9 @@ describe IssuesController do
 
         response.should redirect_to(edit_issue_step_url(issue, step: 'votes'))
       end
-
-      it "should show topics step when hit next from votes" do
-        session[:issue_step] = 'votes'
-
-        put :update, issue: issue_params(issue), id: issue
-
-        session[:issue_step].should == 'topics'
-        assigns(:issue).should == issue
-        response.should redirect_to(edit_issue_step_url(step: 'topics' ))
-      end
     end
 
     context "previous" do
-      it "should show votes step when hit previous from topics" do
-        session[:issue_step] = 'topics'
-
-        put :update, previous: true, issue: issue_params(issue), id: issue
-
-        session[:issue_step].should == 'votes'
-        assigns(:issue).should == issue
-        response.should redirect_to edit_issue_step_url(issue, step: 'votes' )
-      end
-
       it "should show promises when hit previous from votes" do
         session[:issue_step] = 'votes'
 
