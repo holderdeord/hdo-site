@@ -146,7 +146,7 @@ ActiveRecord::Schema.define(:version => 20121024190921) do
     t.datetime "updated_at",  :null => false
   end
 
-  add_index "parliament_periods", ["external_id"], :name => "index_parliament_periods_on_external_id"
+  add_index "parliament_periods", ["external_id"], :name => "index_parliament_periods_on_external_id", :unique => true
 
   create_table "parliament_sessions", :force => true do |t|
     t.string   "external_id"
@@ -156,7 +156,7 @@ ActiveRecord::Schema.define(:version => 20121024190921) do
     t.datetime "updated_at",  :null => false
   end
 
-  add_index "parliament_sessions", ["external_id"], :name => "index_parliament_sessions_on_external_id"
+  add_index "parliament_sessions", ["external_id"], :name => "index_parliament_sessions_on_external_id", :unique => true
 
   create_table "parties", :force => true do |t|
     t.string   "external_id"
