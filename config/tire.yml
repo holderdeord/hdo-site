@@ -1,21 +1,5 @@
 analysis:
-  filter:
-    hdo_ngram:
-      type: nGram
-      max_gram: 20
-      min_gram: 3
-    norwegian_stemmer:
-      type: stemmer
-      name: norwegian
   analyzer:
     snowball_no:
       type: snowball
       language: Norwegian
-    ngram:
-      type: custom
-      tokenizer: standard
-      filter:
-        - lowercase
-        - norwegian_stemmer
-        - hdo_ngram
-
