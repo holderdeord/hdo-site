@@ -6,8 +6,8 @@ class Vote < ActiveRecord::Base
                   :enacted, :personal, :subject, :time, :external_id,
                   :proposition_type
 
-  PROPOSITION_TYPES = %w[none representative_proposition budget_amendment yada_yada]
-  validates_inclusion_of :proposition_type, in: PROPOSITION_TYPES
+  PROPOSITION_TYPES = %w[representative_proposition budget_amendment yada_yada]
+  validates_inclusion_of :proposition_type, in: [PROPOSITION_TYPES, nil]
 
   has_and_belongs_to_many :parliament_issues, uniq: true
   validates_length_of     :parliament_issues, minimum: 1

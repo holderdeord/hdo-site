@@ -34,7 +34,7 @@ module IssuesHelper
   end
 
   def proposition_type_options_for(vote)
-    prop_types = {}
+    prop_types = {I18n.t("app.votes.proposition_types.none") => nil}
     Vote::PROPOSITION_TYPES.each do |prop_type|
       prop_types[I18n.t("app.votes.proposition_types.#{prop_type}")] = prop_type
     end
