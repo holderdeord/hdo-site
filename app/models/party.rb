@@ -6,7 +6,7 @@ class Party < ActiveRecord::Base
   include Tire::Model::Search
   include Tire::Model::Callbacks
 
-  tire.settings(TireSettings) {
+  tire.settings(TireSettings.default) {
     mapping {
       indexes :name,        type: :string, boost: 20
       indexes :external_id, type: :string, boost: 20

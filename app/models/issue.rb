@@ -5,15 +5,14 @@ class Issue < ActiveRecord::Base
   include Tire::Model::Search
   include Tire::Model::Callbacks
 
-  tire.settings(TireSettings) {
+  tire.settings(TireSettings.default) {
     mapping {
-      indexes :description, type: :string, analyzer: :snowball_no
-      indexes :title, type: :string, analyzer: :snowball_no, boost: 100
+      indexes :description, type: :string, analyzer: TireSettings.default_analyzer
+      indexes :title,       type: :string, analyzer: TireSettings.default_analyzer, boost: 100
     }
   }
 
   attr_accessible :description, :title, :category_ids, :promise_ids, :topic_ids, :status
-
   validates :title, presence: true, uniqueness: true
 
   STATUSES = %w[in_progress shelved published]

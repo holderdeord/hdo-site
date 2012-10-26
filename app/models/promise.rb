@@ -4,12 +4,12 @@ class Promise < ActiveRecord::Base
   include Tire::Model::Search
   include Tire::Model::Callbacks
 
-  tire.settings(TireSettings) do
+  tire.settings(TireSettings.default) {
     mapping {
-      indexes :body, type: :string, analyzer: :snowball_no
+      indexes :body, type: :string, analyzer: TireSettings.default_analyzer
       indexes :party_names, type: :string
     }
-  end
+  }
 
   attr_accessible :parties, :general, :categories, :source, :body, :page, :date
 

@@ -2,10 +2,10 @@ class Proposition < ActiveRecord::Base
   include Tire::Model::Search
   include Tire::Model::Callbacks
 
-  tire.settings(TireSettings) {
+  tire.settings(TireSettings.default) {
     mapping {
-      indexes :description, type: :string, analyzer: :snowball_no
-      indexes :plain_body, type: :string, analyzer: :snowball_no
+      indexes :description, type: :string, analyzer: TireSettings.default_analyzer
+      indexes :plain_body, type: :string, analyzer: TireSettings.default_analyzer
       indexes :short_body, type: :string
       indexes :on_behalf_of, type: :string
 

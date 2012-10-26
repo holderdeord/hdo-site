@@ -12,7 +12,11 @@ namespace :search do
       puts "\n#{klass}"
       total = klass.count.to_f
 
-      klass.index.delete
+      index = klass.index
+
+      index.delete
+      index.create :mappings => klass.tire.mapping_to_hash, :settings => klass.tire.settings
+
       klass.import do |docs|
         puts "\t#{docs.to_a.size}"
         docs # must be returned

@@ -1,5 +1,0 @@
-analysis:
-  analyzer:
-    snowball_no:
-      type: snowball
-      language: Norwegian

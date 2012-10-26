@@ -4,10 +4,10 @@ class ParliamentIssue < ActiveRecord::Base
   include Tire::Model::Search
   include Tire::Model::Callbacks
 
-  tire.settings(TireSettings) {
+  tire.settings(TireSettings.default) {
     mapping {
-      indexes :summary, type: :string, analyzer: :snowball_no
-      indexes :description, type: :string, analyzer: :snowball_no
+      indexes :summary, type: :string, analyzer: TireSettings.default_analyzer
+      indexes :description, type: :string, analyzer: TireSettings.default_analyzer
       indexes :status, type: :string
     }
   }

@@ -6,7 +6,7 @@ class Topic < ActiveRecord::Base
   include Tire::Model::Search
   include Tire::Model::Callbacks
 
-  tire.settings(TireSettings) {
+  tire.settings(TireSettings.default) {
     mapping {
       indexes :name, type: :string
     }
