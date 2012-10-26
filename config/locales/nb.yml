@@ -115,6 +115,7 @@ nb:
         parliament_issues: "Stortingssaker"
         external_id: "Ekstern id"
         about: "om"
+        proposition_type: "Forslagstype"
       vote_result:
         result: "Stemme"
         voted_for: 'har stemt for.'
@@ -290,6 +291,11 @@ nb:
         mostly_for: "%{name} har stort sett stemt for"
         mostly_for_html: "%{name} har <strong>stort sett stemt for</strong>"
         not_participated: "%{name} har ikke deltatt i avstemninger om"
+      proposition_types:
+        none: "--Velg forslagstype--"
+        representative_proposition: "Representantforslag"
+        budget_amendment: "Budsjettrevisjon"
+        yada_yada: "Yada yada"
     external:
       urls:
         parliament_issue: "http://stortinget.no/no/Saker-og-publikasjoner/Saker/Sak/?p=%s"

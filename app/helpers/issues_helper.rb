@@ -32,4 +32,13 @@ module IssuesHelper
     options_for_select( Topic.all.inject(Hash.new) { |options,topic| { topic.name => topic.id }.merge(options) }.sort_by { |name, id| name },
       issue.topic_ids)
   end
+
+  def proposition_type_options_for(vote)
+    prop_types = {}
+    Vote::PROPOSITION_TYPES.each do |prop_type|
+      prop_types[I18n.t("app.votes.proposition_types.#{prop_type}")] = prop_type
+    end
+
+    options_for_select prop_types, vote.proposition_type
+  end
 end
