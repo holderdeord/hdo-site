@@ -45,7 +45,7 @@ GEM
       net-sftp (>= 2.0.0)
       net-ssh (>= 2.0.14)
       net-ssh-gateway (>= 1.1.0)
-    childprocess (0.3.4)
+    childprocess (0.3.6)
       ffi (~> 1.0, >= 1.0.6)
     choice (0.1.6)
     coderay (1.0.7)
@@ -92,7 +92,6 @@ GEM
       guard (>= 1.1)
       spork (>= 0.8.4)
     hashr (0.0.22)
-    hdo-storting-importer (0.3.0)
     hdo-storting-importer (0.3.2)
       aruba
       builder
