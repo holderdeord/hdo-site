@@ -1,6 +1,8 @@
 module Hdo
   module Search
     class Searcher
+      SEARCH_ERRORS = [Tire::Search::SearchRequestFailed, Errno::ECONNREFUSED]
+
       INDECES = {
         'issues'            => { boost: 5   },
         'parties'           => { boost: 3.5 },
@@ -27,7 +29,7 @@ module Hdo
         end
 
         Response.new(search.results)
-      rescue Tire::Search::SearchRequestFailed => ex
+      rescue *SEARCH_ERRORS => ex
         Rails.logger.error "search failed, #{ex.class} #{ex.message}"
         Response.new(nil, ex)
       end
