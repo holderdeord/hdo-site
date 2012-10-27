@@ -31,6 +31,7 @@ Install package dependencies and set up Ruby 1.9.3 with RVM.
         libyaml-dev \
         ncurses-dev \
         openssl \
+        wnorwegian \
         postgresql \
         zlib1g \
         zlib1g-dev
@@ -74,6 +75,12 @@ _This list may be incomplete. Please add any missing libs you find._
     $ brew install git imagemagick elasticsearch
 
 Follow the post-install instructions (`brew info elasticsearch`) on how to start ElasticSearch on login.
+
+If you want elasticsearch to correctly decompose words, run this command:
+
+    $ sudo curl -o /usr/share/dict/norsk http://files.holderdeord.no/dev/norsk.txt
+
+(TODO: create homebrew package for OS X?)
 
 ### Database
 
