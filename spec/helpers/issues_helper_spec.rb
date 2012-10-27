@@ -20,4 +20,19 @@ describe IssuesHelper do
 
     expected.should == actual
   end
+
+  it 'should create options for topics' do
+    issue = Issue.make!(:topics => [Topic.make!])
+    opts = topic_options_for(issue)
+
+    opts.should be_kind_of(String)
+    opts.should_not be_empty
+  end
+
+  it 'should create options for proposition types' do
+    opts = proposition_type_options_for(Vote.make!(proposition_type: 'parliamentary_report'))
+
+    opts.should be_kind_of(String)
+    opts.should_not be_empty
+  end
 end

@@ -31,8 +31,9 @@ module IssuesHelper
   end
 
    def topic_options_for(issue)
-    options_for_select( Topic.all.inject(Hash.new) { |options,topic| { topic.name => topic.id }.merge(options) }.sort_by { |name, id| name },
-      issue.topic_ids)
+    topics = Topic.all.inject({}) { |options,topic| { topic.name => topic.id }.merge(options) }.sort_by { |name, id| name }
+
+    options_for_select(topics , issue.topic_ids)
   end
 
   def proposition_type_options_for(vote)
@@ -46,11 +47,11 @@ module IssuesHelper
     options_for_select prop_types, vote.proposition_type
   end
 
-  def proposition_type_for vote
+  def proposition_type_for(vote)
     vote.proposition_type.empty? ? '' : I18n.t!("app.votes.proposition_types.#{vote.proposition_type}")
   end
 
-  def issues_for_promise issue, promise
+  def issues_for_promise(issue, promise)
     issues = promise.issues.where("issues.id != ?", issue.id)
 
     out = ''
