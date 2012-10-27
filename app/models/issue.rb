@@ -98,6 +98,7 @@ class Issue < ActiveRecord::Base
 
   def update_vote_proposition_type vote, proposition_type
     vote.proposition_type = proposition_type
+    changed = vote.changed?
     vote.save
     changed
   end
