@@ -37,13 +37,13 @@ var HDO = HDO || {};
         $(self.target).html(html);
       },
 
-      error: function (xhr, textStatus) {
-        $(self.target).html(textStatus);
+      error: function (xhr) {
+        $(self.target).html('<h5>' + xhr.responseText + '</h5>');
       }
     });
   }
 
-  HDO.globalSearchWidget = {
+  HDO.searchWidget = {
     create: function (params) {
       var instance = Object.create(this);
       instance.form = params.form;

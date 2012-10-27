@@ -29,5 +29,7 @@ class SearchController < ApplicationController
       format.json { render json: @results }
       format.html { render layout: params[:layout] }
     end
+  rescue Tire::Search::SearchRequestFailed
+    render status: 500, text: t('app.error')
   end
 end

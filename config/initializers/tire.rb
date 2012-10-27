@@ -11,15 +11,48 @@ module TireSettings
         analyzer: {
           default: {
             type: 'snowball',
-            language: 'Norwegian'
+            language: 'Norwegian',
+            stopwords: norwegian_stopwords.join(",")
           }
         }
       }
-    } #.with_indifferent_access
+    }.with_indifferent_access
   end
 
   def default_analyzer
     'default'
+  end
+
+  def norwegian_stopwords
+    %w[
+      at
+      av
+      da
+      de
+      den
+      der
+      deres
+      det
+      disse
+      eller
+      en
+      er
+      et
+      for
+      hvis
+      i
+      ikke
+      inn
+      med
+      men
+      nei
+      og
+      slik
+      som
+      til
+      var
+      vil
+    ]
   end
 end
 

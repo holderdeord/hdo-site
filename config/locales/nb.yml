@@ -191,6 +191,7 @@ nb:
       two_words_connector: ' og '
       last_word_connector: ' og '
   app:
+    error: 'Oj, noe gikk galt hos oss. Prøv igjen senere!'
     published: Publisert
     next: "Neste"
     previous: "Forrige"

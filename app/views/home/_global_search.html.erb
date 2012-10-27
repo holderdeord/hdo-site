@@ -2,14 +2,14 @@
   <input type="text" class="span11 search-query">
   <button type="submit" class="btn btn-large"><%= t 'app.search' %></button>
 </form>
-        
+
 <%= spinner_tag %>
 <div id="global-search-result"></div>
-      
+
 <%= content_for :document_ready do %>
   <script>
-    $(document).ready(function() { 
-      HDO.globalSearchWidget.create({
+    $(document).ready(function() {
+      HDO.searchWidget.create({
         form: document.getElementById('global-search'),
         target: document.getElementById('global-search-result'),
         spinner: document.getElementById('spinner')
