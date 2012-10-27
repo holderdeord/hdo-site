@@ -7,7 +7,7 @@ class VoteConnection < ActiveRecord::Base
   belongs_to :vote
   belongs_to :issue
 
-  attr_accessible :vote, :vote_id, :issue, :matches, :comment, :weight, :description
+  attr_accessible :vote, :vote_id, :issue, :matches, :comment, :weight, :title
 
   validates_inclusion_of :weight, :in => WEIGHTS
   validates_presence_of  :vote,

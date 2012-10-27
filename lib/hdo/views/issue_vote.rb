@@ -62,8 +62,8 @@ module Hdo
         @vote ||= @vote_connection.vote
       end
 
-      def description
-        @vote_connection.description
+      def title
+        @vote_connection.title
       end
 
       def comment

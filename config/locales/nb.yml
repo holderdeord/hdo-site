@@ -161,7 +161,7 @@ nb:
         matches: "Støtter saken?"
         comment: "Kommentar"
         weight: "Vekting"
-        description: "Tittel"
+        title: "Tittel"
       topic:
         name: "Tittel"
         new: "Nytt tema"
