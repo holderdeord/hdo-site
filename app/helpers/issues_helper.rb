@@ -45,4 +45,16 @@ module IssuesHelper
   def proposition_type_for vote
     vote.proposition_type.empty? ? '' : I18n.t("app.votes.proposition_types.#{vote.proposition_type}")
   end
+
+  def issues_for_promise issue, promise
+    if promise.issues.any?
+      first = true
+      out = promise.issues.where("issues.id != ?", issue.id).reduce('L&oslash;ftet brukes i ') do |out, i|
+        out << ', ' unless first
+        first = false
+        out << link_to(i.title, i, target: '_blank')
+      end
+      (out || '').html_safe
+    end
+  end
 end
