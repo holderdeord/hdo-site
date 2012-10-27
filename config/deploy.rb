@@ -51,6 +51,12 @@ namespace :db do
   end
 end
 
+namespace :search do
+  task :reindex, :except => { :no_release => true }, :role => :app do
+    run "cd #{current_path} && RAILS_ENV=production bundle exec rake search:reindex"
+  end
+end
+
 namespace :clear do
   cmd = "cd %s && RAILS_ENV=production bundle exec rake db:clear:%s"
 
