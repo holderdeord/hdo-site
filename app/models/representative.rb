@@ -6,7 +6,7 @@ class Representative < ActiveRecord::Base
   include Tire::Model::Search
   include Tire::Model::Callbacks
 
-  tire.settings TireSettings
+  tire.settings TireSettings.default
 
   attr_accessible :party, :first_name, :last_name, :committees,
                   :district, :date_of_birth, :date_of_death

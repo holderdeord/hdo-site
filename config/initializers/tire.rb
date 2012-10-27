@@ -6,7 +6,7 @@ module TireSettings
   LOCALE = {
     nb: {
       language: 'Norwegian',
-      stopwords: %w[at av da de den der deres det disse eller en er et for hvis i ikke inn med men nei og slik som til var vil]
+      stopwords: %w[at av da de den der deres det disse eller en er et for hvis i ikke inn med men nei og slik som til var vil].join(',')
     }
   }
 
@@ -17,9 +17,24 @@ module TireSettings
       analysis: {
         analyzer: {
           default: {
+            type: 'custom',
+            tokenizer: 'standard',
+            filter: %w[standard lowercase hdo_stop hdo_snowball hdo_decompounder]
+          }
+        },
+        filter: {
+          hdo_snowball: {
             type: 'snowball',
-            language: locale[:language],
-            stopwords: locale[:stopwords].join(",")
+            language: locale.fetch(:language)
+          },
+          hdo_stop: {
+            type: 'stop',
+            stopwords: locale.fetch(:stopwords)
+          },
+          hdo_decompounder: {
+            type: 'dictionary_decompounder',
+            word_list: %w[formue skatt eiendom],
+            # word_list_path: ""
           }
         }
       }
@@ -31,7 +46,7 @@ module TireSettings
   end
 
   def locale
-    LOCALE.fetch(I18n.locale)
+    @locale ||= LOCALE.fetch(I18n.locale)
   end
 end
 
