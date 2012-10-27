@@ -1,31 +1,34 @@
 <h1><%= t('app.search.result') %></h1>
 
-
-<table class="table">
-  <% @results.each do |r| %>
-    <tr>
-      <td>
-      <% case r.type %>
-      <% when 'issue' %>
-        <%= link_to r.title, r %>
-      <% when 'parliament_issue' %>
-        <%= link_to r.summary, r %>
-      <% when 'proposition' %>
-        <% unless r.on_behalf_of.empty? %>
-          <strong><%= r.on_behalf_of %></strong>:
+<% if @results.empty? %>
+  <%= t('app.search.empty') %>
+<% else %>
+  <table class="table">
+    <% @results.each do |r| %>
+      <tr>
+        <td>
+        <% case r.type %>
+        <% when 'issue' %>
+          <%= link_to r.title, r %>
+        <% when 'parliament_issue' %>
+          <%= link_to r.summary, r %>
+        <% when 'proposition' %>
+          <% unless r.on_behalf_of.empty? %>
+            <strong><%= r.on_behalf_of %></strong>:
+          <% end %>
+          <%= link_to r.short_body, vote_path(r.vote.slug) %>
+        <% when 'promise' %>
+          <strong><%= r.party_names %></strong>: <%= r.body %>
+        <% when 'representative' %>
+          <%= link_to r.full_name, r %>
+        <% when 'party', 'topic' %>
+          <%= link_to r.name, r %>
         <% end %>
-        <%= link_to r.short_body, vote_path(r.vote.slug) %>
-      <% when 'promise' %>
-        <strong><%= r.party_names %></strong>: <%= r.body %>
-      <% when 'representative' %>
-        <%= link_to r.full_name, r %>
-      <% when 'party', 'topic' %>
-        <%= link_to r.name, r %>
-      <% end %>
-      </td>
-      
-      <td><%= r.class.model_name.human %></td>
-      <td><%= r.id %></td>
-    </tr>
-  <% end %>
-</table>
+        </td>
+
+        <td><%= r.class.model_name.human %></td>
+        <td><%= r.id %></td>
+      </tr>
+    <% end %>
+  </table>
+<% end %>
