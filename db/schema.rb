@@ -95,6 +95,7 @@ ActiveRecord::Schema.define(:version => 20121027150547) do
     t.string   "slug"
     t.integer  "last_updated_by_id"
     t.string   "status",             :default => "in_progress"
+    t.integer  "lock_version",       :default => 0,             :null => false
   end
 
   add_index "issues", ["slug"], :name => "index_issues_on_slug", :unique => true

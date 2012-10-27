@@ -78,8 +78,6 @@ class Issue < ActiveRecord::Base
         end
       end
 
-      touch if changed
-
       if attributes
         # TODO: find a better way to do this!
 
@@ -100,6 +98,7 @@ class Issue < ActiveRecord::Base
       end
 
       if changed
+        touch
         self.last_updated_by = user
       end
 
@@ -107,7 +106,7 @@ class Issue < ActiveRecord::Base
     end
   end
 
-  def update_vote_proposition_type vote, proposition_type
+  def update_vote_proposition_type(vote, proposition_type)
     vote.proposition_type = proposition_type
     changed = vote.changed?
     vote.save
