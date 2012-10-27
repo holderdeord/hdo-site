@@ -15,7 +15,7 @@ describe IssuesController do
         :direction   => connection.matches? ? 'for' : 'against',
         :weight      => connection.weight,
         :comment     => connection.comment,
-        :description => connection.description
+        :title       => connection.title
       }
     end
 
@@ -152,62 +152,42 @@ describe IssuesController do
     end
 
     context "next" do
-      it "should show the promises step when hit next from create" do
+      it "should show the votes step when hit next from create" do
         post :create, issue: { title: "Less Cowbell!" }
 
         issue = assigns(:issue)
         issue.should be_kind_of(Issue)
         issue.last_updated_by.should == @user
 
-        expected_url = edit_issue_step_path(id: issue, step: 'promises')
+        expected_url = edit_issue_step_path(id: issue, step: 'votes')
         response.should redirect_to(expected_url)
       end
 
-      it "should show votes step when hit next from promises" do
+      it "should show categories step when hit next from promises" do
         session[:issue_step] = 'promises'
 
         put :update, issue: issue_params(issue), id: issue
 
         assigns(:issue).should == issue
-        session[:issue_step].should == 'votes'
+        session[:issue_step].should == 'categories'
 
-        response.should redirect_to(edit_issue_step_url(issue, step: 'votes'))
-      end
-
-      it "should show topics step when hit next from votes" do
-        session[:issue_step] = 'votes'
-
-        put :update, issue: issue_params(issue), id: issue
-
-        session[:issue_step].should == 'topics'
-        assigns(:issue).should == issue
-        response.should redirect_to(edit_issue_step_url(step: 'topics' ))
+        response.should redirect_to(edit_issue_step_url(issue, step: 'categories'))
       end
     end
 
     context "previous" do
-      it "should show votes step when hit previous from topics" do
-        session[:issue_step] = 'topics'
-
-        put :update, previous: true, issue: issue_params(issue), id: issue
-
-        session[:issue_step].should == 'votes'
-        assigns(:issue).should == issue
-        response.should redirect_to edit_issue_step_url(issue, step: 'votes' )
-      end
-
-      it "should show promises when hit previous from votes" do
+      it "should show promises when hit next from votes" do
         session[:issue_step] = 'votes'
 
-        put :update, previous: true, issue: issue_params(issue), id: issue
+        put :update, issue: issue_params(issue), id: issue
 
         session[:issue_step].should == 'promises'
         assigns(:issue).should == issue
         response.should redirect_to edit_issue_step_url(issue, step: 'promises')
       end
 
-      it "should show the categories step when hit previous from promises" do
-        session[:issue_step] = 'promises'
+      it "should show the categories step when hit previous from votes" do
+        session[:issue_step] = 'votes'
 
         put :update, previous: true, issue: issue_params(issue), id: issue
 
@@ -283,7 +263,7 @@ describe IssuesController do
       end
 
       it 'sets last_updated_by when vote connections are removed' do
-        connection = VoteConnection.create(:vote => Vote.make!, matches: true, weight: 1, comment: 'hello', description: 'world')
+        connection = VoteConnection.create(:vote => Vote.make!, matches: true, weight: 1, comment: 'hello', title: 'world')
         issue.vote_connections = [connection]
 
         votes = votes_params(issue.vote_connections)
@@ -302,10 +282,11 @@ describe IssuesController do
         vote = Vote.make!
         votes = {
           vote.id => {
-            :direction => "unrelated",
-            :weight => "1.0",
-            :description => "",
-            :comment => ""}
+            direction: "unrelated",
+            weight: "1.0",
+            title: "",
+            comment: ""
+          }
          }
 
         put :update, votes: votes, id: issue
@@ -320,7 +301,7 @@ describe IssuesController do
         vote = Vote.make!
         issue.vote_connections = []
 
-        votes_param = {vote.id => {direction: 'for', weight: '1.0', comment: 'hello', description: 'world'}}
+        votes_param = {vote.id => {direction: 'for', weight: '1.0', comment: 'hello', title: 'world'}}
         put :update, votes: votes_param, id: issue
 
         issue = assigns(:issue)
@@ -329,7 +310,7 @@ describe IssuesController do
       end
 
       it 'sets last_updated_by when vote connections are updated' do
-        connection = VoteConnection.create(:vote => Vote.make!, matches: true, weight: 1, comment: 'hello', description: 'world')
+        connection = VoteConnection.create(:vote => Vote.make!, matches: true, weight: 1, comment: 'hello', title: 'world')
         issue.vote_connections = [connection]
 
 
@@ -359,7 +340,7 @@ describe IssuesController do
         issue.last_updated_by = other_user = User.make!
         issue.save!
 
-        vote_connection = VoteConnection.create(matches: true, weight: 1, comment: 'foo', description: 'bar', vote: Vote.make!)
+        vote_connection = VoteConnection.create(matches: true, weight: 1, comment: 'foo', title: 'bar', vote: Vote.make!)
         issue.vote_connections = [vote_connection]
 
         put :update, votes: votes_params(issue.vote_connections), id: issue

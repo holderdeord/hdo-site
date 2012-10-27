@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121024190921) do
+ActiveRecord::Schema.define(:version => 20121027150547) do
 
   create_table "categories", :force => true do |t|
     t.string   "external_id"
@@ -265,11 +265,11 @@ ActiveRecord::Schema.define(:version => 20121024190921) do
     t.boolean  "matches"
     t.integer  "vote_id"
     t.integer  "issue_id"
-    t.datetime "created_at",                   :null => false
-    t.datetime "updated_at",                   :null => false
-    t.float    "weight",      :default => 1.0
+    t.datetime "created_at",                  :null => false
+    t.datetime "updated_at",                  :null => false
+    t.float    "weight",     :default => 1.0
     t.text     "comment"
-    t.text     "description"
+    t.text     "title"
   end
 
   add_index "vote_connections", ["vote_id", "issue_id"], :name => "index_vote_connections_on_vote_id_and_issue_id"
@@ -292,10 +292,11 @@ ActiveRecord::Schema.define(:version => 20121024190921) do
     t.boolean  "enacted"
     t.string   "subject"
     t.datetime "time"
-    t.datetime "created_at",                      :null => false
-    t.datetime "updated_at",                      :null => false
+    t.datetime "created_at",                         :null => false
+    t.datetime "updated_at",                         :null => false
     t.string   "slug"
-    t.boolean  "personal",      :default => true
+    t.boolean  "personal",         :default => true
+    t.string   "proposition_type"
   end
 
   add_index "votes", ["slug"], :name => "index_votes_on_slug", :unique => true

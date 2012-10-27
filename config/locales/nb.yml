@@ -115,6 +115,7 @@ nb:
         parliament_issues: "Stortingssaker"
         external_id: "Ekstern id"
         about: "om"
+        proposition_type: "Forslagstype"
       vote_result:
         result: "Stemme"
         voted_for: 'har stemt for.'
@@ -160,7 +161,7 @@ nb:
         matches: "Støtter saken?"
         comment: "Kommentar"
         weight: "Vekting"
-        description: "Oppsummering"
+        title: "Tittel"
       topic:
         name: "Tittel"
         new: "Nytt tema"
@@ -283,10 +284,10 @@ nb:
         inferred: 'Denne saken ble avgjort enstemmig uten at avstemningsknappene ble brukt. Oversikten er utledet fra tilstedeværelse ved andre avstemninger samme dag.'
         party_unknown: 'Denne avstemningen ble avgjort uten at avstemningsknappene ble brukt. Vi har derfor ikke oversikt over hva det enkelte parti har stemt.'
       scores:
-        consistently_against: "%{name} har stemt konsekvent mot"
-        consistently_against_html: "%{name} har stemt <strong>konsekvent mot</strong>"
-        consistently_for: "%{name} har stemt konsekvent for"
-        consistently_for_html: "%{name} har stemt <strong>konsekvent for</strong>"
+        against: "%{name} har stemt mot"
+        against_html: "%{name} har stemt <strong>mot</strong>"
+        for: "%{name} har stemt for"
+        for_html: "%{name} har stemt <strong>for</strong>"
         for_and_against: "%{name} har stemt både for og mot"
         for_and_against_html: "%{name} har stemt <strong>både for og mot</strong>"
         mostly_against: "%{name} har stort sett stemt mot"
@@ -294,6 +295,19 @@ nb:
         mostly_for: "%{name} har stort sett stemt for"
         mostly_for_html: "%{name} har <strong>stort sett stemt for</strong>"
         not_participated: "%{name} har ikke deltatt i avstemninger om"
+      proposition_types:
+        none: '--Velg forslagstype--'
+        parliamentary_report: 'Stortingsmelding'
+        proposal_attached_to_the_minutes: 'Forslag vedlegges protokollen'
+        representative_proposition: 'Representantforslag'
+        opposition_proposition_budget: 'Opposisjonsforslag, statsbudsjett'
+        opposition_proposition_parliamentary_report: 'Opposisjonsforslag, stortingsmelding'
+        opposition_proposition_legislation: 'Opposisjonsforslag, lovforslag'
+        legislation: 'Lovforslag'
+        national_budget_financial_proposition: 'Statsbudsjett, finansinnstilling'
+        national_budget_committee_proposition: 'Statsbudsjett, komitéinnstilling'
+        revised_national_budget: 'Revidert statsbudsjett'
+        rebalanced_national_budget: 'Nysaldering av statsbudsjett'
     external:
       urls:
         parliament_issue: "http://stortinget.no/no/Saker-og-publikasjoner/Saker/Sak/?p=%s"

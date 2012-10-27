@@ -17,8 +17,7 @@ class Category < ActiveRecord::Base
 
   scope :all_with_children, includes(:children).all(order: :name)
 
-  def self.column_groups
-    column_count = 3
+  def self.column_groups column_count
     target_size  = Category.count / column_count
     parents      = Category.where(main: true).includes(:children).to_a
 

@@ -59,17 +59,18 @@ module Hdo
           return I18n.t("app.votes.scores.not_participated", name: entity_name).html_safe
         end
 
+        # if you change the scoring, remember to change the 'about method' page as well.
         key = case score
-              when 0...5
-                :consistently_against
-              when 5...34
+              when 0...21
+                :against
+              when 21...41
                 :mostly_against
-              when 34...67
+              when 41...61
                 :for_and_against
-              when 67...95
+              when 61...81
                 :mostly_for
-              when 95..100
-                :consistently_for
+              when 81..100
+                :for
               else
                 raise "unknown score: #{score.inspect}"
               end

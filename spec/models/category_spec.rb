@@ -25,7 +25,7 @@ describe Category do
       mains[index].children = Array.new(count) { |n| Category.make!(:name => "sub-#{index}-#{n}", :main => false) }
     end
 
-    groups = Category.column_groups
+    groups = Category.column_groups 3
     groups.size.should == 3
 
     sums = groups.map do |categories|
