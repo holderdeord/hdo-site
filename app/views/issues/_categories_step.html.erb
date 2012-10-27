@@ -13,7 +13,7 @@
     <div class="span3">
       <label>
         <p><%= Topic.model_name.human.capitalize %></p>
-        <p><%= select_tag "issue[topic_ids][]", topic_options_for(@issue), :multiple => 'multiple' %></p>
+        <p><%= select_tag "issue[topic_ids][]", topic_options_for(@issue), :multiple => 'multiple', id: 'topics-select-box' %></p>
       </label>
     </div>
 
@@ -46,3 +46,12 @@
     </div>
   <% end %>
 </div>
+
+
+<%= content_for :document_ready do %>
+  <script type="text/javascript">
+    $(document).ready(function() {
+      $('#topics-select-box').dgMagnetCombo();
+    });
+  </script>
+<% end %>
