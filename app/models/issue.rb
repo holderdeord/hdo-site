@@ -2,7 +2,8 @@ class Issue < ActiveRecord::Base
   include Hdo::Model::HasStatsCache
   extend FriendlyId
 
-  attr_accessible :description, :title, :category_ids, :promise_ids, :topic_ids, :status
+  attr_accessible :description, :title, :category_ids, :promise_ids, :topic_ids, :status,
+    :lock_version
 
   validates_presence_of   :title
   validates_uniqueness_of :title

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121026101916) do
+ActiveRecord::Schema.define(:version => 20121027111637) do
 
   create_table "categories", :force => true do |t|
     t.string   "external_id"
@@ -95,6 +95,7 @@ ActiveRecord::Schema.define(:version => 20121026101916) do
     t.string   "slug"
     t.integer  "last_updated_by_id"
     t.string   "status",             :default => "in_progress"
+    t.integer  "lock_version",       :default => 0,             :null => false
   end
 
   add_index "issues", ["slug"], :name => "index_issues_on_slug", :unique => true

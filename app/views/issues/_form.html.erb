@@ -1,4 +1,5 @@
 <%= twitter_bootstrap_form_for @issue do |form| %>
+  <%= form.hidden_field :lock_version %>
   <% if @issue_steps %>
     <%= render partial: "step_pagination", locals: { form: form, issue_steps: @issue_steps } %>
   <% end %>
