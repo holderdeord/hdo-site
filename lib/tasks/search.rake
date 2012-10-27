@@ -1,4 +1,9 @@
 namespace :search do
+  task :drop do
+    ENV['INDEX'] = "issues,parties,representatives,promises,propositions,parliament_issues,topics"
+    Rake::Task['tire:index:drop'].invoke
+  end
+
   task :reindex => :environment do
     [ Issue,
       ParliamentIssue,
