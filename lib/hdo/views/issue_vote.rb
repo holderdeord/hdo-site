@@ -25,6 +25,10 @@ module Hdo
         str
       end
 
+      def proposition_type_text
+        vote.proposition_type.blank? ? '' : I18n.t("app.votes.proposition_types.#{vote.proposition_type}")
+      end
+
       def time_text
         I18n.l time, format: :text
       end
@@ -58,8 +62,8 @@ module Hdo
         @vote ||= @vote_connection.vote
       end
 
-      def description
-        @vote_connection.description
+      def title
+        @vote_connection.title
       end
 
       def comment
