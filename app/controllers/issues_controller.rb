@@ -189,7 +189,7 @@ class IssuesController < ApplicationController
   end
 
   def fetch_categories
-    @categories = Category.column_groups
+    @categories = Category.column_groups 4
   end
 
   def fetch_issue
