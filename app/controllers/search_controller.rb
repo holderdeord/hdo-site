@@ -1,6 +1,6 @@
 class SearchController < ApplicationController
   def all
-    response = Hdo::Search::Searcher.new(params).all
+    response = Hdo::Search::Searcher.new(params[:query]).all
 
     if response.success?
       @results = response.results

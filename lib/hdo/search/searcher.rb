@@ -11,19 +11,16 @@ module Hdo
         'topics'            => { boost: 2   },
       }
 
-
-      def initialize(params)
-        @params = params
+      def initialize(query)
+        @query = query
       end
 
       def all
-        query = @params[:query].to_s
-
         search = Tire.search(INDECES) do |s|
           s.size 25
 
           s.query do |query|
-            query.string query, default_operator: 'AND'
+            query.string @query, default_operator: 'AND'
           end
 
           s.sort { by :_score }
