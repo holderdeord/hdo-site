@@ -82,7 +82,7 @@ class IssuesController < ApplicationController
   end
 
   def update
-    if @issue.update_attributes_and_votes_for_user(params[:issue], params[:votes], current_user)
+    if @issue.update_attributes_and_votes_for_user_with_conflict_validation(params[:issue], params[:votes], current_user)
       edit_steps.next!
 
       if edit_steps.finish?
