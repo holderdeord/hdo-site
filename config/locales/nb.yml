@@ -280,10 +280,10 @@ nb:
         inferred: 'Denne saken ble avgjort enstemmig uten at avstemningsknappene ble brukt. Oversikten er utledet fra tilstedeværelse ved andre avstemninger samme dag.'
         party_unknown: 'Denne avstemningen ble avgjort uten at avstemningsknappene ble brukt. Vi har derfor ikke oversikt over hva det enkelte parti har stemt.'
       scores:
-        consistently_against: "%{name} har stemt konsekvent mot"
-        consistently_against_html: "%{name} har stemt <strong>konsekvent mot</strong>"
-        consistently_for: "%{name} har stemt konsekvent for"
-        consistently_for_html: "%{name} har stemt <strong>konsekvent for</strong>"
+        against: "%{name} har stemt mot"
+        against_html: "%{name} har stemt <strong>mot</strong>"
+        for: "%{name} har stemt for"
+        for_html: "%{name} har stemt <strong>for</strong>"
         for_and_against: "%{name} har stemt både for og mot"
         for_and_against_html: "%{name} har stemt <strong>både for og mot</strong>"
         mostly_against: "%{name} har stort sett stemt mot"
