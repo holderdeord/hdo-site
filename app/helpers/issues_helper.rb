@@ -47,14 +47,15 @@ module IssuesHelper
   end
 
   def issues_for_promise issue, promise
-    if promise.issues.any?
+    issues = promise.issues.where("issues.id != ?", issue.id)
+    if issues.any?
       first = true
-      out = promise.issues.where("issues.id != ?", issue.id).reduce('L&oslash;ftet brukes i ') do |out, i|
+      out = issues.reduce('L&oslash;ftet brukes i ') do |out, i|
         out << ', ' unless first
         first = false
         out << link_to(i.title, i, target: '_blank')
       end
-      (out || '').html_safe
     end
+    (out || '').html_safe
   end
 end
