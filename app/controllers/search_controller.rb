@@ -7,7 +7,7 @@ class SearchController < ApplicationController
 
       respond_to do |format|
         format.json { render json: @results }
-        format.html { render layout: params[:layout] }
+        format.html
       end
     else
       flash.alert = t('app.error')
