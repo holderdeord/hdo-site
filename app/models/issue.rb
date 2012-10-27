@@ -98,7 +98,7 @@ class Issue < ActiveRecord::Base
       end
 
       if changed
-        touch
+        self.updated_at = Time.now
         self.last_updated_by = user
       end
 
