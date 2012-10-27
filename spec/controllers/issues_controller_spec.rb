@@ -152,42 +152,42 @@ describe IssuesController do
     end
 
     context "next" do
-      it "should show the promises step when hit next from create" do
+      it "should show the votes step when hit next from create" do
         post :create, issue: { title: "Less Cowbell!" }
 
         issue = assigns(:issue)
         issue.should be_kind_of(Issue)
         issue.last_updated_by.should == @user
 
-        expected_url = edit_issue_step_path(id: issue, step: 'promises')
+        expected_url = edit_issue_step_path(id: issue, step: 'votes')
         response.should redirect_to(expected_url)
       end
 
-      it "should show votes step when hit next from promises" do
+      it "should show categories step when hit next from promises" do
         session[:issue_step] = 'promises'
 
         put :update, issue: issue_params(issue), id: issue
 
         assigns(:issue).should == issue
-        session[:issue_step].should == 'votes'
+        session[:issue_step].should == 'categories'
 
-        response.should redirect_to(edit_issue_step_url(issue, step: 'votes'))
+        response.should redirect_to(edit_issue_step_url(issue, step: 'categories'))
       end
     end
 
     context "previous" do
-      it "should show promises when hit previous from votes" do
+      it "should show promises when hit next from votes" do
         session[:issue_step] = 'votes'
 
-        put :update, previous: true, issue: issue_params(issue), id: issue
+        put :update, issue: issue_params(issue), id: issue
 
         session[:issue_step].should == 'promises'
         assigns(:issue).should == issue
         response.should redirect_to edit_issue_step_url(issue, step: 'promises')
       end
 
-      it "should show the categories step when hit previous from promises" do
-        session[:issue_step] = 'promises'
+      it "should show the categories step when hit previous from votes" do
+        session[:issue_step] = 'votes'
 
         put :update, previous: true, issue: issue_params(issue), id: issue
 
