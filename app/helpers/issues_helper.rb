@@ -41,4 +41,8 @@ module IssuesHelper
 
     options_for_select prop_types, vote.proposition_type
   end
+
+  def proposition_type_for vote
+    vote.proposition_type.empty? ? '' : I18n.t("app.votes.proposition_types.#{vote.proposition_type}")
+  end
 end
