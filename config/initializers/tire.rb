@@ -3,6 +3,13 @@
 #
 
 module TireSettings
+  LOCALE = {
+    nb: {
+      language: 'Norwegian',
+      stopwords: %w[at av da de den der deres det disse eller en er et for hvis i ikke inn med men nei og slik som til var vil]
+    }
+  }
+
   module_function
 
   def default
@@ -11,8 +18,8 @@ module TireSettings
         analyzer: {
           default: {
             type: 'snowball',
-            language: 'Norwegian',
-            stopwords: norwegian_stopwords.join(",")
+            language: locale[:language],
+            stopwords: locale[:stopwords].join(",")
           }
         }
       }
@@ -23,36 +30,8 @@ module TireSettings
     'default'
   end
 
-  def norwegian_stopwords
-    %w[
-      at
-      av
-      da
-      de
-      den
-      der
-      deres
-      det
-      disse
-      eller
-      en
-      er
-      et
-      for
-      hvis
-      i
-      ikke
-      inn
-      med
-      men
-      nei
-      og
-      slik
-      som
-      til
-      var
-      vil
-    ]
+  def locale
+    LOCALE.fetch(I18n.locale)
   end
 end
 
