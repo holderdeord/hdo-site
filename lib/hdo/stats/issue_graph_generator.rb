@@ -31,7 +31,7 @@ module Hdo
 
           vote_connections.each do |conn|
             nodes << {
-              name: conn.description,
+              name: conn.title,
               group: 2
             }
           end
@@ -68,7 +68,7 @@ module Hdo
       end
 
       def vote_connections
-        @votes ||= @issue.vote_connections.order(:description).to_a
+        @votes ||= @issue.vote_connections.order(:title).to_a
       end
 
       def value_for(party, vote_connection)
