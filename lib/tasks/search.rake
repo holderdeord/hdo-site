@@ -15,17 +15,22 @@ namespace :search do
     ].each do |klass|
       next if ENV['CLASS'] && ENV['CLASS'] != klass.to_s
       puts "\n#{klass}"
-      total = klass.count.to_f
 
+      total = klass.count.to_f
       index = klass.index
 
       index.delete
       index.create :mappings => klass.tire.mapping_to_hash, :settings => klass.tire.settings
 
-      klass.import do |docs|
+      klass.import { |docs|
+        if klass == Issue
+          docs = docs.select { |e| e.published? }
+        end
+
         puts "\t#{docs.to_a.size}"
-        docs # must be returned
-      end
+
+        docs
+      }
     end
   end
 end

@@ -1,16 +1,19 @@
 class Issue < ActiveRecord::Base
   extend FriendlyId
   include Hdo::Model::HasStatsCache
-
   include Tire::Model::Search
-  include Tire::Model::Callbacks
 
   tire.settings(TireSettings.default) {
     mapping {
       indexes :description, type: :string, analyzer: TireSettings.default_analyzer
       indexes :title,       type: :string, analyzer: TireSettings.default_analyzer, boost: 100
+      indexes :status,      type: :string, index: :not_analyzed
     }
   }
+
+  after_save do
+    update_index if published?
+  end
 
   attr_accessible :description, :title, :category_ids, :promise_ids, :topic_ids, :status
   validates :title, presence: true, uniqueness: true
