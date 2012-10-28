@@ -7,7 +7,6 @@ class SearchController < ApplicationController
       @results = response.results.group_by { |e| e.type }
 
       respond_to do |format|
-        format.json { render json: @results }
         format.html
       end
     else
