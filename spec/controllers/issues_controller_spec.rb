@@ -75,7 +75,7 @@ describe IssuesController do
     it 'edit redirects to the categories step if no step was specified' do
       get :edit, id: issue
 
-      response.should redirect_to(edit_issue_step_path(issue, step: 'categories'))
+      response.should redirect_to(edit_issue_step_path(issue.id, step: 'categories'))
     end
 
     it 'edits the vote step if specified' do
@@ -159,7 +159,7 @@ describe IssuesController do
         issue.should be_kind_of(Issue)
         issue.last_updated_by.should == @user
 
-        expected_url = edit_issue_step_path(id: issue, step: 'votes')
+        expected_url = edit_issue_step_path(id: issue.id, step: 'votes')
         response.should redirect_to(expected_url)
       end
 
@@ -171,7 +171,7 @@ describe IssuesController do
         assigns(:issue).should == issue
         session[:issue_step].should == 'categories'
 
-        response.should redirect_to(edit_issue_step_url(issue, step: 'categories'))
+        response.should redirect_to(edit_issue_step_url(issue.id, step: 'categories'))
       end
     end
 
@@ -183,7 +183,7 @@ describe IssuesController do
 
         session[:issue_step].should == 'promises'
         assigns(:issue).should == issue
-        response.should redirect_to edit_issue_step_url(issue, step: 'promises')
+        response.should redirect_to edit_issue_step_url(issue.id, step: 'promises')
       end
 
       it "should show the categories step when hit previous from votes" do
@@ -193,7 +193,7 @@ describe IssuesController do
 
         session[:issue_step] = 'categories'
         assigns(:issue).should == issue
-        response.should redirect_to edit_issue_step_url(issue, step: 'categories')
+        response.should redirect_to edit_issue_step_url(issue.id, step: 'categories')
       end
     end
 

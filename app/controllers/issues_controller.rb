@@ -57,7 +57,7 @@ class IssuesController < ApplicationController
       step = edit_steps.from_param!
       send "edit_#{step}"
     else
-      redirect_to edit_issue_step_url(@issue, :step => edit_steps.first)
+      redirect_to edit_issue_step_url(@issue.id, :step => edit_steps.first)
     end
   end
 
@@ -69,7 +69,7 @@ class IssuesController < ApplicationController
       if edit_steps.finish?
         redirect_to @issue
       else
-        redirect_to edit_issue_step_url(@issue, :step => edit_steps.after)
+        redirect_to edit_issue_step_url(@issue.id, :step => edit_steps.after)
       end
     else
       logger.warn "failed to create issue: #{@issue.inspect}: #{@issue.errors.full_messages}"
@@ -82,20 +82,20 @@ class IssuesController < ApplicationController
   end
 
   def update
-    if @issue.update_attributes_and_votes_for_user(params[:issue], params[:votes], current_user)
+    if @issue.update_attributes_and_votes_for_user_with_conflict_validation(params[:issue], params[:votes], current_user)
       edit_steps.next!
 
       if edit_steps.finish?
         session.delete :issue_step
         redirect_to @issue
       else
-        redirect_to edit_issue_step_url(@issue, step: edit_steps.current)
+        redirect_to edit_issue_step_url(@issue.id, step: edit_steps.current)
       end
     else
       logger.warn "failed to update issue: #{@issue.inspect}: #{@issue.errors.full_messages}"
 
       flash.alert = @issue.errors.full_messages.to_sentence
-      redirect_to edit_issue_step_url(@issue, :step => edit_steps.current)
+      redirect_to edit_issue_step_url(@issue.id, :step => edit_steps.current)
     end
   end
 

@@ -15,7 +15,7 @@ class Issue < ActiveRecord::Base
     update_index if published?
   end
 
-  attr_accessible :description, :title, :category_ids, :promise_ids, :topic_ids, :status
+  attr_accessible :description, :title, :category_ids, :promise_ids, :topic_ids, :status, :lock_version
   validates :title, presence: true, uniqueness: true
 
   STATUSES = %w[in_progress shelved published]
@@ -50,64 +50,73 @@ class Issue < ActiveRecord::Base
     [prev_issue, next_issue]
   end
 
-  def update_attributes_and_votes_for_user(attributes, votes, user)
-    changed = false
-
-    Array(votes).each do |vote_id, data|
-      existing = VoteConnection.where('vote_id = ? and issue_id = ?', vote_id, id).first
-
-      if data[:direction] == 'unrelated'
-        if existing
-          vote_connections.delete existing
-          changed = true
-        end
-      else
-        attrs = data.except(:direction, :proposition_type).merge(matches: data[:direction] == 'for', vote_id: vote_id)
-
-        if existing
-          changed ||= update_vote_proposition_type existing.vote, data[:proposition_type]
-
-          existing.attributes = attrs
-          changed ||= existing.changed?
-
-          existing.save!
-        else
-          new_connection = vote_connections.create!(attrs)
-          update_vote_proposition_type new_connection.vote, data[:proposition_type]
-          changed = true
-        end
-      end
-    end
-
-    touch if changed
-
-    if attributes
-      # TODO: find a better way to do this!
-
-      if attributes['category_ids'] && attributes['category_ids'].reject(&:empty?).map(&:to_i).sort != category_ids.sort
-        changed = true
-      end
-
-      if attributes['promise_ids'] && attributes['promise_ids'].reject(&:empty?).map(&:to_i).sort != promise_ids.sort
-        changed = true
-      end
-
-      if attributes['topic_ids'] && attributes['topic_ids'].reject(&:empty?).map(&:to_i).sort != topic_ids.sort
-        changed = true
-      end
-
-      self.attributes = attributes
-      changed ||= self.changed?
-    end
-
-    if changed
-      self.last_updated_by = user
-    end
-
-    save
+  def update_attributes_and_votes_for_user_with_conflict_validation(*args)
+    update_attributes_and_votes_for_user(*args)
+  rescue ActiveRecord::StaleObjectError
+    errors.add :base, "Kunne ikke lagre, saken er blitt endret i mellomtiden."
+    false
   end
 
-  def update_vote_proposition_type vote, proposition_type
+  def update_attributes_and_votes_for_user(attributes, votes, user)
+    user.transaction do
+      changed = false
+
+      Array(votes).each do |vote_id, data|
+        existing = VoteConnection.where('vote_id = ? and issue_id = ?', vote_id, id).first
+
+        if data[:direction] == 'unrelated'
+          if existing
+            vote_connections.delete existing
+            changed = true
+          end
+        else
+
+          attrs = data.except(:direction, :proposition_type).merge(matches: data[:direction] == 'for', vote_id: vote_id)
+
+          if existing
+            changed ||= update_vote_proposition_type existing.vote, data[:proposition_type]
+
+            existing.attributes = attrs
+            changed ||= existing.changed?
+
+            existing.save!
+          else
+            new_connection = vote_connections.create!(attrs)
+            changed ||= update_vote_proposition_type new_connection.vote, data[:proposition_type]
+            changed = true
+          end
+        end
+      end
+
+      if attributes
+        # TODO: find a better way to do this!
+
+        if attributes['category_ids'] && attributes['category_ids'].reject(&:empty?).map(&:to_i).sort != category_ids.sort
+          changed = true
+        end
+
+        if attributes['promise_ids'] && attributes['promise_ids'].reject(&:empty?).map(&:to_i).sort != promise_ids.sort
+          changed = true
+        end
+
+        if attributes['topic_ids'] && attributes['topic_ids'].reject(&:empty?).map(&:to_i).sort != topic_ids.sort
+          changed = true
+        end
+
+        self.attributes = attributes
+        changed ||= self.changed?
+      end
+
+      if changed
+        self.updated_at = Time.now
+        self.last_updated_by = user
+      end
+
+      save
+    end
+  end
+
+  def update_vote_proposition_type(vote, proposition_type)
     vote.proposition_type = proposition_type
     changed = vote.changed?
     vote.save
@@ -151,4 +160,5 @@ class Issue < ActiveRecord::Base
   def fetch_stats
     Hdo::Stats::VoteScorer.new(self)
   end
+
 end

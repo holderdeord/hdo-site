@@ -170,4 +170,90 @@ describe Issue do
     i.last_updated_by = u
     i.last_updated_by_name.should == u.name
   end
+
+  describe 'optimistic locking' do
+    before(:each) do
+      @issue = Issue.make!
+      @same_issue = Issue.find(@issue.id)
+    end
+
+    it 'prevents saving a stale object' do
+      @issue.updated_at = 1.day.from_now
+      @issue.save
+      expect_stale_object_error_when_updating @same_issue
+    end
+
+    it 'is triggered by the `update_attributes_and_votes_for_user_with_conflict_validation` method when updating category associations' do
+      attributes = {
+        'category_ids' => [Category.make!.id.to_s]
+        }
+
+      update_attributes_on @issue, attributes
+      expect_stale_object_error_when_updating @same_issue
+    end
+
+    it 'is triggered by the `update_attributes_and_votes_for_user_with_conflict_validation` method when updating promise associations' do
+      attributes = {
+        'promise_ids' => [Promise.make!.id.to_s]
+        }
+
+      update_attributes_on @issue, attributes
+      expect_stale_object_error_when_updating @same_issue
+    end
+
+    it 'is triggered by the `update_attributes_and_votes_for_user_with_conflict_validation` method when updating topic associations' do
+      attributes = {
+        'topic_ids' => [Topic.make!.id.to_s]
+        }
+
+      update_attributes_on @issue, attributes
+      expect_stale_object_error_when_updating @same_issue
+    end
+
+    it 'is triggered by the `update_attributes_and_votes_for_user_with_conflict_validation` method when adding a vote connection' do
+      votes = {
+        Vote.make!.id => {
+          direction: 'for',
+          weight: 1.0,
+          title: 'more cowbell'
+        }
+      }
+      update_attributes_on @issue, {}, votes
+      expect_stale_object_error_when_updating @same_issue
+    end
+
+    it 'is triggered by the `update_attributes_and_votes_for_user_with_conflict_validation` method when changing proposition type of an existing vote' do
+      @issue.vote_connections.create! :vote => Vote.make!, :matches => true, :title => 'hello', :weight => 1.0
+      vote = @issue.votes.first
+
+      @issue.save
+      @same_issue.reload
+
+      votes = {
+        vote.id => {
+          direction: 'for',
+          weight: 1.0,
+          title: 'hello',
+          proposition_type: Vote::PROPOSITION_TYPES.first
+        }
+      }
+      update_attributes_on @issue, {}, votes
+      expect_stale_object_error_when_updating @same_issue
+    end
+  end
+
+  private
+
+  def expect_stale_object_error_when_updating(issue)
+    issue.last_updated_by = User.make!
+    lambda { issue.save }.should raise_error(ActiveRecord::StaleObjectError)
+  end
+
+  def update_attributes_on(issue, attributes, votes = [])
+    issue.update_attributes_and_votes_for_user_with_conflict_validation(
+      attributes,
+      votes,
+      User.make!
+      )
+  end
 end

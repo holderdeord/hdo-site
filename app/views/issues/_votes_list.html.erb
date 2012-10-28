@@ -10,7 +10,7 @@
       <h4><%= link_to vote.subject, vote, :target => 'issue_new' %></h4>
       <ul>
         <% vote.parliament_issues.each do |parliament_issue| %>
-          <li><%= link_to parliament_issue.summary, parliament_issue %></li>
+          <li><%= link_to parliament_issue.summary, parliament_issue, target: '_blank' %></li>
         <% end %>
       </ul>
     </div>
