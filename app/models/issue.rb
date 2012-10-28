@@ -50,16 +50,14 @@ class Issue < ActiveRecord::Base
     [prev_issue, next_issue]
   end
 
-  def update_attributes_and_votes_for_user_with_conflict_validation(*args)
-    update_attributes_and_votes_for_user(*args)
-  rescue ActiveRecord::StaleObjectError
-    errors.add :base, "Kunne ikke lagre, saken er blitt endret i mellomtiden."
-    false
+  def update_attributes_and_votes_for_user_with_conflict_validation(attributes, votes, user)
+    # TODO: move this to controller, specs into issue_updater_spec.rb
+    Hdo::IssueUpdater.new(self, attributes, votes, user).execute
   end
 
   def update_attributes_and_votes_for_user(attributes, votes, user)
-    # TODO: move call to controller, specs into issue_updater_spec.rb
-    Hdo::IssueUpdater.new(self, attributes, votes, user).execute
+    # TODO: move this to controller, specs into issue_updater_spec.rb
+    Hdo::IssueUpdater.new(self, attributes, votes, user).execute!
   end
 
   def vote_for?(vote_id)
