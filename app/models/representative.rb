@@ -6,10 +6,18 @@ class Representative < ActiveRecord::Base
   include Tire::Model::Search
   include Tire::Model::Callbacks
 
-  tire.settings(TireSettings.default)
+  tire.settings(TireSettings.default) {
+    mapping do
+      indexes :district
+      indexes :current_party
+      indexes :full_name
+      indexes :last_name
+      indexes :first_name
+      indexes :slug
+    end
+  }
 
-  attr_accessible :party, :first_name, :last_name, :committees,
-                  :district, :date_of_birth, :date_of_death
+  attr_accessible :first_name, :last_name, :committees, :district, :date_of_birth, :date_of_death
 
   default_scope order: :last_name
 
@@ -107,6 +115,8 @@ class Representative < ActiveRecord::Base
   end
 
   def to_indexed_json
-    to_json methods: [:current_party, :full_name, :district]
+    to_json include: [:district],
+            methods: [:current_party, :full_name],
+            only: [:slug, :last_name, :first_name]
   end
 end

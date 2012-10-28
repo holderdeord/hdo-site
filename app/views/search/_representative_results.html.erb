@@ -3,7 +3,7 @@
 <ul>
   <% results.sort_by(&:last_name).each do |r| %>
     <li>
-      <%= link_to r.full_name, r %> 
+      <%= link_to r.full_name, representative_path(r.slug) %>
       (<%= [r.district.name, r.current_party && r.current_party.name].join(", ") %>)
     </li>
   <% end %>

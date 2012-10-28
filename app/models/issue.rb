@@ -8,6 +8,7 @@ class Issue < ActiveRecord::Base
       indexes :description, type: :string, analyzer: TireSettings.default_analyzer
       indexes :title,       type: :string, analyzer: TireSettings.default_analyzer, boost: 100
       indexes :status,      type: :string, index: :not_analyzed
+      indexes :slug,        type: :string, index: :not_analyzed
     }
   }
 

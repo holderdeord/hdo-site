@@ -10,6 +10,7 @@ class ParliamentIssue < ActiveRecord::Base
       indexes :description, type: :string, analyzer: TireSettings.default_analyzer
       indexes :status, type: :string
       indexes :last_update, type: :date, include_in_all: false
+      indexes :slug, type: :string, index: :not_analyzed
     }
   }
 

@@ -8,7 +8,8 @@ class Topic < ActiveRecord::Base
 
   tire.settings(TireSettings.default) {
     mapping {
-      indexes :name, type: :string
+      indexes :name, type: :string, analyzer: TireSettings.default_analyzer
+      indexes :slug, type: :string, index: :not_analyzed
     }
   }
 

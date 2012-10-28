@@ -8,8 +8,8 @@ class Party < ActiveRecord::Base
 
   tire.settings(TireSettings.default) {
     mapping {
-      indexes :name,        type: :string, boost: 20
-      indexes :external_id, type: :string, boost: 20
+      indexes :name, type: :string, boost: 20
+      indexes :slug, type: :string, boost: 20
     }
   }
 

@@ -2,6 +2,8 @@
 
 <ul>
   <% results.sort_by(&:name).each do |r| %>
-    <li><%= link_to r.name, r %></li>
+    <li>
+      <%= link_to r.name, topic_path(r.slug) %>
+    </li>
   <% end %>
 </ul>

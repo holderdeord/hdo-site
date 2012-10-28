@@ -2,6 +2,6 @@
 
 <ul>
   <% results.sort_by { |r| Date.parse(r.last_update) }.reverse.each do |r| %>
-    <li><%= link_to r.summary, r %></li>
+    <li><%= link_to r.summary, parliament_issue_path(r.slug) %></li>
   <% end %>
 </ul>
