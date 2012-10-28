@@ -54,15 +54,23 @@ class Issue < ActiveRecord::Base
         attrs = data.except(:direction, :proposition_type).merge(matches: data[:direction] == 'for', vote_id: vote_id)
 
         if existing
-          changed ||= update_vote_proposition_type existing.vote, data[:proposition_type]
+          # binding.pry
+          # changed ||= update_vote_proposition_type existing.vote, data[:proposition_type]
+
+          existing.vote.proposition_type = data[:proposition_type]
+          changed ||= existing.vote.changed?
+          existing.vote.save
 
           existing.attributes = attrs
           changed ||= existing.changed?
 
           existing.save!
+
         else
           new_connection = vote_connections.create!(attrs)
-          update_vote_proposition_type new_connection.vote, data[:proposition_type]
+          # update_vote_proposition_type new_connection.vote, data[:proposition_type]
+          new_connection.vote.proposition_type = data[:proposition_type]
+          new_connection.vote.save
           changed = true
         end
       end
