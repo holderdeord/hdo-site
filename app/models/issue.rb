@@ -58,69 +58,8 @@ class Issue < ActiveRecord::Base
   end
 
   def update_attributes_and_votes_for_user(attributes, votes, user)
-    user.transaction do
-      changed = false
-
-      Array(votes).each do |vote_id, data|
-        existing = VoteConnection.where('vote_id = ? and issue_id = ?', vote_id, id).first
-
-        if data[:direction] == 'unrelated'
-          if existing
-            vote_connections.delete existing
-            changed = true
-          end
-        else
-
-          attrs = data.except(:direction, :proposition_type).merge(matches: data[:direction] == 'for', vote_id: vote_id)
-
-          if existing
-            changed ||= update_vote_proposition_type existing.vote, data[:proposition_type]
-
-            existing.attributes = attrs
-            changed ||= existing.changed?
-
-            existing.save!
-          else
-            new_connection = vote_connections.create!(attrs)
-            changed ||= update_vote_proposition_type new_connection.vote, data[:proposition_type]
-            changed = true
-          end
-        end
-      end
-
-      if attributes
-        # TODO: find a better way to do this!
-
-        if attributes['category_ids'] && attributes['category_ids'].reject(&:empty?).map(&:to_i).sort != category_ids.sort
-          changed = true
-        end
-
-        if attributes['promise_ids'] && attributes['promise_ids'].reject(&:empty?).map(&:to_i).sort != promise_ids.sort
-          changed = true
-        end
-
-        if attributes['topic_ids'] && attributes['topic_ids'].reject(&:empty?).map(&:to_i).sort != topic_ids.sort
-          changed = true
-        end
-
-        self.attributes = attributes
-        changed ||= self.changed?
-      end
-
-      if changed
-        self.updated_at = Time.now
-        self.last_updated_by = user
-      end
-
-      save
-    end
-  end
-
-  def update_vote_proposition_type(vote, proposition_type)
-    vote.proposition_type = proposition_type
-    changed = vote.changed?
-    vote.save
-    changed
+    # TODO: move call to controller, specs into issue_updater_spec.rb
+    Hdo::IssueUpdater.new(self, attributes, votes, user).execute
   end
 
   def vote_for?(vote_id)
