@@ -308,6 +308,7 @@ nb:
         national_budget_committee_proposition: 'Statsbudsjett, komitéinnstilling'
         revised_national_budget: 'Revidert statsbudsjett'
         rebalanced_national_budget: 'Nysaldering av statsbudsjett'
+        parliamentary_report_committee_proposal: 'Stortingsmelding, komitéinnstilling'
     external:
       urls:
         parliament_issue: "http://stortinget.no/no/Saker-og-publikasjoner/Saker/Sak/?p=%s"

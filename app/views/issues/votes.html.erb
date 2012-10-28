@@ -12,9 +12,13 @@
     <% @issue_votes.each do |issue_vote| %>
       <div class="row-fluid">
         <h3>
-           <div class="row"><small class="pull-right"><%= issue_vote.proposition_type_text %></small></div>
-           <small class="pull-right"><%= issue_vote.time_text %></small>
-          <%= issue_vote.title %>
+          <div class="span8"><%= issue_vote.title %></div>
+          <div class="">
+            <small class="pull-right">
+              <p><%= issue_vote.time_text %><p>
+              <p><%= issue_vote.proposition_type_text %></p>
+            </small>
+          </div>
         </h3>
         <br> <!-- ugh -->
       </div>
