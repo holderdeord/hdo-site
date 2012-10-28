@@ -1,0 +1,13 @@
+defaults: &defaults
+  issue_editing_enabled: true
+  front_page_search_enabled: true
+
+development:
+  <<: *defaults
+  front_page_search: false
+
+test:
+  <<: *defaults
+
+production:
+  <<: *defaults

@@ -64,12 +64,5 @@ module Hdo
 
     # this is needed on heroku: https://github.com/plataformatec/devise/issues/1339
     config.assets.initialize_on_precompile = false
-
-    #
-    # Feature toggles
-    #
-
-    # Toggle issue editing temporarily (e.g. while moving database or similar)
-    config.issue_editing_enabled = true
   end
 end
