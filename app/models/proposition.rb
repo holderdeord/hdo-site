@@ -10,7 +10,7 @@ class Proposition < ActiveRecord::Base
       indexes :on_behalf_of, type: :string
 
       indexes :vote do
-        indexes :slug
+        indexes :slug, index: :not_analyzed
       end
     }
   }

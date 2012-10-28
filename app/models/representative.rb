@@ -6,7 +6,7 @@ class Representative < ActiveRecord::Base
   include Tire::Model::Search
   include Tire::Model::Callbacks
 
-  tire.settings TireSettings.default
+  tire.settings(TireSettings.default)
 
   attr_accessible :party, :first_name, :last_name, :committees,
                   :district, :date_of_birth, :date_of_death
@@ -107,6 +107,6 @@ class Representative < ActiveRecord::Base
   end
 
   def to_indexed_json
-    to_json methods: [:current_party, :full_name]
+    to_json methods: [:current_party, :full_name, :district]
   end
 end

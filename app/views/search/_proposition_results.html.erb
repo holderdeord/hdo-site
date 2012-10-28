@@ -1,0 +1,7 @@
+<h3><%= Proposition.model_name.human(count: 2).capitalize %></h3>
+
+<ul>
+  <% results.each do |r| %>
+    <li><%= link_to r.short_body, vote_path(r.vote.slug) %></li>
+  <% end %>
+</ul>

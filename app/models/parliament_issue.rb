@@ -9,6 +9,7 @@ class ParliamentIssue < ActiveRecord::Base
       indexes :summary, type: :string, analyzer: TireSettings.default_analyzer
       indexes :description, type: :string, analyzer: TireSettings.default_analyzer
       indexes :status, type: :string
+      indexes :last_update, type: :date, include_in_all: false
     }
   }
 

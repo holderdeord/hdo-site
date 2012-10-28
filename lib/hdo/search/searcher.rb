@@ -14,12 +14,12 @@ module Hdo
       }
 
       def initialize(query)
-        @query = query
+        @query = query.blank? ? '*' : query
       end
 
       def all
         search = Tire.search(INDECES) do |s|
-          s.size 25
+          s.size 100
 
           s.query do |query|
             query.string @query, default_operator: 'AND'

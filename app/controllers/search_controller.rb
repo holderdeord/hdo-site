@@ -3,7 +3,7 @@ class SearchController < ApplicationController
     response = Hdo::Search::Searcher.new(params[:query]).all
 
     if response.success?
-      @results = response.results
+      @results = response.results.group_by { |e| e.type }
 
       respond_to do |format|
         format.json { render json: @results }

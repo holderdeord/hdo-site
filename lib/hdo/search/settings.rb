@@ -15,13 +15,21 @@ module Hdo
       module_function
 
       def default
-        {
+        @default ||= {
           analysis: {
             analyzer: {
-              default: {
+              hdo_analyzer: {
+                alias: %w[default_index],
                 type: 'custom',
                 tokenizer: 'standard',
-                filter: %w[standard lowercase hdo_stop hdo_snowball hdo_decompounder]
+                filter: default_filters
+              },
+              hdo_search: {
+                alias: %w[default_search],
+                type: 'custom',
+                tokenizer: 'standard',
+                # don't decompound words in the queries
+                filter: default_filters - %w[hdo_decompounder]
               }
             },
             filter: {
@@ -43,7 +51,11 @@ module Hdo
       end
 
       def default_analyzer
-        'default'
+        'hdo_analyzer'
+      end
+
+      def default_filters
+        %w[standard lowercase hdo_stop hdo_snowball hdo_decompounder]
       end
 
       def locale

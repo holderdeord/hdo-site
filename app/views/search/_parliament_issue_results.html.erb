@@ -1,0 +1,7 @@
+<h3><%= ParliamentIssue.model_name.human(count: 2).capitalize %></h3>
+
+<ul>
+  <% results.sort_by { |r| Date.parse(r.last_update) }.reverse.each do |r| %>
+    <li><%= link_to r.summary, r %></li>
+  <% end %>
+</ul>

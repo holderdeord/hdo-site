@@ -1,0 +1,9 @@
+<h3><%= Promise.model_name.human(count: 2).capitalize %></h3>
+
+<ul>
+<% results.group_by { |e| e.party_names }.each do |party_names, promises| %>
+  <% promises.each do |promise| %>
+    <li><%= promise.body %></li>
+  <% end %>
+<% end %>
+</ul>

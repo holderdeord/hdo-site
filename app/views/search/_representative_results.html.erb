@@ -1,0 +1,10 @@
+<h3><%= Representative.model_name.human(count: 2).capitalize %></h3>
+
+<ul>
+  <% results.sort_by(&:last_name).each do |r| %>
+    <li>
+      <%= link_to r.full_name, r %> 
+      (<%= [r.district.name, r.current_party && r.current_party.name].join(", ") %>)
+    </li>
+  <% end %>
+</ul>

@@ -1,0 +1,7 @@
+<h3><%= Issue.model_name.human(count: 2).capitalize %></h3>
+
+<ul>
+  <% results.each do |r| %>
+    <li><%= link_to r.title, r %></li>
+  <% end %>
+</ul>

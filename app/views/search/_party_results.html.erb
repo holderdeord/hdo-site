@@ -1,0 +1,7 @@
+<h3><%= Party.model_name.human(count: 2).capitalize %></h3>
+
+<ul>
+  <% results.sort_by(&:name).each do |r| %>
+    <li><%= link_to r.name, r %></li>
+  <% end %>
+</ul>
