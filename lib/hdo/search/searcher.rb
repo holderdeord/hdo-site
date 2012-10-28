@@ -13,6 +13,8 @@ module Hdo
         Topic.index_name           => { boost: 2   },
       }
 
+      AUTOCOMPLETE_INDECES = ['issues', 'representatives']
+
       def initialize(query)
         @query = query.blank? ? '*' : query
       end
@@ -20,14 +22,20 @@ module Hdo
       def all
         search = Tire.search(INDECES) do |s|
           s.size 100
-
-          s.query do |query|
-            query.string @query, default_operator: 'AND'
-          end
-
-          s.sort { by :_score }
+          do_search s
         end
+        Response.new(search.results)
+      rescue *SEARCH_ERRORS => ex
+        Rails.logger.error "search failed, #{ex.class} #{ex.message}"
+        Response.new(nil, ex)
+      end
 
+      def autocomplete
+        search = Tire.search(AUTOCOMPLETE_INDECES) do |s|
+          s.size 25
+          @query = "*" + @query + "*"
+          do_search s
+        end
         Response.new(search.results)
       rescue *SEARCH_ERRORS => ex
         Rails.logger.error "search failed, #{ex.class} #{ex.message}"
@@ -50,6 +58,16 @@ module Hdo
           @exception.kind_of? Errno::ECONNREFUSED
         end
       end
+
+      private
+
+      def do_search(s)
+        s.query do |query|
+          query.string @query, default_operator: 'AND'
+        end
+        s.sort { by :_score }
+      end
+
     end
 
   end

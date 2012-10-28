@@ -25,4 +25,18 @@ class SearchController < ApplicationController
       flash.alert = t('app.errors.search')
     end
   end
+
+  def autocomplete
+    response = Hdo::Search::Searcher.new(params[:query]).autocomplete
+    @results = []
+
+    if response.success?
+      @results = response.results.group_by { |e| e.type }
+
+      respond_to do |format|
+        format.html {render layout: false}
+      end
+    end
+  end
+
 end
