@@ -37,3 +37,10 @@ chromedriver.log
 .idea
 
 config/database.yml
+
+# http://pow.cx/
+.powrc
+.powenv
+
+# no thank you.
+.rvmrc
