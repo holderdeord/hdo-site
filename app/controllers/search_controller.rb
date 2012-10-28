@@ -1,4 +1,5 @@
 class SearchController < ApplicationController
+
   TYPE_ORDER = %w[
     issue
     topic
@@ -25,4 +26,22 @@ class SearchController < ApplicationController
       flash.alert = t('app.errors.search')
     end
   end
+
+  def autocomplete
+    response = Hdo::Search::Searcher.new(params[:query]).autocomplete
+    @results = []
+
+    if response.success?
+      @results = response.results.map do |r|
+        r.as_json.merge(url: url_for(controller: r.type.pluralize, action: "show", id: r.slug || r.id),
+                        img_src: "/assets/" + r.type + ".png")
+      end.group_by { |e| e[:_type] }
+
+      respond_to do |format|
+        format.html {render layout: false}
+        format.json { render json: @results }
+      end
+    end
+  end
+
 end

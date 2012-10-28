@@ -41,6 +41,12 @@ var JZ = this.JZ || {};
     JZ.ajax.get(options, cbs);
   }
 
+  function getJSON(url, params, callbacks) {
+    var options = getOptions.call(this, url, params);
+    var cbs = getCallbacks.call(this, callbacks);
+    JZ.ajax.getJSON(options, cbs);
+  }
+
   function getDefaultOptions() {
     return $.extend({}, defaultOptions);
   }
@@ -49,6 +55,7 @@ var JZ = this.JZ || {};
     create: create,
     postJSON: postJSON,
     get: get,
+    getJSON: getJSON,
     getDefaultOptions: getDefaultOptions
   };
 
