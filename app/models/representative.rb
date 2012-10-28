@@ -10,9 +10,9 @@ class Representative < ActiveRecord::Base
     mapping do
       indexes :district
       indexes :current_party
-      indexes :full_name
-      indexes :last_name
-      indexes :first_name
+      indexes :full_name, index: :not_analyzed
+      indexes :last_name, index: :not_analyzed
+      indexes :first_name, index: :not_analyzed
       indexes :slug
     end
   }
