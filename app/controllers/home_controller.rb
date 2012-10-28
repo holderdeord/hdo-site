@@ -1,7 +1,7 @@
 # encoding: UTF-8
 
 class HomeController < ApplicationController
-  caches_page :index, :if => lambda { flash.empty? && !user_signed_in? }
+  caches_page :index, if: lambda { flash.empty? && !user_signed_in? }
   caches_page :press, :join, :support, :people, :about_method, :member
 
   def index
