@@ -2,6 +2,6 @@
 
 <ul>
   <% results.each do |r| %>
-    <li><%= link_to r.short_body, vote_path(r.vote.slug) %></li>
+    <li><%= link_to r.description, vote_path(r.vote.slug) %></li>
   <% end %>
 </ul>

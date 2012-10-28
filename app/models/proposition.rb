@@ -6,7 +6,6 @@ class Proposition < ActiveRecord::Base
     mapping {
       indexes :description, type: :string, analyzer: TireSettings.default_analyzer
       indexes :plain_body, type: :string, analyzer: TireSettings.default_analyzer
-      indexes :short_body, type: :string
       indexes :on_behalf_of, type: :string
 
       indexes :vote do
@@ -34,7 +33,7 @@ class Proposition < ActiveRecord::Base
   end
 
   def to_indexed_json
-    to_json methods: [:plain_body, :short_body],
+    to_json methods: [:plain_body],
             include: {vote: {only: [:slug]} },
             only:    [:description, :on_behalf_of]
   end
