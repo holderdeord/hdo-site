@@ -45,6 +45,10 @@ module Hdo
         def success?
           !@exception
         end
+
+        def down?
+          @exception.kind_of? Errno::ECONNREFUSED
+        end
       end
     end
 

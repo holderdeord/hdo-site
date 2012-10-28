@@ -1,6 +1,7 @@
 class SearchController < ApplicationController
   def all
     response = Hdo::Search::Searcher.new(params[:query]).all
+    @results = []
 
     if response.success?
       @results = response.results.group_by { |e| e.type }
@@ -10,8 +11,7 @@ class SearchController < ApplicationController
         format.html
       end
     else
-      flash.alert = t('app.error')
-      redirect_to root_path
+      flash.alert = t('app.errors.search')
     end
   end
 end

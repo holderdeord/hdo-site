@@ -192,7 +192,9 @@ nb:
       two_words_connector: ' og '
       last_word_connector: ' og '
   app:
-    error: 'Oj, noe gikk galt hos oss. Prøv igjen senere!'
+    errors:
+      default: 'Uff, noe gikk helt galt hos oss. Prøv igjen senere!'
+      search: 'Uff, vi har litt problemer med å søke for øyeblikket. Prøv igjen senere!'
     published: Publisert
     next: "Neste"
     previous: "Forrige"
