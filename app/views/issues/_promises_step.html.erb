@@ -17,10 +17,10 @@
               <% promises.each do |promise| %>
               <tr>
                 <td>
-                  <label for="promise-<%= promise.id %>"><%= promise.body %></label>
+                  <label><%= promise.body %></label>
                   <small class="pull-right"><%= issues_for_promise @issue, promise %></small>
                 </td>
-                <td><%= check_box_tag "issue[promise_ids][]", promise.id, @issue.promises.include?(promise), id: "promise-#{promise.id}" -%></td>
+                <td><%= check_box_tag "issue[promise_ids][]", promise.id, @issue.promises.include?(promise) %></td>
               </tr>
               <% end %>
             </tbody>
