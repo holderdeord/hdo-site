@@ -37,14 +37,17 @@ module IssuesHelper
   end
 
   def proposition_type_options_for(vote)
-    prop_types = { I18n.t!("app.votes.proposition_types.none") => nil }
+    prop_types = {}
 
-    Vote::PROPOSITION_TYPES.each do |prop_type|
-      key = I18n.t!("app.votes.proposition_types.#{prop_type}")
-      prop_types[key] = prop_type
+    Vote::PROPOSITION_TYPES.each do |key|
+      human_name = I18n.t!("app.votes.proposition_types.#{key}")
+      prop_types[human_name] = key
     end
 
-    options_for_select prop_types, vote.proposition_type
+    sorted = prop_types.sort_by { |human_name, _| human_name }
+    sorted.unshift [I18n.t!("app.votes.proposition_types.none"), nil]
+
+    options_for_select sorted, vote.proposition_type
   end
 
   def issues_for_promise(issue, promise)

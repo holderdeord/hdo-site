@@ -6,8 +6,24 @@ class Vote < ActiveRecord::Base
                   :enacted, :personal, :subject, :time, :external_id,
                   :proposition_type
 
-  PROPOSITION_TYPES = %w[parliamentary_report proposal_attached_to_the_minutes representative_proposition opposition_proposition_budget opposition_proposition_parliamentary_report opposition_proposition_legislation legislation national_budget_financial_proposition national_budget_committee_proposition revised_national_budget rebalanced_national_budget parliamentary_report_committee_proposal]
-  validates_inclusion_of :proposition_type, in: [PROPOSITION_TYPES, nil, ''].flatten
+  PROPOSITION_TYPES = %w[
+    government_proposal
+    legislation
+    national_budget_committee_proposition
+    national_budget_financial_proposition
+    national_budget_taxes
+    opposition_proposal_throne
+    opposition_proposition_budget
+    opposition_proposition_legislation
+    opposition_proposition_parliamentary_report
+    parliamentary_report
+    parliamentary_report_committee_proposal
+    proposal_attached_to_the_minutes
+    rebalanced_national_budget
+    representative_proposition
+    revised_national_budget
+  ]
+  validates_inclusion_of :proposition_type, in: PROPOSITION_TYPES + [nil, '']
 
   has_and_belongs_to_many :parliament_issues, uniq: true
 
