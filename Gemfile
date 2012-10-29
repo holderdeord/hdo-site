@@ -55,6 +55,9 @@ gem 'tire'
 gem 'yaml_db'
 gem 'settingslogic'
 
+gem 'faraday'
+gem 'net-http-persistent'
+
 # data import
 # gem 'hdo-storting-importer', :path => File.expand_path("../../hdo-storting-importer", __FILE__)
 gem 'hdo-storting-importer', "~> 0.3.2"

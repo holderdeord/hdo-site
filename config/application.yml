@@ -1,6 +1,7 @@
 defaults: &defaults
   issue_editing_enabled: true
   front_page_search_enabled: true
+  elasticsearch_url: http://localhost:9200
 
 development:
   <<: *defaults
