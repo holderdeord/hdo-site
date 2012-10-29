@@ -4,7 +4,6 @@ defaults: &defaults
 
 development:
   <<: *defaults
-  front_page_search: false
 
 test:
   <<: *defaults
