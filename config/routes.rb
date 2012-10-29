@@ -53,6 +53,7 @@ Hdo::Application.routes.draw do
   get "home/method" => "home#about_method", :as => :home_method
 
   get "docs/index"
+  get "docs/analysis"
 
   # global search
   get 'search/all' => 'search#all', :as => :search_all
