@@ -11,7 +11,7 @@ module Hdo
     def execute
       execute!
     rescue ActiveRecord::StaleObjectError
-      @issue.errors.add :base, "Kunne ikke lagre, saken er blitt endret i mellomtiden."
+      @issue.errors.add :base, I18n.t('app.errors.issue.unable_to_save')
       false
     end
 
