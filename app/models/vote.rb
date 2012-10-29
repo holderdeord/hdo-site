@@ -6,8 +6,9 @@ class Vote < ActiveRecord::Base
                   :enacted, :personal, :subject, :time, :external_id,
                   :proposition_type
 
+  PROPOSITION_TYPES = I18n.t('app.votes.proposition_types').except(:none).keys.map(&:to_s)
   validates_inclusion_of :proposition_type, 
-                         in: I18n.t('app.votes.proposition_types').except(:none).keys.map(&:to_s) + [nil, '']
+                         in: PROPOSITION_TYPES + [nil, '']
 
   has_and_belongs_to_many :parliament_issues, uniq: true
 
