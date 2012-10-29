@@ -37,14 +37,9 @@ module IssuesHelper
   end
 
   def proposition_type_options_for(vote)
-    prop_types = {}
+    types  = I18n.t('app.votes.proposition_types').except(:none)
+    sorted = types.invert.sort_by { |human_name, key| human_name }
 
-    Vote::PROPOSITION_TYPES.each do |key|
-      human_name = I18n.t!("app.votes.proposition_types.#{key}")
-      prop_types[human_name] = key
-    end
-
-    sorted = prop_types.sort_by { |human_name, _| human_name }
     sorted.unshift [I18n.t!("app.votes.proposition_types.none"), nil]
 
     options_for_select sorted, vote.proposition_type
