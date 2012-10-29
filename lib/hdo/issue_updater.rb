@@ -11,7 +11,7 @@ module Hdo
     def execute
       execute!
     rescue ActiveRecord::StaleObjectError
-      @issue.errors.add :base, I18n.t('app.errors.issue.unable_to_save')
+      @issue.errors.add :base, I18n.t('app.errors.issues.unable_to_save')
       false
     end
 
