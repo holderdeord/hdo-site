@@ -66,6 +66,7 @@ gem 'rack-mini-profiler'
 gem 'tire'
 gem 'yaml_db'
 gem 'settingslogic'
+gem 'statsd'
 
 gem 'faraday'
 gem 'net-http-persistent'

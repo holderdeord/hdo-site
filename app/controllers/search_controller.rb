@@ -9,7 +9,12 @@ class SearchController < ApplicationController
   ]
 
   def all
-    response = Hdo::Search::Searcher.new(params[:query]).all
+    response = nil
+
+    ActiveSupport::Notifications.instrument("search.all", :query => params[:query]) {
+      response = Hdo::Search::Searcher.new(params[:query]).all
+    }
+
     @results = []
 
     if response.success?
