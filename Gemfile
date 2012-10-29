@@ -1,5 +1,13 @@
 source 'https://rubygems.org'
 
+def darwin_only(require_as)
+  RUBY_PLATFORM.include?('darwin') && require_as
+end
+
+def linux_only(require_as)
+  RUBY_PLATFORM.include?('linux') && require_as
+end
+
 gem 'rails', '3.2.8'
 
 gem 'nokogiri', '~> 1.5.0'
@@ -19,10 +27,13 @@ group :test do
   gem "database_cleaner", "~> 0.9.1"
   gem "loadable_component", ">= 0.1.1"
   gem 'simplecov', :require => false
+
+  # guard
   gem 'guard'
   gem 'guard-rspec'
   gem 'guard-spork'
-  gem 'ruby_gntp'
+  gem 'rb-fsevent', require: darwin_only('rb-fsevent')
+  gem 'rb-inotify', require: linux_only('rb-inotify')
 end
 
 group :test, :development do
