@@ -208,6 +208,10 @@ describe IssuesController do
       end
     end
 
+    #
+    # TODO: move to issue_updater_spec?
+    #
+
     context "update" do
       it "should update the published state" do
         put :update, finish: true, issue: issue_params(issue).merge('status' => 'published'), id: issue
@@ -312,7 +316,6 @@ describe IssuesController do
       it 'sets last_updated_by when vote connections are updated' do
         connection = VoteConnection.create(:vote => Vote.make!, matches: true, weight: 1, comment: 'hello', title: 'world')
         issue.vote_connections = [connection]
-
 
         votes = votes_params(issue.vote_connections)
         votes[connection.vote_id][:weight] = '2.0'

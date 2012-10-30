@@ -82,7 +82,9 @@ class IssuesController < ApplicationController
   end
 
   def update
-    if @issue.update_attributes_and_votes_for_user_with_conflict_validation(params[:issue], params[:votes], current_user)
+    update_ok = Hdo::IssueUpdater.new(@issue, params[:issue], params[:votes], current_user).update
+
+    if update_ok
       edit_steps.next!
 
       if edit_steps.finish?

@@ -183,7 +183,7 @@ describe Issue do
       expect_stale_object_error_when_updating @same_issue
     end
 
-    it 'is triggered by the `update_attributes_and_votes_for_user_with_conflict_validation` method when updating category associations' do
+    it 'is locked when updating category associations' do
       attributes = {
         'category_ids' => [Category.make!.id.to_s]
         }
@@ -192,7 +192,7 @@ describe Issue do
       expect_stale_object_error_when_updating @same_issue
     end
 
-    it 'is triggered by the `update_attributes_and_votes_for_user_with_conflict_validation` method when updating promise associations' do
+    it 'is locked when updating promise associations' do
       attributes = {
         'promise_ids' => [Promise.make!.id.to_s]
         }
@@ -201,7 +201,7 @@ describe Issue do
       expect_stale_object_error_when_updating @same_issue
     end
 
-    it 'is triggered by the `update_attributes_and_votes_for_user_with_conflict_validation` method when updating topic associations' do
+    it 'is locked when updating topic associations' do
       attributes = {
         'topic_ids' => [Topic.make!.id.to_s]
         }
@@ -210,7 +210,7 @@ describe Issue do
       expect_stale_object_error_when_updating @same_issue
     end
 
-    it 'is triggered by the `update_attributes_and_votes_for_user_with_conflict_validation` method when adding a vote connection' do
+    it 'is locked when adding a vote connection' do
       votes = {
         Vote.make!.id => {
           direction: 'for',
@@ -218,11 +218,11 @@ describe Issue do
           title: 'more cowbell'
         }
       }
-      update_attributes_on @issue, {}, votes
+      update_attributes_on @issue, nil, votes
       expect_stale_object_error_when_updating @same_issue
     end
 
-    it 'is triggered by the `update_attributes_and_votes_for_user_with_conflict_validation` method when changing proposition type of an existing vote' do
+    it 'is locked when changing proposition type of an existing vote' do
       @issue.vote_connections.create! :vote => Vote.make!, :matches => true, :title => 'hello', :weight => 1.0
       vote = @issue.votes.first
 
@@ -237,109 +237,18 @@ describe Issue do
           proposition_type: Vote::PROPOSITION_TYPES.first
         }
       }
-      update_attributes_on @issue, {}, votes
+      update_attributes_on @issue, nil, votes
       expect_stale_object_error_when_updating @same_issue
     end
-  end
 
-  private
-
-  def expect_stale_object_error_when_updating(issue)
-    issue.last_updated_by = User.make!
-    lambda { issue.save }.should raise_error(ActiveRecord::StaleObjectError)
-  end
-
-  def update_attributes_on(issue, attributes, votes = [])
-    issue.update_attributes_and_votes_for_user_with_conflict_validation(
-      attributes,
-      votes,
-      User.make!
-      )
-  end
-
-  describe 'vote proposition types' do
-    it "updates a single vote's proposition_type" do
-      issue = Issue.make! vote_connections: [VoteConnection.make!]
-
-      issue.votes.each { |v| v.proposition_type.should be_blank }
-      issue.save
-
-      votes = {
-        issue.votes[0].id => {
-          direction: 'for',
-          weight: 1.0,
-          title: 'title!!!!!!!!',
-          proposition_type: Vote::PROPOSITION_TYPES.first
-        }
-      }
-
-      issue.update_attributes_and_votes_for_user({},
-        votes,
-        User.make!)
-      issue.reload
-
-      issue.votes.each do |vote|
-        vote.proposition_type.should == Vote::PROPOSITION_TYPES.first
-      end
+    def expect_stale_object_error_when_updating(issue)
+      issue.last_updated_by = User.make!
+      lambda { issue.save }.should raise_error(ActiveRecord::StaleObjectError)
     end
 
-    it "updates one of many vote's proposition_type" do
-      issue = Issue.make! vote_connections: [VoteConnection.make!, VoteConnection.make!]
-
-      issue.votes.each { |v| v.proposition_type.should be_blank }
-      issue.save
-
-      votes = {
-        issue.votes[0].id => {
-          direction: 'for',
-          weight: 1.0,
-          title: 'title!!!!!!!!',
-          proposition_type: Vote::PROPOSITION_TYPES.first
-        },
-        issue.votes[1].id => {
-          direction: 'for',
-          weight: 1.0,
-          title: 'title!!!!!!!!',
-          proposition_type: ""
-        }
-      }
-
-      issue.update_attributes_and_votes_for_user({},
-        votes,
-        User.make!)
-      issue.reload
-
-      issue.votes[0].proposition_type.should == Vote::PROPOSITION_TYPES.first
+    def update_attributes_on(issue, attributes, votes = nil)
+      Hdo::IssueUpdater.new(issue, attributes, votes, User.make!).update!
     end
 
-    it "updates multiple vote's proposition_type simultaneously" do
-      issue = Issue.make! vote_connections: [VoteConnection.make!, VoteConnection.make!]
-
-      issue.votes.each { |v| v.proposition_type.should be_blank }
-      issue.save
-
-      votes = {
-        issue.votes[0].id => {
-          direction: 'for',
-          weight: 1.0,
-          title: 'title!!!!!!!!',
-          proposition_type: Vote::PROPOSITION_TYPES.first
-        },
-        issue.votes[1].id => {
-          direction: 'for',
-          weight: 1.0,
-          title: 'title!!!!!!!!',
-          proposition_type: Vote::PROPOSITION_TYPES.last
-        }
-      }
-
-      issue.update_attributes_and_votes_for_user({},
-        votes,
-        User.make!)
-      issue.reload
-
-      issue.votes[0].proposition_type.should == Vote::PROPOSITION_TYPES.first
-      issue.votes[1].proposition_type.should == Vote::PROPOSITION_TYPES.last
-    end
   end
 end

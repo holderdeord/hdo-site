@@ -51,16 +51,6 @@ class Issue < ActiveRecord::Base
     [prev_issue, next_issue]
   end
 
-  def update_attributes_and_votes_for_user_with_conflict_validation(attributes, votes, user)
-    # TODO: move this to controller, specs into issue_updater_spec.rb
-    Hdo::IssueUpdater.new(self, attributes, votes, user).execute
-  end
-
-  def update_attributes_and_votes_for_user(attributes, votes, user)
-    # TODO: move this to controller, specs into issue_updater_spec.rb
-    Hdo::IssueUpdater.new(self, attributes, votes, user).execute!
-  end
-
   def vote_for?(vote_id)
     vote_connections.any? { |vd| vd.matches? && vd.vote_id == vote_id  }
   end

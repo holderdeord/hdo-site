@@ -8,21 +8,23 @@ module Hdo
       @user       = user
     end
 
-    def execute
-      execute!
+    def update
+      update!
     rescue ActiveRecord::StaleObjectError
       @issue.errors.add :base, I18n.t('app.errors.issues.unable_to_save')
       false
+    rescue ActiveRecord::RecordInvalid
+      false
     end
 
-    def execute!
+    def update!
       @changed = false
 
       @user.transaction {
         update_votes
         update_attributes
         update_meta
-        save
+        save!
       }
     end
 
@@ -90,6 +92,10 @@ module Hdo
 
     def save
       @issue.save
+    end
+
+    def save!
+      @issue.save!
     end
 
   end

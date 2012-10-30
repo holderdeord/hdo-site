@@ -13,11 +13,11 @@ guard 'spork', :cucumber_env => { 'RAILS_ENV' => 'test' }, :rspec_env => { 'RAIL
   watch(%r{features/support/}) { :cucumber }
 end
 
-guard 'rspec', :version => 2, :spec_paths => %w[spec/models spec/controllers spec/lib spec/helpers] do
+guard 'rspec', :spec_paths => %w[spec/models spec/controllers spec/lib spec/helpers] do
   watch(%r{^spec/.+_spec\.rb$})
   watch(%r{^lib/(.+)\.rb$})                 { |m| "spec/lib/#{m[1]}_spec.rb" }
   watch(%r{^lib/hdo/import/(persister|party_membership_updater)\.rb$}) { |m| "spec/lib/hdo/import/persister" }
-  watch(%r{^lib/hdo/issue_updater\.rb$}) { |m| ["spec/models/issue_spec.rb", "spec/controllers/issues_controller_spec.rb"] }
+  watch(%r{^lib/hdo/issue_updater\.rb$}) { |m| %w[spec/models/issue_spec.rb spec/controllers/issues_controller_spec.rb spec/lib/issue_updater_spec.rb] }
   watch('spec/spec_helper.rb')              { "spec" }
 
   # Rails example
