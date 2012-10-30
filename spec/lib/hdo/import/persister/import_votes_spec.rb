@@ -159,8 +159,7 @@ module Hdo
           a, b = Vote.all
           a.should be_alternate_of(b)
 
-          a.external_id.should == '1'
-          b.external_id.should == '3'
+          [a.external_id, b.external_id].sort.should == %w[1 3]
         end
 
       end

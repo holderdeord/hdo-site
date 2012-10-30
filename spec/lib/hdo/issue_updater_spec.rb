@@ -78,6 +78,27 @@ module Hdo
         issue.votes[0].proposition_type.should == Vote::PROPOSITION_TYPES.first
         issue.votes[1].proposition_type.should == Vote::PROPOSITION_TYPES.last
       end
+
+      it 'does not touch the issue if proposition type is already nil or empty' do
+        vote_connection = VoteConnection.make!(matches: true)
+        vote            = vote_connection.vote
+        issue           = Issue.make! vote_connections: [vote_connection]
+
+        vote.proposition_type.should be_nil
+        issue.last_updated_by.should be_nil
+
+        votes = {
+          vote.id => {
+            direction: 'for',
+            weight: vote_connection.weight,
+            title: vote_connection.title,
+            proposition_type: '' # input is an empty string
+          }
+        }
+
+        IssueUpdater.new(issue, {}, votes, user).update!
+        issue.last_updated_by.should be_nil
+      end
     end
   end
 end

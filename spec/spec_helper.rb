@@ -28,7 +28,6 @@ Spork.prefork do
     config.color     = $stdout.tty?
     config.order     = :random
     config.drb       = true
-    config.formatter = 'Fuubar'
 
     config.fixture_path = "#{::Rails.root}/spec/fixtures"
     config.use_transactional_fixtures = false
