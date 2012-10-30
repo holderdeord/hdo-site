@@ -27,6 +27,7 @@ group :test do
   gem "database_cleaner", "~> 0.9.1"
   gem "loadable_component", ">= 0.1.1"
   gem 'simplecov', :require => false
+  gem 'fuubar'
 
   # guard
   gem 'guard'

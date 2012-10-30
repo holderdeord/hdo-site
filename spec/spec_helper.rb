@@ -25,9 +25,10 @@ Spork.prefork do
   Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
 
   RSpec.configure do |config|
-    config.color = $stdout.tty?
-    config.order = :random
-    config.drb   = true
+    config.color     = $stdout.tty?
+    config.order     = :random
+    config.drb       = true
+    config.formatter = 'Fuubar'
 
     config.fixture_path = "#{::Rails.root}/spec/fixtures"
     config.use_transactional_fixtures = false
