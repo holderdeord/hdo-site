@@ -4,7 +4,19 @@ namespace :travis do
     require 'faraday'
 
     data = JSON.parse(Faraday.get("https://travis-ci.org/holderdeord/hdo-site.json").body)
-    puts "#{data['slug']}: #{data['last_build_status'] == 0 ? 'passing' : 'failing'} @ #{Time.parse(data['last_build_finished_at']).localtime}"
+    time = data['last_build_finished_at'] || data['last_build_started_at']
+
+    status = case data['last_build_status']
+             when nil
+               'running'
+             when 0
+               'passing'
+             else
+               'failing'
+             end
+
+
+    puts "#{data['slug']}: #{status} @ #{Time.parse(time).localtime}"
   end
 end
 
