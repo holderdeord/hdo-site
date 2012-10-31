@@ -270,7 +270,6 @@ describe Admin::IssuesController do
       issue.last_updated_by.should be_nil
     end
 
-
     it 'sets last_updated_by when vote connections are added' do
       vote = Vote.make!
       issue.vote_connections = []

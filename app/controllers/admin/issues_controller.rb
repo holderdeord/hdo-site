@@ -1,6 +1,5 @@
 class Admin::IssuesController < AdminController
   before_filter :ensure_editable, except: :index
-  before_filter :fetch_issue
   before_filter :fetch_issue, only: [:edit, :update, :destroy, :votes_search]
 
   helper_method :edit_steps
@@ -92,7 +91,7 @@ class Admin::IssuesController < AdminController
       params[:filter],
       params[:keyword],
       @issue.categories
-      )
+    )
 
     # remove already connected votes
     votes -= @issue.vote_connections.map { |e| e.vote }
@@ -108,14 +107,15 @@ class Admin::IssuesController < AdminController
     render partial: 'votes_search_result', locals: { votes_by_issue_type: by_issue_type }
   end
 
+  private
+
   def edit_categories
     fetch_categories
   end
 
   def edit_promises
-    # TODO: confusing that we use @promises_by_party in both
-    # issue#edit and issue#show, but as wildly different data structures.
-    @promises_by_party = @issue.categories.includes(:promises).map(&:promises).compact.flatten.uniq.group_by { |e| e.short_party_names }
+    @promises_by_party = @issue.categories.includes(:promises).map(&:promises).compact.
+                                           flatten.uniq.group_by { |e| e.short_party_names }
   end
 
   def edit_votes
