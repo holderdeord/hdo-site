@@ -1,58 +1,28 @@
 <!DOCTYPE html>
 <html lang="<%= I18n.locale %>">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <%= render 'layouts/head' %>
 
-    <%= render partial: 'layouts/opengraph' %>
-
-    <title><%=t 'app.title' %></title>
-
-    <%= csrf_meta_tags %>
-    <%= stylesheet_link_tag "application", :media => "all" %>
-
-    <link href="/favicon.ico" rel="shortcut icon" />
-    <link href="/images/apple-touch-icon.png" rel="apple-touch-icon" />
-    <link href="/images/apple-touch-icon-72x72.png" rel="apple-touch-icon" sizes="72x72" />
-    <link href="/images/apple-touch-icon-114x114.png" rel="apple-touch-icon" sizes="114x114" />
-    <script>
-      var HDO = HDO || {};
-    </script>
-  </head>
   <body>
     <div class="wrapper">
-      <%= render partial: 'layouts/navigation' %>
+      <%= render 'layouts/navigation' %>
 
       <div class="ribbon visible-desktop">Under utvikling</div>
-
       <div id="hdo-content" class="container">
-        <% if flash.notice %>
-          <div class="alert alert-success"><%= flash.notice %></div>
-        <% end %>
-
-        <% if flash.alert %>
-          <div class="alert alert-error"><%= flash.alert %></div>
-        <% end %>
+        <%= render 'layouts/flash' %>
 
         <%= yield %>
-      </div> <!-- /container -->
+      </div>
       <div class="push"></div>
     </div>
 
     <footer>
-      <p><a href="https://twitter.com/holderdeord" class="twitter-follow-button" data-show-count="true">Følg @holderdeord</a></p>
-      <p>
-        <div class="fb-like" data-href="https://www.facebook.com/holderdeord" data-send="false" data-layout="button_count" data-width="70" data-show-faces="false"></div>
-      </p>
+      <%= render 'layouts/social'%>
       <p><%=t 'app.title' %> &copy; 2012.</p>
     </footer>
 
     <%= javascript_include_tag "application" %>
-    <%= render partial: 'layouts/ga' if Rails.env.production?  %>
-    <%= render partial: 'layouts/social'%>
-    <%= render partial: 'layouts/feedback' %>
+    <%= render 'layouts/ga' if Rails.env.production?  %>
+    <%= render 'layouts/feedback' %>
     <%= yield :document_ready %>
 
     </body>

@@ -1,4 +1,4 @@
-<%= twitter_bootstrap_form_for topic, :html => {:multipart => true} do |form| %>
+<%= twitter_bootstrap_form_for [:admin, topic], :html => {:multipart => true} do |form| %>
   <%# form.inputs do %>
     <div class="well">
       <%= form.text_field :name %>
@@ -27,7 +27,7 @@
   </div>
 
   <div class="pull-right">
-    <%= link_to t('app.cancel'), issues_path, :class => 'btn btn-danger' %>
+    <%= link_to t('app.cancel'), admin_issues_path, :class => 'btn btn-danger' %>
     <%= form.submit t('app.done'), class: 'btn btn-primary', name: 'finish' %>
   </div>
 

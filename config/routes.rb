@@ -1,33 +1,46 @@
 Hdo::Application.routes.draw do
-
   #
-  # Users
+  # user sign-in
   #
 
   devise_for :users
-  resources :users
 
   #
-  # issues
+  # admin
   #
 
-  resources :issues
+  namespace :admin do
+    resources :issues, except: :show do
+      member do
+        get 'edit/:step'   => 'issues#edit',         as: :edit_step
+        get 'votes/search' => "issues#votes_search", as: :vote_search
+      end
+    end
 
-  get 'issues/:id/votes'        => 'issues#votes', as: :issue_votes
-  get 'issues/:id/edit/:step'   => 'issues#edit', as: :edit_issue_step
-  get 'issues/:id/votes/search' => "issues#votes_search", as: :issue_votes_search
+    resources :users
+    resources :topics
+  end
+
+
+  #
+  # non-admin issues + topics
+  #
+
+  resources :issues, only: [:show, :votes]
+  get 'issues/:id/votes' => 'issues#votes', as: :issue_votes
+  get 'topics/:id' => 'topics#show', as: :topic
 
   #
   # districst
   #
 
-  resources :districts,  :only => [:index, :show]
+  resources :districts, only: [:index, :show]
 
   #
   # categories
   #
 
-  resources :categories, :only => [:index, :show] do
+  resources :categories, only: [:index, :show] do
     member do
       get 'promises'
       get 'promises/parties/:party' => 'categories#promises'
@@ -39,14 +52,13 @@ Hdo::Application.routes.draw do
   # parties, committees, topics
   #
   #
-  resources :parties,         :only => [:index, :show]
-  resources :committees,      :only => [:index, :show]
-  resources :topics
+  resources :parties,         only: [:index, :show]
+  resources :committees,      only: [:index, :show]
 
   #
   # promises
-  # 
-  resources :promises,        :only => [:index]
+  #
+  resources :promises,        only: [:index]
   get 'promises/page/:page'   => 'promises#index'
   get 'promises/show/:id'     => 'promises#show'
   get 'promises/category/:id' => 'promises#category'
@@ -55,14 +67,14 @@ Hdo::Application.routes.draw do
   # parliament_issues
   #
 
-  resources :parliament_issues, :path => 'parliament-issues', :only => [:index, :show]
+  resources :parliament_issues, path: 'parliament-issues', only: [:index, :show]
   get 'parliament-issues/page/:page' => 'parliament_issues#index'
 
   #
   # representatives
   #
 
-  resources :representatives, :only => [:index, :show]
+  resources :representatives, only: [:index, :show]
   get 'representatives/index/name'     => 'representatives#index_by_name', as: :representatives_by_name
   get 'representatives/index/party'    => 'representatives#index_by_party', as: :representatives_by_party
   get 'representatives/index/district' => 'representatives#index_by_district', as: :representatives_by_district

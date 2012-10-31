@@ -1,8 +1,7 @@
 require 'spec_helper'
 
-describe UsersController do
-
-  let(:user) { User.make! }
+describe Admin::UsersController do
+  let(:user)    { User.make! }
   before(:each) { sign_in user }
 
   it 'can show index' do
@@ -31,12 +30,12 @@ describe UsersController do
     assigns(:user).should == user.reload
     user.email.should == 'hello@example.com'
 
-    response.should redirect_to user_path(user)
+    response.should redirect_to admin_user_path(user)
   end
 
   it 'can destroy a user' do
     delete :destroy, id: user
 
-    response.should redirect_to users_path
+    response.should redirect_to admin_users_path
   end
 end

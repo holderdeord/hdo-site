@@ -5,7 +5,7 @@
     Denne saken er <%= @issue.status_text.downcase %>.
     <%= Issue.human_attribute_name :last_updated_by %> <%= @issue.last_updated_by_name %> <%= l @issue.updated_at.localtime %>.
 
-    <%= link_to t('app.edit'), edit_issue_path(@issue), class: 'btn btn-small' %>
+    <%= link_to t('app.edit'), edit_admin_issue_path(@issue), class: 'btn btn-small' %>
   </div>
 <% end %>
 

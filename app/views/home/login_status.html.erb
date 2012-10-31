@@ -1,10 +1,10 @@
 <ul class="nav pull-right">
   <% if user_signed_in? %>
-    <li><%= link_to User.model_name.human(count: 2).capitalize, users_path %></li>
-    <li><%= link_to Topic.model_name.human(count: 2).capitalize, topics_path %></li>
-    <li><%= link_to Issue.model_name.human(count: 2).capitalize, issues_path %></li>
+    <li><%= link_to User.model_name.human(count: 2).capitalize, admin_users_path %></li>
+    <li><%= link_to Topic.model_name.human(count: 2).capitalize, admin_topics_path %></li>
+    <li><%= link_to Issue.model_name.human(count: 2).capitalize, admin_issues_path %></li>
     <li><%= link_to t('app.logout'), destroy_user_session_path, method: 'delete' %></li>
   <% else %>
-      <li><%= link_to t('app.login'), new_user_session_path  %></li>
+    <li><%= link_to t('app.login'), new_user_session_path  %></li>
   <% end %>
 </ul>

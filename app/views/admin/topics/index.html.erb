@@ -13,7 +13,7 @@
       <tr>
         <td><%= link_to topic.name, topic %></td>
         <td>
-          <%= link_to t('.new', :default => t("helpers.links.edit")), edit_topic_path(topic), :class => 'btn' %>
+          <%= link_to t('.new', :default => t("helpers.links.edit")), edit_admin_topic_path(topic), :class => 'btn' %>
         </td>
         <td>
           <%= link_to t('.destroy', :default => t("helpers.links.destroy")), topic, method: :delete, data: { confirm: Topic.human_attribute_name(:confirm_destroy) }, class: 'btn btn-danger' %>
@@ -24,6 +24,6 @@
   </tbody>
 </table>
 
-<%= link_to t('.new', :default => t("helpers.links.new")), new_topic_path, :class => 'btn btn-primary' %>
+<%= link_to t('.new', :default => t("helpers.links.new")), new_admin_topic_path, :class => 'btn btn-primary' %>
 
 

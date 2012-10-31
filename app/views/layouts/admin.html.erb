@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="<%= I18n.locale %>">
+  <%= render 'layouts/head' %>
+
+  <body>
+    <%= render 'layouts/navigation' %>
+    <%= render 'layouts/admin_navigation' %>
+
+    <div id="hdo-content" class="container">
+      <%= render 'layouts/flash' %>
+      <%= yield %>
+    </div>
+
+    <%= javascript_include_tag "application" %>
+    <%= yield :document_ready %>
+    </body>
+</html>
