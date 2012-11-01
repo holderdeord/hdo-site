@@ -7,7 +7,7 @@ class Vote < ActiveRecord::Base
                   :proposition_type
 
   PROPOSITION_TYPES = I18n.t('app.votes.proposition_types').except(:none).keys.map(&:to_s)
-  validates_inclusion_of :proposition_type, 
+  validates_inclusion_of :proposition_type,
                          in: PROPOSITION_TYPES + [nil, '']
 
   has_and_belongs_to_many :parliament_issues, uniq: true
@@ -27,6 +27,7 @@ class Vote < ActiveRecord::Base
 
   friendly_id :external_id, use: :slugged
 
+  scope :latest,       lambda { |limit| order(:time).reverse_order.limit(limit) }
   scope :personal,     where(:personal => true)
   scope :non_personal, where(:personal => false)
   scope :with_results, includes(:parliament_issues, vote_results: {representative: {party_memberships: :party}})

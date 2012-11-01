@@ -18,6 +18,7 @@ nb:
       x_days:
         one: "1 dag"
         other: "%{count} dager"
+      about_x_hours: "omtrent %{count} timer"
   activerecord:
     errors:
       messages:

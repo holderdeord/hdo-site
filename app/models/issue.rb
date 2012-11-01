@@ -38,6 +38,7 @@ class Issue < ActiveRecord::Base
 
   scope :vote_ordered, includes(:votes).order('votes.time DESC')
   scope :published, where(:status => 'published')
+  scope :latest, lambda { |limit| order(:updated_at).reverse_order.limit(limit) }
 
   def previous_and_next(opts = {})
     issues = self.class.order(opts[:order] || :title)

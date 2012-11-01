@@ -26,6 +26,7 @@ class ParliamentIssue < ActiveRecord::Base
   friendly_id :external_id, use: :slugged
 
   scope :processed, where("status = ?", I18n.t("app.parliament_issue.states.processed"))
+  scope :latest,    lambda { |limit| order(:last_update).reverse_order.limit(limit) }
 
   def status_text
     status.gsub(/_/, ' ').capitalize

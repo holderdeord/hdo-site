@@ -1,0 +1,10 @@
+<h2>Sist oppdaterte stortingssaker</h2>
+
+<dl>
+  <% @parliament_issues_by_status.each do |status, parliament_issues| %>
+    <dt><%= status %>
+    <% parliament_issues.each do |pi| %>
+      <dd><%= distance_of_time_in_words pi.last_update, Time.now %> siden: <%= link_to pi.summary, pi %></dd>
+    <% end %>
+  <% end %>
+</dl>

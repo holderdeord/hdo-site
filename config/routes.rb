@@ -19,6 +19,8 @@ Hdo::Application.routes.draw do
 
     resources :users
     resources :topics
+
+    root to: "dashboard#index"
   end
 
 
@@ -116,5 +118,5 @@ Hdo::Application.routes.draw do
   # global search
   get 'search/all' => 'search#all', as: :search_all
 
-  root :to => 'home#index'
+  root to: 'home#index'
 end

@@ -1,0 +1,10 @@
+<h2>Sist oppdaterte saker</h2>
+
+<dl>
+  <% @issues_by_status.each do |status, issues| %>
+    <dt><%= status %>
+    <% issues.each do |issue| %>
+      <dd><%= distance_of_time_in_words issue.updated_at, Time.now %> siden: <%= link_to issue.title, issue %></dd>
+    <% end %>
+  <% end %>
+</dl>

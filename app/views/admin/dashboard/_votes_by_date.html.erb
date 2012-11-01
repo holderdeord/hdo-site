@@ -1,0 +1,12 @@
+<dl>
+  <% @votes_by_date.each do |date, votes| %>
+    <dt><%= distance_of_time_in_words date, Date.today %> siden</dt>
+
+    <% votes.sort_by(&:time).each do |vote| %>
+      <dd>
+        <%= link_to vote.subject.truncate(40), vote %>
+        <small class="muted">kl <%= vote.time.strftime("%H:%M") %></small>
+      </dd>
+    <% end %>
+  <% end %>
+</dl>

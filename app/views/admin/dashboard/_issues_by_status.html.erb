@@ -1,0 +1,13 @@
+<dl>
+  <% @issues_by_status.each do |status, issues| %>
+    <dt><%= status %>
+    <% issues.sort_by(&:updated_at).reverse.each do |issue| %>
+      <dd>
+        <%= link_to issue.title, issue %>
+        <p class="muted">
+          <small><%= distance_of_time_in_words issue.updated_at, Time.now %> siden av <%= issue.last_updated_by.name %></small>
+        </p>
+      </dd>
+    <% end %>
+  <% end %>
+</dl>

@@ -1,0 +1,13 @@
+<dl>
+  <% @parliament_issues_by_status.each do |status, parliament_issues| %>
+    <dt><%= status %>
+    <% parliament_issues.each do |pi| %>
+      <dd>
+        <%= link_to pi.summary.truncate(100), pi %>
+        <p class="muted">
+          <small><%= distance_of_time_in_words pi.last_update, Time.now %> siden kl <%= pi.last_update.strftime("%H:%M") %></small>
+        </p>
+      </dd>
+    <% end %>
+  <% end %>
+</dl>
