@@ -16,6 +16,7 @@
             <tbody>
               <% promises.each do |promise| %>
               <tr>
+                <td><%= promise.external_id %></td>
                 <td>
                   <label><%= promise.body %></label>
                   <small class="pull-right"><%= issues_for_promise @issue, promise %></small>
