@@ -53,21 +53,18 @@ end
 
 namespace :search do
   task :reindex, :except => { :no_release => true }, :role => :app do
-    run "cd #{current_path} && RAILS_ENV=production bundle exec rake search:reindex"
+    run "cd #{current_path} && RAILS_ENV=#{rails_env} #{rake} search:reindex"
   end
 end
 
-namespace :clear do
-  cmd = "cd %s && RAILS_ENV=production bundle exec rake db:clear:%s"
+namespace :cache do
+  task :precompute do
+    run "cd #{current_path} && RAILS_ENV=#{rails_env} #{rake} cache:precompute"
+  end
 
-  desc 'Clear promises'
-  task(:promises) { run(cmd % [current_path, 'promises']) }
-
-  desc 'Clear votes'
-  task(:votes)    { run(cmd % [current_path, 'votes'])    }
-
-  desc 'Clear the page cache.'
-  task(:cache) { run "rm -r #{current_path}/public/cache/*"}
+  namespace :pages do
+    task(:clear) { run "rm -r #{current_path}/public/cache/*" }
+  end
 end
 
 namespace :dragonfly do
@@ -77,5 +74,6 @@ namespace :dragonfly do
   end
 end
 
-after 'deploy:update_code',     'dragonfly:symlink'
-after 'deploy:finalize_update', 'db:config'
+after  'deploy:update_code', 'dragonfly:symlink'
+after  'deploy:update_code', 'db:config'
+after 'deploy:restart',      'cache:precompute'
