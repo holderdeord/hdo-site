@@ -1,6 +1,5 @@
 class DocsController < ApplicationController
   caches_page :index 
-  caches_page :analysis, if: lambda { flash.empty? }
 
   def index
     example = Hdo::StortingImporter::Representative.json_example.split("\n").join("\n  ")
