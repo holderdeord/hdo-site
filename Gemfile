@@ -45,6 +45,7 @@ group :development do
   gem "rails-erd"
 end
 
+gem 'requirejs-rails', :git => "git://github.com/jwhitley/requirejs-rails.git", :ref => "f0bda26753"
 gem 'pg'
 gem "thin"
 gem 'jquery-rails'
