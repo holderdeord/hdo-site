@@ -15,13 +15,40 @@ nb:
      month_names: [~, januar, februar, mars, april, mai, juni, juli, august, september, oktober, november, desember]
   datetime:
     distance_in_words:
-      x_days:
-        one: "1 dag"
-        other: "%{count} dager"
-      about_x_hours: "omtrent %{count} timer"
+      half_a_minute: "et halvt minutt"
+      less_than_x_seconds:
+        one:   "mindre enn 1 sekund"
+        other: "mindre enn %{count} sekunder"
+      x_seconds:
+        one:   "1 sekund"
+        other: "%{count} sekunder"
+      less_than_x_minutes:
+        one:   "mindre enn 1 minutt"
+        other: "mindre enn %{count} minutter"
       x_minutes:
-        one: "ett minutt"
+        one:   "1 minutt"
         other: "%{count} minutter"
+      about_x_hours:
+        one:   "omtrent 1 time"
+        other: "omtrent %{count} timer"
+      x_days:
+        one:   "omtrent 1 dag"
+        other: "%{count} dager"
+      about_x_months:
+        one:   "omtrent 1 måned"
+        other: "omtrent %{count} måneder"
+      x_months:
+        one:   "1 måned"
+        other: "%{count} måneder"
+      about_x_years:
+        one:   "omtrent 1 år"
+        other: "omtrent %{count} år"
+      over_x_years:
+        one:   "over 1 år"
+        other: "over %{count} år"
+      almost_x_years:
+        one:   "nesten 1 år"
+        other: "nesten %{count} år"
   activerecord:
     errors:
       messages:
