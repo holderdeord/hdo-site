@@ -19,6 +19,9 @@ nb:
         one: "1 dag"
         other: "%{count} dager"
       about_x_hours: "omtrent %{count} timer"
+      x_minutes:
+        one: "ett minutt"
+        other: "%{count} minutter"
   activerecord:
     errors:
       messages:
