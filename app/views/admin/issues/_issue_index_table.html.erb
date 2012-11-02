@@ -23,7 +23,10 @@
         </td>
         <td>
           <%= link_to t('app.edit'), edit_admin_issue_path(issue), class: 'btn btn-small' %>
-          <%= link_to t('app.destroy'), issue, method: :delete, data: { confirm: t('app.issues.edit.confirm_destroy', title: issue.title) }, class: 'btn btn-small btn-danger' %>
+          <%= link_to t('app.destroy'), admin_issue_path(issue),
+                method: :delete,
+                data: { confirm: t('app.issues.edit.confirm_destroy', title: issue.title) },
+                class: 'btn btn-small btn-danger' %>
         </td>
       </tr>
     <% end %>
