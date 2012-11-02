@@ -9,6 +9,7 @@
 
       <ul class="dropdown-menu">
         <li><%= link_to t('app.issues.edit.new'), new_admin_issue_path %></li>
+        <li><%= link_to 'Dashboard', admin_root_path %></li>
         <li><%= link_to Issue.model_name.human(count: 2).capitalize, admin_issues_path %></li>
         <li><%= link_to Topic.model_name.human(count: 2).capitalize, admin_topics_path %></li>
         <li><%= link_to t('app.documentation.default'), controller: 'docs', action: 'analysis' %></li>
