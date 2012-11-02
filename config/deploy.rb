@@ -74,6 +74,6 @@ namespace :dragonfly do
   end
 end
 
-after  'deploy:update_code', 'dragonfly:symlink'
-after  'deploy:update_code', 'db:config'
+after 'deploy:update_code', 'dragonfly:symlink'
+after 'deploy:update_code', 'db:config'
 after 'deploy:restart',      'cache:precompute'
