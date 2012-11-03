@@ -32,20 +32,21 @@ namespace :deploy do
   task :restart, :roles => :app, :except => { :no_release => true } do
     run "#{try_sudo} touch #{File.join(current_path,'tmp','restart.txt')}"
   end
+end
 
-  namespace :web do
-    task :disable, :roles => :web do
-      on_rollback { rm "#{shared_path}/system/maintenance.html" }
+namespace :web do
+  task :disable, :roles => :web do
+    on_rollback { rm "#{shared_path}/system/maintenance.html" }
 
-      require 'erb'
-      maintenance = ERB.new(File.read("./app/views/layouts/maintenance.erb")).result(binding)
+    require 'erb'
+    maintenance = ERB.new(File.read("./app/views/layouts/maintenance.erb")).result(binding)
 
-      put maintenance, "#{shared_path}/system/maintenance.html", :mode => 0644
-    end
+    put maintenance, "#{shared_path}/system/maintenance.html", :mode => 0644
   end
 end
 
 namespace :db do
+  # moves the file created by puppet. TOCO: find a better way to deal with this
   task :config, :except => { :no_release => true }, :role => :app do
     run "cp -f /home/hdo/.hdo-database-pg.yml #{release_path}/config/database.yml"
   end
@@ -76,4 +77,3 @@ end
 
 after 'deploy:update_code', 'dragonfly:symlink'
 after 'deploy:update_code', 'db:config'
-after 'deploy:restart',      'cache:precompute'
