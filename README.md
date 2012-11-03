@@ -130,7 +130,7 @@ A subset from [data.stortinget.no](http://data.stortinget.no):
 
     $ rake import:dev
 
-## Create ElasticSearch indeces
+## Create ElasticSearch indices
 
     $ rake search:reindex
 
