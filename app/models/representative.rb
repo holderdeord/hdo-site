@@ -8,7 +8,10 @@ class Representative < ActiveRecord::Base
 
   tire.settings(TireSettings.default) {
     mapping do
-      indexes :district
+      indexes :district do
+        indexes :name, type: :string
+      end
+
       indexes :current_party
       indexes :full_name, index: :not_analyzed
       indexes :last_name, index: :not_analyzed
