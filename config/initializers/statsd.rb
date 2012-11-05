@@ -1,3 +1,3 @@
 require 'hdo/instrumentation'
 
-Hdo::Instrumentation.init
+Hdo::Instrumentation.init if AppConfig.statsd_enabled
