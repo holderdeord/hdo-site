@@ -32,16 +32,16 @@ namespace :deploy do
   task :restart, :roles => :app, :except => { :no_release => true } do
     run "#{try_sudo} touch #{File.join(current_path,'tmp','restart.txt')}"
   end
-end
 
-namespace :web do
-  task :disable, :roles => :web do
-    on_rollback { rm "#{shared_path}/system/maintenance.html" }
+  namespace :web do
+    task :disable, :roles => :web do
+      on_rollback { rm "#{shared_path}/system/maintenance.html" }
 
-    require 'erb'
-    maintenance = ERB.new(File.read("./app/views/layouts/maintenance.erb")).result(binding)
+      require 'erb'
+      maintenance = ERB.new(File.read("./app/views/layouts/maintenance.erb")).result(binding)
 
-    put maintenance, "#{shared_path}/system/maintenance.html", :mode => 0644
+      put maintenance, "#{shared_path}/system/maintenance.html", :mode => 0644
+    end
   end
 end
 
