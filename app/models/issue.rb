@@ -1,5 +1,6 @@
 class Issue < ActiveRecord::Base
   extend FriendlyId
+
   include Hdo::Model::HasStatsCache
   include Tire::Model::Search
 
@@ -9,6 +10,14 @@ class Issue < ActiveRecord::Base
       indexes :title,       type: :string, analyzer: TireSettings.default_analyzer, boost: 100
       indexes :status,      type: :string, index: :not_analyzed
       indexes :slug,        type: :string, index: :not_analyzed
+
+      indexes :categories do
+        indexes :name, type: :string, analyzer: TireSettings.default_analyzer
+      end
+
+      indexes :topics do
+        indexes :name, type: :string, analyzer: TireSettings.default_analyzer
+      end
     }
   }
 
@@ -82,6 +91,10 @@ class Issue < ActiveRecord::Base
 
   def last_updated_by_name
     last_updated_by ? last_updated_by.name : I18n.t('app.nobody')
+  end
+
+  def to_indexed_json
+    to_json include: [:topics, :categories]
   end
 
   private
