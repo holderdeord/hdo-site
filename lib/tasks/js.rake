@@ -43,4 +43,11 @@ namespace :js do
     end
   end
 
+  desc "Install npm dependencies"
+  task :install do
+    deps = %w[buster autolint buster-amd]
+    sh "npm", "-g", "install", *deps
+    # TODO || (sleep 5 && npm install -g buster autolint)
+  end
+
 end
