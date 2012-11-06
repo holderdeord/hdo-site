@@ -1,7 +1,7 @@
 <ul class="nav pull-right">
   <% if user_signed_in? %>
     <li><%= link_to User.model_name.human(count: 2).capitalize, admin_users_path %></li>
-    <li class="dropdown <%= active_status_for(:admin_issues_index) %>">
+    <li class="dropdown">
       <a class="dropdown-toggle" data-toggle="dropdown" href="#analysis">
         <%= t 'app.analysis' %>
         <b class="caret"></b>
