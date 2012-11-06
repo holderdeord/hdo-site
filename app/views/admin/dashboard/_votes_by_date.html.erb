@@ -4,8 +4,11 @@
 
     <% votes.sort_by(&:time).each do |vote| %>
       <dd>
-        <%= link_to vote.subject.truncate(40), vote %>
-        <small class="muted">kl <%= vote.time.strftime("%H:%M") %></small>
+        <%= link_to vote.subject, vote %>
+        <small class="muted">
+          kl <%= vote.time.strftime("%H:%M") %>
+          <p><%= vote.parliament_issues.map { |e| e.summary }.to_sentence %></p>
+        </small>
       </dd>
     <% end %>
   <% end %>
