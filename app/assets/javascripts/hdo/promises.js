@@ -1,6 +1,4 @@
-var HDO = HDO || {};
-
-(function (H, $) {
+define(["jquery"], function ($) {
 
   var emptyResultsMessage = '<div class="empty-results-message hidden">' +
                               '<h3>Partiet har ingen løfter i denne kategorien.</h3>' +
@@ -154,7 +152,7 @@ var HDO = HDO || {};
     this.server.fetchPromises(categoryId, renderAndFilterResultsForMobile.bind(this));
   }
 
-  HDO.promiseWidget = {
+  return {
     create: function (params) {
       var instance = Object.create(this);
       instance.server = params.server;
@@ -180,6 +178,6 @@ var HDO = HDO || {};
     }
   };
 
-}(HDO, jQuery));
+});
 
 

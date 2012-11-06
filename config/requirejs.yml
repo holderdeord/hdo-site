@@ -1,0 +1,20 @@
+modules:
+  - name: "bundle"
+optimize: uglify
+paths:
+  "jquery.tabSlideOut": "lib/tabSlideOut"
+  "prettyprint":        "lib/prettify"
+shim:
+  "jquery.tabSlideOut":
+    deps:
+      - "jquery"
+    exports:  "jQuery.fn.tabSlideOut"
+  "twitter/bootstrap":
+    deps:
+      - "jquery"
+  "prettyprint":
+    exports:  "prettyPrintOne"
+  "highcharts":
+    deps:
+      - "jquery"
+    exports:  "Highcharts"

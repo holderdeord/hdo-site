@@ -1,8 +1,6 @@
-/* global HDO, Highcharts */
+define(["highcharts"], function (Highcharts) {
 
-(function (HDO, Highcharts) {
-
-  HDO.voteChart = {
+  return {
     create: function (selector, data) {
       var instance = Object.create(this);
       instance.selector = selector;
@@ -64,4 +62,4 @@
     }
   };
 
-}(HDO, Highcharts));
+});

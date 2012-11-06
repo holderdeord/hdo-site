@@ -49,11 +49,11 @@
 
 <% content_for :document_ready do %>
   <script>
-    $(document).ready(function () {
-      var widget = HDO.promiseWidget.create({
+    require(["hdo/promises", "hdo/promiseServerFacade"], function (promises, promiseServerFacade) {
+      var widget = promises.create({
         targetEl: $(".promises-results"),
         categoriesSelector: $(".categories"),
-        server: HDO.promiseServerFacade,
+        server: promiseServerFacade,
         activeParty: '<li class="<%= @party.slug %>-active"><a href="#" data-party-slug="<%= @party.slug %>"></a></li>',
         spinnerEl: $("#spinner")
       });

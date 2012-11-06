@@ -26,8 +26,8 @@
 
 <%= content_for :document_ready do %>
 <script>
-$(document).ready(function() {
-  var index = HDO.representativeIndex.create({
+require(["hdo/representativeIndex"], function(representativeIndex) {
+  var index = representativeIndex.create({
     sortSelector: '#sort',
     resultSelector: '#representatives',
     paths: {

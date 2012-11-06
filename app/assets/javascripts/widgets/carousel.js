@@ -1,13 +1,12 @@
-var HDO = HDO || {};
-(function (H, $, _) {
-  H.initRepresentativeCarousel = function () {
-    var carousel = document.getElementById("representative-carousel"),
-      loader,
+define(["jquery", "hdo/lazyLoadCarouselImages", "twitter/bootstrap"], function ($, lazyLoadCarouselImages) {
+
+  return function (carousel) {
+    var loader,
       prev;
 
     if (!carousel) { return; }
 
-    loader = H.lazyLoadCarouselImages.create(carousel);
+    loader = lazyLoadCarouselImages.create(carousel);
     loader.init();
 
     // Override carousel.prev, to avoid cycling backwards from the start frame.
@@ -18,7 +17,8 @@ var HDO = HDO || {};
       prev.call(this);
     };
 
-    $("#representative-carousel").carousel({interval: false});
+    $(carousel).carousel({interval: false});
 
   };
-}(HDO, window.jQuery, _));
+
+});

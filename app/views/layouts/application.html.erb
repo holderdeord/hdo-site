@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="<%= I18n.locale %>">
   <%= render 'layouts/head' %>
-
   <body>
     <div class="wrapper">
       <%= render 'layouts/navigation' %>
@@ -19,10 +18,10 @@
       <%= render 'layouts/social'%>
       <p><%=t 'app.title' %> &copy; 2012.</p>
     </footer>
-
-    <%= javascript_include_tag "application" %>
-    <%= render 'layouts/ga' if Rails.env.production?  %>
-    <%= render 'layouts/feedback' %>
+    
+    <%= requirejs_include_tag Rails.env.production? ? "bundle" : "application" %>
+    <%= render partial: 'layouts/ga' if Rails.env.production?  %>
+    <%= render partial: 'layouts/feedback' %>
     <%= yield :document_ready %>
 
     </body>

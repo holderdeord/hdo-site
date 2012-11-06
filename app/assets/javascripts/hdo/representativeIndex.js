@@ -1,8 +1,6 @@
-/* global HDO, jQuery */
+define(["jquery"], function ($) {
 
-(function (HDO, $) {
-
-  HDO.representativeIndex = {
+  return {
     create: function (options) {
       var instance = Object.create(this);
       instance.options = options;
@@ -60,5 +58,5 @@
     }
 
   };
-}(HDO, jQuery));
+});
 

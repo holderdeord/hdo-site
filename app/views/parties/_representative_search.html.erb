@@ -4,9 +4,9 @@
 
 <% content_for :document_ready do %>
   <script>
-    $(document).ready(function() {
+    require(["hdo/representativeSearch"], function(search) {
       var representatives = <%= representatives.to_json.html_safe %>;
-      HDO.representativeSearch.init(document.getElementById("representativeSearch"), representatives);
+      search.init(document.getElementById("representativeSearch"), representatives);
     });
   </script>
 <% end %>

@@ -1,7 +1,5 @@
-/* global HDO */
-
-(function (HDO) {
-  HDO.votePropositionFetcher = {
+define(["jquery"], function ($) {
+  return {
     create: function () {
       var instance = Object.create(this);
       return instance;
@@ -44,4 +42,4 @@
       });
     }
   };
-}(HDO));
+});

@@ -1,9 +1,6 @@
-var HDO = this.HDO || {};
-var JZ = this.JZ || {};
+define(["./serverFacade"], function (serverFacade) {
 
-(function (H, J) {
-
-  H.promiseServerFacade = J.serverFacade.create({
+  return serverFacade.create({
     fetchPromises: function (categoryId, callback) {
       var url = '/categories/' + categoryId + '/promises';
       this.get(url, {}, { success: callback});
@@ -14,4 +11,5 @@ var JZ = this.JZ || {};
       this.get(url, {}, { success: callback});
     }
   });
-}(HDO, JZ));
+
+});
