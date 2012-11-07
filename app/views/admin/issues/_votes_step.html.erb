@@ -1,52 +1,18 @@
-<h3>
-  <%= t('app.issues.edit.connected_votes') %>
-  <small class="pull-right"><%= t('app.counts.vote', count: @votes_and_connections.size).html_safe %></small>
-</h3>
+<div class="row-fluid">
+  <div class="tabbable">
+    <ul class="nav nav-tabs">
+      <li class="span6 active"><a data-toggle="tab" href="#connected-tab"><%= t 'app.issues.edit.connected_votes' %></a></li>
+      <li class="span6"><a data-toggle="tab" href="#search-tab"><%= t 'app.search.button' %></a></li>
+    </ul>
 
-<div class="vote-container">
-  <%= render partial: 'votes_list', locals: { votes_and_connections: @votes_and_connections} %>
-</div>
+    <div class="tab-content">
+      <div class="tab-pane active" id="connected-tab">
+        <%= render 'votes_connected' %>
+      </div>
 
-<div class="well form-horizontal">
-  <h3><%= t('app.issues.edit.find_votes') %></h3>
-
-  <div class="control-group">
-    <label for="keyword"><%= t('app.issues.edit.keyword') %>:</label>
-    <input id="keyword" type="text" class="input-medium search-query">
-  </div>
-
-  <div class="control-group">
-    <label for="filter"><%= t('app.issues.edit.filter') %>:</label>
-
-    <select id="filter">
-      <option value="selected-categories"><%= t('app.issues.edit.selected_categories') %></option>
-      <option value="all"><%= t('app.issues.edit.all') %></option>
-      <option value="not-connected"><%= t('app.issues.edit.not_connected') %></option>
-    </select>
-  </div>
-
-  <div class="control-group">
-    <button id="reset" type="submit" class="btn btn-warning"><%= t('app.issues.edit.reset') %></button>
-    <button id="fetch-votes" type="submit" class="btn btn-info"><%= t('app.issues.edit.fetch_votes') %></button>
+      <div class="tab-pane" id="search-tab">
+        <%= render 'votes_search' %>
+      </div>
+    </div>
   </div>
 </div>
-
-<h3>
-  <%= t('app.issues.edit.search_result') %>
-  <small class="pull-right" id="result-count"></small>
-</h3>
-
-
-<%= spinner_tag %>
-<div class="vote-container" id="result"></div>
-
-<%= content_for :document_ready do %>
-<script type="text/javascript" charset="utf-8">
-  $(document).ready(function() {
-    var url = <%= vote_search_admin_issue_path(@issue).to_json.html_safe %>;
-
-    HDO.voteSearcher.create(url).init();
-    HDO.votePropositionFetcher.create().init();
-  });
-</script>
-<% end %>

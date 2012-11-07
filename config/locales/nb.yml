@@ -316,6 +316,7 @@ nb:
         fetch_votes: Søk
         search_result: Søkeresultat
         disabled: På grunn av serverbytte er saksredigering midlertidig deaktivert.
+        view_proposition_body: Se forslagstekst
       view_vote: 'Se hva de stemte'
       view_votes:
         one: 'Se avstemningen'
