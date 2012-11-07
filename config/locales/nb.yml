@@ -233,6 +233,8 @@ nb:
       search: 'Uff, vi har litt problemer med å søke for øyeblikket. Prøv igjen senere!'
       issues:
         unable_to_save: "Kunne ikke lagre, saken er blitt endret i mellomtiden."
+    admin:
+      latest_from_parliament: Siste fra Stortinget
     published: Publisert
     next: "Neste"
     previous: "Forrige"
@@ -263,8 +265,8 @@ nb:
     contact_us: 'Kontakt oss'
     email: "kontakt@holderdeord.no"
     documentation:
-      default: "Dokumentasjon"
-      technical: "Teknisk"
+      method: Metodikk
+      technical: Teknisk
     "yes": 'Ja'
     "no": 'Nei'
     show: "Vis"
