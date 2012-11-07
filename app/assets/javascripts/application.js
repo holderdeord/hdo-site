@@ -44,7 +44,7 @@
 //   <%= @myData.to_json.html_safe %>;
 // });
 //
-// The widget/module have to require the data on demand to avoid comilation errors when building
+// The widget/module have to require the data on demand to avoid compilation errors when building
 // the production bundle.
 //
 // var myData = require("myData"); // notice no array => sync require instead of async
