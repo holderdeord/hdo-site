@@ -1,6 +1,8 @@
 // JavaScript should now be defined using AMD-syntax:
 // http://addyosmani.com/writing-modular-js/
 //
+// RequireJS docs: http://requirejs.org/docs/api.html
+//
 // Without AMD:
 // var myModule = (function ($) {
 //   return {...};
@@ -13,7 +15,13 @@
 // });
 //
 // You can depend on scripts using the assets-pipeline name, and add a shim config in requirejs.yml
-// if it is not using AMD.
+// if it is not using AMD. jQuery-plugins typically don't have to use exports. See requirejs docs
+// for more info about shims: http://requirejs.org/docs/api.html#config-shim
+// shim:
+//   "highcharts":
+//     deps:
+//       - "jquery"
+//     exports:  "Highcharts"
 //
 // This is the main script for requirejs on every page of the site. Inline script has been replaced
 // with re-usable widgets. In development mode the widgets and dependencies will be loaded async on
