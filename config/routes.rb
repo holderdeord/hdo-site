@@ -108,6 +108,9 @@ Hdo::Application.routes.draw do
   get "home/people"
   get "home/method" => "home#about_method", as: :home_method
 
+  # norwegian aliases - don't overdo this without a proper solution
+  get "bli-med" => "home#join"
+
   #
   # docs
   #
