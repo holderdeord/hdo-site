@@ -24,7 +24,7 @@
   <%= render partial: 'index_by_name', locals: { representatives: @representatives } %>
 </div>
 
-<%= content_for :document_ready do %>
+<%= content_for :document_bottom do %>
 <script>
 require(["hdo/representativeIndex"], function(representativeIndex) {
   var index = representativeIndex.create({

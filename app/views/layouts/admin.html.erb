@@ -12,5 +12,6 @@
     </div>
 
     <%= requirejs_include_tag Rails.env.production? ? "bundle" : "application" %>
-    </body>
+    <%= yield :document_bottom %>
+  </body>
 </html>

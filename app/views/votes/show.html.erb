@@ -72,7 +72,7 @@
   </tbody>
 </table>
 
-<% content_for :document_ready do %>
+<% content_for :document_bottom do %>
 <script>
   define("chartData", function () {
     return <%= @stats.to_json.html_safe %>;

@@ -2,7 +2,7 @@
   <input id="representativeSearch" type="search" name="representative-search" class="typeahead" placeholder="Søk etter representant">
 </div>
 
-<% content_for :document_ready do %>
+<% content_for :document_bottom do %>
   <script>
     require(["hdo/representativeSearch"], function(search) {
       var representatives = <%= representatives.to_json.html_safe %>;

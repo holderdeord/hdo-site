@@ -20,9 +20,10 @@
     </footer>
     
     <%= requirejs_include_tag Rails.env.production? ? "bundle" : "application" %>
+    <%= yield :document_bottom %>
+    
     <%= render partial: 'layouts/ga' if Rails.env.production?  %>
     <%= render partial: 'layouts/feedback' %>
-    <%= yield :document_ready %>
 
     </body>
 </html>
