@@ -4,10 +4,9 @@ config["HDO javascript tests"] = {
     rootPath: "../",
     environment: "browser",
     libs: [
-        "spec/javascript/lib/require-conf.js",
-        "spec/javascript/lib/require.js",
-        "spec/javascript/lib/jquery-1.7.2.min.js",
-        "spec/javascript/lib/bootstrap.js"
+        "tmp/buster/require-conf.js",
+        "tmp/buster/require.js",
+        "tmp/buster/**/*.js"
     ],
     sources: [
         "app/assets/javascripts/hdo/lazyLoadCarouselImages.js",

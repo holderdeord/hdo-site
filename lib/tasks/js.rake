@@ -6,10 +6,44 @@ namespace :js do
     end
   end
 
-  desc 'Run JS tests with Buster (requires node + buster)'
-  task :test do
-    # turn this into a buster-rails gem?
+  task :copy_assets => :environment do
+    mkdir_p Rails.root.join('tmp/buster')
 
+    %w[require twitter/bootstrap jquery].each do |name|
+      asset = Rails.application.assets.find_asset(name) or raise "couldn't find #{name.inspect}"
+      dest = Rails.root.join("tmp/buster/#{name}.js")
+
+      puts "writing #{asset.pathname} to #{dest}"
+
+      mkdir_p dest.dirname
+      asset.write_to(dest)
+    end
+  end
+
+  task :setup => [:copy_assets, 'tmp/buster/require-conf.js']
+
+  file 'tmp/buster/require-conf.js' do |t|
+    gem_assets       = ["twitter/bootstrap"]
+    requirejs_config = YAML.load_file(Rails.root.join("config/requirejs.yml"))
+
+    config = {
+      'paths' => {},
+      'shim' => requirejs_config['shim']
+    }
+
+    config['paths']['hdo'] = 'app/assets/javascripts/hdo'
+    requirejs_config['shim'].each_key do |key|
+      tmp_path = "tmp/buster/#{key}"
+      config['paths'][key] = tmp_path if File.exist?("#{tmp_path}.js")
+    end
+
+    File.open(t.name, "w") do |io|
+      io << "var require = #{config.to_json}"
+    end
+  end
+
+  desc 'Run JS tests with Buster (requires node + buster)'
+  task :test => :setup do
     require 'childprocess'
     require 'selenium-webdriver'
 
