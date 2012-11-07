@@ -1,5 +1,5 @@
 define(["jquery", "jquery-tablesorter"], function ($) {
-	return function (table) {
-		$(table).tablesorter();
-	};
+  return function (table) {
+    $(table).tablesorter();
+  };
 });
