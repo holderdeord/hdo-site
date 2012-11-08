@@ -1,5 +1,5 @@
 module.exports = {
-  paths: [ "../app/assets/javascripts/*.js" ],
+  paths: [ "../app/assets/javascripts/**/*.js" ],
   linter: "jslint",
   linterOptions: {
     browser: true,
@@ -8,7 +8,7 @@ module.exports = {
     maxlen: 120,
     indent: 2,
     plusplus: true,
-    predef: ["HDO", "jQuery", "$", "_", "Highcharts"] // globals
+    predef: ["define", "require", "console"] // globals
   },
-  excludes: ["../app/assets/javascripts/lib/*.js"]
+  excludes: ["app/assets/javascripts/lib/"]
 };

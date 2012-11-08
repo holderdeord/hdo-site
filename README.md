@@ -180,6 +180,10 @@ Run affected specs automatically when files change:
 
 # JavaScript:
 
+## RequireJS
+
+JavaScript should now be defined using AMD-syntax. See app/assets/javascript/application.js for details.
+
 ## Testing
 
 We use [buster.js](http://busterjs.org/) for JavaScript testing.
@@ -188,9 +192,9 @@ To run the tests you need to have buster.js installed.
 Buster.JS on the command-line requires Node 0.6.3 or newer and NPM.
 Node 0.6.3 and newer comes with NPM bundled on most platforms.
 
-Install buster and autolint:
+Install npm dependencies:
 
-    $ npm install -g buster autolint
+    $ rake js:install
 
 To run the tests once:
 
@@ -207,7 +211,7 @@ To add more tests, update the config in spec/buster.js.
 
 ## Linting
 
-    $ npm install -g autolint
+    $ rake js:install
     $ rake js:lint
 
 or

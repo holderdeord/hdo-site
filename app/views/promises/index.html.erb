@@ -59,15 +59,15 @@
   </div>
 </div>
 
-<% content_for :document_ready do %>
+<% content_for :document_bottom do %>
   <script>
-    $(document).ready(function () {
-      var widget = HDO.promiseWidget.create({
+    require(["hdo/promises", "hdo/promiseServerFacade"], function (promises, promiseServerFacade) {
+      var widget = promises.create({
         targetEl: $(".promises-results"),
         categoriesSelector: $(".categories"),
         partiesSelector: $(".party-nav"),
         subCategoriesSelector: $("#subcategory-dropdown"),
-        server: HDO.promiseServerFacade,
+        server: promiseServerFacade,
         activeParty: $(".show-all-active").get(0),
         spinnerEl: $("#spinner")
       });

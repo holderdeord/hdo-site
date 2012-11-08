@@ -3,14 +3,18 @@ var config = module.exports;
 config["HDO javascript tests"] = {
     rootPath: "../",
     environment: "browser",
+    libs: [
+        "tmp/buster/require-conf.js",
+        "tmp/buster/require.js",
+        "tmp/buster/**/*.js"
+    ],
     sources: [
-        "spec/javascript/lib/*.js",
-        "app/assets/javascripts/lib/*.js",
-        "app/assets/javascripts/lazyLoadCarouselImages.js",
-        "app/assets/javascripts/representativeSearch.js",
-        "app/assets/javascripts/promises.js"
+        "app/assets/javascripts/hdo/lazyLoadCarouselImages.js",
+        "app/assets/javascripts/hdo/representativeSearch.js",
+        "app/assets/javascripts/hdo/promises.js"
     ],
     tests: [
-        "spec/javascript/*Test.js"
-    ]
+        "spec/javascript/**/*Test.js"
+    ],
+    extensions: [require("buster-amd")]
 };

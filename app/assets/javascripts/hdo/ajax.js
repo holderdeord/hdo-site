@@ -1,7 +1,4 @@
-var JZ = this.JZ || {};
-
-(function ($) {
-
+define(["jquery"], function ($) {
   var errorCodes = {
     400: 'accessDenied',
     500: 'internalServerError'
@@ -43,9 +40,9 @@ var JZ = this.JZ || {};
     $.ajax(opts);
   }
 
-  JZ.ajax = {
+  return {
     postJSON: postJSON,
     get: get
   };
 
-}(jQuery));
+});

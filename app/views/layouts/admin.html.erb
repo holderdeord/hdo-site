@@ -11,7 +11,7 @@
       <%= yield %>
     </div>
 
-    <%= javascript_include_tag "application" %>
-    <%= yield :document_ready %>
-    </body>
+    <%= requirejs_include_tag Rails.env.production? ? "bundle" : "application" %>
+    <%= yield :document_bottom %>
+  </body>
 </html>

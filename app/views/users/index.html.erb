@@ -1,0 +1,23 @@
+<h1><%= User.model_name.human(count: 2).capitalize %></h1>
+
+<table class="table table-striped" data-widget="tablesorter">
+  <tr>
+    <th><%= User.human_attribute_name :name %></th>
+    <th><%= User.human_attribute_name :email %></th>
+    <th></th>
+  </tr>
+
+<% @users.each do |user| %>
+  <tr>
+    <td><%= user.name %></td>
+    <td><%= user.email %></td>
+    <td>
+      <%= link_to (User.human_attribute_name :edit), edit_user_path(user), :class => 'btn' %>
+      <%= link_to (User.human_attribute_name :destroy), user, method: :delete, data: { confirm: User.human_attribute_name(:confirm_destroy) }, :class => 'btn btn-danger' %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to User.human_attribute_name(:new), new_user_path, :class => 'btn' %>

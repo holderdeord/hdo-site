@@ -1,6 +1,4 @@
-/* global HDO*/
-
-(function (H, $) {
+define(["jquery", "hdo/promises"], function ($, promises) {
   buster.testCase('Promises page - Categories', {
     setUp: function () {
       var el = $('<div id="categories">' +
@@ -13,7 +11,7 @@
         fetchPromises: this.spy()
       }
       this.target = $(document.createElement("div"));
-      this.widget = HDO.promiseWidget.create({
+      this.widget = promises.create({
         categoriesSelector: el,
         server: this.server,
         targetEl: this.target
@@ -103,7 +101,7 @@
 
       this.messageDiv = this.targetEl.find('.empty-results-message').get(0);
 
-      this.widget = HDO.promiseWidget.create({
+      this.widget = promises.create({
         categoriesSelector: categoryEl,
         partiesSelector: partyEl,
         server: this.server,
@@ -205,7 +203,7 @@
         getSubCategories: this.spy()
       }
 
-      this.widget = HDO.promiseWidget.create({
+      this.widget = promises.create({
         categoriesSelector: this.categoryEl,
         partiesSelector: partyEl,
         server: this.server,
@@ -227,4 +225,4 @@
       refute.className(this.subCategoriesEl.get(0), 'hidden');
     }
   });
-}(HDO, jQuery));
+});

@@ -1,12 +1,10 @@
-var HDO = HDO || {};
-
-(function (H, $, _) {
+define(["jquery", "twitter/bootstrap"], function ($) {
 
   function clearInput() {
     $(this).val("");
   }
 
-  H.representativeSearch = {
+  return {
 
     init: function (element, data) {
       var source = this.parse(data);
@@ -22,7 +20,7 @@ var HDO = HDO || {};
     },
 
     parse: function (data) {
-      return _.map(data, function (obj) {
+      return $.map(data, function (obj) {
         return {
           id: obj.slug,
           name: [obj.first_name, obj.last_name].join(" ")
@@ -30,4 +28,4 @@ var HDO = HDO || {};
       });
     }
   };
-}(HDO, $, _));
+});

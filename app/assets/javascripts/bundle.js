@@ -1,0 +1,23 @@
+require([
+  "application",
+  "require",
+  "widgets/carousel",
+  "widgets/dropdownToggle",
+  "widgets/feedback",
+  "widgets/login",
+  "widgets/prettyPrint",
+  "widgets/submitStep",
+  "widgets/tablesorter",
+  "widgets/voteChart",
+  "hdo/ajax",
+  "hdo/lazyLoadCarouselImages",
+  "hdo/login",
+  "hdo/promises",
+  "hdo/promiseServerFacade",
+  "hdo/representativeIndex",
+  "hdo/representativeSearch",
+  "hdo/serverFacade",
+  "hdo/voteChart",
+  "hdo/votePropositionFetcher",
+  "hdo/voteSearcher"
+], function () {});

@@ -1,6 +1,4 @@
-/* global HDO */
-
-(function (H, $) {
+define(["jquery", "hdo/lazyLoadCarouselImages"], function ($, lazyLoadCarouselImages) {
   buster.testCase('Lazy Load Carousel Images', {
     setUp: function () {
       this.element = document.createElement("div");
@@ -15,13 +13,13 @@
         "<img alt='Eva Vinje Aurdal' class='representative-carousel-image' src='' data-src='/assets/6.jpg' />" +
        "</div></div>";
 
-      this.loader = H.lazyLoadCarouselImages.create(this.element);
+      this.loader = lazyLoadCarouselImages.create(this.element);
       this.loader.init();
     },
 
     "should require an element": function () {
       assert.exception(function () {
-        H.lazyLoadCarouselImages.create();
+        lazyLoadCarouselImages.create();
       }, "TypeError");
     },
 
@@ -52,5 +50,4 @@
       refute($(this.element).find("img[data-src]").get(0));
     }
   });
-
-}(HDO, jQuery));
+});

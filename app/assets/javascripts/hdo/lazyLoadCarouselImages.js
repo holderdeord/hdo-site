@@ -1,13 +1,11 @@
-var HDO = HDO || {};
+define(["jquery"], function ($) {
 
-(function (H, $) {
-
-  function updateSrc(img) {
+  function updateSrc(i, img) {
     img.src = $(img).attr("data-src");
     $(img).removeAttr("data-src");
   }
 
-  H.lazyLoadCarouselImages = {
+  return {
     create: function (element) {
       if (!element) {
         throw new TypeError("HDO.lazyLoadCarouselImages requires an element");
@@ -24,11 +22,12 @@ var HDO = HDO || {};
     updateImageSrc: function () {
       var targetItem = $(this.element).find(".item").get(this.getActiveIndex() + 1),
         imgs = $(targetItem).find("img[data-src]");
-      _.map(imgs, updateSrc);
+
+      $(imgs).each(updateSrc);
     },
 
     getActiveIndex: function () {
       return $(this.element).find('.item.active').index();
     }
   };
-}(HDO, jQuery));
+});

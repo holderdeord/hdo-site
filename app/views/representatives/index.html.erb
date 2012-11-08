@@ -24,10 +24,10 @@
   <%= render partial: 'index_by_name', locals: { representatives: @representatives } %>
 </div>
 
-<%= content_for :document_ready do %>
+<%= content_for :document_bottom do %>
 <script>
-$(document).ready(function() {
-  var index = HDO.representativeIndex.create({
+require(["hdo/representativeIndex"], function(representativeIndex) {
+  var index = representativeIndex.create({
     sortSelector: '#sort',
     resultSelector: '#representatives',
     paths: {

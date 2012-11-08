@@ -1,7 +1,5 @@
-/* global HDO */
-
-(function (HDO) {
-  HDO.voteSearcher = {
+define(["jquery"], function ($) {
+  return {
     create: function (url) {
       var instance = Object.create(this);
       instance.url = url;
@@ -62,4 +60,4 @@
       });
     }
   };
-}(HDO));
+});

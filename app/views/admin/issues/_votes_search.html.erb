@@ -30,13 +30,13 @@
 <%= spinner_tag %>
 <div class="vote-container" id="result"></div>
 
-<%= content_for :document_ready do %>
+<% content_for :document_bottom do %>
 <script type="text/javascript" charset="utf-8">
-  $(document).ready(function() {
+  require(["hdo/voteSearcher", "hdo/votePropositionFetcher"], function (searcher, fetcher) {
     var url = <%= vote_search_admin_issue_path(@issue).to_json.html_safe %>;
 
-    HDO.voteSearcher.create(url).init();
-    HDO.votePropositionFetcher.create().init();
+    searcher.create(url).init();
+    fetcher.create().init();
   });
 </script>
 <% end %>

@@ -1,4 +1,4 @@
-<div id="representative-carousel" class="carousel slide">
+<div id="representative-carousel" class="carousel slide" data-widget="carousel">
   <div class="carousel-inner">
     <% representatives.each_slice(4).with_index do |representative_group, index| %>
       <%= render partial: "active_carousel_item", locals: { representative_group: representative_group } if index == 0 %>
@@ -9,12 +9,3 @@
   <a class="carousel-control left" href="#representative-carousel" data-slide="prev">&lsaquo;</a>
   <a class="carousel-control right" href="#representative-carousel" data-slide="next">&rsaquo;</a>
 </div>
-
-
-<% content_for :document_ready do %>
-  <script>
-    $(document).ready(function() {
-       HDO.initRepresentativeCarousel();
-    });
-  </script>
-<% end %>
