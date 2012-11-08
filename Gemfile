@@ -32,7 +32,7 @@ group :test do
   # guard
   gem 'guard'
   gem 'guard-rspec'
-  gem 'guard-spork'
+  gem 'guard-spin'
   gem 'rb-fsevent', require: darwin_only('rb-fsevent')
   gem 'rb-inotify', require: linux_only('rb-inotify')
 end
