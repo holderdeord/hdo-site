@@ -1,4 +1,5 @@
 Hdo::Application.routes.draw do
+
   #
   # user sign-in
   #
@@ -25,12 +26,16 @@ Hdo::Application.routes.draw do
 
 
   #
-  # non-admin issues + topics
+  # non-admin issues, topics
   #
 
-  resources :issues, only: [:show, :votes]
-  get 'issues/:id/votes' => 'issues#votes', as: :issue_votes
-  get 'topics/:id' => 'topics#show', as: :topic
+  resources :issues, only: [:show, :votes] do
+    member do
+      get 'votes' => 'issues#votes'
+    end
+  end
+
+  resources :topics, only: :show
 
   #
   # districst
@@ -46,24 +51,23 @@ Hdo::Application.routes.draw do
     member do
       get 'promises'
       get 'promises/parties/:party' => 'categories#promises'
+      get 'subcategories'           => 'categories#subcategories'
     end
   end
-  get 'categories/:id/subcategories' => "categories#subcategories"
 
   #
-  # parties, committees, topics
+  # parties, committees
   #
-  #
-  resources :parties,         only: [:index, :show]
-  resources :committees,      only: [:index, :show]
+
+  resources :parties,    only: [:index, :show]
+  resources :committees, only: [:index, :show]
 
   #
   # promises
   #
-  resources :promises,        only: [:index]
-  get 'promises/page/:page'   => 'promises#index'
-  get 'promises/show/:id'     => 'promises#show'
-  get 'promises/category/:id' => 'promises#category'
+
+  resources :promises, only: [:index]
+  get 'promises/page/:page' => 'promises#index'
 
   #
   # parliament_issues
@@ -76,11 +80,15 @@ Hdo::Application.routes.draw do
   # representatives
   #
 
-  resources :representatives, only: [:index, :show]
+  resources :representatives, only: [:index, :show] do
+    member do
+      get 'page/:page' => 'representatives#show'
+    end
+  end
+
   get 'representatives/index/name'     => 'representatives#index_by_name', as: :representatives_by_name
   get 'representatives/index/party'    => 'representatives#index_by_party', as: :representatives_by_party
   get 'representatives/index/district' => 'representatives#index_by_district', as: :representatives_by_district
-  get 'representatives/:id/page/:page' => 'representatives#show'
 
   #
   # votes
@@ -108,7 +116,10 @@ Hdo::Application.routes.draw do
   get "home/people"
   get "home/method" => "home#about_method", as: :home_method
 
+  #
   # norwegian aliases - don't overdo this without a proper solution
+  #
+
   get "bli-med" => "home#join"
 
   #

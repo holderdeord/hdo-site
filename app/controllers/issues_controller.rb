@@ -12,7 +12,7 @@ class IssuesController < ApplicationController
 
       @issue_explanation = t('app.issues.explanation',
         count: @issue.votes.size,
-        url: issue_votes_path(@issue)
+        url: votes_issue_path(@issue)
       ).html_safe
 
       respond_to do |format|
