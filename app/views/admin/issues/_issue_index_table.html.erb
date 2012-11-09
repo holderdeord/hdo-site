@@ -1,3 +1,9 @@
+<div class="row-fluid">
+  <div class="pull-right">
+    <%= link_to t('app.issues.edit.new'), new_admin_issue_path, class: 'btn btn-primary' %>
+  </div>
+</div>
+
 <table class="table">
   <thead>
     <tr>
@@ -13,20 +19,25 @@
         <td>
           <p><%= link_to issue.title, issue %></p>
         </td>
-        <td><p><%= l issue.updated_at.localtime %></p> <small class="muted"><%= issue.last_updated_by_name %></small></td>
+        <td>
+          <p><%= l issue.updated_at.localtime %></p>
+          <small class="muted"><%= issue.last_updated_by_name %></small>
+        </td>
         <td>
           <ul>
-          <% issue.topics.each do |topic| %>
-            <li><%= link_to topic.name, topic %></li>
-          <% end %>
+            <% issue.topics.each do |topic| %>
+              <li><%= link_to topic.name, topic %></li>
+            <% end %>
           </ul>
         </td>
         <td>
-          <%= link_to t('app.edit'), edit_admin_issue_path(issue), class: 'btn btn-small' %>
-          <%= link_to t('app.destroy'), admin_issue_path(issue),
-                method: :delete,
-                data: { confirm: t('app.issues.edit.confirm_destroy', title: issue.title) },
-                class: 'btn btn-small btn-danger' %>
+          <p class="pull-right">
+            <%= link_to t('app.edit'), edit_admin_issue_path(issue), class: 'btn btn-small' %>
+            <%= link_to t('app.destroy'), admin_issue_path(issue),
+                  method: :delete,
+                  data: { confirm: t('app.issues.edit.confirm_destroy', title: issue.title) },
+                  class: 'btn btn-small btn-danger' %>
+          </p>
         </td>
       </tr>
     <% end %>

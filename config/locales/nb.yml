@@ -395,8 +395,8 @@ nb:
         one: "Viser <strong>ett</strong> fylke."
         other: "Viser <strong>%{count}</strong> fylker."
       parliament_issue:
-        one: "Viser <strong>1</strong> saker."
-        other: "Viser <strong>%{count}</strong> saker."
+        one: "Viser <strong>1</strong> stortingssaker."
+        other: "Viser <strong>%{count}</strong> stortingssaker."
       vote:
         one: "Viser <strong>1</strong> avstemning."
         other: "Viser <strong>%{count}</strong> avstemninger."

@@ -28,7 +28,7 @@ class Issue < ActiveRecord::Base
   attr_accessible :description, :title, :category_ids, :promise_ids, :topic_ids, :status, :lock_version
   validates :title, presence: true, uniqueness: true
 
-  STATUSES = %w[in_progress shelved published]
+  STATUSES = %w[published in_progress shelved]
   validates_inclusion_of :status, in: STATUSES
 
   has_and_belongs_to_many :topics,     uniq: true
