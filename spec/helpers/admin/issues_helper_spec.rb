@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe IssuesHelper do
+describe Admin::IssuesHelper do
   it 'should create options for the weight dropdown' do
     conn = VoteConnection.make!(:weight => 0.5)
 

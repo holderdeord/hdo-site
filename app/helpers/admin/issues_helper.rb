@@ -47,4 +47,16 @@ module Admin::IssuesHelper
     (vote.issues - [@issue]).first(3)
   end
 
+  def issues_for_promise(issue, promise)
+    issues = promise.issues.where("issues.id != ?", issue.id)
+
+    out = ''
+
+    if issues.any?
+      out = I18n.t('app.issues.edit.promise_used_in')
+      out << issues.map { |i| link_to(i.title, i, target: '_blank') }.to_sentence
+    end
+
+    out.html_safe
+  end
 end

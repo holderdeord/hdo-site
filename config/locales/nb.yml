@@ -319,6 +319,7 @@ nb:
         search_result: Søkeresultat
         disabled: På grunn av serverbytte er saksredigering midlertidig deaktivert.
         view_proposition_body: Se forslagstekst
+        promise_used_in: Løftet brukes i
       view_vote: 'Se hva de stemte'
       view_votes:
         one: 'Se avstemningen'
