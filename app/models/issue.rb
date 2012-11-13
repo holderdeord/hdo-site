@@ -25,7 +25,7 @@ class Issue < ActiveRecord::Base
     update_index if published?
   end
 
-  attr_accessible :description, :title, :category_ids, :promise_ids, :topic_ids, :status, :lock_version
+  attr_accessible :description, :title, :category_ids, :promise_ids, :topic_ids, :status, :lock_version, :editor_id
   validates :title, presence: true, uniqueness: true
 
   STATUSES = %w[published in_progress shelved]
@@ -36,6 +36,7 @@ class Issue < ActiveRecord::Base
   has_and_belongs_to_many :promises,   uniq: true
 
   belongs_to :last_updated_by, foreign_key: 'last_updated_by_id', class_name: 'User'
+  belongs_to :editor, class_name: 'User'
 
   has_many :vote_connections, dependent:     :destroy,
                               before_add:    :clear_stats_cache,
@@ -91,6 +92,10 @@ class Issue < ActiveRecord::Base
 
   def last_updated_by_name
     last_updated_by ? last_updated_by.name : I18n.t('app.nobody')
+  end
+
+  def editor_name
+    editor ? editor.name : I18n.t('app.nobody')
   end
 
   def to_indexed_json

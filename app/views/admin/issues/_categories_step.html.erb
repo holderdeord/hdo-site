@@ -1,32 +1,42 @@
 <%= form.inputs do %>
   <%= hidden_field_tag 'issue[category_ids][]' %>
 
-  <div class="row-fluid well">
-    <div class="span3">
-      <%= form.text_field :title %>
+  <div class="well">
+    <div class="row-fluid">
+      <div class="span3">
+        <%= form.text_field :title %>
+      </div>
+
+      <div class="span3">
+        <%= form.text_area :description, :rows => 5 %>
+      </div>
+
+      <div class="span3">
+        <label>
+          <p><%= Topic.model_name.human.capitalize %></p>
+          <p><%= select_tag "issue[topic_ids][]", topic_options_for(@issue), :multiple => 'multiple' %></p>
+        </label>
+
+        <small>Bruk Ctrl-klikk (eller Command-klikk på Mac) for å velge flere tema.</small>
+      </div>
+
+      <div class="span3">
+        <ul class="unstyled">
+          <% Issue::STATUSES.each do |status| %>
+            <%= form.radio_button :status, t("app.issues.statuses.#{status}"), status, checked: @issue.status == status %>
+          <% end %>
+        </ul>
+      </div>
     </div>
 
-    <div class="span3">
-      <%= form.text_area :description, :rows => 5 %>
+    <div class="row-fluid">
+      <div class="span3">
+        <label>
+          <p><%= Issue.human_attribute_name :editor %></p>
+          <p><%= select_tag "issue[editor_id]", editor_options_for(@issue) %></p>
+        </label>
+      </div>
     </div>
-
-    <div class="span3">
-      <label>
-        <p><%= Topic.model_name.human.capitalize %></p>
-        <p><%= select_tag "issue[topic_ids][]", topic_options_for(@issue), :multiple => 'multiple' %></p>
-      </label>
-
-      <small>Bruk Ctrl-klikk (eller Command-klikk på Mac) for å velge flere tema.</small>
-    </div>
-
-    <div class="span3">
-      <ul class="unstyled">
-        <% Issue::STATUSES.each do |status| %>
-          <%= form.radio_button :status, t("app.issues.statuses.#{status}"), status, checked: @issue.status == status %>
-        <% end %>
-      </ul>
-    </div>
-
   </div>
 <% end %>
 

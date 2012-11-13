@@ -192,6 +192,7 @@ nb:
         votes: "Avstemninger"
         topics: "Tema"
         last_updated_by: Sist redigert av
+        editor: Redaktør
         updated_at: Sist redigert
       vote_connection:
         matches: "Støtter saken?"

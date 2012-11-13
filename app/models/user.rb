@@ -8,9 +8,8 @@ class User < ActiveRecord::Base
          :trackable,
          :validatable
 
-  # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :remember_me, :name
-  # attr_accessible :title, :body
 
-  has_many :issues # last updated by
+  has_many :last_updated_issues, foreign_key: 'last_updated_by_id', class_name: 'Issue'
+  has_many :issues, foreign_key: 'editor_id'
 end

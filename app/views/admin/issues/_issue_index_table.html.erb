@@ -9,6 +9,7 @@
     <tr>
       <th><%= Issue.human_attribute_name :title %></th>
       <th><%= Issue.human_attribute_name :updated_at %></th>
+      <th><%= Issue.human_attribute_name :editor %></th>
       <th></th>
     </tr>
   </thead>
@@ -24,6 +25,9 @@
         <td>
           <p><%= l issue.updated_at.localtime %></p>
           <small class="muted"><%= issue.last_updated_by_name %></small>
+        </td>
+        <td>
+          <%= issue.editor_name %>
         </td>
         <td>
           <p class="pull-right">
