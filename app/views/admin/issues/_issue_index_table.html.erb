@@ -9,7 +9,6 @@
     <tr>
       <th><%= Issue.human_attribute_name :title %></th>
       <th><%= Issue.human_attribute_name :updated_at %></th>
-      <th><%= Topic.model_name.human(count: 2).capitalize %></th>
       <th></th>
     </tr>
   </thead>
@@ -18,17 +17,13 @@
       <tr>
         <td>
           <p><%= link_to issue.title, issue %></p>
+          <small class="muted">
+            <%= issue.topics.map(&:name).sort.join(', ') %>
+          </small>
         </td>
         <td>
           <p><%= l issue.updated_at.localtime %></p>
           <small class="muted"><%= issue.last_updated_by_name %></small>
-        </td>
-        <td>
-          <ul>
-            <% issue.topics.each do |topic| %>
-              <li><%= link_to topic.name, topic %></li>
-            <% end %>
-          </ul>
         </td>
         <td>
           <p class="pull-right">
