@@ -53,7 +53,7 @@ module Admin::IssuesHelper
     out = ''
 
     if issues.any?
-      out = I18n.t('app.issues.edit.promise_used_in')
+      out = "#{I18n.t 'app.issues.edit.promise_used_in'} "
       out << issues.map { |i| link_to(i.title, i, target: '_blank') }.to_sentence
     end
 
