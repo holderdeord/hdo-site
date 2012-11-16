@@ -6,7 +6,6 @@
     <div class="wrapper">
       <%= render 'layouts/navigation' %>
 
-      <div class="ribbon visible-desktop">Under utvikling</div>
       <div id="hdo-content" class="container">
         <%= render 'layouts/flash' %>
 
@@ -22,7 +21,6 @@
 
     <%= javascript_include_tag "application" %>
     <%= render 'layouts/ga' if Rails.env.production?  %>
-    <%= render 'layouts/feedback' %>
     <%= yield :document_ready %>
 
     </body>
