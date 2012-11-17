@@ -5,7 +5,8 @@ class Admin::IssuesController < AdminController
   helper_method :edit_steps
 
   def index
-    @issues_by_status = Issue.order(:title).group_by { |e| e.status }
+    issues = Issue.order(:title).includes(:topics, :editor, :last_updated_by)
+    @issues_by_status = issues.group_by { |e| e.status }
 
     respond_to do |format|
       format.html
