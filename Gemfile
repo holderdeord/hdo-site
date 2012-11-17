@@ -8,7 +8,7 @@ def linux_only(require_as)
   RUBY_PLATFORM.include?('linux') && require_as
 end
 
-gem 'rails', '3.2.8'
+gem 'rails', '3.2.9'
 
 gem 'nokogiri', '~> 1.5.0'
 gem 'acts_as_tree', '~> 1.1'
@@ -54,7 +54,7 @@ gem 'jquery-tablesorter', ">= 0.0.5"
 gem 'devise', "~> 2.1.2"
 gem 'twitter_bootstrap_form_for', "~> 1.0.5"
 gem 'will_paginate', "~> 3.0.3"
-gem 'friendly_id', "~> 4.0.7"
+gem 'friendly_id', "~> 4.0"
 gem 'rack-cache', :require => 'rack/cache'
 gem 'dragonfly', '~> 0.9.12'
 gem 'lograge'
