@@ -126,5 +126,5 @@ end
 
 District.blueprint do
   external_id { sn.to_s }
-  name { "committee-#{sn}" }
+  name { "district-#{sn}" }
 end
