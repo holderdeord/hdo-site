@@ -14,10 +14,7 @@
       <div class="push"></div>
     </div>
 
-    <footer>
-      <%= render 'layouts/social'%>
-      <p><%=t 'app.title' %> &copy; 2012.</p>
-    </footer>
+    <%= render 'layouts/footer'%>
 
     <%= javascript_include_tag "application" %>
     <%= render 'layouts/ga' if Rails.env.production?  %>
