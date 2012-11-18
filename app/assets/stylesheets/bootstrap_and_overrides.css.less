@@ -6,11 +6,11 @@
 @iconWhiteSpritePath: asset-path('twitter/bootstrap/glyphicons-halflings-white.png');
 
 @font-face {
-    font-family: "Neo Sans";
-    src: url('/fonts/NeoSansStd-Regular.otf');
+  font-family: "Neo Sans";
+  src: url('/fonts/NeoSansStd-Regular.otf');
 }
 
-@hdoPrimaryColor: #009ea6;
+@hdoPrimaryColor: #019ea2;
 @hdoSecondaryColor: #e03d25;
 @hdoTertiaryColor: #332b2e;
 @hdoQuaternaryColor: #231f20;
@@ -19,65 +19,73 @@
 
 @navbarBackground: @hdoPrimaryColor;
 @navbarBackgroundHighlight: #55bfbb;
-@navbarLinkColor: @white;
+@navbarLinkColor: rgba(0,0,0,0.3);
+// @navbarLinkBackgroundHover: @white;
 @navbarLinkColorHover: @black;
 @navbarLinkBackgroundActive: @white;
 @navbarLinkColorActive: @black;
 
+.subnav {
+  // background-color: #fff;
+  .border-radius(5px 5px 0 0);
+}
+
 .navbar {
-    font-family: @headingsFontFamily;
-    .navbar-inner {
-        .border-radius(0);
-        border-bottom-width: 0;
-        background-image: none;
-        background-color: #019ea2;
-        box-shadow: 0 -1px rgba(0,0,0,0.04) inset,
-                    0 -2px rgba(0,0,0,0.02) inset,
-                    0 -3px rgba(0,0,0,0.02) inset;
+  font-family: @headingsFontFamily;
+  .navbar-search {
+    float: right;
+    margin-top: 28px;
+    input  {
+        padding-top: 0;
+        padding-bottom: 0;
+        width: 100px;
     }
-    .brand {
-      // padding-top: 11px;
-      // display: none;
-    }
+  }
+  .navbar-inner {
+    .border-radius(0);
+    border-bottom-width: 0;
+    background-image: none;
+    box-shadow: none;
+    background-color: #019ea2;
+    padding: 0;
+    box-shadow: 0 -1px rgba(0,0,0,0.2) inset,
+                0 -2px rgba(0,0,0,0.05) inset,
+                0 -3px rgba(0,0,0,0.04) inset,
+                0 -4px rgba(0,0,0,0.03) inset;
+  }
+  .brand {
+        background: url('/assets/logo.png') 0 30px no-repeat;
+        font-size: 0;
+        padding: 0;
+        width: 220px;
+        height: 60px;
+        margin-bottom: 10px;
+        margin-left: 0;
+  }
 }
 
-.navbar .nav li a {
-  padding-top: 15px;
-  padding-bottom: 9px;
-  text-transform: uppercase;
+.navbar .nav li {
+    margin-right: 3px;
 }
 
+.navbar .nav > li > a {
+    text-shadow: none;
+    box-shadow: none;
+    background-color: rgba(255,255,255,0);
+    .border-radius(2px 2px 0 0);
+    padding: 7px 15px 3px 15px;
+    text-transform: uppercase;
+}
 
-.navbar .nav .active > a,
-.navbar .nav .active > a:hover,
-.navbar .nav li.dropdown.active .dropdown-toggle,
-.navbar .nav li.dropdown.active .dropdown-toggle:hover,
-.navbar .nav li.dropdown.active.open > .dropdown-toggle {
-    .border-radius(3px 3px 0 0);
+.navbar .nav > li.active > a,
+.navbar .nav > li.active:hover > a {
     background-color: @white;
     box-shadow: none;
-    box-shadow: 1px 0 rgba(0,0,0,0.04),
-                -1px 0 rgba(0,0,0,0.04),
-                0 -1px rgba(0,0,0,0.04);
-    color: @black;
-    text-shadow: none;
-    text-decoration: none;
-    .caret {
-        border-top-color: @black;
-    }
-}
-.logo img { margin-left: 20px;}
-// Active state
-.nav-pills > .active > a,
-.nav-pills > .active > a:hover {
-  color: @white;
-  background-color: @hdoPrimaryColor;
+    box-shadow:  -1px 0 1px rgba(0,0,0,0.2),
+                  1px 0 1px rgba(0,0,0,0.2),
+                 0 -1px 1px rgba(0,0,0,0.2);
 }
 
-h1,
-h2,
-h3,
-h4,
-h5 {
+h1, h2, h3, h4, h5 {
     font-family: @headingsFontFamily;
 }
