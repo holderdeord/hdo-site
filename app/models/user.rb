@@ -13,5 +13,5 @@ class User < ActiveRecord::Base
   has_many :last_updated_issues, foreign_key: 'last_updated_by_id', class_name: 'Issue'
   has_many :issues, foreign_key: 'editor_id'
 
-  validates :role, presence: true
+  validates :role, presence: true, inclusion: { in: %w[admin superadmin]}
 end
