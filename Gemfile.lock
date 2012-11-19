@@ -251,6 +251,7 @@ GEM
       multi_json (~> 1.0)
       simplecov-html (~> 0.7.1)
     simplecov-html (0.7.1)
+    six (0.2.0)
     slop (3.3.3)
     spin (0.5.3)
     spreadsheet (0.7.4)
@@ -341,6 +342,7 @@ DEPENDENCIES
   selenium-webdriver (~> 2.0)
   settingslogic
   simplecov
+  six
   statsd
   thin
   tire

@@ -10,10 +10,6 @@ end
 
 gem 'rails', '3.2.9'
 
-gem 'nokogiri', '~> 1.5.0'
-gem 'acts_as_tree', '~> 1.1'
-gem 'capistrano', '~> 2.13'
-
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
@@ -46,35 +42,60 @@ group :development do
   gem 'quiet_assets'
 end
 
-gem 'pg'
-gem "thin"
+#
+# frontend stuff
+#
+
 gem 'jquery-rails'
 gem 'twitter-bootstrap-rails', "~> 2.1"
 gem 'highcharts-rails', "~> 2.2"
 gem 'jquery-tablesorter', ">= 0.0.5"
-gem 'devise', "~> 2.1.2"
 gem 'twitter_bootstrap_form_for', "~> 1.0.5"
+
+# authentication
+gem 'devise', "~> 2.1.2"
+
+# authorization
+gem 'six'
+
+# pagination
 gem 'will_paginate', "~> 3.0.3"
+
+# url slugs
 gem 'friendly_id', "~> 4.0"
+
+# db
+gem 'pg'
+
+# search
+gem 'tire'
+
+# image scaling
 gem 'rack-cache', :require => 'rack/cache'
 gem 'dragonfly', '~> 0.9.12'
+
+# db dump / load
+gem 'yaml_db'
+
+gem 'acts_as_tree', '~> 1.1'
+gem 'capistrano', '~> 2.13'
+gem 'thin'
 gem 'lograge'
 gem 'unicode_utils'
 gem 'pry'
 gem 'multi_json'
 gem 'yajl-ruby'
 gem 'rack-mini-profiler'
-gem 'tire'
-gem 'yaml_db'
 gem 'settingslogic'
 gem 'statsd'
 
+gem 'nokogiri', '~> 1.5.0'
 gem 'faraday'
 gem 'net-http-persistent'
 
 # data import
-# gem 'hdo-storting-importer', :path => File.expand_path("../../hdo-storting-importer", __FILE__)
 gem 'hdo-storting-importer', "~> 0.3.2"
+# gem 'hdo-storting-importer', :path => File.expand_path("../../hdo-storting-importer", __FILE__)
 
 if Gem::Version.new(Bundler::VERSION) >= Gem::Version.new("1.2.0.rc2")
   ruby '1.9.3'
