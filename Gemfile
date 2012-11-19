@@ -43,6 +43,7 @@ end
 
 group :development do
   gem "rails-erd"
+  gem 'quiet_assets'
 end
 
 gem 'pg'
