@@ -11,7 +11,7 @@ module Hdo
       it 'searches all indeces for the given query' do
         search = mock("search")
         Tire.should_receive(:search).
-             with(hash_including('issues')).
+             with(hash_including(Issue.index_name)).
              and_yield(tire_search).and_return(tire_search)
 
         # testing a block DSL sucks...

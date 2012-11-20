@@ -67,6 +67,7 @@ RSpec.configure do |config|
 
   config.before :each, :search do
     recreate_index
+    refresh_index
   end
 
   config.around :each, :cache do |example|
