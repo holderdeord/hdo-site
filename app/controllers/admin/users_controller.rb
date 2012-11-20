@@ -5,7 +5,7 @@ class Admin::UsersController < AdminController
   helper_method :can_edit?
 
   def index
-    @users = User.order(:updated_at).reverse_order
+    @users = User.order(:updated_at).reverse_order.all
   end
 
   def show
