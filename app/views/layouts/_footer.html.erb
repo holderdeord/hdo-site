@@ -4,19 +4,10 @@
 
 
       <div class="span4">
-        <%= render '/layouts/social'%>
+        <%= render 'layouts/social'%>
         <p><%=t 'app.title' %> &copy; 2012.</p>
       </div>
 
-      <div class="span8">
-        <% @topic_columns.each do |topics| %>
-            <div class="span4">
-              <% topics.each do |topic| %>
-                <div><%= link_to topic.name, topic %></div>
-              <% end %>
-            </div>
-        <% end %>
-      </div>
 
     </div>
   </div>

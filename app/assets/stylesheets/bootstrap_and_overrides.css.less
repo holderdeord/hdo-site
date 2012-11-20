@@ -1,5 +1,5 @@
-@import "twitter/bootstrap/bootstrap";
-@import "twitter/bootstrap/responsive";
+@import "bootstrap/bootstrap";
+@import "bootstrap/responsive";
 
 // Set the correct sprite paths
 @iconSpritePath: asset-path('twitter/bootstrap/glyphicons-halflings.png');
@@ -20,14 +20,14 @@
 @navbarBackground: @hdoPrimaryColor;
 @navbarBackgroundHighlight: #55bfbb;
 @navbarLinkColor: rgba(0,0,0,0.3);
-// @navbarLinkBackgroundHover: @white;
-@navbarLinkColorHover: @black;
-@navbarLinkBackgroundActive: @white;
-@navbarLinkColorActive: @black;
+// @navbarLinkBackgroundHover: #FFF;
+@navbarLinkColorHover: #000;
+@navbarLinkBackgroundActive: #FFF;
+@navbarLinkColorActive: #000;
 
 .subnav {
   // background-color: #fff;
-  .border-radius(5px 5px 0 0);
+  // .border-radius(5px 5px 0 0);
 }
 
 .navbar {
@@ -42,7 +42,7 @@
     }
   }
   .navbar-inner {
-    .border-radius(0);
+    // .border-radius(0);
     border-bottom-width: 0;
     background-image: none;
     box-shadow: none;
@@ -72,14 +72,14 @@
     text-shadow: none;
     box-shadow: none;
     background-color: rgba(255,255,255,0);
-    .border-radius(2px 2px 0 0);
+    // .border-radius(2px 2px 0 0);
     padding: 7px 15px 3px 15px;
     text-transform: uppercase;
 }
 
 .navbar .nav > li.active > a,
 .navbar .nav > li.active:hover > a {
-    background-color: @white;
+    background-color: #FFF;
     box-shadow: none;
     box-shadow:  -1px 0 1px rgba(0,0,0,0.2),
                   1px 0 1px rgba(0,0,0,0.2),

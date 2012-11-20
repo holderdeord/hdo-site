@@ -286,11 +286,6 @@ GEM
     treetop (1.4.12)
       polyglot
       polyglot (>= 0.3.1)
-    twitter-bootstrap-rails (2.1.4)
-      actionpack (>= 3.1)
-      less-rails (~> 2.2.3)
-      railties (>= 3.1)
-      therubyracer (>= 0.10.2)
     twitter_bootstrap_form_for (1.0.5)
       actionpack (~> 3)
       railties (~> 3)
@@ -324,7 +319,7 @@ DEPENDENCIES
   highcharts-rails (~> 2.2)
   jquery-rails
   jquery-tablesorter (>= 0.0.5)
-  less
+  less-rails
   loadable_component (>= 0.1.1)
   lograge
   machinist (~> 2.0)
@@ -346,9 +341,9 @@ DEPENDENCIES
   simplecov
   six
   statsd
+  therubyracer
   thin
   tire
-  twitter-bootstrap-rails (~> 2.1)
   twitter_bootstrap_form_for (~> 1.0.5)
   uglifier (>= 1.0.3)
   unicode_utils
