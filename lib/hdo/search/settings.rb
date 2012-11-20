@@ -5,10 +5,14 @@ module Hdo
     #
 
     module Settings
+      word_list = Rails.root.join('config/search/words.nb.txt')
+
       LOCALE = {
         nb: {
-          language: 'Norwegian',
-          stopwords: %w[at av da de den der deres det disse eller en er et for hvis i ikke inn med men nei og slik som til var vil].join(',')
+          language:       'Norwegian',
+          stopwords:      %w[at av da de den der deres det disse eller en er et for hvis i ikke inn med men nei og slik som til var vil].join(','),
+          synonyms_path:  Rails.root.join('config/search/synonyms.nb.txt').to_s,
+          word_list_path: word_list.exist? ? word_list.to_s : '/usr/share/dict/norsk',
         }
       }
 
@@ -43,7 +47,11 @@ module Hdo
               },
               hdo_decompounder: {
                 type: 'dictionary_decompounder',
-                word_list_path: '/usr/share/dict/norsk'
+                word_list_path: locale.fetch(:word_list_path)
+              },
+              hdo_synonym: {
+                type: "synonym",
+                synonyms_path: locale.fetch(:synonyms_path)
               }
             }
           }
@@ -55,12 +63,13 @@ module Hdo
       end
 
       def default_filters
-        %w[standard lowercase hdo_stop hdo_snowball hdo_decompounder]
+        %w[standard lowercase hdo_stop hdo_snowball hdo_synonym hdo_decompounder]
       end
 
       def locale
         @locale ||= LOCALE.fetch(I18n.locale)
       end
+
 
     end
   end
