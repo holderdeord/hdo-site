@@ -2,8 +2,9 @@
   <div class="span9">
     <div class="row-fluid">
       <div class="row-fluid">
-        <div class="row-fluid">
-          <h3>Sjekk hva partiene har stemt og lovet</h3>
+
+        <div class="page-header">
+          <h1>Sjekk hva partiene har stemt og lovet</h1>
         </div>
 
         <div class="home-party-list">
@@ -37,7 +38,6 @@
   </div>
 
   <div class="span3">
-    <%= render partial: 'global_search' if AppConfig.front_page_search_enabled %>
 
     <div class="hidden-phone">
       <div class="well">
@@ -58,6 +58,13 @@
         <p><strong>For tiden søker vi ny produktsjef.</strong></p>
         <p><%= link_to t('app.read_more'), home_join_path, class: 'btn btn-primary' %></p>
       </div>
+
+      <div class="well">
+        <h3>Tilbakemelding</h3>
+        <p>Ris, ros, eller noe som ikke virker? Gi beskjed!</p>
+        <%= link_to 'Send oss en epost', "mailto:#{t 'app.email'}?subject=Tilbakemelding", class: 'btn btn-primary' %>
+      </div>
+
     </div>
   </div>
 </div>
