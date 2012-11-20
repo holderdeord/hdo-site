@@ -26,7 +26,7 @@ describe Committee do
     c.parliament_issues << a
     c.parliament_issues << b
 
-    c.parliament_issues.map(&:description).should == [a.description, b.description]
+    c.parliament_issues.map(&:description).sort.should == [a.description, b.description].sort
     c.should be_valid
   end
 

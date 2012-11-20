@@ -4,13 +4,13 @@ module Hdo
       SEARCH_ERRORS = [Tire::Search::SearchRequestFailed, Errno::ECONNREFUSED]
 
       INDECES = {
-        'issues'            => { boost: 5   },
-        'parties'           => { boost: 3.5 },
-        'representatives'   => { boost: 2   },
-        'promises'          => { boost: 1   },
-        'propositions'      => { boost: 1   },
-        'parliament_issues' => { boost: 1   },
-        'topics'            => { boost: 2   },
+        Issue.index_name           => { boost: 5   },
+        Party.index_name           => { boost: 3.5 },
+        Representative.index_name  => { boost: 2   },
+        Promise.index_name         => { boost: 1   },
+        Proposition.index_name     => { boost: 1   },
+        ParliamentIssue.index_name => { boost: 1   },
+        Topic.index_name           => { boost: 2   },
       }
 
       def initialize(query)

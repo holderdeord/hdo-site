@@ -36,6 +36,7 @@ RSpec.configure do |config|
   config.include Devise::TestHelpers, type: :controller
   config.include BrowserSpecHelper, type: :request
   config.include CacheSpecHelper, :cache
+  config.include SearchSpecHelper, :search
 
   config.before :suite do
     DatabaseCleaner.strategy = :transaction
@@ -62,6 +63,11 @@ RSpec.configure do |config|
 
   config.after :all, type: :request do
     BrowserSpecHelper.stop
+  end
+
+  config.before :each, :search do
+    recreate_index
+    refresh_index
   end
 
   config.around :each, :cache do |example|
