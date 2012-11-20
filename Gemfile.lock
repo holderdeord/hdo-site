@@ -138,7 +138,7 @@ GEM
     listen (0.5.3)
     loadable_component (0.1.1)
     log4r (1.1.10)
-    lograge (0.0.6)
+    lograge (0.1.0)
       actionpack
       activesupport
     lumberjack (1.0.2)
