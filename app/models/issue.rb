@@ -116,5 +116,4 @@ class Issue < ActiveRecord::Base
   def fetch_stats
     Hdo::Stats::VoteScorer.new(self)
   end
-
 end
