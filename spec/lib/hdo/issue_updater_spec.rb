@@ -100,5 +100,22 @@ module Hdo
         issue.last_updated_by.should be_nil
       end
     end
+
+    describe 'authorization' do
+      let(:issue) { Issue.make! status: 'in_progress' }
+      let(:admin) { User.make! role: 'admin' }
+
+      it "can not change status if authorized as admin" do
+        updater = IssueUpdater.new(issue, {status: 'published'}, {}, admin)
+        expect {
+          updater.update!
+        }.to raise_error(IssueUpdater::Unauthorized)
+
+        updater.update.should be_false
+        issue.errors.should_not be_empty
+      end
+
+      it "can change status if authorized as superadmin"
+    end
   end
 end

@@ -1,72 +1,94 @@
 class Admin::UsersController < AdminController
   before_filter :fetch_user, only: [:show, :edit, :update, :destroy]
+  before_filter :add_abilities
+
+  helper_method :can_edit?
 
   def index
     @users = User.all
-
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: @users }
-    end
   end
 
   def show
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @user }
-    end
   end
 
   def new
     @user = User.new
 
-    respond_to do |format|
-      format.html # new.html.erb
-      format.json { render json: @user }
+    unless can_edit?
+      redirect_to admin_users_path, alert: t('app.errors.unauthorized')
+      return
     end
+
+    render action: 'new'
   end
 
   def edit
+    unless can_edit?
+      redirect_to admin_users_path, alert: t('app.errors.unauthorized')
+      return
+    end
+
+    render action: 'edit'
   end
 
   def create
     @user = User.new(params[:user])
 
-    respond_to do |format|
-      if @user.save
-        format.html { redirect_to admin_user_path(@user), notice: 'User was successfully created.' }
-        format.json { render json: @user, status: :created, location: @user }
-      else
-        format.html { render action: "new" }
-        format.json { render json: @user.errors, status: :unprocessable_entity }
-      end
+    unless can_edit?
+      redirect_to admin_users_path, alert: t('app.errors.unauthorized')
+      return
+    end
+
+    if @user.save
+      redirect_to admin_user_path(@user), notice: t('app.users.edit.created')
+    else
+      render action: 'new'
     end
   end
 
   def update
-    respond_to do |format|
-      if @user.update_attributes(params[:user])
-        format.html { redirect_to admin_user_path(@user), notice: 'User was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { render action: "edit" }
-        format.json { render json: @user.errors, status: :unprocessable_entity }
+    unless can_edit?
+      redirect_to admin_users_path, alert: t('app.errors.unauthorized')
+      return
+    end
+
+    attrs = params[:user]
+
+    # allow editing user without changing password
+    [:password, :password_confirmation].each do |attr|
+      if attrs.include?(attr) && attrs[attr].blank?
+        attrs.delete(attr)
       end
+    end
+
+    if @user.update_attributes(attrs)
+      redirect_to admin_user_path(@user), notice: t('app.users.edit.updated')
+    else
+      render action: "edit"
     end
   end
 
   def destroy
-    @user.destroy
-
-    respond_to do |format|
-      format.html { redirect_to admin_users_url }
-      format.json { head :no_content }
+    unless can_edit?
+      redirect_to admin_users_path, alert: t('app.errors.unauthorized')
+      return
     end
+
+    @user.destroy
+    redirect_to admin_users_path
   end
 
   private
 
   def fetch_user
     @user = User.find(params[:id])
+  end
+
+  def add_abilities
+    abilities << User
+  end
+
+  def can_edit?
+    can?(current_user, :edit, User)
   end
 end

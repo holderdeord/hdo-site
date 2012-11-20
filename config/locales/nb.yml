@@ -55,6 +55,22 @@ nb:
         blank: "er blank."
         taken: "er allerede i bruk."
         record_invalid: "Validering feilet: %{errors}"
+        inclusion: "er ikke inkludert i listen"
+        exclusion: "kan ikke brukes."
+        invalid: "er ugyldig"
+        accepted: "må aksepteres"
+        empty: "kan ikke være tom"
+        blank: "kan ikke være blank"
+        too_long: "er for lang (maksimum {{count}} tegn)"
+        too_short: "er for kort (minimum {{count}} tegn)"
+        wrong_length: "er feil lengde (forventet {{count}} tegn)"
+        taken: "er allerede i bruk"
+        not_a_number: "er ikke et tall"
+        greater_than: "må være større enn {{count}}"
+        greater_than_or_equal_to: "må være større enn eller lik {{count}}"
+        equal_to: "må være {{count}}"
+        less_than: "må være mindre enn {{count}}"
+        less_than_or_equal_to: "må være mindre enn eller lik {{count}}"
       models:
         user:
           attributes:
@@ -181,6 +197,7 @@ nb:
         edit: "Rediger bruker"
         destroy: "Slett bruker"
         confirm_destroy: "Er du sikker på at du vil slette brukeren?"
+        role: Rolle
       issue:
         edit: "Rediger"
         published: Publisert
@@ -232,6 +249,7 @@ nb:
     errors:
       default: 'Uff, noe gikk helt galt hos oss. Prøv igjen senere!'
       search: 'Uff, vi har litt problemer med å søke for øyeblikket. Prøv igjen senere!'
+      unauthorized: Du har ikke tilgang til å utføre handlingen.
       issues:
         unable_to_save: "Kunne ikke lagre, saken er blitt endret i mellomtiden."
     admin:
@@ -359,6 +377,10 @@ nb:
         rebalanced_national_budget: 'Nysaldering av statsbudsjett'
         representative_proposition: 'Representantforslag'
         revised_national_budget: 'Revidert statsbudsjett'
+    users:
+      edit:
+        created: Brukeren ble opprettet.
+        updated: Brukeren ble oppdatert.
     external:
       urls:
         parliament_issue: "http://stortinget.no/no/Saker-og-publikasjoner/Saker/Sak/?p=%s"

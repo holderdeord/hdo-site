@@ -50,6 +50,15 @@ class Issue < ActiveRecord::Base
   scope :published, where(:status => 'published')
   scope :latest, lambda { |limit| order(:updated_at).reverse_order.limit(limit) }
 
+  def self.allowed(object, subject)
+    rules = []
+    return rules unless subject.kind_of?(self)
+
+    rules << :change_status if object.superadmin?
+
+    rules
+  end
+
   def previous_and_next(opts = {})
     issues = self.class.order(opts[:order] || :title)
     issues = issues.published if opts[:published_only]

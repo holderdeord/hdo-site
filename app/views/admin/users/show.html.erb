@@ -3,25 +3,26 @@
   <div class="row">
     <div class="span4">
       <p>
-        <strong>
-        <%= User.human_attribute_name :name %>:
-        </strong>
+        <strong><%= User.human_attribute_name :name %>:</strong>
         <%= @user.name %>
       </p>
-    </div>
-  </div>
 
-  <div class="row">
-    <div class="span4">
       <p>
-        <strong>
-        <%= User.human_attribute_name :email %>:
-        </strong>
+        <strong><%= User.human_attribute_name :email %>:</strong>
         <%= @user.email %>
       </p>
+
+      <p>
+        <strong><%= User.human_attribute_name :role %>:</strong>
+        <%= @user.role %>
+      </p>
+
     </div>
   </div>
 </div>
 
-<%= link_to 'Edit', edit_admin_user_path(@user) %> |
-<%= link_to 'Back', admin_users_path %>
+<% if can_edit? %>
+  <%= link_to t('app.edit'), edit_admin_user_path(@user) %> |
+<% end %>
+
+<%= link_to t('app.back'), admin_users_path %>

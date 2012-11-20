@@ -10,7 +10,6 @@ nb:
       not_saved:
         one: "En feil gjorde at %{resource} ikke kunne lagres:"
         other: "%{count} feil gjorde at %{resource} ikke kunne lagres:"
-  
   devise:
     failure:
       already_authenticated: 'Du er allerede logget inn.'
@@ -36,7 +35,7 @@ nb:
       signed_up: 'Velkommen! Din registrering er vellykket.'
       signed_up_but_unconfirmed: 'En epost med en aktiveringslink er sent til din epostadresse.  Vennligst klikk på linken for å aktivere din konto.'
       signed_up_but_inactive: 'Du er registrert. Men vi kan ikke logge deg på siden kontoen din ennå ikke er aktiv.'
-      signed_up_but_locked: 'Du er registrert. Men vi kan ikke logge deg på siden kontoen din er låst.' 
+      signed_up_but_locked: 'Du er registrert. Men vi kan ikke logge deg på siden kontoen din er låst.'
       updated: 'Din profil er oppdatert.'
       destroyed: 'Farvel. Din konto er nå slettet.'
     unlocks:

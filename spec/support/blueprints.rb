@@ -3,7 +3,7 @@ require 'machinist/active_record'
 
 User.blueprint do
   name { "user #{sn}" }
-  email { "user#{sn}@email.com}" }
+  email { "user#{sn}@email.com" }
   password { "abcd1234" }
   password_confirmation { "abcd1234" }
 end

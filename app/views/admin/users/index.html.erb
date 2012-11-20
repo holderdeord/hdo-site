@@ -1,13 +1,16 @@
 <h1><%= User.model_name.human(count: 2).capitalize %></h1>
 
-<p>
-  <%= link_to User.human_attribute_name(:new), new_admin_user_path, :class => 'btn btn-primary' %>
-</p>
+<% if can_edit? %>
+  <p>
+    <%= link_to User.human_attribute_name(:new), new_admin_user_path, :class => 'btn btn-primary' %>
+  </p>
+<% end %>
 
 <table class="table table-striped">
   <tr>
     <th><%= User.human_attribute_name :name %></th>
     <th><%= User.human_attribute_name :email %></th>
+    <th><%= User.human_attribute_name :role %></th>
     <th></th>
   </tr>
 
@@ -15,9 +18,12 @@
   <tr>
     <td><%= user.name %></td>
     <td><%= user.email %></td>
+    <td><%= user.role %></td>
     <td>
-      <%= link_to (User.human_attribute_name :edit), edit_admin_user_path(user), :class => 'btn' %>
-      <%= link_to (User.human_attribute_name :destroy), admin_user_path(user), method: :delete, data: { confirm: User.human_attribute_name(:confirm_destroy) }, :class => 'btn btn-danger' %></td>
+      <% if can_edit? %>
+        <%= link_to (User.human_attribute_name :edit), edit_admin_user_path(user), :class => 'btn' %>
+        <%= link_to (User.human_attribute_name :destroy), admin_user_path(user), method: :delete, data: { confirm: User.human_attribute_name(:confirm_destroy) }, :class => 'btn btn-danger' %></td>
+      <% end %>
   </tr>
 <% end %>
 </table>

@@ -8,10 +8,28 @@ class User < ActiveRecord::Base
          :trackable,
          :validatable
 
-  attr_accessible :email, :password, :password_confirmation, :remember_me, :name
+  attr_accessible :email, :password, :password_confirmation, :remember_me, :name, :role
 
   has_many :last_updated_issues, foreign_key: 'last_updated_by_id', class_name: 'Issue'
   has_many :issues, foreign_key: 'editor_id'
 
-  validates :role, presence: true, inclusion: { in: %w[admin superadmin]}
+  ROLES = %w[admin superadmin]
+  validates :role, presence: true, inclusion: { in: ROLES }
+
+  def self.allowed(object, subject)
+    rules = []
+    return rules unless subject.kind_of?(self) || subject == self
+
+    rules << :edit if object.superadmin?
+
+    rules
+  end
+
+  def admin?
+    role == 'admin'
+  end
+
+  def superadmin?
+    role == 'superadmin'
+  end
 end

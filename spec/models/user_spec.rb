@@ -15,11 +15,13 @@ describe User do
   it 'defaults to the admin role' do
     u = User.make
     u.role.should == 'admin'
+    u.should be_admin
   end
 
   it 'can set the superadmin role' do
     u = User.make role: 'superadmin'
     u.should be_valid
+    u.should be_superadmin
   end
 
   it 'is invalid with unknown roles' do

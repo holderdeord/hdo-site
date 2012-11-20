@@ -1,6 +1,9 @@
 module Hdo
   class IssueUpdater
 
+    class Unauthorized < StandardError
+    end
+
     def initialize(issue, attributes, votes, user)
       @issue      = issue
       @attributes = attributes
@@ -13,6 +16,9 @@ module Hdo
     rescue ActiveRecord::StaleObjectError
       @issue.errors.add :base, I18n.t('app.errors.issues.unable_to_save')
       false
+    rescue Unauthorized
+      @issue.errors.add :base, I18n.t('app.errors.unauthorized')
+      false
     rescue ActiveRecord::RecordInvalid
       false
     end
@@ -21,8 +27,8 @@ module Hdo
       @changed = false
 
       @user.transaction {
-        update_votes
         update_attributes
+        update_votes
         update_meta
         save!
       }
@@ -43,6 +49,10 @@ module Hdo
       @changed ||= (association_changed?(:category_ids) || association_changed?(:promise_ids) || association_changed?(:topic_ids))
       @issue.attributes = @attributes
       @changed ||= @issue.changed?
+
+      if @issue.changes.include? :status
+        assert_status_change_allowed
+      end
     end
 
     def update_meta
@@ -99,6 +109,21 @@ module Hdo
 
     def save!
       @issue.save!
+    end
+
+    def assert_status_change_allowed
+      unless abilities.allowed?(@user, :change_status, @issue)
+        raise Unauthorized
+      end
+    end
+
+    def abilities
+      @abilities ||= (
+        a = Six.new
+        a << Issue
+
+        a
+      )
     end
 
   end

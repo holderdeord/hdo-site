@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe IssuesController do
-  let(:issue)   { Issue.make!  }
+  let(:issue)   { Issue.make! }
 
   it 'should get :show if the issue is published' do
     issue.update_attributes! status: 'published'

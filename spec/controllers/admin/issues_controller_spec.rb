@@ -2,11 +2,11 @@ require 'spec_helper'
 
 describe Admin::IssuesController do
   let(:issue)   { Issue.make!  }
-  let(:user)    { User.make!   }
+  let(:user)    { User.make! role: 'superadmin'  }
   before(:each) { sign_in user }
 
   def issue_params(issue)
-    issue.as_json.except('created_at', 'id', 'last_updated_by_id', 'slug', 'updated_at')
+    issue.as_json except: [:created_at, :id, :last_updated_by_id, :slug, :updated_at]
   end
 
   def votes_params(connections)

@@ -1,9 +1,10 @@
 <%= twitter_bootstrap_form_for [:admin, @user] do |user| %>
-  <%= user.inputs 'Registrer', :class => 'sign_up' do %>
-    <%= user.text_field :name, :placeholder => 'Aktivist' %>
-    <%= user.email_field :email, :placeholder => 'me@example.com' %>
+  <%= user.inputs 'Registrer', class: 'sign_up' do %>
+    <%= user.text_field :name, placeholder: 'Aktivist' %>
+    <%= user.email_field :email, placeholder: 'me@example.com' %>
     <%= user.password_field :password %>
     <%= user.password_field :password_confirmation %>
+    <%= user.select :role, {}, User::ROLES %>
   <% end %>
 
   <div class="actions">
