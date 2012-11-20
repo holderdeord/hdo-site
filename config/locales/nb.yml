@@ -2,7 +2,7 @@ nb:
   helpers:
     submit:
       create: "Lag %{model}"
-      update: "Bekreft endringer i %{model}"
+      update: "Lagre %{model}"
   time:
     formats:
       default: "%Y-%m-%d %H:%M:%S"

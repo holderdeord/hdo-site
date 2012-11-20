@@ -1,13 +1,16 @@
 <%= twitter_bootstrap_form_for [:admin, @user] do |user| %>
   <%= user.inputs 'Registrer', class: 'sign_up' do %>
-    <%= user.text_field :name, placeholder: 'Aktivist' %>
+    <%= user.text_field :name, {placeholder: 'Aktivist'}, class: 'required' %>
     <%= user.email_field :email, placeholder: 'me@example.com' %>
     <%= user.password_field :password %>
     <%= user.password_field :password_confirmation %>
     <%= user.select :role, {}, User::ROLES %>
   <% end %>
 
+  <br>
+
   <div class="actions">
     <%= user.submit class: 'btn btn-primary'  %>
+    <%= link_to t('app.back'), admin_users_path, :class => 'btn' %>
   </div>
 <% end %>
