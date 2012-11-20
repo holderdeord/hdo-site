@@ -29,6 +29,8 @@ end
 
 ParliamentIssue.blueprint do
   external_id { sn.to_s }
+  description { "parliament issue #{sn}" }
+  status { "behandlet" }
 end
 
 Topic.blueprint do
