@@ -6,7 +6,7 @@ describe Hdo::Application do
     front_page.get
   end
 
-  it "shows a list of votes" do
+  xit "shows a list of votes" do
     2.times do
       Vote.make!(:for_count => 50, :against_count => 50, :absent_count => 69)
     end
