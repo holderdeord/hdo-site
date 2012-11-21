@@ -1,9 +1,5 @@
 namespace :search do
-  task :drop do
-    ENV['INDEX'] = "issues,parties,representatives,promises,propositions,parliament_issues,topics"
-    Rake::Task['tire:index:drop'].invoke
-  end
-
+  desc 'Reindex'
   task :reindex => :environment do
     [ Issue,
       ParliamentIssue,
@@ -32,5 +28,11 @@ namespace :search do
         docs
       }
     end
+  end
+
+  desc 'Run a fake search server'
+  task :fake do
+    require 'rack'
+    Rack::Server.new(app: lambda { |env| [200, {}, ["{}"]]}, :Port => 9200, :server => "thin").start
   end
 end
