@@ -36,4 +36,4 @@ namespace :check do
   end
 end
 
-task :check => %w[check:tabs check:scss]
+task :check => %w[check:tabs]
