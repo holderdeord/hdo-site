@@ -62,7 +62,7 @@ Then restart the database:
 
 ## ... on OS X
 
-You'll need [XCode](https://developer.apple.com/xcode/) installed.
+You'll need [XCode](https://developer.apple.com/xcode/) installed—including the Command Line Tools.
 
 Install Ruby 1.9.3 through [RVM](http://rvm.io/):
 
