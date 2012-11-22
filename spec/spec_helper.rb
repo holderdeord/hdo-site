@@ -26,6 +26,8 @@ RSpec.configure do |config|
   config.order     = :random
   config.drb       = true
 
+  config.add_formatter Fuubar
+
   config.profile_examples = true
 
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
