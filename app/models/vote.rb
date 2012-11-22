@@ -120,9 +120,8 @@ class Vote < ActiveRecord::Base
     # TODO: touch when associations change (+ specs)
 
     data = as_json(include: {
-      propositions:      { methods: :plain_body  },
-
-      parliament_issues: { methods: :description }
+      propositions:      { only: :description, methods: :plain_body },
+      parliament_issues: { only: :description }
     })
 
     data[:processed] = parliament_issues.all? { |e| e.processed? }
