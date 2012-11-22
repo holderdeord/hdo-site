@@ -62,7 +62,7 @@ Then restart the database:
 
 ## ... on OS X
 
-You'll need [XCode](https://developer.apple.com/xcode/) installed.
+You'll need [XCode](https://developer.apple.com/xcode/) installed—including the Command Line Tools.
 
 Install Ruby 1.9.3 through [RVM](http://rvm.io/):
 
@@ -75,12 +75,6 @@ _This list may be incomplete. Please add any missing libs you find._
     $ brew install git imagemagick elasticsearch
 
 Follow the post-install instructions (`brew info elasticsearch`) on how to start ElasticSearch on login.
-
-If you want elasticsearch to correctly decompose words, run this command:
-
-    $ sudo curl -o /usr/share/dict/norsk http://files.holderdeord.no/dev/norsk.txt
-
-(TODO: create homebrew package for OS X?)
 
 ### Database
 

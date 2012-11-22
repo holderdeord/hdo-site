@@ -1,14 +1,12 @@
 module Hdo
   module Search
     module Settings
-      word_list = Rails.root.join('config/search/words.nb.txt')
-
       LOCALE = {
         nb: {
           language:       'Norwegian',
           stopwords:      %w[at av da de den der deres det disse eller en er et for hvis i ikke inn med men nei og slik som til var vil].join(','),
           synonyms_path:  Rails.root.join('config/search/synonyms.nb.txt').to_s,
-          word_list_path: word_list.exist? ? word_list.to_s : '/usr/share/dict/norsk',
+          word_list_path: Rails.root.join('config/search/words.nb.txt').to_s
         }
       }
 
