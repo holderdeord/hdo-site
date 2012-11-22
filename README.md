@@ -76,12 +76,6 @@ _This list may be incomplete. Please add any missing libs you find._
 
 Follow the post-install instructions (`brew info elasticsearch`) on how to start ElasticSearch on login.
 
-If you want elasticsearch to correctly decompose words, run this command:
-
-    $ sudo curl -o /usr/share/dict/norsk http://files.holderdeord.no/dev/norsk.txt
-
-(TODO: create homebrew package for OS X?)
-
 ### Database
 
 If you're on Lion or later, use [Postgres.app](http://postgresapp.com/):
