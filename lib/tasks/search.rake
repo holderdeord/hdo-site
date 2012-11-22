@@ -5,14 +5,7 @@ namespace :search do
   end
 
   task :reindex => :environment do
-    [ Issue,
-      ParliamentIssue,
-      Proposition,
-      Promise,
-      Representative,
-      Party,
-      Topic
-    ].each do |klass|
+    Hdo::Search::Settings.models.each do |klass|
       next if ENV['CLASS'] && ENV['CLASS'] != klass.to_s
       puts "\n#{klass}"
 

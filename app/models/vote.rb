@@ -66,7 +66,13 @@ class Vote < ActiveRecord::Base
   def self.admin_search(query)
     query = '*' if query.blank?
 
-    response = search load: true do |s|
+    opts = {
+      load: {
+        include: [ :parliament_issues, :issues, :vote_connections ]
+      }
+    }
+
+    response = search(opts) do |s|
       s.size 1000
 
       s.query do |q|

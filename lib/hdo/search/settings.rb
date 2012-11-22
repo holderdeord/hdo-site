@@ -1,9 +1,5 @@
 module Hdo
   module Search
-    #
-    # Module used to share ES config among models (indeces)
-    #
-
     module Settings
       word_list = Rails.root.join('config/search/words.nb.txt')
 
@@ -70,6 +66,18 @@ module Hdo
         @locale ||= LOCALE.fetch(I18n.locale)
       end
 
+      def models
+        [
+          Issue,
+          ParliamentIssue,
+          Party,
+          Promise,
+          Proposition,
+          Representative,
+          Topic,
+          Vote
+        ]
+      end
 
     end
   end
