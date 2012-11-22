@@ -1,5 +1,10 @@
 class Vote < ActiveRecord::Base
   include Hdo::Model::HasStatsCache
+  include Tire::Model::Search
+  include Tire::Model::Callbacks
+
+  tire.settings(TireSettings.default)
+
   extend FriendlyId
 
   attr_accessible :for_count, :against_count, :absent_count,
@@ -58,6 +63,20 @@ class Vote < ActiveRecord::Base
     votes.select { |e| e.parliament_issues.all?(&:processed?) }
   end
 
+  def self.admin_search(query)
+    query = '*' if query.blank?
+
+    response = search load: true do |s|
+      s.size 1000
+
+      s.query do |q|
+        q.string "processed:true #{query}", default_operator: 'AND'
+      end
+    end
+
+    response.results
+  end
+
   def time_text
     I18n.l time, format: :short
   end
@@ -89,6 +108,20 @@ class Vote < ActiveRecord::Base
       against_count == other.for_count &&
       absent_count == other.absent_count &&
       enacted? != other.enacted?
+  end
+
+  def to_indexed_json
+    # TODO: touch when associations change (+ specs)
+
+    data = as_json(include: {
+      propositions:      { methods: :plain_body  },
+
+      parliament_issues: { methods: :description }
+    })
+
+    data[:processed] = parliament_issues.all? { |e| e.processed? }
+
+    data.to_json
   end
 
   private
