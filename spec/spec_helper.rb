@@ -43,6 +43,10 @@ RSpec.configure do |config|
     DatabaseCleaner.clean_with :truncation
   end
 
+  config.after :suite do
+    TireSettings.models.each { |m| m.index.delete }
+  end
+
   config.before :each do
     DatabaseCleaner.start
   end
