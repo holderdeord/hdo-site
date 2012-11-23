@@ -78,7 +78,7 @@ module Hdo
         parliament_issues = parsing_data_source.parliament_issues(@options[:session])
 
         if @options[:parliament_issue_ids]
-          issues = issues.select { |i| @options[:parliament_issue_ids].include? i.external_id }
+          parliament_issues = parliament_issues.select { |i| @options[:parliament_issue_ids].include? i.external_id }
         end
 
         persister.import_parliament_issues parliament_issues
