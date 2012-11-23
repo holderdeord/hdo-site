@@ -16,7 +16,7 @@ module SearchSpecHelper
     }
 
     ok = index.create(opts)
-    ok or raise "unable to create index for #{described_class}: #{index.response.body}"
+    ok or raise "unable to create index for #{described_class}: #{index.response && index.response.body}"
   end
 
   def results_for(query)
