@@ -16,10 +16,12 @@ namespace :search do
       index = klass.index
 
       index.delete
-      index.create :mappings => klass.tire.mapping_to_hash, :settings => klass.tire.settings
+      ok = index.create :mappings => klass.tire.mapping_to_hash, :settings => klass.tire.settings
+      ok or raise "unable to create #{index.name}, #{index.response.body}"
 
       klass.import { |docs|
         if klass == Issue
+          # don't index unpublished issues.
           docs = docs.select { |e| e.published? }
         end
 
