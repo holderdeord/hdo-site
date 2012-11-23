@@ -61,7 +61,7 @@ module Hdo
       end
 
       def default_filters
-        %w[standard lowercase hdo_stop hdo_snowball hdo_synonym hdo_decompounder]
+        %w[standard lowercase hdo_synonym hdo_stop hdo_snowball hdo_decompounder]
       end
 
       def locale
