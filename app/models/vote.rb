@@ -3,7 +3,9 @@ class Vote < ActiveRecord::Base
   include Tire::Model::Search
   include Tire::Model::Callbacks
 
-  tire.settings(TireSettings.default)
+  tire.settings(TireSettings.default) {
+    indexes :category_names, index: :not_analyzed
+  }
 
   extend FriendlyId
 
@@ -63,7 +65,7 @@ class Vote < ActiveRecord::Base
     votes.select { |e| e.parliament_issues.all?(&:processed?) }
   end
 
-  def self.admin_search(query)
+  def self.admin_search(filter, query, selected_categories = [])
     query = '*' if query.blank?
 
     opts = {
@@ -76,7 +78,15 @@ class Vote < ActiveRecord::Base
       s.size 1000
 
       s.query do |q|
-        q.string "processed:true #{query}", default_operator: 'AND'
+        q.filtered do |f|
+          f.query { |qr| qr.string query, default_operator: 'AND' }
+
+          f.filter :term, processed: true
+
+          if filter == 'selected-categories'
+            f.filter :terms, category_names: selected_categories.map { |e| e.name }
+          end
+        end
       end
     end
 
@@ -124,7 +134,13 @@ class Vote < ActiveRecord::Base
       parliament_issues: { only: :description }
     })
 
-    data[:processed] = parliament_issues.all? { |e| e.processed? }
+    data[:processed] = true
+    data[:category_names] = Set.new
+
+    parliament_issues.each do |pi|
+      data[:processed] = false unless pi.processed?
+      data[:category_names] += pi.categories.map { |e| e.name }
+    end
 
     data.to_json
   end

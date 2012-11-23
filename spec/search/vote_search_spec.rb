@@ -1,12 +1,12 @@
 require 'spec_helper'
 
 describe Vote, :search do
-  def search(query)
-    Vote.naive_search(nil, query)
+  def search(filter, query, categories = [])
+    Vote.naive_search(filter, query, categories)
   end
 
-  def es_search(query)
-    Vote.admin_search(query)
+  def es_search(filter, query, categories = [])
+    Vote.admin_search(filter, query, categories)
   end
 
   context 'open search' do
@@ -20,20 +20,20 @@ describe Vote, :search do
 
       refresh_index
 
-      search('').should == [v2]
-      es_search('').should == [v2]
+      search(nil, '').should == [v2]
+      es_search(nil, '').should == [v2]
     end
   end
 
   context 'keyword search' do
     it 'finds votes where the parliament issue description matches the query' do
-      match = Vote.make!(parliament_issues: [ParliamentIssue.make!(description: 'skatt' )])
-      miss  = Vote.make!(parliament_issues: [ParliamentIssue.make!(description: 'klima' )])
+      match = Vote.make!(parliament_issues: [ParliamentIssue.make!(description: 'skatt')])
+      miss  = Vote.make!(parliament_issues: [ParliamentIssue.make!(description: 'klima')])
 
       refresh_index
 
-      search('skatt').should == [match]
-      es_search('skatt').should == [match]
+      search(nil, 'skatt').should == [match]
+      es_search(nil, 'skatt').should == [match]
     end
 
     it 'finds votes where the proposition body matches the query' do
@@ -42,8 +42,32 @@ describe Vote, :search do
 
       refresh_index
 
-      search('skatt').should == [match]
-      es_search('skatt').should == [match]
+      search(nil, 'skatt').should == [match]
+      es_search(nil, 'skatt').should == [match]
     end
   end
+
+  context 'category filter' do
+    it 'filters by selected categories' do
+      first_category  = Category.make!(name: 'klima')
+      second_category = Category.make!(name: 'skatt')
+
+      parliament_issue_match = ParliamentIssue.make!(categories: [first_category])
+      parliament_issue_miss  = ParliamentIssue.make!(categories: [second_category])
+
+      match = Vote.make!(parliament_issues: [parliament_issue_match])
+      miss  = Vote.make!(parliament_issues: [parliament_issue_miss])
+
+      refresh_index
+
+      results = search('selected-categories', nil, [first_category])
+      results.size.should == 1
+      results.first.should == match
+
+      results = es_search('selected-categories', nil, [first_category])
+      results.size.should == 1
+      results.first.should == match
+    end
+  end
+
 end
