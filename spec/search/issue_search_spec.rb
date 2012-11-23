@@ -20,9 +20,9 @@ describe Issue, :search do
 
   it 'does synonym mappings' do
     issue_titled 'miljøvern'
-    issue_titled 'miljø'
+    issue_titled 'klima'
 
-    results_for('miljø').size.should == 2
-    results_for('vern').size.should == 2
+    results_for('miljøvern').size.should == 2
+    results_for('klima').size.should == 2
   end
 end
