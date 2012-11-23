@@ -15,7 +15,8 @@ module SearchSpecHelper
       settings: described_class.tire.settings
     }
 
-    index.create(opts) or raise "unable to create index for #{described_class}\n#{opts.inspect}"
+    ok = index.create(opts)
+    ok or raise "unable to create index for #{described_class}: #{index.response.body}"
   end
 
   def results_for(query)
