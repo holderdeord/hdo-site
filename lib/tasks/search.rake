@@ -10,7 +10,7 @@ namespace :search do
 
       index.delete
       ok = index.create :mappings => klass.tire.mapping_to_hash, :settings => klass.tire.settings
-      ok or raise "unable to create #{index.name}, #{index.response.body}"
+      ok or raise "unable to create #{index.name}, #{index.response && index.response.body}"
 
       klass.import { |docs|
         if klass == Issue
