@@ -10,7 +10,7 @@ config["HDO javascript tests"] = {
         "app/assets/javascripts/lazyLoadCarouselImages.js",
         "app/assets/javascripts/representativeSearch.js",
         "app/assets/javascripts/promises.js",
-        "app/assets/javascripts/requestThrottler.js",
+        "app/assets/javascripts/throttler.js",
         "app/assets/javascripts/search.js"
     ],
     tests: [
