@@ -21,7 +21,7 @@
           for ( i=0; i<data.length; i++ ) {
             html += '<div>' + data[i].text + '</div>';
           }
-        $('#feed').html(html);
+        // $('#feed').html(html);
       });
     }
   </script>
@@ -30,45 +30,56 @@
 
 <div class="row-fluid">
   <div class="span9">
+
+    <div class="page-header">
+      <h1>Sjekk hva partiene har stemt og lovet</h1>
+    </div>
+
     <div class="row-fluid">
-      <div class="row-fluid">
-
-        <div class="page-header">
-          <h1>Sjekk hva partiene har stemt og lovet</h1>
-        </div>
-
-        <div class="home-party-list">
-          <% @parties.each do |party| %>
-            <%= link_to party do %>
-            <div class="home-party-logo">
-              <%= image_tag party.image_with_fallback.thumb("250x250").url, alt: party.name %>
-            </div>
-            <% end %>
+      <div class="home-party-list">
+        <% @parties.each do |party| %>
+          <%= link_to party do %>
+          <div class="home-party-logo">
+            <%= image_tag party.image_with_fallback.thumb("250x250").url, alt: party.name %>
+          </div>
           <% end %>
-        </div>
-      </div>
-
-      <ul>
-        <% @issues.each do |issue| %>
-        <li><%= link_to issue.title, issue %>: <%= issue.description %></li>
         <% end %>
-      </ul>
+      </div>
+    </div>
 
+    <h2>Saker</h2>
+    <% @issues.each_slice(3) do |issues| %>
+      <section class="issues row-fluid">
+        <% issues.each do |issue| %>
+          <article class="issue span4">
+            <%= link_to issue do %>
+              <!-- OPTIONAL IMAGE -->
+              <!--<figure style="background-image: url('')">-->
+              </figure>
+              <h3><%= issue.title %></h3>
+              <p>
+                <%= issue.description %>
+                <span class="lesmer">Les mer...</span>
+              </p>
+            <% end %>
+          </article>
+        <% end %>
+      </section>
+    <% end %>
 
-      <hr class="soften">
+    <hr class="soften">
 
-      <div class="hidden-phone">
-        <h3>Hvilke saker er viktige for deg?</h3>
+    <div class="hidden-phone">
+      <h3>Hvilke saker er viktige for deg?</h3>
 
-        <div class="row-fluid">
-          <% @topic_columns.each do |topics| %>
-              <div class="span4">
-                <% topics.each do |topic| %>
-                  <h4><%= link_to topic.name, topic %></h4>
-                <% end %>
-              </div>
-          <% end %>
-        </div>
+      <div class="row-fluid">
+        <% @topic_columns.each do |topics| %>
+            <div class="span4">
+              <% topics.each do |topic| %>
+                <h4><%= link_to topic.name, topic %></h4>
+              <% end %>
+            </div>
+        <% end %>
       </div>
     </div>
   </div>

@@ -8,3 +8,40 @@
   position: relative;
 }
 
+section.issues {
+  margin-bottom: 10px;
+  article {
+    word-break: break-word;
+    background-color: #fff;
+    -webkit-transition: 0.5s;
+    transition: 0.5s;
+    box-shadow: 0 0 0 5px lighten(#e03d25, 100%);
+    &:hover {
+      background-color: lighten(#e03d25, 45%);
+      box-shadow: 0 0 0 5px lighten(#e03d25, 45%);
+      -webkit-transition: 0.1s;
+      transition: 0.1s;
+      a {
+        text-decoration: none;
+        color: #e03d36;
+      }
+    }
+    figure {
+      margin: 0;
+      display: block;
+      height: 100px;
+      background-size: cover;
+    }
+    a {
+      color: #333;
+    }
+    h3 {
+      font-size: 1.2em;
+      line-height: 1.1em;
+      text-transform: uppercase;
+    }
+    .lesmer {
+      font-weight: bold;
+    }
+  }
+}
