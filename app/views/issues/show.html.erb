@@ -10,11 +10,14 @@
   </div>
 <% end %>
 
-<h1><%= @issue.title %></h1>
+<div class="page-header span9">
+  <h1><%= @issue.title %></h1>
+</div>
 
 <div class="row-fluid">
   <div class="span9">
     <p class="issue-description"><%= @issue.description %></p>
+    <hr>
   </div>
 
   <div class="issue-big-links span3">
@@ -24,7 +27,6 @@
 </div>
 
 <div class="row-fluid">
-  <hr class="span9">
   <div class="span3 visible-phone">
     <div class="alert alert-info"><%= @issue_explanation %></div>
   </div>
@@ -33,12 +35,8 @@
 <div class="row-fluid">
   <div class="span9">
     <% @party_groups.each do |party_group| %>
-      <div class="row-fluid">
-        <div><strong><%= party_group.name %></strong></div>
-      </div>
-
-      <%= render partial: 'party_group', locals: { group: party_group, issue: @issue, promises_by_party: @promises_by_party } %>
-      <hr>
+    <h4><%= party_group.name %></h4>
+    <%= render partial: 'party_group', locals: { group: party_group, issue: @issue, promises_by_party: @promises_by_party } %>
     <% end %>
   </div>
 
