@@ -26,6 +26,7 @@ module Hdo
       def update_membership(membership)
         intersections = current_intersections_for(membership)
 
+        # TODO extend if no intersection, but continuous
         if intersections.any?
           handle_intersections(intersections, membership)
         else

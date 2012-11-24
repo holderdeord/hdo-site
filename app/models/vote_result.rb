@@ -5,6 +5,7 @@ class VoteResult < ActiveRecord::Base
   belongs_to :vote
 
   validates_uniqueness_of :representative_id, :scope => [:vote_id]
+  validates :vote, presence: true
 
   def human
     case result
