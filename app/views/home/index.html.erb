@@ -18,6 +18,13 @@
         </div>
       </div>
 
+      <ul>
+        <% @issues.each do |issue| %>
+        <li><%= link_to issue.title, issue %>: <%= issue.description %></li>
+        <% end %>
+      </ul>
+
+
       <hr class="soften">
 
       <div class="hidden-phone">
@@ -33,7 +40,6 @@
           <% end %>
         </div>
       </div>
-
     </div>
   </div>
 
