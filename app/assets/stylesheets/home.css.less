@@ -1,3 +1,6 @@
+@hdoPrimaryColor: #019ea2;
+@hdoSecondaryColor: #e03d25;
+
 .home-party-list {
   padding-top: 20px;
 }
@@ -26,15 +29,14 @@ section.issues {
     background-color: #fff;
     -webkit-transition: 0.5s;
     transition: 0.5s;
-    box-shadow: 0 0 0 5px lighten(#e03d25, 100%);
+    box-shadow: 0 0 0 5px lighten(@hdoPrimaryColor, 100%);
     &:hover {
-      background-color: lighten(#e03d25, 45%);
-      box-shadow: 0 0 0 5px lighten(#e03d25, 45%);
+      background-color: desaturate( lighten(@hdoPrimaryColor, 60%), 55%);
+      box-shadow: 0 0 0 5px desaturate( lighten(@hdoPrimaryColor, 60%), 50%);
       -webkit-transition: 0.1s;
       transition: 0.1s;
       a {
         text-decoration: none;
-        color: #e03d36;
       }
     }
     figure {
@@ -52,7 +54,11 @@ section.issues {
       text-transform: uppercase;
     }
     .lesmer {
-      font-weight: bold;
+      color: @hdoPrimaryColor;
+      &:hover {
+        text-decoration: underline;
+        color: darken(@hdoPrimaryColor, 5%);
+      }
     }
   }
 }
