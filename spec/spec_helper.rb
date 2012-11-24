@@ -26,6 +26,8 @@ RSpec.configure do |config|
   config.order     = :random
   config.drb       = true
 
+  config.add_formatter Fuubar
+
   config.profile_examples = true
 
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
@@ -41,6 +43,10 @@ RSpec.configure do |config|
   config.before :suite do
     DatabaseCleaner.strategy = :transaction
     DatabaseCleaner.clean_with :truncation
+  end
+
+  config.after :suite do
+    TireSettings.models.each { |m| m.index.delete }
   end
 
   config.before :each do
