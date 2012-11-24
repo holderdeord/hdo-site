@@ -17,12 +17,12 @@
                 <%= promise.external_id %>
               </div>
 
-              <div class="span8">
+              <div class="span7">
                 <p><%= promise.body %></p>
                 <small class="pull-right"><%= issues_for_promise promise %></small>
               </div>
 
-              <div class="span3">
+              <div class="span4">
                 <div class="pull-right">
                   <% promise_states.each do |status| %>
                   <%= radio_button_tag "promises[#{promise.id}][status]", status, status == promise_status_for(promise) %>
