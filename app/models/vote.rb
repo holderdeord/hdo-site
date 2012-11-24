@@ -1,4 +1,6 @@
 class Vote < ActiveRecord::Base
+  extend FriendlyId
+
   include Hdo::Model::HasStatsCache
   include Tire::Model::Search
   include Tire::Model::Callbacks
@@ -6,8 +8,6 @@ class Vote < ActiveRecord::Base
   tire.settings(TireSettings.default) {
     indexes :category_names, index: :not_analyzed
   }
-
-  extend FriendlyId
 
   attr_accessible :for_count, :against_count, :absent_count,
                   :enacted, :personal, :subject, :time, :external_id,
@@ -30,6 +30,7 @@ class Vote < ActiveRecord::Base
   validates_length_of     :parliament_issues, minimum: 1
   validates_presence_of   :time, :external_id
   validates_uniqueness_of :external_id
+
   # timestamps are unique unless it's an alternate vote, in which case 'enacted' will not be the same
   validates_uniqueness_of :time, scope: :enacted
 
