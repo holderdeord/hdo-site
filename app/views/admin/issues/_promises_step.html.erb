@@ -1,7 +1,7 @@
 <div class="row-fluid">
   <div class="tabbable">
     <ul class="nav nav-tabs">
-      <% @promises_by_party.keys.each_with_index do |party_names, idx| %>
+      <% @promises_by_party.each_with_index do |(party_names, promises), idx| %>
         <li class="<%= 'active' if idx == 0 %>">
           <a href="#<%= party_names.gsub(/\W/, '-') %>-tab" data-toggle="tab"><%= party_names %></a>
         </li>

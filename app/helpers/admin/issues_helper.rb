@@ -69,7 +69,7 @@ module Admin::IssuesHelper
   end
 
   def issues_for_promise(promise)
-    pcs = promise.promise_connections.select { |e| e.id != @issue.id }
+    pcs = promise.promise_connections.select { |pc| pc.issue.id != @issue.id }
 
     out = ''
 
