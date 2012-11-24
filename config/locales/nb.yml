@@ -331,7 +331,6 @@ nb:
         keyword: Nøkkelord
         filter: Filter
         selected_categories: Valgte kategorier
-        not_connected: Ukoblet
         all: Alle
         reset: Nullstill
         fetch_votes: Søk

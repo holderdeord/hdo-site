@@ -5,6 +5,7 @@ class HomeController < ApplicationController
   caches_page :press, :join, :support, :people, :about_method, :member
 
   def index
+    @issues = Issue.random(10)
     @topic_columns = Topic.column_groups
     @parties = Party.order(:name)
   end
