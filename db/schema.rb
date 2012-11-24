@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121119223222) do
+ActiveRecord::Schema.define(:version => 20121124105420) do
 
   create_table "categories", :force => true do |t|
     t.string   "external_id"
@@ -101,13 +101,6 @@ ActiveRecord::Schema.define(:version => 20121119223222) do
 
   add_index "issues", ["slug"], :name => "index_issues_on_slug", :unique => true
 
-  create_table "issues_promises", :id => false, :force => true do |t|
-    t.integer "promise_id"
-    t.integer "issue_id"
-  end
-
-  add_index "issues_promises", ["issue_id", "promise_id"], :name => "index_issues_promises_on_issue_id_and_promise_id"
-
   create_table "issues_topics", :id => false, :force => true do |t|
     t.integer "topic_id"
     t.integer "issue_id"
@@ -190,6 +183,16 @@ ActiveRecord::Schema.define(:version => 20121119223222) do
   end
 
   add_index "party_memberships", ["representative_id", "party_id", "start_date", "end_date"], :name => "index_party_memberships_on_all"
+
+  create_table "promise_connections", :force => true do |t|
+    t.string   "status"
+    t.integer  "promise_id"
+    t.integer  "issue_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "promise_connections", ["promise_id", "issue_id"], :name => "index_promise_connections_on_promise_id_and_issue_id"
 
   create_table "promises", :force => true do |t|
     t.text     "body"

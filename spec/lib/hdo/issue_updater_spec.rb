@@ -19,7 +19,7 @@ module Hdo
           }
         }
 
-        IssueUpdater.new(issue, {}, votes, user).update!
+        IssueUpdater.new(issue, {votes: votes}, user).update!
 
         issue.reload
 
@@ -47,7 +47,7 @@ module Hdo
           }
         }
 
-        IssueUpdater.new(issue, {}, votes, user).update!
+        IssueUpdater.new(issue, {votes: votes}, user).update!
         issue.reload
 
         issue.votes[0].proposition_type.should == Vote::PROPOSITION_TYPES.first
@@ -72,7 +72,7 @@ module Hdo
           }
         }
 
-        IssueUpdater.new(issue, {}, votes, user).update!
+        IssueUpdater.new(issue, {votes: votes}, user).update!
         issue.reload
 
         issue.votes[0].proposition_type.should == Vote::PROPOSITION_TYPES.first
@@ -96,7 +96,7 @@ module Hdo
           }
         }
 
-        IssueUpdater.new(issue, {}, votes, user).update!
+        IssueUpdater.new(issue, {votes: votes}, user).update!
         issue.last_updated_by.should be_nil
       end
     end
@@ -104,9 +104,10 @@ module Hdo
     describe 'authorization' do
       let(:issue) { Issue.make! status: 'in_progress' }
       let(:admin) { User.make! role: 'admin' }
+      let(:superadmin) { User.make! role: 'superadmin' }
 
       it "can not change status if authorized as admin" do
-        updater = IssueUpdater.new(issue, {status: 'published'}, {}, admin)
+        updater = IssueUpdater.new(issue, {issue: {status: 'published'}}, admin)
         expect {
           updater.update!
         }.to raise_error(IssueUpdater::Unauthorized)
@@ -115,7 +116,11 @@ module Hdo
         issue.errors.should_not be_empty
       end
 
-      it "can change status if authorized as superadmin"
+      it "can change status if authorized as superadmin" do 
+        updater = IssueUpdater.new(issue, {issue: {status: 'published'}}, superadmin)
+        updater.update.should be_true
+        issue.errors.should be_empty
+      end
     end
   end
 end
