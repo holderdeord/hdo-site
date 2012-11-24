@@ -4,10 +4,11 @@ module Hdo
     class Unauthorized < StandardError
     end
 
-    def initialize(issue, attributes, votes, user)
+    def initialize(issue, attributes, votes, promises, user)
       @issue      = issue
       @attributes = attributes
       @votes      = votes
+      @promises   = promises
       @user       = user
     end
 
@@ -19,7 +20,9 @@ module Hdo
     rescue Unauthorized
       @issue.errors.add :base, I18n.t('app.errors.unauthorized')
       false
-    rescue ActiveRecord::RecordInvalid
+    rescue ActiveRecord::RecordInvalid => ex
+      # failure could be from association
+      @issue.errors.empty? && @issue.errors.add(:base, ex.message)
       false
     end
 
@@ -29,6 +32,7 @@ module Hdo
       @user.transaction {
         update_attributes
         update_votes
+        update_promises
         update_meta
         save!
       }
@@ -43,10 +47,16 @@ module Hdo
       end
     end
 
+    def update_promises
+      Array(@promises).each do |promise_id, data|
+        update_or_create_promise_connection(promise_id, data)
+      end
+    end
+
     def update_attributes
       return unless @attributes
 
-      @changed ||= (association_changed?(:category_ids) || association_changed?(:promise_ids) || association_changed?(:topic_ids))
+      @changed ||= (association_changed?(:category_ids) || association_changed?(:topic_ids))
       @issue.attributes = @attributes
       @changed ||= @issue.changed?
 
@@ -60,6 +70,28 @@ module Hdo
 
       @issue.updated_at = Time.now
       @issue.last_updated_by = @user
+    end
+
+    def update_or_create_promise_connection(promise_id, data)
+      existing = PromiseConnection.where('promise_id = ? and issue_id = ?', promise_id, @issue.id).first
+      status = data.fetch(:status)
+
+      if status == 'unrelated'
+        if existing
+          @issue.promise_connections.delete existing
+          @changed = true
+        end
+      else
+        if existing
+          existing.status = status
+          @changed ||= existing.changed?
+
+          existing.save!
+        else
+          @issue.promise_connections.create!(status: status, promise_id: promise_id)
+          @changed = true
+        end
+      end
     end
 
     def update_or_create_vote_connection(vote_id, data)

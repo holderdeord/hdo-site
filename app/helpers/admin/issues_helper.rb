@@ -59,14 +59,23 @@ module Admin::IssuesHelper
     (vote.issues - [@issue]).first(3)
   end
 
-  def issues_for_promise(issue, promise)
-    issues = promise.issues.where("issues.id != ?", issue.id)
+  def promise_status_for(promise)
+    conn = promise.promise_connections.find { |pc| pc.issue_id == @issue.id }
+    conn ? conn.status : 'unrelated'
+  end
+
+  def promise_states
+    [PromiseConnection::STATES, PromiseConnection::UNRELATED_STATE].flatten
+  end
+
+  def issues_for_promise(promise)
+    pcs = promise.promise_connections.select { |e| e.id != @issue.id }
 
     out = ''
 
-    if issues.any?
+    if pcs.any?
       out = "#{I18n.t 'app.issues.edit.promise_used_in'} "
-      out << issues.map { |i| link_to(i.title, i, target: '_blank') }.to_sentence
+      out << pcs.map { |pc| link_to(pc.issue.title, pc.issue, target: '_blank') }.to_sentence
     end
 
     out.html_safe

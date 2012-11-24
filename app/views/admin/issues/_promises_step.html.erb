@@ -10,23 +10,29 @@
 
     <div class="tab-content">
       <% @promises_by_party.each_with_index do |(party_names, promises), idx| %>
-      <div class="tab-pane <%= 'active' if idx == 0 %>" id="<%= party_names.gsub(/\W/, '-') %>-tab">
+        <div class="tab-pane <%= 'active' if idx == 0 %>" id="<%= party_names.gsub(/\W/, '-') %>-tab">
+          <% promises.each do |promise| %>
+            <div class="row-fluid">
+              <div class="span1">
+                <%= promise.external_id %>
+              </div>
 
-          <table class="table table-striped">
-            <tbody>
-              <% promises.each do |promise| %>
-              <tr>
-                <td><%= promise.external_id %></td>
-                <td>
-                  <label><%= promise.body %></label>
-                  <small class="pull-right"><%= issues_for_promise @issue, promise %></small>
-                </td>
-                <td><%= check_box_tag "issue[promise_ids][]", promise.id, @issue.promises.include?(promise) %></td>
-              </tr>
-              <% end %>
-            </tbody>
-          </table>
+              <div class="span8">
+                <p><%= promise.body %></p>
+                <small class="pull-right"><%= issues_for_promise promise %></small>
+              </div>
 
+              <div class="span3">
+                <div class="pull-right">
+                  <% promise_states.each do |status| %>
+                  <%= radio_button_tag "promises[#{promise.id}][status]", status, status == promise_status_for(promise) %>
+                    <%= t("app.issues.edit.promise.#{status}") %>
+                  <% end %>
+                </div>
+              </div>
+            </div>
+            <hr>
+          <% end %>
         </div>
       <% end %>
     </div>

@@ -60,7 +60,7 @@ class Admin::IssuesController < AdminController
   end
 
   def update
-    update_ok = Hdo::IssueUpdater.new(@issue, params[:issue], params[:votes], current_user).update
+    update_ok = Hdo::IssueUpdater.new(@issue, params[:issue], params[:votes], params[:promises], current_user).update
 
     if update_ok
       edit_steps.next!
@@ -116,7 +116,7 @@ class Admin::IssuesController < AdminController
   end
 
   def edit_promises
-    @promises_by_party = @issue.categories.includes(:promises).map(&:promises).compact.
+    @promises_by_party = @issue.categories.includes(:promises => [:promise_connections, :parties]).map(&:promises).compact.
                                            flatten.uniq.group_by { |e| e.short_party_names }
   end
 
