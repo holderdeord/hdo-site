@@ -19,62 +19,112 @@
 
 @navbarBackground: @hdoPrimaryColor;
 @navbarBackgroundHighlight: #55bfbb;
-@navbarLinkColor: rgba(0,0,0,0.3);
+@navbarLinkColor: darken(@hdoPrimaryColor, 10%);
 @navbarLinkColorHover: #000;
-@navbarLinkBackgroundActive: #FFF;
+@navbarLinkBackgroundActive: transparent;
 @navbarLinkColorActive: #000;
+
+body {
+  padding: 0;
+}
+
+.container {
+  padding: 0 20px;
+}
 
 .navbar {
   font-family: @headingsFontFamily;
+  margin-bottom: 20px;
   .navbar-search {
     float: right;
     margin-top: 25px;
   }
   .navbar-inner {
-    .border-radius(0);
     border-bottom-width: 0;
-    background-image: none;
     box-shadow: none;
-    background-color: #019ea2;
-    padding: 0;
+    background: @hdoPrimaryColor;
+    filter: none;
+    padding: 20px 0 0 0;
     box-shadow: 0 -1px rgba(0,0,0,0.2) inset,
                 0 -2px rgba(0,0,0,0.05) inset,
                 0 -3px rgba(0,0,0,0.04) inset,
                 0 -4px rgba(0,0,0,0.03) inset;
   }
-  .brand {
-        background: url('/assets/logo.png') 0 30px no-repeat;
-        font-size: 0;
-        padding: 0;
-        width: 220px;
-        height: 60px;
-        margin-bottom: 10px;
-        margin-left: 0;
+  .logo {
+    float: left;
+    border-bottom: 2px solid #fff;
+    margin-bottom: 10px;
+    padding: 5px 5px 10px 5px;
+    -webkit-transition: 0.5s;
+    transition: 0.5s;
+    &:hover {
+      -webkit-transform: scale(1.08);
+      transform: scale(1.08);
+      -webkit-transition: 0.1s;
+      transition: 0.1s;
+    }
+    img {
+      width: 110px;
+      max-width: 110px;
+    }
+  }
+  .nav > li {
+    margin-right: 3px;
+    > a {
+      text-shadow: none;
+      box-shadow: none;
+      background-color: rgba(255,255,255,0);
+      .border-radius(2px 2px 0 0);
+      padding: 7px 15px 3px 15px;
+      text-transform: uppercase;
+      -webkit-transition: color 0.5s;
+      transition: color 0.5s;
+    }
+    &.active > a,
+    &.active:hover > a {
+      background-color: #fff !important;
+      box-shadow: none;
+      box-shadow: -1px -1px px rgba(0,0,0,0.2),
+                   1px -1px 1px rgba(0,0,0,0.2);
+      -webkit-transition: color 0.1s;
+      transition: color 0.1s;
+    }
   }
 }
 
-.navbar .nav li {
-    margin-right: 3px;
-}
-
-.navbar .nav > li > a {
-    text-shadow: none;
-    box-shadow: none;
-    background-color: rgba(255,255,255,0);
-    .border-radius(2px 2px 0 0);
-    padding: 7px 15px 3px 15px;
-    text-transform: uppercase;
-}
-
-.navbar .nav > li.active > a,
-.navbar .nav > li.active:hover > a {
-    background-color: #FFF;
-    box-shadow: none;
-    box-shadow:  -1px 0 1px rgba(0,0,0,0.2),
-                  1px 0 1px rgba(0,0,0,0.2),
-                 0 -1px 1px rgba(0,0,0,0.2);
-}
-
 h1, h2, h3, h4, h5 {
-    font-family: @headingsFontFamily;
+  font-family: @headingsFontFamily;
+}
+
+// CURSED OVERRIDE FOR CURSED BOOTSTRAP
+@media (max-width: 767px) {
+  .navbar {
+    .container {
+      width: auto;
+      padding: 0 10px;
+    }
+    .navbar-search {
+      margin-top: 10px;
+      input.span2 {
+        width: 90px;
+      }
+    }
+    .nav {
+      white-space: nowrap;
+      > li {
+        margin-right: 1px;
+        > a {
+          padding: 7px 4px 3px 4px;
+        }
+      }
+    }
+    .logo {
+      padding-bottom: 7px;
+      border-bottom-width: 1px;
+      margin-bottom: 20px;
+      img {
+        width: 80px;
+      }
+    }
+  }
 }
