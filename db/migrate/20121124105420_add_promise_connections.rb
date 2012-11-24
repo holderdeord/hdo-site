@@ -10,6 +10,10 @@ class AddPromiseConnections < ActiveRecord::Migration
 
     add_index :promise_connections, [:promise_id, :issue_id]
 
+    # in case old join records were left hanging, don't leave connections with invalid issues
+    # see https://github.com/holderdeord/hdo-site/issues/351
+    execute 'DELETE FROM issues_promises ip WHERE (SELECT count(*) FROM issues WHERE id = ip.issue_id) = 0'
+
     # move data
     execute <<-SQL
       INSERT INTO promise_connections (status, promise_id, issue_id, created_at, updated_at)
