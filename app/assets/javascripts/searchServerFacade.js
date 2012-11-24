@@ -7,7 +7,7 @@ var JZ = this.JZ || {};
   H.searchServerFacade = J.serverFacade.create({
     search: function (query, callback) {
       var url = "/search/autocomplete";
-      this.get(url, {query: query}, {success: callback});
+      this.getJSON(url, {query: query}, {success: callback});
     }
   });
 }(HDO, JZ));

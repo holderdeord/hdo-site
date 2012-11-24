@@ -11,7 +11,7 @@ config["HDO javascript tests"] = {
         "app/assets/javascripts/representativeSearch.js",
         "app/assets/javascripts/promises.js",
         "app/assets/javascripts/throttler.js",
-        "app/assets/javascripts/search.js"
+        "app/assets/javascripts/searchAutocomplete.js"
     ],
     tests: [
         "spec/javascript/*Test.js"
