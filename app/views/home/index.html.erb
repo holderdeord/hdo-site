@@ -47,24 +47,25 @@
       </div>
     </div>
 
-    <h2>Saker</h2>
+    <hr class="soften">
+
     <% @issues.each_slice(3) do |issues| %>
-      <section class="issues row-fluid">
-        <% issues.each do |issue| %>
-          <article class="issue span4">
-            <%= link_to issue do %>
-              <!-- OPTIONAL IMAGE -->
-              <!--<figure style="background-image: url('')">-->
-              </figure>
-              <h3><%= issue.title %></h3>
-              <p>
-                <%= issue.description %>
-                <span class="lesmer">Les mer...</span>
-              </p>
-            <% end %>
-          </article>
-        <% end %>
-      </section>
+    <section class="issues row-fluid">
+      <% issues.each do |issue| %>
+        <article class="issue span4">
+          <%= link_to issue do %>
+            <!-- OPTIONAL IMAGE -->
+            <!--<figure style="background-image: url('')">-->
+            </figure>
+            <h3><%= issue.title %></h3>
+            <p>
+              <%= issue.description %>
+              <span class="lesmer">Les mer...</span>
+            </p>
+          <% end %>
+        </article>
+      <% end %>
+    </section>
     <% end %>
 
     <hr class="soften">
