@@ -60,7 +60,7 @@ class Admin::IssuesController < AdminController
   end
 
   def update
-    update_ok = Hdo::IssueUpdater.new(@issue, params[:issue], params[:votes], params[:promises], current_user).update
+    update_ok = Hdo::IssueUpdater.new(@issue, params, current_user).update
 
     if update_ok
       edit_steps.next!

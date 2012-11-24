@@ -4,11 +4,11 @@ module Hdo
     class Unauthorized < StandardError
     end
 
-    def initialize(issue, attributes, votes, promises, user)
+    def initialize(issue, params, user)
       @issue      = issue
-      @attributes = attributes
-      @votes      = votes
-      @promises   = promises
+      @attributes = params[:issue]
+      @votes      = params[:votes]
+      @promises   = params[:promises]
       @user       = user
     end
 

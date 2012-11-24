@@ -219,7 +219,7 @@ describe Admin::IssuesController do
     it 'sets last_updated_by when promises are changed' do
       promise = Promise.make!
 
-      put :update, issue: issue_params(issue).merge('promise_ids' => [promise.id]), id: issue
+      put :update, promises: {promise.id => {status: 'related'}}, id: issue
 
       issue = assigns(:issue)
       issue.promises.should == [promise]

@@ -91,15 +91,18 @@ describe Promise do
   end
 
   it 'can add issues' do
-    promise.issues << Issue.make!
+    promise.promise_connections.create! issue: Issue.make!, status: 'related'
     promise.issues.size.should == 1
   end
 
   it "won't add the same issue twice" do
     issue = Issue.make!
 
-    promise.issues << issue
-    promise.issues << issue
+    promise.promise_connections.create! issue: issue, status: 'related'
+    
+    expect {
+      promise.promise_connections.create! issue: issue, status: 'related'
+    }.to raise_error(ActiveRecord::RecordInvalid)
 
     promise.issues.size.should == 1
   end
