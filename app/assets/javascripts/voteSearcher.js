@@ -13,7 +13,7 @@
 
       $('#reset').click(function () {
         $("#result").html('');
-        $("#filter").val('selected-categories');
+        $("input[value=selected-categories]").attr('checked', true);
         $("#keyword").val('');
 
         return false;
@@ -29,7 +29,7 @@
       $('#fetch-votes').click(function () {
         var params = {
           keyword: $('#keyword').val(),
-          filter: $('#filter').val()
+          filter: $('input[name=filter]:checked').val()
         };
 
         $("#result").html('');

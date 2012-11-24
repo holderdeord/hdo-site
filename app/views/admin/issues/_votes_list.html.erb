@@ -30,12 +30,12 @@
 
       <label>
         <strong><%= VoteConnection.human_attribute_name :matches %></strong>
-        <p><%= select_tag "votes[#{vote.id}][direction]", vote_options_for(vote, connection) %></p>
+        <p><%= select_tag "votes[#{vote.id}][direction]", vote_options_for(vote, connection), class: 'input-medium' %></p>
       </label>
 
       <label>
         <strong><%= VoteConnection.human_attribute_name :weight %></strong>
-        <p><%= select_tag "votes[#{vote.id}][weight]", weight_options_for(connection) %></p>
+        <p><%= select_tag "votes[#{vote.id}][weight]", weight_options_for(connection), class: 'input-small' %></p>
       </label>
 
       <% if (connected_issues = connected_issues_for(vote)) && connected_issues.any? %>

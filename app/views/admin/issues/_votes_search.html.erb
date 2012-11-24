@@ -1,24 +1,30 @@
 <div class="well form-horizontal">
-  <h3><%= t('app.issues.edit.find_votes') %></h3>
-
   <div class="control-group">
-    <label for="keyword"><%= t('app.issues.edit.keyword') %>:</label>
-    <input id="keyword" type="text" class="input-medium search-query">
+    <label class="control-label" for="keyword"><%= t('app.issues.edit.keyword') %>:</label>
+    <div class="controls">
+      <input id="keyword" type="text" class="input-medium search-query">
+    </div>
   </div>
 
   <div class="control-group">
-    <label for="filter"><%= t('app.issues.edit.filter') %>:</label>
+    <p class="control-label"><%= t('app.issues.edit.filter') %>:</p>
 
-    <select id="filter">
-      <option value="selected-categories"><%= t('app.issues.edit.selected_categories') %></option>
-      <option value="all"><%= t('app.issues.edit.all') %></option>
-      <option value="not-connected"><%= t('app.issues.edit.not_connected') %></option>
-    </select>
+    <div class="controls">
+      <label class="radio">
+        <input type="radio" name="filter" value="selected-categories" checked><%= t('app.issues.edit.selected_categories') %>
+      </label>
+
+      <label class="radio">
+        <input type="radio" name="filter" value="all"><%= t('app.issues.edit.all') %>
+      </label>
+    </div>
   </div>
 
   <div class="control-group">
-    <button id="reset" type="submit" class="btn btn-warning"><%= t('app.issues.edit.reset') %></button>
-    <button id="fetch-votes" type="submit" class="btn btn-info"><%= t('app.issues.edit.fetch_votes') %></button>
+    <div class="controls">
+      <button id="reset" type="submit" class="btn"><%= t('app.issues.edit.reset') %></button>
+      <button id="fetch-votes" type="submit" class="btn btn-primary"><%= t('app.issues.edit.fetch_votes') %></button>
+    </div>
   </div>
 </div>
 

@@ -89,7 +89,7 @@ class Admin::IssuesController < AdminController
   end
 
   def votes_search
-    votes = Vote.naive_search(
+    votes = Vote.admin_search(
       params[:filter],
       params[:keyword],
       @issue.categories
