@@ -8,4 +8,8 @@ class ParliamentPeriod < ActiveRecord::Base
   def self.current
     for_date Date.current
   end
+
+  def name
+    [start_date.year, end_date.year].join('-')
+  end
 end
