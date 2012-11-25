@@ -2,12 +2,18 @@
   <div class="container">
     <div class="row-fluid">
 
-
       <div class="span4">
         <%= render 'layouts/social'%>
         <p><%=t 'app.title' %> &copy; 2012.</p>
       </div>
 
+      <div class="span4"></div>
+
+      <div class="span4">
+        <p>
+          Ris, ros, eller noe som ikke virker? <%= link_to 'Gi beskjed!', "mailto:#{t 'app.email'}?subject=Tilbakemelding" %>
+        </p>
+      </div>
 
     </div>
   </div>

@@ -3,7 +3,8 @@
     <div class="container">
       <%= image_tag asset_path("jumbotron_fg.png"),alt: "Holder de ord logo" %>
       <p>
-        Holder de ord gjør det enkelt å sjekke hva politikerne på Stortinget stemmer og lover i saker du er opptatt av. Vårt mål er å bli den foretrukne kilden for faktabasert informasjon om norsk politikk frem mot Stortingsvalget i 2013.
+        Din uavhengige kilde for fakta om stortingspolitikk. Holder de ord gjør det enkelt å sjekke hva politikerne på Stortinget stemmer og lover i saker du er opptatt av.
+        <%= link_to 'Les mer', home_about_path %>
       </p>
     </div>
   </div>
@@ -40,18 +41,17 @@
 
 
 <div class="row-fluid">
-  <% @issues.each_slice(4) do |issues| %>
+  <% @issues.each_slice(3) do |issues| %>
   <section class="issues row-fluid">
     <% issues.each do |issue| %>
-      <article class="issue span3">
+      <article class="issue span4">
         <%= link_to issue do %>
           <!-- OPTIONAL IMAGE -->
-          <!--<figure style="background-image: url('')">-->
-          </figure>
-          <h3><%= issue.title %></h3>
+          <!--<figure style="background-image: url('')"></figure>-->
+          <h4><%= issue.title %></h4>
           <p>
             <%= issue.description %>
-            <span class="lesmer">Les mer...</span>
+            <span class="read-more"><%= t('app.read_more') %>...</span>
           </p>
         <% end %>
       </article>
@@ -61,9 +61,7 @@
 
   <hr class="soften">
 
-  <div class="page-header">
-    <h3>Sjekk hva partiene har stemt og lovet</h3>
-  </div>
+  <h3 align="center">SJEKK DITT PARTI</h3>
 
   <div class="row-fluid">
     <div class="home-party-list">
@@ -80,31 +78,25 @@
   <hr class="soften">
 
   <div class="row-fluid hidden-phone">
-    <!-- <div class="span6">
-        <p>Holder de ord er en partipolitisk uavhengig organisasjon som gjør det lettere å følge med på hva som skjer i norsk politikk. Denne nettsiden er en prototype under utvikling.</p>
-        <p>Følg oss på <a href="http://twitter.com/holderdeord/">Twitter</a> og <a href="http://www.facebook.com/holderdeord">Facebook</a> for oppdateringer!</p>
-        <p><%= link_to t('app.read_more'), home_about_path, class: 'btn btn-primary' %></p>
-      </div> -->
-
     <div class="span4">
-      <h3>Vi trenger din hjelp!</h3>
-      <p>Send kodeord <strong>HOLDERDEORD</strong> til <strong>2160</strong> så støtter du oss med 150 kr.</p>
-      <p><%= link_to t('app.read_more'), home_support_path, class: 'btn btn-primary' %></p>
-    </div>
-
-
-    <div class="span4">
-      <h3>Bli med</h3>
-      <p>Vi er hele tiden på utkikk etter flere drevne medarbeidere.</p>
-      <p><strong>For tiden søker vi ny produktsjef.</strong></p>
-      <p><%= link_to t('app.read_more'), home_join_path, class: 'btn btn-primary' %></p>
+      <h4>GI EN GAVE</h4>
+      <p>
+        Send kodeord <strong>HOLDERDEORD</strong> til <strong>2160</strong> så støtter du oss med 150 kr.
+        Din støtte bidrar til at du enkelt kan følge med på hva som skjer i hjertet av norsk politikk.
+        <span class="read-more"><%= link_to t('app.read_more'), home_support_path %></span>
+      </p>
     </div>
 
     <div class="span4">
-      <h3>Tilbakemelding</h3>
-      <p>Ris, ros, eller noe som ikke virker? Gi beskjed!</p>
-      <%= link_to 'Send oss en epost', "mailto:#{t 'app.email'}?subject=Tilbakemelding", class: 'btn btn-primary' %>
+      <h4>BLI MED</h4>
+      <p>
+        Synes du det er lite fakta i den politiske debatten? Bli med og utvikle Norges nye politiske vaktbikkje! Vi er på utkikk etter flere til å være med på laget.
+        <span class="read-more"><%= link_to t('app.read_more'), home_join_path %></span>
+      </p>
+
     </div>
+
+    <div class="span4"></div>
   </div>
 
 </div>
