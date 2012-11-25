@@ -10,36 +10,6 @@
   </div>
 <% end %>
 
-<style>
-#feed {
-  white-space: nowrap;
-  overflow: hidden;
-}
-#feed div {
-  font: 13px/26px "Helvetica Neue", sans-serif;
-  white-space: normal;
-  display: inline-block;
-  vertical-align: top;
-  height: 120px;
-  width: 200px;
-  padding: 20px;
-  box-shadow: -1px 0 #ddd inset, 1px 0 #ddd;
-}
-</style>
-<script>
-    window.onload = function(){
-      var html = '';
-      $.getJSON('http://api.twitter.com/1/statuses/user_timeline.json?screen_name=holderdeord&include_rts=1&callback=?', function(data) {
-          for ( i=0; i<data.length; i++ ) {
-            html += '<div>' + data[i].text + '</div>';
-          }
-        // $('#feed').html(html);
-      });
-    }
-  </script>
-<div id="feed"></div>
-
-
 <div class="row-fluid">
   <% @issues.each_slice(3) do |issues| %>
   <section class="issues row-fluid">
@@ -96,8 +66,10 @@
 
     </div>
 
-    <div class="span4"></div>
+    <div class="span4">
+      <h4>SE HVA SOM KOMMER</h4>
+      <p>Denne siden er fremdeles en betaversjon og er under kontinuerlig utvikling. Les mer om hva vi utvikler for tiden.</p>
+    </div>
   </div>
-
 </div>
 
