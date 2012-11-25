@@ -1,10 +1,17 @@
 // Place all the styles related to the Representatives controller here.
 // They will automatically be included in application.css.
 
+@hdoPrimaryColor: #019ea2;
+@hdoSecondaryColor: #e03d25;
+
 .representative-image {
-  max-width: 240px;
-  border-radius: 6px;
-  box-shadow: 5px 7px 15px #888;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+}
+
+// Don't think the below selector is used
+.representative-carousel-view {
+  max-width: 150px;
+  margin-right: 10px;
 }
 
 .representative-view {
@@ -12,16 +19,15 @@
   float: left;
   position: relative;
   color: #ddd;
-}
-
-.representative-view:hover { color: #FCF6CF; }
-.representative-name-label {
-  text-align: center;
-  font-size: 0.8em;
-}
-.representative-name-label:hover { text-decoration: underline;}
-
-.representative-carousel-view {
-  max-width: 150px;
-  margin-right: 10px;
+  background-color: @hdoPrimaryColor;
+  &:hover {
+    color: #ddd;
+    img {
+      opacity: 0.85;
+    }
+  }
+  .representative-name-label {
+    text-align: center;
+    font-size: 0.8em;
+  }
 }
