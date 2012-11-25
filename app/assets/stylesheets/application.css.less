@@ -14,34 +14,23 @@
  *= require_directory .
 */
 
-@footerHeight: 180px;
-
 body,
 html {
   height: 100%;
 }
 
-body {
-  position: relative;
-  padding-top: 50px; // for navbar
-}
-
-footer,
-.push {
-  height: @footerHeight;
-}
-
 footer {
-  color: #999;
-  margin: 0 10px;
-  text-align: center;
+  background: #eee;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  margin-top: 30px;
 }
 
 .wrapper {
   min-height: 100%;
   height: auto !important;
   height: 100%;
-  margin: 0 auto @footerHeight * -1; /* the bottom margin is the negative value of the footer's height */
+  margin: 0 auto;
 }
 
 /* Faded out hr */

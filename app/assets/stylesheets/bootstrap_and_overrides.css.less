@@ -1,68 +1,138 @@
-@import "twitter/bootstrap/bootstrap";
-@import "twitter/bootstrap/responsive";
+@import "bootstrap/bootstrap";
+@import "bootstrap/responsive";
 
 // Set the correct sprite paths
 @iconSpritePath: asset-path('twitter/bootstrap/glyphicons-halflings.png');
 @iconWhiteSpritePath: asset-path('twitter/bootstrap/glyphicons-halflings-white.png');
 
 @font-face {
-    font-family: "Neo Sans";
-    src: url('/fonts/NeoSansStd-Regular.otf');
+  font-family: "Neo Sans";
+  src: url('/fonts/NeoSansStd-Regular.otf');
 }
 
-@import url('http://fonts.googleapis.com/css?family=Ubuntu:400,700,400italic,700italic');
-
-@hdoPrimaryColor: #009ea6;
+@hdoPrimaryColor: #019ea2;
 @hdoSecondaryColor: #e03d25;
 @hdoTertiaryColor: #332b2e;
 @hdoQuaternaryColor: #231f20;
 
-@baseFontFamily: Verdana, "Helvetica Neue", Helvetica, Arial, sans-serif;
-@baseLineHeight: 16px;
-@baseFontSize: 10pt;
-@headingsFontFamily: 'NeoSansStandard', 'Ubuntu', Helvetica, Arial, sans-serif;
+@linkColor: @hdoPrimaryColor;
+@linkColorHover: darken(@hdoPrimaryColor, 5%);
+
+@btnPrimaryBackground: #08c;
+
+@headingsFontFamily: 'NeoSansStandard', sans-serif;
 
 @navbarBackground: @hdoPrimaryColor;
 @navbarBackgroundHighlight: #55bfbb;
-@navbarLinkColor: @white;
-@navbarLinkColorHover: @black;
-@navbarLinkBackgroundActive: @white;
-@navbarLinkColorActive: @black;
+@navbarLinkColor: darken(@hdoPrimaryColor, 15%);
+@navbarLinkColorHover: #000;
+@navbarLinkBackgroundActive: transparent;
+@navbarLinkColorActive: #000;
+
+body {
+  padding: 0;
+}
+
+.container {
+  padding: 0 20px;
+}
+
+#hdo-content {
+  margin-top: 20px;
+}
 
 .navbar {
-    font-family: @headingsFontFamily;
-    text-transform: uppercase;
-    .navbar-inner {
-        .border-radius(0);
+  font-family: @headingsFontFamily;
+  .navbar-search {
+    float: right;
+    margin-top: 25px;
+  }
+  .navbar-inner {
+    border-bottom-width: 0;
+    box-shadow: none;
+    background: @hdoPrimaryColor;
+    filter: none;
+    padding: 20px 0 0 0;
+    box-shadow: 0 -1px rgba(0,0,0,0.2) inset,
+                0 -2px rgba(0,0,0,0.05) inset,
+                0 -3px rgba(0,0,0,0.04) inset,
+                0 -4px rgba(0,0,0,0.03) inset;
+  }
+  .logo {
+    float: left;
+    border-bottom: 2px solid #fff;
+    margin-bottom: 10px;
+    padding: 5px 5px 10px 5px;
+    -webkit-transition: 0.5s;
+    transition: 0.5s;
+    &:hover {
+      -webkit-transform: scale(1.08);
+      transform: scale(1.08);
+      -webkit-transition: 0.1s;
+      transition: 0.1s;
     }
+    img {
+      width: 110px;
+      max-width: 110px;
+    }
+  }
+  .nav > li {
+    margin-right: 3px;
+    > a {
+      text-shadow: none;
+      box-shadow: none;
+      background-color: rgba(255,255,255,0);
+      .border-radius(2px 2px 0 0);
+      padding: 7px 15px 3px 15px;
+      text-transform: uppercase;
+      -webkit-transition: color 0.5s;
+      transition: color 0.5s;
+    }
+    &.active > a,
+    &.active:hover > a {
+      background-color: #fff !important;
+      box-shadow: none;
+      box-shadow: -1px -1px px rgba(0,0,0,0.2),
+                   1px -1px 1px rgba(0,0,0,0.2);
+      -webkit-transition: color 0.1s;
+      transition: color 0.1s;
+    }
+  }
 }
 
-.navbar .nav .active > a,
-.navbar .nav .active > a:hover,
-.navbar .nav li.dropdown.active .dropdown-toggle,
-.navbar .nav li.dropdown.active .dropdown-toggle:hover,
-.navbar .nav li.dropdown.active.open > .dropdown-toggle {
-    .border-radius(3px 3px 0 0);
-    .box-shadow(inset 0 0 3px @grayDark);
-    background-color: @white;
-    color: @black;
-    text-decoration: none;
-    .caret {
-        border-top-color: @black;
-    }
-}
-.logo img { margin-left: 20px;}
-// Active state
-.nav-pills > .active > a,
-.nav-pills > .active > a:hover {
-  color: @white;
-  background-color: @hdoPrimaryColor;
+h1, h2, h3, h4, h5 {
+  font-family: @headingsFontFamily;
 }
 
-h1,
-h2,
-h3,
-h4,
-h5 {
-    font-family: @headingsFontFamily;
+// CURSED OVERRIDE FOR CURSED BOOTSTRAP
+@media (max-width: 767px) {
+  .navbar {
+    .container {
+      width: auto;
+      padding: 0 10px;
+    }
+    .navbar-search {
+      margin-top: 10px;
+      input.span2 {
+        width: 90px;
+      }
+    }
+    .nav {
+      white-space: nowrap;
+      > li {
+        margin-right: 1px;
+        > a {
+          padding: 7px 4px 3px 4px;
+        }
+      }
+    }
+    .logo {
+      padding-bottom: 7px;
+      border-bottom-width: 1px;
+      margin-bottom: 20px;
+      img {
+        width: 80px;
+      }
+    }
+  }
 }

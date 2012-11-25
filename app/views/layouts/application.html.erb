@@ -7,6 +7,9 @@
       <%= render 'layouts/navigation' %>
 
       <div class="ribbon visible-desktop">Under utvikling</div>
+
+      <%= yield :jumbotron %>
+
       <div id="hdo-content" class="container">
         <%= render 'layouts/flash' %>
 
@@ -15,14 +18,10 @@
       <div class="push"></div>
     </div>
 
-    <footer>
-      <%= render 'layouts/social'%>
-      <p><%=t 'app.title' %> &copy; 2012.</p>
-    </footer>
+    <%= render 'layouts/footer'%>
 
     <%= javascript_include_tag "application" %>
     <%= render 'layouts/ga' if Rails.env.production?  %>
-    <%= render 'layouts/feedback' %>
     <%= yield :document_ready %>
 
     </body>

@@ -14,15 +14,6 @@ namespace :check do
     end
   end
 
-  desc 'Check that no .scss files exist'
-  task :scss do
-    scss = Dir['**/*.scss']
-
-    unless scss.empty?
-      raise "found scss files:\n #{scss.join "\n"}"
-    end
-  end
-
   desc 'Check that promises in the given JSON file has the correct categories'
   task :categories => :environment do
     file = ENV['PROMISES'] or raise "please set PROMISES=/path/to/promises.json"
@@ -45,4 +36,4 @@ namespace :check do
   end
 end
 
-task :check => %w[check:tabs check:scss]
+task :check => %w[check:tabs]

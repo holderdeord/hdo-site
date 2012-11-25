@@ -53,6 +53,7 @@ class Issue < ActiveRecord::Base
   scope :vote_ordered, includes(:votes).order('votes.time DESC')
   scope :published, where(:status => 'published')
   scope :latest, lambda { |limit| order(:updated_at).reverse_order.limit(limit) }
+  scope :random, lambda { |limit| order("random()").limit(limit) }
 
   def self.allowed(object, subject)
     rules = []

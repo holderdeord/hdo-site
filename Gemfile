@@ -13,7 +13,10 @@ gem 'rails', '3.2.9'
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
-  gem 'less'
+  gem 'less-rails'
+  gem 'sass-rails', '~> 3.2.3'
+
+  gem 'therubyracer', platform: :ruby
   gem 'uglifier', '>= 1.0.3'
 end
 
@@ -47,7 +50,6 @@ end
 #
 
 gem 'jquery-rails'
-gem 'twitter-bootstrap-rails', "~> 2.1"
 gem 'highcharts-rails', "~> 2.2"
 gem 'jquery-tablesorter', ">= 0.0.5"
 gem 'twitter_bootstrap_form_for', "~> 1.0.5"

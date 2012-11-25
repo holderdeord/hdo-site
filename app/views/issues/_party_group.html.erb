@@ -13,8 +13,8 @@
 
       <% if promise_group = promises_by_party[party] %>
         <% promise_group.sort_by { |h, p| h }.each do |header, promises| %>
-          <p><%= header %></hp>
-          <ul>
+          <p class="issues-party-promises"><%= header %></p>
+          <ul class="issues-party-promises">
             <% promises.each do |promise| %>
               <li><%= promise.body %></li>
             <% end %>
