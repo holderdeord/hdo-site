@@ -131,6 +131,7 @@ Hdo::Application.routes.draw do
 
   # global search
   get 'search/all' => 'search#all', as: :search_all
+  get 'search/autocomplete' => 'search#autocomplete', :as => :search_autocomplete
 
   root to: 'home#index'
 end

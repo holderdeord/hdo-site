@@ -22,6 +22,12 @@
 
     <%= javascript_include_tag "application" %>
     <%= render 'layouts/ga' if Rails.env.production?  %>
+
+    <% content_for :document_ready do %>
+      <script>
+        HDO.setupSearchWidget();
+      </script>
+    <% end %>
     <%= yield :document_ready %>
 
     </body>
