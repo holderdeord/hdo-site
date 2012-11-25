@@ -11,7 +11,8 @@
       url: "/test-url-" + id,
       current_party: {
         name: "Party Hard"
-      }
+      },
+      img_src: "test-img-" + id
     };
   }
 
@@ -53,6 +54,12 @@
       assert.equals(this.searcher.getUrl("Test 1"), "/test-1");
     },
 
+    "should map img url of parsed issue": function () {
+      var issue = {title: "Test 1", url: "/test-1", img_src: "/test-img"};
+      this.searcher.parseIssue(issue);
+      assert.equals(this.searcher.getImgSrc("Test 1"), "/test-img");
+    },
+
     "should parse representatives": function () {
       var parsed = this.searcher.parseRepresentative(getRepresentative(1));
       assert.equals(parsed, "Test Name-1 (Party Hard)");
@@ -61,6 +68,11 @@
     "should map urls of parsed reps": function () {
       var parsed = this.searcher.parseRepresentative(getRepresentative(1));
       assert.equals(this.searcher.getUrl(parsed), "/test-url-1");
+    },
+
+    "should map img src of parsed reps": function () {
+      var parsed = this.searcher.parseRepresentative(getRepresentative(1));
+      assert.equals(this.searcher.getImgSrc(parsed), "test-img-1");
     },
 
     "should call process with parsed results": function () {

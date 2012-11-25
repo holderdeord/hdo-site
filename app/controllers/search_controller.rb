@@ -1,4 +1,5 @@
 class SearchController < ApplicationController
+
   TYPE_ORDER = %w[
     issue
     topic
@@ -32,8 +33,8 @@ class SearchController < ApplicationController
 
     if response.success?
       @results = response.results.map do |r|
-        p r
-        r.as_json.merge(url: url_for(controller: r.type.pluralize, action: "show", id: r.slug || r.id) )
+        r.as_json.merge(url: url_for(controller: r.type.pluralize, action: "show", id: r.slug || r.id),
+                        img_src: "/assets/" + r.type + ".png")
       end.group_by { |e| e[:_type] }
 
       respond_to do |format|

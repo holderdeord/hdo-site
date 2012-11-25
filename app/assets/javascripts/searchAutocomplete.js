@@ -7,7 +7,7 @@
       var instance = Object.create(this);
       instance.server = params.server;
       instance.throttler = HDO.throttler.create(300);
-      instance.urlMap = {};
+      instance.nameMap = {};
       return instance;
     },
 
@@ -33,18 +33,28 @@
 
     parseIssue: function (issue) {
       var label = issue.title;
-      this.urlMap[label] = issue.url;
+      this.nameMap[label] = {
+        url: issue.url,
+        img: issue.img_src
+      };
       return label;
     },
 
     parseRepresentative: function (rep) {
       var label = rep.full_name + " (" + rep.current_party.name + ")";
-      this.urlMap[label] = rep.url;
+      this.nameMap[label] = {
+        url: rep.url,
+        img: rep.img_src
+      };
       return label;
     },
 
     getUrl: function (label) {
-      return this.urlMap[label];
+      return this.nameMap[label].url;
+    },
+
+    getImgSrc: function (label) {
+      return this.nameMap[label].img;
     },
 
     redirect: function (label) {
@@ -62,7 +72,12 @@
       source: autocomplete.search.bind(autocomplete),
       updater: autocomplete.redirect.bind(autocomplete),
       items: 15,
-      minLength: 3
+      minLength: 3,
+      matcher: function () { return true;},
+      highlighter: function (item) {
+        return "<img src='"+ autocomplete.getImgSrc(item) +
+          "' width='24' height='24' style='margin-left:-5px; margin-right:10px;'>" +item;
+      }
     });
   };
 
