@@ -31,11 +31,11 @@ class PartiesController < ApplicationController
   end
 
   def show
-    @party  = Party.includes(:representatives, :promises => :categories).find(params[:id])
+    @party  = Party.includes(:representatives).find(params[:id])
     @representatives = @party.current_representatives
 
     @issues = Issue.published.order(:title)
-    @categories = Category.where(:main => true).includes(:children)
+    @categories = Category.where(:main => true).includes(:children => :promises)
 
     respond_to do |format|
       format.html

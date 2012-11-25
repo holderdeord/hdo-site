@@ -16,7 +16,7 @@
             <div class="accordion-inner">
               <ul class="unstyled">
                 <% category.children.each do |c| %>
-                  <li><a data-category-id="<%= c.id %>" href="#"><%= c.human_name %></a> (<%= c.promises.count %>)</li>
+                  <li><a data-category-id="<%= c.id %>" href="#"><%= c.human_name %></a> (<%= c.promises.size %>)</li>
                 <% end %>
                 <br />
                 <!--TO DO: get correct total for Vis Alle -->
