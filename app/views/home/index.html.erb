@@ -1,7 +1,7 @@
 <% content_for :jumbotron do %>
   <div class="jumbotron">
     <div class="container">
-      <%= image_tag asset_path("jumbotron_fg.png"),alt: "Holder de ord logo" %>
+      <%= image_tag asset_path("jumbotron_fg.png"), alt: "Holder de ord logo" %>
       <p>
         Din uavhengige kilde for fakta om stortingspolitikk. Holder de ord gjør det enkelt å sjekke hva politikerne på Stortinget stemmer og lover i saker du er opptatt av.
         <%= link_to 'Les mer', home_about_path %>
@@ -20,7 +20,7 @@
           <!--<figure style="background-image: url('')"></figure>-->
           <h4><%= issue.title %></h4>
           <p>
-            <%= issue.description %>
+            <%= awesome_truncate issue.description, 250 %>
             <span class="read-more"><%= t('app.read_more') %></span>
           </p>
         <% end %>

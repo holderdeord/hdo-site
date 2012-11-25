@@ -28,4 +28,13 @@ module ApplicationHelper
     end
   end
 
+  # http://daniel.collectiveidea.com/blog/2007/07/10/a-prettier-truncate-helper/
+  def awesome_truncate(text, length = 30, truncate_string = "...")
+    return if text.nil?
+    l = length - truncate_string.chars.to_a.size
+    text.chars.to_a.size > length ? text[/\A.{#{l}}\w*\;?/m][/.*[\w\;]/m] + truncate_string : text
+  rescue => ex
+    logger.error "awesome_truncate: #{ex.message}"
+    text
+  end
 end
