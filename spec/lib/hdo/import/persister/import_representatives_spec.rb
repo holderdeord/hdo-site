@@ -196,13 +196,12 @@ module Hdo
             ms.sort_by { |e| e.start_date }.map { |e| membership_to_a(e) }
           end
 
-          it 'extends a party membership backwards in time' do
+          it 'extends a (continuous) party membership backwards in time' do
             import ['A', '2010-10-1', nil]
             import ['A', '2009-10-1','2010-9-30']
 
             actual_memberships.should == [
-              ['A', '2009-10-01', '2010-09-30'],
-              ['A', '2010-10-01', nil]
+              ['A', '2009-10-01', nil]
             ]
           end
 
