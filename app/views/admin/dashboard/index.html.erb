@@ -10,7 +10,13 @@
       <h3>Dine saker</h3>
       <ul>
         <% current_user.issues.each do |issue| %>
-        <li><%= link_to issue.title, issue %></li>
+          <li>
+            <% if issue.published? %>
+              <strong><%= link_to issue.title, issue %></strong>
+            <% else %>
+              <%= link_to issue.title, issue %>
+            <% end %>
+          </li>
         <% end %>
       </ul>
     </div>

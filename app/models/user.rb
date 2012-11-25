@@ -11,7 +11,7 @@ class User < ActiveRecord::Base
   attr_accessible :email, :password, :password_confirmation, :remember_me, :name, :role
 
   has_many :last_updated_issues, foreign_key: 'last_updated_by_id', class_name: 'Issue'
-  has_many :issues, foreign_key: 'editor_id'
+  has_many :issues, foreign_key: 'editor_id', order: :title
 
   ROLES = %w[admin superadmin]
   validates :role, presence: true, inclusion: { in: ROLES }
