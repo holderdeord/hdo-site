@@ -13,7 +13,7 @@ module Pages
     end
 
     def loaded?
-      text =~ /Sjekk hva partiene har stemt og lovet/i
+      text =~ /sjekk ditt parti/i
     end
   end
 end
