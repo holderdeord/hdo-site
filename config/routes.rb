@@ -109,7 +109,6 @@ Hdo::Application.routes.draw do
   get "home/index"
   get "home/about"
   get "home/contact"
-  get "home/login_status"
   get "home/join"
   get "home/support"
   get "home/member"

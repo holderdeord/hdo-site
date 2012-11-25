@@ -32,4 +32,12 @@ class User < ActiveRecord::Base
   def superadmin?
     role == 'superadmin'
   end
+
+  def first_name
+    name.split(' ').first
+  end
+
+  def percentage_of_issues
+    issues.size * 100 / Issue.count
+  end
 end

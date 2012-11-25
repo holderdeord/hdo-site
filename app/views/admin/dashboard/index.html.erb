@@ -1,21 +1,31 @@
 <div class="container-fluid">
-  <div class="row-fluid">
-    <h3>Mine saker</h3>
-    <ul>
-      <% current_user.issues.each do |issue| %>
-      <li><%= link_to issue.title, issue %></li>
-      <% end %>
-    </ul>
-  </div>
+  <h2>Hei <%= current_user.first_name  %></h2>
 
   <div class="row-fluid">
     <div class="span6">
-      <h3><%= Vote.model_name.human(count: 2).capitalize %></h3>
+      <p>Du er redaktør for <h1><%= current_user.percentage_of_issues %>%</h1> av Holder de ords saker!</p>
+    </div>
+
+    <div class="span6">
+      <h3>Dine saker</h3>
+      <ul>
+        <% current_user.issues.each do |issue| %>
+        <li><%= link_to issue.title, issue %></li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+
+  <hr class="soften">
+
+  <div class="row-fluid">
+    <div class="span6">
+      <h3>Siste <%= Vote.model_name.human(count: 2) %></h3>
       <%= render 'votes_by_date' %>
     </div>
 
     <div class="span6">
-      <h3><%= ParliamentIssue.model_name.human(count: 2).capitalize %></h3>
+      <h3>Siste <%= ParliamentIssue.model_name.human(count: 2) %></h3>
       <%= render 'parliament_issues_by_status' %>
     </div>
   </div>

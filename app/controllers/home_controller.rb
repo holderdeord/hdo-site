@@ -23,10 +23,6 @@ class HomeController < ApplicationController
   def contact
   end
 
-  def login_status
-    render layout: false
-  end
-
   def join
   end
 
