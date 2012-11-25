@@ -57,15 +57,18 @@ describe Issue do
   end
 
   it "can add promises" do
-    valid_issue.promises << Promise.make!
+    valid_issue.promise_connections.create!(promise: Promise.make!, status: 'related')
     valid_issue.promises.first.body.should_not be_empty
   end
 
   it "won't add the same promise twice" do
     promise = Promise.make!
 
-    valid_issue.promises << promise
-    valid_issue.promises << promise
+    valid_issue.promise_connections.create!(promise: promise, status: 'related')
+
+    expect {
+      valid_issue.promise_connections.create!(promise: promise, status: 'related')
+    }.to raise_error(ActiveRecord::RecordInvalid)
 
     valid_issue.promises.size.should == 1
   end
@@ -186,27 +189,18 @@ describe Issue do
     it 'is locked when updating category associations' do
       attributes = {
         'category_ids' => [Category.make!.id.to_s]
-        }
+      }
 
-      update_attributes_on @issue, attributes
-      expect_stale_object_error_when_updating @same_issue
-    end
-
-    it 'is locked when updating promise associations' do
-      attributes = {
-        'promise_ids' => [Promise.make!.id.to_s]
-        }
-
-      update_attributes_on @issue, attributes
+      update_attributes_on @issue, {issue: attributes}
       expect_stale_object_error_when_updating @same_issue
     end
 
     it 'is locked when updating topic associations' do
       attributes = {
         'topic_ids' => [Topic.make!.id.to_s]
-        }
+      }
 
-      update_attributes_on @issue, attributes
+      update_attributes_on @issue, {issue: attributes}
       expect_stale_object_error_when_updating @same_issue
     end
 
@@ -218,9 +212,22 @@ describe Issue do
           title: 'more cowbell'
         }
       }
-      update_attributes_on @issue, nil, votes
+      update_attributes_on @issue, {votes: votes}
       expect_stale_object_error_when_updating @same_issue
     end
+    
+    it 'is locked when adding a promise connection' do
+      promise = Promise.make!
+      
+      attributes = {
+        promise.id => {status: 'for'}
+      }
+
+      update_attributes_on @issue, {promises: attributes}
+      expect_stale_object_error_when_updating @same_issue
+    end
+
+    
 
     it 'is locked when changing proposition type of an existing vote' do
       @issue.vote_connections.create! :vote => Vote.make!, :matches => true, :title => 'hello', :weight => 1.0
@@ -237,7 +244,7 @@ describe Issue do
           proposition_type: Vote::PROPOSITION_TYPES.first
         }
       }
-      update_attributes_on @issue, nil, votes
+      update_attributes_on @issue, {votes: votes}
       expect_stale_object_error_when_updating @same_issue
     end
 
@@ -246,8 +253,8 @@ describe Issue do
       lambda { issue.save }.should raise_error(ActiveRecord::StaleObjectError)
     end
 
-    def update_attributes_on(issue, attributes, votes = nil)
-      Hdo::IssueUpdater.new(issue, attributes, votes, User.make!).update!
+    def update_attributes_on(issue, params)
+      Hdo::IssueUpdater.new(issue, params, User.make!).update!
     end
 
   end

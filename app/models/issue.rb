@@ -33,7 +33,6 @@ class Issue < ActiveRecord::Base
 
   has_and_belongs_to_many :topics,     uniq: true
   has_and_belongs_to_many :categories, uniq: true
-  has_and_belongs_to_many :promises,   uniq: true
 
   belongs_to :last_updated_by, foreign_key: 'last_updated_by_id', class_name: 'User'
   belongs_to :editor, class_name: 'User'
@@ -42,7 +41,12 @@ class Issue < ActiveRecord::Base
                               before_add:    :clear_stats_cache,
                               before_remove: :clear_stats_cache
 
-  has_many :votes, through: :vote_connections, order: :time
+  has_many :promise_connections, dependent:     :destroy,
+                                 before_add:    :clear_stats_cache,
+                                 before_remove: :clear_stats_cache
+
+  has_many :votes,    through: :vote_connections,    order: :time
+  has_many :promises, through: :promise_connections
 
   friendly_id :title, use: :slugged
 

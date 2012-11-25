@@ -338,6 +338,11 @@ nb:
         disabled: På grunn av serverbytte er saksredigering midlertidig deaktivert.
         view_proposition_body: Se forslagstekst
         promise_used_in: Løftet brukes i
+        promise:
+          unrelated: Urelatert
+          related: Relatert
+          for: For
+          against: Mot
       view_vote: 'Se hva de stemte'
       view_votes:
         one: 'Se avstemningen'
