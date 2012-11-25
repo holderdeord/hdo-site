@@ -65,6 +65,7 @@
 
   H.setupSearchWidget = function () {
     var input = document.getElementById("appendedInputButton");
+    input.focus();
     var autocomplete = H.searchAutocomplete.create({
       server: H.searchServerFacade.create()
     });

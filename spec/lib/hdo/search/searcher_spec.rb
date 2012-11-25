@@ -80,7 +80,7 @@ module Hdo
         end
 
         it 'only searches in issues and representative indeces' do
-          expect_query "LOL", {:expected_indeces => ['issues', 'representatives']}
+          expect_query "LOL", {:expected_indeces => [Issue.index_name, Representative.index_name]}
         end
 
         it 'restricts response size to 25' do

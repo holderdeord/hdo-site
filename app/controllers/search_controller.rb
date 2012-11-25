@@ -33,12 +33,16 @@ class SearchController < ApplicationController
 
     if response.success?
       @results = response.results.map do |r|
-        r.as_json.merge(url: url_for(controller: r.type.pluralize, action: "show", id: r.slug || r.id),
-                        img_src: "/assets/" + r.type + ".png")
+        url = url_for(controller: r.type.pluralize, action: "show", id: r.slug || r.id)
+        img = view_context.image_path("#{r.type}.png")
+
+        r.as_json.merge(
+          url: url,
+          img_src: img
+        )
       end.group_by { |e| e[:_type] }
 
       respond_to do |format|
-        format.html {render layout: false}
         format.json { render json: @results }
       end
     end
