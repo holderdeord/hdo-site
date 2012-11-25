@@ -28,11 +28,17 @@ module Hdo
 
         if intersections.any?
           handle_intersections(intersections, membership)
+        elsif e = continuous_membership_after(membership)
+          e.update_attributes({ start_date: membership.start_date })
         else
           create_new_membership(membership)
         end
       rescue ActiveRecord::RecordInvalid => ex
         raise IncompatiblePartyMembershipError, "#{ex.message} for #{ex.record.inspect} / #{inspect_representative}"
+      end
+
+      def continuous_membership_after(membership)
+        current_memberships.select { |e| e.start_date - (membership.end_date || e.start_date) == 1 }.first
       end
 
       def party_for(membership)
