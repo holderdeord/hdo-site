@@ -64,20 +64,24 @@
   };
 
   H.setupSearchWidget = function () {
-    var input = document.getElementById("appendedInputButton");
+    var input, autocomplete;
+
+    input = document.getElementById("appendedInputButton");
     input.focus();
-    var autocomplete = H.searchAutocomplete.create({
+
+    autocomplete = H.searchAutocomplete.create({
       server: H.searchServerFacade.create()
     });
+
     $(input).typeahead({
       source: autocomplete.search.bind(autocomplete),
       updater: autocomplete.redirect.bind(autocomplete),
       items: 15,
       minLength: 3,
-      matcher: function () { return true;},
+      matcher: function () { return true; },
       highlighter: function (item) {
-        return "<img src='"+ autocomplete.getImgSrc(item) +
-          "' width='24' height='24' style='margin-left:-5px; margin-right:10px;'>" +item;
+        return "<img src='" + autocomplete.getImgSrc(item) +
+          "' width='24' height='24' style='margin-left:-5px; margin-right:10px;'>" + item;
       }
     });
   };

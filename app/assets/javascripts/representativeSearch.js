@@ -8,7 +8,7 @@ var HDO = HDO || {};
     $(this).val("");
   }
 
-  function parse (data) {
+  function parse(data) {
     var mapped = {};
     c.doall(function (obj) {
       var fullName = obj.first_name + " " + obj.last_name;
