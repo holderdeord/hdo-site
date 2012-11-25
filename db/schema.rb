@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121124105420) do
+ActiveRecord::Schema.define(:version => 20121125164942) do
 
   create_table "categories", :force => true do |t|
     t.string   "external_id"
@@ -110,7 +110,7 @@ ActiveRecord::Schema.define(:version => 20121124105420) do
 
   create_table "parliament_issues", :force => true do |t|
     t.string   "external_id"
-    t.string   "summary"
+    t.text     "summary"
     t.text     "description"
     t.string   "issue_type"
     t.string   "status"
