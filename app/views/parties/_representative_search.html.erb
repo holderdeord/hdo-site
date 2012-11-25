@@ -6,7 +6,10 @@
   <script>
     $(document).ready(function() {
       var representatives = <%= representatives.to_json.html_safe %>;
-      HDO.representativeSearch.init(document.getElementById("representativeSearch"), representatives);
+      HDO.setupRepresentativeSearch({
+        element: document.getElementById("representativeSearch"),
+        data: representatives
+      });
     });
   </script>
 <% end %>

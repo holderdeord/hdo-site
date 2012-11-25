@@ -1,0 +1,7 @@
+<% if @results.empty? %>
+  <%= t('app.search.no_hits') %>.
+<% else %>
+  <% @results.each do |type, items| %>
+    <%= render partial: "#{type}_results", locals: { results: items } %>
+  <% end %>
+<% end %>

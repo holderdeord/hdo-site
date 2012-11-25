@@ -43,9 +43,17 @@ var JZ = this.JZ || {};
     $.ajax(opts);
   }
 
+  function getJSON(options, callbacks) {
+    var opts = $.extend({ type: 'GET', dataType: 'json' }, options);
+    opts.success = successHandler(callbacks);
+    opts.error = errorHandler(callbacks);
+    $.ajax(opts);
+  }
+
   JZ.ajax = {
     postJSON: postJSON,
-    get: get
+    get: get,
+    getJSON: getJSON
   };
 
 }(jQuery));
