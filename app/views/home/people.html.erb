@@ -10,7 +10,7 @@
       <div class="row-fluid">
         <div class="span2">
           <% if person.image %>
-            <%= image_tag asset_path(person.image)  %>
+            <%= image_tag asset_path(person.image), class: 'home-photo'  %>
           <% else %>
             <%= image_tag 'representatives/unknown.jpg' %>
           <% end %>
