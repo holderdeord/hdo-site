@@ -12,7 +12,7 @@ class PartyMembership < ActiveRecord::Base
 
   def no_concurrent_memberships
     existing = self.class.where(:representative_id => representative).
-                          where("(end_date IS NULL and (start_date <= ?)) or (end_date >= ? and end_date <= ?)", end_date, start_date, end_date).to_a
+                          where("(end_date IS NULL and (start_date <= ? or ? IS NULL)) or (end_date >= ? and end_date <= ?)", end_date, end_date, start_date, end_date).to_a
 
 
 
