@@ -1,3 +1,14 @@
+<% content_for :jumbotron do %>
+  <div class="jumbotron">
+    <div class="container">
+      <%= image_tag asset_path("jumbotron_fg.png"),alt: "Holder de ord logo" %>
+      <p>
+        Holder de ord gjør det enkelt å sjekke hva politikerne på Stortinget stemmer og lover i saker du er opptatt av. Vårt mål er å bli den foretrukne kilden for faktabasert informasjon om norsk politikk frem mot Stortingsvalget i 2013.
+      </p>
+    </div>
+  </div>
+<% end %>
+
 <style>
 #feed {
   white-space: nowrap;
@@ -32,7 +43,7 @@
   <div class="span9">
 
     <div class="page-header">
-      <h1>Sjekk hva partiene har stemt og lovet</h1>
+      <h4>Sjekk hva partiene har stemt og lovet</h4>
     </div>
 
     <div class="row-fluid">
