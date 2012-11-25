@@ -22,9 +22,9 @@ module Hdo
         if start_date == other.start_date
           true
         elsif start_date > other.start_date
-          start_date <= (other.end_date || Date.today)
+          other.end_date.nil? || start_date <= other.end_date
         else
-          other.start_date <= (end_date || Date.today)
+          end_date.nil? || other.start_date <= end_date
         end
       end
 
