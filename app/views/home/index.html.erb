@@ -21,7 +21,7 @@
           <h4><%= issue.title %></h4>
           <p>
             <%= issue.description %>
-            <span class="read-more"><%= t('app.read_more') %>...</span>
+            <span class="read-more"><%= t('app.read_more') %></span>
           </p>
         <% end %>
       </article>
@@ -68,7 +68,7 @@
 
     <div class="span4">
       <h4>SE HVA SOM KOMMER</h4>
-      <p>Denne siden er fremdeles en betaversjon og er under kontinuerlig utvikling. Les mer om hva vi utvikler for tiden.</p>
+      <p>Denne siden er fremdeles en betaversjon og under kontinuerlig utvikling. Vi jobber med flere nye funksjoner og forbedringer. <%= link_to t('app.read_more'), home_future_path %></p>
     </div>
   </div>
 </div>

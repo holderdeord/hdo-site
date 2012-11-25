@@ -2,12 +2,11 @@
 
 class HomeController < ApplicationController
   caches_page :index, if: lambda { flash.empty? && !user_signed_in? }
-  caches_page :contact, :join, :support, :people, :about_method, :member
+  caches_page :contact, :join, :support, :people, :about_method, :member, :future
 
   def index
-    @issues = Issue.published.random(6)
-    @topic_columns = Topic.column_groups
-    @parties = Party.order(:name)
+    @issues        = Issue.published.random(6)
+    @parties       = Party.order(:name)
   end
 
   def about
@@ -30,6 +29,9 @@ class HomeController < ApplicationController
   end
 
   def member
+  end
+
+  def future
   end
 
   def people

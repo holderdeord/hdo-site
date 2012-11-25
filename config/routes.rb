@@ -113,6 +113,7 @@ Hdo::Application.routes.draw do
   get "home/support"
   get "home/member"
   get "home/people"
+  get "home/future"
   get "home/method" => "home#about_method", as: :home_method
 
   #
