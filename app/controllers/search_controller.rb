@@ -31,10 +31,15 @@ class SearchController < ApplicationController
     response = Hdo::Search::Searcher.new(params[:query]).autocomplete
     @results = []
 
+    icons = {
+      'representative' => Dragonfly[:images].fetch_file(Rails.application.assets.resolve("representative.png")).thumb("24x24").url,
+      'issue'          => Dragonfly[:images].fetch_file(Rails.application.assets.resolve("issue.png")).thumb("24x24").url
+    }
+
     if response.success?
       @results = response.results.map do |r|
         url = url_for(controller: r.type.pluralize, action: "show", id: r.slug || r.id)
-        img = view_context.image_path("#{r.type}.png")
+        img = icons.fetch(r.type)
 
         r.as_json.merge(
           url: url,
