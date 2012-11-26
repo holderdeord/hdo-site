@@ -41,6 +41,16 @@ body {
   margin-top: 20px;
 }
 
+// WORKAROUND FOR RIBBON MISBEHAVING
+.ribbon-fix {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow: hidden;
+}
+
 .navbar {
   font-family: @headingsFontFamily;
   .navbar-search {
@@ -48,6 +58,7 @@ body {
     margin-top: 25px;
   }
   .navbar-inner {
+    position: relative;
     border-bottom-width: 0;
     box-shadow: none;
     background: @hdoPrimaryColor;
@@ -59,45 +70,52 @@ body {
                 0 -4px rgba(0,0,0,0.03) inset;
   }
   .logo {
+    position: relative;
     float: left;
     border-bottom: 2px solid #fff;
     margin-bottom: 10px;
     padding: 5px 5px 10px 5px;
-    -webkit-transition: 0.5s;
-    transition: 0.5s;
     &:hover {
-      -webkit-transform: scale(1.08);
-      transform: scale(1.08);
-      -webkit-transition: 0.1s;
-      transition: 0.1s;
     }
     img {
       width: 110px;
       max-width: 110px;
     }
   }
-  .nav > li {
-    margin-right: 3px;
-    > a {
-      text-shadow: none;
-      box-shadow: none;
-      background-color: rgba(255,255,255,0);
-      .border-radius(2px 2px 0 0);
-      padding: 7px 15px 3px 15px;
-      text-transform: uppercase;
-      -webkit-transition: color 0.5s;
-      transition: color 0.5s;
+  .nav {
+    background-color: desaturate( lighten(@hdoPrimaryColor, 10%), 40%);
+    background-color: rgba(255,255,255,0.1);
+    .border-radius(2px 2px 0 0);
+    box-shadow: -1px -1px 1px rgba(0,0,0,0.05),
+                 1px -1px 1px rgba(0,0,0,0.05);
+    > li {
+      > a {
+        text-shadow: none;
+        box-shadow: none;
+        background-color: rgba(255,255,255,0);
+        .border-radius(2px 2px 0 0);
+        padding: 7px 15px 3px 15px;
+        text-transform: uppercase;
+        -webkit-transition: color 0.5s;
+        transition: color 0.5s;
+      }
+      &:hover > a,
+      &.open > .dropdown-toggle  {
+        background-color: desaturate( lighten(@hdoPrimaryColor, 30%), 50%);
+        background-color: rgba(255,255,255,0.2);
+        -webkit-transition: color 0.1s;
+        transition: color 0.1s;
+      }
+      &.active > a,
+      &.active:hover > a {
+        background-color: #fff !important;
+        box-shadow: -1px -1px 1px rgba(0,0,0,0.2),
+                     1px -1px 1px rgba(0,0,0,0.2);
+        -webkit-transition: color 0.1s;
+        transition: color 0.1s;
+      }
     }
-    &.active > a,
-    &.active:hover > a {
-      background-color: #fff !important;
-      box-shadow: none;
-      box-shadow: -1px -1px px rgba(0,0,0,0.2),
-                   1px -1px 1px rgba(0,0,0,0.2);
-      -webkit-transition: color 0.1s;
-      transition: color 0.1s;
-    }
-  }
+ }
 }
 
 h1, h2, h3, h4, h5 {
