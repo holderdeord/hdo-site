@@ -23,8 +23,8 @@ VoteConnection.blueprint do
 end
 
 PromiseConnection.blueprint do
-  promise
   issue
+  promise { Promise.make! }
   status { 'related' }
 end
 

@@ -117,6 +117,7 @@ class Issue < ActiveRecord::Base
   end
 
   def accountability
+    # TODO: cache this when it's being used for real.
     Hdo::Stats::AccountabilityScorer.new(self)
   end
 

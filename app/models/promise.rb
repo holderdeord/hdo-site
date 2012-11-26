@@ -22,7 +22,6 @@ class Promise < ActiveRecord::Base
 
   has_many :promise_connections, dependent: :destroy
   has_many :issues, through: :promise_connections
-  # has_and_belongs_to_many :issues,     uniq: true, order: :title
 
   validates_length_of :categories, minimum: 1
   validates_length_of :parties,    minimum: 1
