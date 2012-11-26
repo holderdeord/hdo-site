@@ -116,6 +116,10 @@ class Issue < ActiveRecord::Base
     to_json include: [:topics, :categories]
   end
 
+  def accountability
+    Hdo::Stats::AccountabilityScorer.new(self)
+  end
+
   private
 
   def fetch_stats

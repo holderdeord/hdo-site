@@ -10,4 +10,8 @@ class PromiseConnection < ActiveRecord::Base
   validates :promise_id, presence: true, uniqueness: {scope: :issue_id }
   validates :issue_id, presence: true
   validates :status, presence: true, inclusion: { in: STATES }
+
+  def matches_issue?
+    status == 'for'
+  end
 end
