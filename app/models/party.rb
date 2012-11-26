@@ -36,7 +36,8 @@ class Party < ActiveRecord::Base
 
   # TODO: find a better name for this
   def self.governing_groups
-    government, opposition = order(:name).partition(&:in_government?)
+    government = in_government
+    opposition = order(:name).to_a - government
 
     groups = []
 

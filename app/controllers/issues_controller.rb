@@ -57,7 +57,7 @@ class IssuesController < ApplicationController
 
     @promises_by_party = {}
 
-    @issue.promises.each do |promise|
+    @issue.promises.includes(:parties).each do |promise|
       promise.parties.each do |party|
         data = @promises_by_party[party] ||= {}
         (data[promise.source_header] ||= []) << promise
