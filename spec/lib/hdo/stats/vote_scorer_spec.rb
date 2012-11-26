@@ -231,6 +231,24 @@ module Hdo
         scorer.score_for(rep1.current_party).should == 50
       end
 
+      it "uses the representative's party membership at vote time" do
+        p1 = Party.make!
+        p2 = Party.make!
+
+        rep = Representative.make!
+
+        rep.party_memberships.create!(start_date: 10.days.ago, end_date: 2.days.ago, party: p1)
+        rep.party_memberships.create!(start_date: 1.day.ago,   end_date: nil,        party: p2)
+
+        vote = Vote.make!(time: 5.days.ago,
+                          vote_results: [VoteResult.new(representative: rep, result: 1)])
+
+        issue.vote_connections.create! vote: vote, matches: true, weight: 1
+
+        scorer.score_for(rep.current_party).should be_nil
+        scorer.score_for(p1).should == 100
+      end
+
       it "does computation up front" do
         party     = Party.make!
         ivar_size = scorer.instance_variables.size

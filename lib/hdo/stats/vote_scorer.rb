@@ -112,8 +112,9 @@ module Hdo
       private
 
       def vote_percentages_for(vote_connection)
-        vote_results = vote_connection.vote.vote_results
-        by_party = vote_results.group_by { |v| v.representative.current_party }
+        vote = vote_connection.vote
+        vote_results = vote.vote_results
+        by_party = vote_results.group_by { |v| v.representative.party_at(vote.time) }
 
         res = {}
 
