@@ -31,13 +31,16 @@ class Party < ActiveRecord::Base
   attr_accessible :image, :name
 
   def self.in_government
-    joins(:governing_periods).where("governing_periods.start_date < ? AND (end_date >= ? or end_date IS NULL)", Date.today, Date.today)
+    today = Date.today
+
+    joins(:governing_periods).
+      where("start_date <= ? AND (end_date >= ? or end_date IS NULL)", today, today)
   end
 
   # TODO: find a better name for this
   def self.governing_groups
-    government = in_government
-    opposition = order(:name).to_a - government
+    government = in_government.to_a
+    opposition = order(:name).to_a - government.to_a
 
     groups = []
 
