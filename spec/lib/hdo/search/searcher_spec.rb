@@ -49,7 +49,6 @@ module Hdo
       end
 
       context 'autocomplete' do
-        let(:query) { "*LOL*" }
         let(:tire_search) { mock("tire search", sort: nil, results: []) }
         let(:tire_query) { mock("tire query") }
 
@@ -69,14 +68,14 @@ module Hdo
           tire_search.should_receive(:size).with(expected_size)
           tire_search.should_receive(:query).and_yield(tire_query)
           tire_query.should_receive(:string).
-            with(expected_query, hash_including(default_operator: 'AND'))
+            with(expected_query, hash_including(default_operator: 'OR'))
 
           searcher.autocomplete
         end
 
 
-        it 'wraps query in stars' do
-          expect_query "LOL", {:expected_query => "*LOL*"}
+        it 'matches both wildcard and full string' do
+          expect_query "LOL", {:expected_query => "LOL* LOL"}
         end
 
         it 'only searches in issues and representative indeces' do

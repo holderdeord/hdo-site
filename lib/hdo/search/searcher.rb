@@ -22,8 +22,12 @@ module Hdo
       def all
         search = Tire.search(INDECES) do |s|
           s.size 100
-          do_search s
+          s.query do |query|
+            query.string @query, default_operator: 'AND'
+          end
+          s.sort { by :_score }
         end
+
         Response.new(search.results)
       rescue *SEARCH_ERRORS => ex
         Rails.logger.error "search failed, #{ex.class} #{ex.message}"
@@ -33,9 +37,13 @@ module Hdo
       def autocomplete
         search = Tire.search(AUTOCOMPLETE_INDECES) do |s|
           s.size 25
-          @query = "*" + @query + "*"
-          do_search s
+
+          s.query do |query|
+            query.string "#{@query}* #{@query}", default_operator: 'OR'
+          end
+          s.sort { by :_score }
         end
+
         Response.new(search.results)
       rescue *SEARCH_ERRORS => ex
         Rails.logger.error "search failed, #{ex.class} #{ex.message}"
@@ -57,15 +65,6 @@ module Hdo
         def down?
           @exception.kind_of? Errno::ECONNREFUSED
         end
-      end
-
-      private
-
-      def do_search(s)
-        s.query do |query|
-          query.string @query, default_operator: 'AND'
-        end
-        s.sort { by :_score }
       end
 
     end
