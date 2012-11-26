@@ -41,6 +41,16 @@ body {
   margin-top: 20px;
 }
 
+// WORKAROUND FOR RIBBON MISBEHAVING
+.ribbon-fix {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow: hidden;
+}
+
 .navbar {
   font-family: @headingsFontFamily;
   .navbar-search {
@@ -48,6 +58,7 @@ body {
     margin-top: 25px;
   }
   .navbar-inner {
+    position: relative;
     border-bottom-width: 0;
     box-shadow: none;
     background: @hdoPrimaryColor;
@@ -59,6 +70,7 @@ body {
                 0 -4px rgba(0,0,0,0.03) inset;
   }
   .logo {
+    position: relative;
     float: left;
     border-bottom: 2px solid #fff;
     margin-bottom: 10px;
