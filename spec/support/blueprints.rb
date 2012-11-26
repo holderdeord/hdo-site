@@ -22,6 +22,12 @@ VoteConnection.blueprint do
   matches { true }
 end
 
+PromiseConnection.blueprint do
+  promise
+  issue
+  status { 'related' }
+end
+
 VoteResult.blueprint do
   representative { Representative.make!(:full) }
   result { rand(2) - 1 }

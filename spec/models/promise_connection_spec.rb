@@ -1,5 +1,7 @@
 require 'spec_helper'
 
 describe PromiseConnection do
-  pending "add some examples to (or delete) #{__FILE__}"
+  it 'should have a valid blueprint' do
+    PromiseConnection.make.should be_valid
+  end
 end
