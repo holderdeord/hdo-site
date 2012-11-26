@@ -11,7 +11,7 @@ Hdo::Application.routes.draw do
   #
 
   namespace :admin do
-    resources :issues, except: :show do
+    resources :issues do
       member do
         get 'edit/:step'   => 'issues#edit',         as: :edit_step
         get 'votes/search' => "issues#votes_search", as: :vote_search

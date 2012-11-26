@@ -1,6 +1,6 @@
 class Admin::IssuesController < AdminController
   before_filter :ensure_editable, except: :index
-  before_filter :fetch_issue, only: [:edit, :update, :destroy, :votes_search]
+  before_filter :fetch_issue, only: [:show, :edit, :update, :destroy, :votes_search]
   before_filter :add_abilities
 
   helper_method :edit_steps
@@ -13,6 +13,14 @@ class Admin::IssuesController < AdminController
       format.html
       format.json { render json: @issues_by_status.values.flatten }
     end
+  end
+
+  def show
+    @parties        = Party.order(:name)
+    @stats          = @issue.stats
+    @accountability = @issue.accountability
+
+    logger.info @accountability.inspect
   end
 
   def new

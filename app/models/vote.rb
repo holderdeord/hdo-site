@@ -98,6 +98,10 @@ class Vote < ActiveRecord::Base
     I18n.l time, format: :short
   end
 
+  def proposition_type_text
+    I18n.t("app.votes.proposition_types.#{proposition_type}")
+  end
+
   def has_results?
     vote_results.size > 0
   end

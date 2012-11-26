@@ -17,9 +17,14 @@ module Hdo
         totals
       end
 
+      def self.print(io = $stdout)
+        all.sort_by { |_, score| score }.reverse.each { |party, score| puts "#{party.name}: #{score.to_i}%" }
+      end
+
+      attr_reader :total
 
       def initialize(issue)
-        @data = compute(issue)
+        @data, @total = compute(issue)
       end
 
       def score_for(party)
@@ -36,7 +41,7 @@ module Hdo
         vote_scores         = issue.stats
         promise_connections = issue.promise_connections.includes(:promise => :parties)
 
-        percentages     = Hash.new(0)
+        percentages     = Hash.new
         scores_by_party = Hash.new { |hash, key| hash[key] = [] }
 
         promise_connections.each do |conn|
@@ -56,9 +61,9 @@ module Hdo
         scores = {}
 
         promise_connection.promise.parties.each do |party|
-          if promise_connection.matches_issue?
+          if promise_connection.for?
             scores[party] = vote_scores.score_for(party)
-          else
+          elsif promise_connection.against?
             scores[party] = (100 - vote_scores.score_for(party))
           end
         end

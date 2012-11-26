@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 class PromiseConnection < ActiveRecord::Base
   STATES          = %w[for against related]
   UNRELATED_STATE = 'unrelated'
@@ -11,7 +13,25 @@ class PromiseConnection < ActiveRecord::Base
   validates :issue_id, presence: true
   validates :status, presence: true, inclusion: { in: STATES }
 
-  def matches_issue?
-    status == 'for'
+  def for?
+    status.inquiry.for?
   end
+
+  def against?
+    status.inquiry.against?
+  end
+
+  def status_text
+    case status
+    when 'for'
+      'støtter saken'
+    when 'against'
+      'støtter ikke saken'
+    when 'related'
+      'relatert til saken'
+    else
+      raise "unknown status: #{status.inspect}"
+    end
+  end
+
 end

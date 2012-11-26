@@ -1,0 +1,79 @@
+<h1>
+  <%= @issue.title %>
+</h1>
+
+<p>
+  <%= @issue.description %>
+</p>
+
+<div class="row-fluid">
+  <div class="span6">
+    <h3>Avstemningsskår</h3>
+    
+    <dl>
+      <% @parties.each do |party| %>
+      <dt><%= image_tag party.tiny_logo %><%= party.name %></dt>
+      <dd><%= @stats.score_for(party) %>% = <%= @stats.text_for(party, html: true, name: '') %></dd>
+      <% end %>
+    </dl>
+  </div>
+  
+  <div class="span6">
+    <h3>Etterettelighet</h3>
+    
+    <dl>
+      <% @parties.each do |party| %>
+        <% counts = promise_counts_for(party) %>
+        <dt><%= image_tag party.tiny_logo %><%= party.name %></dt>
+        <dd>
+          <%= @accountability.score_for(party) || 'Ukjent' %>% basert på <%= counts[:total] %> løfter
+          <p><small><%= counts[:for] %> støtter saken, <%= counts[:against] %> støtter ikke saken, <%= counts[:related] %> relatert</small></p>
+        </dd>
+      <% end %>
+    </dl>
+  </div>
+</div>
+
+<hr class="soften">
+
+<h3>Løfter</h3>
+<div class="row-fluid">
+  <% @issue.promise_connections.group_by(&:status_text).each do |status_text, pcs| %>
+    <div class="span4">
+      <h4><%= status_text.capitalize %></h4>
+    
+      <% pcs.group_by { |pc| pc.promise.party_names }.sort_by(&:first).each do |party_names, pcs| %>
+        <h5><%= party_names %></h5>
+        <ul>
+        <% pcs.each do |pc| %>
+          <li><%= pc.promise.body %></li>
+        <% end %>
+        </ul>
+      <% end %>
+    </div>
+  <% end %>
+</div>
+
+<hr class="soften">
+
+<h3>Avstemninger</h3>
+<table class="table table-condensed">
+  <thead>
+    <tr>
+      <th>Tittel</th>
+      <th>Støtter saken?</th>
+      <th>Forslagstype</th>
+      <th>Vekt</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @issue.vote_connections.sort_by(&:weight).reverse.each do |vc| %>
+    <tr>
+      <td><%= link_to vc.title, vc.vote %></td>
+      <td><%= vc.matches_text %></td>
+      <td><%= vc.vote.proposition_type_text %></td>
+      <td><%= vc.weight %></td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>

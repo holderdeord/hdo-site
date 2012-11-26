@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 module Admin::IssuesHelper
   def vote_options_for(vote, connection)
     if connection
@@ -79,5 +81,18 @@ module Admin::IssuesHelper
     end
 
     out.html_safe
+  end
+
+  def promise_counts_for(party)
+    pcs = @issue.promise_connections.select { |e| e.promise.parties.include?(party) }
+
+    counts = Hash.new(0).with_indifferent_access
+    counts[:total] = pcs.size
+
+    pcs.each do |pc|
+      counts[pc.status.to_sym] += 1
+    end
+
+    counts
   end
 end

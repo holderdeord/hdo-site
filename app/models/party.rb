@@ -59,6 +59,10 @@ class Party < ActiveRecord::Base
     image_with_fallback.strip.url
   end
 
+  def tiny_logo
+    image_with_fallback.thumb("25x25").strip.url
+  end
+
   def default_image
     default_logo = Rails.root.join("app/assets/images/party-logos/unknown.png")
     large_logo = Rails.root.join("app/assets/images/party-logos/#{URI.encode slug}.png")
