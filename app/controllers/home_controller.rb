@@ -1,8 +1,7 @@
 # encoding: UTF-8
 
 class HomeController < ApplicationController
-  caches_page :index, if: lambda { flash.empty? && !user_signed_in? }
-  caches_page :contact, :join, :support, :people, :about_method, :member, :future
+  caches_page :index, :contact, :join, :support, :people, :about_method, :member, :future, if: lambda { flash.empty? }
 
   def index
     @issues        = Issue.published.random(6)
