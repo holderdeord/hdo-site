@@ -16,11 +16,12 @@ class Admin::IssuesController < AdminController
   end
 
   def show
-    @parties        = Party.order(:name)
-    @stats          = @issue.stats
-    @accountability = @issue.accountability
+    @parties             = Party.order(:name)
+    @stats               = @issue.stats
+    @accountability      = @issue.accountability
+    @promise_connections = @issue.promise_connections.includes(:promise => :parties)
 
-    logger.info @accountability.inspect
+    render layout: !request.xhr?
   end
 
   def new

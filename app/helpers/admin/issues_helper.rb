@@ -84,12 +84,14 @@ module Admin::IssuesHelper
   end
 
   def promise_counts_for(party)
-    pcs = @issue.promise_connections.select { |e| e.promise.parties.include?(party) }
+    pcs = @promise_connections.select { |e| e.promise.parties.include?(party) }
 
     counts = Hash.new(0).with_indifferent_access
     counts[:total] = pcs.size
+    counts[:used]  = 0
 
     pcs.each do |pc|
+      counts[:used] += 1 if pc.status != 'related'
       counts[pc.status.to_sym] += 1
     end
 

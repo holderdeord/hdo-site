@@ -11,6 +11,11 @@ module Hdo
         @data[party]
       end
 
+      def text_score_for(party)
+        s = score_for(party)
+        s ? "#{s.to_i}%" : I18n.t('app.uncertain')
+      end
+
       def score_for_group(parties)
         @data[parties] ||= (
           if parties.size.zero?

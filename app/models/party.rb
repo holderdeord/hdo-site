@@ -64,7 +64,7 @@ class Party < ActiveRecord::Base
   end
 
   def tiny_logo
-    image_with_fallback.thumb("25x25").strip.url
+    image_with_fallback.thumb("28x28").strip.url
   end
 
   def default_image

@@ -28,6 +28,11 @@ module Hdo
         @data[party]
       end
 
+      def text_score_for(party)
+        s = score_for(party)
+        s ? "#{s.to_i}%" : I18n.t('app.uncertain')
+      end
+
       private
 
       def compute(issue)

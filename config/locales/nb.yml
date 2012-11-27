@@ -276,6 +276,7 @@ nb:
       read: "Les om metoden"
     support: "Støtt oss"
     analysis: "Analyse"
+    uncertain: Uvisst
     member: "Bli medlem"
     donate: "Gi en gave"
     people: "Menneskene bak"
@@ -348,6 +349,7 @@ nb:
       view_votes:
         one: 'Se avstemningen'
         other: 'Se avstemningene'
+      view_scores: Se utregning
     votes:
       non_personal:
         unknown: 'Denne saken ble avgjort uten at avstemningsknappene ble brukt. Vi har derfor ikke oversikt over hva den enkelte representant har stemt.'
@@ -407,6 +409,10 @@ nb:
         governing: 'Regjeringspartiene'
         opposition: 'Opposisjonspartiene'
       none: 'Inget parti'
+    promises:
+      based_on:
+        one: "basert på 1 løfte"
+        other: "basert på %{count} løfter"
     counts:
       representative:
         one: "Viser <strong>1</strong> representant."
