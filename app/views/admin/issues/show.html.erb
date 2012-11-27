@@ -1,10 +1,5 @@
-<h1>
-  <%= @issue.title %>
-</h1>
-
-<p>
-  <%= @issue.description %>
-</p>
+<h1><%= @issue.title %></h1>
+<p class="muted"><%= @issue.description %></p>
 
 <div class="row-fluid">
   <div class="span6">
@@ -24,11 +19,14 @@
     <dl>
       <% @parties.each do |party| %>
         <% counts = promise_counts_for(party) %>
-        <dt><%= image_tag party.tiny_logo %><%= party.name %></dt>
-        <dd>
-          <%= @accountability.score_for(party) || 'Ukjent' %>% basert på <%= counts[:total] %> løfter
-          <p><small><%= counts[:for] %> støtter saken, <%= counts[:against] %> støtter ikke saken, <%= counts[:related] %> relatert</small></p>
-        </dd>
+        <% score  = @accountability.score_for(party) %>
+        <% if score %>
+          <dt><%= image_tag party.tiny_logo %><%= party.name %></dt>
+          <dd>
+            <%= @accountability.score_for(party) || 'Ukjent' %>% basert på <%= counts[:total] %> løfter
+            <p><small><%= counts[:for] %> støtter saken, <%= counts[:against] %> støtter ikke saken, <%= counts[:related] %> relatert</small></p>
+          </dd>
+        <% end %>
       <% end %>
     </dl>
   </div>
