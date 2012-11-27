@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 require 'spec_helper'
 
 describe PromiseConnection do
@@ -27,6 +29,24 @@ describe PromiseConnection do
 
     pc.status = 'unrelated'
     pc.should_not be_valid
+  end
+
+  it 'has a translation for the status' do
+    pc = PromiseConnection.make
+
+    I18n.with_locale :nb do
+      pc.status = 'for'
+      pc.status_text.should == 'støtter saken'
+
+      pc.status = 'against'
+      pc.status_text.should == 'støtter ikke saken'
+
+      pc.status = 'related'
+      pc.status_text.should == 'relatert til saken'
+
+      pc.status = 'unrelated'
+      expect { pc.status_text }.to raise_error
+    end
   end
 
 end
