@@ -1,14 +1,5 @@
 <%= render partial: 'shared/previous_next_links', locals: { next_item: @next_issue, previous_item: @previous_issue, item_text_attr: :title } %>
-
-<% if user_signed_in? %>
-  <div class="alert alert-warning">
-    Denne saken er <%= @issue.status_text.downcase %>.
-    <%= Issue.human_attribute_name :editor %> er <strong><%= @issue.editor_name %></strong>,
-    <%= Issue.human_attribute_name(:last_updated_by).downcase %> <strong><%= @issue.last_updated_by_name %></strong> for <%= distance_of_time_in_words_to_now @issue.updated_at %> siden.
-
-    <%= link_to t('app.edit'), edit_admin_issue_path(@issue), class: 'btn btn-small' %>
-  </div>
-<% end %>
+<%= render partial: 'admin_info' if user_signed_in? %>
 
 <div class="page-header span9">
   <h1><%= @issue.title %></h1>
@@ -35,8 +26,8 @@
 <div class="row-fluid">
   <div class="span9">
     <% @party_groups.each do |party_group| %>
-    <h4><%= party_group.name %></h4>
-    <%= render partial: 'party_group', locals: { group: party_group, issue: @issue, promises_by_party: @promises_by_party } %>
+      <h4><%= party_group.name %></h4>
+      <%= render partial: 'party_group', locals: { group: party_group, issue: @issue, promises_by_party: @promises_by_party } %>
     <% end %>
   </div>
 

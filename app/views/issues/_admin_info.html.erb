@@ -1,0 +1,7 @@
+<div class="alert alert-warning">
+  Denne saken er <%= @issue.status_text.downcase %>.
+  <%= Issue.human_attribute_name :editor %> er <strong><%= @issue.editor_name %></strong>,
+  <%= Issue.human_attribute_name(:last_updated_by).downcase %> <strong><%= @issue.last_updated_by_name %></strong> for <%= distance_of_time_in_words_to_now @issue.updated_at %> siden.
+
+  <%= link_to t('app.edit'), edit_admin_issue_path(@issue), class: 'btn btn-small' %>
+</div>
