@@ -5,14 +5,11 @@ module Hdo
         all = Hash.new { |hash, key| hash[key] = [] }
 
         Issue.published.each do |issue|
-          issue.accountability.each { |party, issue_score| all[party] << issue_score }
+          issue.accountability.data.each { |party, issue_score| all[party] << issue_score }
         end
 
         totals = {}
-
-        all.each do |party, issue_scores|
-          totals[party] = issue_scores.sum / issue_scores.size.to_f
-        end
+        all.each { |party, issue_scores| totals[party] = issue_scores.sum / issue_scores.size.to_f }
 
         totals
       end
@@ -21,18 +18,14 @@ module Hdo
         all.sort_by { |_, score| score }.reverse.each { |party, score| puts "#{party.name}: #{score.to_i}%" }
       end
 
-      attr_reader :total
+      attr_reader :total, :data
 
       def initialize(issue)
-        @data, @total = compute(issue)
+        @data = compute(issue)
       end
 
       def score_for(party)
         @data[party]
-      end
-
-      def each(&blk)
-        @data.each(&blk)
       end
 
       private

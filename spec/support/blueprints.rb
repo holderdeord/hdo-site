@@ -52,7 +52,7 @@ Promise.blueprint do
   external_id { sn.to_s }
   parties { [Party.make!] }
   source { "PP:10" }
-  body { "Løftetekst" }
+  body { "Løftetekst-#{sn}" }
   categories { [Category.make!] }
 end
 
