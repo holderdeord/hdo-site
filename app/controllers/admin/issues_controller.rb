@@ -26,7 +26,6 @@ class Admin::IssuesController < AdminController
   def new
     @issue = Issue.new
     fetch_categories
-
     edit_steps.first!
 
     respond_to do |format|
@@ -62,6 +61,7 @@ class Admin::IssuesController < AdminController
 
       flash.alert = @issue.errors.full_messages.to_sentence
       fetch_categories
+      edit_steps.first!
 
       render action: :new
     end
