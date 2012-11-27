@@ -4,7 +4,10 @@
 
       <div class="span4">
         <%= render 'layouts/social'%>
-        <p class="muted"><%=t 'app.title' %> &copy; 2012</p>
+        <p>
+          <span class="muted"><%=t 'app.title' %> &copy; 2012</span>
+          <small><%= link_to 'Admin', admin_root_path %></small>
+        </p>
       </div>
 
       <div class="span4"></div>
