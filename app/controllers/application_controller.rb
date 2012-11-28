@@ -12,4 +12,13 @@ class ApplicationController < ActionController::Base
   def can?(object, action, subject)
     abilities.allowed?(object, action, subject)
   end
+
+  def xhr_only(&blk)
+    if request.xhr?
+      yield
+    else
+      head :not_acceptable
+    end
+  end
+
 end

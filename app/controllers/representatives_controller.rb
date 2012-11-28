@@ -26,21 +26,23 @@ class RepresentativesController < ApplicationController
   end
 
   def index_by_district
-    # fail on non-XHR?
-    @by_district = @representatives.group_by { |e| e.district }
-
-    render partial: 'index_by_district', locals: { groups: @by_district }
+    xhr_only {
+      @by_district = @representatives.group_by { |e| e.district }
+      render partial: 'index_by_district', locals: { groups: @by_district }
+    }
   end
 
   def index_by_party
-    # fail on non-XHR?
-    @by_party = @representatives.group_by { |e| e.current_party }
-    render partial: 'index_by_party', locals: { groups: @by_party }
+    xhr_only {
+      @by_party = @representatives.group_by { |e| e.current_party }
+      render partial: 'index_by_party', locals: { groups: @by_party }
+    }
   end
 
   def index_by_name
-    # fail on non-XHR?
-    render partial: 'index_by_name', locals: { representatives: @representatives }
+    xhr_only {
+      render partial: 'index_by_name', locals: { representatives: @representatives }
+    }
   end
 
   private

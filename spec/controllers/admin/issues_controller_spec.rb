@@ -28,6 +28,7 @@ describe Admin::IssuesController do
     issues = [issue]
 
     get :index
+    reponse.should be_ok
 
     assigns(:issues_by_status).should == {'in_progress' => [issue]}
     response.should have_rendered(:index)
@@ -40,6 +41,14 @@ describe Admin::IssuesController do
 
     session[:issue_step].should == 'categories'
     assigns(:categories).should_not be_nil
+  end
+
+  it 'should get :show if the request is an XHR' do
+    get :show, id: issue
+    response.status.should == 406
+
+    xhr :get, :show, id: issue
+    response.should have_rendered(:show)
   end
 
   it 'edit redirects to the categories step if no step was specified' do
