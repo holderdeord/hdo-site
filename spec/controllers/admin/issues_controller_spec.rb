@@ -28,7 +28,7 @@ describe Admin::IssuesController do
     issues = [issue]
 
     get :index
-    reponse.should be_ok
+    response.should be_ok
 
     assigns(:issues_by_status).should == {'in_progress' => [issue]}
     response.should have_rendered(:index)
