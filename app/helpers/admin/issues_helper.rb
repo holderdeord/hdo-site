@@ -97,4 +97,8 @@ module Admin::IssuesHelper
 
     counts
   end
+
+  def with_promise_status(promises)
+    promises.map { |pr| [pr, promise_status_for(pr)] }.sort_by { |_, status| status }
+  end
 end

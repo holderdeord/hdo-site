@@ -11,7 +11,7 @@
     <div class="tab-content">
       <% @promises_by_party.each_with_index do |(party_names, promises), idx| %>
         <div class="tab-pane <%= 'active' if idx == 0 %>" id="<%= party_names.gsub(/\W/, '-') %>-tab">
-          <% promises.each do |promise| %>
+          <% with_promise_status(promises).each do |promise, status| %>
             <div class="row-fluid">
               <div class="span1">
                 <%= promise.external_id %>
@@ -24,9 +24,9 @@
 
               <div class="span4">
                 <div class="pull-right">
-                  <% promise_states.each do |status| %>
-                  <%= radio_button_tag "promises[#{promise.id}][status]", status, status == promise_status_for(promise) %>
-                    <%= t("app.issues.edit.promise.#{status}") %>
+                  <% promise_states.each do |current_status| %>
+                  <%= radio_button_tag "promises[#{promise.id}][status]", current_status, current_status == status %>
+                    <%= t("app.issues.edit.promise.#{current_status}") %>
                   <% end %>
                 </div>
               </div>
