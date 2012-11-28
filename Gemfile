@@ -92,7 +92,8 @@ gem 'dragonfly', '~> 0.9.12'
 # logging
 gem 'lograge'
 
-# mail
+# email
+gem 'mail'
 gem 'valid_email'
 
 # serialization / parsing

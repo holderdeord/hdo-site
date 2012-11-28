@@ -336,6 +336,7 @@ DEPENDENCIES
   loadable_component (>= 0.1.1)
   lograge
   machinist (~> 2.0)
+  mail
   multi_json
   net-http-persistent
   nokogiri (~> 1.5.0)

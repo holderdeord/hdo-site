@@ -54,6 +54,10 @@ nb:
       almost_x_years:
         one:   "nesten 1 år"
         other: "nesten %{count} år"
+  valid_email:
+    validations:
+      email:
+        invalid: 'er ikke en gyldig epostaddresse.'
   activerecord:
     errors:
       messages:
@@ -121,6 +125,9 @@ nb:
       topic:
         one: "tema"
         other: "tema"
+      question:
+        one: spørsmål
+        other: spørsmål
     attributes:
       representative:
         name: "Navn"
@@ -235,6 +242,8 @@ nb:
         confirm_destroy: "Er du sikker på at du vil slette tema?"
         issues: "Saker"
         image: "Ikon"
+      question:
+        sender: Avsender
   will_paginate:
     previous_label: "&#8592; Forrige"
     next_label: "Neste &#8594;"
