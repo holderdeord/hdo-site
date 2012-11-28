@@ -1,15 +1,16 @@
 var HDO = HDO || {};
 (function (H, $, _) {
   H.xhrModal = function (element, options) {
-    var button = $(element);
+    var button, url, target;
 
-    var url    = button.attr("data-modal-url");
-    var target = $(button.attr("href"));
+    button = $(element);
+    url    = button.attr("data-modal-url");
+    target = $(button.attr("href"));
 
-    button.on('click', function(){
+    button.on('click', function () {
       $('body').modalmanager('loading');
 
-      target.load(url, '', function() {
+      target.load(url, '', function () {
         target.modal($.extend({}, options));
       });
     });
