@@ -34,12 +34,19 @@ module Hdo
           import_api_votes
         when 'promises'
           import_promises
+        when 'parliament_issues'
+          import_parliament_issues
         else
           raise ArgumentError, "unknown command: #{@cmd.inspect}"
         end
       end
 
       private
+
+      def import_parliament_issues
+        parliament_issues = parsing_data_source.parliament_issues(@options[:session])
+        persister.import_parliament_issues parliament_issues
+      end
 
       def import_api(vote_limit = nil)
         persister.import_parties parsing_data_source.parties(@options[:session])
