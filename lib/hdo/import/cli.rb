@@ -34,7 +34,7 @@ module Hdo
           import_api_votes
         when 'promises'
           import_promises
-        when 'issues'
+        when 'parliament_issues'
           import_parliament_issues
         else
           raise ArgumentError, "unknown command: #{@cmd.inspect}"
