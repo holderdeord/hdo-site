@@ -25,7 +25,7 @@
               <div class="span4">
                 <div class="pull-right">
                   <% promise_states.each do |current_status| %>
-                  <%= radio_button_tag "promises[#{promise.id}][status]", current_status, current_status == status %>
+                    <%= radio_button_tag "promises[#{promise.id}][status]", current_status, current_status == status %>
                     <%= t("app.issues.edit.promise.#{current_status}") %>
                   <% end %>
                 </div>
