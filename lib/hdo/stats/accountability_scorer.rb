@@ -1,10 +1,10 @@
 module Hdo
   module Stats
     class AccountabilityScorer
-      def self.all
+      def self.score(issues = Issue.published)
         all = Hash.new { |hash, key| hash[key] = [] }
 
-        Issue.published.each do |issue|
+        issues.each do |issue|
           issue.accountability.data.each { |party, issue_score| all[party] << issue_score }
         end
 
@@ -14,8 +14,33 @@ module Hdo
         totals
       end
 
+      def self.category_score(issues = Issue.published)
+        category_to_issues = Hash.new { |h,k| h[k] = [] }
+        issues.each do |issue|
+          issue.categories.each { |c| category_to_issues[c.name] << issue }
+        end
+
+        category_to_scores = {}
+        category_to_issues.each do |cat, issues|
+          category_to_scores[cat] = score(issues)
+        end
+
+        category_to_scores
+      end
+
+      def self.print_by_category(io = $stdout)
+        category_score.each do |category, scores|
+          puts category
+          puts "=" * category.size
+
+          scores.sort_by { |_, score| -score }.each { |party, score| puts "#{party.name.ljust(25)}: #{score.to_i}%" }
+
+          puts
+        end
+      end
+
       def self.print(io = $stdout)
-        all.sort_by { |_, score| score }.reverse.each { |party, score| puts "#{party.name}: #{score.to_i}%" }
+        score.sort_by { |_, score| -score }.each { |party, score| puts "#{party.name.ljust(25)}: #{score.to_i}%" }
       end
 
       attr_reader :total, :data

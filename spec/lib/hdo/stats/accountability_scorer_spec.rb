@@ -30,7 +30,7 @@ module Hdo
 
         io = StringIO.new
         AccountabilityScorer.print(io)
-        # TODO: check output
+        AccountabilityScorer.print_by_category(io)
       end
 
     end
