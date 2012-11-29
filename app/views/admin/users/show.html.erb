@@ -21,7 +21,7 @@
   </div>
 </div>
 
-<% if can_edit? %>
+<% if policy(@user).edit? %>
   <%= link_to t('app.edit'), edit_admin_user_path(@user) %> |
 <% end %>
 

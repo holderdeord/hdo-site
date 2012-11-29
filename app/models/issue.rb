@@ -55,18 +55,10 @@ class Issue < ActiveRecord::Base
   scope :latest, lambda { |limit| order(:updated_at).reverse_order.limit(limit) }
   scope :random, lambda { |limit| order("random()").limit(limit) }
 
-  def self.allowed(object, subject)
-    rules = []
-    return rules unless subject.kind_of?(self)
-
-    rules << :change_status if object.superadmin?
-
-    rules
-  end
-
   def previous_and_next(opts = {})
-    issues = self.class.order(opts[:order] || :title)
-    issues = issues.published if opts[:published_only]
+    issues = self.class
+    issues = opts[:policy].scope if opts[:policy]
+    issues = issues.order(opts[:order] || :title)
 
     current_index = issues.to_a.index(self)
 

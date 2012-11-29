@@ -1,7 +1,6 @@
 class Admin::IssuesController < AdminController
   before_filter :ensure_editable, except: :index
   before_filter :fetch_issue, only: [:show, :edit, :update, :destroy, :votes_search]
-  before_filter :add_abilities
 
   helper_method :edit_steps
 
@@ -167,9 +166,5 @@ class Admin::IssuesController < AdminController
 
   def fetch_issue
     @issue = Issue.find(params[:id])
-  end
-
-  def add_abilities
-    abilities << Issue
   end
 end

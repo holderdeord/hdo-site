@@ -58,7 +58,7 @@ gem 'twitter_bootstrap_form_for', "~> 1.0.5"
 gem 'devise', "~> 2.1.2"
 
 # authorization
-gem 'six'
+gem 'pundit'
 
 # pagination
 gem 'will_paginate', "~> 3.0.3"

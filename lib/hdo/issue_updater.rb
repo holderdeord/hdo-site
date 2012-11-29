@@ -36,7 +36,6 @@ module Hdo
         update_meta
         save!
       }
-
     end
 
     private
@@ -144,18 +143,9 @@ module Hdo
     end
 
     def assert_status_change_allowed
-      unless abilities.allowed?(@user, :change_status, @issue)
+      unless IssuePolicy.new(@user, @issue).change_status?
         raise Unauthorized
       end
-    end
-
-    def abilities
-      @abilities ||= (
-        a = Six.new
-        a << Issue
-
-        a
-      )
     end
 
   end

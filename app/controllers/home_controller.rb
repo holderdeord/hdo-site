@@ -4,8 +4,8 @@ class HomeController < ApplicationController
   caches_page :index, :contact, :join, :support, :people, :about_method, :member, :future, if: lambda { flash.empty? }
 
   def index
-    @issues        = Issue.published.random(6)
-    @parties       = Party.order(:name)
+    @issues  = Issue.published.random(6)
+    @parties = Party.order(:name)
   end
 
   def about

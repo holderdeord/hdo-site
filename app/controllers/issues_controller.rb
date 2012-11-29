@@ -4,8 +4,7 @@ class IssuesController < ApplicationController
   before_filter :fetch_issue
 
   def show
-    # introduce a policy object?
-    if @issue.published? || user_signed_in?
+    if policy(@issue).show?
       assign_promises_by_party
       assign_party_groups
       assign_previous_and_next_issues
@@ -25,7 +24,7 @@ class IssuesController < ApplicationController
   end
 
   def votes
-    if @issue.published? || user_signed_in?
+    if policy(@issue).show?
       assign_party_groups
 
       connections = @issue.vote_connections
@@ -42,7 +41,7 @@ class IssuesController < ApplicationController
   private
 
   def assign_previous_and_next_issues
-    @previous_issue, @next_issue = @issue.previous_and_next(published_only: !user_signed_in?)
+    @previous_issue, @next_issue = @issue.previous_and_next(policy: policy(@issue))
   end
 
   def assign_party_groups

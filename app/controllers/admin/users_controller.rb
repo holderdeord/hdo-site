@@ -1,8 +1,5 @@
 class Admin::UsersController < AdminController
   before_filter :fetch_user, only: [:show, :edit, :update, :destroy]
-  before_filter :add_abilities
-
-  helper_method :can_edit?
 
   def index
     @users = User.order(:updated_at).reverse_order.all
@@ -14,7 +11,7 @@ class Admin::UsersController < AdminController
   def new
     @user = User.new
 
-    unless can_edit?
+    unless policy(@user).new?
       redirect_to admin_users_path, alert: t('app.errors.unauthorized')
       return
     end
@@ -23,7 +20,7 @@ class Admin::UsersController < AdminController
   end
 
   def edit
-    unless can_edit?
+    unless policy(@user).edit?
       redirect_to admin_users_path, alert: t('app.errors.unauthorized')
       return
     end
@@ -34,7 +31,7 @@ class Admin::UsersController < AdminController
   def create
     @user = User.new(params[:user])
 
-    unless can_edit?
+    unless policy(@user).create?
       redirect_to admin_users_path, alert: t('app.errors.unauthorized')
       return
     end
@@ -47,7 +44,7 @@ class Admin::UsersController < AdminController
   end
 
   def update
-    unless can_edit?
+    unless policy(@user).update?
       redirect_to admin_users_path, alert: t('app.errors.unauthorized')
       return
     end
@@ -69,7 +66,7 @@ class Admin::UsersController < AdminController
   end
 
   def destroy
-    unless can_edit?
+    unless policy(@user).destroy?
       redirect_to admin_users_path, alert: t('app.errors.unauthorized')
       return
     end
@@ -82,13 +79,5 @@ class Admin::UsersController < AdminController
 
   def fetch_user
     @user = User.find(params[:id])
-  end
-
-  def add_abilities
-    abilities << User
-  end
-
-  def can_edit?
-    can?(current_user, :edit, User)
   end
 end

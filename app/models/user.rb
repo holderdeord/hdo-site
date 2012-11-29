@@ -16,15 +16,6 @@ class User < ActiveRecord::Base
   ROLES = %w[admin superadmin]
   validates :role, presence: true, inclusion: { in: ROLES }
 
-  def self.allowed(object, subject)
-    rules = []
-    return rules unless subject.kind_of?(self) || subject == self
-
-    rules << :edit if object.superadmin?
-
-    rules
-  end
-
   def admin?
     role == 'admin'
   end

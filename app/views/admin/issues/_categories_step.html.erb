@@ -25,7 +25,7 @@
           <% Issue::STATUSES.each do |status| %>
             <%= form.radio_button :status, t("app.issues.statuses.#{status}"), status,
                                   checked: @issue.status == status,
-                                  disabled: !can?(current_user, :change_status, @issue) %>
+                                  disabled: !policy(@issue).change_status? %>
           <% end %>
         </ul>
       </div>
