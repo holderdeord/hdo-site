@@ -1,3 +1,7 @@
+<% if votes_by_issue_type.values.empty? %>
+<p><%= t('app.search.no_hits') %>!</p>
+<% end %>
+
 <div class="row-fluid">
   <div class="tabbable">
     <ul class="nav nav-tabs">

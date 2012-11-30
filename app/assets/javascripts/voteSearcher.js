@@ -57,7 +57,7 @@
         },
 
         error: function (err) {
-          $("#result").html(err);
+          $("#result").html(err.responseText);
         }
       });
     }
