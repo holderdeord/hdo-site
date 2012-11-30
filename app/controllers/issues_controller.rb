@@ -25,7 +25,13 @@ class IssuesController < ApplicationController
   def votes
     if policy(@issue).show?
       connections = @issue.vote_connections.includes(:vote).order("votes.time DESC")
-      @issue_votes = VoteConnectionDecorator.decorate(connections)
+      issue_votes = VoteConnectionDecorator.decorate(connections)
+
+      # within each day, we want to order by time *ascending*
+      grouped = issue_votes.group_by { |e| e.time.to_date }.values
+      sorted  = grouped.flat_map { |conns| conns.sort_by { |e| e.time } }
+
+      @issue_votes = sorted
     else
       redirect_to new_user_session_path
     end
