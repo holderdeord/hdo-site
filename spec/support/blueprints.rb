@@ -62,6 +62,10 @@ Category.blueprint do
   main { false }
 end
 
+Category.blueprint(:with_children) do
+  children(2)
+end
+
 PartyMembership.blueprint do
   party { Party.make! }
   start_date { 1.month.ago }

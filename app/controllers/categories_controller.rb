@@ -48,11 +48,11 @@ class CategoriesController < ApplicationController
 
     @promises_by_parties = promises.group_by { |e| e.parties.to_a }
 
-    render :layout => false
+    render layout: false
   end
 
   def subcategories
-    render :json => Category.where(parent_id: params[:id]).to_json(only: :id, methods: :human_name)
+    render json: Category.where(parent_id: params[:id]).to_json(only: :id, methods: :human_name)
   end
 
 end

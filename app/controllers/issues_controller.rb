@@ -44,6 +44,8 @@ class IssuesController < ApplicationController
   end
 
   def assign_promises_by_party
+    # TODO: move to IssueDecorator?
+
     # {
     #   'A'    => { 'I partiprogrammet har...' => promises, 'I regjeringserklæring har...' => promises },
     #   'FrP'  => { 'I partiprogrammet har...' => promises },

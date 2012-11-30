@@ -17,12 +17,19 @@ class VoteConnectionDecorator < Draper::Base
   end
 
   def matches_text
-    # TODO: i18n
-    str = 'Avstemningen er <strong>'
-    str << 'ikke ' unless matches?
-    str << "i tråd med å #{issue.downcased_title}</strong>."
+    if matches?
+      I18n.t('app.votes.matches_issue.yes')
+    else
+      I18n.t('app.votes.matches_issue.no')
+    end
+  end
 
-    str
+  def enacted_text
+    if enacted?
+      I18n.t('app.votes.enacted')
+    else
+      I18n.t('app.votes.enacted')
+    end
   end
 
   def parties_for
@@ -31,21 +38,6 @@ class VoteConnectionDecorator < Draper::Base
 
   def parties_against
     @parties_against ||= all_parties.select { |e| vote.stats.party_against?(e) }
-  end
-
-  def enacted_text
-    # TODO: i18n
-    str = "Forslaget ble <strong>"
-
-    if enacted?
-      str << "vedtatt"
-    else
-      str << "ikke vedtatt"
-    end
-
-    str << "</strong>."
-
-    str
   end
 
   private
