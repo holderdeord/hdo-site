@@ -6,7 +6,6 @@ class IssuesController < ApplicationController
   def show
     if policy(@issue).show?
       assign_promises_by_party
-      assign_party_groups
       assign_previous_and_next_issues
 
       @issue_explanation = t('app.issues.explanation',
@@ -25,14 +24,8 @@ class IssuesController < ApplicationController
 
   def votes
     if policy(@issue).show?
-      assign_party_groups
-
-      connections = @issue.vote_connections
-      @issue_votes = connections.map do |connection|
-        Hdo::Views::IssueVote.new(connection, @party_groups)
-      end
-
-      @issue_votes = @issue_votes.sort_by { |e| e.time }.reverse
+      connections = @issue.vote_connections.includes(:vote).order("votes.time DESC")
+      @issue_votes = VoteConnectionDecorator.decorate(connections)
     else
       redirect_to new_user_session_path
     end
@@ -42,10 +35,6 @@ class IssuesController < ApplicationController
 
   def assign_previous_and_next_issues
     @previous_issue, @next_issue = @issue.previous_and_next(policy: policy(@issue))
-  end
-
-  def assign_party_groups
-    @party_groups = Party.governing_groups
   end
 
   def assign_promises_by_party
@@ -67,5 +56,4 @@ class IssuesController < ApplicationController
   def fetch_issue
     @issue = Issue.find(params[:id])
   end
-
 end

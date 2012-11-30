@@ -41,14 +41,15 @@ group :test, :development do
 end
 
 group :development do
+  gem 'thin'
   gem "rails-erd"
   gem 'quiet_assets'
 end
 
-#
-# frontend stuff
-#
+# deployment
+gem 'capistrano', '~> 2.13'
 
+# frontend stuff
 gem 'jquery-rails'
 gem 'highcharts-rails', "~> 2.2"
 gem 'jquery-tablesorter', ">= 0.0.5"
@@ -66,8 +67,13 @@ gem 'will_paginate', "~> 3.0.3"
 # url slugs
 gem 'friendly_id', "~> 4.0"
 
-# db
+# view models
+gem 'draper'
+
+# various db / model
 gem 'pg'
+gem 'acts_as_tree', '~> 1.1'
+gem 'yaml_db' # db dump / load
 
 # search
 gem 'tire'
@@ -76,22 +82,26 @@ gem 'tire'
 gem 'rack-cache', :require => 'rack/cache'
 gem 'dragonfly', '~> 0.9.12'
 
-# db dump / load
-gem 'yaml_db'
-
-gem 'acts_as_tree', '~> 1.1'
-gem 'capistrano', '~> 2.13'
-gem 'thin'
+# logging
 gem 'lograge'
-gem 'unicode_utils'
-gem 'pry'
+
+# serialization / parsing
 gem 'multi_json'
 gem 'yajl-ruby'
+gem 'nokogiri', '~> 1.5.0'
+gem 'unicode_utils'
+
+# debugging
+gem 'pry'
 gem 'rack-mini-profiler'
+
+# app settings
 gem 'settingslogic'
+
+# instrumentation
 gem 'statsd'
 
-gem 'nokogiri', '~> 1.5.0'
+# http
 gem 'faraday'
 gem 'net-http-persistent'
 

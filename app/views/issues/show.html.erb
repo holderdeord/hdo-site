@@ -25,7 +25,7 @@
 
 <div class="row-fluid">
   <div class="span9">
-    <% @party_groups.each do |party_group| %>
+    <% Party.governing_groups.each do |party_group| %>
       <h4><%= party_group.name %></h4>
       <%= render partial: 'party_group', locals: { group: party_group, issue: @issue, promises_by_party: @promises_by_party } %>
     <% end %>
