@@ -20,7 +20,6 @@ describe IssuesController do
     get :votes, id: issue
 
     response.should have_rendered(:votes)
-    assigns(:party_groups).should be_kind_of(Enumerable)
     assigns(:issue_votes).should be_kind_of(Enumerable)
   end
 
