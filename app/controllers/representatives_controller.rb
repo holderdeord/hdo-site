@@ -1,6 +1,5 @@
 class RepresentativesController < ApplicationController
-  caches_page :index, :show,
-              :index_by_district, :index_by_party, :index_by_name
+  caches_page :index, :index_by_district, :index_by_party, :index_by_name
 
   before_filter :fetch_representatives, :only => [:index, :index_by_district, :index_by_party, :index_by_name]
 
@@ -12,11 +11,8 @@ class RepresentativesController < ApplicationController
   end
 
   def show
-    @representative  = Representative.includes(:votes => :parliament_issues).find(params[:id])
-
-    all_vote_results = @representative.vote_results.sort_by { |result| result.vote.time }.reverse
-    @activity_stats  = Hdo::Charts::Activity.new(@representative.full_name, all_vote_results)
-    @vote_results    = all_vote_results.paginate(:page => params[:page])
+    @representative = Representative.find(params[:id])
+    @issues         = Issue.published.order(:title).all.reject { |i| i.stats.score_for(@representative).nil? }
 
     respond_to do |format|
       format.html

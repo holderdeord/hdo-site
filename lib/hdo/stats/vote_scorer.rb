@@ -7,12 +7,12 @@ module Hdo
         @data = compute(model.vote_connections.includes(vote: {vote_results: {representative: {party_memberships: :party}}}))
       end
 
-      def score_for(party)
-        @data[party]
+      def score_for(entity)
+        @data[entity]
       end
 
-      def text_score_for(party)
-        s = score_for(party)
+      def text_score_for(entity)
+        s = score_for(entity)
         s ? "#{s.to_i}%" : I18n.t('app.uncertain')
       end
 
@@ -43,16 +43,16 @@ module Hdo
         res
       end
 
-      def text_for(party, opts = {})
-        entity_name = opts[:name] || party.name
-        score = score_for(party)
+      def text_for(entity, opts = {})
+        entity_name = opts[:name] || entity.name
+        score = score_for(entity)
 
         text_for_entity score, entity_name, opts
       end
 
-      def text_for_group(parties, opts = {})
+      def text_for_group(entities, opts = {})
         entity_name = opts.fetch(:name)
-        score = score_for_group(parties)
+        score = score_for_group(entities)
 
         text_for_entity score, entity_name, opts
       end
@@ -88,26 +88,27 @@ module Hdo
 
       def compute(connections)
         weight_sum = 0
+
         vote_percentages = connections.map do |vote_connection|
           weight_sum += vote_connection.weight
           vote_percentages_for(vote_connection)
         end
 
-        party_totals = Hash.new(0)
+        sums = Hash.new(0)
 
         vote_percentages.each do |data|
-          data.each do |party, percent|
-            party_totals[party] += percent
+          data.each do |entity, percent|
+            sums[entity] += percent
           end
         end
 
         result = {}
 
-        party_totals.each do |party, total|
+        sums.each do |entity, total|
           if weight_sum.zero?
-            result[party] = 0
+            result[entity] = 0
           else
-            result[party] = (total * 100 / weight_sum).to_i
+            result[entity] = (total * 100 / weight_sum).to_i
           end
         end
 
@@ -117,16 +118,28 @@ module Hdo
       private
 
       def vote_percentages_for(vote_connection)
-        vote = vote_connection.vote
+        vote         = vote_connection.vote
         vote_results = vote.vote_results
-        by_party = vote_results.group_by { |v| v.representative.party_at(vote.time) }
+        by_party     = vote_results.group_by { |v| v.representative.party_at(vote.time) }
+        res          = {}
 
-        res = {}
+        meth = vote_connection.matches? ? :for? : :against?
 
         by_party.each do |party, votes|
-          meth = vote_connection.matches? ? :for? : :against?
+          for_count, against_count = 0, 0
 
-          for_count, against_count = votes.reject(&:absent?).partition(&meth).map(&:size)
+          votes.each do |vote_result|
+            next if vote_result.absent?
+
+            if vote_result.__send__(meth)
+              res[vote_result.representative] = vote_connection.weight
+              for_count += 1
+            else
+              res[vote_result.representative] = 0
+              against_count += 1
+            end
+          end
+
           total = (for_count + against_count)
 
           if total.zero?

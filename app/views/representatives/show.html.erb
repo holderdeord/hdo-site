@@ -45,17 +45,15 @@
         </div>
 
         <div class="span6">
-          <% if @vote_results.any? %>
-            <dl>
-              <% stats = @representative.stats %>
-              <dt><%= t('app.for')  %></dt>
-              <dd><%= stats.for_percent %>% (<%= stats.for_count %>/<%= stats.total_count %>)</dd>
-              <dt><%= t('app.against') %></dt>
-              <dd><%= stats.against_percent %>% (<%= stats.against_count %>/<%= stats.total_count %>)</dd>
-              <dt><%= t('app.absent') %></dt>
-              <dd><%= stats.absent_percent %>% (<%= stats.absent_count %>/<%= stats.total_count %>)</dd>
-            </dl>
-          <% end %>
+          <dl>
+            <% stats = @representative.stats %>
+            <dt><%= t('app.for')  %></dt>
+            <dd><%= stats.for_percent %>% (<%= stats.for_count %>/<%= stats.total_count %>)</dd>
+            <dt><%= t('app.against') %></dt>
+            <dd><%= stats.against_percent %>% (<%= stats.against_count %>/<%= stats.total_count %>)</dd>
+            <dt><%= t('app.absent') %></dt>
+            <dd><%= stats.absent_percent %>% (<%= stats.absent_count %>/<%= stats.total_count %>)</dd>
+          </dl>
         </div>
       </div>
     </div>
@@ -65,39 +63,15 @@
 
   <div class="row-fluid">
     <div class="span12">
-      <h2><%= Vote.model_name.human(count: 2).capitalize %></h2>
-      <p class="pull-right"><%= page_entries_info @vote_results, model: Vote %></p>
-
-      <table class="table table-striped">
-        <thead>
-          <tr>
-            <th class="wide-table-header"><%= Vote.human_attribute_name :time %></th>
-            <th><%= ParliamentIssue.model_name.human(count: 2).capitalize %></th>
-            <th><%= Vote.human_attribute_name :subject %></th>
-            <th><%= Vote.human_attribute_name :enacted %></th>
-            <th><%= VoteResult.model_name.human.capitalize %></th>
-          </tr>
-        </thead>
-        <tbody>
-          <% @vote_results.each do |result| %>
-            <tr>
-              <td><%= result.vote.time_text %></td>
-              <td>
-                <ul>
-                  <%- result.vote.parliament_issues.each do |parliament_issue| -%>
-                    <li><%= link_to parliament_issue.summary, parliament_issue %></li>
-                  <%- end -%>
-                </ul>
-              </td>
-              <td><%= link_to result.vote.subject, result.vote %></td>
-              <td><%= result.vote.enacted_text %></td>
-              <td class="vote-<%= result.state %>"><%= result.human %></td>
-            </tr>
-          <% end %>
-        </tbody>
-      </table>
-
-      <%= will_paginate @vote_results %>
+      <ul class="parties-issue-list">
+        <% @issues.each do |issue| %>
+          <li>
+            <%= issue.stats.text_for(@representative, html: true) %>
+            <%= t 'app.lang.infinitive_particle' %>
+            <%= link_to issue.downcased_title, issue %>.
+          </li>
+        <% end %>
+      </ul>
     </div>
 
   </div>

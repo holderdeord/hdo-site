@@ -64,6 +64,18 @@ describe RepresentativesController do
       assigns(:representative).should == rep
       response.should have_rendered(:show)
     end
+
+    it 'assigns published issues to @issues' do
+      rep       = Representative.make!
+      shown     = Issue.make!(status: 'published')
+      not_shown = Issue.make!(status: 'in_progress')
+
+
+      get :show, id: rep
+
+      assigns(:issues).should == [shown]
+      response.should have_rendered(:show)
+    end
   end
 
 end

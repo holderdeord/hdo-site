@@ -23,6 +23,9 @@ module Hdo
 
         scorer.score_for(rep1.current_party).should == 100
         scorer.score_for(rep2.current_party).should == 0
+
+        scorer.score_for(rep1).should == 100
+        scorer.score_for(rep2).should == 0
       end
 
       it "calculates scores for a single vote that doesn't match the issue" do
@@ -37,6 +40,9 @@ module Hdo
 
         scorer.score_for(rep1.current_party).should == 0
         scorer.score_for(rep2.current_party).should == 100
+
+        scorer.score_for(rep1).should == 0
+        scorer.score_for(rep2).should == 100
       end
 
       it 'calculates scores for a two votes with different weights' do
@@ -59,6 +65,9 @@ module Hdo
 
         scorer.score_for(rep1.current_party).should == 66
         scorer.score_for(rep2.current_party).should == 0
+
+        scorer.score_for(rep1).should == 66
+        scorer.score_for(rep2).should == 0
       end
 
       it 'has a string description of all valid scores' do
@@ -97,6 +106,14 @@ module Hdo
 
           scorer.stub(:score_for).with(p1).and_return nil
           scorer.text_for(p1).should == "#{p1.name} har ikke deltatt i avstemninger om"
+        end
+      end
+
+      it 'has a string description for a representative' do
+        scorer.stub(:score_for).with(rep1).and_return 100
+
+        I18n.with_locale :nb do
+          scorer.text_for(rep1).should == "#{rep1.name} har stemt for"
         end
       end
 
@@ -156,13 +173,12 @@ module Hdo
         end
       end
 
-
       it 'raises an error if the score is invalid' do
         scorer.stub(:score_for).and_return :foo
         lambda { scorer.text_for(:foo) }.should raise_error
       end
 
-      it 'calculates score for a party grouping' do
+      it 'calculates score for a groupings' do
         vote = Vote.make!(:vote_results => [
           VoteResult.new(:representative => rep1, :result => 1),
           VoteResult.new(:representative => rep2, :result => -1)
@@ -172,6 +188,7 @@ module Hdo
         issue.vote_connections.create! :vote => vote, :matches => true, :weight => 1
 
         scorer.score_for_group([rep1.current_party, rep2.current_party]).should eq 50
+        scorer.score_for_group([rep1, rep2]).should eq 50
       end
 
       it 'uses group name as a text in text_for when group_name option is given' do
@@ -229,6 +246,9 @@ module Hdo
         issue.vote_connections.create! :vote => vote, :matches => true, :weight => 1
 
         scorer.score_for(rep1.current_party).should == 50
+
+        scorer.score_for(rep1).should == 100
+        scorer.score_for(rep2).should == 0
       end
 
       it "uses the representative's party membership at vote time" do
