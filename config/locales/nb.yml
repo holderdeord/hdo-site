@@ -353,6 +353,7 @@ nb:
     votes:
       enacted: Forslaget ble <strong>vedtatt</strong>.
       not_enacted: Forslaget ble <strong>ikke vedtatt</strong>.
+      rebel: utbryterstemme
       matches_issue:
         'yes': 'Avstemningen er <strong>i tråd med å %{issue_title}</strong>.'
         'no': 'Avstemningen er <strong>ikke i tråd med å %{issue_title}</strong>.'

@@ -66,7 +66,12 @@
           <% party = result.representative.party_at(@vote.time) %>
           <%= party && link_to(party.name, party) %>
         </td>
-        <td class="vote-<%= result.state %>"><%= result.human %></td>
+        <td>
+          <span class="vote-<%= result.state %>"><%= result.human %></span>
+          <% if result.rebel? %>
+            (<%= t('app.votes.rebel') %>)
+          <% end %>
+        </td>
       </tr>
       <% end %>
   </tbody>

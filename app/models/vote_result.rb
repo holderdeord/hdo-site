@@ -44,6 +44,13 @@ class VoteResult < ActiveRecord::Base
     result != 0
   end
 
+  def rebel?
+    party = representative.party_at(vote.time)
+    stats = vote.stats
+
+    stats.party_for?(party) && against? || stats.party_against?(party) && for?
+  end
+
   def icon
     case result
     when 1
