@@ -154,7 +154,7 @@ GEM
     mime-types (1.19)
     mongo (1.7.0)
       bson (~> 1.7.0)
-    multi_json (1.3.7)
+    multi_json (1.4.0)
     multipart-post (1.1.5)
     net-http-persistent (2.8)
     net-scp (1.0.4)
