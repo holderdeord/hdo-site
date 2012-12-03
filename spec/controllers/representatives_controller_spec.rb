@@ -66,10 +66,11 @@ describe RepresentativesController do
     end
 
     it 'assigns published issues to @issues' do
+      Issue.any_instance.stub(:stats).and_return(mock(score_for: 100))
+
       rep       = Representative.make!
       shown     = Issue.make!(status: 'published')
       not_shown = Issue.make!(status: 'in_progress')
-
 
       get :show, id: rep
 
