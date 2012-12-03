@@ -48,6 +48,7 @@ end
 
 # deployment
 gem 'capistrano', '~> 2.13'
+gem 'capistrano-maintenance'
 
 # frontend stuff
 gem 'jquery-rails'

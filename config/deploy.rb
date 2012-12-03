@@ -1,4 +1,5 @@
 require 'bundler/capistrano'
+require 'capistrano/maintenance'
 
 if ENV['VAGRANT']
   set :domain, 'localhost'
