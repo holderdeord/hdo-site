@@ -16,7 +16,7 @@ class Proposition < ActiveRecord::Base
 
   attr_accessible :description, :on_behalf_of, :body, :representative_id
 
-  belongs_to :vote
+  has_and_belongs_to_many :votes, uniq: true
   belongs_to :representative
 
   alias_method :delivered_by, :representative
@@ -34,7 +34,7 @@ class Proposition < ActiveRecord::Base
 
   def to_indexed_json
     to_json methods: [:plain_body],
-            include: {vote: {only: [:slug]} },
+            include: {votes: {only: [:slug]} },
             only:    [:description, :on_behalf_of]
   end
 end
