@@ -18,7 +18,6 @@ script: "RAILS_ENV=test SPEC_OPTS=--backtrace bundle exec rake travis"
 before_script:
   - mv config/database.yml.travis config/database.yml
   - sh -e /etc/init.d/xvfb start
-  - sudo apt-get install wnorwegian # for decomposing words
   - 'npm install -g buster autolint || (sleep 5 && npm install -g buster autolint)'
 env:
   - DISPLAY=:99.0 COVERAGE_THRESHOLD=83
