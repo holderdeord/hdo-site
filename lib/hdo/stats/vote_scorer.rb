@@ -87,24 +87,23 @@ module Hdo
       end
 
       def compute(connections)
-        weight_sum = 0
+        weight_sums = Hash.new(0)
+        sums        = Hash.new(0)
 
-        vote_percentages = connections.map do |vote_connection|
-          weight_sum += vote_connection.weight
-          vote_percentages_for(vote_connection)
-        end
-
-        sums = Hash.new(0)
-
-        vote_percentages.each do |data|
-          data.each do |entity, percent|
-            sums[entity] += percent
+        connections.each do |vote_connection|
+          vote_percentages_for(vote_connection).each do |entity, percent|
+            if percent
+              weight_sums[entity] += vote_connection.weight
+              sums[entity] += percent
+            end
           end
         end
 
         result = {}
 
         sums.each do |entity, total|
+          weight_sum = weight_sums.fetch(entity)
+
           if weight_sum.zero?
             result[entity] = 0
           else
@@ -143,7 +142,8 @@ module Hdo
           total = (for_count + against_count)
 
           if total.zero?
-            res[party] = 0
+            # only absence
+            res[party] = nil
           else
             res[party] = (for_count / total.to_f) * vote_connection.weight
           end

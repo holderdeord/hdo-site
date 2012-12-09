@@ -251,6 +251,17 @@ module Hdo
         scorer.score_for(rep2).should == 0
       end
 
+      it 'is not affected by absence' do
+        vote1 = Vote.make!(:vote_results => [VoteResult.new(:representative => rep1, :result => 1)])
+        vote2 = Vote.make!(:vote_results => [VoteResult.new(:representative => rep1, :result => 0)])
+
+        issue.vote_connections.create! :vote => vote1, :matches => true, :weight => 1
+        issue.vote_connections.create! :vote => vote2, :matches => true, :weight => 1
+
+        scorer.score_for(rep1.current_party).should == 100
+        scorer.score_for(rep1).should == 100
+      end
+
       it "uses the representative's party membership at vote time" do
         p1 = Party.make!
         p2 = Party.make!
