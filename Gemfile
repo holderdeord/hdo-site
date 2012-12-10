@@ -100,7 +100,7 @@ gem 'rack-mini-profiler'
 gem 'settingslogic'
 
 # instrumentation
-gem 'statsd'
+gem 'statsd-ruby', :require => 'statsd'
 
 # http
 gem 'faraday'
