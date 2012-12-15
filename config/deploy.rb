@@ -1,15 +1,13 @@
 require 'bundler/capistrano'
 require 'capistrano/maintenance'
 
+set :stages, %w(staging production vagrant)
+
 if ENV['VAGRANT']
-  set :domain, 'localhost'
-  set :port,    2222
-  set :git_shallow_clone, 1
-elsif ENV['DOMAIN']
-  set :domain, ENV['DOMAIN']
-else
-  set :domain, 'beta.holderdeord.no'
+  set :default_stage, :vagrant
 end
+
+require 'capistrano/ext/multistage'
 
 set :user,        'hdo'
 set :application, 'hdo-site'
@@ -21,10 +19,6 @@ set :use_sudo,    false
 set :deploy_via,  :remote_cache
 
 set :passenger_restart_strategy, :hard
-
-role :web, domain
-role :app, domain
-role :db,  domain, :primary => true
 
 namespace :deploy do
   task(:start) {}
