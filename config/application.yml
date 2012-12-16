@@ -2,7 +2,7 @@ defaults: &defaults
   issue_editing_enabled: true
   front_page_search_enabled: true
   elasticsearch_url: http://localhost:9200
-  statsd_host: localhost
+  statsd_host: 5.9.122.47 # ops1.holderdeord.no, but avoid DNS lookup
   statsd_port: 8125
   statsd_enabled: false
 
@@ -14,6 +14,7 @@ test:
 
 staging:
   <<: *defaults
+  statsd_enabled: true
 
 production:
   <<: *defaults

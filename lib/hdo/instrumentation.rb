@@ -3,7 +3,7 @@ require 'statsd'
 module Hdo
   module Instrumentation
     def self.statsd
-      @statsd ||= Statsd::Client.new(AppConfig.statsd_host, AppConfig.statsd_port)
+      @statsd ||= Statsd.new(AppConfig.statsd_host, AppConfig.statsd_port)
     end
 
     def self.host
