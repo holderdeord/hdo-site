@@ -116,10 +116,25 @@ module Hdo
         issue.errors.should_not be_empty
       end
 
-      it "can change status if authorized as superadmin" do 
+      it "can change status if authorized as superadmin" do
         updater = IssueUpdater.new(issue, {issue: {status: 'published'}}, superadmin)
         updater.update.should be_true
         issue.errors.should be_empty
+      end
+
+      it 'sets published_at if the issue is being published' do
+        issue.should_receive(:published_at=).with(instance_of(Time))
+
+        updater = IssueUpdater.new(issue, {issue: {status: 'published'}}, superadmin)
+        updater.update.should be_true
+      end
+
+      it 'sets does not set published_at on any status change' do
+        issue = Issue.make! status: 'published'
+        issue.should_receive(:published_at=).never
+
+        updater = IssueUpdater.new(issue, {issue: {status: 'in_progress'}}, superadmin)
+        updater.update.should be_true
       end
     end
   end

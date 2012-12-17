@@ -8,6 +8,14 @@
 <div class="row-fluid">
   <div class="span9">
     <p class="issue-description"><%= @issue.description %></p>
+
+    <% if @issue.published_at %>
+      <small class="muted">
+        <strong><%= Issue.human_attribute_name(:published_at) %></strong>: <%= l @issue.published_at.localtime, format: :text_time %>
+        <strong><%= Issue.human_attribute_name(:updated_at) %></strong>: <%= l @issue.updated_at.localtime, format: :text_time %>
+      </small>
+    <% end %>
+
     <hr>
   </div>
 

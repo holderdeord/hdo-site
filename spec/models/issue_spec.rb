@@ -47,6 +47,10 @@ describe Issue do
     blank_issue.status.should == 'in_progress'
   end
 
+  it 'has no published_at by default' do
+    blank_issue.published_at.should be_nil
+  end
+
   it "won't add the same category twice" do
     cat = Category.make!
 
@@ -215,10 +219,10 @@ describe Issue do
       update_attributes_on @issue, {votes: votes}
       expect_stale_object_error_when_updating @same_issue
     end
-    
+
     it 'is locked when adding a promise connection' do
       promise = Promise.make!
-      
+
       attributes = {
         promise.id => {status: 'for'}
       }
@@ -227,7 +231,7 @@ describe Issue do
       expect_stale_object_error_when_updating @same_issue
     end
 
-    
+
 
     it 'is locked when changing proposition type of an existing vote' do
       @issue.vote_connections.create! :vote => Vote.make!, :matches => true, :title => 'hello', :weight => 1.0

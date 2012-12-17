@@ -59,8 +59,14 @@ module Hdo
       @issue.attributes = @attributes
       @changed ||= @issue.changed?
 
-      if @issue.changes.include? :status
+      status_change = @issue.changes[:status]
+
+      if status_change
         assert_status_change_allowed
+
+        if @issue.published_at.nil? && status_change.last == 'published'
+          @issue.published_at = Time.now
+        end
       end
     end
 

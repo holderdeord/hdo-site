@@ -8,6 +8,7 @@ nb:
       default: "%Y-%m-%d %H:%M:%S"
       short: "%Y-%m-%d"
       text: "%e. %B %Y"
+      text_time: "%e. %B %Y %H:%M"
   date:
      day_names: [Søndag, Mandag, Tirsdag, Onsdag, Torsdag, Fredag, Lørdag]
      abbr_day_names: [Søn, Man, Tir, Ons, Tor, Fre, Lør]
@@ -210,7 +211,8 @@ nb:
         topics: "Tema"
         last_updated_by: Sist redigert av
         editor: Redaktør
-        updated_at: Sist redigert
+        published_at: Publisert
+        updated_at: Oppdatert
       vote_connection:
         matches: "Støtter saken?"
         comment: "Kommentar"
