@@ -6,7 +6,7 @@ describe Admin::IssuesController do
   before(:each) { sign_in user }
 
   def issue_params(issue)
-    issue.as_json except: [:created_at, :id, :last_updated_by_id, :slug, :updated_at]
+    issue.as_json except: [:created_at, :id, :last_updated_by_id, :slug, :updated_at, :published_at]
   end
 
   def votes_params(connections)
