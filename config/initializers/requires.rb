@@ -2,5 +2,5 @@ require 'acts_as_tree'
 require 'nokogiri'
 require 'hdo/storting_importer'
 
-require 'hdo/stats/vote_scorer'
-require 'hdo/stats/vote_counts'
+require_dependency 'hdo/stats/vote_scorer'
+require_dependency 'hdo/stats/vote_counts'
