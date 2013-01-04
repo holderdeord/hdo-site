@@ -29,6 +29,10 @@ class User < ActiveRecord::Base
   end
 
   def percentage_of_issues
-    issues.size * 100 / Issue.count
+    if Issue.count.zero?
+      0
+    else
+      issues.size * 100 / Issue.count
+    end
   end
 end

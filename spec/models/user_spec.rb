@@ -29,5 +29,14 @@ describe User do
     u.should_not be_valid
   end
 
+  it "knows the user's percentage of issues" do
+    u = User.make!
+    u.percentage_of_issues.should == 0
+
+    Issue.make!(editor: u)
+
+    u.percentage_of_issues.should == 100
+  end
+
 
 end
