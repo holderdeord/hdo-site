@@ -27,8 +27,6 @@ describe Vote, :search do
 
   context 'keyword search' do
     it 'finds votes where the parliament issue description matches the query' do
-      pending 'see https://github.com/travis-ci/travis-cookbooks/pull/119' if ENV['TRAVIS']
-
       match = Vote.make!(parliament_issues: [ParliamentIssue.make!(description: 'skatt')])
       miss  = Vote.make!(parliament_issues: [ParliamentIssue.make!(description: 'klima')])
 
@@ -39,8 +37,6 @@ describe Vote, :search do
     end
 
     it 'finds votes where the proposition body matches the query' do
-      pending 'see https://github.com/travis-ci/travis-cookbooks/pull/119' if ENV['TRAVIS']
-
       match = Vote.make!(propositions: [Proposition.make!(:body => "<h1>skatt</h1>")])
       miss  = Vote.make!(propositions: [Proposition.make!(:body => "<h1>klima</h1>")])
 
@@ -53,8 +49,6 @@ describe Vote, :search do
 
   context 'category filter' do
     it 'filters by selected categories' do
-      pending 'see https://github.com/travis-ci/travis-cookbooks/pull/119' if ENV['TRAVIS']
-
       first_category  = Category.make!(name: 'klima')
       second_category = Category.make!(name: 'skatt')
 
