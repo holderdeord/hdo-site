@@ -31,7 +31,7 @@
 
           <p>
             <strong><%= Representative.human_attribute_name :date_of_birth %>:</strong>
-            <%= l @representative.date_of_birth, format: :short %> (<%= @representative.age %> <%= t('app.time.years') %>)
+            <%= l @representative.date_of_birth.localtime, format: :short %> (<%= @representative.age %> <%= t('app.time.years') %>)
           </p>
 
           <p>
