@@ -1,55 +1,52 @@
 <h2>Menneskene bak</h2>
+
+<h3>Styre og administrasjon</h3>
+
+<% @board.each do |person| %>
+
+  <div class="person">
+    <% if person.image %>
+      <!--<div style="background-image: url('/assets/<%= person.image %>')" class="photo">-->
+      <img src="/assets/<%=person.image %>" class="photo">
+    <% else %>
+      <!--<div style="background-image: url('/assets/representatives/unknown.jpg')" class="photo">-->
+      <img src="/assets/representatives/unknown.jpg" class="photo">
+
+    <% end %>
+    <!--</div>-->
+
+    <% if person.email %>
+      <a class="name" href="mailto:<%= obscure_email person.email %>">
+        <%= person.name %>
+      </a>
+    <% else %>
+      <span class="name">
+        <%= person.name %>
+      </span>
+    <% end %>
+
+    <div class="bio">
+      <%= person.bio.to_s.html_safe %>
+    </div>
+
+  </div>
+<% end %>
+
+
+<p class="muted">Foto: Alex Asensi/Holder de ord</p>
 <br>
 
-<div class="row-fluid">
-  <div class="span8">
-
-    <h4>Styre og administrasjon</h4>
-
-    <% @board.each do |person| %>
-      <div class="row-fluid">
-        <div class="span2">
-          <% if person.image %>
-            <%= image_tag asset_path(person.image), class: 'home-photo'  %>
-          <% else %>
-            <%= image_tag 'representatives/unknown.jpg' %>
-          <% end %>
-          <br>
-          <br>
-        </div>
-
-        <div class="span10">
-          <p>
-            <% if person.email %>
-              <a href="mailto:<%= obscure_email person.email %>"><strong><%= person.name %></strong></a> <%= person.bio.to_s.html_safe %>
-            <% else %>
-              <strong><%= person.name %></strong> <%= person.bio.to_s.html_safe %>
-            <% end %>
-          </p>
-        </div>
-      </div>
-    <% end %>
-
-    <p class="muted">Foto: Alex Asensi/Holder de ord</p>
+<h3>Bidragsytere</h3>
+<% @contributors.each do |person| %>
+  <div class="bidragsyter">
+  <%= person.name %>
   </div>
+<% end %>
+<br>
 
-  <div class="span4">
-
-    <h4>Bidragsytere</h4>
-    <ul class="unstyled">
-    <% @contributors.each do |person| %>
-      <li><%= person.name %></li>
-    <% end %>
-    </ul>
-    <br>
-
-    <h4>Tidligere bidragsytere</h4>
-    <ul class="unstyled">
-    <% @alumni.each do |person| %>
-      <li><%= person.name %></li>
-    <% end %>
-    </ul>
-
+<h3>Tidligere bidragsytere</h3>
+<% @alumni.each do |person| %>
+  <div class="bidragsyter">
+    <%= person.name %>
   </div>
-</div>
-
+<% end %>

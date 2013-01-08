@@ -21,16 +21,25 @@
 }
 
 .jumbotron {
-  background: #ddd url('/assets/jumbotron_bg.png') 50% 0 no-repeat;
-  padding: 80px 0 20px 0;
+  background: #a8d0d2 url('/assets/jumbotron_bg.jpg') 50% 0 no-repeat;
+  background-size: auto 100%;
+  padding: 45px 0;
   text-align: center;
-  font-size: 1.1em;
+  font-size: 1.2em;
   line-height: 1.5em;
   .container {
     max-width: 600px;
   }
+  img {
+    margin: 40px 0;
+    max-width: 80%;
+  }
   p {
-    color: #666;
+    color: #1d5154;
+    text-shadow: 0 0 3px rgba(0,158,163,0.5);
+    a {
+      color: #000;
+    }
   }
 }
 
@@ -71,4 +80,44 @@ section.issues {
       }
     }
   }
+}
+
+.person {
+  position: relative;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  padding: 20px 20px 0 100px;
+  margin: 20px 0;
+  display: inline-block;
+  vertical-align: top;
+  width: 310px;
+  .photo {
+    border-radius: 50%;
+    background: #fff 50% 0% no-repeat;
+    background-size: cover;
+    width: 90px;
+    height: auto;
+    position: absolute;
+    top: 0;
+    left: -10px;
+  }
+  .name {
+    font-size: 1.4em;
+    line-height: 1.75em;
+    font-weight: 300;
+  }
+  .bio {
+    font-size: 0.9em;
+    line-height: 1.75em;
+  }
+}
+
+.bidragsyter {
+  display: inline-block;
+  vertical-align: top;
+  width: 310px;
+  margin: 0 0 20px 0;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  padding-right: 20px;
 }
