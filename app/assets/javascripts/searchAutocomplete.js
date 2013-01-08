@@ -67,7 +67,6 @@
     var input, autocomplete;
 
     input = document.getElementById("appendedInputButton");
-    input.focus();
 
     autocomplete = H.searchAutocomplete.create({
       server: H.searchServerFacade.create()
