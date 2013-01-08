@@ -41,7 +41,7 @@
   </div>
 
   <!-- VISIBLE IN MOBILE -->
-  <div class="hidden-desktop">
+  <div class="hidden-desktop" style="clear:left">
     <select class="party-nav">
       <option class="show-all-active" data-party-slug="show-all">Alle partiene</option>
       <% @parties.each do |party| %>
@@ -49,11 +49,9 @@
       <% end %>
     </select>
 
-    <div class="span3">
-      <div class="promises-results">
-        <div class="empty-results-message hidden">
-          <h3>Partiet har ingen løfter i denne kategorien.</h3>
-        </div>
+    <div class="promises-results">
+      <div class="empty-results-message hidden">
+        <h3>Partiet har ingen løfter i denne kategorien.</h3>
       </div>
     </div>
   </div>
