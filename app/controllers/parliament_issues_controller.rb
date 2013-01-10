@@ -1,5 +1,6 @@
 class ParliamentIssuesController < ApplicationController
-  caches_page :index, :show
+  caches_page :index
+  caches_page :show, unless: -> { request.format.json? }
 
   def index
     @parliament_issues = ParliamentIssue.order(:last_update).reverse_order.paginate(:page => params[:page])
