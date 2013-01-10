@@ -107,6 +107,9 @@ gem 'statsd-ruby', :require => 'statsd'
 gem 'faraday'
 gem 'net-http-persistent'
 
+# cors
+gem 'rack-cors', :require => 'rack/cors'
+
 # data import
 gem 'hdo-storting-importer', "~> 0.3.2"
 # gem 'hdo-storting-importer', :path => File.expand_path("../../hdo-storting-importer", __FILE__)

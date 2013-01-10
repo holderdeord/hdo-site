@@ -64,5 +64,13 @@ module Hdo
 
     # this is needed on heroku: https://github.com/plataformatec/devise/issues/1339
     config.assets.initialize_on_precompile = false
+
+    # allow cors from other subdomains
+    config.middleware.use Rack::Cors do
+      allow do
+        origins(/holderdeord\.no$/)
+        resource '*', :headers => :any, :methods => [:get, :options]
+      end
+    end
   end
 end
