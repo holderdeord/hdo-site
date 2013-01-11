@@ -35,7 +35,13 @@ class PartiesController < ApplicationController
     @representatives = @party.current_representatives
 
     @issues = Issue.published.order(:title)
-    @categories = Category.where(:main => true).includes(:children => :promises)
+    @categories = Category.where(:main => true).includes(:children => :promises, :promises => :parties)
+
+    @categories.each do |cat|
+      cat.children.each do |child|
+        child.promises.reject! { |p| !p.parties.include? @party }
+      end
+    end
 
     respond_to do |format|
       format.html
