@@ -16,10 +16,10 @@
             <div class="accordion-inner">
               <ul class="unstyled">
                 <% category.children.each do |c| %>
-                  <li><a data-category-id="<%= c.id %>" href="#"><%= c.human_name %></a> (<%= c.promises.size %>)</li>
+                  <li><a data-category-id="<%= c.id %>" href="#"><%= c.human_name %></a></li>
                 <% end %>
                 <br />
-                <!--TO DO: get correct total for Vis Alle -->
+
                 <li><a data-category-id="<%= category.id %>" href="#">Vis alle</a></li>
               </ul>
             </div>
