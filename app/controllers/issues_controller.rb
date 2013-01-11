@@ -4,7 +4,9 @@ class IssuesController < ApplicationController
   before_filter :fetch_issue
 
   def show
-    if policy(@issue).show?
+    policy = policy(@issue)
+
+    if policy.show?
       assign_promises_by_party
       assign_previous_and_next_issues
 
@@ -15,7 +17,9 @@ class IssuesController < ApplicationController
 
       respond_to do |format|
         format.html
-        format.json { render json: @issue }
+        format.json {
+          render json: policy.view_stats? ? @issue.to_json_with_stats : @issue
+        }
       end
     else
       redirect_to new_user_session_path

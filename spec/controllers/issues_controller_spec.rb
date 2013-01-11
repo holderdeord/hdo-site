@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe IssuesController do
-  let(:issue)   { Issue.make! }
+  let(:issue) { Issue.make! }
 
   it 'should get :show if the issue is published' do
     issue.update_attributes! status: 'published'
@@ -68,6 +68,14 @@ describe IssuesController do
     assigns(:next_issue).should be_nil
   end
 
+  it 'does not include stats in JSON representation' do
+    issue.update_attributes!(status: 'published')
+
+    get :show, id: issue, format: :json
+
+    JSON.parse(response.body).should_not include('stats', 'accountability')
+  end
+
   context 'as a logged in user' do
     let(:user)    { User.make! }
     before(:each) { sign_in user }
@@ -78,6 +86,12 @@ describe IssuesController do
       assigns(:issue).should == issue
       assigns(:promises_by_party).should_not be_nil
       response.should have_rendered(:show)
+    end
+
+    it 'includes stats in JSON representation' do
+      get :show, id: issue, format: :json
+
+      JSON.parse(response.body).should include('stats', 'accountability')
     end
 
     it "shows also non-published issues for the next/previous links" do

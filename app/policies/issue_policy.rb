@@ -25,6 +25,10 @@ class IssuePolicy
     record.published? || logged_in?
   end
 
+  def view_stats?
+    logged_in?
+  end
+
   def change_status?
     logged_in? && user.superadmin?
   end

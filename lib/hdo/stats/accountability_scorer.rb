@@ -58,6 +58,12 @@ module Hdo
         s ? "#{s.to_i}%" : I18n.t('app.uncertain')
       end
 
+      def as_json(opts = nil)
+        @data.each_with_object({}) do |(party, score), obj|
+          obj[party.name] = score
+        end
+      end
+
       private
 
       def compute(issue)

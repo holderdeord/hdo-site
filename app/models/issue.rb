@@ -108,6 +108,10 @@ class Issue < ActiveRecord::Base
     to_json include: [:topics, :categories]
   end
 
+  def to_json_with_stats
+    to_json methods: [:stats, :accountability]
+  end
+
   def accountability
     # TODO: cache this when it's being used for real.
     Hdo::Stats::AccountabilityScorer.new(self)
