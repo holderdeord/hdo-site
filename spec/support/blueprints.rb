@@ -143,10 +143,8 @@ end
 Question.blueprint do
   title { "question #{sn}" }
   body { "question body #{sn}" }
-end
-
-Question.blueprint(:full) do
   sender { "#{sn}@engasjert.no" }
+  representative { Representative.make! }
 end
 
 Answer.blueprint do

@@ -1,0 +1,50 @@
+<div class="span9">
+<%= form_for(@question, html: {}) do |f| %>
+  <% if @question.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@question.errors.count, "feil") %> gjorde at spørsmålet ikke kunne lagres:</h2>
+
+      <ul>
+        <% @question.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="control-group">
+    <label class="control-label"><%= Question.human_attribute_name :representative %></label>
+    <div class="controls">
+      <%= f.select :representative_id, representative_options, prompt: 'Velg representant...' %>
+    </div>
+  </div>
+
+  <div class="control-group">
+    <label class="control-label"><%= Question.human_attribute_name :title %></label>
+    <div class="controls">
+      <%= f.text_field :title, class: 'span6' %>
+    </div>
+  </div>
+
+  <div class="control-group">
+    <div class="controls">
+      <%= f.text_area :body, class: 'span10', rows: 5 %>
+    </div>
+  </div>
+
+  <div class="control-group">
+    <label class="control-label"><%= t 'app.questions.your_email' %></label>
+    <div class="controls">
+      <%= f.text_field :sender, class: 'span4' %>
+    </div>
+  </div>
+
+  <div class="control-group">
+     <div class="controls">
+       <%= f.submit class: 'btn' %>
+     </div>
+  </div>
+<% end %>
+</div>
+
+<div class="well span3">blabla ... moderert ... blabla</div>

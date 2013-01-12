@@ -118,6 +118,12 @@ Hdo::Application.routes.draw do
   get "home/method" => "home#about_method", as: :home_method
 
   #
+  # Q & A
+  #
+
+  resources :questions
+
+  #
   # norwegian aliases - don't overdo this without a proper solution
   #
 

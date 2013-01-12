@@ -4,7 +4,7 @@ describe Question do
   let(:q) { Question.make }
 
   it 'has a valid blueprint' do
-    q.save! #should be_valid
+    q.save!
   end
 
   it 'is invalid without a title' do
@@ -29,4 +29,9 @@ describe Question do
     q.sender = 'foo@bar'
     q.should_not be_valid
   end
+
+  it 'knows if the question is awaiting control' do
+    q.should be_awaiting_control
+  end
+
 end

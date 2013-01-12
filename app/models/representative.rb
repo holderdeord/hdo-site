@@ -37,6 +37,9 @@ class Representative < ActiveRecord::Base
   has_many :committee_memberships, dependent: :destroy
   has_many :committees,            through: :committee_memberships
 
+  has_many :questions
+  has_many :answers
+
   validates_uniqueness_of :first_name, scope: :last_name # TODO: scope: :period ?!
 
   validates :external_id, presence: true, uniqueness: true

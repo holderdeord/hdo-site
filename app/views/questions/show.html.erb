@@ -1,0 +1,17 @@
+<h1 class="lead">
+  <%= @question.title %>
+  <small class="pull-right">
+    Spørsmål til <strong><%= @question.representative.name %></strong>
+  </small>
+</h1>
+
+<div class="row-fluid">
+  <p class="well"><%= @question.body %></p>
+</div>
+
+<div class="row-fluid">
+  <%= image_tag @question.representative.image_with_fallback.thumb('240x320#').strip.url,
+                  class: 'representative-image',
+                  alt: @question.representative.full_name %>
+</div>
+

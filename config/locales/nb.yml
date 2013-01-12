@@ -244,6 +244,9 @@ nb:
         image: "Ikon"
       question:
         sender: Avsender
+        title: Tittel
+        body: Tekst
+        representative: Representant
   will_paginate:
     previous_label: "&#8592; Forrige"
     next_label: "Neste &#8594;"
@@ -415,6 +418,11 @@ nb:
       edit:
         created: Brukeren ble opprettet.
         updated: Brukeren ble oppdatert.
+    questions:
+      new: 'Still et spørsmål'
+      your_email: Din epost
+      edit:
+        created: Spørsmålet er sendt til moderasjon.
     external:
       urls:
         parliament_issue: "http://stortinget.no/no/Saker-og-publikasjoner/Saker/Sak/?p=%s"

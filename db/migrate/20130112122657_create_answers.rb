@@ -7,5 +7,7 @@ class CreateAnswers < ActiveRecord::Migration
 
       t.timestamps
     end
+
+    add_index :answers, :representative_id
   end
 end

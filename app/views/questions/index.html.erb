@@ -1,0 +1,15 @@
+<h1><%= Question.model_name.human.capitalize %></h1>
+
+<div class="row-fluid">
+  <%= link_to t('app.questions.new'), new_question_path, class: 'btn' %>
+</div>
+
+<div class="row-fluid">
+  <table class="table">
+    <tbody>
+      <% @questions.each do |question| %>
+        <tr><td><%= link_to question.title, question %></td></tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
