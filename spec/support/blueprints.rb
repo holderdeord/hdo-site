@@ -98,7 +98,6 @@ ParliamentPeriod.blueprint :full do
   end_date { Date.new(2013, 9, 30) }
 end
 
-
 Representative.blueprint do
   external_id { sn.to_s }
   first_name { "first-name-#{sn}" }
@@ -148,4 +147,10 @@ end
 
 Question.blueprint(:full) do
   sender { "#{sn}@engasjert.no" }
+end
+
+Answer.blueprint do
+  body { "answer body" }
+  representative { Representative.make! }
+  question { Question.make! }
 end
