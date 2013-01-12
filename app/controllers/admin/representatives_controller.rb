@@ -15,8 +15,8 @@ class Admin::RepresentativesController < ApplicationController
       flash.now[:success] = "Informasjonen er oppdatert."
       render:action => 'show'
     else
-      flash.now[:error] = "Informasjonen ble ikke"
-      redirect_to :action => 'show', :error => "Oi."
+      flash.now[:error] = "Informasjonen ble ikke oppdatert."
+      redirect_to :action => 'show'
     end
   end
 end
