@@ -11,7 +11,7 @@ class Admin::RepresentativesController < ApplicationController
 
   def update
     @representative = Representative.find(params[:id])
-    if @representative.update_attribute(:twitter_id, params[:representative][:twitter_id])
+    if @representative.update_attributes(params[:representative].slice(:twitter_id))
       flash.now[:success] = "Informasjonen er oppdatert."
       render:action => 'show'
     else
