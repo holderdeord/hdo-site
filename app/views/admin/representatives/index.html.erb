@@ -1,0 +1,8 @@
+<ul class="unstyled">
+  <% @reps_grouped.each do |letter, representatives| %>
+    <h5><%= letter %></h5>
+    <% representatives.each do |r| %>
+      <li><%= link_to r.display_name, admin_representative_path(r) %></li>
+    <% end %>
+  <% end %>
+</ul>
