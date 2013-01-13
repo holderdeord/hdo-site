@@ -129,9 +129,18 @@ Hdo::Application.routes.draw do
   get "docs/index"
   get "docs/analysis"
 
+  #
   # global search
+  #
+
   get 'search/all' => 'search#all', as: :search_all
   get 'search/autocomplete' => 'search#autocomplete', :as => :search_autocomplete
+
+  #
+  # robots
+  #
+
+  get '/robots.txt' => 'home#robots'
 
   root to: 'home#index'
 end

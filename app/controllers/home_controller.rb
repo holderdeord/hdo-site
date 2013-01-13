@@ -1,7 +1,9 @@
 # encoding: UTF-8
 
 class HomeController < ApplicationController
-  caches_page :index, :contact, :join, :support, :people, :about_method, :member, :future, if: lambda { flash.empty? }
+  caches_page :index, :contact, :join, :support, :people,
+              :about_method, :member, :future, :robots,
+              if: lambda { flash.empty? }
 
   def index
     @issues  = Issue.published.random(6)
@@ -12,6 +14,16 @@ class HomeController < ApplicationController
     if params[:lang] == "en"
       render :about, :locale => "en"
     end
+  end
+
+  def robots
+    if Rails.env.production?
+      robots = ''
+    else
+      robots = "User-Agent: *\nDisallow: /\n"
+    end
+
+    render :text => robots, :layout => false, :content_type => "text/plain"
   end
 
   # don't override Object#method
