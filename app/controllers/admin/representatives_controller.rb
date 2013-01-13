@@ -1,4 +1,4 @@
-class Admin::RepresentativesController < ApplicationController
+class Admin::RepresentativesController < AdminController
 
   def index
     reps = Representative.order(:last_name)
@@ -11,7 +11,12 @@ class Admin::RepresentativesController < ApplicationController
 
   def update
     @representative = Representative.find(params[:id])
-    if @representative.update_attributes(params[:representative].slice(:twitter_id))
+    twitter_handle = params[:representative].slice(:twitter_id)
+
+    if twitter_handle.values == [""]
+      @representative.update_attributes(:twitter_id => nil)
+      render:action => 'show'
+    elsif @representative.update_attributes(twitter_handle)
       flash.now[:success] = "Informasjonen er oppdatert."
       render:action => 'show'
     else

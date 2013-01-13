@@ -4,7 +4,7 @@
     <%= image_tag @representative.image_with_fallback.thumb('240x320#').strip.url, class: 'representative-image', alt: @representative.full_name %>
   </div>
 
-  <div class="span8">
+  <div class="span6">
     <h4>Rediger</h4>
     
     <% if flash[:success] %>
@@ -22,5 +22,9 @@
     <br>
     <%= submit_tag "Update" %>
     <% end %>
+  </div>
+
+  <div class="span2">
+    <%= link_to "Tilbake til representativene", :action => 'index' %>
   </div>
 </div
