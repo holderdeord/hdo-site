@@ -29,7 +29,7 @@ class IssuesController < ApplicationController
   def votes
     if policy(@issue).show?
       connections = @issue.vote_connections.includes(:vote).order("votes.time DESC")
-      views       = VoteConnectionDecorator.decorate(connections)
+      views       = VoteConnectionDecorator.decorate_all(connections)
 
       # within each day, we want to order by time *ascending*
       grouped = views.group_by { |e| e.time.to_date }.values

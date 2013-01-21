@@ -1,8 +1,7 @@
 # encoding: utf-8
 
-class VoteConnectionDecorator < Draper::Base
-  decorates :vote_connection
-  allows :vote, :title, :comment, :weight_text
+class VoteConnectionDecorator < Draper::Decorator
+  delegate :vote, :title, :comment, :weight_text
 
   def proposition_type_text
     vote.proposition_type.blank? ? '' : I18n.t("app.votes.proposition_types.#{vote.proposition_type}")
