@@ -17,7 +17,7 @@
     <%= render 'layouts/footer'%>
 
     <%= javascript_include_tag "application" %>
-    <%= render 'layouts/ga' if Rails.env.production?  %>
+    <%= render 'layouts/ga' if AppConfig.analytics_enabled  %>
 
     <script>HDO.setupSearchWidget();</script>
     <%= yield :document_ready %>

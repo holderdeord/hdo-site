@@ -5,6 +5,7 @@ defaults: &defaults
   statsd_host: 5.9.122.47 # ops1.holderdeord.no, but avoid DNS lookup
   statsd_port: 8125
   statsd_enabled: false
+  analytics_enabled: false
 
 development:
   <<: *defaults
@@ -18,3 +19,4 @@ staging:
 
 production:
   <<: *defaults
+  analytics_enabled: true
