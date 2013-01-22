@@ -37,4 +37,8 @@ module ApplicationHelper
     logger.error "awesome_truncate: #{ex.message}"
     text
   end
+
+  def title(page_title)
+    content_for(:title) { page_title }
+  end
 end
