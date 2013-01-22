@@ -21,7 +21,7 @@ class VotesController < ApplicationController
   end
 
   def propositions
-    vote = Vote.includes(:propositions).find(params[:id])
+    vote = Vote.find(params[:id])
     @propositions = vote ? vote.propositions : []
 
     respond_to do |format|

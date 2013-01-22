@@ -1,10 +1,6 @@
 require 'spec_helper'
 
 describe Vote, :search do
-  def search(filter, query, categories = [])
-    Vote.naive_search(filter, query, categories)
-  end
-
   def es_search(filter, query, categories = [])
     Vote.admin_search(filter, query, categories)
   end
@@ -20,7 +16,6 @@ describe Vote, :search do
 
       refresh_index
 
-      search(nil, '').should == [v2]
       es_search(nil, '').should == [v2]
     end
   end
@@ -32,7 +27,6 @@ describe Vote, :search do
 
       refresh_index
 
-      search(nil, 'skatt').should == [match]
       es_search(nil, 'skatt').should == [match]
     end
 
@@ -42,8 +36,14 @@ describe Vote, :search do
 
       refresh_index
 
-      search(nil, 'skatt').should == [match]
       es_search(nil, 'skatt').should == [match]
+    end
+
+    it 'finds votes where the parliament issue external id matches the query' do
+      match = Vote.make!(:parliament_issues => [ParliamentIssue.make!(:external_id => "541232")])
+      refresh_index
+
+      es_search(nil, '541232').should == [match]
     end
   end
 
@@ -59,10 +59,6 @@ describe Vote, :search do
       miss  = Vote.make!(parliament_issues: [parliament_issue_miss])
 
       refresh_index
-
-      results = search('selected-categories', nil, [first_category])
-      results.size.should == 1
-      results.first.should == match
 
       results = es_search('selected-categories', nil, [first_category])
       results.size.should == 1

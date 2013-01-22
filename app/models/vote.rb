@@ -135,7 +135,7 @@ class Vote < ActiveRecord::Base
 
     data = as_json(include: {
       propositions:      { only: :description, methods: :plain_body },
-      parliament_issues: { only: :description }
+      parliament_issues: { only: [:description, :external_id] }
     })
 
     data[:processed] = true
