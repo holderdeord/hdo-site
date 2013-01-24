@@ -54,7 +54,7 @@ class HomeController < ApplicationController
       Person.new('Kristofer Rees', 'kristofer@holderdeord.no', 'hdo/kristofer.jpg', 'er sjef for metode og analyse i Holder de ord. Han har en bachelorgrad i statsvitenskap, og har tidligere studert musikk ved NTNU i Trondheim og Det Kgl. Danske Musikkonservatorium i København. Kristofer sitter også i Holder de ords styre.'),
       Person.new('Tiina Ruohonen', 'tiina@holderdeord.no', 'hdo/tiina.jpg', 'er en av grunnleggerne av Holder de ord, nestleder og sjef for kommunikasjon, presse, og partnerskap. Tiina har en Cand. Mag. i statsvitenskap og juss, og en mastergrad i bærekraftig utvikling og etikk. Hun jobbet i flere år som prosjektleder og rådgiver på klimaområdet, og driver i dag sitt eget selskap som hjelper kunder med utfordringer innenfor klimaspørsmål, etikk, samfunnsansvar, og demokratisk medvirkning. Tiina sitter også i Holder de ords styre.'),
       Person.new('Linn Skorge', 'linn@holderdeord.no',  'hdo/linn.jpg', 'jobber med salg og finansiering i Holder de ord. Linn tar for øyeblikket en mastergrad i politisk økonomi på BI i Oslo. Fra tidligere har hun en bachelorgrad i internasjonal markedsføring, også fra Handelshøyskolen BI. Linn sitter også i Holder de ords styre.'),
-      Person.new('Guro Øistensen', nil, nil, 'jobber med metode og det faglige innholdet i Holder de ord. Til daglig er hun Communications Manager i IT-bedriften Logica, hvor hun jobber med internett, intranett, PR og intern kommunikasjon. Guro er utdannet sosiolog fra Universitetet i Oslo. Hun sitter også i Holder de ords styre.')
+      Person.new('Hanna Welde Tranås', 'hanna@holderdeord.no', nil, 'har bachelorgrad i statsvitenskap og utviklingsstudier fra NTNU og mastergrad i statsvitenskap med fordypning i komparativ politikk fra Universitet i Oslo. Hanna leder arbeidet med politisk analyse i Holder de ord.'),
     ]
 
     @contributors = [
@@ -66,21 +66,14 @@ class HomeController < ApplicationController
       Person.new('Arne Hassel'),
       Person.new('Henrik Helmers'),
       Person.new('Jostein Holje'),
-      Person.new('Daniel Kafkas'),
       Person.new('Vegard Karevold'),
       Person.new('Markus Krüger'),
-      Person.new('Sara Mjelva'),
       Person.new('Linda Therese Myrvang'),
       Person.new('Salve J. Nilsen'),
-      Person.new('Gustav Oddsson'),
-      Person.new('Endre Ottosen'),
       Person.new('Gregers Skram Rygg'),
       Person.new('Petter Reinholdtsen'),
       Person.new('Tor Halle Rise'),
       Person.new('Jonathan Ronen'),
-      Person.new('Nina Rønning'),
-      Person.new('Cosimo Streppone'),
-      Person.new('Hanna Welde Tranås'),
       Person.new('Ingrid Ødegaard')
     ]
 
@@ -105,6 +98,7 @@ class HomeController < ApplicationController
       Person.new('Tor Håkon Inderberg'),
       Person.new('Esben Jensen'),
       Person.new('Nina Jensen'),
+      Person.new('Daniel Kafkas'),
       Person.new('Einar Kjerschow'),
       Person.new('Øystein Jerkø Kostøl'),
       Person.new('Ingrid Lomelde'),
@@ -114,13 +108,17 @@ class HomeController < ApplicationController
       Person.new('Carl Martin Rosenberg'),
       Person.new('Marit Sjøvaag Marino'),
       Person.new('Joanna Merker'),
+      Person.new('Sara Mjelva'),
       Person.new('Silje Nyløkken'),
+      Person.new('Endre Ottosen'),
       Person.new('Erik Seierstad'),
       Person.new('Osman Siddique'),
       Person.new('Tommy Steinsli'),
+      Person.new('Cosimo Streppone'),
       Person.new('Einar Sundin'),
       Person.new('Eirik Swensen'),
-      Person.new('Ole Martin Volle')
+      Person.new('Ole Martin Volle'),
+      Person.new('Guro Øistensen')
      ]
   end
 
