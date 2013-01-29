@@ -1,7 +1,7 @@
-<% title "Løfter" %>
+<% title "#{@page_title} - #{t('app.title')}" %>
 <div class="page-header">
   <h1>
-    <%= Promise.model_name.human(count: 2).capitalize %>
+    <%= @page_title %>
     <small class="hidden-phone pull-right"><%= Promise.count %> løfter fra valgprogrammene 2009-2013</small>
   </h1>
 </div>
