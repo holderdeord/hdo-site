@@ -1,8 +1,6 @@
 module Hdo
   module Search
     class Searcher
-      SEARCH_ERRORS = [Tire::Search::SearchRequestFailed, Errno::ECONNREFUSED]
-
       INDECES = {
         Issue.index_name           => { boost: 5   },
         Party.index_name           => { boost: 3.5 },
@@ -13,39 +11,41 @@ module Hdo
         Topic.index_name           => { boost: 2   },
       }
 
-      AUTOCOMPLETE_INDECES = [Issue.index_name, Representative.index_name]
-
       def initialize(query)
         @query = query.blank? ? '*' : query
       end
 
       def all
-        search = Tire.search(INDECES) do |s|
-          s.size 100
-          s.query do |query|
-            query.string @query, default_operator: 'AND'
+        response_from {
+          Tire.search(INDECES) do |s|
+            s.size 100
+            s.query do |query|
+              query.string @query, default_operator: 'AND'
+            end
+            s.sort { by :_score }
           end
-          s.sort { by :_score }
-        end
-
-        Response.new(search.results)
-      rescue *SEARCH_ERRORS => ex
-        Rails.logger.error "search failed, #{ex.class} #{ex.message}"
-        Response.new(nil, ex)
+        }
       end
 
       def autocomplete
-        search = Tire.search(AUTOCOMPLETE_INDECES) do |s|
-          s.size 25
+        response_from {
+          Tire.search([Issue.index_name, Representative.index_name]) do |s|
+            s.size 25
 
-          s.query do |query|
-            query.string "#{@query}* #{@query}", default_operator: 'OR'
+            s.query do |query|
+              query.string "#{@query}* #{@query}", default_operator: 'OR'
+            end
+            s.sort { by :_score }
           end
-          s.sort { by :_score }
-        end
+        }
+      end
 
+      private
+
+      def response_from(&blk)
+        search = yield
         Response.new(search.results)
-      rescue *SEARCH_ERRORS => ex
+      rescue Tire::Search::SearchRequestFailed, Errno::ECONNREFUSED => ex
         Rails.logger.error "search failed, #{ex.class} #{ex.message}"
         Response.new(nil, ex)
       end
@@ -65,9 +65,8 @@ module Hdo
         def down?
           @exception.kind_of? Errno::ECONNREFUSED
         end
-      end
+      end # Response
 
-    end
-
+    end # Searcher
   end
 end
