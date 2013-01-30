@@ -41,31 +41,6 @@ class Vote < ActiveRecord::Base
   scope :non_personal, where(:personal => false)
   scope :with_results, includes(:parliament_issues, vote_results: {representative: {party_memberships: :party}})
 
-  def self.naive_search(filter, keyword, selected_categories = [])
-    # TODO: elasticsearch
-    votes = Vote.includes(:parliament_issues, :propositions, :vote_connections)
-
-    case filter
-    when 'selected-categories'
-      votes.select! do |v|
-        v.parliament_issues.any? { |i| (i.categories & selected_categories).any? }
-      end
-    when 'not-connected'
-      votes.select! { |v| v.vote_connections.empty? }
-    else
-      # ignore 'all' or others
-    end
-
-    if keyword.present?
-      votes.select! do |v|
-        v.propositions.any? { |e| e.plain_body.include? keyword } ||
-          v.parliament_issues.any? { |e| e.description.include? keyword }
-      end
-    end
-
-    votes.select { |e| e.parliament_issues.all?(&:processed?) }
-  end
-
   def self.admin_search(filter, query, selected_categories = [])
     query = '*' if query.blank?
 
