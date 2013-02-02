@@ -1,9 +1,20 @@
 module Hdo
   module Stats
     class AgreementScorer
+      VALID_UNITS = [:propositions, :votes]
 
-      def initialize(votes = Vote.with_results)
-        @votes = votes
+      def initialize(opts = {})
+        @votes = opts[:votes] || Vote.with_results
+
+        if opts[:unit]
+          unless VALID_UNITS.include?(opts[:unit])
+            raise "invalid unit: #{opts[:unit].inspect}"
+          end
+
+          @unit = opts[:unit]
+        else
+          @unit = :propositions
+        end
       end
 
       def result
@@ -13,14 +24,23 @@ module Hdo
 
           @votes.each do |vote|
             next if ignored?(vote)
-
-            count += 1
             stats = vote.stats
+
+            case @unit
+            when :propositions
+              unit_count = vote.propositions.count
+            when :votes
+              unit_count = 1
+            else
+              raise "invalid unit: #{@unit.inspect}"
+            end
+
+            count += unit_count
 
             combinations.each do |current_parties|
               if agree?(current_parties, stats)
                 key = current_parties.map(&:external_id).sort.join(',')
-                result[key] += 1
+                result[key] += unit_count
               end
             end
           end
@@ -38,9 +58,9 @@ module Hdo
           io.puts str
         end
       end
-      
+
       private
-      
+
       def combinations
         @combinations ||= (
           parties = Party.all.to_a
