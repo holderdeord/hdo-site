@@ -11,7 +11,7 @@ namespace :import do
 
     desc 'Import a subset of promises for development'
     task :promises => %w[db:clear:promises import:env] do
-      Hdo::Import::CLI.new(['json', "http://files.holderdeord.no/dev/promises.dev.json"]).run
+      Hdo::Import::CLI.new(['json', "http://files.holderdeord.no/dev/data/promises.dev.json"]).run
     end
   end
 
