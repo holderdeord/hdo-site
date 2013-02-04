@@ -1,10 +1,54 @@
+require 'csv'
+
 module Hdo
   module Stats
     class AgreementScorer
       VALID_UNITS = [:propositions, :votes]
 
+      COMBINATIONS = (
+        parties = Party.all.to_a
+        2.upto(parties.size).flat_map do |n|
+          parties.combination(n).to_a
+        end
+      )
+
+      def self.by_category(parliament_issues = ParliamentIssue.all)
+        category_votes = Hash.new { |h, k| h[k] = [] }
+
+        parliament_issues.each do |pi|
+          pi.categories.each do |cat|
+            category_votes[cat.human_name].concat pi.vote_ids
+          end
+        end
+
+        result = {}
+
+        category_votes.each do |category_name, vote_ids|
+          votes = Vote.with_results.find(vote_ids)
+          result[category_name] = new(votes: votes).result
+        end
+
+        result
+      end
+
+      def self.csv
+        all        = new.result
+        categories = by_category.sort_by { |name, result| name }
+
+        combinations = all[:data].keys.sort
+
+        CSV.generate do |csv|
+          csv << [nil, *combinations]
+          csv << ["Alle kategorier", *combinations.map { |key| '%.1f' % ((all[:data][key] / all[:total].to_f) * 100) }]
+
+          categories.each do |name, result|
+            csv << [name, *combinations.map { |key| '%.1f' % ((result[:data][key] / result[:total].to_f) * 100) }]
+          end
+        end
+      end
+
       def initialize(opts = {})
-        @votes = opts[:votes] || Vote.with_results
+        @votes = opts[:votes] || Vote.with_results.includes(:propositions)
 
         if opts[:unit]
           unless VALID_UNITS.include?(opts[:unit])
@@ -28,7 +72,7 @@ module Hdo
 
             case @unit
             when :propositions
-              unit_count = vote.propositions.count
+              unit_count = vote.propositions.uniq.size
             when :votes
               unit_count = 1
             else
@@ -37,7 +81,7 @@ module Hdo
 
             count += unit_count
 
-            combinations.each do |current_parties|
+            COMBINATIONS.each do |current_parties|
               if agree?(current_parties, stats)
                 key = current_parties.map(&:external_id).sort.join(',')
                 result[key] += unit_count
@@ -60,19 +104,6 @@ module Hdo
       end
 
       private
-
-      def combinations
-        @combinations ||= (
-          parties = Party.all.to_a
-          combinations = []
-
-          2.upto(parties.size) do |n|
-            combinations.concat parties.combination(n).to_a
-          end
-
-          combinations
-        )
-      end
 
       def agree?(parties, stats)
         parties.map { |party| stats.text_for(party) }.uniq.size == 1

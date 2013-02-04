@@ -42,8 +42,10 @@ class Category < ActiveRecord::Base
     n = name
 
     case n
-    when 'EFTA/EU'
+    when 'EFTA/EU', 'FN'
       n
+    when 'FN-STYRKER'
+      'FN-styrker'
     else
       "#{UnicodeUtils.upcase n[0]}#{UnicodeUtils.downcase n[1..-1]}"
     end
