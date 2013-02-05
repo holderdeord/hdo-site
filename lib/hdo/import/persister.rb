@@ -239,6 +239,13 @@ module Hdo
           result = VOTE_RESULTS[xrep.vote_result] or raise "invalid vote result: #{result_text.inspect}"
           rep = find_or_import_representative(xrep)
 
+          if rep.party_membership_at(attributes[:time]).nil?
+            rep = import_representative(xrep)
+            if rep.party_membership_at(attributes[:time]).nil?
+              raise "vote cast without party membership: #{xrep.inspect} @ #{xvote.time} (#{xvote.subject})"
+            end
+          end
+
           res = VoteResult.find_or_create_by_representative_id_and_vote_id(rep.id, vote.id)
           res.result = result
           res.save!
