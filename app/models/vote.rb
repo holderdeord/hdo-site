@@ -34,7 +34,7 @@ class Vote < ActiveRecord::Base
   # timestamps are unique unless it's an alternate vote, in which case 'enacted' will not be the same
   validates_uniqueness_of :time, scope: :enacted
 
-  friendly_id :external_id, use: :slugged
+  friendly_id :timestamp_and_enacted, use: :slugged
 
   scope :latest,       lambda { |limit| order(:time).reverse_order.limit(limit) }
   scope :personal,     where(:personal => true)
@@ -103,6 +103,10 @@ class Vote < ActiveRecord::Base
       against_count == other.for_count &&
       absent_count == other.absent_count &&
       enacted? != other.enacted?
+  end
+
+  def timestamp_and_enacted
+    "#{time.to_i}#{enacted ? 'e' : 'ne'}"
   end
 
   def to_indexed_json
