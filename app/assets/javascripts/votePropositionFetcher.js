@@ -8,11 +8,11 @@
     },
 
     init: function () {
-      $(document.body).delegate('[data-vote-id]', 'click', function () {
-        var voteId, target, spinner;
+      $(document.body).delegate('[data-vote-slug]', 'click', function () {
+        var voteSlug, target, spinner;
 
-        voteId = $(this).data('vote-id');
-        target = $('#proposition-body-' + voteId);
+        voteSlug = $(this).data('vote-slug');
+        target = $('#proposition-body-' + voteSlug);
 
         target.toggle();
 
@@ -24,7 +24,7 @@
         spinner.show();
 
         $.ajax({
-          url: "/votes/" + voteId + "/propositions",
+          url: "/votes/" + voteSlug + "/propositions",
           type: "GET",
           dataType: "html",
 
