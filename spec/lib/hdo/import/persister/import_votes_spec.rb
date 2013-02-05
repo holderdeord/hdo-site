@@ -43,6 +43,18 @@ module Hdo
           Vote.count.should == 1
         end
 
+        it 'handles comma-separated list of external issue ids' do
+          vote = StortingImporter::Vote.example
+          setup_vote(vote)
+
+          ParliamentIssue.make! :external_id => '512'
+          vote.external_issue_id << ",512"
+
+          persister.import_vote vote
+          Vote.count.should == 1
+          Vote.first.parliament_issues.map(&:external_id).should include('512')
+        end
+
         it 'runs the VoteInferrer after importing votes' do
           ParliamentIssue.make! :external_id => non_personal_vote.external_issue_id
 
