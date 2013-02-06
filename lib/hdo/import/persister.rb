@@ -253,7 +253,10 @@ module Hdo
 
         xvote.propositions.each do |e|
           prop = import_proposition(e)
-          vote.propositions << prop if prop
+
+          if prop && !vote.propositions.include?(prop)
+            vote.propositions << prop
+          end
         end
 
         vote.save!

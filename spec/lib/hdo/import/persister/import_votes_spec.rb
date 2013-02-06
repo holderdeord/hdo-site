@@ -174,6 +174,26 @@ module Hdo
           [a.external_id, b.external_id].sort.should == %w[1 3]
         end
 
+        it 'imports a vote twice without adding duplicate propositions' do
+          example = StortingImporter::Vote.example
+          setup_vote(example)
+
+          2.times do
+            persister.import_vote example
+            Vote.connection.select_all('select * from propositions_votes').size.should == example.propositions.size
+          end
+        end
+
+        it 'imports a vote twice without adding duplicate parliament issues' do
+          example = StortingImporter::Vote.example
+          setup_vote(example)
+
+          2.times do
+            persister.import_vote example
+            Vote.connection.select_all('select * from parliament_issues_votes').size.should == 1
+          end
+        end
+
       end
     end
   end
