@@ -25,6 +25,10 @@ class Issue < ActiveRecord::Base
     update_index if published?
   end
 
+  before_destroy do
+    destroy_associations # workaround https://github.com/rails/rails/issues/5332, should be fixed in 3.2.12
+  end
+
   attr_accessible :description, :title, :category_ids, :promise_ids, :topic_ids, :status, :lock_version, :editor_id
   validates :title, presence: true, uniqueness: true
 

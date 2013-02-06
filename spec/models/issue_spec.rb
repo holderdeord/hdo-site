@@ -231,8 +231,6 @@ describe Issue do
       expect_stale_object_error_when_updating @same_issue
     end
 
-
-
     it 'is locked when changing proposition type of an existing vote' do
       @issue.vote_connections.create! :vote => Vote.make!, :matches => true, :title => 'hello', :weight => 1.0
       vote = @issue.votes.first
