@@ -20,7 +20,8 @@ class Representative < ActiveRecord::Base
     end
   }
 
-  attr_accessible :first_name, :last_name, :committees, :district, :date_of_birth, :date_of_death, :twitter_id
+  attr_accessible :first_name, :last_name, :committees, :district,
+                  :date_of_birth, :date_of_death, :twitter_id, :email
 
   default_scope order: :last_name
 
@@ -37,7 +38,10 @@ class Representative < ActiveRecord::Base
   has_many :committees,            through: :committee_memberships
 
   validates_uniqueness_of :first_name, scope: :last_name # TODO: scope: :period ?!
+  validates_uniqueness_of :twitter_id, allow_nil: true
+
   validates :external_id, presence: true, uniqueness: true
+  validates :email, email: true, allow_nil: true
 
   friendly_id :external_id, use: :slugged
 

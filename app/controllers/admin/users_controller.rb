@@ -37,7 +37,7 @@ class Admin::UsersController < AdminController
     end
 
     if @user.save
-      redirect_to admin_user_path(@user), notice: t('app.users.edit.created')
+      redirect_to admin_user_path(@user), notice: t('app.created.user')
     else
       render action: 'new'
     end
@@ -59,7 +59,7 @@ class Admin::UsersController < AdminController
     end
 
     if @user.update_attributes(attrs)
-      redirect_to admin_user_path(@user), notice: t('app.users.edit.updated')
+      redirect_to admin_user_path(@user), notice: t('app.updated.user')
     else
       render action: "edit"
     end

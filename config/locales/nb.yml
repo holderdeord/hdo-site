@@ -9,6 +9,10 @@ nb:
       short: "%Y-%m-%d"
       text: "%e. %B %Y"
       text_time: "%e. %B %Y %H:%M"
+  valid_email:
+    validations:
+      email:
+        invalid: 'Ugyldig epostaddresse.'
   date:
      day_names: [Søndag, Mandag, Tirsdag, Onsdag, Torsdag, Fredag, Lørdag]
      abbr_day_names: [Søn, Man, Tir, Ons, Tor, Fre, Lør]
@@ -127,6 +131,8 @@ nb:
         alternate: "Vara"
         date_of_birth: 'Født'
         date_of_death: 'Død'
+        twitter_id: 'Twitter'
+        email: 'Epost'
       party:
         name: "Navn"
         representatives: "Representanter"
@@ -408,9 +414,12 @@ nb:
     created:
       promise: 'Løftet ble lagret.'
       issue: 'Saken er lagret.'
+      user: 'Brukeren ble lagret.'
     updated:
       promise: 'Løftet ble oppdatert.'
-      issue: 'Saken er oppdatert.'
+      issue: 'Saken ble oppdatert.'
+      user: 'Brukeren ble oppdatert.'
+      representative: 'Representanten ble oppdatert.'
     parties:
       no_promises: Partiet har ingen løfter om denne saken.
       group:

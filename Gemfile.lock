@@ -302,6 +302,9 @@ GEM
       execjs (>= 0.3.0)
       multi_json (~> 1.0, >= 1.0.2)
     unicode_utils (1.4.0)
+    valid_email (0.0.4)
+      activemodel
+      mail
     warden (1.2.1)
       rack (>= 1.0)
     websocket (1.0.6)
@@ -361,6 +364,7 @@ DEPENDENCIES
   twitter_bootstrap_form_for (~> 1.0.5)
   uglifier (>= 1.0.3)
   unicode_utils
+  valid_email
   will_paginate (~> 3.0.3)
   yajl-ruby
   yaml_db

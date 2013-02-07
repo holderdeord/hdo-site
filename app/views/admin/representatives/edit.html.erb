@@ -1,0 +1,27 @@
+<h1><%= "#{@representative.first_name} #{@representative.last_name}" %></h1>
+<div class="row-fluid">
+  <div class="span4">
+    <%= image_tag @representative.image_with_fallback.thumb('240x320#').strip.url, class: 'representative-image', alt: @representative.full_name %>
+  </div>
+
+  <div class="span6">
+    <%= twitter_bootstrap_form_for [:admin, @representative] do |form| %>
+      <%= form.inputs t('app.edit') do %>
+
+        <div class="input-prepend">
+          <span class="add-on">@</span>
+          <%= text_field :representative, :twitter_id %>
+        </div>
+
+        <div class="input-prepend">
+          <span class="add-on">Email</span>
+          <%= text_field :representative, :email %>
+        </div>
+      <% end %>
+
+      <%= form.actions do %>
+        <%= form.submit 'Lagre', class: 'btn btn-primary' %>
+      <% end %>
+    <% end %>
+  </div>
+</div>

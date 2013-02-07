@@ -1,3 +1,5 @@
+<%= render partial: 'admin_info', locals: { representative: @representative } if policy(@representative).edit? %>
+
 <div class="page-header">
   <h1><%= @representative.full_name %> <small class="pull-right"><%= @representative.external_id %></small></h1>
 </div>

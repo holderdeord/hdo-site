@@ -92,6 +92,9 @@ gem 'dragonfly', '~> 0.9.12'
 # logging
 gem 'lograge'
 
+# mail
+gem 'valid_email'
+
 # serialization / parsing
 gem 'multi_json'
 gem 'yajl-ruby'

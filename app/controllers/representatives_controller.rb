@@ -1,13 +1,8 @@
 class RepresentativesController < ApplicationController
-  caches_page :index, :index_by_district, :index_by_party, :index_by_name
-
-  before_filter :fetch_representatives, :only => [:index, :index_by_district, :index_by_party, :index_by_name]
+  caches_page :index
 
   def index
-    respond_to do |format|
-      format.html
-      format.json { render json: Representative.order(:last_name) }
-    end
+    @representatives = Representative.includes(:district, :party_memberships => :party).order(:last_name)
   end
 
   def show
@@ -21,29 +16,4 @@ class RepresentativesController < ApplicationController
     end
   end
 
-  def index_by_district
-    xhr_only {
-      @by_district = @representatives.group_by { |e| e.district }
-      render partial: 'index_by_district', locals: { groups: @by_district }
-    }
-  end
-
-  def index_by_party
-    xhr_only {
-      @by_party = @representatives.group_by { |e| e.current_party }
-      render partial: 'index_by_party', locals: { groups: @by_party }
-    }
-  end
-
-  def index_by_name
-    xhr_only {
-      render partial: 'index_by_name', locals: { representatives: @representatives }
-    }
-  end
-
-  private
-
-  def fetch_representatives
-    @representatives = Representative.includes(:district, :party_memberships => :party).order(:last_name)
-  end
 end

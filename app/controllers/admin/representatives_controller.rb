@@ -1,27 +1,28 @@
 class Admin::RepresentativesController < AdminController
+  EDITABLE_ATTRIBUTES = [:twitter_id, :email]
 
-  def index
-    reps = Representative.order(:last_name)
-    @reps_grouped = reps.group_by { |r| r.last_name[0]}
-  end
+  before_filter :fetch_representative
 
-  def show
-    @representative = Representative.find(params[:id])
+  def edit
   end
 
   def update
-    @representative = Representative.find(params[:id])
-    twitter_handle = params[:representative].slice(:twitter_id)
+    attrs = params[:representative].slice(*EDITABLE_ATTRIBUTES)
 
-    if twitter_handle.values == [""]
-      @representative.update_attributes(:twitter_id => nil)
-      render:action => 'show'
-    elsif @representative.update_attributes(twitter_handle)
-      flash.now[:success] = "Informasjonen er oppdatert."
-      render:action => 'show'
-    else
-      flash.now[:error] = "Informasjonen ble ikke oppdatert."
-      redirect_to :action => 'show'
+    attrs.each do |k,v|
+      attrs[k] = nil if v.blank?
     end
+
+    if @representative.update_attributes(attrs)
+      redirect_to representative_path(@representative), notice: t('app.updated.representative')
+    else
+      redirect_to edit_admin_representative_path(@representative), alert: @representative.errors.full_messages.to_sentence
+    end
+  end
+
+  private
+
+  def fetch_representative
+    @representative = Representative.find(params[:id])
   end
 end
