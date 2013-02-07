@@ -119,4 +119,9 @@ describe Representative do
     representative.should_not be_valid
   end
 
+  it 'returns the twitter profile url' do
+    representative.twitter_id = 'foo'
+    representative.twitter_url.should == "https://twitter.com/foo"
+  end
+
 end

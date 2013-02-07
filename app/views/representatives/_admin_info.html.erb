@@ -1,4 +1,13 @@
 <div class="alert alert-warning">
+
+  <% if representative.twitter_id %>
+    <strong><%= Representative.human_attribute_name :twitter_id %></strong>: <%= link_to "@#{representative.twitter_id}", representative.twitter_url %>
+  <% end %>
+
+  <% if representative.email %>
+    <strong><%= Representative.human_attribute_name :email %></strong>: <%= link_to representative.email, "mailto:#{representative.email}" %>
+  <% end %>
+
   <%= link_to t('app.edit'), edit_admin_representative_path(representative), class: 'btn' %>
 </div>
 

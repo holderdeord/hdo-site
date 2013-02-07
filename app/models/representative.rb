@@ -114,6 +114,10 @@ class Representative < ActiveRecord::Base
     now.year - dob.year - ((now.month > dob.month || (now.month == dob.month && now.day >= dob.day)) ? 0 : 1)
   end
 
+  def twitter_url
+    "https://twitter.com/#{twitter_id}" if twitter_id
+  end
+
   def stats
     Hdo::Stats::RepresentativeCounts.new self
   end
