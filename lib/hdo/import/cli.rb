@@ -34,8 +34,10 @@ module Hdo
           import_api_votes
         when 'promises'
           import_promises
-        when 'parliament_issues'
+        when 'parliament_issues', 'parliament-issues'
           import_parliament_issues
+        when 'representative-emails'
+          import_representative_emails
         else
           raise ArgumentError, "unknown command: #{@cmd.inspect}"
         end
@@ -121,6 +123,29 @@ module Hdo
         persister.import_promises promises
       end
 
+      SCRAPED_EMAIL_URL = "https://api.scraperwiki.com/api/1.0/datastore/sqlite?format=json&name=hdo-representative-emails&query=#{URI.escape 'select * from swdata'}"
+
+      def import_representative_emails
+        data = JSON.parse(RestClient.get(SCRAPED_EMAIL_URL))
+
+        missing_emails = []
+        data.each do |e|
+          rep = Representative.where('first_name like ? and last_name = ?', "#{e['first_name'].strip}%", e['last_name'].strip).first
+
+          if rep
+            rep.email ||= e['email']
+            rep.save!
+          else
+            missing_emails << e
+          end
+        end
+
+        missing_reps = Representative.where(:email => nil).map(&:full_name)
+
+        log.warn "representatives missing emails: #{missing_reps.to_json} "
+        log.warn "emails missing representatives: #{missing_emails.to_json}"
+      end
+
       def each_vote_for(data_source, parliament_issues, limit = nil)
         count = 0
 
@@ -135,8 +160,8 @@ module Hdo
           remaining_parliament_issues = parliament_issues.size - parliament_issue_count
           remaining_votes = (count / parliament_issue_count.to_f) * remaining_parliament_issues
 
-          @log.info "->        #{count} votes for #{parliament_issue_count} parliament issues imported"
-          @log.info "->        about #{remaining_votes.to_i} votes remaining for #{remaining_parliament_issues} parliament issues"
+          log.info "->        #{count} votes for #{parliament_issue_count} parliament issues imported"
+          log.info "->        about #{remaining_votes.to_i} votes remaining for #{remaining_parliament_issues} parliament issues"
         end
       end
 
