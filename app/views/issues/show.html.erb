@@ -1,3 +1,4 @@
+<% title "#{@issue.title} - #{t('app.issues')} - #{t('app.title')}" %>
 <%= render partial: 'shared/previous_next_links', locals: { next_item: @next_issue, previous_item: @previous_issue, item_text_attr: :title } %>
 <%= render partial: 'admin_info' if user_signed_in? %>
 
