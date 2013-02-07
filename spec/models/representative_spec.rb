@@ -96,4 +96,27 @@ describe Representative do
 
     representative.should_not be_valid
   end
+
+  it 'require a unique twitter_id' do
+    Representative.make!(:twitter_id => "polit")
+
+    representative.twitter_id = 'polit'
+    representative.should_not be_valid
+  end
+
+  it 'validates format of email' do
+    representative.email = 'foo'
+    representative.should_not be_valid
+
+    representative.email = 'foo@bar.com'
+    representative.should be_valid
+  end
+
+  it 'validates uniqueness of email' do
+    Representative.make!(:email => 'foo@bar.com')
+
+    representative.email = 'foo@bar.com'
+    representative.should_not be_valid
+  end
+
 end
