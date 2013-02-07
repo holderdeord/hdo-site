@@ -20,7 +20,7 @@ class Representative < ActiveRecord::Base
     end
   }
 
-  attr_accessible :first_name, :last_name, :committees, :district, :date_of_birth, :date_of_death
+  attr_accessible :first_name, :last_name, :committees, :district, :date_of_birth, :date_of_death, :twitter_id
 
   default_scope order: :last_name
 
@@ -123,4 +123,5 @@ class Representative < ActiveRecord::Base
             methods: [:current_party, :full_name],
             only: [:slug, :last_name, :first_name]
   end
+
 end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121217000118) do
+ActiveRecord::Schema.define(:version => 20130112111248) do
 
   create_table "categories", :force => true do |t|
     t.string   "external_id"
@@ -235,6 +235,7 @@ ActiveRecord::Schema.define(:version => 20121217000118) do
     t.string   "slug"
     t.string   "image_uid"
     t.string   "image_name"
+    t.string   "twitter_id"
   end
 
   add_index "representatives", ["district_id"], :name => "index_representatives_on_district_id"
