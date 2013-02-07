@@ -3,6 +3,11 @@ class RepresentativesController < ApplicationController
 
   def index
     @representatives = Representative.includes(:district, :party_memberships => :party).order(:last_name)
+
+    respond_to do |format|
+      format.html
+      format.json { render json: @representatives }
+    end
   end
 
   def show
