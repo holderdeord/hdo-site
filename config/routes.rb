@@ -147,7 +147,7 @@ Hdo::Application.routes.draw do
   # health check for varnish/others
   #
 
-  get '/healthz' => 'home'
+  get '/healthz' => 'home#healthz'
 
   root to: 'home#index'
 end
