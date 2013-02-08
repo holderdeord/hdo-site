@@ -14,7 +14,7 @@
   <% @representatives.each do |rep| %>
     <div class="row-fluid">
       <div class="span3"><%= link_to rep.display_name, rep %></div>
-      <div class="span3"><%= (party = rep.current_party) && link_to(party.name, party) %></div>
+      <div class="span3"><%= (party = rep.latest_party) && link_to(party.name, party) %></div>
       <div class="span3"><%= link_to rep.district.name, rep.district %></div>
 
       <% if user_signed_in? %>

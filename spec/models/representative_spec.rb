@@ -47,6 +47,15 @@ describe Representative do
     rep.party_membership_at(40.days.ago).should == previous_membership
   end
 
+  it "knows the representatives' latest party" do
+    rep = Representative.make!
+    party = Party.make!
+
+    rep.party_memberships.create!(:party => party, :start_date => 2.months.ago, :end_date => 1.month.ago)
+
+    rep.current_party.should be_nil
+    rep.latest_party.should == party
+  end
 
   it "should have stats" do
     representative.stats.should be_kind_of(Hdo::Stats::RepresentativeCounts)

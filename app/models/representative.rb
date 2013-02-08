@@ -12,7 +12,7 @@ class Representative < ActiveRecord::Base
         indexes :name, type: :string
       end
 
-      indexes :current_party
+      indexes :latest_party
       indexes :full_name, index: :not_analyzed
       indexes :last_name, index: :not_analyzed
       indexes :first_name, index: :not_analyzed
@@ -62,6 +62,11 @@ class Representative < ActiveRecord::Base
 
   def current_party
     party_at Time.current
+  end
+
+  def latest_party
+    membership = party_memberships.order(:start_date).last
+    membership && membership.party
   end
 
   def current_party_membership
@@ -128,7 +133,7 @@ class Representative < ActiveRecord::Base
 
   def to_indexed_json
     to_json include: [:district],
-            methods: [:current_party, :full_name],
+            methods: [:latest_party, :full_name],
             only: [:slug, :last_name, :first_name]
   end
 

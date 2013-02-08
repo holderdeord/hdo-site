@@ -13,8 +13,8 @@
       <% representatives.each do |rep| %>
       <tr>
         <td><%= link_to rep.display_name, rep %></td>
-        <% if show_party && rep.current_party %>
-          <td><%= link_to rep.current_party.name, rep.current_party %></td>
+        <% if show_party && rep.latest_party %>
+          <td><%= link_to rep.latest_party.name, rep.latest_party %></td>
         <% end %>
       </tr>
       <% end %>

@@ -22,7 +22,7 @@
           <p>
             <strong><%= Representative.human_attribute_name :party %>:</strong>
 
-            <% party = @representative.current_party %>
+            <% party = @representative.latest_party %>
             <%= party && link_to(party.name, party) %>
           </p>
 
