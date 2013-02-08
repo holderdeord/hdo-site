@@ -45,6 +45,10 @@ class HomeController < ApplicationController
   def future
   end
 
+  def healthz
+    head :ok
+  end
+
   def people
     @board = [
       Person.new('Jari Bakken', 'jari@holderdeord.no', 'hdo/jari.jpg', 'er sjefsutvikler i Holder de ord. Han jobber til daglig hos FINN.no, hovedsakelig med interne verktøy og testautomasjon. Jari programmerer for det meste i Ruby og JavaScript, og står bak <a href="http://github.com/jarib">mange populære open source-prosjekt</a> med flere millioner nedlastinger. Han er selvlært som utvikler. Jari sitter også i Holder de ords styre.'),

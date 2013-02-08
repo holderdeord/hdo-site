@@ -143,5 +143,11 @@ Hdo::Application.routes.draw do
 
   get '/robots.txt' => 'home#robots'
 
+  #
+  # health check for varnish/others
+  #
+
+  get '/healthz' => 'home'
+
   root to: 'home#index'
 end
