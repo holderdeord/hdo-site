@@ -103,7 +103,6 @@ gem 'unicode_utils'
 
 # debugging
 gem 'pry'
-gem 'rack-mini-profiler', require: false
 
 # app settings
 gem 'settingslogic'
