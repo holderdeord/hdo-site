@@ -313,7 +313,8 @@ nb:
       result: Søkeresultat
       no_hits: Ingen treff
       placeholder: 'Søk...'
-    issues: 'Saker'
+    issues:
+      title: 'Saker'
       explanation:
         one: 'Denne siden er basert på <a href="%{url}"><strong>%{count} avstemning</strong></a> på Stortinget i perioden oktober 2011 til dagens dato, og løfter fra valgprogram og regjeringserklæring 2009-2013.'
         other: 'Denne siden er basert på <a href="%{url}"><strong>%{count} avstemninger</strong></a> på Stortinget i perioden oktober 2011 til dagens dato, og løfter fra valgprogram og regjeringserklæring 2009-2013.'
