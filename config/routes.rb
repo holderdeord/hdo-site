@@ -20,7 +20,7 @@ Hdo::Application.routes.draw do
 
     resources :users
     resources :topics
-    resources :representatives, only: [:edit, :update]
+    resources :representatives, only: [:index, :edit, :update]
 
     root to: "dashboard#index"
   end

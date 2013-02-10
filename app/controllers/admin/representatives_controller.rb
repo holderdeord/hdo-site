@@ -1,7 +1,12 @@
 class Admin::RepresentativesController < AdminController
   EDITABLE_ATTRIBUTES = [:twitter_id, :email]
 
-  before_filter :fetch_representative
+  before_filter :fetch_representative, only: [:edit, :update]
+
+  def index
+    reps = Representative.order(:last_name)
+    @reps_grouped = reps.group_by { |r| r.last_name[0] }
+  end
 
   def edit
   end
