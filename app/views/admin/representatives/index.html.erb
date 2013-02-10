@@ -1,8 +1,14 @@
-<ul class="unstyled">
-  <% @reps_grouped.each do |letter, representatives| %>
-    <h5><%= letter %></h5>
-    <% representatives.each do |r| %>
-      <li><%= link_to r.display_name, admin_representative_path(r) %></li>
-    <% end %>
-  <% end %>
-</ul>
+<% @reps_grouped.to_a.in_groups_of(3) do |groups| %>
+  <div class="row-fluid">
+      <% groups.each do |letter, representatives| %>
+        <div class="span4">
+          <h5><%= letter %></h5>
+          <ul class="unstyled">
+            <% Array(representatives).each do |r| %>
+              <li><%= link_to r.display_name, edit_admin_representative_path(r) %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+  </div>
+<% end %>

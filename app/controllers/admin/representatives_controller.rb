@@ -5,7 +5,7 @@ class Admin::RepresentativesController < AdminController
 
   def index
     reps = Representative.order(:last_name)
-    @reps_grouped = reps.group_by { |r| r.last_name[0] }
+    @reps_grouped = reps.group_by { |r| UnicodeUtils.downcase(r.last_name[0]) }
   end
 
   def edit
