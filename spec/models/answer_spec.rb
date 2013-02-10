@@ -22,4 +22,22 @@ describe Answer do
     a.should_not be_valid
   end
 
+  it "returns the representative's party when the answer was posted" do
+    party_a = Party.make!
+    party_b = Party.make!
+
+    rep = Representative.make!
+
+    rep.party_memberships.create!(party: party_a, start_date: 1.year.ago, end_date: 1.month.ago)
+    rep.party_memberships.create!(party: party_b, start_date: 29.days.ago, end_date: nil)
+
+    a = Answer.make(representative: rep)
+    a.created_at = 2.months.ago
+
+    a.party.should == party_a
+    a.created_at = Time.now
+
+    a.party.should == party_b
+  end
+
 end

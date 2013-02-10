@@ -6,17 +6,15 @@ defaults: &defaults
   statsd_port: 8125
   statsd_enabled: false
   analytics_enabled: false
-  qa_enabled: false
+  questions_enabled: true
   ignore_votes_against_alternate_budget: false
   ignore_votes_against_proposal_attached_to_minutes: false
 
 development:
   <<: *defaults
-  qa_enabled: true
 
 test:
   <<: *defaults
-  qa_enabled: true
 
 staging:
   <<: *defaults
@@ -26,5 +24,4 @@ staging:
 production:
   <<: *defaults
   analytics_enabled: true
-  ignore_votes_against_alternate_budget: false
-  ignore_votes_against_proposal_attached_to_minutes: false
+  questions_enabled: false

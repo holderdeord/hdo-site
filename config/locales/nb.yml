@@ -128,6 +128,9 @@ nb:
       question:
         one: spørsmål
         other: spørsmål
+      answer:
+        one: svar
+        other: svar
     attributes:
       representative:
         name: "Navn"
@@ -243,10 +246,10 @@ nb:
         issues: "Saker"
         image: "Ikon"
       question:
-        sender: Avsender
         title: Tittel
         body: Tekst
-        representative: Representant
+        from_name: Ditt navn
+        from_email: Din epost
   will_paginate:
     previous_label: "&#8592; Forrige"
     next_label: "Neste &#8594;"
@@ -420,7 +423,6 @@ nb:
         updated: Brukeren ble oppdatert.
     questions:
       new: 'Still et spørsmål'
-      your_email: Din epost
       edit:
         created: Spørsmålet er sendt til moderasjon.
     external:

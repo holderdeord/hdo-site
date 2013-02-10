@@ -1,5 +1,5 @@
 class QuestionsController < ApplicationController
-  before_filter :assert_qa_enabled
+  before_filter { assert_feature(:questions) }
 
   def index
     @questions = Question.all # TODO: Question.published
@@ -29,7 +29,7 @@ class QuestionsController < ApplicationController
   end
 
   def create
-    @question = Question.new(params[:question])
+    @question = Question.new(normalize_blanks(params[:question]))
 
     respond_to do |format|
       if @question.save
@@ -39,12 +39,6 @@ class QuestionsController < ApplicationController
         format.html { render action: "new" }
         format.json { render json: @question.errors, status: :unprocessable_entity }
       end
-    end
-  end
-
-  def assert_qa_enabled
-    unless AppConfig.qa_enabled
-      render status: 404, text: ''
     end
   end
 end

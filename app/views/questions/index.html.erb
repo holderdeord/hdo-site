@@ -1,14 +1,17 @@
-<h1><%= Question.model_name.human.capitalize %></h1>
-
 <div class="row-fluid">
-  <%= link_to t('app.questions.new'), new_question_path, class: 'btn' %>
+  <%= link_to t('app.questions.new'), new_question_path, class: 'btn pull-right' %>
+  <h1><%= Question.model_name.human.capitalize %></h1>
 </div>
 
 <div class="row-fluid">
-  <table class="table">
+  <table class="table table-striped">
     <tbody>
       <% @questions.each do |question| %>
-        <tr><td><%= link_to question.title, question %></td></tr>
+        <tr>
+          <td><%= link_to question.title, question %></td>
+          <td><%= l question.updated_at.localtime, format: :text_time %></td>
+          <td><%= question.answers.size %> <%= Answer.model_name.human(count: 2) %></td>
+        </tr>
       <% end %>
     </tbody>
   </table>

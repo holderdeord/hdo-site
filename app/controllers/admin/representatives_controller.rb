@@ -12,10 +12,7 @@ class Admin::RepresentativesController < AdminController
 
   def update
     attrs = params[:representative].slice(*EDITABLE_ATTRIBUTES)
-
-    attrs.each do |k,v|
-      attrs[k] = nil if v.blank?
-    end
+    normalize_blanks(attrs)
 
     if @representative.update_attributes(attrs)
       redirect_to admin_representatives_path, notice: t('app.updated.representative')

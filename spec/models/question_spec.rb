@@ -22,16 +22,44 @@ describe Question do
     q.should_not be_valid
   end
 
-  it 'validates that sender is a valid email address' do
-    q.sender = 'foo@bar.com'
+  it 'is valid without name or email' do
+    q.from_name = nil
     q.should be_valid
 
-    q.sender = 'foo@bar'
+    q.from_email = nil
+    q.should be_valid
+  end
+
+  it 'validates that from_email is a valid email address' do
+    q.from_email = 'foo@bar.com'
+    q.should be_valid
+
+    q.from_email = 'foo@bar'
     q.should_not be_valid
   end
 
-  it 'knows if the question is awaiting control' do
-    q.should be_awaiting_control
+  it 'validates statuses' do
+    q.status = 'pending'
+    q.should be_valid
+    q.should be_pending
+
+    q.status = 'approved'
+    q.should be_valid
+    q.should be_approved
+
+    q.status = 'rejected'
+    q.should be_valid
+    q.should be_rejected
+
+    q.status = 'foo'
+    q.should_not be_valid
   end
 
+  it 'has status scopes' do
+    pending = Question.make!(status: 'pending')
+    approved = Question.make!(status: 'approved')
+    rejected = Question.make!(status: 'rejected')
+
+    Question.approved.should == [approved]
+  end
 end

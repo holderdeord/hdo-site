@@ -1,10 +1,26 @@
 class Question < ActiveRecord::Base
-  attr_accessible :title, :body, :sender, :representative_id
+  attr_accessible :title, :body, :from_name, :from_email
 
-  validates :title,  presence: true, length: { maximum: 255 }
-  validates :body,   presence: true
-  validates :sender, email: true, allow_nil: true
+  validates :title,      presence: true, length: { maximum: 255 }
+  validates :body,       presence: true
+  validates :status,     presence: true, inclusion: { in: %w[pending rejected approved] }
+  validates :from_email, email: true, allow_nil: true
 
   has_many :answers
-  belongs_to :representative
+
+  scope :approved, lambda { where(:status => 'approved') }
+
+  def pending?
+    status == 'pending'
+  end
+
+  def rejected?
+    status == 'rejected'
+  end
+
+  def approved?
+    status == 'approved'
+  end
+
+  private
 end
