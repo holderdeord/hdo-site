@@ -1,5 +1,4 @@
 <% title "#{@representative.full_name} - #{Representative.model_name.human(count: 2).capitalize} - #{t('app.title')}" %>
-<%= render partial: 'admin_info', locals: { representative: @representative } if policy(@representative).edit? %>
 
 <div class="page-header">
   <h1><%= @representative.full_name %> <small class="pull-right"><%= @representative.external_id %></small></h1>
