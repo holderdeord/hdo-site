@@ -4,8 +4,7 @@ class Admin::RepresentativesController < AdminController
   before_filter :fetch_representative, only: [:edit, :update]
 
   def index
-    reps = Representative.order(:last_name)
-    @reps_grouped = reps.group_by { |r| UnicodeUtils.downcase(r.last_name[0]) }
+    @representatives = Representative.order(:last_name)
   end
 
   def edit

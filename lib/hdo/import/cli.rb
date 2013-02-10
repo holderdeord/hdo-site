@@ -260,7 +260,7 @@ module Hdo
 
       def purge_cache
         # crude cache purge for now
-        FileUtils.rm_rf Rails.root.join('public/cache' )
+        FileUtils.rm_rf Rails.root.join('public/cache')
       end
 
       def parse_options(args)

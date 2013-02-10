@@ -20,7 +20,8 @@
       <% end %>
 
       <%= form.actions do %>
-        <%= form.submit 'Lagre', class: 'btn btn-primary' %>
+        <%= form.submit t('app.save'), class: 'btn btn-primary' %>
+        <%= link_to t('app.cancel'), admin_representatives_path, class: 'btn' %>
       <% end %>
     <% end %>
   </div>

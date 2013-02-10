@@ -1,14 +1,18 @@
-<% @reps_grouped.to_a.in_groups_of(3) do |groups| %>
-  <div class="row-fluid">
-      <% groups.each do |letter, representatives| %>
-        <div class="span4">
-          <h5><%= letter %></h5>
-          <ul class="unstyled">
-            <% Array(representatives).each do |r| %>
-              <li><%= link_to r.display_name, edit_admin_representative_path(r) %></li>
-            <% end %>
-          </ul>
-        </div>
-      <% end %>
-  </div>
-<% end %>
+<table class="table table-condensed table-hover">
+  <thead>
+    <th><%= Representative.human_attribute_name :name %></th>
+    <th><%= Representative.human_attribute_name :email %></th>
+    <th><%= Representative.human_attribute_name :twitter_id %></th>
+    <th></th>
+  </thead>
+  <tbody>
+    <% @representatives.each do |rep| %>
+      <tr>
+        <td><%= link_to rep.display_name, rep %> (<%= rep.latest_party.external_id %>)</td>
+        <td><%= link_to rep.email, "mailto:#{rep.email}" if rep.email %></td>
+        <td><%= link_to rep.twitter_id, rep.twitter_url if rep.twitter_id %> </td>
+        <td><%= link_to t('app.edit'), edit_admin_representative_path(rep), class: 'btn btn-small' %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
