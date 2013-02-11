@@ -9,7 +9,7 @@
     return {
       full_name: "Test Name-" + id,
       url: "/test-url-" + id,
-      latest_part: {
+      latest_party: {
         name: "Party Hard"
       },
       img_src: "test-img-" + id
