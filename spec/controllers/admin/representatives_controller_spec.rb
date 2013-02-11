@@ -16,14 +16,14 @@ describe Admin::RepresentativesController do
     it "can update twitter_id and email" do
       put :update, id: representative.to_param, representative: { twitter_id: 'foo' }
 
-      response.should redirect_to(representative_path(representative))
+      response.should redirect_to(admin_representatives_path)
       representative.reload.twitter_id.should == 'foo'
     end
 
     it "sets twitter_id to nil if blank" do
       put :update, id: representative.to_param, representative: { twitter_id: '' }
 
-      response.should redirect_to(representative_path(representative))
+      response.should redirect_to(admin_representatives_path)
       representative.reload.twitter_id.should be_nil
     end
 
@@ -33,7 +33,7 @@ describe Admin::RepresentativesController do
 
       put :update, id: representative.to_param, representative: { first_name: 'Foo', last_name: 'Bar' }
 
-      response.should redirect_to(representative_path(representative))
+      response.should redirect_to(admin_representatives_path)
       representative.reload
 
       representative.first_name.should == first_name
