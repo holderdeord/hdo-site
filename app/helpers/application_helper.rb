@@ -14,7 +14,8 @@ module ApplicationHelper
   end
 
   def active_status_for(*what)
-    if what.include?(controller_name.to_sym) || what.include?("#{controller_name}_#{controller.action_name}".to_sym)
+    what = what.map(&:to_s)
+    if what.include?(controller_path) || what.include?("#{controller_path}_#{controller.action_name}")
       'active'
     end
   end
