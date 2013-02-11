@@ -41,7 +41,7 @@
     },
 
     parseRepresentative: function (rep) {
-      var label = rep.full_name + " (" + rep.current_party.name + ")";
+      var label = rep.full_name + " (" + rep.latest_party.name + ")";
       this.nameMap[label] = {
         url: rep.url,
         img: rep.img_src
