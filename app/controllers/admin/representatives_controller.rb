@@ -4,7 +4,7 @@ class Admin::RepresentativesController < AdminController
   before_filter :fetch_representative, only: [:edit, :update]
 
   def index
-    @representatives = Representative.order(:last_name)
+    @representatives = Representative.order(:external_id)
   end
 
   def edit
@@ -18,7 +18,7 @@ class Admin::RepresentativesController < AdminController
     end
 
     if @representative.update_attributes(attrs)
-      redirect_to representative_path(@representative), notice: t('app.updated.representative')
+      redirect_to admin_representatives_path, notice: t('app.updated.representative')
     else
       redirect_to edit_admin_representative_path(@representative), alert: @representative.errors.full_messages.to_sentence
     end

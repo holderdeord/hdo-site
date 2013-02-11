@@ -124,6 +124,8 @@ nb:
     attributes:
       representative:
         name: "Navn"
+        first_name: Fornavn
+        last_name: Etternavn
         party: "Parti"
         external_id: "Ekstern id"
         committees: "Komiteer"

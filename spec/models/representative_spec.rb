@@ -107,10 +107,15 @@ describe Representative do
   end
 
   it 'require a unique twitter_id' do
-    Representative.make!(:twitter_id => "polit")
+    Representative.make!(twitter_id: "polit")
 
     representative.twitter_id = 'polit'
     representative.should_not be_valid
+  end
+
+  it 'does not allow @ in twitter_id' do
+    rep = Representative.make(twitter_id: '@foo')
+    rep.should_not be_valid
   end
 
   it 'validates format of email' do
@@ -122,7 +127,7 @@ describe Representative do
   end
 
   it 'validates uniqueness of email' do
-    Representative.make!(:email => 'foo@bar.com')
+    Representative.make!(email: 'foo@bar.com')
 
     representative.email = 'foo@bar.com'
     representative.should_not be_valid

@@ -14,7 +14,7 @@
         </div>
 
         <div class="input-prepend">
-          <span class="add-on">Email</span>
+          <span class="add-on"><%= Representative.human_attribute_name :email %></span>
           <%= text_field :representative, :email %>
         </div>
       <% end %>

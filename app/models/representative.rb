@@ -41,7 +41,7 @@ class Representative < ActiveRecord::Base
 
   validates :external_id, presence: true, uniqueness: true
   validates :email,       allow_nil: true, uniqueness: true, email: true
-  validates :twitter_id,  allow_nil: true, uniqueness: true
+  validates :twitter_id,  allow_nil: true, uniqueness: true, format: /^[^@]/
 
   friendly_id :external_id, use: :slugged
 
