@@ -170,6 +170,8 @@ module Hdo
 
       private
 
+      IGNORE_VOTES_AGAINST = %w[proposal_attached_to_the_minutes alternate_national_budget]
+
       def vote_percentages_for(vote_connection, weight)
         vote         = vote_connection.vote
         vote_results = vote.vote_results
@@ -183,6 +185,7 @@ module Hdo
 
           votes.each do |vote_result|
             next if vote_result.absent?
+            # next if vote_result.against? && IGNORED_AGAINST_VOTES.include?(vote.proposition_type)
 
             if vote_result.__send__(meth)
               res[vote_result.representative] = weight
