@@ -30,7 +30,7 @@ module Hdo
                 weighted_score,
                 unweighted.text_for(party),
                 unweighted_score,
-                weighted_score - unweighted_score
+                weighted_score.to_i - unweighted_score.to_i
               ]
             end
           end

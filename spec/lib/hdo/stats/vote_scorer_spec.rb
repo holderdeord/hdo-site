@@ -295,6 +295,13 @@ module Hdo
         scorer.as_json.should be_kind_of(Hash)
       end
 
+      it 'generates CSV to analyze weights' do
+        Issue.make!(status: 'published')
+        Issue.make!(status: 'published')
+
+        VoteScorer.csv.should be_kind_of(String)
+      end
+
     end
   end
 end
