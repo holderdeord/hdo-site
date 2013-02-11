@@ -3,8 +3,46 @@
 module Hdo
   module Stats
     class VoteScorer
-      def initialize(model)
-        @data = compute(model.vote_connections.includes(vote: {vote_results: {representative: {party_memberships: :party}}}))
+
+      #
+      # Return CSV for comparing the effect of weights in all published issues
+      #
+
+      def self.csv
+        require 'csv'
+
+        parties = Party.order(:name)
+
+        CSV.generate do |csv|
+          csv << ['Tittel', 'Vektet tekst', 'Vektet %', 'Uvektet tekst', 'Uvektet %', 'Differanse']
+
+          Issue.published.each do |issue|
+            weighted   = new(issue, bins: 3)
+            unweighted = new(issue, weighted: false, bins: 3)
+
+            parties.each do |party|
+              weighted_score   = weighted.score_for(party)
+              unweighted_score = unweighted.score_for(party)
+
+              csv << [
+                issue.title,
+                weighted.text_for(party),
+                weighted_score,
+                unweighted.text_for(party),
+                unweighted_score,
+                weighted_score - unweighted_score
+              ]
+            end
+          end
+        end
+      end
+
+      def initialize(model, opts = {})
+        @weighted = opts.fetch(:weighted) { true }
+        @bins     = opts.fetch(:bins) { 5 }
+
+        vote_connections = model.vote_connections.includes(vote: {vote_results: {representative: {party_memberships: :party}}})
+        @data = compute(vote_connections)
       end
 
       def score_for(entity)
@@ -65,20 +103,34 @@ module Hdo
         end
 
         # if you change the scoring, remember to change the 'about method' page as well.
-        key = case score
-              when 0...21
-                :against
-              when 21...41
-                :mostly_against
-              when 41...61
-                :for_and_against
-              when 61...81
-                :mostly_for
-              when 81..100
-                :for
+        key = case @bins
+              when 3
+                case score
+                when 0...33
+                  :against
+                when 33...66
+                  :for_and_against
+                when 66..100
+                  :for
+                end
+              when 5
+                case score
+                when 0...21
+                  :against
+                when 21...41
+                  :mostly_against
+                when 41...61
+                  :for_and_against
+                when 61...81
+                  :mostly_for
+                when 81..100
+                  :for
+                end
               else
-                raise "unknown score: #{score.inspect}"
+                raise "unknown # of vote scoring bins: #{@bins}"
               end
+
+        raise "unknown score: #{score}" unless key
 
         key = "app.votes.scores.#{key}"
         key << "_html" if opts[:html]
@@ -91,9 +143,11 @@ module Hdo
         sums        = Hash.new(0)
 
         connections.each do |vote_connection|
-          vote_percentages_for(vote_connection).each do |entity, percent|
+          weight = @weighted ? vote_connection.weight : 1
+
+          vote_percentages_for(vote_connection, weight).each do |entity, percent|
             if percent
-              weight_sums[entity] += vote_connection.weight
+              weight_sums[entity] += weight
               sums[entity] += percent
             end
           end
@@ -116,7 +170,7 @@ module Hdo
 
       private
 
-      def vote_percentages_for(vote_connection)
+      def vote_percentages_for(vote_connection, weight)
         vote         = vote_connection.vote
         vote_results = vote.vote_results
         by_party     = vote_results.group_by { |v| v.representative.party_at(vote.time) }
@@ -131,7 +185,7 @@ module Hdo
             next if vote_result.absent?
 
             if vote_result.__send__(meth)
-              res[vote_result.representative] = vote_connection.weight
+              res[vote_result.representative] = weight
               for_count += 1
             else
               res[vote_result.representative] = 0
@@ -145,7 +199,7 @@ module Hdo
             # only absence
             res[party] = nil
           else
-            res[party] = (for_count / total.to_f) * vote_connection.weight
+            res[party] = (for_count / total.to_f) * weight
           end
         end
 
