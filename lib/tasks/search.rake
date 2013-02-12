@@ -5,12 +5,14 @@ namespace :search do
       next if ENV['CLASS'] && ENV['CLASS'] != klass.to_s
       puts "\n#{klass}"
 
-      total = klass.count.to_f
+      total = klass.count
       index = klass.index
 
       index.delete
       ok = index.create :mappings => klass.tire.mapping_to_hash, :settings => klass.tire.settings
       ok or raise "unable to create #{index.name}, #{index.response && index.response.body}"
+
+      indexed_count = 0
 
       klass.import { |docs|
         if klass == Issue
@@ -18,7 +20,9 @@ namespace :search do
           docs = docs.select { |e| e.published? }
         end
 
-        puts "\t#{docs.to_a.size}"
+        count = docs.to_a.size
+        indexed_count += count
+        puts "\t#{count} (#{indexed_count}/#{total})"
 
         docs
       }

@@ -42,6 +42,7 @@ module Hdo
         @bins     = opts.fetch(:bins) { 5 }
 
         vote_connections = model.vote_connections.includes(vote: {vote_results: {representative: {party_memberships: :party}}})
+
         @data = compute(vote_connections)
       end
 
@@ -211,9 +212,10 @@ module Hdo
       def ignore_result?(vote_result)
         vote = vote_result.vote
 
-        vote_result.absent? || 
-          (vote.proposition_type == 'alternate_national_budget' && AppConfig.ignore_votes_against_alternate_budget) || 
-          (vote.proposition_type == 'proposal_attached_to_the_minutes' && AppConfig.ignore_votes_against_proposal_attached_to_minutes)
+        vote_result.absent? ||
+          (vote_result.against? &&
+            (vote.proposition_type == 'alternate_national_budget' && AppConfig.ignore_votes_against_alternate_budget) ||
+            (vote.proposition_type == 'proposal_attached_to_the_minutes' && AppConfig.ignore_votes_against_proposal_attached_to_minutes))
       end
 
     end
