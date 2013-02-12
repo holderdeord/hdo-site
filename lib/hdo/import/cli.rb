@@ -34,7 +34,7 @@ module Hdo
           import_api_votes
         when 'promises'
           import_promises
-        when 'parliament_issues', 'parliament-issues'
+        when 'parliament-issues', 'parliament-issues'
           import_parliament_issues
         when 'representative-emails'
           import_representative_emails
