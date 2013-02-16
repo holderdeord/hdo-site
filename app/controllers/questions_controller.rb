@@ -2,7 +2,7 @@ class QuestionsController < ApplicationController
   before_filter { assert_feature(:questions) }
 
   def index
-    @questions = Question.all # TODO: Question.published
+    @questions = Question.approved
 
     respond_to do |format|
       format.html

@@ -75,4 +75,13 @@ describe Question do
       q.status_text.should == 'Avvist'
     end
   end
+
+  it 'destroys dependent answers' do
+    q.save!
+    a = q.answers.create!(body: 'text', representative: Representative.make!)
+
+    q.destroy
+
+    expect { a.reload }.to raise_error(ActiveRecord::RecordNotFound)
+  end
 end

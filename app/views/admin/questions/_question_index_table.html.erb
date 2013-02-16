@@ -1,0 +1,45 @@
+<table class="table table-hover">
+  <tr>
+    <th><%= Question.human_attribute_name :title %></th>
+    <th><%= Question.human_attribute_name :from_name %></th>
+
+    <% unless status == 'pending' %>
+      <th><%= Question.human_attribute_name :answers %></th>
+    <% end %>
+
+    <th><%= Question.human_attribute_name :created_at %></th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% questions.each do |question| %>
+  <tr>
+    <td><%= link_to question.title, question %></td>
+
+    <td>
+      <p><%= question.from_name %></p>
+      <small class="muted"><%= question.from_email %></small>
+    </td>
+
+    <% unless status == 'pending' %>
+      <td>
+        <%= link_to "#{question.answers.size} #{Answer.model_name.human}", admin_question_answers_path(question) %>
+      </td>
+    <% end %>
+
+    <td>
+      <p><%= l question.created_at.localtime %></p>
+      <small class="muted">
+        <%= Question.human_attribute_name :updated_at %>
+        <%= l question.updated_at.localtime %>
+      </small>
+    </td>
+
+    <td><%= link_to t('app.questions.edit.approve'), approve_admin_question_path(question), method: :put, class: 'btn btn-small btn-success' %></td>
+    <td><%= link_to t('app.questions.edit.reject'), reject_admin_question_path(question), method: :put, class: 'btn btn-small btn-warning' %></td>
+    <td><%= link_to t('app.destroy'), admin_question_path(question), method: :delete, class: 'btn btn-small btn-danger',
+                                                                     data: { confirm: t('app.issues.edit.confirm_destroy', title: question.title) } %></td>
+  </tr>
+<% end %>
+</table>

@@ -2,18 +2,17 @@ require 'spec_helper'
 
 describe QuestionsController do
 
-  # This should return the minimal set of attributes required to create a valid
-  # Question. As you add validations to Question, be sure to
-  # update the return value of this method accordingly.
   def valid_attributes
     {title: 'Tittel?', body: 'Tekst'}
   end
 
   describe "GET index" do
-    it "assigns all questions as @questions" do
-      question = Question.create! valid_attributes
+    it "assigns all approved questions as @questions" do
+      pending = Question.make!
+      approved = Question.make!(status: 'approved')
+
       get :index
-      assigns(:questions).should eq([question])
+      assigns(:questions).should eq([approved])
     end
   end
 

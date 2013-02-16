@@ -248,8 +248,14 @@ nb:
       question:
         title: Tittel
         body: Tekst
-        from_name: Ditt navn
-        from_email: Din epost
+        from_name: Navn
+        from_email: Epost
+        created_at: Opprettet
+        updated_at: Sist oppdatert
+        answers: Svar
+      answer:
+        body: Tekst
+        representative: Representant
   will_paginate:
     previous_label: "&#8592; Forrige"
     next_label: "Neste &#8594;"
@@ -425,10 +431,16 @@ nb:
       new: 'Still et spørsmål'
       edit:
         created: Spørsmålet er sendt til moderasjon.
+        approve: Godkjenn
+        reject: Avvis
       status:
         approved: 'Godkjent'
         pending: 'Avventer kontroll'
         rejected: 'Avvist'
+    answers:
+      edit:
+        created: Svaret ble opprettet.
+        updated: Svaret ble oppdatert.
     external:
       urls:
         parliament_issue: "http://stortinget.no/no/Saker-og-publikasjoner/Saker/Sak/?p=%s"

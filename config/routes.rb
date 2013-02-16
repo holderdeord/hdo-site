@@ -22,6 +22,16 @@ Hdo::Application.routes.draw do
     resources :topics
     resources :representatives, only: [:index, :edit, :update]
 
+    # S&S
+    resources :questions, only: [:index, :edit, :update, :destroy] do
+      resources :answers
+
+      member do
+        put 'approve' => 'questions#approve'
+        put 'reject'  => 'questions#reject'
+      end
+    end
+
     root to: "dashboard#index"
   end
 

@@ -1,6 +1,10 @@
 <% content_for :navbar_extras do %>
 <ul class="nav pull-right">
   <% if user_signed_in? %>
+    <% if AppConfig.questions_enabled %>
+      <li><%= link_to 'S&S', admin_questions_path %></li>
+    <% end %>
+
     <li class="dropdown <%= active_status_for 'admin/representatives', 'admin/users' %>">
       <a class="dropdown-toggle" data-toggle="dropdown" href="#users">
         <%= User.model_name.human(count: 2).capitalize %>
