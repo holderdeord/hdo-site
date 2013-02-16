@@ -89,7 +89,7 @@ class Issue < ActiveRecord::Base
   end
 
   def status_text
-    I18n.t("app.issues.statuses.#{status}")
+    I18n.t("app.issues.status.#{status}")
   end
 
   def published_state

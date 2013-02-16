@@ -344,7 +344,7 @@ nb:
       back: Tilbake til saken
       not_published: Denne saken er ikke publisert.
       published: Denne saken er publisert.
-      statuses:
+      status:
         published: Publisert
         in_progress: Under arbeid
         shelved: Lagt på is
@@ -425,6 +425,10 @@ nb:
       new: 'Still et spørsmål'
       edit:
         created: Spørsmålet er sendt til moderasjon.
+      status:
+        approved: 'Godkjent'
+        pending: 'Avventer kontroll'
+        rejected: 'Avvist'
     external:
       urls:
         parliament_issue: "http://stortinget.no/no/Saker-og-publikasjoner/Saker/Sak/?p=%s"

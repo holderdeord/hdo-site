@@ -22,5 +22,9 @@ class Question < ActiveRecord::Base
     status == 'approved'
   end
 
+  def status_text
+    I18n.t "app.questions.status.#{status}"
+  end
+
   private
 end

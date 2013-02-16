@@ -23,7 +23,7 @@
       <div class="span3">
         <ul class="unstyled">
           <% Issue::STATUSES.each do |status| %>
-            <%= form.radio_button :status, t("app.issues.statuses.#{status}"), status,
+            <%= form.radio_button :status, t("app.issues.status.#{status}"), status,
                                   checked: @issue.status == status,
                                   disabled: !policy(@issue).change_status? %>
           <% end %>

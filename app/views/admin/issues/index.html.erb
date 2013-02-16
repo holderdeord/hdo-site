@@ -5,7 +5,7 @@
     <ul class="nav nav-tabs">
       <% Issue::STATUSES.each_with_index do |status, idx| %>
         <li class="span4 <%= 'active' if idx == 0 %>">
-          <a href="#<%= status %>-tab" data-toggle="tab"><%= t("app.issues.statuses.#{status}") %> (<%= @issues_by_status[status].try(:size) || 0 %>)</a>
+          <a href="#<%= status %>-tab" data-toggle="tab"><%= t("app.issues.status.#{status}") %> (<%= @issues_by_status[status].try(:size) || 0 %>)</a>
         </li>
       <% end %>
     </ul>

@@ -62,4 +62,17 @@ describe Question do
 
     Question.approved.should == [approved]
   end
+
+  it 'has a status text' do
+    I18n.with_locale(:nb) do
+      q.status = 'pending'
+      q.status_text.should == 'Avventer kontroll'
+
+      q.status = 'approved'
+      q.status_text.should == 'Godkjent'
+
+      q.status = 'rejected'
+      q.status_text.should == 'Avvist'
+    end
+  end
 end
