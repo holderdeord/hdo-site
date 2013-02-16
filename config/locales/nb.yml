@@ -324,8 +324,8 @@ nb:
     issues:
       title: 'Saker'
       explanation:
-        one: '<p>Denne siden er basert på <a href="%{url}"><strong>%{count} avstemning</strong></a> på Stortinget i perioden oktober 2011 til dagens dato, og løfter fra valgprogram og regjeringserklæring 2009-2013.</p> <p>Vi jobber kontinuerlig med å oppdatere alle saker med avstemninger tilbake til 2010. Noen saker er allerede oppdatert, mens samtlige vil være oppdatert om kort tid.</p>'
-        other: '<p>Denne siden er basert på <a href="%{url}"><strong>%{count} avstemninger</strong></a> på Stortinget i perioden oktober 2011 til dagens dato, og løfter fra valgprogram og regjeringserklæring 2009-2013.</p><p>Vi jobber kontinuerlig med å oppdatere alle saker med avstemninger tilbake til 2010. Noen saker er allerede oppdatert, mens samtlige vil være oppdatert om kort tid.</p>'
+        one: '<p>Denne siden er basert på <a href="%{url}"><strong>%{count} avstemning</strong></a> på Stortinget i perioden oktober 2011 til dagens dato, og løfter fra valgprogram og regjeringserklæring 2009-2013.</p> <p>Vi jobber nå med å oppdatere alle saker med avstemninger tilbake til 2010. Noen saker er allerede oppdatert, mens samtlige vil være oppdatert om kort tid.</p>'
+        other: '<p>Denne siden er basert på <a href="%{url}"><strong>%{count} avstemninger</strong></a> på Stortinget i perioden oktober 2011 til dagens dato, og løfter fra valgprogram og regjeringserklæring 2009-2013.</p><p>Vi jobber nå med å oppdatere alle saker med avstemninger tilbake til 2010. Noen saker er allerede oppdatert, mens samtlige vil være oppdatert om kort tid.</p>'
       back: Tilbake til saken
       not_published: Denne saken er ikke publisert.
       published: Denne saken er publisert.
