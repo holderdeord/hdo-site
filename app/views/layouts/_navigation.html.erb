@@ -27,7 +27,7 @@
           </ul>
         </li>
 
-        <% if AppSettings.questions_enabled %>
+        <% if AppConfig.questions_enabled %>
           <li class="<%= active_status_for(:questions) %>">
             <%= link_to questions_path do %>
               <%= Question.model_name.human(count: 2).capitalize %>

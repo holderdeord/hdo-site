@@ -14,7 +14,7 @@
     <% @question.answers.each do |answer| %>
       <div class="row-fluid">
         <div class="span4">
-          <small>Svar fra</small>
+          <small>Svar for <%= answer.representative.party_at(answer.created_at).try(:name) %></small>
           <h3 class="lead"><%= answer.representative.name %></h3>
           <%= image_tag answer.representative.image_with_fallback.thumb('80x106').strip.url %>
         </div>
