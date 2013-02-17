@@ -27,7 +27,7 @@ class Admin::AnswersController < AdminController
 
   def update
     if @answer.update_attributes(params[:answer])
-      redirect_to admin_question_answers_path(@question, @answer), notice: t('app.answers.edit.updated')
+      redirect_to admin_question_answers_path(@question), notice: t('app.answers.edit.updated')
     else
       render action: "edit"
     end

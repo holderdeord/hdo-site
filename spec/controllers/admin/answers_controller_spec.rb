@@ -95,7 +95,7 @@ describe Admin::AnswersController do
 
       it "redirects to the answer" do
         put :update, default_params.merge(id: answer.to_param, answer: valid_attributes)
-        response.should redirect_to(admin_question_answer_path(question, answer))
+        response.should redirect_to(admin_question_answers_path(question))
       end
     end
 
