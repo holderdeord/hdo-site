@@ -25,6 +25,7 @@ describe Admin::AnswersController do
       assigns(:answers).should eq([a])
     end
   end
+
   describe "GET new" do
     it "assigns a new answer as @answer" do
       get :new, default_params
