@@ -5,7 +5,7 @@ module Admin::AnswersHelper
       ["#{e.display_name} (#{e.latest_party.external_id})", e.id]
     end
 
-    options_for_select opts
+    options_for_select opts, @answer.representative.try(:id)
   end
 
 end
