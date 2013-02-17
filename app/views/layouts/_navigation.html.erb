@@ -27,6 +27,14 @@
           </ul>
         </li>
 
+        <% if AppSettings.questions_enabled %>
+          <li class="<%= active_status_for(:questions) %>">
+            <%= link_to questions_path do %>
+              <%= Question.model_name.human(count: 2).capitalize %>
+            <% end %>
+          </li>
+        <% end %>
+
         <li class="<%= active_status_for(:promises) %>">
           <%= link_to promises_path do %>
             <%= Promise.model_name.human(count: 2).capitalize %>

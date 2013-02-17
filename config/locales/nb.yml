@@ -428,11 +428,12 @@ nb:
         created: Brukeren ble opprettet.
         updated: Brukeren ble oppdatert.
     questions:
-      new: 'Still et spørsmål'
+      new: Still et spørsmål
       edit:
         created: Spørsmålet er sendt til moderasjon.
         approve: Godkjenn
         reject: Avvis
+        updated: Spørsmålet ble oppdatert.
       status:
         approved: 'Godkjent'
         pending: 'Avventer kontroll'
