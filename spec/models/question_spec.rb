@@ -61,6 +61,7 @@ describe Question do
     rejected = Question.make!(status: 'rejected')
 
     Question.approved.should == [approved]
+    Question.pending.should == [pending]
   end
 
   it 'has a status text' do

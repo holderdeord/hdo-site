@@ -256,6 +256,8 @@ nb:
       answer:
         body: Tekst
         representative: Representant
+        created_at: Opprettet
+        updated_at: Sist oppdatert
   will_paginate:
     previous_label: "&#8592; Forrige"
     next_label: "Neste &#8594;"
@@ -442,6 +444,7 @@ nb:
       edit:
         created: Svaret ble opprettet.
         updated: Svaret ble oppdatert.
+        new: Legg til svar
     external:
       urls:
         parliament_issue: "http://stortinget.no/no/Saker-og-publikasjoner/Saker/Sak/?p=%s"

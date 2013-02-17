@@ -24,7 +24,7 @@ Hdo::Application.routes.draw do
 
     # S&S
     resources :questions, only: [:index, :edit, :update, :destroy] do
-      resources :answers
+      resources :answers, except: :show
 
       member do
         put 'approve' => 'questions#approve'

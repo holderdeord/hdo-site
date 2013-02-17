@@ -25,14 +25,6 @@ describe Admin::AnswersController do
       assigns(:answers).should eq([a])
     end
   end
-
-  describe "GET show" do
-    it "assigns the requested answer as @answer" do
-      get :show, default_params.merge(id: answer.to_param)
-      assigns(:answer).should eq(answer)
-    end
-  end
-
   describe "GET new" do
     it "assigns a new answer as @answer" do
       get :new, default_params
@@ -61,9 +53,9 @@ describe Admin::AnswersController do
         assigns(:answer).should be_persisted
       end
 
-      it "redirects to the created answer" do
+      it "redirects to the list of answers" do
         post :create, default_params.merge(answer: valid_attributes)
-        response.should redirect_to(admin_question_answer_path(question, Answer.last))
+        response.should redirect_to(admin_question_answers_path(question))
       end
     end
 

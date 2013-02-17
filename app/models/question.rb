@@ -10,7 +10,8 @@ class Question < ActiveRecord::Base
 
   has_many :answers, dependent: :destroy
 
-  scope :approved, lambda { where(:status => 'approved') }
+  scope :approved, lambda { where(:status => 'approved').order('updated_at DESC') }
+  scope :pending, lambda { where(:status => 'pending').order('created_at DESC') }
 
   def self.all_by_status
     grouped = all.group_by { |q| q.status }

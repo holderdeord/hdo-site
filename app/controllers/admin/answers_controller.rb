@@ -2,13 +2,10 @@ class Admin::AnswersController < AdminController
   before_filter { assert_feature(:questions) }
 
   before_filter :fetch_question
-  before_filter :fetch_answer, only: [:show, :edit, :update, :destroy]
+  before_filter :fetch_answer, only: [:edit, :update, :destroy]
 
   def index
     @answers = @question.answers
-  end
-
-  def show
   end
 
   def new
@@ -22,7 +19,7 @@ class Admin::AnswersController < AdminController
     @answer = @question.answers.create(params[:answer])
 
     if @answer.save
-      redirect_to admin_question_answer_path(@question, @answer), notice: t('app.answers.edit.created')
+      redirect_to admin_question_answers_path(@question), notice: t('app.answers.edit.created')
     else
       render action: "new"
     end
@@ -30,7 +27,7 @@ class Admin::AnswersController < AdminController
 
   def update
     if @answer.update_attributes(params[:answer])
-      redirect_to admin_question_answer_path(@question, @answer), notice: t('app.answers.edit.updated')
+      redirect_to admin_question_answers_path(@question, @answer), notice: t('app.answers.edit.updated')
     else
       render action: "edit"
     end
