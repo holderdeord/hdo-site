@@ -3,42 +3,25 @@ class QuestionsController < ApplicationController
 
   def index
     @questions = Question.approved
-
-    respond_to do |format|
-      format.html
-      format.json { render json: @questions }
-    end
   end
 
   def show
     @question = Question.find(params[:id])
-
-    respond_to do |format|
-      format.html
-      format.json { render json: @question }
-    end
+    # TODO: render_not_found unless @question.approved?
   end
 
   def new
     @question = Question.new
-
-    respond_to do |format|
-      format.html
-      format.json { render json: @question }
-    end
   end
 
   def create
     @question = Question.new(normalize_blanks(params[:question]))
 
-    respond_to do |format|
-      if @question.save
-        format.html { redirect_to @question, notice: t('app.questions.edit.created') }
-        format.json { render json: @question, status: :created, location: @question }
-      else
-        format.html { render action: "new" }
-        format.json { render json: @question.errors, status: :unprocessable_entity }
-      end
+    if @question.save
+      # TODO: show action should not be available unless status=approved
+      redirect_to @question, notice: t('app.questions.edit.created')
+    else
+      render action: "new"
     end
   end
 end
