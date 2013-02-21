@@ -25,12 +25,11 @@ module Hdo
         issue.accountability.score_for(rep2.current_party).should == 0.0
       end
 
-      it 'prints aggregates to the given io' do
+      it 'generates CSV' do
         Issue.make!(status: 'published')
 
-        io = StringIO.new
-        AccountabilityScorer.print(io)
-        AccountabilityScorer.print_by_category(io)
+        AccountabilityScorer.csv.should be_kind_of(String)
+        AccountabilityScorer.csv_by_category.should be_kind_of(String)
       end
 
     end

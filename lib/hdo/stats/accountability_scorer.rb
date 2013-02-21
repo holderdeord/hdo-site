@@ -1,11 +1,39 @@
+require 'csv'
+
 module Hdo
   module Stats
     class AccountabilityScorer
+      def self.csv
+        parties = Party.order(:name).to_a
+
+        rows = []
+
+        all_issues = Issue.published.order(:title)
+        all_issues.each do |issue|
+          ac = issue.accountability
+          scores = parties.map { |p| ac.score_for(p) }.map { |e| e ? e.to_i : nil }
+          rows << [issue.title, nil, *scores]
+        end
+
+        totals = score(all_issues)
+
+        CSV.generate do |csv|
+          csv << [nil, nil, *parties.map(&:name)]
+          csv << ['Snitt alle partier/saker', totals[:aggregate].to_i]
+          csv << ['Snitt alle saker', nil, *parties.map { |p| totals[p] ? totals[p].to_i : nil }]
+
+          rows.each { |r| csv << r }
+        end
+      end
+
       def self.score(issues = Issue.published)
         all = Hash.new { |hash, key| hash[key] = [] }
 
-        issues.each do |issue|
-          issue.accountability.data.each { |party, issue_score| all[party] << issue_score }
+        Array(issues).each do |issue|
+          issue.accountability.data.each do |party, issue_score|
+            all[:aggregate] << issue_score
+            all[party] << issue_score
+          end
         end
 
         totals = {}
@@ -16,7 +44,7 @@ module Hdo
 
       def self.category_score(issues = Issue.published)
         category_to_issues = Hash.new { |h,k| h[k] = [] }
-        issues.each do |issue|
+        Array(issues).each do |issue|
           issue.categories.each { |c| category_to_issues[c.name] << issue }
         end
 
@@ -28,19 +56,16 @@ module Hdo
         category_to_scores
       end
 
-      def self.print_by_category(io = $stdout)
-        category_score.each do |category, scores|
-          puts category
-          puts "=" * category.size
+      def self.csv_by_category
+        parties = Party.order(:name)
 
-          scores.sort_by { |_, score| -score }.each { |party, score| puts "#{party.name.ljust(25)}: #{score.to_i}%" }
+        CSV.generate { |csv|
+          csv << [nil, *parties.map(&:name)]
 
-          puts
-        end
-      end
-
-      def self.print(io = $stdout)
-        score.sort_by { |_, score| -score }.each { |party, score| puts "#{party.name.ljust(25)}: #{score.to_i}%" }
+          category_score.sort_by { |c, _| c }.each do |category, scores|
+            csv << [category, *parties.map { |p| (score = scores[p]) ? score.to_i : nil }]
+          end
+        }
       end
 
       attr_reader :total, :data
