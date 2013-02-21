@@ -7,7 +7,7 @@ defaults: &defaults
   statsd_enabled: false
   analytics_enabled: false
   questions_enabled: true
-  ignore_votes_against_alternate_budget: false
+  ignore_votes_against_alternate_budget: true
   ignore_votes_against_proposal_attached_to_minutes: false
 
 development:
@@ -19,7 +19,6 @@ test:
 staging:
   <<: *defaults
   statsd_enabled: true
-  ignore_votes_against_alternate_budget: true
 
 production:
   <<: *defaults
