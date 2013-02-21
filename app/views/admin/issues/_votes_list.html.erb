@@ -51,11 +51,13 @@
 
   <div class="row-fluid">
     <a data-vote-slug="<%= vote.slug %>"><%= t 'app.issues.edit.view_proposition_body' %></a>
-
-    <div class="proposition-body" id="proposition-body-<%= vote.slug %>">
-      <%= image_tag 'spinner.gif', class: 'spinner' %>
-    </div>
+    <div class="pull-right muted">id: <%= vote.id %>, slug: <%= vote.slug %></div>
   </div>
+
+  <div class="row-fluid proposition-body" id="proposition-body-<%= vote.slug %>">
+    <%= image_tag 'spinner.gif', class: 'spinner' %>
+  </div>
+
 
   <hr>
 <% end %>
