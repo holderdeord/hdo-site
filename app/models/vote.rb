@@ -4,10 +4,12 @@ class Vote < ActiveRecord::Base
   include Hdo::Model::HasStatsCache
   include Tire::Model::Search
   include Tire::Model::Callbacks
+  extend Hdo::Search::Index
 
   tire.settings(TireSettings.default) {
     indexes :category_names, index: :not_analyzed
   }
+  update_index_on_change_of :propositions
 
   attr_accessible :for_count, :against_count, :absent_count,
                   :enacted, :personal, :subject, :time, :external_id,

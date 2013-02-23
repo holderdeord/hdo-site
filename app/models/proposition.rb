@@ -24,12 +24,6 @@ class Proposition < ActiveRecord::Base
   validates :body, presence: true
   validates_uniqueness_of :external_id, allow_nil: true # https://github.com/holderdeord/hdo-site/issues/138
 
-  after_save do
-    votes.each do |v|
-      v.tire.update_index
-    end
-  end
-
   def plain_body
     Nokogiri::HTML.parse(body).xpath('//text()').map { |e| e.text.strip }.join(' ')
   end
