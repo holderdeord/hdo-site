@@ -3,6 +3,7 @@
 class Promise < ActiveRecord::Base
   include Tire::Model::Search
   include Tire::Model::Callbacks
+  extend Hdo::Search::Index
 
   tire.settings(TireSettings.default) {
     mapping {
@@ -10,6 +11,7 @@ class Promise < ActiveRecord::Base
       indexes :party_names, type: :string
     }
   }
+  update_index_on_change_of :parties
 
   attr_accessible :parties, :general, :categories, :source, :body, :page, :date
 
