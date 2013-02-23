@@ -70,7 +70,7 @@ namespace :images do
   desc 'Save party logos to Party models'
   task :party_logos => :environment do
     puts "Mapping each party's logo to image attribute"
-    path_to_logos = Rails.root.join("app/assets/images/party-logos")
+    path_to_logos = Rails.root.join("app/assets/images/party-logos-stripped")
 
     Party.all.each do |party|
       party.image = path_to_logos.join("#{party.slug}.png")
