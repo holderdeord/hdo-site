@@ -39,7 +39,7 @@ module Hdo
 
       def initialize(model, opts = {})
         @weighted = opts.fetch(:weighted) { true }
-        @bins     = opts.fetch(:bins) { 5 }
+        @bins     = opts.fetch(:bins) { AppConfig.vote_scoring_bins }
 
         vote_connections = model.vote_connections.includes(vote: {vote_results: {representative: {party_memberships: :party}}})
 

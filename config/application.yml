@@ -9,6 +9,7 @@ defaults: &defaults
   questions_enabled: true
   ignore_votes_against_alternate_budget: true
   ignore_votes_against_proposal_attached_to_minutes: false
+  vote_scoring_bins: 5
 
 development:
   <<: *defaults
@@ -19,6 +20,7 @@ test:
 staging:
   <<: *defaults
   statsd_enabled: true
+  vote_scoring_bins: 3
 
 production:
   <<: *defaults
