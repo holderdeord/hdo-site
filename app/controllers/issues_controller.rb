@@ -1,7 +1,17 @@
 # encoding: UTF-8
 
 class IssuesController < ApplicationController
-  before_filter :fetch_issue
+  before_filter :fetch_issue, except: :index
+
+  def index
+    @groups = Hash.new { |hash, key| hash[key] = [] }
+
+    Issue.published.each do |issue|
+      issue.topics.each { |topic| @groups[topic] << issue }
+    end
+
+    @groups = @groups.sort_by { |t, _| t.name }
+  end
 
   def show
     policy = policy(@issue)

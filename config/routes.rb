@@ -40,7 +40,7 @@ Hdo::Application.routes.draw do
   # non-admin issues, topics
   #
 
-  resources :issues, only: [:show, :votes] do
+  resources :issues, only: [:index, :show, :votes] do
     member do
       get 'votes' => 'issues#votes'
     end
