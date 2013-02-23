@@ -3,19 +3,17 @@ module Hdo
     module Index
 
       def update_index_on_change_of(*args)
-        singular = self.to_s.downcase
+        singular = self.to_s.underscore
         plural   = singular.pluralize
-        classes  = args.map { |a| a.to_s.classify.constantize }
+        classes = args[0..-2] if args.last == :has_many
+        classes.map! { |a| a.to_s.classify.constantize }
 
         classes.each do |clazz|
-          if clazz.method_defined? singular
-            clazz.send :after_save, "#{singular}.tire.update_index"
-          elsif clazz.method_defined? plural
+          if args.last == :has_many
             clazz.send :after_save, "#{plural}.each {|e| e.tire.update_index}"
           else
-            raise "Model #{self} has no relation #{clazz}."
+            clazz.send :after_save, "#{singular}.tire.update_index"
           end
-
         end
       end
 

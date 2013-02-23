@@ -1,6 +1,7 @@
 class Proposition < ActiveRecord::Base
   include Tire::Model::Search
   include Tire::Model::Callbacks
+  extend Hdo::Search::Index
 
   tire.settings(TireSettings.default) {
     mapping {
@@ -13,6 +14,7 @@ class Proposition < ActiveRecord::Base
       end
     }
   }
+  update_index_on_change_of :votes, :has_many
 
   attr_accessible :description, :on_behalf_of, :body, :representative_id
 
