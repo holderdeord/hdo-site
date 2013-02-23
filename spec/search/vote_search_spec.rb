@@ -67,7 +67,7 @@ describe Vote, :search do
   end
 
   context 'refresh on association update' do
-    xit 'updates the index when associated propositions change' do
+    it 'updates the index when associated propositions change' do
       prop = Proposition.make!
       Vote.make!(propositions: [prop])
 
@@ -80,6 +80,7 @@ describe Vote, :search do
       refresh_index
 
       result = Vote.search('*').results.first
+
       result.propositions.first.plain_body.should == prop.plain_body
     end
 
