@@ -9,7 +9,7 @@ class Vote < ActiveRecord::Base
   tire.settings(TireSettings.default) {
     indexes :category_names, index: :not_analyzed
   }
-  update_index_on_change_of :propositions
+  update_index_on_change_of :propositions, :parliament_issues
 
   attr_accessible :for_count, :against_count, :absent_count,
                   :enacted, :personal, :subject, :time, :external_id,
@@ -112,8 +112,6 @@ class Vote < ActiveRecord::Base
   end
 
   def to_indexed_json
-    # TODO: touch when associations change (+ specs)
-
     data = as_json(include: {
       propositions:      { only: :description, methods: :plain_body },
       parliament_issues: { only: [:description, :external_id] }
