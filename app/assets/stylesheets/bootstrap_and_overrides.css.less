@@ -5,10 +5,8 @@
 @iconSpritePath: asset-path('twitter/bootstrap/glyphicons-halflings.png');
 @iconWhiteSpritePath: asset-path('twitter/bootstrap/glyphicons-halflings-white.png');
 
-@font-face {
-  font-family: "Neo Sans";
-  src: url('/fonts/NeoSansStd-Regular.otf');
-}
+@baseFontSize: 15px;
+@baseLineHeight: 25px;
 
 @hdoPrimaryColor: #019ea2;
 @hdoSecondaryColor: #e03d25;
@@ -118,8 +116,8 @@ body {
  }
 }
 
-h1, h2, h3, h4, h5 {
-  font-family: @headingsFontFamily;
+h5, h6 {
+  font-family: inherit;
 }
 
 // CURSED OVERRIDE FOR CURSED BOOTSTRAP
@@ -153,4 +151,8 @@ h1, h2, h3, h4, h5 {
       }
     }
   }
+}
+
+figure {
+  margin: 0;
 }

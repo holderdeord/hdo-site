@@ -1,41 +1,81 @@
-.vote-container {
-  padding: 10px;
-  margin: 3px;
-}
-
-.issues-party {
-  padding: 18px 0px;
-}
-
-.issues-party-position {
-  margin-top: 10px;
-  font-size: 1.2em;
-  line-height: 1.1em;
-}
-
-.issues-party-promises {
-  font-size: 0.95em;
-  line-height: 1.1em;
-}
-
-.issue-navigation {
-  font-size: 0.8em;
-  padding: 10px 0px;
-}
-
-.issue-big-links {
-  font-size: 1.5em;
-
-  > p {
-    padding: 0 8px 8px;
+.page-header {
+  aside {
+    text-transform: uppercase;
+    line-height: 1em;
+    margin-bottom: 0.5em;
+  }
+  .issue-description {
+    font-size: 1.2em;
+    line-height: 1.5em;
   }
 }
 
-.issue-description {
-  font-size: 1.2em;
-  line-height: 1.2em;
+figure {
+  .issue-graph {
+    text-align: center;
+    img {
+      width: 64px;
+      height: 64px;
+    }
+    > div {
+      padding: 100px 0 50px 0;
+      box-shadow: 0 0 0 1px #fff inset, 0 0 0 2px #eee inset;
+    }
+  }
 }
 
-.proposition-body {
-  display: none;
+
+.issue-party-group-title {
+  color: #aaa;
+  text-transform: uppercase;
+  font-weight: normal;
+  padding-left: 110px;
+}
+
+.issue-party {
+  padding-left: 110px;
+  position: relative;
+  margin-bottom: 4em;
+  .issue-party-logo {
+    position: absolute;
+    top: 0;
+    left: 0;
+    font-weight: 700;
+  }
+  .issue-party-name {
+    padding-top: 1em;
+    margin-bottom: 0;
+  }
+  .issue-party-summary {
+    font-size: 1.15em;
+    line-height: 1.5em;
+  }
+  .issue-party-vote-title,
+  .issue-party-promise-title {
+    margin-bottom: 0;
+    margin-top: 1.5em;
+  }
+  .issue-party-vote-list {
+    list-style: none;
+    margin: 0;
+    .issue-against, .issue-for {
+      background-color: #eaeaea;
+      margin-right: 7px;
+      margin-left: 3px;
+      box-shadow: 3px 0 0 1px #eaeaea, -3px 0 0 1px #eaeaea;
+      border-radius: 2px;
+    }
+  }
+}
+
+
+.issue-party-votes,
+.issue-party-promises {
+  position: relative;
+  > img {
+    top: 0;
+    position: absolute;
+    left: -85px;
+    opacity: 0.25;
+  }
 }

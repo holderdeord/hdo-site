@@ -1,26 +1,45 @@
 <% group.parties.each do |party| %>
-  <div class="row-fluid issues-party">
-    <div class="span2">
-      <%= link_to party_path(party) do %>
-        <%= image_tag party.image_with_fallback.thumb('100x100').url, alt: "#{party.name}s logo" %>
-      <% end %>
+  <div class="issue-party">
+    <%= link_to party_path(party), class:party.external_id do %>
+      <%= image_tag party.image_with_fallback.thumb('96x96').url, alt: "#{party.name}s logo", class:"issue-party-logo" %>
+      <h4 class="issue-party-name"><%= party.name %></h4>
+    <% end %>
+
+    <p class="issue-party-summary">
+      <%= issue.stats.text_for(party, html: true) %> <%= t 'app.lang.infinitive_particle' %> <%= issue.downcased_title %>.
+      <span>Det er <strong>uklart om de holder ord</strong> da <%= party.name %> ikke har løfter som direkte angår saken.</span>
+    </p>
+
+    <div class="issue-party-votes">
+      <!-- GENERATE ME -->
+      <img src="/assets/taxonomy-icons/case_undecided.png">
+      <h5 class="issue-party-vote-title">Avstemninger</h2>
+      <ul class="issue-party-vote-list">
+        <% issue.vote_connections.each do |vc| %>
+          <% next unless vc.vote.stats.party_participated?(party) %>
+          <% status = vc.vote.stats.party_for?(party) ? 'for' : 'against' %>
+          <% text = vc.vote.stats.party_for?(party) ? 'For' : 'Mot' %>
+
+          <li><span class="issue-<%= status %>"><%= text %></span> <%= vc.title %>.
+        <% end %>
+      </ul>
     </div>
 
-    <div class="span10">
-      <p class="issues-party-position">
-        <%= issue.stats.text_for(party, html: true) %> <%= t 'app.lang.infinitive_particle' %> <%= issue.downcased_title %>
-      </p>
-
+    <div class="issue-party-promises">
+      <!-- GENERATE ME -->
+      <img src="/assets/taxonomy-icons/promise_unclear.png">
       <% if promise_group = promises_by_party[party] %>
         <% promise_group.sort_by { |h, p| h }.each do |header, promises| %>
-          <p class="issues-party-promises"><%= header %></p>
-          <ul class="issues-party-promises">
+        <!-- GENERATE ME -->
+        <h5 class="issue-party-promise-title">Løfter fra <%= header %></h5>
+          <ul class="issue-party-promise-list">
             <% promises.each do |promise| %>
               <li><%= promise.body %></li>
             <% end %>
           </ul>
         <% end %>
       <% else %>
+        <h5 class="issue-party-promise-title">Løfter</h5>
         <p><%= t 'app.parties.no_promises' %></p>
       <% end %>
     </div>

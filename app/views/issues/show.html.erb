@@ -1,52 +1,74 @@
 <% title "#{@issue.title} - #{t('app.issues.title')} - #{t('app.title')}" %>
-<%= render partial: 'shared/previous_next_links', locals: { next_item: @next_issue, previous_item: @previous_issue, item_text_attr: :title } %>
 <%= render partial: 'admin_info' if user_signed_in? %>
 
-<div class="page-header span9">
+<div class="page-header">
+
+  <figure>
+    <div class="issue-graph row-fluid">
+      <div class="span4">
+        <img src="/assets/party-logos-stripped/frp.png">
+        <img src="/assets/party-logos-stripped/v.png">
+        <h3>For</h3>
+      </div>
+      <div class="span4">
+        <img src="/assets/party-logos-stripped/sv.png">
+        <img src="/assets/party-logos-stripped/krf.png">
+        <img src="/assets/party-logos-stripped/a.png">
+        <h3>Både for og mot</h3>
+      </div>
+      <div class="span4">
+        <img src="/assets/party-logos-stripped/h.png">
+        <img src="/assets/party-logos-stripped/sp.png">
+        <h3>Mot</h3>
+      </div>
+    </div>
+    <figcaption class="muted"><%= @issue_explanation %></figcaption>
+  </figure>
+
   <h1><%= @issue.title %></h1>
+  <aside class="muted">
+    Oppdatert 13. januar 2013
+  <% if @issue.published_at %>
+    <small class="muted">
+      <strong><%= Issue.human_attribute_name(:published_at) %></strong>: <%= l @issue.published_at.localtime, format: :text_time %>
+      <strong><%= Issue.human_attribute_name(:updated_at) %></strong>: <%= l @issue.updated_at.localtime, format: :text_time %>
+    </small>
+  <% end %>
+  </aside>
+
+  <p class="issue-description"><%= @issue.description %></p>
+
 </div>
 
-<div class="row-fluid">
-  <div class="span9">
-    <p class="issue-description"><%= @issue.description %></p>
 
-    <% if @issue.published_at %>
-      <small class="muted">
-        <strong><%= Issue.human_attribute_name(:published_at) %></strong>: <%= l @issue.published_at.localtime, format: :text_time %>
-        <strong><%= Issue.human_attribute_name(:updated_at) %></strong>: <%= l @issue.updated_at.localtime, format: :text_time %>
-      </small>
-    <% end %>
+<div>
+  <% Party.governing_groups.each do |party_group| %>
+    <h5 class="issue-party-group-title"><%= party_group.name %></h5>
+    <%= render partial: 'party_group', locals: { group: party_group, issue: @issue, promises_by_party: @promises_by_party } %>
+  <% end %>
+</div>
 
-    <hr>
+
+
+<!--
+<div>
+  <div class="alert alert-info"><%= @issue_explanation %></div>
+
+  <div class="well well-small">
+    <p>Har du forslag til en sak vi burde dekke?</p>
+    <p>Kontakt oss <a href="mailto:<%= obscure_email t('app.email') %>">her</a>!</p>
   </div>
+</div>
+-->
 
+<!--
+<%= render partial: 'shared/previous_next_links', locals: { next_item: @next_issue, previous_item: @previous_issue, item_text_attr: :title } %>
+-->
+
+
+<!--
   <div class="issue-big-links span3">
     <p><%= link_to t('app.issues.view_votes', count: @issue.votes.size), votes_issue_path(@issue) %></p>
     <p><%= link_to t('app.method.read'), home_method_path %></p>
   </div>
-</div>
-
-<div class="row-fluid">
-  <div class="span3 visible-phone">
-    <div class="alert alert-info"><%= @issue_explanation %></div>
-  </div>
-</div>
-
-<div class="row-fluid">
-  <div class="span9">
-    <% Party.governing_groups.each do |party_group| %>
-      <h4><%= party_group.name %></h4>
-      <%= render partial: 'party_group', locals: { group: party_group, issue: @issue, promises_by_party: @promises_by_party } %>
-    <% end %>
-  </div>
-
-  <div class="span3">
-    <div class="hidden-phone alert alert-info"><%= @issue_explanation %></div>
-
-    <div class="well well-small">
-      <p>Har du forslag til en sak vi burde dekke?</p>
-      <p>Kontakt oss <a href="mailto:<%= obscure_email t('app.email') %>">her</a>!</p>
-    </div>
-  </div>
-</div>
-
+-->
