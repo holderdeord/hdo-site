@@ -5,7 +5,11 @@ module Hdo
       def update_index_on_change_of(*args)
         singular = self.to_s.underscore
         plural   = singular.pluralize
-        classes = args[0..-2] if args.last == :has_many
+        if args.last == :has_many
+          classes = args[0..-2]
+        else
+          classes = args
+        end
         classes.map! { |a| a.to_s.classify.constantize }
 
         classes.each do |clazz|
