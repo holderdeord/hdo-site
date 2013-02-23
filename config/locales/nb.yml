@@ -122,9 +122,6 @@ nb:
       issue:
         one: "sak"
         other: "saker"
-      topic:
-        one: "tema"
-        other: "tema"
       question:
         one: spørsmål
         other: spørsmål
@@ -226,25 +223,16 @@ nb:
         categories: "Kategorier"
         promises: "Løfter"
         votes: "Avstemninger"
-        topics: "Tema"
         last_updated_by: Sist redigert av
         editor: Redaktør
         published_at: Publisert
         updated_at: Oppdatert
+        tag_list: Tags
       vote_connection:
         matches: "Støtter saken?"
         comment: "Kommentar"
         weight: "Vekting"
         title: "Tittel"
-      topic:
-        name: "Tittel"
-        new: "Nytt tema"
-        submit: "Lagre tema"
-        edit: "Rediger tema"
-        destroy: "Slett tema"
-        confirm_destroy: "Er du sikker på at du vil slette tema?"
-        issues: "Saker"
-        image: "Ikon"
       question:
         title: Tittel
         body: Tekst

@@ -72,7 +72,6 @@ module Hdo
           Promise,
           Proposition,
           Representative,
-          Topic,
           Vote
         ]
       end

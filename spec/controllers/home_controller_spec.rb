@@ -16,8 +16,6 @@ describe HomeController do
     render_views
 
     it 'renders home#index' do
-      Topic.make!
-
       get :index
 
       response.should have_rendered(:index)

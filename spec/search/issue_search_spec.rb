@@ -25,4 +25,16 @@ describe Issue, :search do
     results_for('miljøvern').size.should == 2
     results_for('klima').size.should == 2
   end
+
+  it 'indexes tags' do
+    issue = issue_titled 'foo'
+    issue.tag_list << 'bar'
+    issue.save!
+
+    refresh_index
+
+    results = results_for('bar')
+    results.size.should == 1
+    results.first.load.should == issue
+  end
 end

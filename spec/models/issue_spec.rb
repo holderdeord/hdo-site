@@ -77,20 +77,19 @@ describe Issue do
     valid_issue.promises.size.should == 1
   end
 
-  it "can add topics" do
-    topic = Topic.make!
-
-    valid_issue.topics << topic
-    valid_issue.topics.first.should == topic
+  it "can add tags" do
+    valid_issue.tag_list << 'some-tag'
+    valid_issue.save
+    
+    valid_issue.tags.first.name.should == 'some-tag'
   end
 
-  it "won't add the same topic twice" do
-    topic = Topic.make!
+  it "won't add the same tag twice" do
+    valid_issue.tag_list << 'some-tag'
+    valid_issue.tag_list << 'some-tag'
+    valid_issue.save
 
-    valid_issue.topics << topic
-    valid_issue.topics << topic
-
-    valid_issue.topics.size.should == 1
+    valid_issue.tags.size.should == 1
   end
 
   it "can add votes with a vote connection" do
@@ -199,9 +198,9 @@ describe Issue do
       expect_stale_object_error_when_updating @same_issue
     end
 
-    it 'is locked when updating topic associations' do
+    it 'is locked when updating tag associations' do
       attributes = {
-        'topic_ids' => [Topic.make!.id.to_s]
+        'tag_list' => 'foo,bar'
       }
 
       update_attributes_on @issue, {issue: attributes}

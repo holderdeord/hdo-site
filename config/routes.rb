@@ -19,7 +19,6 @@ Hdo::Application.routes.draw do
     end
 
     resources :users
-    resources :topics
     resources :representatives, only: [:index, :edit, :update]
 
     # S&S
@@ -37,7 +36,7 @@ Hdo::Application.routes.draw do
 
 
   #
-  # non-admin issues, topics
+  # non-admin issues
   #
 
   resources :issues, only: [:index, :show, :votes] do
@@ -45,8 +44,6 @@ Hdo::Application.routes.draw do
       get 'votes' => 'issues#votes'
     end
   end
-
-  resources :topics, only: :show
 
   #
   # districst

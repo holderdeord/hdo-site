@@ -78,13 +78,6 @@ describe Admin::IssuesController do
     assigns(:categories).should_not be_nil
   end
 
-  it 'edits the topics step if specified' do
-    get :edit, id: issue, step: 'topics'
-
-    response.should have_rendered(:edit)
-    assigns(:topics).should_not be_nil
-  end
-
   it "should create a new issue with a name" do
     post :create, issue: { title: 'More Cowbell' }, finish: true
 
@@ -113,10 +106,6 @@ describe Admin::IssuesController do
     end
 
     it 'should re-edit votes if update was unsuccessful' do
-      pending "can this actually happen?"
-    end
-
-    it 'should re-edit topics if update was unsuccessful' do
       pending "can this actually happen?"
     end
   end
@@ -235,13 +224,12 @@ describe Admin::IssuesController do
       issue.last_updated_by.should == user
     end
 
-    it 'sets last_updated_by when topics are changed' do
-      topic = Topic.make!
+    it 'sets last_updated_by when tags are changed' do
 
-      put :update, issue: issue_params(issue).merge('topic_ids' => [topic.id]), id: issue
+      put :update, issue: issue_params(issue).merge('tag_list' => "foo"), id: issue
 
       issue = assigns(:issue)
-      issue.topics.should == [topic]
+      issue.tag_list.should == ["foo"]
       issue.last_updated_by.should == user
     end
 

@@ -7,8 +7,7 @@ module Hdo
         Representative.index_name  => { boost: 2   },
         Promise.index_name         => { boost: 1   },
         Proposition.index_name     => { boost: 1   },
-        ParliamentIssue.index_name => { boost: 1   },
-        Topic.index_name           => { boost: 2   },
+        ParliamentIssue.index_name => { boost: 1   }
       }
 
       def initialize(query)

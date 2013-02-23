@@ -21,27 +21,3 @@ if Rails.env.development?
     remember_me: false
   )
 end
-
-Topic.destroy_all
-
-puts "creating topics"
-[
-  "Offentlig forvaltning",
-  "Familie",
-  "Trossamfunn",
-  "Kultur og frivillighet",
-  "Helse- og sosialvesen",
-  "Utenriks og forsvar",
-  "Politi og rettsvesen",
-  "Utdanning og forskning",
-  "Landbruk og fiskeri",
-  "Energi",
-  "Miljøvern",
-  "Finanser og skatter",
-  "Næringsliv",
-  "Arbeidsliv",
-  "Transport og kommunikasjon"
-].each do |topic_name|
-  puts "\t#{topic_name}"
-  Topic.create! name: topic_name
-end
