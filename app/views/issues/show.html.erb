@@ -3,6 +3,8 @@
 
 <div class="page-header">
 
+  <h1><%= @issue.title %></h1>
+
   <figure class="position">
     <div class="issue-graph">
       <div class="row-fluid">
@@ -35,17 +37,6 @@
 
   </figure>
 
-  <h1><%= @issue.title %></h1>
-  <aside class="muted">
-    Oppdatert <%= @issue.updated_at %>
-    <% if @issue.published? %>
-      <small class="muted">
-        <strong><%= Issue.human_attribute_name(:published_at) %></strong>: <%= @issue.published_at %>
-        <strong><%= Issue.human_attribute_name(:updated_at) %></strong>: <%= @issue.updated_at %>
-      </small>
-    <% end %>
-  </aside>
-
   <p class="issue-description"><%= @issue.description %></p>
 
 </div>
@@ -60,6 +51,17 @@
     <% end %>
   <% end %>
 </div>
+
+<aside class="muted">
+  Oppdatert <%= @issue.updated_at %>
+  <% if @issue.published? %>
+    <small class="muted">
+      <strong><%= Issue.human_attribute_name(:published_at) %></strong>: <%= @issue.published_at %>
+      <strong><%= Issue.human_attribute_name(:updated_at) %></strong>: <%= @issue.updated_at %>
+    </small>
+  <% end %>
+</aside>
+
 
 
 
