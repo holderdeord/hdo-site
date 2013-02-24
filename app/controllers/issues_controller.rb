@@ -7,10 +7,10 @@ class IssuesController < ApplicationController
     @groups = Hash.new { |hash, key| hash[key] = [] }
 
     Issue.published.each do |issue|
-      issue.topics.each { |topic| @groups[topic] << issue }
+      issue.tag_list.each { |topic| @groups[topic] << issue }
     end
 
-    @groups = @groups.sort_by { |t, _| t.name }
+    @groups = @groups.sort_by { |t, _| t }
   end
 
   def show

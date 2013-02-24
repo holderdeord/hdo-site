@@ -1,6 +1,6 @@
-<% @groups.each do |topic, issues| %>
+<% @groups.each do |tag, issues| %>
 <div class="row-fluid">
-  <h3><%= topic.name %></h3>
+  <h3><%= tag %></h3>
   <ul>
     <% issues.each do |issue| %>
     <li><%= link_to issue.title, issue %></li>
