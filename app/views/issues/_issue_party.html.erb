@@ -1,4 +1,4 @@
-<div class="issue-party">
+<div class="issue-party" id="<%= party.name %>">
 
   <%= party.link class: party.external_id do %>
     <%= party.logo class: "issue-party-logo" %>
@@ -15,7 +15,7 @@
     <h5 class="issue-party-vote-title"><%= Vote.model_name.human(count: 2).capitalize %></h2>
     <ul class="issue-party-vote-list">
       <% party.votes.each do |vote| %>
-        <li><span class="issue-<%= vote.direction %>"><%= vote.label %></span> <%= vote.title %>.
+        <li><span class="issue-<%= vote.direction %>"><%= vote.label %></span><%= vote.title %>.
       <% end %>
     </ul>
   </div>
@@ -25,7 +25,7 @@
 
     <% if party.has_promises? %>
       <% party.promise_groups.each do |source, promises| %>
-        <h5 class="issue-party-promise-title">Løfter fra <%= source %>:</h5>
+        <h5 class="issue-party-promise-title">Løfter fra <%= source %></h5>
         <ul class="issue-party-promise-list">
           <% promises.each do |promise| %>
             <li><%= promise.body %></li>

@@ -8,9 +8,11 @@
       <% @issue.position_groups.each do |label, parties| %>
         <div class="span4">
           <% parties.each do |party| %>
-            <%= image_tag party.image_with_fallback.url %>
+            <a class="issue-graph-party" href="#<%= party.name %>">
+              <%= image_tag party.image_with_fallback.thumb("64x64").url, alt: party.name + 's logo' %>
+            </a>
           <% end %>
-          <h3><%= label %></h3>
+          <h4 class="-issue-graph-label"><%= label %></h4>
         </div>
       <% end %>
     </div>

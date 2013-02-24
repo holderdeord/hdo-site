@@ -13,14 +13,18 @@
 figure {
   .issue-graph {
     text-align: center;
-    img {
-      width: 64px;
-      height: 64px;
+    padding: 100px 0 50px 0;
+    border-bottom : 2px solid #eee;
+    .issue-graph-party {
+      img {
+        margin: 10px;
+      }
     }
-    > div {
-      padding: 100px 0 50px 0;
-      box-shadow: 0 0 0 1px #fff inset, 0 0 0 2px #eee inset;
+    .issue-graph-label {
+      margin: 3em 0;
     }
+  }
+  figcaption {
   }
 }
 
@@ -72,7 +76,8 @@ figure {
 .issue-party-votes,
 .issue-party-promises {
   position: relative;
-  > img {
+  /* TODO: USE A MORE ROBUST SELECTOR */
+  img {
     top: 0;
     position: absolute;
     left: -85px;
