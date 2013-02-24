@@ -3,18 +3,32 @@
 
 <div class="page-header">
 
-  <figure>
-    <div class="issue-graph row-fluid">
-      <% @issue.position_groups.each do |label, parties| %>
-        <div class="span4">
-          <% parties.each do |party| %>
-            <a class="issue-graph-party" href="#<%= party.name %>">
-              <%= image_tag party.image_with_fallback.thumb("64x64").url, alt: party.name + 's logo' %>
-            </a>
-          <% end %>
-          <h4 class="-issue-graph-label"><%= label %></h4>
-        </div>
-      <% end %>
+  <figure class="position">
+    <div class="issue-graph">
+      <div class="row-fluid">
+        <% @issue.position_groups.each do |label, parties| %>
+          <div class="position span4">
+            <div class="canvas parties_<%= parties.count %>">
+              <% parties.each do |party| %>
+                <a class="issue-graph-party" href="#<%= party.name %>">
+                  <%= image_tag party.image_with_fallback.thumb("64x64").url, alt: party.name + 's logo' %>
+                </a>
+                <br />
+              <% end %>
+            </div>
+            <div class="axis">
+              <%= image_tag label.icon, class: "icon" %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+      <div class="issue-graph-axis row-fluid">
+        <% @issue.position_groups.each do |label, parties| %>
+          <div class="span4">
+            <h4 class="-issue-graph-label text"><%= label.text %></h4>
+          </div>
+        <% end %>
+      </div>
     </div>
 
     <figcaption class="muted"><%= @issue.explanation %></figcaption>

@@ -1,3 +1,5 @@
+@import "bootstrap/mixins";
+
 .page-header {
   aside {
     text-transform: uppercase;
@@ -10,24 +12,92 @@
   }
 }
 
-figure {
-  .issue-graph {
-    text-align: center;
-    padding: 100px 0 50px 0;
-    border-bottom : 2px solid #eee;
+figure.position {
+  @parties_num: 7;
+  .canvas {
+    .clearfix;
     .issue-graph-party {
+      display: block;
+      float: left;
+      width: 100% / @parties_num;
       img {
-        margin: 10px;
+        width: 100%;
       }
     }
-    .issue-graph-label {
-      margin: 3em 0;
+    br {
+      display: none;
     }
+  }
+  .issue-graph {
+    text-align: center;
+    border-bottom: 2px solid #eee;
+    padding: 0.5em;
+    margin-bottom: 1em;
+    .position {
+      .clearfix;
+      .axis {
+        float: left;
+        width: 100% / (@parties_num + 1)
+      }
+      .canvas {
+        float: right;
+        width: 100% / (@parties_num + 1) * @parties_num;
+      }
+    }
+  }
+  .issue-graph-axis {
+    display: none;
   }
   figcaption {
   }
 }
 
+@media (min-width: 768px) {
+  figure.position {
+    .canvas {
+      .issue-graph-party {
+        display: inline-block;
+        float: none;
+        width: auto;
+        img {
+          width: 100%;
+        }
+      }
+      &.parties_3,
+      &.parties_4,
+      &.parties_5 {
+        br:nth-child(4n) {
+          display: inline-block;
+        }
+      }
+      &.parties_6,
+      &.parties_7 {
+        br:nth-child(6n) {
+          display: inline-block;
+        }
+      }
+    }
+    .issue-graph {
+      padding: 3em 0;
+      .position {
+        .axis {
+          display: none;
+        }
+        .canvas {
+          float: none;
+          width: 100%;
+        }
+      }
+      .issue-graph-axis {
+        display: block;
+        .icon,
+        .text {
+          display: inline-block;
+        }
+      }
+    }
+  }
+}
 
 .issue-party-group-title {
   color: #aaa;
