@@ -2,6 +2,8 @@
 
 <ul>
   <% results.each do |r| %>
-    <li><%= link_to r.description, vote_path(r.votes.first.slug) %></li>
+    <% if r.votes.first %>
+      <li><%= link_to r.description, vote_path(r.votes.first.slug) %></li>
+    <% end %>
   <% end %>
 </ul>
