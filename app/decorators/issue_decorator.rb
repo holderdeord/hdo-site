@@ -95,9 +95,9 @@ class IssueDecorator < Draper::Decorator
       key = issue.stats.key_for(score) # FIXME: take the party, not the score
 
       if key.nil? || key == :not_participated
-        # could add taxonomy-icons/case_not_participated.png
+        # could add taxonomy-icons/issue_not_participated.png
       else
-        h.image_tag "taxonomy-icons/case_#{key}.png"
+        h.image_tag "taxonomy-icons/issue_#{key}.png"
       end
     end
 
