@@ -18,7 +18,7 @@ class Issue < ActiveRecord::Base
       end
     }
   }
-  update_index_on_change_of :categories, :topics, :has_many
+  update_index_on_change_of :categories, :has_many
 
   after_save do
     update_index if published?

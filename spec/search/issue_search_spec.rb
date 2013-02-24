@@ -44,21 +44,7 @@ describe Issue, :search do
       result = Issue.search('*').results.first
       result.categories.first.name.should == category.name
     end
-
-    it 'updates the index when associated topics change' do
-      topic = Topic.make!
-      Issue.make!(status: 'published', topics: [topic])
-      refresh_index
-
-      results_for('*').first.topics.first.name.should == topic.name
-
-      topic.update_attributes!(name: 'clown fish')
-      refresh_index
-
-      results_for('*').first.topics.first.name.should == topic.name
-    end
   end
-end
   it 'indexes tags' do
     issue = issue_titled 'foo'
     issue.tag_list << 'bar'
