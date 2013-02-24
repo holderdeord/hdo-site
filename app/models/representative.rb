@@ -5,6 +5,7 @@ class Representative < ActiveRecord::Base
 
   include Tire::Model::Search
   include Tire::Model::Callbacks
+  extend Hdo::Search::Index
 
   tire.settings(TireSettings.default) {
     mapping do
@@ -19,6 +20,7 @@ class Representative < ActiveRecord::Base
       indexes :slug
     end
   }
+  update_index_on_change_of :district, :parties, :has_many
 
   attr_accessible :first_name, :last_name, :committees, :district,
                   :date_of_birth, :date_of_death, :twitter_id, :email
