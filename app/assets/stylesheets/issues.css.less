@@ -1,5 +1,7 @@
 @import "bootstrap/mixins";
 
+@parties_num: 7;
+
 .page-header {
   aside {
     text-transform: uppercase;
@@ -13,7 +15,6 @@
 }
 
 figure.position {
-  @parties_num: 7;
   .canvas {
     .clearfix;
     .issue-graph-party {
@@ -107,27 +108,12 @@ figure.position {
 }
 
 .issue-party {
-  padding-left: 110px;
-  position: relative;
+  @space-left: 100% / (@parties_num + 1 );
   margin-bottom: 4em;
-  .issue-party-logo {
-    position: absolute;
-    top: 0;
-    left: 0;
-    font-weight: 700;
-  }
-  .issue-party-name {
-    padding-top: 1em;
-    margin-bottom: 0;
-  }
+  margin-top: 1em;
   .issue-party-summary {
     font-size: 1.15em;
     line-height: 1.5em;
-  }
-  .issue-party-vote-title,
-  .issue-party-promise-title {
-    margin-bottom: 0;
-    margin-top: 1.5em;
   }
   .issue-party-vote-list {
     list-style: none;
@@ -140,17 +126,42 @@ figure.position {
       border-radius: 2px;
     }
   }
+  > header,
+  > section {
+    .clearfix;
+    .content {
+      padding-left: @space-left;
+    }
+    .icon {
+      float: left;
+      text-align: center;
+      width: @space-left;
+    }
+  }
+  > section img {
+    opacity: 0.25;
+  }
 }
 
+@media (max-width: 400px) {
+  .issue-party {
+    > section img {
+      margin-top: 4px;
+    }
+  }
+}
 
-.issue-party-votes,
-.issue-party-promises {
-  position: relative;
-  /* TODO: USE A MORE ROBUST SELECTOR */
-  img {
-    top: 0;
-    position: absolute;
-    left: -85px;
-    opacity: 0.25;
+@media (min-width: 768px) {
+  @space-left: 110px;
+  .issue-party {
+    > header,
+    > section {
+      .content {
+        padding-left: @space-left;
+      }
+      .icon {
+        width: @space-left;
+      }
+    }
   }
 }

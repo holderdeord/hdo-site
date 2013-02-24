@@ -1,41 +1,53 @@
 <div class="issue-party" id="<%= party.name %>">
-
-  <%= party.link class: party.external_id do %>
-    <%= party.logo class: "issue-party-logo" %>
-    <h4 class="issue-party-name"><%= party.name %></h4>
-  <% end %>
-
-  <p class="issue-party-summary">
-    <%= party.position_text %>.
-    <%= party.accountability_text %>
-  </p>
-
-  <div class="issue-party-votes">
-    <%= party.position_logo %>
-    <h5 class="issue-party-vote-title"><%= Vote.model_name.human(count: 2).capitalize %></h2>
-    <ul class="issue-party-vote-list">
-      <% party.votes.each do |vote| %>
-        <li><span class="issue-<%= vote.direction %>"><%= vote.label %></span><%= vote.title %>.
+  <header>
+    <div class="icon">
+      <%= party.link class: party.external_id do %>
+        <%= party.logo class: "issue-party-logo" %>
       <% end %>
-    </ul>
-  </div>
-
-  <div class="issue-party-promises">
-    <%= party.promise_logo %>
-
-    <% if party.has_promises? %>
-      <% party.promise_groups.each do |source, promises| %>
-        <h5 class="issue-party-promise-title">Løfter fra <%= source %></h5>
-        <ul class="issue-party-promise-list">
-          <% promises.each do |promise| %>
-            <li><%= promise.body %></li>
-          <% end %>
-        </ul>
+    </div>
+    <div class="content">
+      <h4 class="issue-party-name">
+        <%= party.link class: party.external_id do %>
+          <%= party.name %>
+        <% end %>
+      </h4>
+      <p class="issue-party-summary">
+        <%= party.position_text %>.
+        <%= party.accountability_text %>
+      </p>
+    </div>
+  </header>
+  <section class="issue-party-votes">
+    <div class="icon">
+      <%= party.position_logo %>
+    </div>
+    <div class="content">
+      <h5 class="issue-party-vote-title"><%= Vote.model_name.human(count: 2).capitalize %></h2>
+      <ul class="issue-party-vote-list">
+        <% party.votes.each do |vote| %>
+          <li><span class="issue-<%= vote.direction %>"><%= vote.label %></span><%= vote.title %>.
+        <% end %>
+      </ul>
+    </div>
+  </section>
+  <section class="issue-party-promises">
+    <div class="icon">
+      <%= party.promise_logo %>
+    </div>
+    <div class="content">
+      <% if party.has_promises? %>
+        <% party.promise_groups.each do |source, promises| %>
+          <h5 class="issue-party-promise-title">Løfter fra <%= source %></h5>
+          <ul class="issue-party-promise-list">
+            <% promises.each do |promise| %>
+              <li><%= promise.body %></li>
+            <% end %>
+          </ul>
+        <% end %>
+      <% else %>
+        <h5 class="issue-party-promise-title">Løfter</h5>
+        <p><%= t 'app.parties.no_promises' %></p>
       <% end %>
-    <% else %>
-      <h5 class="issue-party-promise-title">Løfter</h5>
-      <p><%= t 'app.parties.no_promises' %></p>
-    <% end %>
-  </div>
-
+    </div>
+  </section>
 </div>
