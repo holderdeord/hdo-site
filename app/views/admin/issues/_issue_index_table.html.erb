@@ -19,7 +19,7 @@
         <td>
           <p><%= link_to issue.title, issue %></p>
           <small class="muted">
-            <%= issue.topics.map(&:name).sort.join(', ') %>
+            <%= issue.tag_list.sort.join(', ') %>
           </small>
         </td>
         <td>

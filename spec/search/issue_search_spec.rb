@@ -59,3 +59,15 @@ describe Issue, :search do
     end
   end
 end
+  it 'indexes tags' do
+    issue = issue_titled 'foo'
+    issue.tag_list << 'bar'
+    issue.save!
+
+    refresh_index
+
+    results = results_for('bar')
+    results.size.should == 1
+    results.first.load.should == issue
+  end
+end

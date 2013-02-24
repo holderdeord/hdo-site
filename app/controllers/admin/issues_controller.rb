@@ -5,7 +5,7 @@ class Admin::IssuesController < AdminController
   helper_method :edit_steps
 
   def index
-    issues = Issue.order(:title).includes(:topics, :editor, :last_updated_by)
+    issues = Issue.order(:title).includes(:tags, :editor, :last_updated_by)
     @issues_by_status = issues.group_by { |e| e.status }
 
     respond_to do |format|
@@ -134,10 +134,6 @@ class Admin::IssuesController < AdminController
 
   def edit_votes
     @votes_and_connections = @issue.vote_connections.map { |e| [e.vote, e] }
-  end
-
-  def edit_topics
-    @topics = Topic.all
   end
 
   def edit_steps

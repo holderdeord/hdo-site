@@ -55,7 +55,7 @@ module Hdo
     def update_attributes
       return unless @attributes
 
-      @changed ||= (association_changed?(:category_ids) || association_changed?(:topic_ids))
+      @changed ||= (association_changed?(:category_ids) || association_changed?(:tags))
       @issue.attributes = @attributes
       @changed ||= @issue.changed?
 

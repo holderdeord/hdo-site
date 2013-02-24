@@ -35,16 +35,6 @@ module Admin::IssuesHelper
     options_for_select weight_options, selected
   end
 
-  def topic_options_for(issue)
-    topics = {}
-
-    Topic.order(:name).each do |topic|
-      topics[topic.name] = topic.id
-    end
-
-    options_for_select(topics, issue.topic_ids)
-  end
-
   def editor_options_for(issue)
     users = User.order(:name)
 
@@ -60,6 +50,10 @@ module Admin::IssuesHelper
     sorted.unshift [I18n.t!("app.votes.proposition_types.none"), nil]
 
     options_for_select sorted, vote.proposition_type
+  end
+
+  def all_tags
+    ActsAsTaggableOn::Tag.select(:name).all.map(&:name)
   end
 
   def connected_issues_for(vote)

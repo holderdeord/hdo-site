@@ -11,12 +11,9 @@ class Issue < ActiveRecord::Base
       indexes :title,       type: :string, analyzer: TireSettings.default_analyzer, boost: 100
       indexes :status,      type: :string, index: :not_analyzed
       indexes :slug,        type: :string, index: :not_analyzed
+      indexes :tag_list,    type: :string, analyzer: 'keyword'
 
       indexes :categories do
-        indexes :name, type: :string, analyzer: TireSettings.default_analyzer
-      end
-
-      indexes :topics do
         indexes :name, type: :string, analyzer: TireSettings.default_analyzer
       end
     }
@@ -28,16 +25,17 @@ class Issue < ActiveRecord::Base
   end
 
   before_destroy do
-    destroy_associations # workaround https://github.com/rails/rails/issues/5332, should be fixed in 3.2.13
+    destroy_associations # workaround https://github.com/rails/rails/issues/5332, should be fixed in Rails 3.2.13
   end
 
-  attr_accessible :description, :title, :category_ids, :promise_ids, :topic_ids, :status, :lock_version, :editor_id
+  acts_as_taggable
+
+  attr_accessible :description, :title, :category_ids, :promise_ids, :status, :lock_version, :editor_id, :tag_list
   validates :title, presence: true, uniqueness: true
 
   STATUSES = %w[published in_progress shelved]
   validates_inclusion_of :status, in: STATUSES
 
-  has_and_belongs_to_many :topics,     uniq: true
   has_and_belongs_to_many :categories, uniq: true
 
   belongs_to :last_updated_by, foreign_key: 'last_updated_by_id', class_name: 'User'
@@ -111,7 +109,7 @@ class Issue < ActiveRecord::Base
   end
 
   def to_indexed_json
-    to_json include: [:topics, :categories]
+    as_json(include: [:categories]).merge(:tag_list => tag_list).to_json
   end
 
   def to_json_with_stats

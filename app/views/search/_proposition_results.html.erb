@@ -1,7 +1,14 @@
-<h3><%= Proposition.model_name.human(count: 2).capitalize %></h3>
+<% results = results.reject { |r| r.description.empty? } %>
+<% if results.any? %>
+  <h3><%= Proposition.model_name.human(count: 2).capitalize %></h3>
 
-<ul>
-  <% results.each do |r| %>
-    <li><%= link_to r.description, vote_path(r.votes.first.slug) %></li>
-  <% end %>
-</ul>
+  <ul>
+    <% results.each do |r| %>
+      <% if r.votes.first %>
+        <li><%= link_to r.description, vote_path(r.votes.first.slug) %></li>
+      <% else %>
+        <li><%= r.description %></li>
+      <% end %>
+    <% end %>
+  </ul>
+<% end %>
