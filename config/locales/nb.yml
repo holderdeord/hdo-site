@@ -333,6 +333,7 @@ nb:
     save: 'Lagre'
     for: 'For'
     against: 'Mot'
+    for_and_against: 'Både for og mot'
     absent: 'Ikke tilstede'
     unrelated: 'Ikke relatert'
     connection: 'Kobling'
@@ -407,6 +408,7 @@ nb:
         mostly_for: "%{name} har stort sett stemt for"
         mostly_for_html: "%{name} har <strong>stort sett stemt for</strong>"
         not_participated: "%{name} har ikke deltatt i avstemninger om"
+        not_participated_html: "%{name} har ikke deltatt i avstemninger om"
       proposition_types:
         none: '--Velg forslagstype--'
         alternate_national_budget: 'Alternativt statsbudsjett'
@@ -470,6 +472,10 @@ nb:
         opposition: 'Opposisjonspartiene'
       none: 'Inget parti'
     promises:
+      scores:
+        unclear_html: "Det er <strong>uklart om de holder ord</strong> da %{name} ikke har løfter som direkte angår saken."
+        broken_html: "De har <strong>ikke holdt ord</strong> i denne saken."
+        kept_html: "De har stort sett <strong>holdt ord</strong> i denne saken."
       based_on:
         one: "basert på 1 løfte"
         other: "basert på %{count} løfter"

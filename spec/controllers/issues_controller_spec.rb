@@ -9,9 +9,7 @@ describe IssuesController do
     get :show, id: issue
 
     response.should have_rendered(:show)
-
-    assigns(:issue).should == issue
-    assigns(:promises_by_party).should_not be_nil
+    assigns(:issue).should be_decorated_with(IssueDecorator)
   end
 
   it 'should get :votes if the issue is published' do
@@ -37,7 +35,7 @@ describe IssuesController do
     render_views
 
     it "should render :show" do
-      get :show, id: Issue.make!(status: 'published')
+      get :show, id: Issue.make!(status: 'published', published_at: Time.now)
       response.should have_rendered(:show)
     end
   end
@@ -83,8 +81,7 @@ describe IssuesController do
     it 'should get :show for a logged in user' do
       get :show, id: issue
 
-      assigns(:issue).should == issue
-      assigns(:promises_by_party).should_not be_nil
+      assigns(:issue).should be_decorated_with(IssueDecorator)
       response.should have_rendered(:show)
     end
 
