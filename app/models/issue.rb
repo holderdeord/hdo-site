@@ -3,6 +3,7 @@ class Issue < ActiveRecord::Base
 
   include Hdo::Model::HasStatsCache
   include Tire::Model::Search
+  extend Hdo::Search::Index
 
   tire.settings(TireSettings.default) {
     mapping {
@@ -17,6 +18,7 @@ class Issue < ActiveRecord::Base
       end
     }
   }
+  update_index_on_change_of :categories, :has_many
 
   after_save do
     update_index if published?

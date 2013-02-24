@@ -26,6 +26,25 @@ describe Issue, :search do
     results_for('klima').size.should == 2
   end
 
+  context 'refresh on association update' do
+    it 'updates the index when associated categories change' do
+      category = Category.make!
+      issue = Issue.make!({status: 'published', categories: [category]})
+
+      refresh_index
+
+      results_for('*').size.should == 1
+
+      result = Issue.search('*').results.first
+      result.categories.first.name.should == category.name
+
+      category.update_attributes!(name: 'shrimp')
+      refresh_index
+
+      result = Issue.search('*').results.first
+      result.categories.first.name.should == category.name
+    end
+  end
   it 'indexes tags' do
     issue = issue_titled 'foo'
     issue.tag_list << 'bar'

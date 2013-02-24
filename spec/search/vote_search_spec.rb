@@ -67,7 +67,7 @@ describe Vote, :search do
   end
 
   context 'refresh on association update' do
-    xit 'updates the index when associated propositions change' do
+    it 'updates the index when associated propositions change' do
       prop = Proposition.make!
       Vote.make!(propositions: [prop])
 
@@ -80,11 +80,42 @@ describe Vote, :search do
       refresh_index
 
       result = Vote.search('*').results.first
+
       result.propositions.first.plain_body.should == prop.plain_body
     end
 
-    it 'updates the index when associated parliament issues change'
-    it 'updates the index when associated categories change (through parliament issues)'
+    it 'updates the index when associated parliament issues change' do
+      issue = ParliamentIssue.make!
+      Vote.make!(parliament_issues: [issue])
+      refresh_index
+
+      result = Vote.search('*').results.first
+      result.parliament_issues.first.description.should == issue.description
+
+      issue.update_attributes!(description: 'this is a re-indexing issue')
+      refresh_index
+
+      result = Vote.search('*').results.first
+      result.parliament_issues.first.description.should == issue.description
+    end
+
+    it 'updates the index when associated categories change (through parliament issues)' do
+      category = Category.make!
+      issue    = ParliamentIssue.make!(categories: [category])
+      Vote.make!(parliament_issues: [issue])
+      refresh_index
+
+      result = Vote.search('*').results.first
+      result.category_names.first.should == category.name
+
+      category = Category.make!
+      issue.categories = [category]
+      issue.save!
+      refresh_index
+
+      result = Vote.search('*').results.first
+      result.category_names.first.should == category.name
+    end
   end
 
 end
