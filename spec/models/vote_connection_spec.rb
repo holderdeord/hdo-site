@@ -34,7 +34,7 @@ describe VoteConnection do
     conn.should be_invalid
 
     conn.weight = 4
-    conn.should be_valid
+    conn.should be_invalid
 
     conn.weight = 100
     conn.should be_invalid
