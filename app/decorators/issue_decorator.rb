@@ -31,7 +31,7 @@ class IssueDecorator < Draper::Decorator
       model.stats.key_for(model.stats.score_for(p))
     end
 
-    [:for, :for_and_against, :against].map do |key|
+    [:against, :for_and_against, :for].map do |key|
       label = OpenStruct.new(:icon => "taxonomy-icons/issue_#{key}.png", :text => h.t("app.#{key}"))
 
       parties = grouped[key] || [] 
