@@ -15,7 +15,6 @@ describe Admin::IssuesHelper do
       [ "0.5", "0.5", 'selected' ],
       [ "1.0", "1",   nil        ],
       [ "2.0", "2",   nil        ],
-      [ "4.0", "4",   nil        ]
     ]
 
     expected.should == actual
