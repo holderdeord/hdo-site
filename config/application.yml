@@ -10,6 +10,7 @@ defaults: &defaults
   ignore_votes_against_alternate_budget: true
   ignore_votes_against_proposal_attached_to_minutes: false
   vote_scoring_bins: 5
+  show_accountability: true
 
 development:
   <<: *defaults
@@ -27,3 +28,4 @@ production:
   <<: *defaults
   analytics_enabled: true
   questions_enabled: false
+  show_accountability: false

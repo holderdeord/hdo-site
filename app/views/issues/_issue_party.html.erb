@@ -13,7 +13,7 @@
       </h4>
       <p class="issue-party-summary">
         <%= party.position_text %>.
-        <%= party.accountability_text %>
+        <%= party.accountability_text if AppConfig.show_accountability %>
       </p>
     </div>
   </header>
@@ -31,9 +31,11 @@
     </div>
   </section>
   <section class="issue-party-promises">
-    <div class="icon">
-      <%= party.promise_logo %>
-    </div>
+
+    <% if AppConfig.show_accountability %>
+      <div class="icon"><%= party.promise_logo %></div>
+    <% end %>
+
     <div class="content">
       <% if party.has_promises? %>
         <% party.promise_groups.each do |source, promises| %>
