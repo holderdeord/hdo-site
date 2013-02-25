@@ -41,6 +41,8 @@ GEM
       rspec (>= 2.7.0)
     bcrypt-ruby (3.0.1)
     builder (3.0.4)
+    cache_digests (0.2.0)
+      actionpack (>= 3.2)
     capistrano (2.13.5)
       highline
       net-scp (>= 1.0.0)
@@ -318,6 +320,7 @@ PLATFORMS
 DEPENDENCIES
   acts-as-taggable-on (~> 2.3.1)
   acts_as_tree (~> 1.1)
+  cache_digests
   capistrano (~> 2.13)
   capistrano-ext
   capistrano-maintenance

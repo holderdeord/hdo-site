@@ -86,8 +86,11 @@ gem 'acts-as-taggable-on', '~> 2.3.1'
 # search
 gem 'tire'
 
-# image scaling
+# caching
 gem 'rack-cache', :require => 'rack/cache'
+gem 'cache_digests'
+
+# images
 gem 'dragonfly', '~> 0.9.12'
 
 # logging

@@ -6,6 +6,7 @@ class IssueDecorator < Draper::Decorator
            :vote_connections,
            :accountability,
            :published?,
+           :cache_key,
 
            # move to decorator?
            :status_text,
