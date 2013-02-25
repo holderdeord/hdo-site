@@ -1,16 +1,15 @@
 (function ($) {
   $.fn.hideChildren = function (opts) {
-    function create (element) {
+    function create(element) {
       return $(document.createElement(element));
     }
     var options = $.extend({}, $.fn.hideChildren.defaults, opts);
     return this.each(function () {
-      var $list = $(this),
-          $children = $list.children(),
-          $lastChild,
-          $toggler,
-          $toggleContainer,
-          $layover;
+      var $list, $children, $lastChild, $toggler, $toggleContainer, $layover;
+
+      $list = $(this);
+      $children = $list.children();
+
       if ($children.length > options.startAtIndex + 2) {
         $layover = create("div").addClass("layover");
         $lastChild = $($children.get(options.startAtIndex - 1)).addClass("fader").append($layover);
@@ -26,6 +25,7 @@
       }
     });
   };
+
   $.fn.hideChildren.defaults = {
     "startAtIndex": 3,
     "togglerText": "Vis alle"
