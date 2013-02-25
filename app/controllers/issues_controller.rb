@@ -6,8 +6,8 @@ class IssuesController < ApplicationController
   def index
     @groups = Hash.new { |hash, key| hash[key] = [] }
 
-    Issue.published.each do |issue|
-      issue.tag_list.each { |topic| @groups[topic] << issue }
+    Issue.includes(:tags).published.each do |issue|
+      issue.tags.each { |tag| @groups[tag.name] << issue }
     end
 
     @groups = @groups.sort_by { |t, _| t }
