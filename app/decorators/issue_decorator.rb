@@ -26,6 +26,10 @@ class IssueDecorator < Draper::Decorator
     h.l model.updated_at.localtime, format: :text
   end
 
+  def time_since_updated
+    h.distance_of_time_in_words_to_now model.updated_at.localtime
+  end
+
   def position_groups
     grouped = Party.order(:name).group_by do |p|
       model.stats.key_for(model.stats.score_for(p))
@@ -34,8 +38,8 @@ class IssueDecorator < Draper::Decorator
     [:against, :for_and_against, :for].map do |key|
       label = OpenStruct.new(:icon => "taxonomy-icons/issue_#{key}.png", :text => h.t("app.#{key}"))
 
-      parties = grouped[key] || [] 
-      [label, parties] 
+      parties = grouped[key] || []
+      [label, parties]
     end
   end
 
