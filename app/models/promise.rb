@@ -32,19 +32,6 @@ class Promise < ActiveRecord::Base
     I18n.t(general? ? 'app.yes' : 'app.no')
   end
 
-  def source_header
-    # TODO: i18n
-
-    case source
-    when 'Partiprogram'
-      'I partiprogrammet har partiet lovet følgende:'
-    when 'Regjeringserklæring'
-      'I regjeringserklæringen har partiet lovet følgende:'
-    else
-      raise "unknown source: #{source}"
-    end
-  end
-
   def party_names
     parties.map(&:name).to_sentence
   end

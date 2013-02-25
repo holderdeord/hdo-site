@@ -1,10 +1,10 @@
 <% @groups.each do |tag, issues| %>
-<div class="row-fluid">
-  <h3><%= tag %></h3>
-  <ul>
+  <div class="category">
+    <h4><%= tag.name %></h4>
     <% issues.each do |issue| %>
-    <li><%= link_to issue.title, issue %></li>
+      <%= link_to issue.title, issue, title: issue.description %>
+      <br>
     <% end %>
-  </ul>
-</div>
+  </div>
+  <br>
 <% end %>

@@ -13,6 +13,7 @@ defaults: &defaults
 
 development:
   <<: *defaults
+  vote_scoring_bins: 3
 
 test:
   <<: *defaults

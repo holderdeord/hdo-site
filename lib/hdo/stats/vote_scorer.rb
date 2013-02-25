@@ -96,43 +96,45 @@ module Hdo
         text_for_entity score, entity_name, opts
       end
 
-      private
-
-      def text_for_entity(score, entity_name, opts)
+      # FIXME: API is inconsistent with AccountabilityScorer - should take a party, not a score
+      def key_for(score)
         if score.nil?
-          return I18n.t("app.votes.scores.not_participated", name: entity_name).html_safe
+          return :not_participated
         end
 
         # if you change the scoring, remember to change the 'about method' page as well.
-        key = case @bins
-              when 3
-                case score
-                when 0...33
-                  :against
-                when 33...66
-                  :for_and_against
-                when 66..100
-                  :for
-                end
-              when 5
-                case score
-                when 0...21
-                  :against
-                when 21...41
-                  :mostly_against
-                when 41...61
-                  :for_and_against
-                when 61...81
-                  :mostly_for
-                when 81..100
-                  :for
-                end
-              else
-                raise "unknown # of vote scoring bins: #{@bins}"
-              end
+        case @bins
+        when 3
+          case score
+          when 0...33
+            :against
+          when 33...66
+            :for_and_against
+          when 66..100
+            :for
+          end
+        when 5
+          case score
+          when 0...21
+            :against
+          when 21...41
+            :mostly_against
+          when 41...61
+            :for_and_against
+          when 61...81
+            :mostly_for
+          when 81..100
+            :for
+          end
+        else
+          raise "unknown # of vote scoring bins: #{@bins}"
+        end
+      end
 
-        raise "unknown score: #{score}" unless key
+      private
 
+      def text_for_entity(score, entity_name, opts)
+        key = key_for(score) or raise "unknown score: #{score}"
         key = "app.votes.scores.#{key}"
         key << "_html" if opts[:html]
 

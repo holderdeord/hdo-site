@@ -17,18 +17,14 @@ class IssuesController < ApplicationController
     policy = policy(@issue)
 
     if policy.show?
-      assign_promises_by_party
-      assign_previous_and_next_issues
-
-      @issue_explanation = t('app.issues.explanation',
-        count: @issue.votes.size,
-        url: votes_issue_path(@issue)
-      ).html_safe
-
       respond_to do |format|
-        format.html
+        format.html {
+          assign_previous_and_next_issues
+          @issue = IssueDecorator.decorate(@issue)
+        }
+
         format.json {
-          render json: policy.view_stats? ? @issue.to_json_with_stats : @issue
+          render json: policy.view_stats? ? @issue.to_json_with_stats : @issue.to_json
         }
       end
     else
@@ -55,24 +51,6 @@ class IssuesController < ApplicationController
 
   def assign_previous_and_next_issues
     @previous_issue, @next_issue = @issue.previous_and_next(policy: policy(@issue))
-  end
-
-  def assign_promises_by_party
-    # TODO: move to IssueDecorator?
-
-    # {
-    #   'A'    => { 'I partiprogrammet har...' => promises, 'I regjeringserklæring har...' => promises },
-    #   'FrP'  => { 'I partiprogrammet har...' => promises },
-    # }
-
-    @promises_by_party = {}
-
-    @issue.promises.includes(:parties).each do |promise|
-      promise.parties.each do |party|
-        data = @promises_by_party[party] ||= {}
-        (data[promise.source_header] ||= []) << promise
-      end
-    end
   end
 
   def fetch_issue

@@ -85,6 +85,7 @@ class Issue < ActiveRecord::Base
   end
 
   def downcased_title
+    # TODO: move to decorators?
     @downcased_title ||= "#{UnicodeUtils.downcase title[0]}#{title[1..-1]}"
   end
 

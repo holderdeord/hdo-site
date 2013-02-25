@@ -13,9 +13,6 @@ class Party < ActiveRecord::Base
     }
   }
 
-  class PartyGroup < Struct.new(:name, :parties)
-  end
-
   has_many :governing_periods,  dependent: :destroy, order: :start_date
   has_many :party_memberships,  dependent: :destroy
   has_many :representatives,    through:   :party_memberships
@@ -35,24 +32,6 @@ class Party < ActiveRecord::Base
 
     joins(:governing_periods).
       where("start_date <= ? AND (end_date >= ? or end_date IS NULL)", today, today)
-  end
-
-  # TODO: find a better name for this
-  def self.governing_groups
-    government = in_government.to_a
-    opposition = order(:name).to_a - government.to_a
-
-    groups = []
-
-    if government.any?
-      groups << PartyGroup.new(I18n.t('app.parties.group.governing'), government)
-      groups << PartyGroup.new(I18n.t('app.parties.group.opposition'), opposition)
-    else
-      # if no-one's in government, we only need a single group with no name.
-      groups << PartyGroup.new('', opposition)
-    end
-
-    groups
   end
 
   def in_government?(date = Date.today)

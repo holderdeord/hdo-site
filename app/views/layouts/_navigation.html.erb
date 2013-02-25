@@ -14,6 +14,12 @@
 
       <ul class="nav">
 
+        <li class="<%= active_status_for(:issues) %>">
+          <%= link_to issues_path do %>
+            <%= Issue.model_name.human(count: 2).capitalize %>
+          <% end %>
+        </li>
+
         <li class="dropdown <%= active_status_for(:parties_show) %>">
           <a class="dropdown-toggle" data-toggle="dropdown" href="#partier">
             <%= Party.model_name.human(count: 2).capitalize %>

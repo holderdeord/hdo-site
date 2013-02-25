@@ -1,0 +1,9 @@
+.gradient-vertical(@fromColor, @fromOpacity, @toColor, @toOpacity) {
+  background: -moz-linear-gradient(top, @fromColor @fromOpacity, @toColor @toOpacity); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(@fromOpacity,@fromColor, color-stop(@toOpacity,@toColor))); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top, @fromColor @fromOpacity,@toColor @toOpacity); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top, @fromColor @fromOpacity,@toColor @toOpacity); /* Opera 11.10+ */
+  background: -ms-linear-gradient(top, @fromColor @fromOpacity,@toColor @toOpacity); /* IE10+ */
+  background: linear-gradient(to bottom, @fromColor @fromOpacity,@toColor @toOpacity); /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='@fromColor', endColorstr='@toColor',GradientType=0 ); /* IE6-9 */
+}

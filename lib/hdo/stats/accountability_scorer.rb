@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 require 'csv'
 
 module Hdo
@@ -49,8 +51,8 @@ module Hdo
         end
 
         category_to_scores = {}
-        category_to_issues.each do |cat, issues|
-          category_to_scores[cat] = score(issues)
+        category_to_issues.each do |cat, iss|
+          category_to_scores[cat] = score(iss)
         end
 
         category_to_scores
@@ -81,6 +83,26 @@ module Hdo
       def text_score_for(party)
         s = score_for(party)
         s ? "#{s.to_i}%" : I18n.t('app.uncertain')
+      end
+
+      def key_for(party)
+        score = score_for(party)
+
+        case score
+        when nil
+          :unclear
+        when 0...50
+          :broken
+        when 50..100
+          :kept
+        else
+          raise "score out of range: #{score.inspect}"
+        end
+      end
+
+      def text_for(party)
+        # TODO: tests, html as option
+        I18n.t("app.promises.scores.#{key_for(party)}_html", name: party.name).html_safe
       end
 
       def as_json(opts = nil)
