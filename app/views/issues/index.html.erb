@@ -1,6 +1,6 @@
 <% @groups.each do |tag, issues| %>
   <div class="category">
-    <h4><%= tag.name %></h4>
+    <h4><%= tag %></h4>
     <% issues.each do |issue| %>
       <%= link_to issue.title, issue, title: issue.description %>
       <br>
