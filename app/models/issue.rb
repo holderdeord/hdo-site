@@ -20,9 +20,8 @@ class Issue < ActiveRecord::Base
   }
   update_index_on_change_of :categories, :has_many
 
-  after_save do
-    update_index if published?
-  end
+  after_save    { tire.update_index if published? } # TODO: what if an issue is retracted?
+  after_destroy { tire.update_index }
 
   before_destroy do
     destroy_associations # workaround https://github.com/rails/rails/issues/5332, should be fixed in Rails 3.2.13
