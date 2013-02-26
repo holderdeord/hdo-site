@@ -45,6 +45,7 @@ describe Issue, :search do
       result.categories.first.name.should == category.name
     end
   end
+
   it 'indexes tags' do
     issue = issue_titled 'foo'
     issue.tag_list << 'bar'

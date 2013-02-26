@@ -11,7 +11,7 @@ class Issue < ActiveRecord::Base
       indexes :title,       type: :string, analyzer: TireSettings.default_analyzer, boost: 100
       indexes :status,      type: :string, index: :not_analyzed
       indexes :slug,        type: :string, index: :not_analyzed
-      indexes :tags,        type: :string, analyzer: 'keyword'
+      indexes :tag_list,    type: :string, analyzer: 'keyword'
 
       indexes :categories do
         indexes :name, type: :string, analyzer: TireSettings.default_analyzer
@@ -109,7 +109,7 @@ class Issue < ActiveRecord::Base
   end
 
   def to_indexed_json
-    as_json(include: [:categories]).merge(:tags => tags.map(&:name)).to_json
+    as_json(include: [:categories]).merge(:tag_list => tag_list).to_json
   end
 
   def to_json_with_stats
