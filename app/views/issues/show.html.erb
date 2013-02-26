@@ -5,7 +5,7 @@
 
   <div class="page-header">
 
-    <h1><%= @issue.title %></h1>
+    <div class="hidden-desktop"><%= render partial: 'title_and_aside' %></div>
 
     <figure class="position">
       <div class="issue-graph">
@@ -35,12 +35,12 @@
         </div>
       </div>
 
+      <div class="visible-desktop"><%= render partial: 'title_and_aside' %></div>
       <figcaption class="muted"><p><%= @issue.explanation %></p></figcaption>
 
     </figure>
 
     <p class="issue-description"><%= @issue.description %></p>
-
   </div>
 
 
@@ -53,27 +53,6 @@
       <% end %>
     <% end %>
   </div>
-
-  <aside class="muted">
-    Oppdatert <%= @issue.updated_at %>
-    <% if @issue.published? %>
-      <small class="muted">
-        <strong><%= Issue.human_attribute_name(:published_at) %></strong>: <%= @issue.published_at %>
-        <strong><%= Issue.human_attribute_name(:updated_at) %></strong>: <%= @issue.updated_at %>
-      </small>
-    <% end %>
-  </aside>
-
-  <!--
-  <div>
-    <div class="alert alert-info"><%= @issue_explanation %></div>
-
-    <div class="well well-small">
-      <p>Har du forslag til en sak vi burde dekke?</p>
-      <p>Kontakt oss <a href="mailto:<%= obscure_email t('app.email') %>">her</a>!</p>
-    </div>
-  </div>
-  -->
 
   <!--
   <%= render partial: 'shared/previous_next_links', locals: { next_item: @next_issue, previous_item: @previous_issue, item_text_attr: :title } %>

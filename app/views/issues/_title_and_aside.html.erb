@@ -1,0 +1,7 @@
+<h1><%= @issue.title %></h1>
+
+<% if @issue.published? %>
+  <aside class="muted">
+    <%= Issue.human_attribute_name(:updated_at) %> <%= @issue.updated_at %>
+  </aside>
+<% end %>

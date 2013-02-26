@@ -6,11 +6,11 @@ defaults: &defaults
   statsd_port: 8125
   statsd_enabled: false
   analytics_enabled: false
-  questions_enabled: true
+  questions_enabled: false
   ignore_votes_against_alternate_budget: true
   ignore_votes_against_proposal_attached_to_minutes: false
   vote_scoring_bins: 5
-  show_accountability: true
+  show_accountability: false
 
 development:
   <<: *defaults
