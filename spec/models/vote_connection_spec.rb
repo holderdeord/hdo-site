@@ -20,23 +20,30 @@ describe VoteConnection do
 
     conn.weight = 0
     conn.should be_valid
+    conn.weight_text.should be_kind_of(String)
 
     conn.weight = 0.5
     conn.should be_valid
+    conn.weight_text.should be_kind_of(String)
 
     conn.weight = 1
     conn.should be_valid
+    conn.weight_text.should be_kind_of(String)
 
     conn.weight = 2
     conn.should be_valid
+    conn.weight_text.should be_kind_of(String)
 
     conn.weight = 3
     conn.should be_invalid
+    expect { conn.weight_text }.to raise_error
 
     conn.weight = 4
     conn.should be_invalid
+    expect { conn.weight_text }.to raise_error
 
     conn.weight = 100
     conn.should be_invalid
+    expect { conn.weight_text }.to raise_error
   end
 end
