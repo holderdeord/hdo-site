@@ -1,37 +1,45 @@
 <div class="issue-party" id="<%= party.name %>">
+
   <header>
     <div class="icon">
       <%= party.link class: party.external_id do %>
         <%= party.logo class: "issue-party-logo" %>
       <% end %>
     </div>
+
     <div class="content">
       <h4 class="issue-party-name">
         <%= party.link class: party.external_id do %>
           <%= party.name %>
         <% end %>
       </h4>
+
       <p class="issue-party-summary">
         <%= party.position_text %>.
         <%= party.accountability_text if AppConfig.show_accountability %>
       </p>
     </div>
   </header>
+
   <section class="issue-party-votes">
     <div class="icon">
       <%= party.position_logo %>
     </div>
+
     <div class="content">
       <h5 class="issue-party-vote-title"><%= Vote.model_name.human(count: 2).capitalize %></h2>
       <ul class="issue-party-vote-list">
         <% party.votes.each do |vote| %>
-          <li><span class="issue-<%= vote.direction %>"><%= vote.label %></span><%= vote.title %>.
+          <li>
+            <span class="issue-<%= vote.direction %>"><%= vote.label %></span>
+            <%= link_to vote.title, votes_issue_path(@issue, anchor: vote.anchor) %></a>.
+          </li>
         <% end %>
       </ul>
     </div>
   </section>
-  <section class="issue-party-promises">
 
+  <section class="issue-party-promises">
     <% if AppConfig.show_accountability %>
       <div class="icon"><%= party.promise_logo %></div>
     <% end %>

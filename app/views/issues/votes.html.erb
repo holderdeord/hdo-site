@@ -10,7 +10,7 @@
     </h1>
 
     <% @issue_votes.each do |issue_vote| %>
-      <div class="row-fluid">
+      <div id="<%= issue_vote.anchor %>" class="row-fluid">
         <h3>
           <div class="span8"><%= issue_vote.title %></div>
           <div class="">

@@ -1,7 +1,10 @@
 # encoding: utf-8
 
 class VoteConnectionDecorator < Draper::Decorator
-  delegate :vote, :title, :comment, :weight_text
+  delegate :vote,
+           :title,
+           :comment,
+           :weight_text
 
   def proposition_type_text
     vote.proposition_type.blank? ? '' : I18n.t("app.votes.proposition_types.#{vote.proposition_type}")
@@ -13,6 +16,10 @@ class VoteConnectionDecorator < Draper::Decorator
 
   def time
     vote.time
+  end
+
+  def anchor
+    model.to_param
   end
 
   def matches_text

@@ -158,6 +158,10 @@ class IssueDecorator < Draper::Decorator
       vote_connection.title
     end
 
+    def anchor
+      vote_connection.to_param
+    end
+
     def label
       direction == 'for' ? 'For' : 'Mot'
     end
