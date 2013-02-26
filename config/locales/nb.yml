@@ -336,8 +336,8 @@ nb:
     issues:
       title: 'Saker'
       explanation:
-        one: 'Basert på <a href="%{url}"><strong>%{count} avstemning</strong></a> fra oktober 2010 til dagens dato.'
-        other: 'Basert på <a href="%{url}"><strong>%{count} avstemninger</strong></a> fra oktober 2010 til dagens dato.'
+        one: 'Basert på <a href="%{url}">%{count} avstemning</a> fra oktober 2010 til dagens dato.'
+        other: 'Basert på <a href="%{url}">%{count} avstemninger</a> fra oktober 2010 til dagens dato.'
       back: Tilbake til saken
       not_published: Denne saken er ikke publisert.
       published: Denne saken er publisert.

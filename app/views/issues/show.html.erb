@@ -87,16 +87,3 @@
   -->
 
 <% end # cache %>
-
-
-<%= content_for :document_ready do %>
-<script charset="utf-8" type="text/javascript">
-  (function ($) {
-    $(function () {
-      $(".issue-party-vote-list").hideChildren({
-        "togglerText": "Se alle avstemmingene"
-      });
-    });
-  }(jQuery));
-</script>
-<% end %>
