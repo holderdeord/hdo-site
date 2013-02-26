@@ -21,7 +21,6 @@ test:
 staging:
   <<: *defaults
   statsd_enabled: true
-  vote_scoring_bins: 3
 
 production:
   <<: *defaults

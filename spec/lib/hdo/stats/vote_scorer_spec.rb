@@ -77,28 +77,22 @@ module Hdo
           scorer.stub(:score_for).with(p1).and_return 0
           scorer.text_for(p1).should == "#{p1.name} har stemt mot"
 
-          scorer.stub(:score_for).with(p1).and_return 10
+          scorer.stub(:score_for).with(p1).and_return 4.5
           scorer.text_for(p1).should == "#{p1.name} har stemt mot"
 
-          scorer.stub(:score_for).with(p1).and_return 21.1
-          scorer.text_for(p1).should == "#{p1.name} har stort sett stemt mot"
+          scorer.stub(:score_for).with(p1).and_return 32.1
+          scorer.text_for(p1).should == "#{p1.name} har stemt mot"
 
-          scorer.stub(:score_for).with(p1).and_return 40
-          scorer.text_for(p1).should == "#{p1.name} har stort sett stemt mot"
-
-          scorer.stub(:score_for).with(p1).and_return 41
+          scorer.stub(:score_for).with(p1).and_return 33
           scorer.text_for(p1).should == "#{p1.name} har stemt både for og mot"
 
-          scorer.stub(:score_for).with(p1).and_return 61.2
-          scorer.text_for(p1).should == "#{p1.name} har stort sett stemt for"
+          scorer.stub(:score_for).with(p1).and_return 65.2
+          scorer.text_for(p1).should == "#{p1.name} har stemt både for og mot"
 
-          scorer.stub(:score_for).with(p1).and_return 67
-          scorer.text_for(p1).should == "#{p1.name} har stort sett stemt for"
-
-          scorer.stub(:score_for).with(p1).and_return 81.2
+          scorer.stub(:score_for).with(p1).and_return 66
           scorer.text_for(p1).should == "#{p1.name} har stemt for"
 
-          scorer.stub(:score_for).with(p1).and_return 95
+          scorer.stub(:score_for).with(p1).and_return 81.2
           scorer.text_for(p1).should == "#{p1.name} har stemt for"
 
           scorer.stub(:score_for).with(p1).and_return 100
@@ -131,29 +125,24 @@ module Hdo
           str.should == "#{p1.name} har stemt <strong>mot</strong>"
           str.should be_html_safe
 
-          scorer.stub(:score_for).with(p1).and_return 21.1
+          scorer.stub(:score_for).with(p1).and_return 32.1
           str = scorer.text_for(p1, html: true)
-          str.should == "#{p1.name} har <strong>stort sett stemt mot</strong>"
+          str.should == "#{p1.name} har stemt <strong>mot</strong>"
           str.should be_html_safe
 
-          scorer.stub(:score_for).with(p1).and_return 40
-          str = scorer.text_for(p1, html: true)
-          str.should == "#{p1.name} har <strong>stort sett stemt mot</strong>"
-          str.should be_html_safe
-
-          scorer.stub(:score_for).with(p1).and_return 41
+          scorer.stub(:score_for).with(p1).and_return 33
           str = scorer.text_for(p1, html: true)
           str.should == "#{p1.name} har stemt <strong>både for og mot</strong>"
           str.should be_html_safe
 
-          scorer.stub(:score_for).with(p1).and_return 61.2
+          scorer.stub(:score_for).with(p1).and_return 65.2
           str = scorer.text_for(p1, html: true)
-          str.should == "#{p1.name} har <strong>stort sett stemt for</strong>"
+          str.should == "#{p1.name} har stemt <strong>både for og mot</strong>"
           str.should be_html_safe
 
-          scorer.stub(:score_for).with(p1).and_return 67
+          scorer.stub(:score_for).with(p1).and_return 66
           str = scorer.text_for(p1, html: true)
-          str.should == "#{p1.name} har <strong>stort sett stemt for</strong>"
+          str.should == "#{p1.name} har stemt <strong>for</strong>"
           str.should be_html_safe
 
           scorer.stub(:score_for).with(p1).and_return 81.2
