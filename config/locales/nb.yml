@@ -336,8 +336,8 @@ nb:
     issues:
       title: 'Saker'
       explanation:
-        one: '<p>Denne siden er basert på <a href="%{url}"><strong>%{count} avstemning</strong></a> på Stortinget i perioden oktober 2011 til dagens dato, og løfter fra valgprogram og regjeringserklæring 2009-2013.</p>'
-        other: '<p>Denne siden er basert på <a href="%{url}"><strong>%{count} avstemninger</strong></a> på Stortinget i perioden oktober 2011 til dagens dato, og løfter fra valgprogram og regjeringserklæring 2009-2013.</p>'
+        one: 'Basert på <a href="%{url}"><strong>%{count} avstemning</strong></a> fra oktober 2010 til dagens dato.'
+        other: 'Basert på <a href="%{url}"><strong>%{count} avstemninger</strong></a> fra oktober 2010 til dagens dato.'
       back: Tilbake til saken
       not_published: Denne saken er ikke publisert.
       published: Denne saken er publisert.
