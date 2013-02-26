@@ -14,34 +14,25 @@
 
   <p>En sak defineres som et politisk standpunkt, eksempelvis om å «fjerne eller redusere formueskatt». Under en sak samler vi alle relevante avstemninger og viser partiposisjonene som en sum av disse avstemningene. For hver avstemning gjør Holder de ord en vurdering av hvorvidt å stemme for et forslag i Stortinget er å stemme i tråd med saken slik den blir angitt i sakens overskrift. I tillegg hentes relevante valgløfter fra løftedatabasen, som så knyttes til saken.</p>
 
-  <p>Partiene får dermed en skår på hver sak basert på hvor mange ganger de har stemt for eller mot saken i de individuelle avstemningene. Denne skåren brukes til å gi en samlet oversikt over hvordan partiene har stemt i saken totalt sett. Holder de ord opererer med fem graderinger:</p>
+  <p>Partiene får dermed en skår på hver sak basert på hvor mange ganger de har stemt for eller mot saken i de individuelle avstemningene. Denne skåren brukes til å gi en samlet oversikt over hvordan partiene har stemt i saken totalt sett. Holder de ord opererer med tre graderinger:</p>
 
   <ul>
-    <li>for (81-100%)</li>
-    <li>stort sett for (61-80%)</li>
-    <li>både for og mot (41-60%)</li>
-    <li>stort sett mot (21-40%)</li>
-    <li>mot (0-20%)</li>
+    <li>for (66-100%)</li>
+    <li>både for og mot (33-66%)</li>
+    <li>mot (0-33%)</li>
   </ul>
 
   <h3 id="method-weights">Vekting av saker</h3>
   <p>Alle avstemninger i Stortinget er ikke like viktige. Noen avstemninger, slik som representantforslag fra opposisjonen, kan ofte fremmes for å markere egen politikk, særlig når det er en flertallsregjering og man vet at forslaget ikke kommer til å bli vedtatt. Andre avstemninger, slik som statsbudsjettet eller lovsaker, gir faktiske konsekvenser for samfunnet i form av tilskudd og bevilgninger eller innførte lover.</p>
 
-  <p>For å gjøre presentasjonen av politikken mer representativ, vekter vi derfor avstemningene etter deres faktiske betydning. En vektet avstemning får større relativ tyngde i forhold til andre avstemninger i samme sak. Man får da et resultat som i større grad speiler den faktiske politikkutformingen på Stortinget. Vekting medfører enkelte skjønnsmessige vurderinger, og Holder de ord opererer med tre kriterier som kan gjøre at en sak blir vektet opp eller ned:</p>
+  <p>For å gjøre presentasjonen av politikken mer representativ, gir vi derfor avstemningene ulik vekt basert på sakstype. En vektet avstemning får større relativ tyngde i forhold til andre avstemninger i samme sak. Man får da et resultat som i større grad speiler den faktiske politikkutformingen på Stortinget.</p>
 
-  <dl>
-    <dt>Sakstype på Stortinget</dt>
-    <dd>Forskjellige stortingssaker har forskjellig betydning. I stortingsmeldinger gjøres ingen reelle politiske vedtak, og disse vektes derfor lavt. Forslag som vedlegges protokollen vektes noe høyere. Når en avstemning vedlegges protokollen, betyr det ofte at flertallet er enige i innholdet, men at den er under arbeid i Regjeringen, eller at den skal opp til behandling i en annen form senere. Representantforslag vektes høyere, men anses fremdeles som mindre viktige, siden terskelen for å fremme slike ikke er særlig høy og de ofte er gjenstand for politisk spill. Lovforslag vektes høyere siden disse ofte danner rammene for handling. Statsbudsjettavstemninger vektes høyest siden de fører til direkte, bevilgningsmessige konsekvenser.</dd>
-
-    <dt>Samsvar mellom sak og avstemning</dt>
-    <dd>En avstemning kan vektes opp eller ned, avhengig av hvor viktig den er for den konkrete saken. Er innholdet i forslaget svært sentralt for saken, kan for eksempel et lovforslag vektes høyere.</dd>
-
-    <dt>Gjennomførte forslag</dt>
-    <dd>Et forslag som faktisk gjennomføres kan vektes opp. Hvis for eksempel representantforslag fra opposisjonen blir vedtatt og gjennomført har dette mer betydning enn bare et fremsatt forslag.</dd>
-  </dl>
+  <p>
+    Forskjellige stortingssaker har altså ulik betydning. I stortingsmeldinger gjøres ingen reelle politiske vedtak, og disse vektes derfor lavt. Forslag som vedlegges protokollen vektes noe høyere. Når en avstemning vedlegges protokollen, betyr det ofte at flertallet er enige i innholdet, men at den er under arbeid i Regjeringen, eller at den skal opp til behandling i en annen form senere. Representantforslag vektes høyere, mens lovforslag og statsbudsjett vektes høyest siden disse saken er mer omfattende både når det gjelder forberedelse, omfang på behandling i stortinget og utfall.
+  </p>
 
   <h3>Vekting - skjematisk oversikt</h3>
-
+  
   <table class="table table-striped">
     <thead>
       <tr>
@@ -50,6 +41,7 @@
         <th>Sakstyper</th>
       </tr>
     </thead>
+    
     <tbody>
       <tr>
         <td>0</td>
@@ -59,38 +51,22 @@
 
       <tr>
         <td>0.5</td>
-        <td>Lite viktig</td>
-        <td>
-            Forslag som vedlegges protokollen, alternative statsbudsjett og
-            representatforslag som i mindre grad er relevant for sak.
-        </td>
+        <td>Noe viktig</td>
+        <td>Forslag som vedlegges protokollen, mindre relevante representantforslag, opposisjonsforslag</td>
       </tr>
 
       <tr>
         <td>1.0</td>
-        <td>Noe viktig</td>
-        <td>
-          Representantforslag inkludert de som fremmes i forbindelse med
-          stortingsmeldinger og statsbudsjett
-        </td>
+        <td>Viktig</td>
+        <td>Representantforslag, alternative statsbudsjett, mindre relevante proposisjoner</td>
       </tr>
 
       <tr>
         <td>2.0</td>
-        <td>Viktig</td>
-        <td>
-          Lovforslag, regjeringsproposisjoner og representantforslag
-          som blir gjennomført politisk.
-        </td>
+        <td>Svært viktig</td>
+        <td>Lovsaker, Statsbudsjett, Proposisjoner, Mer relevante representantforslag</td>
       </tr>
 
-      <tr>
-        <td>4.0</td>
-        <td>Svært viktig</td>
-        <td>
-          Statsbudsjett og særdeles viktige lovsaker.
-        </td>
-      </tr>
     </tbody>
   </table>
 </div>
