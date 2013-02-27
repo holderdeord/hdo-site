@@ -16,6 +16,14 @@ end
 
 module Hdo
   class Application < Rails::Application
+    config.before_configuration do
+      env = Rails.root.join('config/env.yml')
+
+      if env.exist?
+        YAML.load(env.read).each { |k, v| ENV[k.to_s] = v.to_s }
+      end
+    end
+
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.

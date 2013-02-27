@@ -36,7 +36,9 @@ erd.pdf
 chromedriver.log
 .idea
 
+# config
 config/database.yml
+config/env.yml
 
 # http://pow.cx/
 .powrc
