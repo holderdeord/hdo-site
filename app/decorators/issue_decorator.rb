@@ -156,7 +156,7 @@ class IssueDecorator < Draper::Decorator
 
     def title
       @title ||= (
-        title = vote_connection.title || ''
+        title = vote_connection.title or return ''
         "#{I18n.t('app.lang.infinitive_particle')} #{UnicodeUtils.downcase title[0]}#{title[1..-1]}".strip
       )
     end
