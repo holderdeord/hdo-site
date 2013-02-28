@@ -46,3 +46,4 @@ config/env.yml
 
 # no thank you.
 .rvmrc
+.ruby-version
