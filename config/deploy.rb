@@ -40,10 +40,14 @@ namespace :deploy do
   end
 end
 
-namespace :db do
-  # moves the file created by puppet. TOCO: find a better way to deal with this
-  task :config, :except => { :no_release => true }, :role => :app do
-    run "cp -f /home/hdo/.hdo-database-pg.yml #{release_path}/config/database.yml"
+namespace :config do
+  task :symlink do
+    cmd = {
+       "#{shared_path}/config/database.yml" => "#{release_path}/config/database.yml",
+       "#{shared_path}/config/env.yml"      => "#{release_path}/config/env.yml"
+    }.map { |src, des| "ln -nfs #{src} #{des}"}.join(" && ")
+
+    run cmd
   end
 end
 
@@ -71,4 +75,4 @@ namespace :dragonfly do
 end
 
 after 'deploy:update_code', 'dragonfly:symlink'
-after 'deploy:update_code', 'db:config'
+after 'deploy:update_code', 'config:symlink'
