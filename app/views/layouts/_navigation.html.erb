@@ -41,7 +41,7 @@
           </li>
         <% end %>
 
-        <li class="<%= active_status_for(:promises) %>">
+        <li class="hidden-phone <%= active_status_for(:promises) %>">
           <%= link_to promises_path do %>
             <%= Promise.model_name.human(count: 2).capitalize %>
           <% end %>
@@ -63,7 +63,7 @@
           </ul>
         </li>
 
-        <li class="hidden-phone dropdown <%= active_status_for(:home_support, :home_member) %>">
+        <li class="dropdown <%= active_status_for(:home_support, :home_member) %>">
           <a class="dropdown-toggle" data-toggle="dropdown" href="#support">
             <%= t 'app.support' %>
             <b class="caret"></b>
