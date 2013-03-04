@@ -114,15 +114,17 @@ Hdo::Application.routes.draw do
   # home
   #
 
-  get "home/index"
-  get "home/about"
-  get "home/contact"
-  get "home/join"
-  get "home/support"
-  get "home/member"
-  get "home/people"
-  get "home/future"
-  get "home/method" => "home#about_method", as: :home_method
+  get 'home/index'
+  get 'home/about'
+  get 'home/contact'
+  get 'home/join'
+  get 'home/support'
+  get 'home/member'
+  get 'home/people'
+  get 'home/future'
+  get 'home/method'   => 'home#about_method', as: :home_method
+  get 'info/revision' => 'home#revision'
+
 
   #
   # Q & A
@@ -157,7 +159,7 @@ Hdo::Application.routes.draw do
   get '/robots.txt' => 'home#robots'
 
   #
-  # health check for varnish/others
+  # cheap health check for varnish/others
   #
 
   get '/healthz' => 'home#healthz'

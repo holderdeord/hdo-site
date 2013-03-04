@@ -23,7 +23,7 @@ class HomeController < ApplicationController
       robots = "User-Agent: *\nDisallow: /\n"
     end
 
-    render :text => robots, :layout => false, :content_type => "text/plain"
+    render text: robots, layout: false, content_type: "text/plain"
   end
 
   # don't override Object#method
@@ -43,6 +43,15 @@ class HomeController < ApplicationController
   end
 
   def future
+  end
+
+  def revision
+    rev = AppConfig['revision'] ||= (
+      file = Rails.root.join('REVISION')
+      file.exist? ? file.read : `git rev-parse HEAD`.strip
+    )
+
+    render :text => rev, content_type: 'text/plain'
   end
 
   def healthz
