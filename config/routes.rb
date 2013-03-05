@@ -16,6 +16,7 @@ Hdo::Application.routes.draw do
         get 'edit/:step'   => 'issues#edit',         as: :edit_step
         get 'votes/search' => "issues#votes_search", as: :vote_search
       end
+      resources :party_comments
     end
 
     resources :users
