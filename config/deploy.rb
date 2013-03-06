@@ -1,7 +1,7 @@
 require 'bundler/capistrano'
 require 'capistrano/maintenance'
 
-set :stages, %w(staging production vagrant)
+set :stages, %w(vagrant staging beta production)
 
 if ENV['VAGRANT']
   set :default_stage, :vagrant
@@ -52,7 +52,7 @@ namespace :config do
 end
 
 namespace :search do
-  task :reindex, :except => { :no_release => true }, :role => :app do
+  task :reindex, :roles => :db, :only => { :primary => true } do
     run "cd #{current_path} && RAILS_ENV=#{rails_env} #{rake} search:reindex"
   end
 end
