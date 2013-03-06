@@ -5,7 +5,7 @@ services:
   - postgresql
   - elasticsearch
 notifications:
-  webhooks: http://hooks.holderdeord.no/deploy
+  webhooks: http://deploy.holderdeord.no/travis
   recipients:
     - jari@holderdeord.no
   irc:
