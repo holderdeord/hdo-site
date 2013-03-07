@@ -72,3 +72,6 @@ namespace :cache do
 end
 
 after 'deploy:update_code', 'config:symlink'
+
+# not a permanent solution - will donwload images from all app servers on every deploy
+before'deploy:assets:precompile', 'cache:images'
