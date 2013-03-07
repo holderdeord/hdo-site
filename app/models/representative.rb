@@ -132,7 +132,8 @@ class Representative < ActiveRecord::Base
     default_image = "representatives/unknown.jpg"
     actual_image = "representatives/#{URI.encode slug}.jpg"
 
-    Rails.root.join("app/assets/images/#{actual_image}").exist? ? actual_image : default_image
+    image = Rails.root.join("app/assets/images/#{actual_image}").exist? ? actual_image : default_image
+    ActionController::Base.helpers.asset_path image
   end
 
   def to_indexed_json

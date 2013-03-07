@@ -39,7 +39,8 @@ class Party < ActiveRecord::Base
     default_logo = "party-logos-stripped/unknown.png"
     actual_logo = "party-logos-stripped/#{URI.encode slug}.png"
 
-    Rails.root.join("app/assets/images/#{actual_logo}").exist? ? actual_logo : default_logo
+    logo = Rails.root.join("app/assets/images/#{actual_logo}").exist? ? actual_logo : default_logo
+    ActionController::Base.helpers.asset_path logo
   end
 
   def current_representatives
