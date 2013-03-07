@@ -71,7 +71,8 @@ namespace :cache do
   end
 end
 
-after 'deploy:update_code', 'config:symlink'
+# alternatively after:update_code, but need to get things in the right order here.
+before 'deploy:assets:precompile', 'config:symlink'
 
 # not a permanent solution - will donwload images from all app servers on every deploy
-before'deploy:assets:precompile', 'cache:images'
+before 'deploy:assets:precompile', 'cache:images'
