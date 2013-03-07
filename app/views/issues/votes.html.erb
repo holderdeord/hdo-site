@@ -30,7 +30,7 @@
 
             <% issue_vote.parties_for.each do |party| %>
               <%= link_to party do %>
-                <%= image_tag party.image_with_fallback.thumb("60x60").url %>
+                <%= image_tag party.image, width: '60', height: '60' %>
               <% end %>
             <% end %>
           <% end %>
@@ -42,7 +42,7 @@
 
             <% issue_vote.parties_against.each do |party| %>
               <%= link_to party do %>
-                <%= image_tag party.image_with_fallback.thumb("60x60").url %>
+                <%= image_tag party.image, width: '60', height: '60' %>
               <% end %>
             <% end %>
           <% end %>

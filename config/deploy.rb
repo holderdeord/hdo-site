@@ -65,14 +65,10 @@ namespace :cache do
   namespace :pages do
     task(:clear) { run "rm -r #{current_path}/public/cache/*" }
   end
-end
 
-namespace :dragonfly do
-  desc "Symlink the Rack::Cache files"
-  task :symlink, :roles => [:app] do
-    run "mkdir -p #{shared_path}/tmp/dragonfly && ln -nfs #{shared_path}/tmp/dragonfly #{release_path}/tmp/dragonfly"
+  task :images do
+    run "cd #{current_path} && RAILS_ENV=#{rails_env} #{rake} images:reset"
   end
 end
 
-after 'deploy:update_code', 'dragonfly:symlink'
 after 'deploy:update_code', 'config:symlink'

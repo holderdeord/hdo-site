@@ -38,7 +38,7 @@
       <% @parties.each do |party| %>
         <%= link_to party do %>
         <div class="home-party-logo">
-          <%= image_tag party.image_with_fallback.thumb("250x250").url, alt: party.name %>
+          <%= image_tag party.image, alt: party.name, width: '250', height: '250' %>
         </div>
         <% end %>
       <% end %>

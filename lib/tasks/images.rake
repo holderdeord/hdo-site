@@ -5,7 +5,7 @@ namespace :images do
   namespace :representatives do
     desc 'Reset representative images'
     task :reset => :environment do
-      Representative.all.each { |e| e.image = nil; e.save! }
+      # Representative.all.each { |e| e.image = nil; e.save! }
     end
 
     desc 'Fetch representatives images from stortinget.no'
@@ -19,8 +19,6 @@ namespace :images do
 
         if ENV['FORCE'].nil? && filename.exist?
           puts "skipping download for existing #{filename}, use FORCE=true to override"
-          rep.image = filename
-          rep.save!
           next
         end
 
@@ -57,11 +55,8 @@ namespace :images do
             else
               print "\rDownloading #{url} finished. Saved as #{filename}\n"
               $stdout.flush
-              rep.image = Pathname.new filename
             end
           end
-
-          rep.save!
         end
       end
     end
@@ -69,14 +64,7 @@ namespace :images do
 
   desc 'Save party logos to Party models'
   task :party_logos => :environment do
-    puts "Mapping each party's logo to image attribute"
-    path_to_logos = Rails.root.join("app/assets/images/party-logos-stripped")
-
-    Party.all.each do |party|
-      party.image = path_to_logos.join("#{party.slug}.png")
-      party.save!
-      puts "Logo for #{party.name} mapped."
-    end
+    puts "not needed at the moment"
   end
 
   desc 'Set up all images'

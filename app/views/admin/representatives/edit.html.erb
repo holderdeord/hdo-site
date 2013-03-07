@@ -1,7 +1,7 @@
 <h1><%= "#{@representative.first_name} #{@representative.last_name}" %></h1>
 <div class="row-fluid">
   <div class="span4">
-    <%= image_tag @representative.image_with_fallback.thumb('240x320#').strip.url, class: 'representative-image', alt: @representative.full_name %>
+    <%= image_tag @representative.image, class: 'representative-image', alt: @representative.full_name, width: '240'; height: '320' %>
   </div>
 
   <div class="span6">

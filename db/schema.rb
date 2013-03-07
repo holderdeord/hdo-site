@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130225215835) do
+ActiveRecord::Schema.define(:version => 20130307004639) do
 
   create_table "answers", :force => true do |t|
     t.text     "body",                                     :null => false
@@ -162,8 +162,6 @@ ActiveRecord::Schema.define(:version => 20130225215835) do
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
     t.string   "slug"
-    t.string   "image_uid"
-    t.string   "image_name"
   end
 
   add_index "parties", ["name"], :name => "index_parties_on_name"
@@ -245,8 +243,6 @@ ActiveRecord::Schema.define(:version => 20130225215835) do
     t.datetime "date_of_birth"
     t.datetime "date_of_death"
     t.string   "slug"
-    t.string   "image_uid"
-    t.string   "image_name"
     t.string   "twitter_id"
     t.string   "email"
   end

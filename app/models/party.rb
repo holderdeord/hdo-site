@@ -1,8 +1,6 @@
 class Party < ActiveRecord::Base
   extend FriendlyId
 
-  include Hdo::Model::HasFallbackImage
-
   include Tire::Model::Search
   include Tire::Model::Callbacks
 
@@ -24,8 +22,7 @@ class Party < ActiveRecord::Base
 
   friendly_id :external_id, use: :slugged
 
-  image_accessor :image
-  attr_accessible :image, :name
+  attr_accessible :name
 
   def self.in_government
     today = Date.today
@@ -38,19 +35,11 @@ class Party < ActiveRecord::Base
     governing_periods.for_date(date).any?
   end
 
-  def large_logo
-    image_with_fallback.strip.url
-  end
+  def image
+    default_logo = "party-logos-stripped/unknown.png"
+    actual_logo = "party-logos-stripped/#{URI.encode slug}.png"
 
-  def tiny_logo
-    image_with_fallback.thumb("28x28").strip.url
-  end
-
-  def default_image
-    default_logo = Rails.root.join("app/assets/images/party-logos/unknown.png")
-    large_logo = Rails.root.join("app/assets/images/party-logos/#{URI.encode slug}.png")
-
-    large_logo.exist? ? large_logo : default_logo
+    Rails.root.join("app/assets/images/#{actual_logo}").exist? ? actual_logo : default_logo
   end
 
   def current_representatives
