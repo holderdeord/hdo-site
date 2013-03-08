@@ -25,6 +25,18 @@ module Hdo
         issue.accountability.score_for(rep2.current_party).should == 0.0
       end
 
+      it 'does not fail when some promises but no votes are connected' do
+        party   = Party.make!
+        issue   = Issue.make!(vote_connections: [])
+
+        # [nil, nil].sum will fail with a NoMethodError, so there should be two connections
+        # for the same party here
+        issue.promise_connections.create!(promise: Promise.make!(parties: [party]), status: 'for')
+        issue.promise_connections.create!(promise: Promise.make!(parties: [party]), status: 'for')
+
+        issue.accountability.score_for(party).should be_nil
+      end
+
       it 'generates CSV' do
         Issue.make!(status: 'published')
 

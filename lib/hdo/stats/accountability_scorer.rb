@@ -122,7 +122,7 @@ module Hdo
 
         promise_connections.each do |conn|
           party_scores_for(vote_scores, conn).each do |party, score|
-            scores_by_party[party] << score
+            scores_by_party[party] << score if score
           end
         end
 
@@ -137,10 +137,14 @@ module Hdo
         scores = {}
 
         promise_connection.promise.parties.each do |party|
-          if promise_connection.for?
-            scores[party] = vote_scores.score_for(party)
+          party_score = vote_scores.score_for(party)
+
+          if party_score.nil?
+            scores[party] = nil
+          elsif promise_connection.for?
+            scores[party] = party_score
           elsif promise_connection.against?
-            scores[party] = (100 - vote_scores.score_for(party))
+            scores[party] = (100 - party_score)
           end
         end
 
