@@ -34,7 +34,8 @@ Install package dependencies and set up Ruby 1.9.3 with RVM.
         wnorwegian \
         postgresql \
         zlib1g \
-        zlib1g-dev
+        zlib1g-dev \
+        postgresql-server-dev-9.1
 
     $ curl -L get.rvm.io | bash -s stable --ruby
     $ ruby -v
