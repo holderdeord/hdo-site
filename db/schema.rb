@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130307004639) do
+ActiveRecord::Schema.define(:version => 20130308115945) do
 
   create_table "answers", :force => true do |t|
     t.text     "body",                                     :null => false
@@ -162,6 +162,7 @@ ActiveRecord::Schema.define(:version => 20130307004639) do
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
     t.string   "slug"
+    t.string   "logo"
   end
 
   add_index "parties", ["name"], :name => "index_parties_on_name"
@@ -245,6 +246,7 @@ ActiveRecord::Schema.define(:version => 20130307004639) do
     t.string   "slug"
     t.string   "twitter_id"
     t.string   "email"
+    t.string   "image"
   end
 
   add_index "representatives", ["district_id"], :name => "index_representatives_on_district_id"

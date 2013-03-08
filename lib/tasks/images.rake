@@ -19,6 +19,10 @@ namespace :images do
 
         if ENV['FORCE'].nil? && filename.exist?
           puts "skipping download for existing #{filename}, use FORCE=true to override"
+
+          rep.image = filename.open
+          rep.save!
+
           next
         end
 
@@ -54,6 +58,10 @@ namespace :images do
               File.delete(destination.path)
             else
               print "\rDownloading #{url} finished. Saved as #{filename}\n"
+
+              rep.image = filename.open
+              rep.save!
+
               $stdout.flush
             end
           end
@@ -62,9 +70,15 @@ namespace :images do
     end
   end
 
-  desc 'Save party logos to Party models'
+  desc 'Save and scale party logos to Party models'
   task :party_logos => :environment do
-    puts "not needed at the moment"
+    path_to_logos = Rails.root.join("app/assets/images/party-logos-stripped")
+
+    Party.all.each do |party|
+      party.logo = path_to_logos.join("#{party.slug}.png").open
+      party.save!
+      puts "Logo for #{party.name} mapped as #{party.logo.url}."
+    end
   end
 
   desc 'Set up all images'
@@ -73,4 +87,3 @@ namespace :images do
   desc 'Reset and set up all images'
   task :reset => %w[representatives:reset all]
 end
-

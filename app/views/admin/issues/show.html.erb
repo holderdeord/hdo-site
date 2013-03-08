@@ -18,7 +18,7 @@
 
       <div class="span6">
           <% counts = promise_counts_for(party) %>
-          <%= image_tag party.image, width: '28', height: '28' %>
+          <%= image_tag party.logo, width: '28', height: '28' %>
           <strong><%= @accountability.text_score_for(party) %></strong> <%= t('app.promises.based_on', count: counts[:used]) %>
           <p><small><%= counts[:for] %> støtter saken, <%= counts[:against] %> støtter ikke saken + <%= counts[:related] %> relatert</small></p>
       </div>

@@ -1,4 +1,6 @@
 class Representative < ActiveRecord::Base
+  mount_uploader :image, RepresentativeUploader
+
   extend FriendlyId
 
   include Tire::Model::Search
@@ -126,14 +128,6 @@ class Representative < ActiveRecord::Base
 
   def stats
     Hdo::Stats::RepresentativeCounts.new self
-  end
-
-  def image
-    default_image = "representatives/unknown.jpg"
-    actual_image = "representatives/#{URI.encode slug}.jpg"
-
-    image = Rails.root.join("app/assets/images/#{actual_image}").exist? ? actual_image : default_image
-    ActionController::Base.helpers.asset_path image
   end
 
   def to_indexed_json

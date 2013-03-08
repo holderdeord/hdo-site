@@ -7,7 +7,7 @@
   <% @parties.each do |party| %>
     <li class="span2">
       <%= link_to party do %>
-        <%= image_tag party.image, alt: party.name + 's logo' %>
+        <%= image_tag party.logo, alt: party.name + 's logo' %>
       <% end %>
     </li>
   <% end %>

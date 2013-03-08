@@ -1,4 +1,6 @@
 class Party < ActiveRecord::Base
+  mount_uploader :logo, PartyUploader
+
   extend FriendlyId
 
   include Tire::Model::Search
@@ -35,19 +37,16 @@ class Party < ActiveRecord::Base
     governing_periods.for_date(date).any?
   end
 
-  def image
-    default_logo = "party-logos-stripped/unknown.png"
-    actual_logo = "party-logos-stripped/#{URI.encode slug}.png"
-
-    logo = Rails.root.join("app/assets/images/#{actual_logo}").exist? ? actual_logo : default_logo
-    ActionController::Base.helpers.asset_path logo
-  end
-
   def current_representatives
     representatives_at Date.today
   end
 
   def representatives_at(date)
     party_memberships.includes(:representative).for_date(date).map { |e| e.representative }.sort_by { |e| e.last_name }
+  end
+
+  def image
+    logger.warn "Party#image is deprecated, use Party#logo (from #{caller(0).to_s})"
+    logo
   end
 end

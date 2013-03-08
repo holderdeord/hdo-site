@@ -20,8 +20,8 @@
 # OS X finder.
 .DS_Store
 
-# Ignore dragonfly cache
-/public/system/dragonfly/*
+# Ignore carrierwave uploads
+/public/uploads
 
 # Ignore representative images
 /app/assets/images/representatives/*.jpg

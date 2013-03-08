@@ -90,6 +90,10 @@ gem 'tire'
 gem 'rack-cache', :require => 'rack/cache'
 gem 'cache_digests'
 
+# images
+gem 'mini_magick', "~> 3.5"
+gem 'carrierwave', '~> 0.8'
+
 # logging
 gem 'lograge'
 

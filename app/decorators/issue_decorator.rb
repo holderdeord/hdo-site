@@ -96,7 +96,7 @@ class IssueDecorator < Draper::Decorator
     end
 
     def logo(opts = {})
-      h.image_tag model.image, opts.merge(alt: "#{model.name}s logo", width: '96', height: '96')
+      h.image_tag model.logo, opts.merge(alt: "#{model.name}s logo", width: '96', height: '96')
     end
 
     def position_logo
