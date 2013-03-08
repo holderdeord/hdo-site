@@ -6,14 +6,14 @@ class RepresentativeUploader < CarrierWave::Uploader::Base
   storage :file
 
   def store_dir
-    "uploads/#{model.class.to_s.underscore}/#{mounted_as}/#{model.id}"
+    "uploads/#{model.class.to_s.underscore}/#{mounted_as}/#{model.slug}"
   end
 
   def default_url
     asset_path "representatives/unknown.jpg"
   end
 
-  # TODO: sharpen as in https://github.com/holderdeord/hdo-site/issues/418
+  # TODO: quality, strip, sharpen, scale https://github.com/fxposter/carrierwave-processing
 
   version :extra_large do
     process resize_to_fit: [480, 640]
@@ -33,6 +33,10 @@ class RepresentativeUploader < CarrierWave::Uploader::Base
 
   version :extra_small do
     process resize_to_fit: [30, 40]
+  end
+
+  def filename
+    digest(:image) if original_filename.present?
   end
 
 end

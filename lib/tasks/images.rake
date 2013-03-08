@@ -5,7 +5,7 @@ namespace :images do
   namespace :representatives do
     desc 'Reset representative images'
     task :reset => :environment do
-      # Representative.all.each { |e| e.image = nil; e.save! }
+      Representative.all.each { |e| e.image = nil; e.save! }
     end
 
     desc 'Fetch representatives images from stortinget.no'

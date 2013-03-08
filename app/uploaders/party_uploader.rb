@@ -9,7 +9,7 @@ class PartyUploader < CarrierWave::Uploader::Base
   # Override the directory where uploaded files will be stored.
   # This is a sensible default for uploaders that are meant to be mounted:
   def store_dir
-    "uploads/#{model.class.to_s.underscore}/#{mounted_as}/#{model.id}"
+    "uploads/#{model.class.to_s.underscore}/#{mounted_as}/#{model.slug}"
   end
 
   def default_url
@@ -36,4 +36,7 @@ class PartyUploader < CarrierWave::Uploader::Base
     process :resize_to_fit => [30, 30]
   end
 
+  def filename
+    digest(:logo) if original_filename.present?
+  end
 end
