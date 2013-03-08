@@ -148,3 +148,10 @@ Answer.blueprint do
   representative { Representative.make! }
   question { Question.make! }
 end
+
+PartyComment.blueprint do
+  title { 'Title' }
+  body  { 'This is my body' }
+  party
+  issue
+end
