@@ -18,16 +18,13 @@ class Admin::PartyCommentsController < AdminController
   # PUT /admin/issue/1/party_comments/1
   # PUT /admin/issue/1/party_comments/1.json
   def update
-    @admin_party_comment = PartyComment.find_by_issue_id_and_id(parmas[:issue_id], params[:id])
+    @admin_party_comment = PartyComment.find_by_issue_id_and_id(params[:issue_id], params[:id])
+    @admin_party_comment.update_attributes(params[:admin_party_comment])
 
-    respond_to do |format|
-      if @admin_party_comment.update_attributes(params[:admin_party_comment])
-        format.html { redirect_to @admin_party_comment, notice: 'Party comment was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { render action: "edit" }
-        format.json { render json: @admin_party_comment.errors, status: :unprocessable_entity }
-      end
+    if @admin_party_comment.save
+      render json: @admin_party_comment
+    else
+      head :bad_request
     end
   end
 
@@ -37,9 +34,6 @@ class Admin::PartyCommentsController < AdminController
     @admin_party_comment = PartyComment.find_by_issue_id_and_id(params[:issue_id], params[:id])
     @admin_party_comment.destroy
 
-    respond_to do |format|
-      format.html { redirect_to admin_party_comments_url }
-      format.json { head :no_content }
-    end
+    head :ok
   end
 end
