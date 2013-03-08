@@ -11,7 +11,7 @@ class Promise < ActiveRecord::Base
       indexes :party_names, type: :string
     }
   }
-  update_index_on_change_of :parties, :has_many
+  update_index_on_change_of :parties, has_many: true
 
   attr_accessible :parties, :general, :categories, :source, :body, :page, :date
 

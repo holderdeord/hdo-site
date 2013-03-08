@@ -9,7 +9,7 @@ class Vote < ActiveRecord::Base
   tire.settings(TireSettings.default) {
     indexes :category_names, index: :not_analyzed
   }
-  update_index_on_change_of :propositions, :parliament_issues, :has_many
+  update_index_on_change_of :propositions, :parliament_issues, has_many: true
 
   attr_accessible :for_count, :against_count, :absent_count,
                   :enacted, :personal, :subject, :time, :external_id,

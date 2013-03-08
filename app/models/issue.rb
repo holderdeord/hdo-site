@@ -18,7 +18,8 @@ class Issue < ActiveRecord::Base
       end
     }
   }
-  update_index_on_change_of :categories, :has_many
+
+  update_index_on_change_of :categories, if: lambda { |i| i.published? }, has_many: true
 
   after_save    { tire.update_index if published? } # TODO: what if an issue is retracted?
   after_destroy { tire.update_index }

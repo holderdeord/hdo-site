@@ -29,8 +29,7 @@ describe Issue, :search do
   context 'refresh on association update' do
     it 'updates the index when associated categories change' do
       category = Category.make!
-      issue = Issue.make!({status: 'published', categories: [category]})
-
+      issue = Issue.make!(status: 'published', categories: [category])
       refresh_index
 
       results_for('*').size.should == 1
@@ -43,6 +42,19 @@ describe Issue, :search do
 
       result = Issue.search('*').results.first
       result.categories.first.name.should == category.name
+    end
+
+    it 'does not update the index if categories change while the issue is unpublished' do
+      category = Category.make!
+      issue = Issue.make!(status: 'in_progress', categories: [category])
+      refresh_index
+
+      Issue.search('*').results.size.should == 0
+
+      category.update_attributes!(name: 'shrimp')
+      refresh_index
+
+      Issue.search('*').results.size.should == 0
     end
   end
 

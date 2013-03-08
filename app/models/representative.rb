@@ -20,7 +20,7 @@ class Representative < ActiveRecord::Base
       indexes :slug
     end
   }
-  update_index_on_change_of :district, :parties, :has_many
+  update_index_on_change_of :district, :parties, has_many: true
 
   attr_accessible :first_name, :last_name, :committees, :district,
                   :date_of_birth, :date_of_death, :twitter_id, :email

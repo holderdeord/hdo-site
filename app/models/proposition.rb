@@ -14,7 +14,7 @@ class Proposition < ActiveRecord::Base
       end
     }
   }
-  update_index_on_change_of :votes, :has_many
+  update_index_on_change_of :votes, has_many: true
 
   attr_accessible :description, :on_behalf_of, :body, :representative_id
 
