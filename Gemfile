@@ -49,6 +49,7 @@ group :development do
   gem 'thin'
   gem "rails-erd"
   gem 'quiet_assets'
+  gem 'hipchat'
 end
 
 # deployment
