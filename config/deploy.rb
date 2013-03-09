@@ -67,7 +67,7 @@ namespace :cache do
   end
 
   task :images do
-    run "cd #{release_path} && RAILS_ENV=#{rails_env} #{rake} images:reset"
+    run "cd #{current_path} && RAILS_ENV=#{rails_env} #{rake} images:reset"
   end
 end
 
