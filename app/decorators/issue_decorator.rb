@@ -169,6 +169,10 @@ class IssueDecorator < Draper::Decorator
       I18n.l vote_connection.vote.time, format: :short
     end
 
+    def month_and_year
+      I18n.l(vote_connection.vote.time, format: :month_year).capitalize
+    end
+
     def anchor
       vote_connection.to_param
     end

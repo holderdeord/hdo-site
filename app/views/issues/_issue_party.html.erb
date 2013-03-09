@@ -32,7 +32,8 @@
         <% party.votes.each do |vote| %>
           <li>
             <span class="issue-<%= vote.direction %>"><%= vote.label %></span>
-            <%= link_to vote.title, votes_issue_path(@issue, anchor: vote.anchor) %></a>.
+            <%= link_to vote.title, votes_issue_path(@issue, anchor: vote.anchor) %></a>
+            <small class="muted"><%= vote.month_and_year %></small>
           </li>
         <% end %>
       </ul>

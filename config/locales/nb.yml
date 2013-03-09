@@ -8,6 +8,7 @@ nb:
       default: "%Y-%m-%d %H:%M:%S"
       short: "%Y-%m-%d"
       text: "%e. %B %Y"
+      month_year: "%B %Y"
       text_time: "%e. %B %Y %H:%M"
   valid_email:
     validations:
@@ -336,8 +337,8 @@ nb:
     issues:
       title: 'Saker'
       explanation:
-        one: 'Basert på <a href="%{url}">%{count} avstemning</a> fra oktober 2010 til dagens dato.'
-        other: 'Basert på <a href="%{url}">%{count} avstemninger</a> fra oktober 2010 til dagens dato.'
+        one: 'Basert på <a href="%{url}">%{count} avstemning</a> fra oktober 2010 til dagens dato og løfter for perioden 2009-2013.'
+        other: 'Basert på <a href="%{url}">%{count} avstemninger</a> fra oktober 2010 til dagens dato og løfter for perioden 2009-2013.'
       back: Tilbake til saken
       not_published: Denne saken er ikke publisert.
       published: Denne saken er publisert.
