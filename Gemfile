@@ -49,13 +49,13 @@ group :development do
   gem 'thin'
   gem "rails-erd"
   gem 'quiet_assets'
-  gem 'hipchat'
 end
 
 # deployment
 gem 'capistrano', '~> 2.13'
 gem 'capistrano-maintenance'
 gem 'capistrano-ext'
+gem 'hipchat'
 
 # frontend stuff
 gem 'jquery-rails'
