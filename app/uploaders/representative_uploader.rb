@@ -13,26 +13,25 @@ class RepresentativeUploader < CarrierWave::Uploader::Base
     asset_path "representatives/unknown.jpg"
   end
 
-  # TODO: quality, strip, sharpen, scale https://github.com/fxposter/carrierwave-processing
-
-  version :extra_large do
-    process resize_to_fit: [480, 640]
-  end
+  process quality: 80
+  process :strip
+  process sharpen: [0, 1.15]
 
   version :large do
-    process resize_to_fit: [240, 320]
+    process scale: [480, 640]
   end
 
   version :medium do
-    process resize_to_fit: [120, 160]
+    process scale: [240, 320]
   end
 
   version :small do
-    process resize_to_fit: [60, 80]
+    process scale: [120, 160]
   end
 
-  version :extra_small do
-    process resize_to_fit: [30, 40]
+  version :avatar do
+    process scale: [64, 96]
+    process crop: [64, 64, 0, 0]
   end
 
   def filename

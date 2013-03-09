@@ -38,6 +38,21 @@ module Hdo
         end
       end
 
+      def crop(width, height, x, y)
+        manipulate! do |img|
+          img.crop("#{width}x#{height}+#{x}+#{y}")
+          img = yield(img) if block_given?
+          img
+        end
+      end
+
+      def sharpen(radiux, sigma)
+        manipulate! do |img|
+          img.sharpen("#{radiux}x#{sigma}")
+          img = yield(img) if block_given?
+          img
+        end
+      end
 
     end
   end

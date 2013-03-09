@@ -7,7 +7,7 @@
 <div class="container-fluid">
   <div class="row-fluid">
     <div class="span4">
-      <%= image_tag @representative.image, width: '240', height: '320', class: 'representative-image', alt: @representative.full_name %>
+      <%= image_tag @representative.image.versions[:medium], width: '240', height: '320', class: 'representative-image', alt: @representative.full_name %>
       <br>
       <br>
     </div>

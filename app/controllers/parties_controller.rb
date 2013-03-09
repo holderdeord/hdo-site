@@ -32,7 +32,7 @@ class PartiesController < ApplicationController
 
   def show
     @party  = Party.includes(:representatives).find(params[:id])
-    @representatives = @party.current_representatives
+    @representatives = @party.current_representatives.sort_by { |e| e.image.to_s.include?("unknown") ? 1 : 0 }
 
     @issues = Issue.published.order(:title)
     @categories = Category.where(:main => true).includes(:children => :promises)
