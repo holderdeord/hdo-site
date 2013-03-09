@@ -8,6 +8,9 @@ notifications:
   webhooks: http://deploy.holderdeord.no/travis
   recipients:
     - jari@holderdeord.no
+  hipchat:
+    rooms:
+      secure: "dPDcvtGQXXzdj31ftZkRShrn+l1TCnTEPTdr6YVAfzAI1Ashzhr4yGvnNfMs\n4lbxYDJfRxpTO5Xd1Hte5HH7c0ijoHEGjajySSl43+nLeShw+CWhuxKSbmCM\nnICGbjLhNPSDTIg1QPO/AkUCF3YG6szmd3JX9XLathUrt0HOBTY="
   irc:
     channels:
       - "irc.freenode.net#holderdeord"
