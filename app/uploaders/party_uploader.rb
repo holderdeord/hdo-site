@@ -16,24 +16,12 @@ class PartyUploader < CarrierWave::Uploader::Base
     asset_path "party-logos-stripped/unknown.png"
   end
 
-  version :extra_large do
-    process :resize_to_fit => [500, 500]
-  end
-
-  version :large do
-    process :resize_to_fit => [250, 250]
-  end
-
   version :medium do
-    process :resize_to_fit => [125, 125]
+    process :scale => [128, 128]
   end
 
   version :small do
-    process :resize_to_fit => [60, 60]
-  end
-
-  version :extra_small do
-    process :resize_to_fit => [30, 30]
+    process :scale => [32, 32]
   end
 
   def filename
