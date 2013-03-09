@@ -32,8 +32,8 @@ class SearchController < ApplicationController
     @results = []
 
     icons = {
-      'representative' => Dragonfly[:images].fetch_file(Rails.application.assets.resolve("representative.png")).thumb("24x24").url,
-      'issue'          => Dragonfly[:images].fetch_file(Rails.application.assets.resolve("issue.png")).thumb("24x24").url
+      # 'representative' => Dragonfly[:images].fetch_file(Rails.application.assets.resolve("representative.png")).thumb("24x24").url,
+      # 'issue'          => Dragonfly[:images].fetch_file(Rails.application.assets.resolve("issue.png")).thumb("24x24").url
     }
 
     if response.success?

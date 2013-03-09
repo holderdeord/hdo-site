@@ -16,7 +16,7 @@
         <div class="span4">
           <small>Svar for <%= answer.representative.party_at(answer.created_at).try(:name) %></small>
           <h3 class="lead"><%= answer.representative.name %></h3>
-          <%= image_tag answer.representative.image_with_fallback.thumb('80x106').strip.url %>
+          <%= image_tag answer.representative.image.versions[:small] %>
         </div>
 
         <div class="well span8"><%= answer.body %></div>

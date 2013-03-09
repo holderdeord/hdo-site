@@ -96,8 +96,7 @@ class IssueDecorator < Draper::Decorator
     end
 
     def logo(opts = {})
-      size = opts.delete(:size) || '96x96'
-      h.image_tag model.image_with_fallback.thumb(size).url, opts.merge(alt: "#{model.name}s logo")
+      h.image_tag model.logo.versions[:medium], opts.merge(alt: "#{model.name}s logo", width: '96', height: '96')
     end
 
     def position_logo

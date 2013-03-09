@@ -1,7 +1,7 @@
 class Party < ActiveRecord::Base
-  extend FriendlyId
+  mount_uploader :logo, PartyUploader
 
-  include Hdo::Model::HasFallbackImage
+  extend FriendlyId
 
   include Tire::Model::Search
   include Tire::Model::Callbacks
@@ -24,8 +24,7 @@ class Party < ActiveRecord::Base
 
   friendly_id :external_id, use: :slugged
 
-  image_accessor :image
-  attr_accessible :image, :name
+  attr_accessible :name
 
   def self.in_government
     today = Date.today
@@ -38,26 +37,16 @@ class Party < ActiveRecord::Base
     governing_periods.for_date(date).any?
   end
 
-  def large_logo
-    image_with_fallback.strip.url
-  end
-
-  def tiny_logo
-    image_with_fallback.thumb("28x28").strip.url
-  end
-
-  def default_image
-    default_logo = Rails.root.join("app/assets/images/party-logos/unknown.png")
-    large_logo = Rails.root.join("app/assets/images/party-logos/#{URI.encode slug}.png")
-
-    large_logo.exist? ? large_logo : default_logo
-  end
-
   def current_representatives
     representatives_at Date.today
   end
 
   def representatives_at(date)
     party_memberships.includes(:representative).for_date(date).map { |e| e.representative }.sort_by { |e| e.last_name }
+  end
+
+  def image
+    logger.warn "Party#image is deprecated, use Party#logo (from #{caller(0).to_s})"
+    logo
   end
 end

@@ -55,6 +55,7 @@ end
 gem 'capistrano', '~> 2.13'
 gem 'capistrano-maintenance'
 gem 'capistrano-ext'
+gem 'hipchat'
 
 # frontend stuff
 gem 'jquery-rails'
@@ -91,7 +92,8 @@ gem 'rack-cache', :require => 'rack/cache'
 gem 'cache_digests'
 
 # images
-gem 'dragonfly', '~> 0.9.12'
+gem 'mini_magick', "~> 3.5"
+gem 'carrierwave', '~> 0.8'
 
 # logging
 gem 'lograge'

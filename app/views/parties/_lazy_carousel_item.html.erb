@@ -1,7 +1,7 @@
 <div class="item">
   <% representative_group.each do |representative| %>
       <%= link_to(representative, :class => "representative-view") do %>
-        <img alt="<%= representative.full_name%>" data-src="<%= path_to_image representative.image_with_fallback.thumb('169x226#').strip.url %>">
+        <img alt="<%= representative.full_name%>" data-src="<%= path_to_image representative.image.versions[:medium] %>">
         <div class="carousel-caption representative-name-label">
           <%= representative.full_name %>
         </div>

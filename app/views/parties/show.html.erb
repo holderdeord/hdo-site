@@ -8,7 +8,8 @@
 
 <div class="row-fluid">
   <div class="span4">
-    <%= image_tag @party.image_with_fallback.thumb("210x290").url, alt: "#{@party.name}s logo" %>
+    <%# TODO(henrik): skaler i CSS %>
+    <%= image_tag @party.logo, alt: "#{@party.name}s logo", width: '210', height: '210' %>
   </div>
 
   <div class="span8">

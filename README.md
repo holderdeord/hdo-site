@@ -231,5 +231,3 @@ For test environments, deploying to [Heroku](http://www.heroku.com/) should work
     $ heroku create
     $ git push heroku master
     $ heroku run rake db:setup import:dev
-
-One caveat: since Heroku doesn't allow writing to the file system, [Dragonfly won't work properly](http://markevans.github.com/dragonfly/file.Heroku.html).

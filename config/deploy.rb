@@ -9,15 +9,15 @@ end
 
 require 'capistrano/ext/multistage'
 
-set :user,        'hdo'
-set :application, 'hdo-site'
-set :scm,         :git
-set :repository,  'git://github.com/holderdeord/hdo-site'
-set :branch,      ENV['BRANCH'] || 'master'
-set :deploy_to,   "/webapps/#{application}"
-set :use_sudo,    false
-set :deploy_via,  :remote_cache
-
+set :user,            'hdo'
+set :application,     'hdo-site'
+set :scm,             :git
+set :repository,      'git://github.com/holderdeord/hdo-site'
+set :branch,          ENV['BRANCH'] || 'master'
+set :deploy_to,       "/webapps/#{application}"
+set :use_sudo,        false
+set :deploy_via,      :remote_cache
+set :shared_children, shared_children + %w[public/uploads]
 set :passenger_restart_strategy, :hard
 
 namespace :deploy do
@@ -65,14 +65,19 @@ namespace :cache do
   namespace :pages do
     task(:clear) { run "rm -r #{current_path}/public/cache/*" }
   end
-end
 
-namespace :dragonfly do
-  desc "Symlink the Rack::Cache files"
-  task :symlink, :roles => [:app] do
-    run "mkdir -p #{shared_path}/tmp/dragonfly && ln -nfs #{shared_path}/tmp/dragonfly #{release_path}/tmp/dragonfly"
+  task :images do
+    run "cd #{release_path} && RAILS_ENV=#{rails_env} #{rake} images:reset"
   end
 end
 
-after 'deploy:update_code', 'dragonfly:symlink'
-after 'deploy:update_code', 'config:symlink'
+# alternatively after:update_code, but need to get things in the right order here.
+before 'deploy:assets:precompile', 'config:symlink'
+
+if ENV['HIPCHAT_API_TOKEN']
+  require "hipchat/capistrano"
+
+  set :hipchat_token,     ENV["HIPCHAT_API_TOKEN"]
+  set :hipchat_room_name, "Teknisk"
+  set :hipchat_announce,  false
+end

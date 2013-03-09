@@ -1,7 +1,7 @@
 class Representative < ActiveRecord::Base
-  extend FriendlyId
+  mount_uploader :image, RepresentativeUploader
 
-  include Hdo::Model::HasFallbackImage
+  extend FriendlyId
 
   include Tire::Model::Search
   include Tire::Model::Callbacks
@@ -49,8 +49,6 @@ class Representative < ActiveRecord::Base
   validates :twitter_id,  allow_nil: true, uniqueness: true, format: /^[^@]/
 
   friendly_id :external_id, use: :slugged
-
-  image_accessor :image
 
   def display_name
     "#{last_name}, #{first_name}"
@@ -130,10 +128,6 @@ class Representative < ActiveRecord::Base
 
   def stats
     Hdo::Stats::RepresentativeCounts.new self
-  end
-
-  def default_image
-    "#{Rails.root}/app/assets/images/representatives/unknown.jpg"
   end
 
   def to_indexed_json
