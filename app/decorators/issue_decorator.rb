@@ -140,8 +140,8 @@ class IssueDecorator < Draper::Decorator
     end
 
     def votes
-      votes = issue.vote_connections.map { |vc| PartyVote.new(model, vc) }
-      votes.select { |e| e.participated? }
+      votes = issue.vote_connections.sort_by { |e| e.vote.time }.reverse
+      votes.map { |vc| PartyVote.new(model, vc) }.select(&:participated?)
     end
   end
 
