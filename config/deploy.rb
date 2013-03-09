@@ -18,7 +18,6 @@ set :deploy_to,       "/webapps/#{application}"
 set :use_sudo,        false
 set :deploy_via,      :remote_cache
 set :shared_children, shared_children + %w[public/uploads]
-
 set :passenger_restart_strategy, :hard
 
 namespace :deploy do
@@ -74,3 +73,11 @@ end
 
 # alternatively after:update_code, but need to get things in the right order here.
 before 'deploy:assets:precompile', 'config:symlink'
+
+if ENV['HIPCHAT_API_TOKEN']
+  require "hipchat/capistrano"
+
+  set :hipchat_token,     ENV["HIPCHAT_API_TOKEN"]
+  set :hipchat_room_name, "Teknisk"
+  set :hipchat_announce,  false
+end
