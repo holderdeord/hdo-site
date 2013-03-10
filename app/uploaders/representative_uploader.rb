@@ -13,9 +13,10 @@ class RepresentativeUploader < CarrierWave::Uploader::Base
     asset_path "representatives/unknown.jpg"
   end
 
-  process quality: 80
   process :strip
-  process sharpen: [0, 1.15]
+  process sigmoidal_contrast: [3, 20]
+  process sharpen: [0, 1.05]
+  process quality: 85
 
   version :large do
     process scale: [480, 640]
