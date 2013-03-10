@@ -21,8 +21,15 @@ module Hdo
         issue.promise_connections.create!(promise: promise1, status: "for")
         issue.promise_connections.create!(promise: promise2, status: "against")
 
-        issue.accountability.score_for(rep1.current_party).should == 100.0
-        issue.accountability.score_for(rep2.current_party).should == 0.0
+        accountability = issue.accountability
+
+        accountability.score_for(rep1.current_party).should == 100.0
+        accountability.score_for(rep2.current_party).should == 0.0
+
+        I18n.with_locale(:nb) do
+          accountability.text_for(rep1.current_party).should == "De har <strong>holdt ord</strong> i denne saken."
+          accountability.text_for(rep2.current_party).should == "De har <strong>ikke holdt ord</strong> i denne saken."
+        end
       end
 
       it 'does not fail when some promises but no votes are connected' do
