@@ -34,7 +34,8 @@ ERD.pdf
 erd.pdf
 
 chromedriver.log
-.idea
+/.idea
+/node_modules
 
 # config
 config/database.yml
