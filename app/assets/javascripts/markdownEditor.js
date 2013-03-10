@@ -5,8 +5,8 @@
     $("[data-wmd-editor]").each(function () {
       var converter, editor;
 
-      // converter = new Markdown.Converter();
-      // editor = new Markdown.Editor(converter, "-" + $(this).data('wmd-editor'));
+      converter = new Markdown.Converter();
+      editor = new Markdown.Editor(converter, "-" + $(this).data('wmd-editor'));
 
       editor.run();
     });
