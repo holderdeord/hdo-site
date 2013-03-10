@@ -129,6 +129,9 @@ nb:
       answer:
         one: svar
         other: svar
+      party_comment:
+        one: "Partikommentar"
+        other: "Partikommentarer"
     attributes:
       representative:
         name: "Navn"
@@ -224,6 +227,7 @@ nb:
         categories: "Kategorier"
         promises: "Løfter"
         votes: "Avstemninger"
+        party_comments: "Partikommentarer"
         last_updated_by: Sist redigert av
         editor: Redaktør
         published_at: Publisert
@@ -247,6 +251,9 @@ nb:
         representative: Representant
         created_at: Opprettet
         updated_at: Sist oppdatert
+      party_comment:
+        party: Parti
+        body: Kommentar
   will_paginate:
     previous_label: "&#8592; Forrige"
     next_label: "Neste &#8594;"
