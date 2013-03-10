@@ -4,30 +4,81 @@
 @hdoPrimaryColor: #019ea2;
 @hdoSecondaryColor: #e03d25;
 
-.representative-image {
-  box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+.representative-header {
+  position: absolute;
+  background-image: url(/assets/representative-headermask.png);
+  background-position: 50% 0;
+  left: 0;
+  right: 0;
+  height: 200px;
+  z-index: -1;
 }
 
-// Don't think the below selector is used
-.representative-carousel-view {
-  max-width: 150px;
-  margin-right: 10px;
-}
-
-.representative-view {
-  max-width: 25%;
-  float: left;
+.representative-profile {
+  border: 3px solid transparent;
+  border-width: 1px 2px 0 2px;
+  border-image: url(/assets/representative-borderbox.png) 1 2 0 2 fill stretch;
+  margin-top: 125px;
+  padding: 70px 10px 20px 285px;
   position: relative;
-  color: #ddd;
-  background-color: #000;
-  &:hover {
-    color: #ddd;
-    img {
-      opacity: 0.95;
+  margin: 125px -10px 0 -10px;
+  .representative-name {
+    font-weight: 300;
+  }
+  .representative-image {
+    box-shadow: 0 0 1px 1px rgba(0,0,0,0.3);
+    position: absolute;
+    width: 240px;
+    height: 320px;
+    top: -100px;
+    left: 20px;
+  }
+  .representative-party,
+  .representative-district {
+    a {
+      text-transform: uppercase;
+      font-weight: bold;
+      font-family: NeoSansStandard, sans-serif;
     }
   }
-  .representative-name-label {
-    text-align: center;
-    font-size: 0.8em;
+  .representative-district {
+    a {
+      text-transform: uppercase;
+      font-weight: bold;
+      font-family: NeoSansStandard, sans-serif;
+      color: #000;
+    }
+  }
+  .representative-comitee-list {
+    color: #999;
+    margin: 0;
+    font-family: NeoSansStandard, sans-serif;
+    dd {
+      margin: 0;
+      a {
+        color: inherit;
+      }
+    }
   }
 }
+
+
+
+@media (max-width: 767px) {
+  .representative-profile {
+    margin-top: 50px;
+    padding: 20px 5px 20px 150px;
+    .representative-name {
+      font-size: 1.5em;
+      line-height: 1.25em;
+    }
+    .representative-image {
+      top: -50px;
+      left: 10px;
+      width: 120px;
+      height: 160px;
+    }
+  }
+}
+
+

@@ -1,9 +1,89 @@
+.party-title-name {
+  font-weight: normal;
+}
+
+#representatives {
+  position: relative;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  .representative {
+    background: #fff 50% 0 no-repeat;
+    a {
+      position: relative;
+      height: 100%;
+      display: block;
+      text-align: center;
+      span {
+        display: block;
+        padding-top: 5px;
+        color: #000;
+        font-size: 0.85em;
+        line-height: 1.25em;
+      }
+    }
+  }
+}
+
+.swiper-navigation {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  text-align: center;
+  line-height: 40px;
+  font-weight: bold;
+  top: 50%;
+  margin-top: -40px;
+  background-color: #000;
+  background-color: rgba(0,0,0,0.75);
+  border-radius: 50%;
+  color: #fff;
+  cursor: pointer;
+  &:hover {
+    background-color: #000;
+  }
+  &.swiper-prev {
+    left: 0;
+  }
+  &.swiper-next {
+    right: 0;
+  }
+}
+
+
+@media (max-width: 767px) {
+  .swiper-navigation {
+    display: none;
+  }
+}
+
+
+/* Swiper Styles */
+.swiper-container {
+  overflow:hidden;
+  height: 200px;
+}
+.swiper-wrapper {
+  position:relative;
+}
+.swiper-slide {
+  height: 160px;
+  float:left;
+  position: relative;
+}
+/* IE10 Windows Phone 8 Fixes */
+.swiper-wp8-horizontal {
+  -ms-touch-action: pan-y;
+}
+.swiper-wp8-vertical {
+  -ms-touch-action: pan-x;
+}
 
 .parties-issue-list {
-  font-size: 1.5em; // TODO: fix issue list font size on mobile;
+  font-size: 1.25em;
   list-style-type: none;
   margin-bottom: 3em;
-
   > li {
     padding: 0.4em 0;
     line-height: 1.5em;
