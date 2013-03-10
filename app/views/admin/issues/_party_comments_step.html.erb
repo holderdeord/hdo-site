@@ -1,0 +1,20 @@
+<div class="well">
+  <h3><%= PartyComment.model_name.human(count: 2) %></h3>
+  <hr/>
+  <table class="table">
+    <tr>
+      <th><%= PartyComment.human_attribute_name :party %></th>
+      <th><%= PartyComment.human_attribute_name :body %></th>
+      <th></th>
+    </tr>
+
+    <% @party_comments.each do |party_comment| %>
+      <tr>
+        <td><%= select_tag "party_comments[#{party_comment.id}][party]", party_options %></td>
+        <td>comment text field</td>
+        <td>destroy button</td>
+      </tr>
+    <% end %>
+  </table>
+  Add Comment button
+</div>
