@@ -102,6 +102,6 @@ module Admin::IssuesHelper
   end
 
   def party_options(opts = {})
-    options_for_select(Party.all.reduce({}) { |options, party| options[party.name] = party.slug; options }, opts[:selected])
+    options_for_select(Party.all.reduce({}) { |options, party| options[party.name] = party.id; options }, opts[:selected])
   end
 end

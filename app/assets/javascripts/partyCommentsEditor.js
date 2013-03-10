@@ -16,11 +16,24 @@
         $('#party-comments-table tr:last').after(newRowHtml.replace(/newPartyComment/g, newId));
         self.initializeMarkdownEditors([newId]);
 
+        $('#destroy-'+newId).click(function () {
+          var row = $(this).closest('tr').remove();
+
+          return false;
+        });
+
         return false;
       });
 
       $('.destroy-comment').click(function () {
+        var id = $(this).attr('id').split('-')[1]
+        $(this).closest('form').append($('<input/>')
+          .attr('type', 'hidden')
+          .attr('name', 'party_comments['+id+'][deleted]')
+          .val('true'));
+
         $(this).closest('tr').remove();
+
         return false;
       });
     },
