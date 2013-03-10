@@ -19,15 +19,18 @@
   border-width: 1px 2px 0 2px;
   border-image: url(/assets/representative-borderbox.png) 1 2 0 2 fill stretch;
   margin-top: 125px;
-  padding: 45px 10px 10px 245px;
+  padding: 70px 10px 20px 285px;
   position: relative;
+  margin: 125px -10px 0 -10px;
   .representative-name {
     font-weight: 300;
   }
   .representative-image {
     box-shadow: 0 0 1px 1px rgba(0,0,0,0.3);
     position: absolute;
-    top: -30px;
+    width: 240px;
+    height: 320px;
+    top: -100px;
     left: 20px;
   }
   .representative-party,
@@ -60,5 +63,22 @@
 }
 
 
+
+@media (max-width: 767px) {
+  .representative-profile {
+    margin-top: 50px;
+    padding: 20px 5px 20px 150px;
+    .representative-name {
+      font-size: 1.5em;
+      line-height: 1.25em;
+    }
+    .representative-image {
+      top: -50px;
+      left: 10px;
+      width: 120px;
+      height: 160px;
+    }
+  }
+}
 
 

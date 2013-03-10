@@ -1,30 +1,15 @@
 <% title "#{@representative.full_name} - #{Representative.model_name.human(count: 2).capitalize} - #{t('app.title')}" %>
 <% party = @representative.latest_party %>
 
-<<<<<<< HEAD
-<div class="page-header">
-  <h1><%= @representative.full_name %> <small class="pull-right"><%= @representative.external_id %></small></h1>
-</div>
-
-<div class="container-fluid">
-  <div class="row-fluid">
-    <div class="span4">
-      <%= image_tag @representative.image.versions[:medium], width: '240', height: '320', class: 'representative-image', alt: @representative.full_name %>
-      <br>
-      <br>
-=======
 <% content_for :jumbotron do %>
   <div class="representative-header party-<%= party.external_id %>">
     <div class="container">
->>>>>>> Rewrite of /parties and /representatives. WARNING: Inline inefficient image loading and JS library in /parties.
     </div>
   </div>
 <% end %>
 
 <div class="representative-profile">
-  <div class="representative-image">
-    <%= image_tag @representative.image_with_fallback.thumb('180x216#').strip.url, class: 'representative-image', alt: @representative.full_name %>
-  </div>
+  <%= image_tag @representative.image.versions[:medium], width: '240', height: '320', class: 'representative-image', alt: @representative.full_name %>
   <h1 class="representative-name"><%= @representative.full_name %> (<%= @representative.age %>)</h1>
 
   <span class="representative-district">
@@ -56,22 +41,3 @@
   </ul>
 </div>
 
-
-
-<!--
-      <p class="alert alert-warning">
-        Vi jobber med å finne ut hvordan vi kan vise hvilke representanter som er mest aktive på Stortinget. Foreløpig vil du kun kunne se oppmøteprosent ved voteringer i Stortingssalen. Det finnes mange grunner til at en representant kan ha lavt oppmøte, for eksempel reisevirksomhet i eget fylke, komitearbeid eller utbytting. For mer informasjon om representantenes oppmøte i Stortinget, les om <a target="_blank" href="http://www.stortinget.no/no/Stortinget-og-demokratiet/Representantene/Hva-gjor-en-representant/">Representantenes arbeidsoppgaver</a> og <a target="_blank" href="http://www.stortinget.no/no/Stortinget-og-demokratiet/Arbeidet/Voteringer/#utbyttingssystemet">Utbyttingssystemet</a>.
-      </p>
--->
-
-<!--
-<dl>
-  <% stats = @representative.stats %>
-  <dt><%= t('app.for')  %></dt>
-  <dd><%= stats.for_percent %>% (<%= stats.for_count %>/<%= stats.total_count %>)</dd>
-  <dt><%= t('app.against') %></dt>
-  <dd><%= stats.against_percent %>% (<%= stats.against_count %>/<%= stats.total_count %>)</dd>
-  <dt><%= t('app.absent') %></dt>
-  <dd><%= stats.absent_percent %>% (<%= stats.absent_count %>/<%= stats.total_count %>)</dd>
-</dl>
-      <ul class="parties-issue-list">

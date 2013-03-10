@@ -1,44 +1,51 @@
 <% title "#{@party.name} - #{t('app.title')}" %>
-<<<<<<< HEAD
-<div class="page-header">
-  <h1>
-    <%= @party.name %>
-    <small><%= render partial: "representative_search", locals: { representatives: @representatives } %></small>
-  </h1>
-</div>
 
-<div class="row-fluid">
-  <div class="span4">
-    <%# TODO(henrik): skaler i CSS %>
-    <%= image_tag @party.logo, alt: "#{@party.name}s logo", width: '210', height: '210' %>
-  </div>
-=======
+
 <h2 class="party-title-name">
-  <%= image_tag @party.image_with_fallback.thumb("96x96").url, alt: "#{@party.name}s logo" %>
+  <%= image_tag @party.logo, alt: "#{@party.name}s logo", width: '96', height: '96' %>
   <%= @party.name %>
 </h2>
->>>>>>> Rewrite of /parties and /representatives. WARNING: Inline inefficient image loading and JS library in /parties.
+
+<hr>
 
 <div id="representatives" class="swiper-container">
   <div class="swiper-wrapper">
   <% @representatives.each_slice(1).with_index do |representative_group, index| %>
     <% representative_group.each do |representative| %>
-      <div class="swiper-slide representative" style='background-image:url("<%= path_to_image representative.image_with_fallback.thumb('140x180#').strip.url %>")'>
+      <div class="swiper-slide representative">
         <%= link_to(representative) do %>
-          <%= representative.full_name %>
+          <img src="<%= path_to_image representative.image.versions[:small] %>" height="160" width="120">
+          <span><%= representative.full_name %></span>
         <% end %>
       </div>
     <% end %>
   <% end %>
   </div>
+  <div class="swiper-navigation swiper-prev">&lt;</div>
+  <div class="swiper-navigation swiper-next">&gt;</div>
+
 </div>
 
-<hr>
+<hr class="soften">
 
 <% content_for :document_ready do %>
   <script>
+    /* Returns the number of slides wanted dependig on container width.  */
+    function getSlideSize() {
+      var maxWidth = $('.container').first().width();
+      var slideWidth = 120;
+      return Math.floor(maxWidth/slideWidth);
+    }
+    /* Updates the slide count  */
     window.onload = function() {
-      var mySwiper = new Swiper('.swiper-container', {'slidesPerSlide': 7});
+      var swiperParty = new Swiper('.swiper-container', {'slidesPerSlide': getSlideSize()});
+
+      $('.swiper-prev').on('click', swiperParty.swipePrev);
+      $('.swiper-next').on('click', swiperParty.swipeNext);
+
+      $(window).resize(function() {
+        swiperParty.params.slidesPerSlide = getSlideSize();
+      });
     }
   </script>
 <% end %>
