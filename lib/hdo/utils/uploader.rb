@@ -54,6 +54,14 @@ module Hdo
         end
       end
 
+      def sigmoidal_contrast(contrast, midpoint)
+        manipulate! do |img|
+          img.sigmoidal_contrast("#{contrast}x#{midpoint}%")
+          img = yield(img) if block_given?
+          img
+        end
+      end
+
     end
   end
 end
