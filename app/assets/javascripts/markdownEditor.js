@@ -4,7 +4,7 @@
   HDO.markdownEditor = function (opts) {
     var options = $.extend({
       root: document.body
-    }, opts)
+    }, opts);
 
     $(options.root).find("[data-wmd-editor]").each(function () {
       var converter, editor;
