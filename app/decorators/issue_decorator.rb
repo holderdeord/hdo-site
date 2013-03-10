@@ -111,6 +111,12 @@ class IssueDecorator < Draper::Decorator
 
     def promise_logo
       key = issue.accountability.key_for(model)
+
+      # FIXME: missing icon for partially_kept
+      if key == :partially_kept
+        key = :kept
+      end
+
       h.image_tag "taxonomy-icons/promise_#{key}.png"
     end
 
