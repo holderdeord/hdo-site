@@ -62,6 +62,7 @@ gem 'jquery-rails'
 gem 'highcharts-rails', "~> 2.2"
 gem 'jquery-tablesorter', ">= 0.0.5"
 gem 'twitter_bootstrap_form_for', "~> 1.0.5"
+gem 'redcarpet'
 
 # authentication
 gem 'devise', "~> 2.2.3"

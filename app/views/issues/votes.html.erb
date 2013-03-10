@@ -49,7 +49,7 @@
         </div>
 
         <div class="span6">
-          <p id="markdown-<%= issue_vote.anchor %>"><%= issue_vote.comment %></p>
+          <p><%= raw(markdown(issue_vote.comment)) %></p>
           <p><%= issue_vote.matches_text.html_safe %> <%= issue_vote.enacted_text.html_safe %></p>
           <p>Holder de ord regner avstemningen som <%= link_to issue_vote.weight_text, home_method_path(anchor: 'method-weights') %>.</p>
         </div>
@@ -67,18 +67,3 @@
     <% end %>
   </div>
 </div>
-
-<% content_for :document_ready do %>
-  <script>
-    $(document).ready(function () {
-      var connection_ids = <%= @issue_votes.collect do |issue_vote| issue_vote.anchor.to_i end %>;    
-      for (var i = 0; i < connection_ids.length; i++) {
-        var converter = new Markdown.Converter();
-        var element = "#markdown-"+connection_ids[i];
-        var toBeConverted = $(element).html();
-        var converted = converter.makeHtml(toBeConverted);
-        $(element).html(converted);
-      }
-    });
-  </script>
-<% end %>
