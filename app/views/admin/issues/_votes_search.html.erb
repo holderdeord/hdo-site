@@ -43,6 +43,10 @@
 
     HDO.voteSearcher.create(url).init();
     HDO.votePropositionFetcher.create().init();
+
+    $(document).on("hdo:vote-search-complete", function() {
+      HDO.markdownEditor();
+    });
   });
 </script>
 <% end %>

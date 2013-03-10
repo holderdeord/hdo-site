@@ -50,6 +50,7 @@
 
         complete: function () {
           $("#spinner").hide();
+          $(document).trigger("hdo:vote-search-complete");
         },
 
         success: function (html) {

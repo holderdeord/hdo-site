@@ -15,21 +15,19 @@
         <strong><%= VoteConnection.human_attribute_name :title %></strong>
         <%= text_area_tag "votes[#{vote.id}][title]", connection && connection.title, class: 'span12' %>
       </label>
-
-     <label>
-        <strong><%= VoteConnection.human_attribute_name :matches %></strong>
-        <p><%= select_tag "votes[#{vote.id}][direction]", vote_options_for(vote, connection), class: 'input-medium' %></p>
-      </label>
-
     </div>
-    
+
     <div class="span4">
       <label>
         <strong><%= Vote.human_attribute_name :proposition_type %></strong>
         <p><%= select_tag "votes[#{vote.id}][proposition_type]", proposition_type_options_for(vote) %></p>
       </label>
 
-     
+      <label>
+         <strong><%= VoteConnection.human_attribute_name :matches %></strong>
+         <p><%= select_tag "votes[#{vote.id}][direction]", vote_options_for(vote, connection), class: 'input-medium' %></p>
+       </label>
+
       <label>
         <strong><%= VoteConnection.human_attribute_name :weight %></strong>
         <p><%= select_tag "votes[#{vote.id}][weight]", weight_options_for(connection), class: 'input-small' %></p>
@@ -47,14 +45,18 @@
   </div>
 
   <div class="row-fluid">
-    <div class="offset4 span8">
-      <label>
+    <div data-wmd-editor="<%= vote.id %>">
+      <div class="span6">
         <strong><%= VoteConnection.human_attribute_name :comment %></strong>
-          <div id="wmd-button-bar-<%= connection.id %>"></div>
-          <%= text_area_tag "votes[#{vote.id}][comment]", connection && connection.comment, class: 'span12', rows: '10', id: "wmd-input-#{connection.id}" %>
-        <strong>Preview</strong>
-        <div id="wmd-preview-<%= connection.id %>" class="well"></div>
-      </label>
+        <div id="wmd-button-bar-<%= vote.id %>"></div>
+        <%= text_area_tag "votes[#{vote.id}][comment]", connection && connection.comment, class: 'span12', rows: '10', id: "wmd-input-#{vote.id}" %>
+      </div>
+
+      <div class="span6">
+        <strong>Forhåndsvisning</strong>
+        <br>
+        <div id="wmd-preview-<%= vote.id %>" class="well"></div>
+      </div>
     </div>
   </div>
 
@@ -66,20 +68,11 @@
   <div class="row-fluid proposition-body" id="proposition-body-<%= vote.slug %>">
     <%= image_tag 'spinner.gif', class: 'spinner' %>
   </div>
-
-
   <hr>
 <% end %>
 
 <% content_for :document_ready do %>
   <script>
-    $(document).ready(function () {
-      var connection_ids = <%= votes_and_connections.collect do |vote, connection| connection.id end %>;    
-      for (var i = 0; i < connection_ids.length; i++) {
-        var converter = new Markdown.Converter();  
-        var editor = new Markdown.Editor(converter, "-"+connection_ids[i]);
-        editor.run();
-      }
-    });
+    $(document).ready(function () { HDO.markdownEditor(); });
   </script>
 <% end %>
