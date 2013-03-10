@@ -177,7 +177,6 @@ ActiveRecord::Schema.define(:version => 20130308115945) do
 
   create_table "party_comments", :force => true do |t|
     t.string   "body"
-    t.string   "title"
     t.integer  "party_id"
     t.integer  "issue_id"
     t.datetime "created_at", :null => false

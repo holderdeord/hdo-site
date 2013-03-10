@@ -2,7 +2,6 @@ class CreatePartyComments < ActiveRecord::Migration
   def change
     create_table :party_comments do |t|
       t.string :body
-      t.string :title
       t.references :party
       t.references :issue
 

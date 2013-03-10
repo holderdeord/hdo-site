@@ -150,7 +150,6 @@ Answer.blueprint do
 end
 
 PartyComment.blueprint do
-  title { 'Title' }
   body  { 'This is my body' }
   party
   issue

@@ -23,7 +23,6 @@ describe Admin::PartyCommentsController do
         valid_attributes = {
           issue_id: issue.id,
           party_id: party.id,
-          title:    'haha',
           body:     'not..'
         }
         expect {
