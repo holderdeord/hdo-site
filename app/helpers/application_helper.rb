@@ -39,6 +39,10 @@ module ApplicationHelper
     text
   end
 
+  def gravatar_url(email)
+    "http://gravatar.com/avatar/#{Digest::MD5.hexdigest email}.png"
+  end
+
   def title(page_title)
     content_for(:title) { page_title }
   end
