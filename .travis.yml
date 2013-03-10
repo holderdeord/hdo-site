@@ -30,4 +30,3 @@ before_script:
   - 'npm install -g buster autolint || (sleep 5 && npm install -g buster autolint)'
 env:
   - DISPLAY=:99.0 COVERAGE_THRESHOLD=83
-  - RUBY_VERSION=1.9.3
