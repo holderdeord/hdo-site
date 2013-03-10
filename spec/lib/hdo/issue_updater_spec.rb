@@ -4,6 +4,61 @@ module Hdo
   describe IssueUpdater do
     let(:user) { User.make! }
 
+    describe 'party comments' do
+      let(:issue) { Issue.make! }
+      let(:party) { Party.make! }
+
+      it "adds party comments" do
+        party_comments = {
+          "new1" => {
+            "id"       => "1",
+            "issue_id" => issue.id,
+            "party_id" => party.id,
+            "body"     => "we disagree with the analysis!"
+          }
+        }
+
+        expect {
+          IssueUpdater.new(issue, {party_comments: party_comments }, user).update!
+          issue.reload
+          }.to change(issue.party_comments, :count).by(1)
+      end
+
+      it "modifies party comments" do
+        party_comment = PartyComment.make! party: party, issue: issue, body: "Spot on!"
+
+        party_comments = {
+          party_comment.id => {
+            "id"       => party_comment.id,
+            "issue_id" => issue.id,
+            "party_id" => party.id,
+            "body"     => "we disagree with the analysis!"
+          }
+        }
+
+        IssueUpdater.new(issue, { party_comments: party_comments }, user).update!
+        issue.reload
+        issue.party_comments.first.body.should == "we disagree with the analysis!"
+      end
+
+      it "deletes party comments" do
+        party_comment = PartyComment.make! party: party, issue: issue
+
+        party_comments = {
+          party_comment.id => {
+            "deleted" => "true"
+          }
+        }
+
+        expect {
+          IssueUpdater.new(issue, { party_comments: party_comments }, user).update!
+          issue.reload
+          }.to change(issue.party_comments, :count).by(-1)
+
+
+      end
+    end
+
     describe 'vote proposition types' do
       it "updates a single vote's proposition_type" do
         issue = Issue.make! vote_connections: [VoteConnection.make!]
