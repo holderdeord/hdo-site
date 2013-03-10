@@ -10,7 +10,10 @@ namespace :images do
 
     desc 'Fetch representatives images from stortinget.no'
     task :fetch => :environment do
-      rep_image_path = Rails.root.join("app/assets/images/representatives")
+      I18n.locale = :en # no translations for minimagick errors
+
+      rep_image_path = Rails.root.join("tmp/downloads/representatives")
+      rep_image_path.mkpath
 
       Representative.all.each do |rep|
         url = URI.parse("http://stortinget.no/Personimages/PersonImages_ExtraLarge/#{URI.escape rep.external_id}_ekstrastort.jpg")

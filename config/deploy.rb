@@ -17,7 +17,7 @@ set :branch,          ENV['BRANCH'] || 'master'
 set :deploy_to,       "/webapps/#{application}"
 set :use_sudo,        false
 set :deploy_via,      :remote_cache
-set :shared_children, shared_children + %w[public/uploads]
+set :shared_children, shared_children + %w[public/uploads tmp/downloads]
 set :passenger_restart_strategy, :hard
 
 namespace :deploy do
