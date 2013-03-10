@@ -54,7 +54,6 @@
           </a>
 
           <ul class="dropdown-menu">
-            <li><%= link_to t("app.contact_us"), home_contact_path %></li>
             <li><%= link_to t("app.about_hdo"), home_about_path %></li>
             <li><%= link_to t("app.method.about"), home_method_path %></li>
             <li><%= link_to t("app.people"), home_people_path %></li>
@@ -63,17 +62,7 @@
           </ul>
         </li>
 
-        <li class="dropdown <%= active_status_for(:home_support, :home_member) %>">
-          <a class="dropdown-toggle" data-toggle="dropdown" href="#support">
-            <%= t 'app.support' %>
-            <b class="caret"></b>
-          </a>
-
-          <ul class="dropdown-menu">
-            <li><%= link_to t('app.donate'), home_support_path %></li>
-            <li><%= link_to t('app.member'), home_member_path %></li>
-          </ul>
-        </li>
+        <li><%= link_to t("app.contact_us"), home_contact_path %></li>
       </ul>
 
       <%= yield :navbar_extras %>
