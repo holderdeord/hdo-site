@@ -45,7 +45,7 @@
     HDO.votePropositionFetcher.create().init();
 
     $(document).on("hdo:vote-search-complete", function() {
-      HDO.markdownEditor();
+      HDO.markdownEditor({ root: "#search-tab" });
     });
   });
 </script>
