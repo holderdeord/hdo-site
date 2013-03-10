@@ -90,10 +90,12 @@ module Hdo
 
         case score
         when nil
-          :unclear
-        when 0...50
+          :no_promises
+        when 0...33
           :broken
-        when 50..100
+        when 33...66
+          :partially_kept
+        when 66..100
           :kept
         else
           raise "score out of range: #{score.inspect}"
