@@ -1,3 +1,5 @@
+# TODO: (Jonathan 2013-3-10) This code is not presently in use. I leave it here to perhaps be adopted when we make an API to be used by widgets etc.
+
 class Admin::PartyCommentsController < AdminController
   # GET /admin/issue/1/party_comments
   # GET /admin/issue/1/party_comments.json
