@@ -46,4 +46,9 @@ module ApplicationHelper
   def title(page_title)
     content_for(:title) { page_title }
   end
+
+  def markdown(text)
+    @markdown ||= Redcarpet::Markdown.new(Redcarpet::Render::HTML)
+    @markdown.render(text)
+  end
 end
