@@ -176,7 +176,7 @@ ActiveRecord::Schema.define(:version => 20130308115945) do
   add_index "parties_promises", ["party_id", "promise_id"], :name => "index_parties_promises_on_party_id_and_promise_id"
 
   create_table "party_comments", :force => true do |t|
-    t.string   "body"
+    t.text     "body"
     t.integer  "party_id"
     t.integer  "issue_id"
     t.datetime "created_at", :null => false

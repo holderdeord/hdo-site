@@ -21,7 +21,7 @@ module Hdo
         expect {
           IssueUpdater.new(issue, {party_comments: party_comments }, user).update!
           issue.reload
-          }.to change(issue.party_comments, :count).by(1)
+        }.to change(issue.party_comments, :count).by(1)
       end
 
       it "modifies party comments" do
@@ -53,9 +53,7 @@ module Hdo
         expect {
           IssueUpdater.new(issue, { party_comments: party_comments }, user).update!
           issue.reload
-          }.to change(issue.party_comments, :count).by(-1)
-
-
+        }.to change(issue.party_comments, :count).by(-1)
       end
     end
 

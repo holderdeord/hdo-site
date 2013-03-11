@@ -10,7 +10,6 @@ module Hdo
       @votes          = params[:votes]
       @promises       = params[:promises]
       @party_comments = params[:party_comments]
-      # raise params.inspect
       @user           = user
     end
 

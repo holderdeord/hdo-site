@@ -7,7 +7,7 @@
     <div id="wmd-preview-<%= party_comment_id %>" class="well"></div></td></td>
   </td>
   <td>
-    <button class="btn btn-danger destroy-comment" id="destroy-<%= party_comment_id %>">DESTROY!!</button>
+    <button class="btn btn-danger destroy-comment" id="destroy-<%= party_comment_id %>"><%= t('app.destroy') %></button>
     <%= hidden_field_tag "party_comments[#{party_comment_id}[id]", party_comment_id  %>
     <%= hidden_field_tag "party_comments[#{party_comment_id}[issue_id]", issue_id  %>
   </td>
