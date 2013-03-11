@@ -131,8 +131,19 @@ describe Admin::IssuesController do
       response.should redirect_to(expected_url)
     end
 
-    it "should show categories step when hit next from promises" do
+    it "should show party_comments step when hit next from promises" do
       session[:issue_step] = 'promises'
+
+      put :update, issue: issue_params(issue), id: issue
+
+      assigns(:issue).should == issue
+      session[:issue_step].should == 'party_comments'
+
+      response.should redirect_to(edit_step_admin_issue_url(issue.id, step: 'party_comments'))
+    end
+
+    it "should show categories step when hit next from party comments" do
+      session[:issue_step] = 'party_comments'
 
       put :update, issue: issue_params(issue), id: issue
 

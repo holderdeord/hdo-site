@@ -100,4 +100,8 @@ module Admin::IssuesHelper
   def with_promise_status(promises)
     promises.map { |pr| [pr, promise_status_for(pr)] }.sort_by { |_, status| status }
   end
+
+  def party_options(opts = {})
+    options_for_select(Party.all.reduce({}) { |options, party| options[party.name] = party.id; options }, opts[:selected])
+  end
 end

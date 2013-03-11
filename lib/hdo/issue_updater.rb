@@ -5,11 +5,12 @@ module Hdo
     end
 
     def initialize(issue, params, user)
-      @issue      = issue
-      @attributes = params[:issue]
-      @votes      = params[:votes]
-      @promises   = params[:promises]
-      @user       = user
+      @issue          = issue
+      @attributes     = params[:issue]
+      @votes          = params[:votes]
+      @promises       = params[:promises]
+      @party_comments = params[:party_comments]
+      @user           = user
     end
 
     def update
@@ -33,6 +34,7 @@ module Hdo
         update_attributes
         update_votes
         update_promises
+        update_party_comments
         update_meta
         save!
       }
@@ -49,6 +51,12 @@ module Hdo
     def update_promises
       Array(@promises).each do |promise_id, data|
         update_or_create_promise_connection(promise_id, data)
+      end
+    end
+
+    def update_party_comments
+      Array(@party_comments).each do |comment_id, data|
+        update_or_create_or_destroy_party_comment(comment_id, data)
       end
     end
 
@@ -122,6 +130,31 @@ module Hdo
           update_vote_proposition_type new_connection.vote, data[:proposition_type]
           @changed = true
         end
+      end
+    end
+
+    def update_or_create_or_destroy_party_comment(id, data)
+      existing = PartyComment.find_by_issue_id_and_id(@issue.id, id)
+      if data["deleted"]
+        @changed = true
+        existing.destroy
+        return
+      end
+
+      if existing
+        existing.attributes = data
+        @changed ||= existing.changed?
+
+        existing.save!
+      else
+        new_party_comment = @issue.party_comments.create!(data.except(:id))
+        @changed = true
+      end
+    end
+
+    def remove_deleted_comments
+      @issue.party_comments.each do |existing|
+        existing.destroy unless @party_comments && party_comments.keys.include?(existing.id)
       end
     end
 
