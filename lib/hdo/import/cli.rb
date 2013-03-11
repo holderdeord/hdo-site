@@ -81,6 +81,7 @@ module Hdo
 
         persister.infer_all_votes
         purge_cache
+        notify_new_votes if Rails.env.production?
       end
 
       def import_api_votes(vote_limit = nil)
@@ -261,6 +262,33 @@ module Hdo
       def purge_cache
         # crude cache purge for now
         FileUtils.rm_rf Rails.root.join('public/cache')
+      end
+
+      def notify_new_votes
+        require 'hipchat'
+
+        token = ENV['HIPCHAT_API_TOKEN'] || return
+        votes = Vote.where("created_at >= ?", 1.day.ago)
+        return if votes.empty?
+
+        room = HipChat::Client.new(token)['Analyse']
+        urls = Rails.application.routes.url_helpers
+
+        pis = votes.flat_map { |vote| vote.parliament_issues.to_a }.uniq.map do |pi|
+          [urls.parliament_issue_url(pi), pi.summary]
+        end
+
+        template = <<-HTML
+        <h2>Saker med nye avstemninger i dag:</h2>
+        <ul>
+          <% pis.each do |url, summary| %>
+          <li><a href="<%= url %>"><%= summary %></li>
+          <% end %>
+        </ul>
+        HTML
+
+        message = ERB.new(template, 0, "%-<>").result(binding)
+        room.send('Stortinget', message, notify: true)
       end
 
       def parse_options(args)
