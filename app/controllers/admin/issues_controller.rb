@@ -132,6 +132,10 @@ class Admin::IssuesController < AdminController
                                            sort_by { |names, _| names }
   end
 
+  def edit_party_comments
+    @party_comments = PartyComment.find_all_by_issue_id(@issue)
+  end
+
   def edit_votes
     @votes_and_connections = @issue.vote_connections.map { |e| [e.vote, e] }
   end

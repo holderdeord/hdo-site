@@ -1,0 +1,31 @@
+<div class="well">
+  <h3><%= PartyComment.model_name.human(count: 2) %></h3>
+
+  <table class="table" id="party-comments-table">
+    <tr>
+      <th><%= PartyComment.human_attribute_name :party %></th>
+      <th><%= PartyComment.human_attribute_name :body %></th>
+      <th></th>
+      <th></th>
+    </tr>
+
+    <% @party_comments.each do |party_comment| %>
+    <%= render partial: "comment_row", locals: { party_comment_id: party_comment.id, party_comment_body: party_comment && party_comment.body, party_comment_party: party_comment.party.id, party_comment_id: party_comment.id, issue_id: party_comment.issue_id } %>
+    <% end %>
+  </table>
+  <button class="btn" id="new-comment-button" type="submit">Ny</button>
+</div>
+
+<% content_for :document_ready do %>
+  <script>
+    $(document).ready(function () {
+      var url = <%= vote_search_admin_issue_path(@issue).to_json.html_safe %>;
+
+      var editor = HDO.partyCommentsEditor.create(url);
+      var newRowHtml = '<%= render(partial: "comment_row", locals: { party_comment_id: 'newPartyComment', party_comment_party: '', party_comment_body: '', party_comment_id: 'newPartyComment', issue_id: @issue.id }).to_json.html_safe %>';
+      editor.init(newRowHtml);
+      editor.initializeMarkdownEditors(<%= @party_comments.map &:id %>);
+
+    });
+  </script>
+<% end %>
