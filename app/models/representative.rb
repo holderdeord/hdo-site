@@ -13,7 +13,11 @@ class Representative < ActiveRecord::Base
         indexes :name, type: :string
       end
 
-      indexes :latest_party
+      indexes :latest_party do
+        indexes :name, type: :string
+        indexes :slug, type: :string
+      end
+
       indexes :full_name, index: :not_analyzed
       indexes :last_name, index: :not_analyzed
       indexes :first_name, index: :not_analyzed
