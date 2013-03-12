@@ -45,7 +45,7 @@ class IssuePolicy
   private
 
   def logged_in?
-    !!user
+    !!(user && user.is_a?(User))
   end
 
 end
