@@ -31,11 +31,11 @@ Install package dependencies and set up Ruby 1.9.3 with RVM.
         libyaml-dev \
         ncurses-dev \
         openssl \
-        wnorwegian \
         postgresql \
+        postgresql-server-dev-9.1 \
+        wnorwegian \
         zlib1g \
-        zlib1g-dev \
-        postgresql-server-dev-9.1
+        zlib1g-dev
 
     $ curl -L get.rvm.io | bash -s stable --ruby
     $ ruby -v
@@ -127,7 +127,7 @@ A subset from [data.stortinget.no](http://data.stortinget.no):
 
 ## Create ElasticSearch indices
 
-    $ rake search:reindex
+    $ rake search:setup search:reindex
 
 ## Set up images:
 

@@ -38,8 +38,9 @@ chromedriver.log
 /node_modules
 
 # config
-config/database.yml
-config/env.yml
+/config/database.yml
+/config/env.yml
+/config/search
 
 # http://pow.cx/
 .powrc

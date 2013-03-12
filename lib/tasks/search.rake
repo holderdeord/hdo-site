@@ -34,4 +34,19 @@ namespace :search do
     require 'rack'
     Rack::Server.new(app: lambda { |env| [200, {}, ["{}"]]}, :Port => 9200, :server => "thin").start
   end
+
+  desc 'Download elasticsearch config from our Puppet repo'
+  task :setup do
+    require 'open-uri'
+
+    dir = Rails.root.join('config/search')
+    dir.mkpath
+
+    %w[words.nb.txt synonyms.nb.txt].each do |file|
+      dir.join(file).open("wb") do |dest|
+        src = open("https://raw.github.com/holderdeord/hdo-puppet/master/modules/elasticsearch/files/config/hdo.#{file}")
+        IO.copy_stream(src, dest)
+      end
+    end
+  end
 end

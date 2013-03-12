@@ -3,10 +3,8 @@ module Hdo
     module Settings
       LOCALE = {
         nb: {
-          language:       'Norwegian',
-          stopwords:      %w[at av da de den der deres det disse eller en er et for hvis i ikke inn med men nei og slik som til var vil].join(','),
-          synonyms_path:  Rails.root.join('config/search/synonyms.nb.txt').to_s,
-          word_list_path: Rails.root.join('config/search/words.nb.txt').to_s
+          language: 'Norwegian',
+          stopwords: %w[at av da de den der deres det disse eller en er et for hvis i ikke inn med men nei og slik som til var vil].join(','),
         }
       }
 
@@ -41,11 +39,11 @@ module Hdo
               },
               hdo_decompounder: {
                 type: 'dictionary_decompounder',
-                word_list_path: locale.fetch(:word_list_path)
+                word_list_path: word_list_path
               },
               hdo_synonym: {
                 type: "synonym",
-                synonyms_path: locale.fetch(:synonyms_path)
+                synonyms_path: synonyms_path
               }
             }
           }
@@ -62,6 +60,22 @@ module Hdo
 
       def locale
         @locale ||= LOCALE.fetch(I18n.locale)
+      end
+
+      def word_list_path
+        config_path_for "words.#{I18n.locale}.txt"
+      end
+
+      def synonyms_path
+        config_path_for "synonyms.#{I18n.locale}.txt"
+      end
+
+      def config_path_for(filename)
+        if Rails.env.production?
+          "/etc/elasticsearch/hdo.#{filename}"
+        else
+          Rails.root.join("config/search/#{filename}").to_s
+        end
       end
 
       def models
