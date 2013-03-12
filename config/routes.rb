@@ -1,6 +1,12 @@
 Hdo::Application.routes.draw do
 
   #
+  # representative sign-in
+  #
+
+  devise_for :representatives
+
+  #
   # user sign-in
   #
 
