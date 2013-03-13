@@ -17,11 +17,9 @@
 
 figure.position {
   .canvas {
-    .clearfix;
     .issue-graph-party {
-      display: block;
-      float: left;
-      width: 100% / @parties_num;
+      display: inline-block;
+      width: 64px;
       img {
         width: 100%;
       }
@@ -29,75 +27,75 @@ figure.position {
     br {
       display: none;
     }
+    &.parties_3,
+    &.parties_4,
+    &.parties_5 {
+      br:nth-child(4n) {
+        display: inline-block;
+      }
+    }
+    &.parties_6,
+    &.parties_7 {
+      br:nth-child(6n) {
+        display: inline-block;
+      }
+    }
   }
   .issue-graph {
     text-align: center;
     border-bottom: 2px solid #eee;
     padding: 0.5em;
+    padding: 3em 0;
     margin-bottom: 1em;
     .position {
       .clearfix;
       .axis {
-        float: left;
-        width: 100% / (@parties_num + 1)
+        display: none;
       }
       .canvas {
-        float: right;
-        width: 100% / (@parties_num + 1) * @parties_num;
+        float: none;
+        width: 100%;
       }
     }
   }
   .issue-graph-axis {
-    display: none;
+    .icon,
+    .text {
+      display: inline-block;
+    }
   }
   figcaption {
     font-size: 0.9em;
   }
 }
 
-@media (min-width: 768px) {
+@media (max-width: 768px) {
   figure.position {
     .canvas {
+      br {
+        /* !important is needed because of dynamic classes */
+        display: none !important;
+      }
       .issue-graph-party {
-        display: inline-block;
-        float: none;
-        width: auto;
-        img {
-          width: 100%;
-        }
-      }
-      &.parties_3,
-      &.parties_4,
-      &.parties_5 {
-        br:nth-child(4n) {
-          display: inline-block;
-        }
-      }
-      &.parties_6,
-      &.parties_7 {
-        br:nth-child(6n) {
-          display: inline-block;
-        }
+        float: left;
+        max-width: 44px;
       }
     }
     .issue-graph {
-      padding: 3em 0;
       .position {
-        .axis {
-          display: none;
-        }
         .canvas {
-          float: none;
-          width: 100%;
+          float: right;
+          width: 100% / (@parties_num + 1) * @parties_num;
+        }
+        .axis {
+          float: left;
+          width: 100% / (@parties_num + 1);
+          display: block;
         }
       }
-      .issue-graph-axis {
-        display: block;
-        .icon,
-        .text {
-          display: inline-block;
-        }
-      }
+    }
+    .issue-graph-axis {
+      display: none;
     }
   }
 }
