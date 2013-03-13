@@ -1,48 +1,63 @@
-<div class="span9">
-<%= form_for(@question) do |f| %>
-  <% if @question.errors.any? %>
-    <div class="alert alert-error">
-      <ul>
-        <% @question.errors.full_messages.each do |msg| %>
-          <li><%= msg %></li>
-        <% end %>
-      </ul>
+<aside class="span4 pull-right qa-form-help">
+  <h4>Fremgangsmåte</h4>
+  <p>
+    Her kan du stille spørsmål til partier og representanter om saker
+    og avstemninger. Saker og avstemninger refereres med bruk av
+    nummbertegn <em>#sak</em> eller <em>#avstemning</em>.
+  </p>
+  <p>
+    Partier og representanter refereres med bruk av alfakrøll
+    <em>@parti</em> eller <em>@representant</em>.
+  </p>
+  <p>
+    Spørsmålene vil bli moderert. Vi oppfordrer deg til å
+    oppgi epostadresse og ditt fulle navn.
+  </p>
+</aside>
+
+
+<div class="span7">
+  <h4>Spørsmålsskjema</h4>
+  <%= form_for(@question) do |f| %>
+    <% if @question.errors.any? %>
+      <div class="alert alert-error">
+        <ul>
+          <% @question.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <!-- TODO: REMOVE ONCE BACKEND IS UPDATED -->
+    <input type="hidden" name="question[title]" value="foo">
+
+    <div class="control-group">
+      <div class="controls">
+        <%= f.text_area :body, class: 'span12 qa-form-body', rows: 5, placeholder: "Kjære parti/representant! Hvordan kan det ha seg at..." %>
+      </div>
+    </div>
+
+    <div class="row-fluid">
+      <div class="control-group span5">
+        <label class="control-label"><%= Question.human_attribute_name :from_name %></label>
+        <div class="controls">
+          <%= f.text_field :from_name, class: 'span12' %>
+        </div>
+      </div>
+
+      <div class="control-group span5 offset2">
+        <label class="control-label"><%= Question.human_attribute_name :from_email %></label>
+        <div class="controls">
+          <%= f.text_field :from_email, class: 'span12' %>
+        </div>
+      </div>
+    </div>
+
+    <div class="control-group">
+       <div class="controls">
+         <%= f.submit class: 'btn btn-primary' %>
+       </div>
     </div>
   <% end %>
-
-  <div class="control-group">
-    <label class="control-label"><%= Question.human_attribute_name :title %></label>
-    <div class="controls">
-      <%= f.text_field :title, class: 'span6' %>
-    </div>
-  </div>
-
-  <div class="control-group">
-    <div class="controls">
-      <%= f.text_area :body, class: 'span10', rows: 5 %>
-    </div>
-  </div>
-
-  <div class="control-group">
-    <label class="control-label"><%= Question.human_attribute_name :from_name %></label>
-    <div class="controls">
-      <%= f.text_field :from_name, class: 'span4' %>
-    </div>
-  </div>
-
-  <div class="control-group">
-    <label class="control-label"><%= Question.human_attribute_name :from_email %></label>
-    <div class="controls">
-      <%= f.text_field :from_email, class: 'span4' %>
-    </div>
-  </div>
-
-  <div class="control-group">
-     <div class="controls">
-       <%= f.submit class: 'btn' %>
-     </div>
-  </div>
-<% end %>
 </div>
-
-<div class="well span3">blabla ... moderert ... blabla</div>

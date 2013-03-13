@@ -1,18 +1,15 @@
-<div class="row-fluid">
-  <%= link_to t('app.questions.new'), new_question_path, class: 'btn pull-right' %>
+<div class="page-header">
+  <%= link_to t('app.questions.new'), new_question_path, class: 'btn btn-primary pull-right' %>
   <h1><%= Question.model_name.human.capitalize %></h1>
 </div>
 
-<div class="row-fluid">
-  <table class="table table-striped">
-    <tbody>
-      <% @questions.each do |question| %>
-        <tr>
-          <td><%= link_to question.title, question %></td>
-          <td><%= l question.updated_at.localtime, format: :text_time %></td>
-          <td><%= question.answers.size %> <%= Answer.model_name.human(count: 2) %></td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
-</div>
+
+<section class="qa-list">
+<% @questions.each do |question| %>
+  <a class="qa-list-item row-fluid" href="/questions/ <%= question.id %>">
+    <div class="span9"><%= question.body %></div>
+    <div class="span2"><%= l question.updated_at.localtime, format: :text_time %></div>
+    <div class="span1"><%= question.answers.size %> <%= Answer.model_name.human(count: 2) %></div>
+  </a>
+<% end %>
+</section>

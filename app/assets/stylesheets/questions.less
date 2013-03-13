@@ -1,0 +1,64 @@
+@import "bootstrap/mixins";
+@import "mixins";
+
+
+.qa-list {
+  .qa-list-item {
+    display: block;
+    color: inherit;
+    margin-bottom: 5px;
+    padding: 5px 5px 3px 5px;
+    border-radius: 3px;
+    border: 1px solid transparent;
+    &:hover {
+      xcolor: #fff;
+      background-color: #fafafa;
+      border-color: #eee;
+    }
+    &:active {
+      background-color: #f2f2f2;
+      border-color: #e4e4e4;
+    }
+    div {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+}
+
+
+.qa-answer-qa-question {
+  display: block;
+}
+.qa-answer-answers {
+  .qa-answer-answer {
+    display: block;
+    position: relative;
+    margin-bottom: 2em;
+    padding-left: 115px;
+    min-height: 8em;
+    img {
+      width: 96px;
+      height: auto;
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+    .qa-answer-heading {
+      margin-bottom: 0.5em;
+      margin-top: 2em;
+    }
+    .qa-answer-representative {
+      color: inherit;
+    }
+  }
+}
+
+
+.qa-form-help {
+  margin-bottom: 2em;
+}
+.qa-form-body {
+  margin-top: 0.5em;
+}
