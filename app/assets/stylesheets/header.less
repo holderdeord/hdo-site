@@ -1,0 +1,79 @@
+@import "bootstrap/mixins";
+@import "mixins";
+
+@headingsFontFamily: 'NeoSansStandard', sans-serif;
+@hdoPrimaryColor: #019ea2;
+
+#hdo-header {
+  background-color: @hdoPrimaryColor;
+  font-family: @headingsFontFamily;
+  color: #fff;
+  padding-top: 60px;
+  margin-bottom: -70px;
+  a.logo {
+    float: left;
+    width: 120px;
+    margin-right: 40px;
+  }
+  nav {
+    padding-top: 13px;
+    > a {
+      color: #fff;
+      display: inline-block;
+      margin-right: 20px;
+      border-bottom: 2px solid rgba(255,255,255, 0);
+      text-decoration: none;
+      &:hover {
+        border-color: rgba(255,255,255, 0.5);
+      }
+      &.active, &:active {
+        border-color: #fff;
+      }
+    }
+    > div.dropdown {
+      display: inline-block;
+      margin-right: 20px;
+      border-bottom: 2px solid rgba(255,255,255, 0);
+      > a {
+        color: #fff;
+        text-decoration: none;
+      }
+      &:hover {
+        border-color: rgba(255,255,255, 0.5);
+      }
+      &.active, &:active {
+        border-color: #fff;
+      }
+      .caret {
+        border-top-color: #fff;
+      }
+    }
+  }
+  .header-decoration {
+    border: 3px solid transparent;
+    border-width: 1px 2px 0 2px;
+    border-image: url(/assets/representative-borderbox.png) 1 2 0 2 fill stretch;
+    height: 250px;
+    margin: 100px -40px -150px -40px;
+  }
+}
+
+@media (max-width: 768px) {
+  #hdo-header {
+    nav {
+      display: block;
+      clear: both;
+    }
+    .header-decoration {
+      height: 100px;
+      margin: 100px -20px -20px -20px;
+      border: none;
+      background: #fff;
+      box-shadow: 0 -1px rgba(0,0,0, 0.25), 0 -2px rgba(0,0,0,0.025);
+    }
+  }
+}
+
+.jumbotron {
+  display: none !important;
+}

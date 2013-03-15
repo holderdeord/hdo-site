@@ -1,37 +1,26 @@
 // Place all the styles related to the Representatives controller here.
 // They will automatically be included in application.css.
 
+@import "bootstrap/mixins";
+
 @hdoPrimaryColor: #019ea2;
 @hdoSecondaryColor: #e03d25;
 
-.representative-header {
-  position: absolute;
-  background-image: url(/assets/representative-headermask.png);
-  background-position: 50% 0;
-  left: 0;
-  right: 0;
-  height: 200px;
-  z-index: -1;
-}
-
 .representative-profile {
-  border: 3px solid transparent;
-  border-width: 1px 2px 0 2px;
-  border-image: url(/assets/representative-borderbox.png) 1 2 0 2 fill stretch;
-  margin-top: 125px;
-  padding: 70px 10px 20px 285px;
-  position: relative;
-  margin: 125px -10px 0 -10px;
+  .clearfix;
   .representative-name {
     font-weight: 300;
   }
   .representative-image {
+    background: #fff;
     box-shadow: 0 0 1px 1px rgba(0,0,0,0.3);
-    position: absolute;
     width: 240px;
     height: 320px;
+    float: left;
+    margin-right: 20px;
+    position: relative;
     top: -100px;
-    left: 20px;
+    margin-bottom: -120px;
   }
   .representative-party,
   .representative-district {
@@ -66,15 +55,17 @@
 
 @media (max-width: 767px) {
   .representative-profile {
-    margin-top: 50px;
-    padding: 20px 5px 20px 150px;
     .representative-name {
       font-size: 1.5em;
       line-height: 1.25em;
     }
+    .representative-name,
+    .representative-comitee-list,
+    .representative-district {
+      margin-left: 140px;
+    }
     .representative-image {
-      top: -50px;
-      left: 10px;
+      top: -80px;
       width: 120px;
       height: 160px;
     }
