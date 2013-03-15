@@ -1,13 +1,11 @@
+<% content_for :headerImage do %>/assets/jumbotron_bg.jpg <% end %>
+
 <% content_for :jumbotron do %>
-  <div class="jumbotron">
-    <div class="container">
-      <%= image_tag asset_path("jumbotron_fg.png"), alt: "Holder de ord logo" %>
-      <p>
-        Din uavhengige kilde for fakta om stortingspolitikk. Holder de ord gjør det enkelt å sjekke hva politikerne på Stortinget stemmer og lover i saker du er opptatt av.
-        <%= link_to 'Les mer', home_about_path %>
-      </p>
-    </div>
-  </div>
+  <%= image_tag asset_path("jumbotron_fg.png"), alt: "Holder de ord logo" %>
+  <p>
+    Din uavhengige kilde for fakta om stortingspolitikk. Holder de ord gjør det enkelt å sjekke hva politikerne på Stortinget stemmer og lover i saker du er opptatt av.
+    <%= link_to 'Les mer', home_about_path %>
+  </p>
 <% end %>
 
 <div class="row-fluid">

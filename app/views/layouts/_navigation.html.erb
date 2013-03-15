@@ -1,59 +1,62 @@
-<header id="hdo-header" class="party-<%= yield :headerColor %>">
-  <div class="container">
-    <a class="logo" href="/">
-      <%= image_tag"logo.png", alt:"Holder de ord" %>
+<nav>
+  <%= link_to issues_path, class:"#{active_status_for(:issues)}" do %>
+    <%= Issue.model_name.human(count: 2).capitalize %>
+  <% end %>
+
+  <!--
+  <div class="dropdown <%= active_status_for(:parties_show) %>">
+    <a class="dropdown-toggle" data-toggle="dropdown" href="#partier">
+      <%= Party.model_name.human(count: 2).capitalize %>
+      <b class="caret"></b>
     </a>
-    <%= render 'shared/global_search' if AppConfig.front_page_search_enabled %>
 
-    <nav>
-      <%= link_to issues_path, class:"#{active_status_for(:issues)}" do %>
-        <%= Issue.model_name.human(count: 2).capitalize %>
+    <ul class="dropdown-menu">
+      <% Party.order(:name).each do |party| %>
+        <li><%= link_to party.name, party %></li>
       <% end %>
-
-      <div class="dropdown <%= active_status_for(:parties_show) %>">
-        <a class="dropdown-toggle" data-toggle="dropdown" href="#partier">
-          <%= Party.model_name.human(count: 2).capitalize %>
-          <b class="caret"></b>
-        </a>
-
-        <ul class="dropdown-menu">
-          <% Party.order(:name).each do |party| %>
-            <li><%= link_to party.name, party %></li>
-          <% end %>
-        </ul>
-      </div>
-
-      <% if AppConfig.questions_enabled %>
-        <%= link_to questions_path, class:"#{active_status_for(:questions)}" do %>
-          <%= Question.model_name.human(count: 2).capitalize %>
-        <% end %>
-      <% end %>
-
-      <%= link_to promises_path, class:"#{active_status_for(:promises)}" do %>
-        <%= Promise.model_name.human(count: 2).capitalize %>
-      <% end %>
-
-      <div class="dropdown <%= active_status_for(:home_contact, :home_about, :home_join, :home_about_method, :home_people, :docs_index)%>">
-        <a class="dropdown-toggle" data-toggle="dropdown" href="#about-us">
-          <%= t 'app.about' %>
-          <b class="caret"></b>
-        </a>
-
-        <ul class="dropdown-menu">
-          <li><%= link_to t("app.about_hdo"), home_about_path %></li>
-          <li><%= link_to t("app.method.about"), home_method_path %></li>
-          <li><%= link_to t("app.people"), home_people_path %></li>
-          <li><%= link_to t("app.join"), home_join_path %></li>
-          <li><%= link_to t("app.documentation.technical"), docs_index_path %></li>
-        </ul>
-      </div>
-
-      <%= link_to t("app.contact_us"), home_contact_path, class:"#{active_status_for(:home_contact)}" %>
-
-    </nav>
-
-    <%= yield :navbar_extras %>
-
-    <div class="header-decoration"></div>
+    </ul>
   </div>
-</header>
+  -->
+
+  <%= link_to parties_path, class:"#{active_status_for(:parties)}" do %>
+    <%= Party.model_name.human(count: 2).capitalize %>
+  <% end %>
+
+  <%= link_to promises_path, class:"#{active_status_for(:promises)}" do %>
+    <%= Promise.model_name.human(count: 2).capitalize %>
+  <% end %>
+
+  <% if AppConfig.questions_enabled %>
+    <%= link_to questions_path, class:"#{active_status_for(:questions)}" do %>
+      <%= Question.model_name.human(count: 2).capitalize %>
+    <% end %>
+  <% end %>
+
+  <%= link_to home_about_path, class:"pull-right #{active_status_for(:parties)}" do %>
+    <%= t("app.about") %>
+  <% end %>
+
+  <!--
+  <div class="dropdown <%= active_status_for(:home_contact, :home_about, :home_join, :home_about_method, :home_people, :docs_index)%>">
+    <a class="dropdown-toggle" data-toggle="dropdown" href="#about-us">
+      <%= t 'app.about' %>
+      <b class="caret"></b>
+    </a>
+
+    <ul class="dropdown-menu">
+      <li><%= link_to t("app.about_hdo"), home_about_path %></li>
+      <li><%= link_to t("app.method.about"), home_method_path %></li>
+      <li><%= link_to t("app.people"), home_people_path %></li>
+      <li><%= link_to t("app.join"), home_join_path %></li>
+      <li><%= link_to t("app.documentation.technical"), docs_index_path %></li>
+    </ul>
+  </div>
+
+
+  <%= link_to t("app.contact_us"), home_contact_path, class:"#{active_status_for(:home_contact)}" %>
+
+-->
+
+</nav>
+
+<%= yield :navbar_extras %>
