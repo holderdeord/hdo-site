@@ -1,5 +1,5 @@
 class DocsController < ApplicationController
-  caches_page :index 
+  hdo_caches_page :index
 
   def index
     example = Hdo::StortingImporter::Representative.json_example.split("\n").join("\n  ")

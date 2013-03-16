@@ -2,7 +2,30 @@ class ApplicationController < ActionController::Base
   include Pundit
   protect_from_forgery
 
+  #
+  # beta has no varnish in front, but the new production servers do.
+  # this helps us with the transition
+  #
+
+  def self.hdo_caches_page(*actions)
+    if AppConfig.beta?
+      caches_page(*actions, if: -> { can_cache? })
+    else
+      before_filter :set_default_expiry, only: actions
+    end
+  end
+
   protected
+
+  def set_default_expiry
+    if can_cache?
+      expires_in 5.minutes, public: true
+    end
+  end
+
+  def can_cache?
+    flash.empty? && current_user.nil?
+  end
 
   def xhr_only(&blk)
     if request.xhr?

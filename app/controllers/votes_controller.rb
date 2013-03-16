@@ -1,5 +1,5 @@
 class VotesController < ApplicationController
-  caches_page :index, :show, :all
+  hdo_caches_page :index, :show, :all
 
   DEFAULT_PER_PAGE = 30
 

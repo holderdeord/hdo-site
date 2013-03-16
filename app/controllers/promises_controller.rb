@@ -1,5 +1,5 @@
 class PromisesController < ApplicationController
-  caches_page :index
+  hdo_caches_page :index
 
   def index
     @categories       = Category.where(:main => true).includes(:children)

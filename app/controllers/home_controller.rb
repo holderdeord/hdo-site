@@ -1,9 +1,8 @@
 # encoding: UTF-8
 
 class HomeController < ApplicationController
-  caches_page :index, :contact, :join, :support, :people,
-              :about_method, :member, :future, :robots,
-              if: lambda { flash.empty? }
+  hdo_caches_page :index, :contact, :join, :support, :people,
+                  :about_method, :member, :future, :robots
 
   def index
     @issues  = Issue.published.random(6)
