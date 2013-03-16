@@ -366,7 +366,6 @@ DEPENDENCIES
   pry
   pundit
   quiet_assets
-  rack-cache
   rack-cors
   rails (= 3.2.12)
   rails-erd
