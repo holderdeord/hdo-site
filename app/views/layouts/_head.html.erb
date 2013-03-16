@@ -10,8 +10,7 @@
 
   <%= render partial: 'layouts/opengraph' %>
 
-  <!-- <title><%=t 'app.title' %></title> -->
-  <title><%= yield(:title) || "Holder De Ord" %></title>
+  <title><%= content_for?(:title) ? yield(:title) : t('app.title') %></title>
 
   <%= csrf_meta_tags %>
   <%= stylesheet_link_tag "application", :media => "all" %>
