@@ -89,7 +89,6 @@ gem 'acts-as-taggable-on', '~> 2.3.1'
 gem 'tire'
 
 # caching
-gem 'rack-cache', :require => 'rack/cache'
 gem 'cache_digests'
 
 # images
