@@ -18,6 +18,9 @@ module Hdo
       end
 
       def stats_cache_key
+        # TODO: if we switch to a cache store that persists between
+        # deploys (like memcached), consider using ActiveSupport::Caching.expand_cache_key
+
         "#{cache_key}/stats"
       end
     end
