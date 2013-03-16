@@ -472,7 +472,7 @@ nb:
         no_promises_html: "De har ingen løfter i partiprogrammet som direkte angår saken."
         broken_html: "De har <strong>ikke holdt ord</strong> i denne saken."
         kept_html: "De har <strong>holdt ord</strong> i denne saken."
-        partially_kept_html: "De har delvis holdt ord i denne saken."
+        partially_kept_html: "De har <strong>delvis holdt ord</strong> i denne saken."
       based_on:
         one: "basert på 1 løfte"
         other: "basert på %{count} løfter"
