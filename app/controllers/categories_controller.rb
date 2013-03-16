@@ -1,5 +1,5 @@
 class CategoriesController < ApplicationController
-  caches_page :index, :show, :promises
+  hdo_caches_page :index, :show, :promises
 
   def index
     @categories = Category.all_with_children

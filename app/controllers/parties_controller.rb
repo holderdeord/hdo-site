@@ -1,8 +1,8 @@
 class PartiesController < ApplicationController
-  caches_page :index
+  hdo_caches_page :index
 
   #
-  # caches_page :show
+  # hdo_caches_page :show
   #
   # FIXME: need to look into how to cache the parties page when
   # the issue list is enabled.
