@@ -38,7 +38,6 @@ module Hdo
 
       personal_vote = find_personal_vote_for(vote.time)
 
-
       if personal_vote
         @log.info "#{self.class}: inferring result for vote #{vote.external_id} from #{personal_vote.external_id}"
 
@@ -60,7 +59,9 @@ module Hdo
       points = personal_votes_of_the_day.map { |v| v.time.to_i }
       clusterer = OneDimensionalHierarchicalClusterer.new(points, 900)
       cluster_for_time = [clusterer.nearest_cluster_for(time.to_i)].flatten
-      personal_votes_of_the_day.select { |v| cluster_for_time.include? v.time.to_i }.first
+
+      candidates = personal_votes_of_the_day.select { |v| cluster_for_time.include? v.time.to_i }
+      candidates.min_by { |v| v.absent_count }
     end
 
     def add_result(non_personal, personal)

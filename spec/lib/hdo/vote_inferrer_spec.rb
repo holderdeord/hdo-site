@@ -77,6 +77,45 @@ module Hdo
       vi.infer!.should == [false, false]
     end
 
+    it 'picks the vote with the most representatives from the chosen cluster' do
+      # Even though it's not really allowed, representatives sometimes forget to press the button.
+      # When this happens, we want to pick the vote with the most representatives present to
+      # have the inferred votes as accurate as possible.
+
+      v1 = Vote.make!(
+        enacted: true,
+        personal: true,
+        absent_count: 168,
+        vote_results: [],
+        time: Time.parse("2012-08-07 12:56")
+      )
+
+
+      v2 = Vote.make!(
+        enacted: false,
+        personal: true,
+        absent_count: 167,
+        vote_results: [],
+        time: Time.parse("2012-08-07 12:57")
+      )
+
+      v3 = Vote.make!(
+        enacted: true,
+        personal: false,
+        vote_results: [],
+        time: Time.parse("2012-08-07 13:00")
+      )
+
+      vr1  = VoteResult.make!(representative: Representative.make!, result: 1, vote: v1)
+      vr2a = VoteResult.make!(representative: Representative.make!, result: -1, vote: v2)
+      vr2b = VoteResult.make!(representative: Representative.make!, result: 1, vote: v2)
+
+      VoteInferrer.new([v3]).infer!.should == [true]
+      v3.reload
+
+      v3.vote_results.size.should == 2
+    end
+
     describe "with multiple voting sessions in the same day" do
       before do
         @rep1 = Representative.make!
