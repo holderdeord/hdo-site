@@ -5,3 +5,7 @@
 <% if alert %>
   <div class="alert alert-error"><%= alert %></div>
 <% end %>
+
+<% if AppConfig.read_only %>
+  <div class="alert alert-info"><%= t('app.mode.read_only') %></div>
+<% end %>

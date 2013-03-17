@@ -336,6 +336,8 @@ nb:
     expand: 'Åpne'
     collapse: 'Lukke'
     nobody: ingen
+    mode:
+      read_only: På grunn av serverbytte er saksredigering midlertidig deaktivert.
     search:
       button: Søk
       result: Søkeresultat
@@ -368,7 +370,6 @@ nb:
         reset: Nullstill
         fetch_votes: Søk
         search_result: Søkeresultat
-        disabled: På grunn av serverbytte er saksredigering midlertidig deaktivert.
         view_proposition_body: Se forslagstekst
         promise_used_in: Løftet brukes i
         promise:

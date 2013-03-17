@@ -145,9 +145,8 @@ class Admin::IssuesController < AdminController
   end
 
   def ensure_editable
-    unless AppConfig.issue_editing_enabled
-      flash.alert = t('app.issues.edit.disabled')
-      redirect_to root_path
+    if AppConfig.read_only
+      redirect_to admin_root_path
     end
   end
 
