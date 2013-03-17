@@ -27,4 +27,3 @@ production:
   analytics_enabled: true
   questions_enabled: false
   show_accountability: false
-  read_only: true
