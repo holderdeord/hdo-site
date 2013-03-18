@@ -25,7 +25,7 @@ class Issue < ActiveRecord::Base
   after_destroy { tire.update_index }
 
   before_destroy do
-    destroy_associations # workaround https://github.com/rails/rails/issues/5332, should be fixed in Rails 3.2.13
+    destroy_associations # workaround https://github.com/rails/rails/issues/5332, should be fixed in Rails 3.2.14
   end
 
   acts_as_taggable
