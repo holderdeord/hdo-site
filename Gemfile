@@ -11,9 +11,9 @@ end
 #
 # When bumping the version:
 #
-# * check that the fix for https://github.com/rails/rails/issues/5332 made it into 3.2.13,
+# * check that the fix for https://github.com/rails/rails/issues/5332 made it into 3.2.14,
 #   then remove our workaround in Issue.before_destroy
-gem 'rails', '3.2.12'
+gem 'rails', '3.2.13'
 
 # Gems used only for assets and not required
 # in production environments by default.
