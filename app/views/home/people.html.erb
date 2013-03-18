@@ -7,11 +7,9 @@
 
   <div class="person">
     <% if person.image %>
-      <!--<div style="background-image: url('/assets/<%= person.image %>')" class="photo">-->
-      <img src="/assets/<%=person.image %>" class="photo">
+      <img src="<%= asset_path person.image %>" class="photo">
     <% else %>
-      <!--<div style="background-image: url('/assets/representatives/unknown.jpg')" class="photo">-->
-      <img src="/assets/representatives/unknown.jpg" class="photo">
+      <img src="<%= asset_path "representatives/unknown.jpg" %>" class="photo">
 
     <% end %>
     <!--</div>-->
