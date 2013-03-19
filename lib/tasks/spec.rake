@@ -12,15 +12,13 @@ unless ENV['RAILS_ENV'] == "production"
     namespace :coverage do
       desc "Make sure test coverage doesn't drop below THRESHOLD"
       task :ensure do
-        require 'nokogiri'
+        require 'json'
 
-        threshold = Float(ENV['COVERAGE_THRESHOLD'] || ENV['THRESHOLD'] || 60)
-        path = Rails.root.join("coverage/index.html")
-        doc = Nokogiri::HTML.parse File.read(path)
+        threshold = Float(ENV['COVERAGE_THRESHOLD'] || ENV['THRESHOLD'] || 80)
+        path = Rails.root.join("coverage/.last_run.json")
+        data = JSON.parse File.read(path)
 
-        node = doc.css("h2:first .covered_percent").first
-        str = node && node.content[/(\d+\.\d+)%/, 1] || raise("unable to parse coverage from #{path}")
-        covered = Float(str)
+        covered = data.fetch('result').fetch('covered_percent')
 
         if covered < threshold
           raise "Test coverage #{covered}% is below the threshold of #{threshold}%. Not good enough, sorry."
