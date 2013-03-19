@@ -71,7 +71,7 @@ module Hdo
       end
 
       def config_path_for(filename)
-        if Rails.env.production?
+        if Rails.env.production? || Rails.env.staging?
           "/etc/elasticsearch/hdo.#{filename}"
         else
           Rails.root.join("config/search/#{filename}").to_s
