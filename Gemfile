@@ -30,8 +30,9 @@ group :test do
   gem "machinist", "~> 2.0"
   gem "database_cleaner", "~> 0.9.1"
   gem "loadable_component", ">= 0.1.1"
-  gem 'simplecov', :require => false
+  gem 'simplecov', require: false
   gem 'fuubar'
+  gem 'coveralls', require: false
 
   # guard
   gem 'guard'
