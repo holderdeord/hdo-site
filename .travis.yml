@@ -22,7 +22,7 @@ notifications:
     on_failure: change
     template:
       - "%{author} | %{commit} | %{message} | %{build_url}"
-before_install: touch ~/do_not_run_bundle
+install: touch ~/do_not_run_bundle
 before_script:
   - ./script/travis/bundle_install.sh
   - dpkg -s elasticsearch | grep --color=never Version
