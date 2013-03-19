@@ -284,16 +284,23 @@ module Hdo
           [urls.parliament_issue_url(pi), pi.summary]
         end
 
+        max = 10
+
         template = <<-HTML
         <h2>Saker med nye avstemninger i dag:</h2>
         <ul>
-          <% pis.each do |url, summary| %>
-          <li><a href="<%= url %>"><%= summary %></li>
+          <% pis.first(max).each do |url, summary| %>
+            <li><a href="<%= url %>"><%= summary %></a></li>
+          <% end %>
+
+          <% if pis.size > max %>
+            <li>...og <%= pis.size - max %> flere</li>
           <% end %>
         </ul>
         HTML
 
         message = ERB.new(template, 0, "%-<>").result(binding)
+        log.info "sending hipchat message:\n#{message}"
         room.send('Stortinget', message, notify: true)
       end
 
