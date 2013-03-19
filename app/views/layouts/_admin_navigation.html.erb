@@ -1,43 +1,8 @@
 <% content_for :navbar_extras do %>
-<ul class="nav pull-right">
-  <% if user_signed_in? %>
-    <% if AppConfig.questions_enabled %>
-      <li><%= link_to 'S&S', admin_questions_path %></li>
-    <% end %>
 
-    <li class="dropdown <%= active_status_for 'admin/representatives', 'admin/users' %>">
-      <a class="dropdown-toggle" data-toggle="dropdown" href="#users">
-        <%= User.model_name.human(count: 2).capitalize %>
-        <b class="caret"></b>
-      </a>
-      <ul class="dropdown-menu">
-        <li><%= link_to 'Administratorer', admin_users_path %></li>
-        <li><%= link_to Representative.model_name.human(count: 2).capitalize, admin_representatives_path %></li>
-      </ul>
-    </li>
+<nav class="pull-right">
 
-    <li class="dropdown <%= active_status_for 'admin/issues', 'docs_analysis', 'admin/topics' %>">
-      <a class="dropdown-toggle" data-toggle="dropdown" href="#analysis">
-        <%= t 'app.analysis' %>
-        <b class="caret"></b>
-      </a>
-
-      <ul class="dropdown-menu">
-        <li><%= link_to t('app.issues.edit.new'), new_admin_issue_path %></li>
-        <li><%= link_to t('app.admin.latest_from_parliament'), admin_root_path %></li>
-        <li><%= link_to Issue.model_name.human(count: 2).capitalize, admin_issues_path %></li>
-        <li><%= link_to t('app.documentation.method'), docs_analysis_path %></li>
-      </ul>
-    </li>
-
-    <li><%= link_to t('app.logout'), destroy_user_session_path, method: 'delete' %></li>
-  <% else %>
-    <li><%= link_to t('app.login'), new_user_session_path  %></li>
-  <% end %>
-</ul>
-
-<ul class="nav pull-right">
-  <li class="dropdown <%= active_status_for(:representatives, :parliament_issues, :votes, :categories, :districts, :committees)%>" id="stortinget">
+  <div class="dropdown <%= active_status_for(:representatives, :parliament_issues, :votes, :categories, :districts, :committees)%>" id="stortinget">
     <a class="dropdown-toggle" data-toggle="dropdown" href="#stortinget">
       Rådata
       <b class="caret"></b>
@@ -75,6 +40,44 @@
         <% end %>
       </li>
     </ul>
-  </li>
-</ul>
+  </div>
+
+
+  <% if user_signed_in? %>
+    <% if AppConfig.questions_enabled %>
+      <%= link_to 'S&S', admin_questions_path %>
+    <% end %>
+
+    <div class="dropdown <%= active_status_for 'admin/representatives', 'admin/users' %>">
+      <a class="dropdown-toggle" data-toggle="dropdown" href="#users">
+        <%= User.model_name.human(count: 2).capitalize %>
+        <b class="caret"></b>
+      </a>
+      <ul class="dropdown-menu">
+        <li><%= link_to 'Administratorer', admin_users_path %></li>
+        <li><%= link_to Representative.model_name.human(count: 2).capitalize, admin_representatives_path %></li>
+      </ul>
+    </div>
+
+    <div class="dropdown <%= active_status_for 'admin/issues', 'docs_analysis', 'admin/topics' %>">
+      <a class="dropdown-toggle" data-toggle="dropdown" href="#analysis">
+        <%= t 'app.analysis' %>
+        <b class="caret"></b>
+      </a>
+
+      <ul class="dropdown-menu">
+        <li><%= link_to t('app.issues.edit.new'), new_admin_issue_path %></li>
+        <li><%= link_to t('app.admin.latest_from_parliament'), admin_root_path %></li>
+        <li><%= link_to Issue.model_name.human(count: 2).capitalize, admin_issues_path %></li>
+        <li><%= link_to t('app.documentation.method'), docs_analysis_path %></li>
+      </ul>
+    </div>
+
+    <%= link_to t('app.logout'), destroy_user_session_path, method: 'delete' %>
+  <% else %>
+    <%= link_to t('app.login'), new_user_session_path  %>
+  <% end %>
+
+</nav>
+
 <% end %>
