@@ -2,10 +2,8 @@
 <html lang="<%= I18n.locale %>">
   <%= render 'layouts/head' %>
 
-
-
   <body>
-    <header class="party-<%= yield :headerColor %> <% if content_for?(:jumbotron) %>jumbotron<% end %>" style="background-image:url('<%= yield :headerImage %>')">
+    <header class="<%= header_class %>" style="<%= header_style %>">
       <div class="container">
         <a class="logo" href="/">
           <%= image_tag"logo.png", alt:"Holder de ord" %>

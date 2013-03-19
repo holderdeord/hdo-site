@@ -1,5 +1,25 @@
 module ApplicationHelper
 
+  def header_class
+    header_class = []
+
+    if @party
+      header_class << "party-#{@party.external_id}"
+    end
+
+    if content_for?(:jumbotron)
+      header_class << 'jumbotron'
+    end
+
+    header_class.join ' '
+  end
+
+  def header_style
+    if request.path == "/"
+      "background-image:url('#{asset_path("jumbotron_frontpage.jpg")}')"
+    end
+  end
+
   def obscure_email(email)
     return nil if email.nil?
 

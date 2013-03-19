@@ -1,7 +1,5 @@
 <% title "#{@party.name} - #{t('app.title')}" %>
 
-<% content_for :headerColor do %><%= @party.external_id %><% end %>
-
 <h2 class="party-title-name">
   <%= image_tag @party.logo, alt: "#{@party.name}s logo", width: '96', height: '96' %>
   <%= @party.name %>

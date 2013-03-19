@@ -13,6 +13,7 @@ class RepresentativesController < ApplicationController
   def show
     @representative = Representative.find(params[:id])
     @issues         = Issue.published.order(:title).all.reject { |i| i.stats.score_for(@representative).nil? }
+    @party          = @representative.latest_party
 
     respond_to do |format|
       format.html
