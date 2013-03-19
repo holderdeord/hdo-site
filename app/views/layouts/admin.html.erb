@@ -2,9 +2,29 @@
 <html lang="<%= I18n.locale %>">
   <%= render 'layouts/head' %>
 
+
+
   <body>
-    <%= render 'layouts/admin_navigation' %>
-    <%= render 'layouts/navigation' %>
+    <header class="party-<%= yield :headerColor %> <% if content_for?(:jumbotron) %>jumbotron<% end %>" style="background-image:url('<%= yield :headerImage %>')">
+      <div class="container">
+        <a class="logo" href="/">
+          <%= image_tag"logo.png", alt:"Holder de ord" %>
+        </a>
+
+        <%= render 'shared/global_search' if AppConfig.front_page_search_enabled %>
+        <%= render 'layouts/admin_navigation' %>
+        <%= render 'layouts/navigation' %>
+
+        <% if content_for?(:jumbotron) %>
+          <div class="jumbotron">
+            <%= yield :jumbotron %>
+          </div>
+        <% else %>
+          <div class="header-decoration"></div>
+        <% end %>
+
+      </div>
+    </header>
 
     <div id="hdo-content" class="container">
       <%= render 'layouts/flash' %>

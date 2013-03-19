@@ -1,12 +1,8 @@
+
 <% title "#{@representative.full_name} - #{Representative.model_name.human(count: 2).capitalize} - #{t('app.title')}" %>
 <% party = @representative.latest_party %>
 
-<% content_for :jumbotron do %>
-  <div class="representative-header party-<%= party.external_id %>">
-    <div class="container">
-    </div>
-  </div>
-<% end %>
+<% content_for :headerColor do %><%= party.external_id %><% end %>
 
 <div class="representative-profile">
   <%= image_tag @representative.image.versions[:medium], width: '240', height: '320', class: 'representative-image', alt: @representative.full_name %>

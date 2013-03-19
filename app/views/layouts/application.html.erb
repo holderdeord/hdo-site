@@ -3,16 +3,31 @@
   <%= render 'layouts/head' %>
 
   <body>
-    <div class="wrapper">
-      <%= render 'layouts/navigation' %>
+    <header class="party-<%= yield :headerColor %> <% if content_for?(:jumbotron) %>jumbotron<% end %>" style="background-image:url('<%= yield :headerImage %>')">
+      <div class="container">
+        <a class="logo" href="/">
+          <%= image_tag"logo.png", alt:"Holder de ord" %>
+        </a>
 
-      <%= yield :jumbotron %>
+        <%= render 'shared/global_search' if AppConfig.front_page_search_enabled %>
+        <%= render 'layouts/navigation' %>
 
-      <div id="hdo-content" class="container">
-        <%= yield %>
+        <% if content_for?(:jumbotron) %>
+          <div class="jumbotron">
+            <%= yield :jumbotron %>
+          </div>
+        <% else %>
+          <div class="header-decoration"></div>
+        <% end %>
+
       </div>
-      <div class="push"></div>
+    </header>
+
+
+    <div id="hdo-content" class="container">
+      <%= yield %>
     </div>
+    <div class="push"></div>
 
     <%= render 'layouts/footer'%>
 
@@ -22,5 +37,5 @@
     <script>HDO.setupSearchWidget();</script>
     <%= yield :document_ready %>
 
-    </body>
+  </body>
 </html>
