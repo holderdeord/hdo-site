@@ -29,7 +29,7 @@ module Hdo
         if intersections.any?
           handle_intersections(intersections, membership)
         elsif e = continuous_membership_after(membership)
-          e.update_attributes({ start_date: membership.start_date })
+          e.update_attributes(start_date: membership.start_date)
         else
           create_new_membership(membership)
         end
