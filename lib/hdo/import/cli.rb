@@ -281,7 +281,7 @@ module Hdo
         urls = Rails.application.routes.url_helpers
 
         pis = votes.flat_map { |vote| vote.parliament_issues.to_a }.uniq.map do |pi|
-          [urls.parliament_issue_url(pi), pi.summary]
+          [urls.parliament_issue_url(pi, host: "holderdeord.no"), pi.summary]
         end
 
         max = 10
