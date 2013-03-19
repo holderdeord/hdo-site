@@ -269,7 +269,13 @@ module Hdo
 
         token = ENV['HIPCHAT_API_TOKEN'] || return
         votes = Vote.where("created_at >= ?", 1.day.ago)
-        return if votes.empty?
+
+        if votes.empty?
+          log.info "no new votes"
+          return
+        else
+          log.info "#{votes.count} new votes"
+        end
 
         room = HipChat::Client.new(token)['Analyse']
         urls = Rails.application.routes.url_helpers
