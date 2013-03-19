@@ -5,7 +5,7 @@
 @hdoPrimaryColor: #019ea2;
 
 body > header {
-  background: @hdoPrimaryColor 50% 50% no-repeat;
+  background: @hdoPrimaryColor 50% 0 no-repeat;
   font-family: @headingsFontFamily;
   color: #fff;
   padding-top: 60px;
@@ -13,7 +13,7 @@ body > header {
   &.jumbotron {
     margin-bottom: 0;
   }
-  a.logo {
+  .logo {
     float: left;
     width: 120px;
     margin-right: 40px;
@@ -23,12 +23,13 @@ body > header {
     > a {
       display: inline-block;
       margin-right: 20px;
-      border-bottom: 2px solid rgba(255,255,255, 0);
+      border-bottom: 2px solid transparent;
       &, &:hover, &:active, &.active {
         color: inherit;
         text-decoration: none;
       }
       &:hover {
+        border-color: #fff;
         border-color: rgba(255,255,255, 0.5);
       }
       &.active, &:active {
@@ -44,7 +45,7 @@ body > header {
         text-decoration: none;
       }
       &:hover {
-        border-color: rgba(255,255,255, 0.5);
+        border-color: rgba(255,255,255, 0.75);
       }
       &.active, &:active {
         border-color: #fff;
@@ -55,14 +56,29 @@ body > header {
     }
   }
   .header-decoration {
-    border: 3px solid transparent;
-    border-width: 1px 2px 0 2px;
-    border-image: url(/assets/representative-borderbox.png) 1 2 0 2 fill stretch;
+    background-color: #fff;
+    position: relative;
     height: 250px;
     margin: 100px -40px -150px -40px;
+    box-shadow: 0 -1px rgba(0,0,0,0.1), 0 -2px rgba(0,0,0,0.025);
+    &:before, &:after {
+      position: absolute;
+      content: "";
+      display: block;
+      height: 250px;
+      width: 2px;
+      top: -1px;
+      background: url(/assets/bg_sheet.png) 0 0 no-repeat;
+    }
+    &:before {
+      left: -2px;
+    }
+    &:after {
+      right: -2px;
+      background-position: 100% 0;
+    }
   }
   .jumbotron {
-    background-size: auto 100%;
     padding: 45px 0;
     text-align: center;
     font-size: 1.2em;
@@ -74,36 +90,52 @@ body > header {
       max-width: 80%;
     }
     p {
-      color: #1d5154;
-      text-shadow: 0 0 3px rgba(0,158,163,0.5);
+      margin-top: 2em;
+      color: #fff;
+      color: rgba(255,255,255,0.75);
       a {
-        color: #000;
+        color: #fff;
       }
     }
   }
 }
 
 @media (max-width: 959px) {
-  #hdo-header {
+  body > header nav {
     .header-decoration {
-      margin: 100px -20px -150px -20px;
+      margin: 100px -15px -150px -15px;
+      &:before, &:after {
+        display: none;
+      }
     }
   }
 }
 
 @media (max-width: 767px) {
-  #hdo-header {
+  body > header {
     padding-top: 40px;
+    .logo {
+      margin-right: 0;
+    }
     nav {
       display: block;
       clear: both;
+      > a {
+        margin-right: 5px;
+      }
     }
     .header-decoration {
       height: 100px;
-      margin: 50px -20px -20px -20px;
+      margin: 50px -15px -20px -15px;
       border: none;
       background: #fff;
-      box-shadow: 0 -1px rgba(0,0,0, 0.25), 0 -2px rgba(0,0,0,0.025);
+      box-shadow: 0 -1px rgba(0,0,0, 0.1), 0 -2px rgba(0,0,0,0.025);
+    }
+    .form-search .btn {
+      line-height: 20px;
+    }
+    .form-search .search-query {
+      width: 90px;
     }
   }
 }
