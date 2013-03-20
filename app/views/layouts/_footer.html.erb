@@ -5,7 +5,7 @@
       <div class="span4">
         <%= render 'layouts/social'%>
         <p>
-          <span class="muted"><%=t 'app.title' %> &copy; 2012</span>
+          <span class="muted"><%=t 'app.title' %> &copy; <%= Time.now.year %></span>
           <small><%= link_to 'Admin', admin_root_path %></small>
         </p>
       </div>
