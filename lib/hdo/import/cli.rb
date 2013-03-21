@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 require 'optparse'
 require 'set'
 require 'open-uri'
