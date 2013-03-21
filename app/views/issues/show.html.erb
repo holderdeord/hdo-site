@@ -1,4 +1,6 @@
-<% title "#{@issue.title} - #{t('app.issues.title')} - #{t('app.title')}" %>
+<% page_title "#{@issue.title} - #{t('app.issues.title')} - #{t('app.title')}" %>
+<% page_desc @issue.description %>
+
 <%= render partial: 'admin_info' if user_signed_in? %>
 
 <% cache @issue do %>

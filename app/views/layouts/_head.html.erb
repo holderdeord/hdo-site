@@ -10,7 +10,7 @@
 
   <%= render partial: 'layouts/opengraph' %>
 
-  <title><%= content_for?(:title) ? yield(:title) : t('app.title') %></title>
+  <title><%= title %></title>
 
   <%= csrf_meta_tags %>
   <%= stylesheet_link_tag "application", :media => "all" %>

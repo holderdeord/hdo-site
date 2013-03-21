@@ -1,4 +1,4 @@
-<% title "#{@representative.full_name} - #{Representative.model_name.human(count: 2).capitalize} - #{t('app.title')}" %>
+<% page_title "#{@representative.full_name} - #{Representative.model_name.human(count: 2).capitalize} - #{t('app.title')}" %>
 <% party = @representative.latest_party %>
 
 <div class="representative-profile">

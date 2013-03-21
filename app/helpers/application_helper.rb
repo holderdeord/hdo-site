@@ -63,9 +63,24 @@ module ApplicationHelper
     "http://gravatar.com/avatar/#{Digest::MD5.hexdigest email}.png"
   end
 
-  def title(page_title)
-    content_for(:title) { page_title }
+  def page_title(page_title = nil)
+    if page_title
+      @page_title = page_title
+    end
+
+    @page_title || t('app.title')
   end
+
+  alias_method :title, :page_title
+
+  def page_description(desc = nil)
+    if desc
+      @page_description = desc
+    end
+
+    @page_description || t('app.opengraph.description')
+  end
+  alias_method :page_desc, :page_description
 
   def markdown(text)
     @markdown ||= Redcarpet::Markdown.new(Redcarpet::Render::HTML)
