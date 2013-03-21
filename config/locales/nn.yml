@@ -1,0 +1,511 @@
+nb:
+  helpers:
+    submit:
+      create: "Lag %{model}"
+      update: "Lagre %{model}"
+  time:
+    formats:
+      default: "%Y-%m-%d %H:%M:%S"
+      short: "%Y-%m-%d"
+      text: "%e. %B %Y"
+      month_year: "%B %Y"
+      text_time: "%e. %B %Y %H:%M"
+  valid_email:
+    validations:
+      email:
+        invalid: 'Ugyldig epostaddresse.'
+  date:
+     day_names: [Søndag, Mandag, Tirsdag, Onsdag, Torsdag, Fredag, Lørdag]
+     abbr_day_names: [Søn, Man, Tir, Ons, Tor, Fre, Lør]
+      # Don't forget the nil at the beginning; there's no such thing as a 0th month
+     month_names: [~, januar, februar, mars, april, mai, juni, juli, august, september, oktober, november, desember]
+  datetime:
+    distance_in_words:
+      half_a_minute: "et halvt minutt"
+      less_than_x_seconds:
+        one:   "mindre enn 1 sekund"
+        other: "mindre enn %{count} sekunder"
+      x_seconds:
+        one:   "1 sekund"
+        other: "%{count} sekunder"
+      less_than_x_minutes:
+        one:   "mindre enn 1 minutt"
+        other: "mindre enn %{count} minutter"
+      x_minutes:
+        one:   "1 minutt"
+        other: "%{count} minutter"
+      about_x_hours:
+        one:   "omtrent 1 time"
+        other: "omtrent %{count} timer"
+      x_days:
+        one:   "omtrent 1 dag"
+        other: "%{count} dager"
+      about_x_months:
+        one:   "omtrent 1 måned"
+        other: "omtrent %{count} måneder"
+      x_months:
+        one:   "1 måned"
+        other: "%{count} måneder"
+      about_x_years:
+        one:   "omtrent 1 år"
+        other: "omtrent %{count} år"
+      over_x_years:
+        one:   "over 1 år"
+        other: "over %{count} år"
+      almost_x_years:
+        one:   "nesten 1 år"
+        other: "nesten %{count} år"
+  valid_email:
+    validations:
+      email:
+        invalid: 'er ikke en gyldig epostaddresse.'
+  activerecord:
+    errors:
+      messages:
+        blank: "er blank."
+        taken: "er allerede i bruk."
+        record_invalid: "Validering feilet: %{errors}"
+        inclusion: "er ikke inkludert i listen"
+        exclusion: "kan ikke brukes."
+        invalid: "er ugyldig"
+        accepted: "må aksepteres"
+        empty: "kan ikke være tom"
+        blank: "kan ikke være blank"
+        too_long: "er for lang (forventet maksimum %{count})"
+        too_short: "er for kort (forventet minimum %{count})"
+        wrong_length: "er feil lengde (forventet %{count})"
+        taken: "er allerede i bruk"
+        not_a_number: "er ikke et tall"
+        greater_than: "må være større enn %{count}"
+        greater_than_or_equal_to: "må være større enn eller lik %{count}"
+        equal_to: "må være %{count}"
+        less_than: "må være mindre enn %{count}"
+        less_than_or_equal_to: "må være mindre enn eller lik %{count}"
+      models:
+        user:
+          attributes:
+            password:
+              too_short: 'Passordet er for kort (minimum 6 tegn).'
+    models:
+      representative:
+        one: "representant"
+        other: "representanter"
+      committee:
+        one: "komite"
+        other: "komiteer"
+      party:
+        one: "parti"
+        other: "partier"
+      category:
+        one: "kategori"
+        other: "kategorier"
+      district:
+        one: "fylke"
+        other: "fylker"
+      parliament_issue:
+        one: "stortingssak"
+        other: "stortingssaker"
+      vote:
+        one: "avstemning"
+        other: "avstemninger"
+      vote_result:
+        one: "stemme"
+        other: "stemmer"
+      promise:
+        one: "løfte"
+        other: "løfter"
+      proposition:
+        one: "forslag"
+        other: "forslag"
+      user:
+        one: "bruker"
+        other: "brukere"
+      issue:
+        one: "sak"
+        other: "saker"
+      question:
+        one: spørsmål
+        other: spørsmål
+      answer:
+        one: svar
+        other: svar
+      party_comment:
+        one: "Partikommentar"
+        other: "Partikommentarer"
+    attributes:
+      representative:
+        name: "Navn"
+        first_name: Fornavn
+        last_name: Etternavn
+        party: "Parti"
+        external_id: "Ekstern id"
+        committees: "Komiteer"
+        district: "Fylke"
+        alternate: "Vara"
+        date_of_birth: 'Født'
+        date_of_death: 'Død'
+        twitter_id: 'Twitter'
+        email: 'Epost'
+      party:
+        name: "Navn"
+        representatives: "Representanter"
+        external_id: "Ekstern id"
+      committee:
+        name: "Navn"
+        representatives: "Representanter"
+        external_id: "Ekstern id"
+        parliament_issues: "Stortingssaker"
+      category:
+        name: "Navn"
+        external_id: "Ekstern id"
+        children: "Underkategorier"
+        ancestors: "Hovedkategorier"
+      district:
+        name: "Navn"
+        external_id: "Ekstern id"
+        representatives: "Representanter"
+        percent_of_representatives: "Prosent"
+      parliament_issue:
+        summary: "Sammendrag"
+        external_id: "Ekstern id"
+        status: "Status"
+        last_update: "Sist oppdatert"
+        categories: "Kategorier"
+        description: "Beskrivelse"
+        committee: "Komité"
+        document_group: "Dokumentgruppe"
+        reference: "Henvisning"
+      vote:
+        subject: "Beskrivelse"
+        for_count: "For"
+        against_count: "Mot"
+        absent_count: "Ikke tilstede"
+        time: "Dato"
+        enacted: "Vedtatt"
+        counts: "Stemmegivning"
+        propositions: "Forslag"
+        parliament_issues: "Stortingssaker"
+        external_id: "Ekstern id"
+        about: "om"
+        proposition_type: "Forslagstype"
+      vote_result:
+        result: "Stemme"
+        voted_for: 'har stemt for.'
+        voted_against: 'har stemt mot.'
+        voted_neither: 'har ikke tatt standpunkt.'
+      promise:
+        party: "Parti"
+        body: "Tekst"
+        general: "Generell"
+        source: "Kilde"
+        new: "Nytt løfte"
+        edit: "Endre løfte"
+        categories: "Kategorier"
+        main_categories: "Hovedkategorier"
+      proposition:
+        description: "Beskrivelse"
+        on_behalf_of: "På vegne av"
+        delivered_by: "Levert av"
+        body: "Tekst"
+      user:
+        name: "Navn"
+        email: "E-post"
+        password: "Passord"
+        password_confirmation: "Bekreft passord"
+        new: "Ny bruker"
+        submit: "Lag bruker"
+        edit: "Rediger bruker"
+        destroy: "Slett bruker"
+        confirm_destroy: "Er du sikker på at du vil slette brukeren?"
+        role: Rolle
+      issue:
+        edit: "Rediger"
+        published: Publisert
+        status: Status
+        title: "Tittel"
+        description: "Beskrivelse"
+        categories: "Kategorier"
+        promises: "Løfter"
+        votes: "Avstemninger"
+        party_comments: "Partikommentarer"
+        last_updated_by: Sist redigert av
+        editor: Redaktør
+        published_at: Publisert
+        updated_at: Oppdatert
+        tag_list: Tags
+      vote_connection:
+        matches: "Støtter saken?"
+        comment: "Kommentar"
+        weight: "Vekting"
+        title: "Tittel"
+      question:
+        title: Tittel
+        body: Tekst
+        from_name: Navn
+        from_email: Epost
+        created_at: Opprettet
+        updated_at: Sist oppdatert
+        answers: Svar
+      answer:
+        body: Tekst
+        representative: Representant
+        created_at: Opprettet
+        updated_at: Sist oppdatert
+      party_comment:
+        party: Parti
+        body: Kommentar
+  will_paginate:
+    previous_label: "&#8592; Forrige"
+    next_label: "Neste &#8594;"
+    page_gap: "&hellip;"
+    page_entries_info:
+      single_page:
+        zero:  "Ingen %{model} funnet."
+        one:   "Viser 1 %{model}"
+        other: "Viser alle %{count} %{model}"
+      single_page_html:
+        zero:  "Ingen %{model} funnet"
+        one:   "Viser <strong>1</strong> %{model}"
+        other: "Viser <strong>alle&nbsp;%{count}</strong> %{model}"
+      multi_page: "Viser %{from} - %{to} av totalt %{count} %{model}"
+      multi_page_html: "Viser <strong>%{from}&nbsp;-&nbsp;%{to}</strong> av totalt <strong>%{count}</strong> %{model}"
+  support:
+    array:
+      words_connector: ', '
+      two_words_connector: ' og '
+      last_word_connector: ' og '
+  app:
+    errors:
+      default: 'Uff, noe gikk helt galt hos oss. Prøv igjen senere!'
+      search: 'Uff, vi har litt problemer med å søke for øyeblikket. Prøv igjen senere!'
+      unauthorized: Du har ikke tilgang til å utføre handlingen.
+      issues:
+        unable_to_save: "Kunne ikke lagre, saken er blitt endret i mellomtiden."
+    admin:
+      latest_from_parliament: Siste fra Stortinget
+    published: Publisert
+    next: "Neste"
+    previous: "Forrige"
+    show_all: "Vis alle"
+    url: 'holderdeord.no'
+    title: "Holder de ord"
+    opengraph:
+      description: "Holder de ord gjør det enkelt å sjekke hva som har blitt gjort og lovet i norsk politikk."
+      admins: "635985218:525020960:1562377886:757795452:518536137"
+    login: "Logg inn"
+    logout: "Logg ut"
+    description: "Bringer politikken til folket."
+    lang:
+      infinitive_particle: "å"
+    about: "Om oss"
+    about_hdo: "Om Holder de ord"
+    method:
+      about: "Hva vi gjør"
+      read_more: "Les mer om metoden"
+      read: "Les om metoden"
+    support: "Støtt oss"
+    analysis: "Analyse"
+    uncertain: Uvisst
+    member: "Bli medlem"
+    donate: "Gi en gave"
+    people: "Menneskene bak"
+    read_more: "Les mer"
+    press: "Presse"
+    join: "Bli med"
+    contact_us: 'Kontakt oss'
+    email: "kontakt@holderdeord.no"
+    documentation:
+      method: Metodikk
+      technical: Teknisk
+    "yes": 'Ja'
+    "no": 'Nei'
+    show: "Vis"
+    edit: "Rediger"
+    destroy: "Slett"
+    details: 'Detaljer'
+    back: 'Tilbake'
+    cancel: 'Avbryt'
+    done: 'Ferdig'
+    save: 'Lagre'
+    for: 'For'
+    against: 'Mot'
+    for_and_against: 'Både for og mot'
+    absent: 'Ikke tilstede'
+    unrelated: 'Ikke relatert'
+    connection: 'Kobling'
+    expand: 'Åpne'
+    collapse: 'Lukke'
+    nobody: ingen
+    mode:
+      read_only: På grunn av serverbytte er saksredigering midlertidig deaktivert.
+    search:
+      button: Søk
+      result: Søkeresultat
+      no_hits: Ingen treff
+      placeholder: 'Søk...'
+    issues:
+      title: 'Saker'
+      explanation:
+        one: 'Basert på <a href="%{url}">%{count} avstemning</a> fra oktober 2010 til dagens dato og løfter for perioden 2009-2013.'
+        other: 'Basert på <a href="%{url}">%{count} avstemninger</a> fra oktober 2010 til dagens dato og løfter for perioden 2009-2013.'
+      back: Tilbake til saken
+      not_published: Denne saken er ikke publisert.
+      published: Denne saken er publisert.
+      status:
+        published: Publisert
+        in_progress: Under arbeid
+        shelved: Lagt på is
+      edit:
+        new: "Ny sak"
+        submit: "Lagre sak"
+        edit: "Rediger sak"
+        destroy: "Slett sak"
+        confirm_destroy: "Er du sikker på at du vil slette '%{title}'?"
+        connected_votes: Koblede avstemninger
+        find_votes: Finn avstemninger
+        keyword: Nøkkelord
+        filter: Filter
+        selected_categories: Valgte kategorier
+        all: Alle
+        reset: Nullstill
+        fetch_votes: Søk
+        search_result: Søkeresultat
+        view_proposition_body: Se forslagstekst
+        promise_used_in: Løftet brukes i
+        promise:
+          unrelated: Urelatert
+          related: Relatert
+          for: For
+          against: Mot
+      view_vote: 'Se hva de stemte'
+      view_votes:
+        one: 'Se avstemningen'
+        other: 'Se avstemningene'
+      view_scores: Se utregning
+    votes:
+      enacted: Forslaget ble <strong>vedtatt</strong>.
+      not_enacted: Forslaget ble <strong>ikke vedtatt</strong>.
+      rebel: utbryterstemme
+      matches_issue:
+        'yes': 'Avstemningen er <strong>i tråd med å %{issue_title}</strong>.'
+        'no': 'Avstemningen er <strong>ikke i tråd med å %{issue_title}</strong>.'
+      non_personal:
+        unknown: 'Denne saken ble avgjort uten at avstemningsknappene ble brukt. Vi har derfor ikke oversikt over hva den enkelte representant har stemt.'
+        inferred: 'Denne saken ble avgjort enstemmig uten at avstemningsknappene ble brukt. Oversikten er utledet fra tilstedeværelse ved andre avstemninger samme dag.'
+        party_unknown: 'Denne avstemningen ble avgjort uten at avstemningsknappene ble brukt. Vi har derfor ikke oversikt over hva det enkelte parti har stemt.'
+      scores:
+        against: "%{name} har stemt mot"
+        against_html: "%{name} har stemt <strong>mot</strong>"
+        for: "%{name} har stemt for"
+        for_html: "%{name} har stemt <strong>for</strong>"
+        for_and_against: "%{name} har stemt både for og mot"
+        for_and_against_html: "%{name} har stemt <strong>både for og mot</strong>"
+        mostly_against: "%{name} har stort sett stemt mot"
+        mostly_against_html: "%{name} har <strong>stort sett stemt mot</strong>"
+        mostly_for: "%{name} har stort sett stemt for"
+        mostly_for_html: "%{name} har <strong>stort sett stemt for</strong>"
+        not_participated: "%{name} har ikke deltatt i avstemninger om"
+        not_participated_html: "%{name} har ikke deltatt i avstemninger om"
+      proposition_types:
+        none: '--Velg forslagstype--'
+        alternate_national_budget: 'Alternativt statsbudsjett'
+        government_proposal: Regjeringsproposisjon
+        legislation: Lovforslag
+        national_budget_committee_proposition: 'Statsbudsjett, komitéinnstilling'
+        national_budget_financial_proposition: 'Statsbudsjett, finansinnstilling'
+        national_budget_taxes: 'Statsbudsjett, skattedelen'
+        opposition_proposal_throne: 'Opposisjonsforslag, trontale'
+        opposition_proposition_budget: 'Opposisjonsforslag, statsbudsjett'
+        opposition_proposition_legislation: 'Opposisjonsforslag, lovforslag'
+        opposition_proposition_parliamentary_report: 'Opposisjonsforslag, stortingsmelding'
+        parliamentary_report: Stortingsmelding
+        parliamentary_report_committee_proposal: 'Stortingsmelding, komitéinnstilling'
+        proposal_attached_to_the_minutes: 'Forslag vedlegges protokollen'
+        rebalanced_national_budget: 'Nysaldering av statsbudsjett'
+        representative_proposition: 'Representantforslag'
+        revised_national_budget: 'Revidert statsbudsjett'
+    users:
+      edit:
+        created: Brukeren ble opprettet.
+        updated: Brukeren ble oppdatert.
+    questions:
+      new: Still et spørsmål
+      edit:
+        created: Spørsmålet er sendt til moderasjon.
+        approve: Godkjenn
+        reject: Avvis
+        updated: Spørsmålet ble oppdatert.
+      status:
+        approved: 'Godkjent'
+        pending: 'Avventer kontroll'
+        rejected: 'Avvist'
+    answers:
+      edit:
+        created: Svaret ble opprettet.
+        updated: Svaret ble oppdatert.
+        new: Legg til svar
+    external:
+      urls:
+        parliament_issue: "http://stortinget.no/no/Saker-og-publikasjoner/Saker/Sak/?p=%s"
+        minutes: "http://stortinget.no/no/Saker-og-publikasjoner/Publikasjoner/Referater/Stortinget/%s/%s"
+    parliament_issue:
+      states:
+        processed: "behandlet"
+    time:
+      years: "år"
+    created:
+      promise: 'Løftet ble lagret.'
+      issue: 'Saken er lagret.'
+      user: 'Brukeren ble lagret.'
+    updated:
+      promise: 'Løftet ble oppdatert.'
+      issue: 'Saken ble oppdatert.'
+      user: 'Brukeren ble oppdatert.'
+      representative: 'Representanten ble oppdatert.'
+    parties:
+      no_promises: Partiet har ingen løfter om denne saken.
+      group:
+        governing: 'Regjeringspartiene'
+        opposition: 'Opposisjonspartiene'
+      none: 'Inget parti'
+    promises:
+      scores:
+        no_promises_html: "De har ingen løfter i partiprogrammet som direkte angår saken."
+        broken_html: "De har <strong>ikke holdt ord</strong> i denne saken."
+        kept_html: "De har <strong>holdt ord</strong> i denne saken."
+        partially_kept_html: "De har <strong>delvis holdt ord</strong> i denne saken."
+      based_on:
+        one: "basert på 1 løfte"
+        other: "basert på %{count} løfter"
+    counts:
+      representative:
+        one: "Viser <strong>1</strong> representant."
+        other: "Viser <strong>%{count}</strong> representanter (inkludert varaer)."
+      committee:
+        one: "Viser <strong>1</strong> komite."
+        other: "Viser <strong>%{count}</strong> komiteer."
+      party:
+        one: "Viser <strong>ett</strong> parti."
+        other: "Viser <strong>%{count}</strong> partier."
+      category:
+        one: "Viser <strong>en</strong> kategori."
+        other: "Viser <strong>%{count}</strong> kategorier."
+      district:
+        one: "Viser <strong>ett</strong> fylke."
+        other: "Viser <strong>%{count}</strong> fylker."
+      parliament_issue:
+        one: "Viser <strong>1</strong> stortingssaker."
+        other: "Viser <strong>%{count}</strong> stortingssaker."
+      vote:
+        one: "Viser <strong>1</strong> avstemning."
+        other: "Viser <strong>%{count}</strong> avstemninger."
+      promises:
+        one: "Viser <strong>1</strong> løfte."
+        other: "Viser <strong>%{count}</strong> løfter."
+      propositions:
+        one: "Viser <strong>1</strong> forslag."
+        other: "Viser <strong>%{count}</strong> forslag."
+    group:
+      by_party: 'Grupper etter parti'
+      by_district: 'Grupper etter fylke'
+      by_name: 'Grupper etter navn'
