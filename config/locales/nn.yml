@@ -1,4 +1,4 @@
-nb:
+nn:
   helpers:
     submit:
       create: "Lag %{model}"
