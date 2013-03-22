@@ -23,7 +23,7 @@ describe RepresentativesController do
     end
 
     it 'assigns published issues to @issues' do
-      Issue.any_instance.stub(:stats).and_return(mock(score_for: 100))
+      Issue.any_instance.stub(:stats).and_return(mock(score_for: 100, key_for: :for))
 
       rep       = Representative.make!
       shown     = Issue.make!(status: 'published')
@@ -31,7 +31,7 @@ describe RepresentativesController do
 
       get :show, id: rep
 
-      assigns(:issues).should == [shown]
+      assigns(:issue_groups).should == {"for" => [shown]}
       response.should have_rendered(:show)
     end
   end
