@@ -76,7 +76,7 @@
 <% end %>
 
 
-<h3>Avstemninger</h3>
+<h3>Posisjoner</h3>
 <!--
   TODO:
    * SPLIT IN FOR AGAINST, EACH IN A SPAN6 UL INSIDE A ROW-FLUID
@@ -84,15 +84,18 @@
    * MAKE THE LINK CONTAIN THE SPAN, INFINITIVE_PARTICLE AND PERIOD.
 -->
 <div class="row-fluid">
-  <ul class="representative-issue-list span12">
-    <% @issues.each do |issue| %>
-      <li>
-        <span class="issue-<%= issue.stats.score_for(@representative) >= 66 %>"><%= issue.stats.score_for(@representative) >= 66 %></span>
-
-        <%= t 'app.lang.infinitive_particle' %>
-        <%= link_to issue.downcased_title, issue %>.
-      </li>
-    <% end %>
-  </ul>
+  <% [:for, :for_and_against, :against].each do |key| %>
+    <ul class="representative-issue-list span4">
+      <% Array(@issue_groups[key]).each do |issue| %>
+        <li>
+          <%= link_to issue do %>
+            <span class="issue-<%= key %>"><%= t "app.#{key}" %></span>
+            <%= t 'app.lang.infinitive_particle' %>
+            <%= issue.downcased_title %>.
+          <% end %>
+        </li>
+      <% end %>
+    </ul>
+  <% end %>
 </div>
 
