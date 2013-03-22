@@ -46,8 +46,6 @@
   }
 }
 
-
-
 @media (max-width: 767px) {
   .representative-profile {
     .representative-name {
@@ -66,14 +64,30 @@
   }
 }
 
-
-
 #representative-tweets {
   .row-fluid {
     article {
       font-size: 0.9em;
       color: #666;
       margin-bottom: 20px;
+    }
+  }
+}
+
+.representative-issue-list {
+  list-style: none;
+  margin: 0;
+  li {
+    margin-bottom: 5px;
+    .issue-false,
+    .issue-true,
+    .issue-against,
+    .issue-for {
+      background-color: #eaeaea;
+      margin-right: 7px;
+      margin-left: 3px;
+      box-shadow: 3px 0 0 1px #eaeaea, -3px 0 0 1px #eaeaea;
+      border-radius: 2px;
     }
   }
 }

@@ -72,12 +72,19 @@
 
 <hr>
 
-<div>
-  <h3>Avstemninger</h3>
-  <ul class="parties-issue-list">
+<h3>Avstemninger</h3>
+<!--
+  TODO:
+   * SPLIT IN FOR AGAINST, EACH IN A SPAN6 UL INSIDE A ROW-FLUID
+   * FIX LANGUAGE (FOR/MOT)
+   * MAKE THE LINK CONTAIN THE SPAN, INFINITIVE_PARTICLE AND PERIOD.
+-->
+<div class="row-fluid">
+  <ul class="representative-issue-list span12">
     <% @issues.each do |issue| %>
       <li>
-        <%= issue.stats.text_for(@representative, html: true) %>
+        <span class="issue-<%= issue.stats.score_for(@representative) >= 66 %>"><%= issue.stats.score_for(@representative) >= 66 %></span>
+
         <%= t 'app.lang.infinitive_particle' %>
         <%= link_to issue.downcased_title, issue %>.
       </li>
