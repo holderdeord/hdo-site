@@ -22,7 +22,39 @@
 
 <hr class="soften">
 
+<h3>Twitter <a href="http://twitter.com/<%= @representative.twitter_id %>" class="muted">(@<%= @representative.twitter_id %>)</a></h3>
+<div id="representative-tweets">
+  <span class="muted">Henter kvitter...</span>
+</div>
+
+<% content_for :document_ready do %>
+<script>
+  $(function() {
+    var representative = "<%= @representative.twitter_id %>";
+    $.getJSON("http://search.twitter.com/search.json?q=from%3A" + representative + "&callback=?",
+      function (data) {
+        var tweets = "<div class='row-fluid'>"
+        $(data.results).each(function(index) {
+          if (index < 6) {
+            var tweet = this;
+            tweets += "<article class='span4'>" + tweet.text + "</article>";
+            if ((index+2) % 3 == 1) {
+              tweets += "</div><div class='row-fluid'>"
+            }
+          }
+        });
+        tweets += "</div>";
+        $('#representative-tweets').html(tweets);
+      }
+    );
+  });
+</script>
+<% end %>
+
+<hr>
+
 <div>
+  <h3>Avstemninger</h3>
   <ul class="parties-issue-list">
     <% @issues.each do |issue| %>
       <li>
