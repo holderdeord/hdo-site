@@ -80,5 +80,7 @@ module Hdo
         resource '*', :headers => :any, :methods => [:get, :options]
       end
     end
+
+    config.middleware.use 'Hdo::Rack::Locale'
   end
 end
