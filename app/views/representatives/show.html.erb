@@ -2,21 +2,24 @@
 <% party = @representative.latest_party %>
 
 <div class="representative-profile">
+
   <%= image_tag @representative.image.versions[:medium], width: '240', height: '320', class: 'representative-image', alt: @representative.full_name %>
+
   <h1 class="representative-name"><%= @representative.full_name %> (<%= @representative.age %>)</h1>
 
-  <span class="representative-district">
+  <aside>
+    <span class="representative-district">
     <%= link_to @representative.district.name, @representative.district %>
-  </span>
-  <span class="representative-party">
-    <%= party && link_to(party.name, party, class:party.external_id) %>
-  </span>
-
-  <dl class="representative-comitee-list">
-    <% @representative.current_committees.each do |com| %>
-      <dd>Medlem av <%= link_to com.name, com %></dd>
-    <% end %>
-  </dl>
+    </span>
+    <span class="representative-party">
+      <%= party && link_to(party.name, party, class:party.external_id) %>
+    </span>
+    <dl class="representative-comitee-list">
+      <% @representative.current_committees.each do |com| %>
+        <dd>Medlem av <%= link_to com.name, com %></dd>
+      <% end %>
+    </dl>
+  </aside>
 
 </div>
 
@@ -30,9 +33,19 @@
 <% content_for :document_ready do %>
 <script>
   $(function() {
-    var representative = "<%= @representative.twitter_id %>";
-    $.getJSON("http://search.twitter.com/search.json?q=from%3A" + representative + "&callback=?",
-      function (data) {
+    if ("<%= @representative.twitter_id %>" == "") {
+      var notweets = "<span class='muted'>Ingen twitterkonto registrert for <%= @representative.full_name %>.</span>";
+      $('#representative-tweets').html(notweets);
+    }
+
+    else {
+      var req = $.ajax({
+        url: "http://search.twitter.com/search.json?q=from%3A<%= @representative.twitter_id %>&callback=?",
+        dataType: "jsonp",
+        timeout: 5000
+      });
+
+      req.success(function (data) {
         var tweets = "<div class='row-fluid'>"
         $(data.results).each(function(index) {
           if (index < 6) {
@@ -45,8 +58,14 @@
         });
         tweets += "</div>";
         $('#representative-tweets').html(tweets);
-      }
-    );
+      });
+
+      req.error(function (data) {
+        var notweets = "<span class='muted'>Fikk ikke kontakt med Twitter. Fugl fløyet.</span>";
+        $('#representative-tweets').html(notweets);
+      });
+
+    }
   });
 </script>
 <% end %>
