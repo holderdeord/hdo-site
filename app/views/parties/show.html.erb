@@ -5,24 +5,23 @@
   <%= @party.name %>
 </h2>
 
-<hr>
-
-<div id="representatives" class="swiper-container">
-  <div class="swiper-wrapper">
-  <% @representatives.each_slice(1).with_index do |representative_group, index| %>
-    <% representative_group.each do |representative| %>
-      <div class="swiper-slide representative">
-        <%= link_to(representative) do %>
-          <img src="<%= path_to_image representative.image.versions[:small] %>" height="160" width="120">
-          <span><%= representative.full_name %></span>
-        <% end %>
-      </div>
+<div id="representatives">
+  <div class="swiper-container">
+    <div class="swiper-wrapper">
+    <% @representatives.each_slice(1).with_index do |representative_group, index| %>
+      <% representative_group.each do |representative| %>
+        <div class="swiper-slide representative">
+          <%= link_to(representative) do %>
+            <img src="<%= path_to_image representative.image.versions[:small] %>" height="160" width="120">
+            <span><%= representative.full_name %></span>
+          <% end %>
+        </div>
+      <% end %>
     <% end %>
-  <% end %>
+    </div>
   </div>
   <div class="swiper-navigation swiper-prev">&lt;</div>
   <div class="swiper-navigation swiper-next">&gt;</div>
-
 </div>
 
 <hr class="soften">
@@ -38,6 +37,8 @@
     /* Updates the slide count  */
     window.onload = function() {
       var swiperParty = new Swiper('.swiper-container', {'slidesPerSlide': getSlideSize()});
+
+      $('#representatives .representative').fadeTo('slow', 1);
 
       $('.swiper-prev').on('click', swiperParty.swipePrev);
       $('.swiper-next').on('click', swiperParty.swipeNext);
