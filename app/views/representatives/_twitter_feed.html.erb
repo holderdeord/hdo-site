@@ -1,0 +1,36 @@
+<h3>Twitter <a href="http://twitter.com/<%= twitter_id %>" class="muted">(@<%= twitter_id %>)</a></h3>
+<div id="representative-tweets">
+  <span class="muted">Henter kvitter...</span>
+</div>
+
+<% content_for :document_ready do %>
+<script>
+  $(function() {
+    var req = $.ajax({
+      url: "http://search.twitter.com/search.json?q=from%3A<%= twitter_id %>&callback=?",
+      dataType: "jsonp",
+      timeout: 5000
+    });
+
+    req.success(function (data) {
+      var tweets = "<div class='row-fluid'>"
+      $(data.results).each(function(index) {
+        if (index < 6) {
+          var tweet = this;
+          tweets += "<article class='span4'>" + tweet.text + "</article>";
+          if ((index+2) % 3 == 1) {
+            tweets += "</div><div class='row-fluid'>"
+          }
+        }
+      });
+      tweets += "</div>";
+      $('#representative-tweets').html(tweets);
+    });
+
+    req.error(function (data) {
+      var notweets = "<span class='muted'>Fikk ikke kontakt med Twitter. Fugl fløyet.</span>";
+      $('#representative-tweets').html(notweets);
+    });
+  });
+</script>
+<% end %>
