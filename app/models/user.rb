@@ -8,12 +8,12 @@ class User < ActiveRecord::Base
          :trackable,
          :validatable
 
-  attr_accessible :email, :password, :password_confirmation, :remember_me, :name, :role
+  attr_accessible :email, :password, :password_confirmation, :remember_me, :name, :role, :description, :active, :board
 
   has_many :last_updated_issues, foreign_key: 'last_updated_by_id', class_name: 'Issue'
   has_many :issues, foreign_key: 'editor_id', order: :title
 
-  ROLES = %w[admin superadmin]
+  ROLES = %w[contributor admin superadmin]
   validates :role, presence: true, inclusion: { in: ROLES }
 
   def admin?

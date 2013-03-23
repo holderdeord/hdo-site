@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130308115945) do
+ActiveRecord::Schema.define(:version => 20130319173950) do
 
   create_table "answers", :force => true do |t|
     t.text     "body",                                     :null => false
@@ -110,6 +110,13 @@ ActiveRecord::Schema.define(:version => 20130308115945) do
   end
 
   add_index "issues", ["slug"], :name => "index_issues_on_slug", :unique => true
+
+  create_table "issues_topics", :id => false, :force => true do |t|
+    t.integer "topic_id"
+    t.integer "issue_id"
+  end
+
+  add_index "issues_topics", ["issue_id", "topic_id"], :name => "index_issues_topics_on_issue_id_and_topic_id"
 
   create_table "parliament_issues", :force => true do |t|
     t.string   "external_id"
@@ -281,6 +288,17 @@ ActiveRecord::Schema.define(:version => 20130308115945) do
     t.string "name"
   end
 
+  create_table "topics", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+    t.string   "slug"
+    t.string   "image_uid"
+    t.string   "image_name"
+  end
+
+  add_index "topics", ["slug"], :name => "index_topics_on_slug", :unique => true
+
   create_table "users", :force => true do |t|
     t.string   "email",                  :default => "",      :null => false
     t.string   "encrypted_password",     :default => "",      :null => false
@@ -296,6 +314,9 @@ ActiveRecord::Schema.define(:version => 20130308115945) do
     t.datetime "updated_at",                                  :null => false
     t.string   "name"
     t.string   "role",                   :default => "admin", :null => false
+    t.text     "description"
+    t.boolean  "active"
+    t.boolean  "board"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true

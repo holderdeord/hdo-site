@@ -40,7 +40,7 @@ module ApplicationHelper
   end
 
   def gravatar_url(email)
-    "http://gravatar.com/avatar/#{Digest::MD5.hexdigest email}.png"
+    "http://gravatar.com/avatar/#{Digest::MD5.hexdigest email}?s=300"
   end
 
   def title(page_title)
