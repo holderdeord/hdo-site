@@ -58,40 +58,9 @@ class HomeController < ApplicationController
   end
 
   def people
-    @board = [
-      Person.new('Jari Bakken', 'jari@holderdeord.no', 'hdo/jari.jpg', 'er sjefsutvikler i Holder de ord. Han jobber til daglig hos FINN.no, hovedsakelig med interne verktøy og testautomasjon. Jari programmerer for det meste i Ruby og JavaScript, og står bak <a href="http://github.com/jarib">mange populære open source-prosjekt</a> med flere millioner nedlastinger. Han er selvlært som utvikler. Jari sitter også i Holder de ords styre.'),
-      Person.new('Eva Jørgensen', nil, 'hdo/eva-cecilie.jpg', 'jobber med regnskap og økonomistyring i Holder de ord. Hun har en mastergrad i politisk økonomi fra BI i Oslo. Eva har også to bachelorgrader: en i Europastudier fra Universitetet i Oslo, og en i økonomi og administrasjon fra Høyskolen i Oslo. Eva sitter også i Holder de ords styre.'),
-      Person.new('Morten Kjelkenes', nil, 'hdo/morten.jpg', 'sitter i Holder de ords styre. Morten jobber til daglig med prosjektledelse av både telecom- og IT-prosjekter, og har god teknisk erfaring innen konsolidering og virtualisering av tjenester for store kunder. Han har lang erfaring med kompliserte og heterogene miljøer og tjenester, samt fra oppbygging av testmiljøer for disse.'),
-      Person.new('Daniel Rees', 'daniel@holderdeord.no', 'hdo/daniel.jpg', 'er daglig leder og en av grunnleggerne av Holder de ord. Han har en mastergrad i statsvitenskap fra NTNU i Trondheim, og har bakgrunn fra TNS Gallup hvor han har jobbet med opinionsundersøkelser og kommunikasjonsanalyse. Daniel har bred erfaring som frilansjournalist og har tidligere jobbet med å utvikle nettsteder for FN og landsdekkende organisasjoner i Norge. Daniel er også styreleder i Holder de ord.'),
-      Person.new('Kristofer Rees', 'kristofer@holderdeord.no', 'hdo/kristofer.jpg', 'er sjef for metode og analyse i Holder de ord. Han har en bachelorgrad i statsvitenskap, og har tidligere studert musikk ved NTNU i Trondheim og Det Kgl. Danske Musikkonservatorium i København. Kristofer sitter også i Holder de ords styre.'),
-      Person.new('Tiina Ruohonen', 'tiina@holderdeord.no', 'hdo/tiina.jpg', 'er en av grunnleggerne av Holder de ord, nestleder og sjef for kommunikasjon, presse, og partnerskap. Tiina har en Cand. Mag. i statsvitenskap og juss, og en mastergrad i bærekraftig utvikling og etikk. Hun jobbet i flere år som prosjektleder og rådgiver på klimaområdet, og driver i dag sitt eget selskap som hjelper kunder med utfordringer innenfor klimaspørsmål, etikk, samfunnsansvar, og demokratisk medvirkning. Tiina sitter også i Holder de ords styre.'),
-      Person.new('Linn Skorge', 'linn@holderdeord.no',  'hdo/linn.jpg', 'jobber med salg og finansiering i Holder de ord. Linn tar for øyeblikket en mastergrad i politisk økonomi på BI i Oslo. Fra tidligere har hun en bachelorgrad i internasjonal markedsføring, også fra Handelshøyskolen BI. Linn sitter også i Holder de ords styre.'),
-      Person.new('Hanna Welde Tranås', 'hanna@holderdeord.no', 'hdo/hanna.jpg', 'leder det politiske analysearbeidet i Holder de ord. Hun er utdannet statsviter fra Universitetet i Oslo. Fra NTNU har hun en bachelorgrad i statsvitenskap og utviklingsstudier, samt et årsstudium i historie.'),
-    ]
 
-    @contributors = [
-      Person.new('Alex Asensi'),
-      Person.new('Kat Aquino'),
-      Person.new('Bjørn Dyresen'),
-      Person.new('Eli Foss'),
-      Person.new('Inge Olav Fure'),
-      Person.new('Arne Hassel'),
-      Person.new('Henrik Helmers'),
-      Person.new('Frode Hiorth'),
-      Person.new('Jostein Holje'),
-      Person.new('Simen Andreas Jensen'),
-      Person.new('Vegard Karevold'),
-      Person.new('Markus Krüger'),
-      Person.new('Linda Therese Myrvang'),
-      Person.new('Salve J. Nilsen'),
-      Person.new('Knut Jørgen Rishaug'),
-      Person.new('Gregers Skram Rygg'),
-      Person.new('Petter Reinholdtsen'),
-      Person.new('Tor Halle Rise'),
-      Person.new('Jonathan Ronen'),
-      Person.new('Jan Olav Ryfetten'),
-      Person.new('Ingrid Ødegaard')
-    ]
+    @board = User.where(:active => true, :board => true)
+    @contributors = User.where(:active => true, :board => false)
 
     @alumni = [
       Person.new('Tage Augustson'),
