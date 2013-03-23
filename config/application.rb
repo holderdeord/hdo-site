@@ -81,6 +81,7 @@ module Hdo
       end
     end
 
-    config.middleware.use 'Hdo::Rack::Locale'
+    # This is turned off until we figure out how to deal with caching.
+    # # config.middleware.use 'Hdo::Rack::Locale'
   end
 end
