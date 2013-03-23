@@ -65,4 +65,13 @@
       <% end %>
     </div>
   </section>
+
+  <% if party.has_comment? %>
+    <section class="issue-party-comment">
+      <div class="content">
+        <h5><%= party.name %>s kommentar</h5>
+        <p><%= party.comment.body %></p>
+      </div>
+    </section>
+  <% end %>
 </div>
