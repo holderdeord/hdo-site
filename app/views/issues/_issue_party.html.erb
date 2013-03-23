@@ -63,4 +63,11 @@
       <% end %>
     </div>
   </section>
+
+  <% if party.has_comment? %>
+    <section style="border: 5px solid red;">
+      <h5>Kommentar fra <%= party.name %></h5>
+      <p class="muted"><%= party.comment.body %></p>
+    </section>
+  <% end %>
 </div>

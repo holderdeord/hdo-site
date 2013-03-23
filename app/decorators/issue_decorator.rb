@@ -7,6 +7,7 @@ class IssueDecorator < Draper::Decorator
            :accountability,
            :published?,
            :cache_key,
+           :party_comments,
 
            # move to decorator?
            :status_text,
@@ -107,6 +108,14 @@ class IssueDecorator < Draper::Decorator
       else
         h.image_tag "taxonomy-icons/issue_#{key}.png"
       end
+    end
+
+    def has_comment?
+      !!comment
+    end
+
+    def comment
+      issue.party_comments.where(:party_id => model.id).first
     end
 
     def promise_logo

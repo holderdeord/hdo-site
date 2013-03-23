@@ -54,6 +54,6 @@ class IssuesController < ApplicationController
   end
 
   def fetch_issue
-    @issue = Issue.find(params[:id])
+    @issue = Issue.includes(:party_comments).find(params[:id])
   end
 end
