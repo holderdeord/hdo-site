@@ -100,20 +100,21 @@ figure.position {
   }
 }
 
-.issue-party-group-title {
-  color: #aaa;
-  text-transform: uppercase;
-  font-weight: normal;
-  padding-left: 110px;
-}
-
 .issue-party {
   @space-left: 100% / (@parties_num + 1 );
   margin-bottom: 4em;
   margin-top: 1em;
+  h3 {
+    line-height: 1em;
+    margin-bottom: 5px;
+    .muted {
+      font-size: 0.7em;
+    }
+  }
   .issue-party-summary {
     font-size: 1.15em;
     line-height: 1.5em;
+    margin-bottom: 0;
   }
   > header,
   > section {
@@ -127,11 +128,15 @@ figure.position {
       width: @space-left;
       font-size: 0.75em;
       line-height: 1em;
+      margin-top: 0.5em;
       text-transform: lowercase;
     }
   }
-  > section img {
-    opacity: 0.25;
+  > section {
+    margin-top: 15px;
+    img {
+      opacity: 0.25;
+    }
   }
   .issue-party-comment {
 
@@ -158,9 +163,6 @@ figure.position {
   .issue-party {
     > header,
     > section {
-      img {
-        margin-top: 4px;
-      }
       .content {
         padding-left: @space-left + 10px;
       }

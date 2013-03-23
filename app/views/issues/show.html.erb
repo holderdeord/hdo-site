@@ -48,10 +48,8 @@
 
   <div>
     <% @issue.party_groups.each do |party_group| %>
-      <h5 class="issue-party-group-title"><%= party_group.name %></h5>
-
       <% party_group.parties.each do |party| %>
-        <%= render partial: 'issue_party', locals: { party: party } %>
+        <%= render partial: 'issue_party', locals: { party: party, party_group:party_group } %>
       <% end %>
     <% end %>
   </div>

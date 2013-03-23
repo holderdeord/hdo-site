@@ -8,11 +8,12 @@
     </div>
 
     <div class="content">
-      <h4 class="issue-party-name">
+      <h3 class="issue-party-name lead">
         <%= party.link class: party.external_id do %>
           <%= party.name %>
         <% end %>
-      </h4>
+        <div class="muted"><%= party_group.name %></div>
+      </h3>
 
       <p class="issue-party-summary">
         <%= party.position_text %>.
