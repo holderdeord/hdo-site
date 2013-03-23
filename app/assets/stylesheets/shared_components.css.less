@@ -1,0 +1,30 @@
+.issue-list,
+.vote-list {
+  list-style: none;
+  margin: 0;
+  li {
+    margin-bottom: 5px;
+    font-size: 0.9em;
+    a {
+      &:hover {
+        text-decoration: none;
+        .issue-list-text {
+          text-decoration: underline;
+        }
+      }
+      color: inherit;
+      .issue-against,
+      .issue-for_and_against,
+      .issue-for {
+        background-color: #eaeaea;
+        margin-right: 3px;
+        box-shadow: 3px 0 0 1px #eaeaea, -3px 0 0 1px #eaeaea;
+        border-radius: 2px;
+      }
+      time {
+        color: #999;
+        text-transform: lowercase;
+      }
+    }
+  }
+}

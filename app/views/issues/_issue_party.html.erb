@@ -28,12 +28,14 @@
 
     <div class="content">
       <h5 class="issue-party-vote-title"><%= Vote.model_name.human(count: 2).capitalize %></h2>
-      <ul class="issue-party-vote-list">
+      <ul class="vote-list">
         <% party.votes.each do |vote| %>
           <li>
-            <span class="issue-<%= vote.direction %>"><%= vote.label %></span>
-            <%= link_to vote.title, votes_issue_path(@issue, anchor: vote.anchor) %></a>
-            <small class="muted"><%= vote.month_and_year %></small>
+            <%= link_to votes_issue_path(@issue, anchor: vote.anchor) do %>
+              <span class="issue-<%= vote.direction %>"><%= vote.label %></span>
+              <span class="issue-list-text"><%= vote.title %>.</span>
+              <time><%= vote.month_and_year %></time>
+            <% end %>
           </li>
         <% end %>
       </ul>
