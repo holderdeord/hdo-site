@@ -110,6 +110,16 @@ class IssueDecorator < Draper::Decorator
       end
     end
 
+    def position_caption
+      key = issue.stats.key_for(score) # FIXME: take the party, not the score
+
+      if key.nil? || key == :not_participated
+
+      else
+        h.t("app.#{key}")
+      end
+    end
+
     def has_comment?
       !!comment
     end
@@ -127,6 +137,12 @@ class IssueDecorator < Draper::Decorator
       end
 
       h.image_tag "taxonomy-icons/promise_#{key}.png"
+    end
+
+    def promise_caption
+      key = issue.accountability.key_for(model)
+
+      h.t("app.#{key}")
     end
 
     def has_promises?

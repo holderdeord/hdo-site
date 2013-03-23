@@ -7,7 +7,7 @@
 
   <div class="page-header">
 
-    <div class="hidden-desktop"><%= render partial: 'title_and_aside' %></div>
+    <div class="hidden-desktop hidden-tablet"><%= render partial: 'title_and_aside' %></div>
 
     <figure class="position">
       <div class="issue-graph">
@@ -37,7 +37,7 @@
         </div>
       </div>
 
-      <div class="visible-desktop"><%= render partial: 'title_and_aside' %></div>
+      <div class="hidden-phone"><%= render partial: 'title_and_aside' %></div>
       <figcaption class="muted"><p><%= @issue.explanation %></p></figcaption>
 
     </figure>

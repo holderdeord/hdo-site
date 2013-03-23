@@ -22,8 +22,9 @@
   </header>
 
   <section class="issue-party-votes">
-    <div class="icon">
-      <%= party.position_logo %>
+    <div class="icon muted">
+      <div><%= party.position_logo %></div>
+      <div><%= party.position_caption %></div>
     </div>
 
     <div class="content">
@@ -44,7 +45,10 @@
 
   <section class="issue-party-promises">
     <% if AppConfig.show_accountability %>
-      <div class="icon"><%= party.promise_logo %></div>
+      <div class="icon muted">
+        <div><%= party.promise_logo %></div>
+        <div><%= party.promise_caption %></div>
+      </div>
     <% end %>
 
     <div class="content">
