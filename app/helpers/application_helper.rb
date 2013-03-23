@@ -60,7 +60,8 @@ module ApplicationHelper
   end
 
   def gravatar_url(email)
-    "http://gravatar.com/avatar/#{Digest::MD5.hexdigest email}.png"
+    default = asset_url("representatives/unknown.jpg")
+    "http://gravatar.com/avatar/#{Digest::MD5.hexdigest email}?s=300&d=#{default}"
   end
 
   def page_title(page_title = nil)
@@ -85,5 +86,9 @@ module ApplicationHelper
   def markdown(text)
     @markdown ||= Redcarpet::Markdown.new(Redcarpet::Render::HTML)
     @markdown.render(text)
+  end
+
+  def asset_url(asset)
+    "#{request.protocol}#{request.host_with_port}#{asset_path(asset)}"
   end
 end

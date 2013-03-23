@@ -1,17 +1,12 @@
 <% page_title "#{t('app.people')} - #{t('app.about')} - #{t('app.title')}" %>
 <h2><%= t('app.people') %></h2>
 
-<h3>Styre og administrasjon</h3>
+<h3>Styre</h3>
 
 <% @board.each do |person| %>
 
   <div class="person">
-    <% if person.image %>
-      <img src="<%= asset_path person.image %>" class="photo">
-    <% else %>
-      <img src="<%= asset_path "representatives/unknown.jpg" %>" class="photo">
-
-    <% end %>
+    <%= image_tag gravatar_url(person.email), class: 'photo'%> 
 
     <% if person.email %>
       <a class="name" href="mailto:<%= obscure_email person.email %>">
@@ -24,20 +19,21 @@
     <% end %>
 
     <div class="bio">
-      <%= person.bio.to_s.html_safe %>
+      <%= person.description %>
     </div>
 
   </div>
 <% end %>
 
-
 <p class="muted">Foto: Alex Asensi/Holder de ord</p>
 <br>
 
-<h3>Bidragsytere</h3>
+<h3>Aktive</h3>
 <% @contributors.each do |person| %>
-  <div class="bidragsyter">
-  <%= person.name %>
+  <div class="person">
+      <%= image_tag "#{gravatar_url(person.email)}", class: 'photo'%> 
+      <span class="name"><%= person.name %></span>
+      <div class="muted bio"><%= person.description %></div>
   </div>
 <% end %>
 <br>
