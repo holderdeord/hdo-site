@@ -29,4 +29,7 @@ before_script:
   - sh -e /etc/init.d/xvfb start
   - 'npm install -g buster autolint || (sleep 5 && npm install -g buster autolint)'
 env:
-  - DISPLAY=:99.0 COVERAGE_THRESHOLD=83
+  global:
+    - DISPLAY=:99.0
+    - COVERAGE_THRESHOLD=83
+    - RUBY_GC_MALLOC_LIMIT=50000000
