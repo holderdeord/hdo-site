@@ -24,10 +24,6 @@ class Issue < ActiveRecord::Base
   after_save    { tire.update_index if published? } # TODO: what if an issue is retracted?
   after_destroy { tire.update_index }
 
-  before_destroy do
-    destroy_associations # workaround https://github.com/rails/rails/issues/5332, should be fixed in Rails 3.2.14
-  end
-
   acts_as_taggable
 
   attr_accessible :description, :title, :category_ids, :promise_ids, :status, :lock_version, :editor_id, :tag_list

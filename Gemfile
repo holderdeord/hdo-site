@@ -8,11 +8,6 @@ def linux_only(require_as)
   RUBY_PLATFORM.include?('linux') && require_as
 end
 
-#
-# When bumping the version:
-#
-# * check that the fix for https://github.com/rails/rails/issues/5332 made it into 3.2.14,
-#   then remove our workaround in Issue.before_destroy
 gem 'rails', '3.2.13'
 
 # Gems used only for assets and not required
