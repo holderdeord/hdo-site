@@ -334,9 +334,6 @@ nb:
     against: 'Mot'
     for_and_against: 'Både for og mot'
     absent: 'Ikke tilstede'
-    kept: 'holdt'
-    broken: 'ikke holdt'
-    partially_kept: 'delvis holdt'
     unrelated: 'Ikke relatert'
     connection: 'Kobling'
     expand: 'Åpne'
@@ -480,6 +477,11 @@ nb:
         broken_html: "De har <strong>ikke holdt ord</strong> i denne saken."
         kept_html: "De har <strong>holdt ord</strong> i denne saken."
         partially_kept_html: "De har <strong>delvis holdt ord</strong> i denne saken."
+        caption:
+          kept: 'holdt'
+          broken: 'ikke holdt'
+          partially_kept: 'delvis holdt'
+          no_promises: 'ingen løfter'
       based_on:
         one: "basert på 1 løfte"
         other: "basert på %{count} løfter"

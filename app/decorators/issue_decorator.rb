@@ -140,7 +140,7 @@ class IssueDecorator < Draper::Decorator
     def promise_caption
       key = issue.accountability.key_for(model)
 
-      h.t("app.#{key}")
+      h.t("app.promises.scores.caption.#{key}")
     end
 
     def has_promises?
