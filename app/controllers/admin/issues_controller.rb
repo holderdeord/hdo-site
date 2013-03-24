@@ -27,6 +27,7 @@ class Admin::IssuesController < AdminController
 
   def new
     @issue = Issue.new
+
     fetch_categories
     edit_steps.first!
 
@@ -146,6 +147,9 @@ class Admin::IssuesController < AdminController
 
   def ensure_editable
     if AppConfig.read_only
+      redirect_to admin_root_path
+    elsif !policy(@issue || Issue.new).edit?
+      flash.alert = t('app.errors.unauthorized')
       redirect_to admin_root_path
     end
   end

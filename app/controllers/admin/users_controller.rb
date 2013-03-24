@@ -2,7 +2,7 @@ class Admin::UsersController < AdminController
   before_filter :fetch_user, only: [:show, :edit, :update, :destroy]
 
   def index
-    @users = User.order(:updated_at).reverse_order.all
+    @users = User.order(:name).all
   end
 
   def show

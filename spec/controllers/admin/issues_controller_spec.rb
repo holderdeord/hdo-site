@@ -236,7 +236,6 @@ describe Admin::IssuesController do
     end
 
     it 'sets last_updated_by when tags are changed' do
-
       put :update, issue: issue_params(issue).merge('tag_list' => "foo"), id: issue
 
       issue = assigns(:issue)
@@ -339,6 +338,25 @@ describe Admin::IssuesController do
     it "should not be set when creating a new issue" do
       get :new
       assigns(:issue_steps).should be_nil
+    end
+  end
+
+  context 'as contributor' do
+    let(:user) { User.make!(role: 'contributor')}
+    before(:each) { sign_in user }
+
+    it 'disallows issue creation' do
+      get :new
+
+      flash.alert.should_not be_empty
+      response.should redirect_to admin_root_path
+    end
+
+    it 'disallows issue editing' do
+      get :edit, id: issue
+
+      flash.alert.should_not be_empty
+      response.should redirect_to admin_root_path
     end
   end
 end

@@ -30,6 +30,8 @@ module Hdo
     def update!
       @changed = false
 
+      assert_editing_allowed
+
       @user.transaction {
         update_attributes
         update_votes
@@ -182,9 +184,15 @@ module Hdo
     end
 
     def assert_status_change_allowed
-      unless IssuePolicy.new(@user, @issue).change_status?
-        raise Unauthorized
-      end
+      raise Unauthorized unless issue_policy.change_status?
+    end
+
+    def assert_editing_allowed
+      raise Unauthorized unless issue_policy.edit?
+    end
+
+    def issue_policy
+      @issue_policy ||= IssuePolicy.new(@user, @issue)
     end
 
   end

@@ -25,12 +25,17 @@ class IssuePolicy
     record.published? || logged_in?
   end
 
+  def edit?
+    logged_in? && (user.admin? || user.superadmin?)
+  end
+  alias_method :create?, :edit?
+
   def view_stats?
     logged_in?
   end
 
   def change_status?
-    logged_in? && user.superadmin?
+    edit? && user.superadmin?
   end
 
   def scope

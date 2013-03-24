@@ -189,6 +189,14 @@ module Hdo
         updater = IssueUpdater.new(issue, {issue: {status: 'in_progress'}}, superadmin)
         updater.update.should be_true
       end
+
+      it 'can not perform updates if the user has a non-admin role' do
+        updater = IssueUpdater.new(issue, {issue: {title: 'foo'}}, User.make!(role: 'contributor'))
+
+        expect {
+          updater.update!
+        }.to raise_error(IssueUpdater::Unauthorized)
+      end
     end
   end
 end
