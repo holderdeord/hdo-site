@@ -6,7 +6,7 @@
 <% @board.each do |person| %>
 
   <div class="person">
-    <%= image_tag gravatar_url(person.email), class: 'photo'%> 
+    <%= image_tag gravatar_url(person.email), class: 'photo'%>
 
     <% if person.email %>
       <a class="name" href="mailto:<%= obscure_email person.email %>">
@@ -19,7 +19,7 @@
     <% end %>
 
     <div class="bio">
-      <%= person.description %>
+      <%= person.description.try(:html_safe) %>
     </div>
 
   </div>
@@ -31,9 +31,9 @@
 <h3>Aktive</h3>
 <% @contributors.each do |person| %>
   <div class="person">
-      <%= image_tag "#{gravatar_url(person.email)}", class: 'photo'%> 
+      <%= image_tag "#{gravatar_url(person.email)}", class: 'photo'%>
       <span class="name"><%= person.name %></span>
-      <div class="muted bio"><%= person.description %></div>
+      <div class="muted bio"><%=h person.description.try(:html_safe) %></div>
   </div>
 <% end %>
 <br>

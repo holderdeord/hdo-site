@@ -58,7 +58,7 @@ class HomeController < ApplicationController
   end
 
   def people
-    @board, @contributors = User.where(active: true).order(:name).partition { |e| e.board? }
+    @board, @contributors = User.where(active: true).sort_by { |e| e.name.split(" ").last }.partition { |e| e.board? }
 
     @alumni = [
       Person.new('Tage Augustson'),
