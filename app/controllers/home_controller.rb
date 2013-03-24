@@ -59,7 +59,7 @@ class HomeController < ApplicationController
 
   def people
     @all_members = User.where(active: true).sort_by { |e| e.name.split(" ").last }
-    @board = @all_members.select {|member| member.board?}
+    @board = @all_members.select { |member| member.board? }
 
     @alumni = [
       Person.new('Tage Augustson'),
