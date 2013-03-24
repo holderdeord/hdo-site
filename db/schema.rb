@@ -111,13 +111,6 @@ ActiveRecord::Schema.define(:version => 20130324163216) do
 
   add_index "issues", ["slug"], :name => "index_issues_on_slug", :unique => true
 
-  create_table "issues_topics", :id => false, :force => true do |t|
-    t.integer "topic_id"
-    t.integer "issue_id"
-  end
-
-  add_index "issues_topics", ["issue_id", "topic_id"], :name => "index_issues_topics_on_issue_id_and_topic_id"
-
   create_table "parliament_issues", :force => true do |t|
     t.string   "external_id"
     t.text     "summary"
@@ -288,17 +281,6 @@ ActiveRecord::Schema.define(:version => 20130324163216) do
     t.string "name"
   end
 
-  create_table "topics", :force => true do |t|
-    t.string   "name"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-    t.string   "slug"
-    t.string   "image_uid"
-    t.string   "image_name"
-  end
-
-  add_index "topics", ["slug"], :name => "index_topics_on_slug", :unique => true
-
   create_table "users", :force => true do |t|
     t.string   "email",                  :default => "",      :null => false
     t.string   "encrypted_password",     :default => "",      :null => false
@@ -317,7 +299,7 @@ ActiveRecord::Schema.define(:version => 20130324163216) do
     t.text     "description"
     t.boolean  "active"
     t.boolean  "board"
-    t.string   "title"
+    t.string   "title",                  :default => ""
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
