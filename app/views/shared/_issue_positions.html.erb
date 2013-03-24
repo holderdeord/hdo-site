@@ -7,7 +7,6 @@
           <li>
             <%= link_to issue do %>
               <span class="issue-<%= key %>"><%= t "app.#{key}" %></span>
-              <span><%= issue.published? %></span>
               <span class="issue-list-text">
                 <%= t 'app.lang.infinitive_particle' %>
                 <%= issue.downcased_title %>.
