@@ -8,7 +8,7 @@ class User < ActiveRecord::Base
          :trackable,
          :validatable
 
-  attr_accessible :email, :password, :password_confirmation, :remember_me, :name, :role, :description, :active, :board
+  attr_accessible :email, :password, :password_confirmation, :remember_me, :name, :role, :description, :active, :board, :title
 
   has_many :last_updated_issues, foreign_key: 'last_updated_by_id', class_name: 'Issue'
   has_many :issues, foreign_key: 'editor_id', order: :title

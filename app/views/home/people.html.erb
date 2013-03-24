@@ -1,46 +1,39 @@
 <% page_title "#{t('app.people')} - #{t('app.about')} - #{t('app.title')}" %>
-<h2><%= t('app.people') %></h2>
 
-<h3>Styre</h3>
-
-<% @board.each do |person| %>
-
-  <div class="person">
-    <%= image_tag gravatar_url(person.email), class: 'photo'%>
-
-    <% if person.email %>
-      <a class="name" href="mailto:<%= obscure_email person.email %>">
-        <%= person.name %>
-      </a>
-    <% else %>
-      <span class="name">
-        <%= person.name %>
-      </span>
-    <% end %>
-
-    <div class="bio">
-      <%= person.description.try(:html_safe) %>
-    </div>
-
-  </div>
-<% end %>
-
-<p class="muted">Foto: Alex Asensi/Holder de ord</p>
-<br>
-
-<h3>Aktive</h3>
-<% @contributors.each do |person| %>
+<h1><%= t('app.people') %></h1>
+<hr class="soften">
+<% @all_members.each do |person| %>
   <div class="person">
       <%= image_tag "#{gravatar_url(person.email)}", class: 'photo'%>
       <span class="name"><%= person.name %></span>
-      <div class="muted bio"><%=h person.description.try(:html_safe) %></div>
+      <div class="muted bio"><%=h person.title %></div>
   </div>
 <% end %>
 <br>
 
-<h3>Tidligere bidragsytere</h3>
+<h3>Styret</h3>
+
+<% @board.each do |person| %>
+
+  <dl>
+    <dt>
+      <% if person.email %>
+      <a class="name" href="mailto:<%= obscure_email person.email %>">
+        <%= person.name %>
+      </a>
+      <% else %>
+      <span class="name"><%= person.name %></span>
+      <% end %>
+    </dt>
+    <dd><%= person.description.try(:html_safe) %></dd>
+  </dl>
+<% end %>
+
+<br>
+
+<h3>Andre bidragsytere</h3>
 <% @alumni.each do |person| %>
-  <div class="bidragsyter">
+  <div class="span3">
     <%= person.name %>
   </div>
 <% end %>
