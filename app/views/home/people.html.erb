@@ -1,4 +1,5 @@
 <% page_title "#{t('app.people')} - #{t('app.about')} - #{t('app.title')}" %>
+<<<<<<< HEAD
 
 <h1><%= t('app.people') %></h1>
 <hr class="soften">
@@ -35,5 +36,61 @@
 <% @alumni.each do |person| %>
   <div class="span3">
     <%= person.name %>
+=======
+<h1><%= t('app.people') %></h1>
+
+<h3>Styre</h3>
+<% @board.each_slice(2) do |persons| %>
+  <div class="row-fluid">
+  <% persons.each do |person| %>
+    <div class="person board span6">
+      <%= image_tag gravatar_url(person.email), class: 'photo'%>
+      <h4 class="name lead">
+        <% if person.email %>
+          <a href="mailto:<%= obscure_email person.email %>">
+            <%= person.name %>
+          </a>
+        <% else %>
+          <%= person.name %>
+        <% end %>
+      </h4>
+      <div class="profession">.</div>
+      <p class="bio muted">
+        <%= person.description %>
+      </p>
+    </div>
+  <% end %>
+  </div>
+<% end %>
+
+<hr class="soften">
+
+<h3>Aktive bidragsytere</h3>
+<% @contributors.each_slice(3) do |persons| %>
+  <div class="row-fluid">
+  <% persons.each do |person| %>
+    <div class="person span4">
+      <%= image_tag "#{gravatar_url(person.email)}", class: 'photo'%>
+      <h4 class="name lead"><%= person.name %></h4>
+      <div class="profession">.</div>
+      <p class="muted bio"><%= person.description %></p>
+    </div>
+  <% end %>
+  </div>
+<% end %>
+
+<p class="muted pagination-centered">Foto: Alex Asensi/Holder de ord</p>
+
+<hr class="soften">
+
+<h3>Tidligere bidragsytere</h3>
+<% @alumni.each_slice(4) do |persons| %>
+  <div class="row-fluid">
+  <% persons.each do |person| %>
+    <div class="bidragsyter span3 muted">
+      <%= person.name %>
+    </div>
+  <% end %>
+>>>>>>> Updated styling for /home/people.
   </div>
 <% end %>

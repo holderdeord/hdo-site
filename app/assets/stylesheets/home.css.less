@@ -61,40 +61,43 @@ section.issues {
 
 .person {
   position: relative;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-  padding: 20px 20px 0 100px;
-  margin: 20px 0;
-  display: inline-block;
-  vertical-align: top;
-  width: 310px;
+  padding-left: 70px;
+  min-height: 70px;
+  margin-bottom: 50px;
+  &.board {
+    padding-left: 135px;
+    .photo {
+      width: 128px;
+      height: 128px;
+    }
+    .name {
+      margin-top: 0;
+    }
+  }
   .photo {
     border-radius: 50%;
     background: #fff 50% 0% no-repeat;
-    background-size: cover;
-    width: 90px;
-    height: auto;
+    margin-bottom: 20px;
+    box-shadow: 0 0 0 4px #fff, 0 0 0 5px rgba(0,0,0,0.1), 0 0 0 9px #fff, 0 0 0 10px rgba(0,0,0,0.033);
+    width: 64px;
+    height: 64px;
     position: absolute;
     top: 0;
     left: -10px;
   }
   .name {
-    font-size: 1.4em;
-    line-height: 1.75em;
-    font-weight: 300;
+    line-height: 1em;
+    margin-bottom: 0;
+    a {
+      color: inherit;
+    }
+  }
+  .profession {
   }
   .bio {
-    font-size: 0.9em;
-    line-height: 1.75em;
+    font-size: 0.85em;
+    margin-top: 0.25em;
+    line-height: 1.6em;
+    word-break:break-word;
   }
-}
-
-.bidragsyter {
-  display: inline-block;
-  vertical-align: top;
-  width: 310px;
-  margin: 0 0 20px 0;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-  padding-right: 20px;
 }
