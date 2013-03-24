@@ -468,8 +468,8 @@ nb:
     parties:
       no_promises: Partiet har ingen løfter om denne saken.
       group:
-        governing: 'Regjeringspartiene'
-        opposition: 'Opposisjonspartiene'
+        governing: 'Regjering'
+        opposition: 'Opposisjon'
       none: 'Intet parti'
     promises:
       scores:
