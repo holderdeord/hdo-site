@@ -60,7 +60,7 @@ module ApplicationHelper
   end
 
   def gravatar_url(email)
-    default = asset_url("representatives/unknown.jpg")
+    default = asset_url("representatives/unknown_square.jpg")
     "http://gravatar.com/avatar/#{Digest::MD5.hexdigest email}?s=300&d=#{default}"
   end
 
