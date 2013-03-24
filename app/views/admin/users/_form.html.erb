@@ -4,6 +4,7 @@
     <%= user.email_field :email, placeholder: 'user@holderdeord.no' %>
     <%= user.password_field :password %>
     <%= user.password_field :password_confirmation %>
+    <%= user.text_field :title, class: 'required' %>
     <%= user.text_area :description, {rows: 5} %>
 
     <ul class="unstyled">

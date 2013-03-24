@@ -221,6 +221,7 @@ nb:
         active: Aktiv
         board: Styremedlem
         description: Beskrivelse
+        title: Tittel
       issue:
         edit: "Rediger"
         published: Publisert
