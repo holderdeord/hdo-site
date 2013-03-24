@@ -113,9 +113,7 @@ class IssueDecorator < Draper::Decorator
     def position_caption
       key = issue.stats.key_for(score) # FIXME: take the party, not the score
 
-      if key.nil? || key == :not_participated
-
-      else
+      if key && key != :not_participated
         h.t("app.#{key}")
       end
     end

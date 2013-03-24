@@ -49,7 +49,7 @@
   <div>
     <% @issue.party_groups.each do |party_group| %>
       <% party_group.parties.each do |party| %>
-        <%= render partial: 'issue_party', locals: { party: party, party_group:party_group } %>
+        <%= render partial: 'issue_party', locals: { party: party, party_group: party_group } %>
       <% end %>
     <% end %>
   </div>

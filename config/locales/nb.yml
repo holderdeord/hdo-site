@@ -218,6 +218,9 @@ nb:
         destroy: "Slett bruker"
         confirm_destroy: "Er du sikker på at du vil slette brukeren?"
         role: Rolle
+        active: Aktiv
+        board: Styremedlem
+        description: Beskrivelse
       issue:
         edit: "Rediger"
         published: Publisert
@@ -331,6 +334,9 @@ nb:
     against: 'Mot'
     for_and_against: 'Både for og mot'
     absent: 'Ikke tilstede'
+    kept: 'holdt'
+    broken: 'ikke holdt'
+    partially_kept: 'delvis holdt'
     unrelated: 'Ikke relatert'
     connection: 'Kobling'
     expand: 'Åpne'

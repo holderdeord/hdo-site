@@ -58,9 +58,9 @@ class HomeController < ApplicationController
   end
 
   def people
+    users = User.where(active: true)
 
-    @board = User.where(:active => true, :board => true)
-    @contributors = User.where(:active => true, :board => false)
+    @board, @contributors = users.partition { |e| e.board? }
 
     @alumni = [
       Person.new('Tage Augustson'),
