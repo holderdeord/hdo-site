@@ -57,6 +57,11 @@ class Issue < ActiveRecord::Base
   scope :latest, lambda { |limit| order(:updated_at).reverse_order.limit(limit) }
   scope :random, lambda { |limit| order("random()").limit(limit) }
 
+  def self.grouped_by_position(entity)
+    all.to_a.reject { |i| i.stats.score_for(entity).nil? }.
+             group_by { |i| i.stats.key_for(i.stats.score_for(entity)) }
+  end
+
   def previous_and_next(opts = {})
     issues = self.class
     issues = opts[:policy].scope if opts[:policy]
