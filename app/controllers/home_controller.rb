@@ -102,7 +102,12 @@ class HomeController < ApplicationController
       Person.new('Einar Sundin'),
       Person.new('Eirik Swensen'),
       Person.new('Ole Martin Volle'),
-      Person.new('Guro Øistensen')
+      Person.new('Guro Øistensen'),
+      Person.new('Jan Olav Ryfetten'),
+      Person.new('Frode Hiorth'),
+      Person.new('Jostein Holje'),
+      Person.new('Markus Krüger'),
+      Person.new('Salve Nilsen')
      ]
   end
 
