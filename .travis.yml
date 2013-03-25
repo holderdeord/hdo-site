@@ -22,14 +22,20 @@ notifications:
     on_failure: change
     template:
       - "%{author} | %{commit} | %{message} | %{build_url}"
+bundler_args: --without development --path ~/.bundle
 script: "RAILS_ENV=test SPEC_OPTS=--backtrace bundle exec rake travis"
+before_install:
+  - ./script/travis/bundle_download.sh
 before_script:
   - dpkg -s elasticsearch | grep --color=never Version
   - mv config/database.yml.travis config/database.yml
   - sh -e /etc/init.d/xvfb start
   - 'npm install -g buster autolint || (sleep 5 && npm install -g buster autolint)'
+after_script:
+  - ./script/travis/bundle_cache.sh
 env:
   global:
+    - secure: "PSyNsqaahsPzmTbjo+tAOZONgXDcWYomETnk+fFnqTBNFhkR9v+fAzIc2drD\nHn2QHd26TfmCN7YJtn7b57RwQ/TN2V4WVRI6TLC6BaIGLbj7HJpnR8rb37U9\nxo/HYULBAK/McwnaVOS6d6EmaI+jvHNDAeUd9NfH2tVx74C2qSU="
     - DISPLAY=:99.0
     - COVERAGE_THRESHOLD=83
     - RUBY_GC_MALLOC_LIMIT=50000000
