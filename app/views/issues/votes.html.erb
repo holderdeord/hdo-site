@@ -1,8 +1,21 @@
-<div class="issue-navigation">
-  <%= link_to @issue do %>
-    &larr; <%= t 'app.issues.back' %>
-  <% end %>
-</div>
+<!--
+  TODO:
+   * MAKE BREADCRUMBS WORK (PERHAPS COMPONENTIZED)
+-->
+<ul class="breadcrumb">
+  <li>
+    <a href="/issues">Saker</a>
+    <span class="divider">/</span>
+  <li>
+    <a href="/issues#TAG">Tagg</a>
+    <span class="divider">/</span>
+  <li>
+    <a href="/issues/issue">Sak</a>
+    <span class="divider">/</span>
+  <li class="active">
+    Votering
+</ul>
+
 <div class="row-fluid">
   <div class="span12">
     <h1 class="page-header">

@@ -1,3 +1,17 @@
+<!--
+  TODO:
+   * MAKE BREADCRUMBS WORK (PERHAPS COMPONENTIZED)
+-->
+<ul class="breadcrumb">
+  <li>
+    <a href="/issues">Saker</a>
+    <span class="divider">/</span>
+  <li>
+    <a href="/issues#TAG">Tagg</a>
+    <span class="divider">/</span>
+  <li class="active">
+    Sak
+</ul>
 <h1 class="issue-title"><%= @issue.title %></h1>
 
 <% if @issue.published? %>
