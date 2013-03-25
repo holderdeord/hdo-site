@@ -11,22 +11,40 @@
 
     <% @issue_votes.each do |issue_vote| %>
       <div class="row-fluid">
-      <div id="<%= issue_vote.anchor %>" class="span7">
-        <h4><%= issue_vote.title %></h4>
-        <p><%= raw(markdown(issue_vote.comment)) %></p>
-          <p><%= issue_vote.matches_text.html_safe %> </p>
-      </div>
-      <div class="span5 pull-right">
-          <div class="facts-box">
-            <h5>Faktaboks</h5>
-            <small>
-              <p><strong>Dato:</strong> <%= issue_vote.time_text %></p>
-              <p><strong>Type:</strong> <%= issue_vote.proposition_type_text %></p>
-              <p><strong>Viktighetsgrad:</strong> <%= link_to issue_vote.weight_text, home_method_path(anchor: 'method-weights') %> (icon here)</p>
-              <p><strong>Vedtakelse:</strong> <%= issue_vote.enacted_text.html_safe %></p>
-            </small>
+        <div id="<%= issue_vote.anchor %>" class="span7">
+          <h4><%= issue_vote.title %></h4>
+          <p><%= raw(markdown(issue_vote.comment)) %></p>
+        </div>
+        <div class="span5 pull-right">
+            <div class="facts-box">
+              <h5>Faktaboks</h5>
+              <small>
+                <p><strong>Dato:</strong> <%= issue_vote.time_text %></p>
+                <p><strong>Type:</strong> <%= issue_vote.proposition_type_text %></p>
+                <p><strong>Viktighetsgrad:</strong> <%= link_to issue_vote.weight_text, home_method_path(anchor: 'method-weights') %> (icon here)</p>
+                <p><strong>Vedtakelse:</strong> <%= issue_vote.enacted_text.html_safe %></p>
+                <p><%= issue_vote.matches_text.html_safe %> </p>
+              </small>
+            </div>
           </div>
         </div>
+      </div>
+
+      <div class="row-fluid">
+        <h5 class="span4">For</h5>
+        <h5 class="span4">Mot</h5>
+        <h5 class="span4">Tilstede</h5>
+      </div>
+
+      <div class="row-fluid">
+        <% [:for, :against, :absent].each do |result_key| %>
+        <div class="span4">
+          <% issue_vote.vote_result_groups[result_key].each do |party, count| %>
+            <!-- <p><a class="<%= party.external_id %>"><%= party.name %> <span class="muted"><%= count %></span></a></p> -->
+            <p><%= image_tag party.logo, alt: party.name, width: '35', height: '35' %> <%= party.name %> <span class="muted"><%= count %></span></p>
+          <% end %>
+        </div>
+        <% end %>
       </div>
 
       <div class="row-fluid">
