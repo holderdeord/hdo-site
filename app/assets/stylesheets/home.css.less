@@ -20,45 +20,6 @@
   border-radius: 4px;
 }
 
-section.issues {
-  margin-bottom: 10px;
-  article {
-    word-break: break-word;
-    background-color: #fff;
-    -webkit-transition: 0.5s;
-    transition: 0.5s;
-    box-shadow: 0 0 0 5px lighten(@hdoPrimaryColor, 100%);
-    &:hover {
-      background-color: desaturate( lighten(@hdoPrimaryColor, 60%), 55%);
-      box-shadow: 0 0 0 5px desaturate( lighten(@hdoPrimaryColor, 60%), 50%);
-      -webkit-transition: 0.1s;
-      transition: 0.1s;
-      a {
-        text-decoration: none;
-      }
-    }
-    figure {
-      margin: 0;
-      display: block;
-      height: 100px;
-      background-size: cover;
-    }
-    a {
-      color: #333;
-    }
-    h4 {
-      text-transform: uppercase;
-    }
-    .read-more {
-      color: @hdoPrimaryColor;
-      &:hover {
-        text-decoration: underline;
-        color: darken(@hdoPrimaryColor, 5%);
-      }
-    }
-  }
-}
-
 .person {
   position: relative;
   padding-left: 70px;

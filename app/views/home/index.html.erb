@@ -5,22 +5,29 @@
   </p>
 <% end %>
 
-<div class="row-fluid">
+
+<!--
+ TODO:
+  * HENTE UT X MENGDE TAGGER (SOM HVER HAR MINST Y ANTALL ARTIKLER)
+  * HENTE UT Y ANTALL ARTIKLER (BRUKES AV @issues NEDENFOR)
+  * TRENGER OGSÅ NAVN OG LENKE TIL TAGGEN (ANCHOR PÅ /issues) I H2
+ -->
   <% @issues.each_slice(3) do |issues| %>
-  <section class="issues row-fluid">
-    <% issues.each do |issue| %>
-      <article class="issue span4">
-        <%= link_to issue do %>
-          <!-- OPTIONAL IMAGE -->
-          <!--<figure style="background-image: url('')"></figure>-->
-          <h4><%= issue.title %></h4>
-          <p>
-            <%= awesome_truncate issue.description, 250 %>
-            <span class="read-more"><%= t('app.read_more') %></span>
-          </p>
-        <% end %>
-      </article>
-    <% end %>
+  <h3 class="lead tagblock-caption"><a href="">Navn på tagg</a></h3>
+  <section class="tagblock">
+    <div class="row-fluid">
+      <% issues.each do |issue| %>
+        <article class="issue span4">
+          <%= link_to issue do %>
+            <h4><%= issue.title %></h4>
+            <p>
+              <%= awesome_truncate issue.description, 250 %>
+              <span class="read-more"><%= t('app.read_more') %></span>
+            </p>
+          <% end %>
+        </article>
+      <% end %>
+    </div>
   </section>
   <% end %>
 
