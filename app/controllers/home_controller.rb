@@ -2,7 +2,7 @@
 
 class HomeController < ApplicationController
   hdo_caches_page :index, :contact, :join, :support, :people,
-                  :about_method, :member, :future, :robots
+                  :about_method, :member, :future, :robots, :faq
 
   def index
     @issues  = Issue.published.random(6)
@@ -27,6 +27,9 @@ class HomeController < ApplicationController
 
   # don't override Object#method
   def about_method
+  end
+
+  def faq
   end
 
   def contact
