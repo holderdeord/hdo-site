@@ -44,20 +44,18 @@
   <% end %>
   -->
 
-  <div class="dropdown pull-right <%= active_status_for(:home_contact, :home_about, :home_join, :home_about_method, :home_people, :docs_index, :home_contact)%>">
+  <div class="dropdown pull-right <%= active_status_for(:home_contact, :home_about, :home_join, :home_people, :docs_index, :home_contact)%>">
     <a class="dropdown-toggle" data-toggle="dropdown" href="#about-us">
       <%= t 'app.about' %>
       <b class="caret"></b>
     </a>
 
     <ul class="dropdown-menu">
-      <li><%= link_to t("app.about_hdo"), home_about_path %></li>
-      <li><%= link_to t("app.contact_us"), home_contact_path %></li>
-      <li><%= link_to t("app.method.about"), home_method_path %></li>
+      <li><%= link_to t("app.what_we_do"), home_about_path %></li>
       <li><%= link_to t("app.people"), home_people_path %></li>
       <li><%= link_to t("app.faq"), home_faq_path %></li>
       <li><%= link_to t("app.join"), home_join_path %></li>
-      <li><%= link_to t("app.documentation.technical"), docs_index_path %></li>
+      <li><%= link_to t("app.contact_us"), home_contact_path %></li>
     </ul>
   </div>
 

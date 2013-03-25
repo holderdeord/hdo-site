@@ -302,9 +302,8 @@ nb:
     lang:
       infinitive_particle: "å"
     about: "Om oss"
-    about_hdo: "Om Holder de ord"
+    what_we_do: "Hva vi gjør"
     method:
-      about: "Hva vi gjør"
       read_more: "Les mer om metoden"
       read: "Les om metoden"
     support: "Støtt oss"

@@ -1,18 +1,20 @@
 # encoding: UTF-8
 
 class HomeController < ApplicationController
-  hdo_caches_page :index, :contact, :join, :support, :people,
-                  :about_method, :member, :future, :robots, :faq
+  hdo_caches_page :index,
+                  :contact,
+                  :join,
+                  :support,
+                  :people,
+                  :about,
+                  :member,
+                  :future,
+                  :robots,
+                  :faq
 
   def index
     @issues  = Issue.published.random(6)
     @parties = Party.order(:name)
-  end
-
-  def about
-    if params[:lang] == "en"
-      render :about, :locale => "en"
-    end
   end
 
   def robots
@@ -25,8 +27,7 @@ class HomeController < ApplicationController
     render text: robots, layout: false, content_type: "text/plain"
   end
 
-  # don't override Object#method
-  def about_method
+  def about
   end
 
   def faq
