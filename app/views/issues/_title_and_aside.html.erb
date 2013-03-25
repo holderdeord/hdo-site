@@ -1,13 +1,11 @@
-<!--
-  TODO:
-   * MAKE BREADCRUMBS WORK (PERHAPS COMPONENTIZED)
--->
 <ul class="breadcrumb">
   <li>
     <a href="/issues">Saker</a>
     <span class="divider">/</span>
   <li>
-    <a href="/issues#TAG">Tagg</a>
+    <% @issue.tags.each do |tag| %>
+      <%= link_to tag.name, issues_path(anchor: "tag-#{tag.id}") %>
+    <% end %>
     <span class="divider">/</span>
   <li class="active">
     Sak
