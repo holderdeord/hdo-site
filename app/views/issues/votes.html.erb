@@ -39,11 +39,18 @@
         <% [:for, :against, :absent].each do |result_key| %>
         <div class="span4 state-column">
           <% issue_vote.vote_result_groups[result_key].sort.each do |party, representatives| %>
-            <p><%= image_tag party.logo, alt: party.name, width: '35', height: '35' %> <%= party.name %> <span class="muted"><%= representatives.size %></span></p>
-            <div class="representatives-list hidden">
-              <% representatives.each do |rep| %>
-                <p><%= link_to rep.name, rep %></p>
+            <div class="row">
+              <% if representatives.size == 0 %>
+                <p class="muted" data-party-slug="<%= party.slug %>"><%= image_tag party.logo, alt: party.name, width: '35', height: '35' %> <%= representatives.size %></p>
+              <% else %>
+                <p data-party-slug="<%= party.slug %>"><%= image_tag party.logo, alt: party.name, width: '35', height: '35' %> <%= representatives.size %></p>
               <% end %>
+
+              <div class="representatives-list hidden" data-party-slug="<%= party.slug %>">
+                <% representatives.each do |rep| %>
+                  <p><%= link_to rep.name, rep %></p>
+                <% end %>
+              </div>
             </div>
           <% end %>
         </div>

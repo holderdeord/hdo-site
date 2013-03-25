@@ -49,10 +49,16 @@ class VoteConnectionDecorator < Draper::Decorator
   def vote_result_groups
     @counts ||= (
       c = {
-        :for => Hash.new { |hash, key| hash[key] = [] },
-        :against => Hash.new { |hash, key| hash[key] = [] },
-        :absent => Hash.new { |hash, key| hash[key] = [] }
+        :for => Hash.new,
+        :against => Hash.new,
+        :absent => Hash.new
       }
+
+      c.each do |state, list|
+        all_parties.each do |party|
+          list[party] = Array.new
+        end
+      end
 
       vote.vote_results.each do |result|
         party = result.representative.party_at(vote.time)
