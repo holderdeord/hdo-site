@@ -51,7 +51,7 @@
         <div class="span6">
           <p><%= raw(markdown(issue_vote.comment)) %></p>
           <p><%= issue_vote.matches_text.html_safe %> <%= issue_vote.enacted_text.html_safe %></p>
-          <p>Holder de ord regner avstemningen som <%= link_to issue_vote.weight_text, home_about_path(anchor: 'method-weights') %>.</p>
+          <p>Holder de ord regner avstemningen som <%= link_to issue_vote.weight_text, home_about_path(anchor: 'vekting-av-avstemninger') %>.</p>
         </div>
       </div>
 
