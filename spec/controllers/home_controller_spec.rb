@@ -3,12 +3,24 @@ require 'spec_helper'
 describe HomeController do
   context 'issues' do
     it 'loads only published issues' do
-      shown     = Issue.make! status: 'published'
-      not_shown = Issue.make! status: 'shelved'
+      issues = []
+
+      issues << Issue.make!(status: 'published')
+      issues << Issue.make!(status: 'shelved')
+      issues << Issue.make!(status: 'published')
+      issues << Issue.make!(status: 'published')
+
+      issues.each do |i|
+        i.tag_list << 'foo'
+        i.save!
+      end
 
       get :index
 
-      assigns(:issues).should == [shown]
+      group = assigns(:tag_groups).first
+
+      group.first.name.should == "foo"
+      group.last.should == issues.values_at(0, 2, 3)
     end
   end
 
