@@ -1,6 +1,6 @@
 <nav>
 
-  <%= link_to issues_path, class:"#{active_status_for(:issues)}" do %>
+  <%= link_to issues_path, class: "#{active_status_for(:issues)}" do %>
     <%= Issue.model_name.human(count: 2).capitalize %>
   <% end %>
 

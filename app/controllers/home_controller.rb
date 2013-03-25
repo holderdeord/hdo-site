@@ -5,8 +5,10 @@ class HomeController < ApplicationController
                   :about_method, :member, :future, :robots
 
   def index
-    @issues  = Issue.published.random(6)
-    @parties = Party.order(:name)
+    x, y = 3, 3
+
+    @tag_groups = Issue.published.in_tag_groups(count: x, minimum: y, random: true)
+    @parties    = Party.order(:name)
   end
 
   def about

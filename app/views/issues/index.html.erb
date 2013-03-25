@@ -7,9 +7,8 @@
  -->
 
 <% @groups.each do |tag, issues| %>
-
-<div class="row-fluid" id="tag-<%= tag %>">
-  <h3 class="lead tagblock-caption"><%= tag %></h3>
+<div class="row-fluid" id="tag-<%= tag.id %>">
+  <h3 class="lead tagblock-caption"><%= tag.name %></h3>
   <section class="tagblock">
   <% issues.each_slice(2) do |issues| %>
     <div class="row-fluid">

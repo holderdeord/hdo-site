@@ -6,17 +6,11 @@
 <% end %>
 
 
-<!--
- TODO:
-  * HENTE UT X MENGDE TAGGER (SOM HVER HAR MINST Y ANTALL ARTIKLER)
-  * HENTE UT Y ANTALL ARTIKLER (BRUKES AV @issues NEDENFOR)
-  * TRENGER OGSÅ NAVN OG LENKE TIL TAGGEN (ANCHOR PÅ /issues) I H2
- -->
-  <% @issues.each_slice(3) do |issues| %>
-  <h3 class="lead tagblock-caption"><a href="">Navn på tagg</a></h3>
+<% @tag_groups.each do |tag, issues| %>
+  <h3 class="lead tagblock-caption"><%= link_to tag.name, issues_path(anchor: "tag-#{tag.id}") %></h3>
   <section class="tagblock">
     <div class="row-fluid">
-      <% issues.each do |issue| %>
+      <% issues.first(3).each do |issue| %>
         <article class="issue span4">
           <%= link_to issue do %>
             <h4><%= issue.title %></h4>
@@ -29,48 +23,47 @@
       <% end %>
     </div>
   </section>
-  <% end %>
+<% end %>
 
-  <hr class="soften">
+<hr class="soften">
 
-  <h3 align="center">SJEKK DITT PARTI</h3>
+<h3 align="center">SJEKK DITT PARTI</h3>
 
-  <div class="row-fluid">
-    <div class="home-party-list">
-      <% @parties.each do |party| %>
-        <%= link_to party do %>
-        <div class="home-party-logo">
-          <%= image_tag party.logo, alt: party.name, width: '290', height: '290' %>
-        </div>
-        <% end %>
+<div class="row-fluid">
+  <div class="home-party-list">
+    <% @parties.each do |party| %>
+      <%= link_to party do %>
+      <div class="home-party-logo">
+        <%= image_tag party.logo, alt: party.name, width: '290', height: '290' %>
+      </div>
       <% end %>
-    </div>
+    <% end %>
+  </div>
+</div>
+
+<hr class="soften">
+
+<div class="row-fluid">
+  <div class="span4">
+    <h4>GI EN GAVE</h4>
+    <p>
+      Send kodeord <strong>HOLDERDEORD</strong> til <strong>2160</strong> så støtter du oss med 150 kr.
+      Din støtte bidrar til at du enkelt kan følge med på hva som skjer i hjertet av norsk politikk.
+      <span class="read-more"><%= link_to t('app.read_more'), home_support_path %></span>
+    </p>
   </div>
 
-  <hr class="soften">
+  <div class="span4">
+    <h4>BLI MED</h4>
+    <p>
+      Synes du det er lite fakta i den politiske debatten? Bli med og utvikle Norges nye politiske vaktbikkje! Vi er på utkikk etter flere til å være med på laget.
+      <span class="read-more"><%= link_to t('app.read_more'), home_join_path %></span>
+    </p>
 
-  <div class="row-fluid">
-    <div class="span4">
-      <h4>GI EN GAVE</h4>
-      <p>
-        Send kodeord <strong>HOLDERDEORD</strong> til <strong>2160</strong> så støtter du oss med 150 kr.
-        Din støtte bidrar til at du enkelt kan følge med på hva som skjer i hjertet av norsk politikk.
-        <span class="read-more"><%= link_to t('app.read_more'), home_support_path %></span>
-      </p>
-    </div>
+  </div>
 
-    <div class="span4">
-      <h4>BLI MED</h4>
-      <p>
-        Synes du det er lite fakta i den politiske debatten? Bli med og utvikle Norges nye politiske vaktbikkje! Vi er på utkikk etter flere til å være med på laget.
-        <span class="read-more"><%= link_to t('app.read_more'), home_join_path %></span>
-      </p>
-
-    </div>
-
-    <div class="span4">
-      <h4>SE HVA SOM KOMMER</h4>
-      <p>Denne siden er fremdeles en betaversjon og under kontinuerlig utvikling. Vi jobber med flere nye funksjoner og forbedringer. <%= link_to t('app.read_more'), home_future_path %></p>
-    </div>
+  <div class="span4">
+    <h4>SE HVA SOM KOMMER</h4>
+    <p>Denne siden er fremdeles en betaversjon og under kontinuerlig utvikling. Vi jobber med flere nye funksjoner og forbedringer. <%= link_to t('app.read_more'), home_future_path %></p>
   </div>
 </div>
