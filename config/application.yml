@@ -26,4 +26,3 @@ production:
   <<: *defaults
   analytics_enabled: true
   questions_enabled: false
-  show_accountability: false
