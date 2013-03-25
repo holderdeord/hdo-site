@@ -1,19 +1,13 @@
-<ul class="breadcrumb">
-  <li>
-    <a href="/issues">Saker</a>
-    <span class="divider">/</span>
-  <li>
-    <% @issue.tags.each do |tag| %>
-      <%= link_to tag.name, issues_path(anchor: "tag-#{tag.id}") %>
-    <% end %>
-    <span class="divider">/</span>
-  <li class="active">
-    Sak
-</ul>
 <h1 class="issue-title"><%= @issue.title %></h1>
 
 <% if @issue.published? %>
   <aside class="muted">
-    <%= Issue.human_attribute_name(:updated_at) %> <%= @issue.updated_at %>
+    <%= Issue.human_attribute_name(:updated_at) %> <%= @issue.updated_at %>.
+    <span class="issue-tags">
+      Tagger:
+      <% @issue.tags.each do |tag| %>
+        <%= link_to tag.name, issues_path(anchor: "tag-#{tag.id}") %>
+      <% end %>
+    </span>
   </aside>
 <% end %>

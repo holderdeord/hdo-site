@@ -4,6 +4,24 @@
 
 @parties_num: 7;
 
+.issue-tags {
+  a:after {
+    content: ",";
+  }
+  a:last-child:after {
+    content: "";
+  }
+}
+
+.votes-header {
+  .lead {
+    margin-bottom: 0;
+  }
+  .votes-title {
+    color: inherit;
+  }
+}
+
 .page-header {
   aside {
     line-height: 1em;
