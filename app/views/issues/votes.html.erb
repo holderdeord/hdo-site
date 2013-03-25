@@ -10,48 +10,22 @@
     </h1>
 
     <% @issue_votes.each do |issue_vote| %>
-      <div id="<%= issue_vote.anchor %>" class="row-fluid">
-        <h3>
-          <div class="span8"><%= issue_vote.title %></div>
-          <div class="">
-            <small class="pull-right pagination-right">
-              <p><%= issue_vote.time_text %><p>
-              <p><%= issue_vote.proposition_type_text %></p>
+      <div class="row-fluid">
+      <div id="<%= issue_vote.anchor %>" class="span7">
+        <h4><%= issue_vote.title %></h4>
+        <p><%= raw(markdown(issue_vote.comment)) %></p>
+          <p><%= issue_vote.matches_text.html_safe %> </p>
+      </div>
+      <div class="span5 pull-right">
+          <div class="facts-box">
+            <h5>Faktaboks</h5>
+            <small>
+              <p><strong>Dato:</strong> <%= issue_vote.time_text %></p>
+              <p><strong>Type:</strong> <%= issue_vote.proposition_type_text %></p>
+              <p><strong>Viktighetsgrad:</strong> <%= link_to issue_vote.weight_text, home_method_path(anchor: 'method-weights') %> (icon here)</p>
+              <p><strong>Vedtakelse:</strong> <%= issue_vote.enacted_text.html_safe %></p>
             </small>
           </div>
-        </h3>
-        <br> <!-- ugh -->
-      </div>
-
-      <div class="row-fluid">
-        <div class="span3">
-          <% if issue_vote.parties_for.any? %>
-            <h4>Stemte for</h4>
-
-            <% issue_vote.parties_for.each do |party| %>
-              <%= link_to party do %>
-                <%= image_tag party.logo.versions[:medium], width: '60', height: '60' %>
-              <% end %>
-            <% end %>
-          <% end %>
-        </div>
-
-        <div class="span3">
-          <% if issue_vote.parties_against.any? %>
-            <h4>Stemte mot</h4>
-
-            <% issue_vote.parties_against.each do |party| %>
-              <%= link_to party do %>
-                <%= image_tag party.logo, width: '60', height: '60' %>
-              <% end %>
-            <% end %>
-          <% end %>
-        </div>
-
-        <div class="span6">
-          <p><%= raw(markdown(issue_vote.comment)) %></p>
-          <p><%= issue_vote.matches_text.html_safe %> <%= issue_vote.enacted_text.html_safe %></p>
-          <p>Holder de ord regner avstemningen som <%= link_to issue_vote.weight_text, home_method_path(anchor: 'method-weights') %>.</p>
         </div>
       </div>
 
