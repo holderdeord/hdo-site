@@ -35,7 +35,7 @@
       return Math.floor(maxWidth/slideWidth);
     }
     /* Updates the slide count  */
-    window.onload = function() {
+    $(document).ready(function() {
       var swiperParty = new Swiper('.swiper-container', {'slidesPerSlide': getSlideSize()});
 
       $('#representatives .representative').fadeTo('slow', 1);
@@ -46,54 +46,10 @@
       $(window).resize(function() {
         swiperParty.params.slidesPerSlide = getSlideSize();
       });
-    }
+    })
   </script>
 <% end %>
-
 
 <div class="row-fluid">
-  <div class="tabbable">
-    <ul class="nav nav-tabs">
-
-      <li class="span6">
-        <a href="#promises-tab" data-toggle="tab">Hva de har lovet</a>
-      </li>
-
-      <li class="active span6">
-        <a href="#issues-tab" data-toggle="tab">Hva de har stemt</a>
-      </li>
-    </ul>
-
-    <div class="tab-content">
-      <div class="tab-pane active" id="issues-tab">
-          <%= render partial: 'shared/issue_positions', locals: { issue_groups: @issue_groups } %>
-      </div>
-
-      <div class="tab-pane" id="promises-tab">
-        <div class="span3 categories">
-          <%= render partial: 'shared/main_categories_list', locals: { categories: @categories } %>
-        </div>
-
-        <div class="span9">
-          <%= render partial: 'shared/promises_results' %>
-        </div>
-      </div>
-    </div>
-  </div>
+  <%= render partial: 'shared/issue_positions', locals: { issue_groups: @issue_groups } %>
 </div>
-
-<% content_for :document_ready do %>
-  <script>
-    $(document).ready(function () {
-      var widget = HDO.promiseWidget.create({
-        targetEl: $(".promises-results"),
-        categoriesSelector: $(".categories"),
-        server: HDO.promiseServerFacade,
-        activeParty: '<li class="<%= @party.slug %>-active"><a href="#" data-party-slug="<%= @party.slug %>"></a></li>',
-        spinnerEl: $("#spinner")
-      });
-
-      widget.init();
-    });
-  </script>
-<% end %>
