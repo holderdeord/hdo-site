@@ -7,7 +7,8 @@
 
   <div class="page-header">
 
-    <div><%= render partial: 'title_and_aside' %></div>
+    <h1 class="issue-title"><%= @issue.title %></h1>
+    <%= render partial: 'aside', locals: { issue: @issue } %>
 
     <figure class="position">
       <div class="issue-graph">

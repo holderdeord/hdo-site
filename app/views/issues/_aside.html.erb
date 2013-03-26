@@ -1,0 +1,9 @@
+<aside class="muted">
+  <%= Issue.human_attribute_name(:updated_at) %> <%= issue.updated_at %>.
+
+  <span class="issue-tags">
+    <% issue.tags.each do |tag| %>
+      <%= link_to tag.name, issues_path(anchor: "tag-#{tag.slug}") %>
+    <% end %>
+  </span>
+</aside>
