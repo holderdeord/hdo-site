@@ -13,10 +13,11 @@ class HomeController < ApplicationController
                   :faq
 
   def index
-    x, y = 3, 3
+    published = Issue.published.includes(:tags)
 
-    @tag_groups = Issue.published.in_tag_groups(count: x, minimum: y, random: true)
-    @all_tags   = ActsAsTaggableOn::Tag.order(:name).select(:name).all
+    @tag_groups = published.in_tag_groups(count: 3, minimum: 3, random: true)
+    @all_tags   = published.flat_map { |e| e.tags }.uniq.sort_by(&:name)
+
     @parties    = Party.order(:name)
   end
 
