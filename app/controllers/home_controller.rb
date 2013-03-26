@@ -8,7 +8,7 @@ class HomeController < ApplicationController
     x, y = 3, 3
 
     @tag_groups = Issue.published.in_tag_groups(count: x, minimum: y, random: true)
-    @tags_all   = Issue.published.in_tag_groups
+    @all_tags   = ActsAsTaggableOn::Tag.order(:name).select(:name).all
     @parties    = Party.order(:name)
   end
 

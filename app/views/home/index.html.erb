@@ -27,13 +27,12 @@
   </section>
 <% end %>
 
-<h3 class="lead">Alle tama</h3>
-<% @tags_all.each_slice(4) do |tags| %>
+<h3 class="lead">Alle tema</h3>
+<% @all_tags.each_slice(4) do |tags| %>
   <div class="row-fluid">
   <% tags.each do |tag| %>
     <div class="span3">
-      <a href="">TODO</a>
-      <%# link_to tag.name, issues_path(anchor: "tag-#{tag.slug}") %>
+      <%= link_to tag.name, issues_path(anchor: "tag-#{tag.slug}") %>
     </div>
   <% end %>
   </div>
