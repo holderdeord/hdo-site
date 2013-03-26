@@ -20,8 +20,10 @@ if [[ "$LOCAL_SHA" = "$REMOTE_SHA" ]]; then
 else
   echo "Gemfile.lock changed, uploading bundle"
 
+  cd $HOME
+
   rm -f bundle.tgz
-  tar cjf bundle.tgz ~/.bundle
+  tar cjf bundle.tgz .bundle
 
   curl -X PUT --user "${HDO_DEPLOY_AUTH}" "http://${DEPLOY_HOST}/travis/bundle?${DEPLOY_PARAMS}" --upload-file bundle.tgz
   curl -X PUT --user "${HDO_DEPLOY_AUTH}" "http://${DEPLOY_HOST}/travis/bundle/sha?${DEPLOY_PARAMS}" -d "$LOCAL_SHA"
