@@ -5,8 +5,8 @@ require 'spec_helper'
 describe VoteConnectionDecorator do
   it 'has text for matches state' do
     issue        = Issue.make!(:title => 'Øke ditt og datt')
-    matching     = VoteConnectionDecorator.decorate(VoteConnection.make!(matches: true,  issue: issue))
-    non_matching = VoteConnectionDecorator.decorate(VoteConnection.make!(matches: false, issue: issue))
+    matching     = VoteConnectionDecorator.decorate(VoteConnection.make!(matches: true,  issue: issue), context: issue)
+    non_matching = VoteConnectionDecorator.decorate(VoteConnection.make!(matches: false, issue: issue), context: issue)
 
     I18n.with_locale :nb do
       matching.matches_text.should     == 'Avstemningen er <strong>i tråd med å øke ditt og datt</strong>.'
