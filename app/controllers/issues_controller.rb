@@ -38,6 +38,7 @@ class IssuesController < ApplicationController
 
       @issue_votes = sorted
       @all_parties = Party.order(:name)
+      @issue       = IssueDecorator.decorate(@issue)
     else
       redirect_to new_user_session_path
     end

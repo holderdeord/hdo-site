@@ -391,8 +391,8 @@ nb:
       not_enacted: Forslaget ble <strong>ikke vedtatt</strong>.
       rebel: utbryterstemme
       matches_issue:
-        'yes': 'Avstemningen er <strong>i tråd med å %{issue_title}</strong>.'
-        'no': 'Avstemningen er <strong>ikke i tråd med å %{issue_title}</strong>.'
+        'yes': 'Avstemningen er <strong>i tråd med</strong> å %{issue_title}.'
+        'no': 'Avstemningen er <strong>ikke i tråd med</strong> å %{issue_title}.'
       non_personal:
         unknown: 'Denne saken ble avgjort uten at avstemningsknappene ble brukt. Vi har derfor ikke oversikt over hva den enkelte representant har stemt.'
         inferred: 'Denne saken ble avgjort enstemmig uten at avstemningsknappene ble brukt. Oversikten er utledet fra tilstedeværelse ved andre avstemninger samme dag.'
