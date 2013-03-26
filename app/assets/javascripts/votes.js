@@ -3,11 +3,11 @@ var HDO = HDO || {};
 (function (H, $) {
 
   function toggleRepresentatives(el) {
-    var self = this;
-    partySlug = $(el.currentTarget).data('party-slug');
-    columnsToShow = $(self.columns).find("div[data-party-slug='" + partySlug + "']");
-    $(columnsToShow).each(function(){
-      if($(this).hasClass('hidden')){
+    var self = this,
+      partySlug = $(el.currentTarget).data('party-slug'),
+      columnsToShow = $(self.columns).find("div[data-party-slug='" + partySlug + "']");
+    $(columnsToShow).each(function () {
+      if ($(this).hasClass('hidden')) {
         $(this).removeClass('hidden');
       } else {
         $(this).addClass('hidden');
