@@ -19,7 +19,7 @@ class VoteConnectionDecorator < Draper::Decorator
   end
 
   def anchor
-    model.to_param
+    "vote-#{model.to_param}"
   end
 
   def matches_text

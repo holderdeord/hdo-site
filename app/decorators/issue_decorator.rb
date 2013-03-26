@@ -203,7 +203,7 @@ class IssueDecorator < Draper::Decorator
     end
 
     def anchor
-      vote_connection.to_param
+      "vote-#{vote_connection.to_param}"
     end
 
     def label
