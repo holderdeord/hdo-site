@@ -40,11 +40,9 @@
 <% content_for :document_ready do %>
   <script>
     $(document).ready(function () {
-      var votes_column_handler = HDO.votes.create({
-        columns: $('.state-column')
-      });
-
-      votes_column_handler.init();
+      HDO.voteRowToggler.create({
+        columns: $('.state-column') }
+      ).init();
     });
   </script>
 <% end %>

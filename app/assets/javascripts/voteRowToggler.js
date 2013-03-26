@@ -2,9 +2,14 @@ var HDO = HDO || {};
 
 (function (H, $) {
 
-  function toggleRepresentatives(el) {
+  function toggleRepresentatives(ev) {
+    if ($(ev.target).attr("href")) {
+      // don't toggle if a link was clicked
+      return;
+    }
+
     var self = this,
-      partySlug = $(el.currentTarget).data('party-slug'),
+      partySlug = $(ev.currentTarget).data('party-slug'),
       columnsToShow = $(self.columns).find("div[data-party-slug='" + partySlug + "-reps']");
 
     $(columnsToShow).each(function () {
@@ -16,7 +21,7 @@ var HDO = HDO || {};
     });
   }
 
-  HDO.votes = {
+  HDO.voteRowToggler = {
     create: function (params) {
       var instance = Object.create(this);
       instance.columns = params.columns;
