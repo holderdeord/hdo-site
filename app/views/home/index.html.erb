@@ -5,9 +5,11 @@
   </p>
 <% end %>
 
-
 <% @tag_groups.each do |tag, issues| %>
-  <h3 class="lead tagblock-caption"><%= link_to tag.name, issues_path(anchor: "tag-#{tag.id}") %></h3>
+  <h3 class="lead tagblock-caption">
+    <%= link_to tag.name, issues_path(anchor: "tag-#{tag.slug}") %>
+  </h3>
+
   <section class="tagblock">
     <div class="row-fluid">
       <% issues.first(3).each do |issue| %>

@@ -1,30 +1,24 @@
 <% page_title "#{t('app.issues.title')} - #{t('app.title')}" %>
 
-
-<!--
- TODO:
-  * SETTE BRUKBAR ID PÅ RADENE SÅ DE KAN LENKES FRA /home.index.erb
- -->
-
 <% @groups.each do |tag, issues| %>
-<div class="row-fluid" id="tag-<%= tag.id %>">
-  <h3 class="lead tagblock-caption"><%= tag.name %></h3>
-  <section class="tagblock">
-  <% issues.each_slice(2) do |issues| %>
-    <div class="row-fluid">
-    <% issues.each do |issue| %>
-      <article class="issue span6">
-      <%= link_to issue do %>
-        <h4><%= issue.title %></h4>
-        <p>
-          <%= awesome_truncate issue.description, 400 %>
-          <span class="read-more"><%= t('app.read_more') %></span>
-        </p>
+  <div class="row-fluid" id="tag-<%= tag.slug %>">
+    <h3 class="lead tagblock-caption"><%= tag.name %></h3>
+    <section class="tagblock">
+    <% issues.each_slice(2) do |issues| %>
+      <div class="row-fluid">
+      <% issues.each do |issue| %>
+        <article class="issue span6">
+        <%= link_to issue do %>
+          <h4><%= issue.title %></h4>
+          <p>
+            <%= awesome_truncate issue.description, 400 %>
+            <span class="read-more"><%= t('app.read_more') %></span>
+          </p>
+        <% end %>
+        </article>
       <% end %>
-      </article>
+      </div>
     <% end %>
-    </div>
-  <% end %>
-  </section>
-</div>
+    </section>
+  </div>
 <% end %>
