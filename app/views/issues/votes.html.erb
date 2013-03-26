@@ -29,13 +29,7 @@
           </div>
         </div>
 
-      <div class="row-fluid">
-        <h5 class="span4">For</h5>
-        <h5 class="span4">Mot</h5>
-        <h5 class="span4">Ikke tilstede</h5>
-      </div>
-
-      <div class="row-fluid">
+      <!-- <div class="row-fluid">
         <% [:for, :against, :absent].each do |result_key| %>
         <div class="span4 state-column">
           <% issue_vote.vote_result_groups[result_key].sort.each do |party, representatives| %>
@@ -43,7 +37,7 @@
               <% if representatives.size == 0 %>
                 <p class="muted" data-party-slug="<%= party.slug %>"><%= image_tag party.logo, alt: party.name, width: '35', height: '35' %> <%= representatives.size %></p>
               <% else %>
-                <p data-party-slug="<%= party.slug %>"><%= image_tag party.logo, alt: party.name, width: '35', height: '35' %> <%= representatives.size %></p>
+                <p data-party-slug="<%= party.slug %>"><%= image_tag party.logo, alt: party.name, width: '35', height: '35' %>k <%= representatives.size %></p>
               <% end %>
 
               <div class="representatives-list hidden" data-party-slug="<%= party.slug %>">
@@ -55,7 +49,31 @@
           <% end %>
         </div>
         <% end %>
-      </div>
+      </div> -->
+
+      <table class="table table-hover table-condensed">
+        <thead>
+          <th>For</th>
+          <th>Mot</th>
+          <th>Ikke tilstede</th>
+        </thead>
+        <% @all_parties.each do |party| %>
+          <tr class="state-column">
+            <% [:for, :against, :absent].each do |result_key| %>
+              <td class="span4" data-party-slug="<%= party.slug %>">
+                <%= image_tag party.logo, alt: party.name, width: '35', height: '35' %> <%= issue_vote.vote_result_groups[result_key][party].size %>
+
+                <div class="representatives-list hidden" data-party-slug="<%= party.slug %>">
+                  <% issue_vote.vote_result_groups[result_key][party].each do |rep| %>
+                      <p><%= link_to rep.name, rep %></p>
+                  <% end %>
+                </div>
+              </td>
+            <% end %>
+          </tr>
+        <% end %>
+
+      </table>
 
     <hr>
     <% end %>

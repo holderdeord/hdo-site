@@ -23,7 +23,7 @@ var HDO = HDO || {};
     },
 
     init: function () {
-      $(this.columns).on('click', 'p', toggleRepresentatives.bind(this));
+      $(this.columns).on('click', 'td', toggleRepresentatives.bind(this));
     }
   };
 
