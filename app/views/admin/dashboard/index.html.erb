@@ -3,7 +3,9 @@
 
   <div class="row-fluid">
     <div class="span6">
-      <p>Du er redaktør for <h1><%= current_user.percentage_of_issues %>%</h1> av Holder de ords saker!</p>
+      <p>Du er redaktør for <strong><%= current_user.percentage_of_issues %>%</strong> av Holder de ords saker!</p>
+      <p><strong><%= @issue_vote_percentage %>%</strong> av alle avstemninger er koblet til en publisert sak.</p>
+      <p><strong><%= @issue_promise_percentage %>%</strong> av alle løfter er koblet til en publisert sak.</p>
     </div>
 
     <div class="span6">
