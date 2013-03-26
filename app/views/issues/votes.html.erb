@@ -12,7 +12,7 @@
     <% @issue_votes.each do |issue_vote| %>
       <div class="row-fluid">
         <div id="<%= issue_vote.anchor %>" class="span7">
-          <h4><%= issue_vote.title %></h4>
+          <h3><%= issue_vote.title %></h3>
           <p><%= raw(markdown(issue_vote.comment)) %></p>
         </div>
         <div class="span5 pull-right">
@@ -21,35 +21,13 @@
               <small>
                 <p><strong>Dato:</strong> <%= issue_vote.time_text %></p>
                 <p><strong>Type:</strong> <%= issue_vote.proposition_type_text %></p>
-                <p><strong>Viktighetsgrad:</strong> <%= link_to issue_vote.weight_text, home_method_path(anchor: 'method-weights') %> (icon here)</p>
-                <p><strong>Vedtakelse:</strong> <%= issue_vote.enacted_text.html_safe %></p>
+                <p><strong>Vekt:</strong> <%= link_to issue_vote.weight_text, home_method_path(anchor: 'method-weights') %> (icon here)</p>
+                <p><%= issue_vote.enacted_text.html_safe %></p>
                 <p><%= issue_vote.matches_text.html_safe %> </p>
               </small>
             </div>
           </div>
         </div>
-
-      <!-- <div class="row-fluid">
-        <% [:for, :against, :absent].each do |result_key| %>
-        <div class="span4 state-column">
-          <% issue_vote.vote_result_groups[result_key].sort.each do |party, representatives| %>
-            <div class="row">
-              <% if representatives.size == 0 %>
-                <p class="muted" data-party-slug="<%= party.slug %>"><%= image_tag party.logo, alt: party.name, width: '35', height: '35' %> <%= representatives.size %></p>
-              <% else %>
-                <p data-party-slug="<%= party.slug %>"><%= image_tag party.logo, alt: party.name, width: '35', height: '35' %>k <%= representatives.size %></p>
-              <% end %>
-
-              <div class="representatives-list hidden" data-party-slug="<%= party.slug %>">
-                <% representatives.each do |rep| %>
-                  <p><%= link_to rep.name, rep %></p>
-                <% end %>
-              </div>
-            </div>
-          <% end %>
-        </div>
-        <% end %>
-      </div> -->
 
       <table class="table table-hover table-condensed">
         <thead>
@@ -60,10 +38,12 @@
         <% @all_parties.each do |party| %>
           <tr class="state-column">
             <% [:for, :against, :absent].each do |result_key| %>
-              <td class="span4" data-party-slug="<%= party.slug %>">
-                <%= image_tag party.logo, alt: party.name, width: '35', height: '35' %> <%= issue_vote.vote_result_groups[result_key][party].size %>
+              <td class="span4" data-party-slug="<%= party.slug %>-<%= issue_vote.title %>">
+                <% if !issue_vote.vote_result_groups[result_key][party].empty? %>
+                  <%= image_tag party.logo, alt: party.name, width: '35', height: '35' %> <%= issue_vote.vote_result_groups[result_key][party].size %>
+                <% end %>
 
-                <div class="representatives-list hidden" data-party-slug="<%= party.slug %>">
+                <div class="representatives-list hidden" data-party-slug="<%= party.slug %>-<%= issue_vote.title %>">
                   <% issue_vote.vote_result_groups[result_key][party].each do |rep| %>
                       <p><%= link_to rep.name, rep %></p>
                   <% end %>
@@ -74,7 +54,6 @@
         <% end %>
 
       </table>
-
     <hr>
     <% end %>
   </div>
