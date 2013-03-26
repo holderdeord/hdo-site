@@ -32,7 +32,6 @@
 
       <div class="span5 pull-right">
         <div class="facts-box">
-          <h5>Faktaboks</h5>
           <small>
             <p><strong>Dato:</strong> <%= issue_vote.time_text %></p>
             <p><strong>Type:</strong> <%= issue_vote.proposition_type_text %></p>
@@ -44,32 +43,8 @@
       </div>
     </div>
 
-    <table class="table table-hover table-condensed">
-      <thead>
-        <th>For</th>
-        <th>Mot</th>
-        <th>Ikke tilstede</th>
-      </thead>
-      <% @all_parties.each do |party| %>
-        <tr class="state-column">
-          <% [:for, :against, :absent].each do |result_key| %>
-            <td class="span4" data-party-slug="<%= party.slug %>-<%= issue_vote.title %>">
-              <% if !issue_vote.vote_result_groups[result_key][party].empty? %>
-                <%= image_tag party.logo, alt: party.name, width: '35', height: '35' %> <%= issue_vote.vote_result_groups[result_key][party].size %>
-              <% end %>
-
-              <div class="representatives-list hidden" data-party-slug="<%= party.slug %>-<%= issue_vote.title %>">
-                <% issue_vote.vote_result_groups[result_key][party].each do |rep| %>
-                    <p><%= link_to rep.name, rep %></p>
-                <% end %>
-              </div>
-            </td>
-          <% end %>
-        </tr>
-      <% end %>
-
-    </table>
-    <hr>
+    <%= render partial: 'vote_table', locals: { all_parties: @all_parties, issue_vote: issue_vote } %>
+    <hr class="soften">
   <% end %>
 </div>
 
