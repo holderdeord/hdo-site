@@ -21,6 +21,8 @@ describe HomeController do
 
       group.first.name.should == "foo"
       group.last.should == issues.values_at(0, 2, 3)
+
+      assigns(:all_tags).map(&:name).should == ["foo"]
     end
   end
 
