@@ -108,26 +108,29 @@ module Hdo
         issue = Issue.make! vote_connections: [VoteConnection.make!, VoteConnection.make!]
         issue.vote_connections.each { |v| v.proposition_type.should be_blank }
 
+        first = VoteConnection::PROPOSITION_TYPES.first
+        last  = VoteConnection::PROPOSITION_TYPES.last
+
         votes = {
           issue.votes[0].id => {
             direction: 'for',
             weight: 1.0,
             title: 'title!!!!!!!!',
-            proposition_type: VoteConnection::PROPOSITION_TYPES.first
+            proposition_type: first
           },
           issue.votes[1].id => {
             direction: 'for',
             weight: 1.0,
             title: 'title!!!!!!!!',
-            proposition_type: VoteConnection::PROPOSITION_TYPES.last
+            proposition_type: last
           }
         }
 
         IssueUpdater.new(issue, {votes: votes}, user).update!
         issue.reload
 
-        issue.vote_connections[0].proposition_type.should == VoteConnection::PROPOSITION_TYPES.first
-        issue.vote_connections[1].proposition_type.should == VoteConnection::PROPOSITION_TYPES.last
+        actual = issue.vote_connections.map(&:proposition_type).sort
+        actual.should == [first, last].sort
       end
 
       it 'does not touch the issue if proposition type is already nil or empty' do
