@@ -80,7 +80,7 @@ describe Issue do
   it "can add tags" do
     valid_issue.tag_list << 'some-tag'
     valid_issue.save
-    
+
     valid_issue.tags.first.name.should == 'some-tag'
   end
 
@@ -242,7 +242,7 @@ describe Issue do
           direction: 'for',
           weight: 1.0,
           title: 'hello',
-          proposition_type: Vote::PROPOSITION_TYPES.first
+          proposition_type: VoteConnection::PROPOSITION_TYPES.first
         }
       }
       update_attributes_on @issue, {votes: votes}

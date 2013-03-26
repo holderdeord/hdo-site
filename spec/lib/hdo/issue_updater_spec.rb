@@ -58,17 +58,15 @@ module Hdo
     end
 
     describe 'vote proposition types' do
-      it "updates a single vote's proposition_type" do
+      it "updates a single proposition_type" do
         issue = Issue.make! vote_connections: [VoteConnection.make!]
-
-        issue.votes.each { |v| v.proposition_type.should be_blank }
 
         votes = {
           issue.votes[0].id => {
             direction: 'for',
             weight: 1.0,
             title: 'title!!!!!!!!',
-            proposition_type: Vote::PROPOSITION_TYPES.first
+            proposition_type: VoteConnection::PROPOSITION_TYPES.first
           }
         }
 
@@ -76,21 +74,21 @@ module Hdo
 
         issue.reload
 
-        issue.votes.each do |vote|
-          vote.proposition_type.should == Vote::PROPOSITION_TYPES.first
+        issue.vote_connections.each do |vc|
+          vc.proposition_type.should == VoteConnection::PROPOSITION_TYPES.first
         end
       end
 
-      it "updates one of many vote's proposition_type" do
+      it "updates one of many proposition_types" do
         issue = Issue.make! vote_connections: [VoteConnection.make!, VoteConnection.make!]
-        issue.votes.each { |v| v.proposition_type.should be_blank }
+        issue.vote_connections.each { |v| v.proposition_type.should be_blank }
 
         votes = {
           issue.votes[0].id => {
             direction: 'for',
             weight: 1.0,
             title: 'title!!!!!!!!',
-            proposition_type: Vote::PROPOSITION_TYPES.first
+            proposition_type: VoteConnection::PROPOSITION_TYPES.first
           },
           issue.votes[1].id => {
             direction: 'for',
@@ -103,33 +101,33 @@ module Hdo
         IssueUpdater.new(issue, {votes: votes}, user).update!
         issue.reload
 
-        issue.votes[0].proposition_type.should == Vote::PROPOSITION_TYPES.first
+        issue.vote_connections.first.proposition_type.should == VoteConnection::PROPOSITION_TYPES.first
       end
 
-      it "updates multiple vote's proposition_type simultaneously" do
+      it "updates multiple proposition_types simultaneously" do
         issue = Issue.make! vote_connections: [VoteConnection.make!, VoteConnection.make!]
-        issue.votes.each { |v| v.proposition_type.should be_blank }
+        issue.vote_connections.each { |v| v.proposition_type.should be_blank }
 
         votes = {
           issue.votes[0].id => {
             direction: 'for',
             weight: 1.0,
             title: 'title!!!!!!!!',
-            proposition_type: Vote::PROPOSITION_TYPES.first
+            proposition_type: VoteConnection::PROPOSITION_TYPES.first
           },
           issue.votes[1].id => {
             direction: 'for',
             weight: 1.0,
             title: 'title!!!!!!!!',
-            proposition_type: Vote::PROPOSITION_TYPES.last
+            proposition_type: VoteConnection::PROPOSITION_TYPES.last
           }
         }
 
         IssueUpdater.new(issue, {votes: votes}, user).update!
         issue.reload
 
-        issue.votes[0].proposition_type.should == Vote::PROPOSITION_TYPES.first
-        issue.votes[1].proposition_type.should == Vote::PROPOSITION_TYPES.last
+        issue.vote_connections[0].proposition_type.should == VoteConnection::PROPOSITION_TYPES.first
+        issue.vote_connections[1].proposition_type.should == VoteConnection::PROPOSITION_TYPES.last
       end
 
       it 'does not touch the issue if proposition type is already nil or empty' do
@@ -137,7 +135,7 @@ module Hdo
         vote            = vote_connection.vote
         issue           = Issue.make! vote_connections: [vote_connection]
 
-        vote.proposition_type.should be_nil
+        vote_connection.proposition_type.should be_nil
         issue.last_updated_by.should be_nil
 
         votes = {

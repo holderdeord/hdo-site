@@ -187,7 +187,7 @@ module Hdo
           for_count, against_count = 0, 0
 
           votes.each do |vote_result|
-            next if ignore_result?(vote_result)
+            next if ignore_result?(vote_result, vote_connection)
 
             if vote_result.__send__(meth)
               res[vote_result.representative] = weight
@@ -211,13 +211,12 @@ module Hdo
         res
       end
 
-      def ignore_result?(vote_result)
+      def ignore_result?(vote_result, vote_connection)
         vote = vote_result.vote
 
         vote_result.absent? ||
           (vote_result.against? &&
-            (vote.proposition_type == 'alternate_national_budget' && AppConfig.ignore_votes_against_alternate_budget) ||
-            (vote.proposition_type == 'proposal_attached_to_the_minutes' && AppConfig.ignore_votes_against_proposal_attached_to_minutes))
+          (vote_connection.proposition_type == 'alternate_national_budget' && AppConfig.ignore_votes_against_alternate_budget))
       end
 
     end

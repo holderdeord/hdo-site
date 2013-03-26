@@ -118,18 +118,18 @@ module Hdo
           @changed = true
         end
       else
-        attrs = data.except(:direction, :proposition_type).merge(matches: data[:direction] == 'for', vote_id: vote_id)
+        attrs = data.except(:direction).merge(matches: data[:direction] == 'for', vote_id: vote_id)
+
+        # normalize '' vs nil
+        attrs[:proposition_type] = nil if attrs[:proposition_type].blank?
 
         if existing
-          update_vote_proposition_type existing.vote, data[:proposition_type]
-
           existing.attributes = attrs
           @changed ||= existing.changed?
 
           existing.save!
         else
           new_connection = @issue.vote_connections.create!(attrs)
-          update_vote_proposition_type new_connection.vote, data[:proposition_type]
           @changed = true
         end
       end
@@ -165,14 +165,6 @@ module Hdo
       orig = @issue.__send__(name)
 
       edit && (edit.reject(&:empty?).map(&:to_i).sort != orig.sort)
-    end
-
-    def update_vote_proposition_type(vote, type)
-      return if vote.proposition_type.blank? && type.blank?
-
-      vote.proposition_type = type
-      @changed ||= vote.changed?
-      vote.save!
     end
 
     def save

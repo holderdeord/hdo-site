@@ -187,7 +187,6 @@ nb:
         parliament_issues: "Stortingssaker"
         external_id: "Ekstern id"
         about: "om"
-        proposition_type: "Forslagstype"
       vote_result:
         result: "Stemme"
         voted_for: 'har stemt for.'
@@ -242,6 +241,7 @@ nb:
         comment: "Kommentar"
         weight: "Vekting"
         title: "Tittel"
+        proposition_type: "Forslagstype"
       question:
         title: Tittel
         body: Tekst
