@@ -5,9 +5,11 @@ class Admin::DashboardController < AdminController
     @issues_by_status            = Issue.latest(10).group_by(&:status_text)
     @pending_questions           = Question.pending
 
-    published = Issue.published
+    published     = Issue.published
+    vote_count    = Vote.count
+    promise_count = Promise.count
 
-    @issue_vote_percentage       = published.flat_map(&:vote_ids).uniq.size * 100 / Vote.count
-    @issue_promise_percentage    = published.flat_map(&:promise_ids).uniq.size * 100 / Promise.count
+    @issue_vote_percentage       = published.flat_map(&:vote_ids).uniq.size * 100 / (vote_count.zero? ? 1 : vote_count)
+    @issue_promise_percentage    = published.flat_map(&:promise_ids).uniq.size * 100 / (promise_count.zero? ? 1 : promise_count)
   end
 end
