@@ -8,6 +8,7 @@ class IssueDecorator < Draper::Decorator
            :published?,
            :cache_key,
            :party_comments,
+           :tags,
 
            # move to decorator?
            :status_text,

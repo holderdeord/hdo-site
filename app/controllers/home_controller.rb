@@ -13,8 +13,11 @@ class HomeController < ApplicationController
                   :faq
 
   def index
-    @issues  = Issue.published.random(6)
-    @parties = Party.order(:name)
+    x, y = 3, 3
+
+    @tag_groups = Issue.published.in_tag_groups(count: x, minimum: y, random: true)
+    @all_tags   = ActsAsTaggableOn::Tag.order(:name).select(:name).all
+    @parties    = Party.order(:name)
   end
 
   def robots

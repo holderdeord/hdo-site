@@ -4,13 +4,8 @@ class IssuesController < ApplicationController
   before_filter :fetch_issue, except: :index
 
   def index
-    @groups = Hash.new { |hash, key| hash[key] = [] }
-
-    Issue.includes(:tags).published.each do |issue|
-      issue.tags.each { |tag| @groups[tag.name] << issue }
-    end
-
-    @groups = @groups.sort_by { |t, _| t }
+    @groups = Issue.published.in_tag_groups
+    @groups = @groups.sort_by { |t, _| t.name }
   end
 
   def show

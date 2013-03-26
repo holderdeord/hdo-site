@@ -4,10 +4,31 @@
 
 @parties_num: 7;
 
+.issue-tags {
+  a:after {
+    content: ",";
+  }
+  a:last-child:after {
+    content: "";
+  }
+}
+
+.votes-header {
+  .lead {
+    margin-bottom: 0;
+  }
+  .votes-title {
+    color: inherit;
+  }
+}
+
 .page-header {
   aside {
     line-height: 1em;
     margin-bottom: 0.5em;
+  }
+  .issue-title {
+    margin-bottom: 0;
   }
   .issue-description {
     font-size: 1.2em;
@@ -45,8 +66,8 @@ figure.position {
     text-align: center;
     border-bottom: 2px solid #eee;
     padding: 0.5em;
-    padding: 3em 0;
-    margin-bottom: 1em;
+    padding: 3.5em 0 2em 0;
+    margin-bottom: 0.15em;
     .position {
       .clearfix;
       .axis {
@@ -57,6 +78,11 @@ figure.position {
         width: 100%;
       }
     }
+    .issue-graph-label {
+      font-weight: normal;
+      font-size: 1.25em;
+      margin-top: 1em;
+    }
   }
   .issue-graph-axis {
     .icon,
@@ -66,6 +92,9 @@ figure.position {
   }
   figcaption {
     font-size: 0.9em;
+    a {
+      color: #666;
+    }
   }
 }
 

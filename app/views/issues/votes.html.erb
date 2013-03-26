@@ -1,69 +1,83 @@
-<div class="issue-navigation">
-  <%= link_to @issue do %>
-    &larr; <%= t 'app.issues.back' %>
-  <% end %>
-</div>
-<div class="row-fluid">
-  <div class="span12">
-    <h1 class="page-header">
-      <%= Vote.model_name.human(count: 2).capitalize %> <%= Vote.human_attribute_name(:about) %> <%= t 'app.lang.infinitive_particle' %> <%= @issue.downcased_title %>
-    </h1>
-
-    <% @issue_votes.each do |issue_vote| %>
-      <div id="<%= issue_vote.anchor %>" class="row-fluid">
-        <h3>
-          <div class="span8"><%= issue_vote.title %></div>
-          <div class="">
-            <small class="pull-right pagination-right">
-              <p><%= issue_vote.time_text %><p>
-              <p><%= issue_vote.proposition_type_text %></p>
-            </small>
-          </div>
-        </h3>
-        <br> <!-- ugh -->
-      </div>
-
-      <div class="row-fluid">
-        <div class="span3">
-          <% if issue_vote.parties_for.any? %>
-            <h4>Stemte for</h4>
-
-            <% issue_vote.parties_for.each do |party| %>
-              <%= link_to party do %>
-                <%= image_tag party.logo.versions[:medium], width: '60', height: '60' %>
-              <% end %>
-            <% end %>
-          <% end %>
-        </div>
-
-        <div class="span3">
-          <% if issue_vote.parties_against.any? %>
-            <h4>Stemte mot</h4>
-
-            <% issue_vote.parties_against.each do |party| %>
-              <%= link_to party do %>
-                <%= image_tag party.logo, width: '60', height: '60' %>
-              <% end %>
-            <% end %>
-          <% end %>
-        </div>
-
-        <div class="span6">
-          <p><%= raw(markdown(issue_vote.comment)) %></p>
-          <p><%= issue_vote.matches_text.html_safe %> <%= issue_vote.enacted_text.html_safe %></p>
-          <p>Holder de ord regner avstemningen som <%= link_to issue_vote.weight_text, home_about_path(anchor: 'vekting-av-avstemninger') %>.</p>
-        </div>
-      </div>
-
-      <div class="row-fluid">
-        <small class="pull-right">
-          <%= link_to issue_vote.vote do %>
-            <%= t 'app.issues.view_vote' %> &rarr;
-          <% end %>
-        </small>
-      </div>
-
-      <hr>
+<div class="page-header votes-header">
+  <h1>
+    <div class="lead">
+      <%= Vote.model_name.human(count: 2).capitalize %> <%= Vote.human_attribute_name(:about) %> <%= t 'app.lang.infinitive_particle' %>
+    </div>
+    <%= link_to @issue, class:"votes-title" do %>
+      <%= @issue.title %>
     <% end %>
-  </div>
+  </h1>
+
+<% if @issue.published? %>
+  <aside class="muted">
+    <%= Issue.human_attribute_name(:updated_at) %> <%= @issue.updated_at %>.
+    <span class="issue-tags">
+      Tagger:
+      <% @issue.tags.each do |tag| %>
+        <%= link_to tag.name, issues_path(anchor: "tag-#{tag.id}") %>
+      <% end %>
+    </span>
+  </aside>
+<% end %>
+
+</div>
+
+<div class="row-fluid">
+
+  <% @issue_votes.each do |issue_vote| %>
+    <div id="<%= issue_vote.anchor %>" class="row-fluid">
+      <h3>
+        <div class="span8"><%= issue_vote.title %></div>
+        <div class="">
+          <small class="pull-right pagination-right">
+            <p><%= issue_vote.time_text %><p>
+            <p><%= issue_vote.proposition_type_text %></p>
+          </small>
+        </div>
+      </h3>
+      <br> <!-- ugh -->
+    </div>
+
+    <div class="row-fluid">
+      <div class="span3">
+        <% if issue_vote.parties_for.any? %>
+          <h4>Stemte for</h4>
+
+          <% issue_vote.parties_for.each do |party| %>
+            <%= link_to party do %>
+              <%= image_tag party.logo.versions[:medium], width: '60', height: '60' %>
+            <% end %>
+          <% end %>
+        <% end %>
+      </div>
+
+      <div class="span3">
+        <% if issue_vote.parties_against.any? %>
+          <h4>Stemte mot</h4>
+
+          <% issue_vote.parties_against.each do |party| %>
+            <%= link_to party do %>
+              <%= image_tag party.logo, width: '60', height: '60' %>
+            <% end %>
+          <% end %>
+        <% end %>
+      </div>
+
+      <div class="span6">
+        <p><%= raw(markdown(issue_vote.comment)) %></p>
+        <p><%= issue_vote.matches_text.html_safe %> <%= issue_vote.enacted_text.html_safe %></p>
+        <p>Holder de ord regner avstemningen som <%= link_to issue_vote.weight_text, home_about_path(anchor: 'vekting-av-avstemninger') %>.</p>
+      </div>
+    </div>
+
+    <div class="row-fluid">
+      <small class="pull-right">
+        <%= link_to issue_vote.vote do %>
+          <%= t 'app.issues.view_vote' %> &rarr;
+        <% end %>
+      </small>
+    </div>
+
+    <hr>
+  <% end %>
 </div>
