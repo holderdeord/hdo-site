@@ -14,7 +14,7 @@
     <span class="issue-tags">
       Tagger:
       <% @issue.tags.each do |tag| %>
-        <%= link_to tag.name, issues_path(anchor: "tag-#{tag.id}") %>
+        <%= link_to tag.name, issues_path(anchor: "tag-#{tag.slug}") %>
       <% end %>
     </span>
   </aside>
