@@ -2,8 +2,13 @@
 
 set -e
 
-echo "Checking bundle cache..."
-echo
+if [[ -n "${HDO_DEPLOY_AUTH}" ]]; then
+  echo "Checking bundle cache..."
+  echo
+else
+  echo "HDO_DEPLOY_AUTH not available, not caching bundle"
+  exit 0
+fi
 
 DEPLOY_HOST="deploy.holderdeord.no"
 DEPLOY_PARAMS="repo_slug=${TRAVIS_REPO_SLUG}"
