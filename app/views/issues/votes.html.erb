@@ -35,16 +35,16 @@
       <hr class="soften">
     <% end %>
   </div>
+<% end # cache %>
 
-  <% content_for :document_ready do %>
-    <script>
-      $(document).ready(function () {
-        var votes_column_handler = HDO.votes.create({
-          columns: $('.state-column')
-        });
-
-        votes_column_handler.init();
+<% content_for :document_ready do %>
+  <script>
+    $(document).ready(function () {
+      var votes_column_handler = HDO.votes.create({
+        columns: $('.state-column')
       });
-    </script>
-  <% end %>
+
+      votes_column_handler.init();
+    });
+  </script>
 <% end %>
