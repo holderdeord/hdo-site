@@ -29,8 +29,8 @@ class IssuesController < ApplicationController
 
   def votes
     if policy(@issue).show?
-      connections = @issue.vote_connections.with_results.order("votes.time DESC")
-      views       = VoteConnectionDecorator.decorate_collection(connections)
+      connections = @issue.vote_connections.includes(:vote).order("votes.time DESC")
+      views       = VoteConnectionDecorator.decorate_collection(connections, context: @issue)
 
       # within each day, we want to order by time *ascending*
       grouped = views.group_by { |e| e.time.to_date }.values
@@ -50,6 +50,6 @@ class IssuesController < ApplicationController
   end
 
   def fetch_issue
-    @issue = Issue.includes(:party_comments).find(params[:id])
+    @issue = Issue.find(params[:id])
   end
 end

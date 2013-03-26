@@ -40,6 +40,8 @@ GEM
       rspec-expectations (>= 2.7.0)
     bcrypt-ruby (3.0.1)
     builder (3.0.4)
+    bullet (4.5.0)
+      uniform_notifier
     cache_digests (0.2.0)
       actionpack (>= 3.2)
     capistrano (2.14.2)
@@ -300,6 +302,7 @@ GEM
       execjs (>= 0.3.0)
       multi_json (~> 1.0, >= 1.0.2)
     unicode_utils (1.4.0)
+    uniform_notifier (1.2.0)
     valid_email (0.0.4)
       activemodel
       mail
@@ -316,6 +319,7 @@ PLATFORMS
 DEPENDENCIES
   acts-as-taggable-on (~> 2.3.1)
   acts_as_tree (~> 1.1)
+  bullet
   cache_digests
   capistrano (~> 2.13)
   capistrano-ext

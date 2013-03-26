@@ -13,11 +13,10 @@ class HomeController < ApplicationController
                   :faq
 
   def index
-    published = Issue.published.includes(:tags)
+    published   = Issue.published.includes(:tags)
 
     @tag_groups = published.in_tag_groups(count: 3, minimum: 3, random: true)
     @all_tags   = published.flat_map { |e| e.tags }.uniq.sort_by(&:name)
-
     @parties    = Party.order(:name)
   end
 

@@ -19,8 +19,6 @@ class VoteConnection < ActiveRecord::Base
                          :issue,
                          :weight
 
-  scope :with_results, lambda { includes(vote: {vote_results: {representative: :party_memberships}}) }
-
   def matches_text
     matches? ? I18n.t('app.yes') : I18n.t('app.no')
   end

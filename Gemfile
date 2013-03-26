@@ -45,6 +45,7 @@ group :development do
   gem 'thin'
   gem "rails-erd"
   gem 'quiet_assets'
+  gem 'bullet'
 end
 
 # deployment

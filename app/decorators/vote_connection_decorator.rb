@@ -1,6 +1,8 @@
 # encoding: utf-8
 
 class VoteConnectionDecorator < Draper::Decorator
+  alias_method :issue, :context
+
   delegate :vote,
            :title,
            :comment,
@@ -60,7 +62,7 @@ class VoteConnectionDecorator < Draper::Decorator
         end
       end
 
-      vote.vote_results.each do |result|
+      vote.vote_results.includes(representative: {party_memberships: :party}).each do |result|
         party = result.representative.party_at(vote.time)
         c[result.state][party] << result.representative
       end
@@ -73,10 +75,6 @@ class VoteConnectionDecorator < Draper::Decorator
 
   def enacted?
     vote.enacted?
-  end
-
-  def issue
-    @issue ||= model.issue
   end
 
   def enacted?

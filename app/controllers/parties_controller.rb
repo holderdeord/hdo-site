@@ -12,7 +12,7 @@ class PartiesController < ApplicationController
   end
 
   def show
-    @party  = Party.includes(:representatives).find(params[:id])
+    @party  = Party.find(params[:id])
     @representatives = @party.current_representatives.sort_by { |e| e.image.to_s.include?("unknown") ? 1 : 0 }
 
     @issue_groups = Issue.published.order(:title).grouped_by_position(@party)

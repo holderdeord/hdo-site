@@ -169,7 +169,7 @@ class IssueDecorator < Draper::Decorator
     end
 
     def votes
-      votes = issue.vote_connections.sort_by { |e| e.vote.time }.reverse
+      votes = issue.vote_connections.includes(:vote).sort_by { |e| e.vote.time }.reverse
       votes.map { |vc| PartyVote.new(model, vc) }.select(&:participated?)
     end
   end

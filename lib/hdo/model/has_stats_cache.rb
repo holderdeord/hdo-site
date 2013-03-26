@@ -8,7 +8,7 @@ module Hdo
 
     module HasStatsCache
       def stats
-        Rails.cache.fetch(stats_cache_key) { fetch_stats }
+        @stats ||= Rails.cache.fetch(stats_cache_key) { fetch_stats }
       end
 
       private
