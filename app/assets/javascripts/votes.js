@@ -5,7 +5,8 @@ var HDO = HDO || {};
   function toggleRepresentatives(el) {
     var self = this,
       partySlug = $(el.currentTarget).data('party-slug'),
-      columnsToShow = $(self.columns).find("div[data-party-slug='" + partySlug + "']");
+      columnsToShow = $(self.columns).find("div[data-party-slug='" + partySlug + "-reps']");
+
     $(columnsToShow).each(function () {
       if ($(this).hasClass('hidden')) {
         $(this).removeClass('hidden');
@@ -23,7 +24,7 @@ var HDO = HDO || {};
     },
 
     init: function () {
-      $(this.columns).on('click', 'td', toggleRepresentatives.bind(this));
+      $(this.columns).on('click', 'div', toggleRepresentatives.bind(this));
     }
   };
 
