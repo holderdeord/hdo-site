@@ -18,12 +18,6 @@
     </ul>
   </div>
 
-  <!--
-  <%= link_to parties_path, class:"#{active_status_for(:parties)}" do %>
-    <%= Party.model_name.human(count: 2).capitalize %>
-  <% end %>
-  -->
-
   <%= link_to promises_path, class:"#{active_status_for(:promises)}" do %>
     <%= Promise.model_name.human(count: 2).capitalize %>
   <% end %>
@@ -34,17 +28,7 @@
     <% end %>
   <% end %>
 
-  <!--
-
-
-  <%= link_to t("app.contact_us"), home_contact_path, class:"pull-right #{active_status_for(:home_contact)}" %>
-
-  <%= link_to home_about_path, class:"pull-right #{active_status_for(:parties)}" do %>
-    <%= t("app.about") %>
-  <% end %>
-  -->
-
-  <div class="dropdown pull-right <%= active_status_for(:home_contact, :home_about, :home_join, :home_people, :docs_index, :home_contact)%>">
+  <div class="dropdown pull-right <%= active_status_for(:home_contact, :home_about, :home_join, :home_people, :home_faq, :home_contact)%>">
     <a class="dropdown-toggle" data-toggle="dropdown" href="#about-us">
       <%= t 'app.about' %>
       <b class="caret"></b>
@@ -58,7 +42,6 @@
       <li><%= link_to t("app.contact_us"), home_contact_path %></li>
     </ul>
   </div>
-
 
 </nav>
 
