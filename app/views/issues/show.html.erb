@@ -7,7 +7,7 @@
 
   <div class="page-header">
 
-    <div class="hidden-desktop hidden-tablet"><%= render partial: 'title_and_aside' %></div>
+    <div><%= render partial: 'title_and_aside' %></div>
 
     <figure class="position">
       <div class="issue-graph">
@@ -31,13 +31,12 @@
         <div class="issue-graph-axis row-fluid">
           <% @issue.position_groups.each do |label, parties| %>
             <div class="span4">
-              <h4 class="-issue-graph-label text"><%= label.text %></h4>
+              <h4 class="issue-graph-label text"><%= label.text %></h4>
             </div>
           <% end %>
         </div>
       </div>
 
-      <div class="hidden-phone"><%= render partial: 'title_and_aside' %></div>
       <figcaption class="muted"><p><%= @issue.explanation %></p></figcaption>
 
     </figure>

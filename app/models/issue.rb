@@ -62,6 +62,28 @@ class Issue < ActiveRecord::Base
              group_by { |i| i.stats.key_for(i.stats.score_for(entity)) }
   end
 
+  def self.in_tag_groups(opts = {})
+    count  = opts[:count]
+    min    = opts[:minimum]
+    random = opts[:random]
+
+    groups = Hash.new { |hash, key| hash[key] = [] }
+
+    includes(:tags).each do |issue|
+      issue.tags.each { |tag| groups[tag] << issue }
+    end
+
+    if min
+      groups = groups.select { |tag_name, issues| issues.size >= min }
+    end
+
+    if random
+      groups = groups.to_a.shuffle
+    end
+
+    count ? groups.first(count) : groups
+  end
+
   def previous_and_next(opts = {})
     issues = self.class
     issues = opts[:policy].scope if opts[:policy]
