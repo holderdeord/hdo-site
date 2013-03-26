@@ -10,50 +10,45 @@ nn:
       text: "%e. %B %Y"
       month_year: "%B %Y"
       text_time: "%e. %B %Y %H:%M"
-  valid_email:
-    validations:
-      email:
-        invalid: 'Ugyldig epostaddresse.'
   date:
-     day_names: [Søndag, Måndag, Tysdag, Onsdag, Torsdag, Fredag, Laurdag]
-     abbr_day_names: [Søn, Mån, Tys, Ons, Tor, Fre, Lau]
-      # Don't forget the nil at the beginning; there's no such thing as a 0th month
-     month_names: [~, januar, februar, mars, april, mai, juni, juli, august, september, oktober, november, desember]
+    day_names: [Søndag, Måndag, Tysdag, Onsdag, Torsdag, Fredag, Laurdag]
+    abbr_day_names: [Søn, Mån, Tys, Ons, Tor, Fre, Lau]
+    month_names: [null, januar, februar, mars, april, mai, juni, juli, august, september, oktober, november, desember]
   datetime:
     distance_in_words:
       half_a_minute: "eit halvt minutt"
       less_than_x_seconds:
-        one:   "mindre enn 1 sekund"
+        one: "mindre enn 1 sekund"
         other: "mindre enn %{count} sekund"
       x_seconds:
-        one:   "1 sekund"
+        one: "1 sekund"
         other: "%{count} sekund"
       less_than_x_minutes:
-        one:   "mindre enn 1 minutt"
+        one: "mindre enn 1 minutt"
         other: "mindre enn %{count} minutt"
       x_minutes:
-        one:   "1 minutt"
+        one: "1 minutt"
         other: "%{count} minutt"
       about_x_hours:
-        one:   "omtrent 1 time"
+        one: "omtrent 1 time"
         other: "omtrent %{count} timar"
       x_days:
-        one:   "omtrent 1 dag"
+        one: "omtrent 1 dag"
         other: "%{count} dagar"
       about_x_months:
-        one:   "omtrent 1 månad"
+        one: "omtrent 1 månad"
         other: "omtrent %{count} månadar"
       x_months:
-        one:   "1 månad"
+        one: "1 månad"
         other: "%{count} månadar"
       about_x_years:
-        one:   "omtrent 1 år"
+        one: "omtrent 1 år"
         other: "omtrent %{count} år"
       over_x_years:
-        one:   "over 1 år"
+        one: "over 1 år"
         other: "over %{count} år"
       almost_x_years:
-        one:   "nesten 1 år"
+        one: "nesten 1 år"
         other: "nesten %{count} år"
   valid_email:
     validations:
@@ -62,8 +57,6 @@ nn:
   activerecord:
     errors:
       messages:
-        blank: "er blank."
-        taken: "er allereie i bruk."
         record_invalid: "Validering feila: %{errors}"
         inclusion: "er ikkje inkludert i lista"
         exclusion: "kan ikkje brukast."
@@ -174,7 +167,6 @@ nn:
         description: "Skildring"
         committee: "Komité"
         document_group: "Dokumentgruppe"
-        # FIXME: Kva blir følgjande på nynorsk?
         reference: "Henvisning"
       vote:
         subject: "Skildring"
@@ -219,6 +211,9 @@ nn:
         destroy: "Slett brukar"
         confirm_destroy: "Er du sikker på at du vil slette brukaren?"
         role: Rolle
+        board: Styremedlem
+        description: Skildring
+        title: Tittel
       issue:
         edit: "Rediger"
         published: Publisert
@@ -261,12 +256,12 @@ nn:
     page_gap: "&hellip;"
     page_entries_info:
       single_page:
-        zero:  "Ingen %{model} funnet."
-        one:   "Viser 1 %{model}"
+        zero: "Ingen %{model} funnet."
+        one: "Viser 1 %{model}"
         other: "Viser alle %{count} %{model}"
       single_page_html:
-        zero:  "Ingen %{model} funnet"
-        one:   "Viser <strong>1</strong> %{model}"
+        zero: "Ingen %{model} funnet"
+        one: "Viser <strong>1</strong> %{model}"
         other: "Viser <strong>alle&nbsp;%{count}</strong> %{model}"
       multi_page: "Viser %{from} - %{to} av totalt %{count} %{model}"
       multi_page_html: "Viser <strong>%{from}&nbsp;-&nbsp;%{to}</strong> av totalt <strong>%{count}</strong> %{model}"
@@ -289,7 +284,6 @@ nn:
     previous: "Førre"
     show_all: "Vis alle"
     url: 'holderdeord.no'
-    # FIXME: "Held dei ord"?
     title: "Holder de ord"
     opengraph:
       description: "Holder de ord gjer det enkelt å sjekke kva som har blitt gjort og lova i norsk politikk."
@@ -300,9 +294,8 @@ nn:
     lang:
       infinitive_particle: "å"
     about: "Om oss"
-    about_hdo: "Om Holder de ord"
+    what_we_do: "Kva vi gjer"
     method:
-      about: "Kva vi gjer"
       read_more: "Les meir om metoden"
       read: "Les om metoden"
     support: "Støtt oss"
@@ -319,8 +312,8 @@ nn:
     documentation:
       method: Metodikk
       technical: Teknisk
-    "yes": 'Ja'
-    "no": 'Nei'
+    'yes': 'Ja'
+    'no': 'Nei'
     show: "Vis"
     edit: "Rediger"
     destroy: "Slett"
@@ -476,6 +469,11 @@ nn:
         broken_html: "Dei har <strong>ikkje helde ord</strong> i denne saka."
         kept_html: "Dei har <strong>helde ord</strong> i denne saka."
         partially_kept_html: "Dei har <strong>delvis helde ord</strong> i denne saka."
+        caption:
+          kept: 'heldt'
+          broken: 'ikkje helde'
+          partially_kept: 'delvis helde'
+          no_promises: 'ingen løfte'
       based_on:
         one: "basert på 1 løfte"
         other: "basert på %{count} løfte"

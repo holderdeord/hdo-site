@@ -12,12 +12,7 @@ class Vote < ActiveRecord::Base
   update_index_on_change_of :propositions, :parliament_issues, has_many: true
 
   attr_accessible :for_count, :against_count, :absent_count,
-                  :enacted, :personal, :subject, :time, :external_id,
-                  :proposition_type
-
-  PROPOSITION_TYPES = I18n.t('app.votes.proposition_types').except(:none).keys.map(&:to_s)
-  validates_inclusion_of :proposition_type,
-                         in: PROPOSITION_TYPES + [nil, '']
+                  :enacted, :personal, :subject, :time, :external_id
 
   has_and_belongs_to_many :parliament_issues, uniq: true
   has_and_belongs_to_many :propositions, uniq: true
@@ -73,10 +68,6 @@ class Vote < ActiveRecord::Base
 
   def time_text
     I18n.l time, format: :short
-  end
-
-  def proposition_type_text
-    I18n.t("app.votes.proposition_types.#{proposition_type}")
   end
 
   def has_results?

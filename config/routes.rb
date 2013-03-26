@@ -115,16 +115,17 @@ Hdo::Application.routes.draw do
   #
 
   get 'home/index'
-  get 'home/about'
   get 'home/contact'
   get 'home/join'
   get 'home/support'
   get 'home/member'
   get 'home/people'
   get 'home/future'
-  get 'home/method'   => 'home#about_method', as: :home_method
-  get 'info/revision' => 'home#revision'
+  get 'home/faq'        => 'home#faq', as: :home_faq
+  get 'info/revision'   => 'home#revision'
 
+  get 'home/about'      => 'home#about', as: :home_about
+  get 'home/method'     => 'home#about'
 
   #
   # Q & A

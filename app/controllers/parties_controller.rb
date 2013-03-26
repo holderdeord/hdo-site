@@ -1,25 +1,6 @@
 class PartiesController < ApplicationController
   hdo_caches_page :index
 
-  #
-  # hdo_caches_page :show
-  #
-  # FIXME: need to look into how to cache the parties page when
-  # the issue list is enabled.
-  #
-  # * sweeper
-  # * ActiveRecord::Observer
-  #
-  # The party page must be expired on:
-  #
-  # * issue saved
-  # * issue's vote_connection updated
-  # * issue's vote_connection added
-  # * issue's vote_connection removed
-  #
-  # Also need to find a way to test this.
-  #
-
   def index
     @parties = Party.order(:name).all
 
@@ -34,7 +15,7 @@ class PartiesController < ApplicationController
     @party  = Party.includes(:representatives).find(params[:id])
     @representatives = @party.current_representatives.sort_by { |e| e.image.to_s.include?("unknown") ? 1 : 0 }
 
-    @issues = Issue.published.order(:title)
+    @issue_groups = Issue.published.order(:title).grouped_by_position(@party)
     @categories = Category.where(:main => true).includes(:children => :promises)
 
     respond_to do |format|

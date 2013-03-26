@@ -1,18 +1,20 @@
 # encoding: UTF-8
 
 class HomeController < ApplicationController
-  hdo_caches_page :index, :contact, :join, :support, :people,
-                  :about_method, :member, :future, :robots
+  hdo_caches_page :index,
+                  :contact,
+                  :join,
+                  :support,
+                  :people,
+                  :about,
+                  :member,
+                  :future,
+                  :robots,
+                  :faq
 
   def index
     @issues  = Issue.published.random(6)
     @parties = Party.order(:name)
-  end
-
-  def about
-    if params[:lang] == "en"
-      render :about, :locale => "en"
-    end
   end
 
   def robots
@@ -25,8 +27,10 @@ class HomeController < ApplicationController
     render text: robots, layout: false, content_type: "text/plain"
   end
 
-  # don't override Object#method
-  def about_method
+  def about
+  end
+
+  def faq
   end
 
   def contact
@@ -58,7 +62,8 @@ class HomeController < ApplicationController
   end
 
   def people
-    @board, @contributors = User.where(active: true).sort_by { |e| e.name.split(" ").last }.partition { |e| e.board? }
+    @all_members = User.where(active: true).sort_by { |e| e.name.split(" ").last }
+    @board = @all_members.select { |member| member.board? }
 
     @alumni = [
       Person.new('Tage Augustson'),
@@ -101,7 +106,12 @@ class HomeController < ApplicationController
       Person.new('Einar Sundin'),
       Person.new('Eirik Swensen'),
       Person.new('Ole Martin Volle'),
-      Person.new('Guro Øistensen')
+      Person.new('Guro Øistensen'),
+      Person.new('Jan Olav Ryfetten'),
+      Person.new('Frode Hiorth'),
+      Person.new('Jostein Holje'),
+      Person.new('Markus Krüger'),
+      Person.new('Salve Nilsen')
      ]
   end
 

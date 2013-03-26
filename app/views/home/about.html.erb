@@ -1,49 +1,70 @@
-<% page_title "#{t('app.about')} - #{t('app.title')}" %>
-<div class="page-header">
-  <h1>Om Holder de ord</h1>
-  <%= link_to 'In English', home_about_path(:lang => 'en') %>
-</div>
+<% page_title "#{t 'app.what_we_do'} - #{t 'app.title'}" %>
 
-<div class="row-fluid">
-  <div class="span8">
+<h1 id='hva-vi-gjr'>Hva vi gjør</h1>
 
-    <section>
-      <h2>Hva vi gjør</h2>
-      <p>
-        <%= link_to t('app.title'), root_path %> er en partipolitisk uavhengig organisasjon som ble grunnlagt på slutten av 2010 med et ønske om å gjøre det lettere å følge med på hva som skjer i norsk politikk. På denne nettsiden vil du finne data om hvordan partier og stortingsrepresentanter stemmer i konkrete politiske saker og kunne sjekke dette opp mot partiprogram og andre politiske løfter.
-      </p>
+<p>Holder de ord er en partipolitisk uavhengig organisasjon som ble grunnlagt i november 2010 med ønske om å gjøre det lettere å følge med på hva som skjer i norsk politikk.</p>
 
-      <p>
-        I det kommende valget vil Holder de ord være et viktig verktøy som gir deg fakta om norsk politikk, først og fremst for deg som skal stemme, men også for politikere og redaksjoner.
-      </p>
+<p>Vårt mål er å bidra til en samfunnsdebatt preget av åpenhet, saklighet, samfunnsengasjement og dialog. Dette er utgangspunktet for hva Holder de ord velger å publisere. Vi opererer etter prinsipper som skal sikre partipolitisk uavhengighet, og følger redaktørplakaten og Vær Varsom-plakten der hvor de er aktuelle for oss.</p>
 
-      <p><%= link_to t('app.read_more'), home_future_path %> om hva vi utvikler for tiden.</p>
-    </section>
+<p>Kjernen i holderdeord.no er en database med alle avstemninger på Stortinget fra 2009 og fremover, og partienes valgløfter fra partiprogrammene. Vi samler løfter og avstemninger under politiske saker slik vi kjenner de fra samfunnsdebatten, og gjør det enkelt å få oversikt over hvordan partiene har stemt og lovet.</p>
 
-    <br>
+<p>Holderdeord.no er under kontinuerlig utvikling. Les mer om <a href="/home/future">hva vi utvikler for tiden</a>.</p>
+<h2 id='sakene-p-holderdeordno'>Sakene på holderdeord.no</h2>
 
-    <section>
-      <h2>Bakgrunn</h2>
-      <p>
-        Demokrati handler ikke lenger bare om valg hvert fjerde år. Den australske statsviteren <a href="http://en.wikipedia.org/wiki/John_Keane_(political_theorist)">John Keane</a> mener verden utvikler seg i retning av en ny og mer avansert form for folkestyre, såkalt undersøkende eller kontrollerende demokrati (<em>monitory democracy</em>), som i tillegg til valg kjennetegnes av et mye bredere og omfattende nettverk av folkelig oppmerksomhet og kontroll med makthavere.
-      </p>
+<p>Sakene du finner på holderdeord.no er formulert som politiske standpunkt man kan være for eller mot, for eksempel mot eller for å <a href="/issues/fjerne-formueskatten">fjerne formuesskatten</a>. En sak skal være gjenkjennelig og meningsfull, uavhengig av om man er enig i standpunktet politisk, og skal ikke kunne brytes opp i mindre saker.  </p>
 
-      <p>
-Vi er overbeviste om at borgere som engasjerer seg gjennom ulike nettverk og kanaler gjør at de folkevalgte tar bedre og mer velinformerte beslutninger på vegne av oss. En viktig forutsetning er imidlertid at det er lett for alle å følge med på hva som skjer i politikkens hjerte. Dette er også årsaken til at liknende initiativ er på plass eller under utvikling i flere land, inkludert <a href="http://www.opencongress.org">USA</a>, <a href="http://www.theyworkforyou.com">Storbritannia</a>, <a href="http://www.nosdeputes.fr">Frankrike</a>, <a href="https://sejmometr.pl">Polen</a> og <a href="http://www.kansanmuisti.fi">Finland</a>.
-      </p>
-    </section>
+<p>Under en sak samler Holder de ord alle relevante avstemninger tilknyttet saken, og viser hvordan partiene har stemt på Stortinget under disse. I hver sak får partiene en skår basert på hvor mange ganger de har stemt for eller mot saken i de individuelle avstemningene. Holder de ord opererer med tre graderinger av partienes stemmegivning: <strong>for</strong> (0 – 33%), <strong>både for og mot</strong> (34 – 66 %) og <strong>mot</strong> (67 – 100%). Deretter henter vi relevante valgløfter fra partiprogrammene og knytter så disse opp til den aktuelle saken.</p>
 
-    <br>
+<p>Med utgangspunkt i løftene og partiposisjonene utleder vi om partiene har stemt i tråd med valgløftene, og gir partiene en ny skår som viser om de har stemt i tråd med sine valgløfter eller ikke i disse sakene. Dette forutsetter at partiene har avgitt løfter om sakens innhold, og at løftene kan knyttes til standpunktet, i dette tilfellet «å fjerne formuesskatten». Løfter kan være <strong>holdt</strong>, <strong>delvis holdt</strong> eller <strong>ikke holdt</strong>. I situasjoner hvor partier har stemt både for og mot kan det også være uklart om et valgløfte er holdt eller ikke.</p>
 
-    <section>
-      <h2>Samarbeid</h2>
-      <p>
-I 2011 inngikk Holder de ord et samarbeid med <a href="http://nuug.no/">NUUG</a> (Norwegian Unix User Group). Nettsiden vår, basert på åpne standarder og fri programvareutvikling, er et direkte resultat av dette samarbeidet.
-      </p>
+<p>Partier velger av og til å kompromisse på enkelte standpunkter for å oppnå resultater i andre saker. Dette er viktig for holderdeord.no å få frem. Partiene har derfor mulighet til å forklare og utdype hvorfor de har stemt som de har gjort i de ulike sakene.</p>
+<h2 id='vekting-av-avstemninger'>Vekting av avstemninger</h2>
 
-      <p>
-I 2012 vant Holder de ord den gjeve <a href="http://reklameforalvor.no/">Reklame for Alvor</a>-konkurransen i regi av bransjeorganisasjonen <a href="http://www.kreativtforum.no/">Kreativt Forum</a>, der vinnerorganisasjonen får en gratis reklamekampanje verdt flere millioner kroner. Holder de ords reklamekampanje vil gå på luften våren 2013.
-      </p>
-    </section>
-  </div>
-</div>
+<p>I hovedsak er det tre ulike typer saker som behandles på Stortinget: budsjettsaker, lovsaker og det Stortinget kaller alminneligsaker – blant annet representantforslag og Stortingsmeldinger.</p>
+
+<p>Disse sakene skiller seg fra hverandre når det gjelder forarbeid, omfang og lengde på behandlingen i Stortinget, samt utfall. Derfor gir vi de ulike typene avstemninger ulik vekt når summen av partienes stemmegivning beregnes. Formålet er å bevare et reelt bilde av hva som foregår på Stortinget, men samtidig forsøke å gjøre de politiske beslutningene mer tilgjengelige for velgerne. Gjennom å vekte avstemningene ulikt, kan vi presentere saker som tar innover seg politiske nyanser, samtidig som utgangspunktet er faktisk stemmegivning i Stortingssalen.</p>
+
+<p>I tabellen under vises en oversikt over våre vekter.</p>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Vekt</th>
+      <th>Betydning</th>
+      <th>Sakstype på Stortinget</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>0</td>
+      <td>Uten formell betydning</td>
+      <td>Stortingsmeldinger</td>
+    </tr>
+    <tr>
+      <td>0.5</td>
+      <td>Noe viktig</td>
+      <td>Forslag som vedlegges protokollen</td>
+    </tr>
+    <tr>
+      <td>1.0</td>
+      <td>Viktig</td>
+      <td>Representantforslag, Opposisjonsforslag, Alternative statsbudsjett</td>
+    </tr>
+    <tr>
+      <td>2.0</td>
+      <td>Svært viktig</td>
+      <td>Lovsaker, Proposisjoner, Statsbudsjett</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Holder de ord benytter en enkel vektemodell, for å bevare fokuset på stemmegivning slik det skjer på Stortinget. Vi gjør også vektingen tilgjengelig og etterprøvbar for de som ønsker gå i dybden og se datamaterialet bak de sakene vi omtaler.</p>
+
+<p>I vår modell har lov- og budsjettforslag dobbel vekt jamført med representantforslag og alternative budsjettforslag. Forslag som vedlegges protokollen har halv vekt sammenlignet med representantforslag, og stortingsmeldinger regnes som uten formell betydning.</p>
+<h2 id='valglfter-og-lftedatabasen'>Valgløfter og løftedatabasen</h2>
+
+<p>Holder de ord kategoriserer valgløfter fra partiprogram og regjeringserklæringer fortløpende når de blir vedtatt av enten landsmøter eller regjeringskoalisjoner.  Et valgløfte er en politisk lovnad som staker ut en politisk kurs eller foreslår et konkret handlingsmål (Naurin 2009).</p>
+
+<p>Holder de ord fokuserer i første omgang på partienes partiprogrammer og eventuelle regjeringserklæringer. I valgprogrammene presenterer partiene og politikerne sine visjoner og planer, og disse danner grunnlaget for valgkampen ved å forklare for velgerne hvordan partiene vil bruke makten dersom de får støtte fra velgerne. Det ligger et vesentlig element av forpliktelse fra partiene til å oppfylle de politiske løftene de gir før valget. Sammenhengen mellom gjennomført politikk og valgløfter er dermed viktig.</p>
+
+<p>I en koalisjonsregjering forhandler partiene frem en regjeringserklæring, som er regjeringspartienes felles plattform for den kommende Stortingsperioden. Her inngås det kompromisser og viktige saker fremheves. For å få et representativt bilde inngår derfor også løfter fra disse regjeringserklæringene i Holder de ords løftedatabase.</p>

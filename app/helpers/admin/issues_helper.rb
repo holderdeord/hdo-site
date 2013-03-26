@@ -43,13 +43,13 @@ module Admin::IssuesHelper
     options_from_collection_for_select(users, 'id', 'name', selected: editor.try(:id))
   end
 
-  def proposition_type_options_for(vote)
+  def proposition_type_options_for(connection)
     types  = I18n.t('app.votes.proposition_types').except(:none)
     sorted = types.invert.sort_by { |human_name, key| human_name }
 
     sorted.unshift [I18n.t!("app.votes.proposition_types.none"), nil]
 
-    options_for_select sorted, vote.proposition_type
+    options_for_select sorted, (connection && connection.proposition_type)
   end
 
   def all_tags

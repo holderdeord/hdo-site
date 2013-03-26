@@ -7,7 +7,7 @@ class VoteConnectionDecorator < Draper::Decorator
            :weight_text
 
   def proposition_type_text
-    vote.proposition_type.blank? ? '' : I18n.t("app.votes.proposition_types.#{vote.proposition_type}")
+    model.proposition_type.blank? ? '' : I18n.t("app.votes.proposition_types.#{model.proposition_type}")
   end
 
   def time_text

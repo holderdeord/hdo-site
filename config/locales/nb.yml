@@ -187,7 +187,6 @@ nb:
         parliament_issues: "Stortingssaker"
         external_id: "Ekstern id"
         about: "om"
-        proposition_type: "Forslagstype"
       vote_result:
         result: "Stemme"
         voted_for: 'har stemt for.'
@@ -221,6 +220,7 @@ nb:
         active: Aktiv
         board: Styremedlem
         description: Beskrivelse
+        title: Tittel
       issue:
         edit: "Rediger"
         published: Publisert
@@ -241,6 +241,7 @@ nb:
         comment: "Kommentar"
         weight: "Vekting"
         title: "Tittel"
+        proposition_type: "Forslagstype"
       question:
         title: Tittel
         body: Tekst
@@ -301,9 +302,8 @@ nb:
     lang:
       infinitive_particle: "å"
     about: "Om oss"
-    about_hdo: "Om Holder de ord"
+    what_we_do: "Hva vi gjør"
     method:
-      about: "Hva vi gjør"
       read_more: "Les mer om metoden"
       read: "Les om metoden"
     support: "Støtt oss"
@@ -312,6 +312,7 @@ nb:
     member: "Bli medlem"
     donate: "Gi en gave"
     people: "Hvem vi er"
+    faq: Ofte stilte spørsmål
     read_more: "Les mer"
     press: "Presse"
     join: "Bli med"

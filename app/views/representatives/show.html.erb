@@ -30,25 +30,4 @@
   <hr>
 <% end %>
 
-
-<div class="row-fluid">
-  <% [:for, :for_and_against, :against].each do |key| %>
-    <div class="span4">
-      <h4 class="lead"><%= t "app.#{key}" %></h4>
-      <ul class="issue-list">
-        <% Array(@issue_groups[key]).each do |issue| %>
-          <li>
-            <%= link_to issue do %>
-              <span class="issue-<%= key %>"><%= t "app.#{key}" %></span>
-              <span class="issue-list-text">
-                <%= t 'app.lang.infinitive_particle' %>
-                <%= issue.downcased_title %>.
-              </span>
-            <% end %>
-          </li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
-</div>
-
+<%= render partial: 'shared/issue_positions', locals: { issue_groups: @issue_groups } %>
