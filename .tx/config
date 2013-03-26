@@ -1,0 +1,11 @@
+[main]
+host = https://www.transifex.com
+
+[holder-de-ord.master]
+file_filter = config/locales/<lang>.yml
+source_file = config/locales/nb.yml
+source_lang = nb
+trans.en = config/locales/en.yml
+trans.nn = config/locales/nn.yml
+type = YML
+
