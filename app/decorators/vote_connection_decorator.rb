@@ -46,6 +46,29 @@ class VoteConnectionDecorator < Draper::Decorator
     @parties_against ||= all_parties.select { |e| vote.stats.party_against?(e) }
   end
 
+  def vote_result_groups
+    @counts ||= (
+      c = {
+        :for => Hash.new,
+        :against => Hash.new,
+        :absent => Hash.new
+      }
+
+      c.each do |state, list|
+        all_parties.each do |party|
+          list[party] = Array.new
+        end
+      end
+
+      vote.vote_results.each do |result|
+        party = result.representative.party_at(vote.time)
+        c[result.state][party] << result.representative
+      end
+
+      c
+    )
+  end
+
   private
 
   def enacted?

@@ -37,6 +37,7 @@ class IssuesController < ApplicationController
       sorted  = grouped.flat_map { |vcs| vcs.sort_by { |e| e.time } }
 
       @issue_votes = sorted
+      @all_parties = Party.order(:name)
     else
       redirect_to new_user_session_path
     end
