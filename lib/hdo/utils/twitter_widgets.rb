@@ -163,7 +163,7 @@ module Hdo
           data: {
             'dnt'       => 'true',      # do not track
             'widget-id' => widget_id,
-            'chrome'    => 'noheader', # noheader nofooter noborders transparent
+            # 'chrome'    => 'noheader nofooter noborders transparent'
             'lang'      => "no",
             # 'border-color' => '#...'
             # 'link-color' => '#...'
