@@ -26,7 +26,7 @@
 <hr class="soften">
 
 <% if @representative.twitter_id.present? %>
-  <%= twitter_widget_for(@representative.twitter_id).html_safe %>
+  <%= twitter_widget_for(@representative.twitter_id) %>
   <hr>
 <% end %>
 
