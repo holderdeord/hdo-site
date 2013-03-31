@@ -160,13 +160,15 @@ module Hdo
           class: 'twitter-timeline',
           # width: '300',  # min: 180px, max 520px
           # height: '500', # min: 200px
+          height: '310px',
           data: {
+            # 'border-color' => '#...'
             'dnt'       => 'true',      # do not track
             'widget-id' => widget_id,
-            # 'chrome'    => 'noheader nofooter noborders transparent'
             'lang'      => "no",
-            # 'border-color' => '#...'
-            # 'link-color' => '#...'
+            'link-color' => '#019ea2',
+            # 'chrome'    => 'noheader nofooter noborders transparent'
+            'chrome' => 'noheader nofooter'
           }
         }
 
