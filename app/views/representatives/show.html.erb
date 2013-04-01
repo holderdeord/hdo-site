@@ -26,7 +26,8 @@
 <hr class="soften">
 
 <% if @representative.twitter_id.present? %>
-  <%= render partial: 'twitter_feed', locals: { twitter_id: @representative.twitter_id } %>
+  <h3>Twitter <a href="http://twitter.com/<%= @representative.twitter_id %>" class="muted">(@<%= @representative.twitter_id %>)</a></h3>
+  <%= twitter_widget_for(@representative.twitter_id) %>
   <hr>
 <% end %>
 
