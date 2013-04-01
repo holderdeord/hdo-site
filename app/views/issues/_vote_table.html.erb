@@ -1,4 +1,4 @@
-<div class="row-fluid">
+<div class="row-fluid state-header">
   <h5 class="span4">For</h5>
   <h5 class="span4">Mot</h5>
   <h5 class="span4">Ikke tilstede</h5>
@@ -9,7 +9,9 @@
     <% [:for, :against, :absent].each do |result_key| %>
       <div class="span4" data-party-slug="<%= party.slug %>-<%= issue_vote.title %>">
         <% if !issue_vote.vote_result_groups[result_key][party].empty? %>
-          <%= image_tag party.logo, alt: party.name, width: '35', height: '35' %> <%= issue_vote.vote_result_groups[result_key][party].size %>
+          <%= image_tag party.logo, alt: party.name, width: '24', height: '24' %>
+          <span class="state-party"><%= party.name %>
+          (<%= issue_vote.vote_result_groups[result_key][party].size %>)</span>
         <% end %>
 
         <div class="representatives-list hidden" data-party-slug="<%= party.slug %>-<%= issue_vote.title %>-reps">
