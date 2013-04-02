@@ -28,7 +28,7 @@
     <% end %>
   <% end %>
 
-  <div class="dropdown pull-right <%= active_status_for(:home_contact, :home_about, :home_join, :home_people, :home_faq, :home_contact)%>">
+  <div class="dropdown pull-right <%= active_status_for(:home_contact, :home_about, :home_join, :home_people, :home_faq, :home_contact, :home_friends)%>">
     <a class="dropdown-toggle" data-toggle="dropdown" href="#about-us">
       <%= t 'app.about' %>
       <b class="caret"></b>
@@ -40,6 +40,9 @@
       <li><%= link_to t("app.faq"), home_faq_path %></li>
       <li><%= link_to t("app.join"), home_join_path %></li>
       <li><%= link_to t("app.contact_us"), home_contact_path %></li>
+      <% if AppConfig.friends_enabled %>
+        <li><%= link_to t("app.friends"), home_friends_path %></li>
+      <% end %>
     </ul>
   </div>
 

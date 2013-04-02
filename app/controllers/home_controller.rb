@@ -10,7 +10,8 @@ class HomeController < ApplicationController
                   :member,
                   :future,
                   :robots,
-                  :faq
+                  :faq,
+                  :friends,
 
   def index
     published   = Issue.published.includes(:tags)
@@ -49,6 +50,9 @@ class HomeController < ApplicationController
   end
 
   def future
+  end
+
+  def friends
   end
 
   def revision

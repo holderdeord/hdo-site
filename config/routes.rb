@@ -46,7 +46,7 @@ Hdo::Application.routes.draw do
   end
 
   #
-  # districst
+  # districts
   #
 
   resources :districts, only: [:index, :show]
@@ -122,7 +122,7 @@ Hdo::Application.routes.draw do
   get 'home/people'
   get 'home/future'
   get 'home/faq'        => 'home#faq', as: :home_faq
-  get 'info/revision'   => 'home#revision'
+  get 'home/friends'
 
   get 'home/about'      => 'home#about', as: :home_about
   get 'home/method'     => 'home#about'
@@ -160,10 +160,11 @@ Hdo::Application.routes.draw do
   get '/robots.txt' => 'home#robots'
 
   #
-  # cheap health check for varnish/others
+  # various
   #
 
-  get '/healthz' => 'home#healthz'
+  get 'info/revision' => 'home#revision'
+  get '/healthz'      => 'home#healthz' # cheap health check for varnish/others
 
   root to: 'home#index'
 end
