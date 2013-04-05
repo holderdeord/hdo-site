@@ -34,6 +34,15 @@
 
     <div class="control-group">
       <div class="controls">
+        <label class="control-label"><%= Question.human_attribute_name :to %></label>
+        <%= f.text_field :from_name, class: 'span12', placeholder: "Skriv for å søke etter representant" %>
+        <%# TODO: Legge til auto-complete av representanter. %>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <div class="controls">
+        <label class="control-label"><%= Question.human_attribute_name :body %></label>
         <%= f.text_area :body, class: 'span12 qa-form-body', rows: 5, placeholder: "Kjære parti/representant! Hvordan kan det ha seg at..." %>
       </div>
     </div>
