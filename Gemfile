@@ -55,7 +55,7 @@ gem 'capistrano-ext'
 gem 'hipchat', require: false
 
 # frontend stuff
-gem 'jquery-rails'
+gem 'jquery-rails', '2.1.4'
 gem 'highcharts-rails', "~> 2.2"
 gem 'jquery-tablesorter', ">= 0.0.5"
 gem 'twitter_bootstrap_form_for', "~> 1.0.5"
