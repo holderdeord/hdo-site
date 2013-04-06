@@ -11,7 +11,6 @@ defaults: &defaults
   ignore_votes_against_proposal_attached_to_minutes: false
   vote_scoring_bins: 3
   show_accountability: true
-  friends_enabled: true
 
 development:
   <<: *defaults
@@ -27,4 +26,3 @@ production:
   <<: *defaults
   analytics_enabled: true
   questions_enabled: false
-  friends_enabled: false
