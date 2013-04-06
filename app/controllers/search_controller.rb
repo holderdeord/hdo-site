@@ -41,11 +41,8 @@ class SearchController < ApplicationController
         url = url_for(controller: r.type.pluralize, action: "show", id: r.slug || r.id)
         img = icons.fetch(r.type)
 
-        r.as_json.merge(
-          url: url,
-          img_src: img
-        )
-      end.group_by { |e| e[:_type] }
+        r.as_json.merge(url: url, img_src: img)
+      end.group_by { |e| e["_type"] }
 
       respond_to do |format|
         format.json { render json: @results }
