@@ -10,12 +10,7 @@ module BrowserSpecHelper
   extend self
 
   def driver
-    $spec_driver ||= (
-      driver = Selenium::WebDriver.for :firefox
-      driver.manage.window.maximize
-
-      driver
-    )
+    $spec_driver ||= Selenium::WebDriver.for :firefox
   end
 
   def stop
@@ -24,6 +19,10 @@ module BrowserSpecHelper
 
   def app_url
     "http://#{host}:#{port}"
+  end
+
+  def wait(timeout = 3)
+    Selenium::WebDriver::Wait.new(timeout: timeout)
   end
 
   def front_page

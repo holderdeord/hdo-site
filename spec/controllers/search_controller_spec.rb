@@ -21,5 +21,7 @@ describe SearchController do
     searcher.should_receive(:autocomplete).and_return response
 
     get :autocomplete, query: 'skatt'
+
+    response.should be_success
   end
 end

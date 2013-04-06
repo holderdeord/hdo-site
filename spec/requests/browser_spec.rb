@@ -6,18 +6,15 @@ describe Hdo::Application do
     front_page.get
   end
 
-  xit "shows a list of votes" do
-    2.times do
-      Vote.make!(:for_count => 50, :against_count => 50, :absent_count => 69)
-    end
+  it 'autocompletes a search for issues' do
+    Issue.create!(status: "published", title: "Fjerne formueskatten")
+    Issue.index.refresh
 
-    page = votes_page.get
-    page.vote_count.should == 2
+    menu = front_page.get.menu
+    menu.search_for('skatt')
 
-    vote = page.first_vote
+    wait(10).until { menu.autocomplete_results.any? }
 
-    vote.for.should == "50% (50/100)"
-    vote.against.should == "50% (50/100)"
-    vote.absent.should == "40% (69/169)"
+    menu.autocomplete_results.first.title.should == "Fjerne formueskatten"
   end
 end
