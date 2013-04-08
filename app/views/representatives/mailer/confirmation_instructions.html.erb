@@ -1,0 +1,10 @@
+<p>Kjære <%= @resource.name %>,</p>
+<p>Velkommen til Holder de ords spørsmål og svar tjeneste!</p>
+<p>Følg lenken nederst for å velge passord og komme i gang med holder de ord.</p>
+<p>Vi håper dette kan være en fantastisk mulighet for deg å komme i kontakt med velgerne dine på!</p>
+<p>Hilsen,</p>
+<p> Holder de ord</p>
+
+<p><%= link_to 'Kom i gang!', confirmation_url(@resource, :confirmation_token => @resource.confirmation_token) %></p>
+
+<p>Ikke svar på denne mailen. Send mail til <a href="mailto:kontakt@holderdeord.no">kontant@holderdeord.no</a> hvis du har spørsmål.</p>
