@@ -14,6 +14,7 @@ defaults: &defaults
   widgets_enabled: true
 
 development:
+  beta?: true
   <<: *defaults
 
 test:

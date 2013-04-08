@@ -1,6 +1,7 @@
 class Representative < ActiveRecord::Base
   devise :database_authenticatable,
-         :recoverable, :rememberable, :trackable, :validatable
+         :recoverable, :rememberable, :trackable, :validatable,
+         :confirmable
 
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :remember_me
@@ -59,6 +60,10 @@ class Representative < ActiveRecord::Base
   validates :twitter_id,  allow_nil: true, uniqueness: true, format: /^[^@]/
 
   friendly_id :external_id, use: :slugged
+
+  def unconfirmed_email
+    email unless confirmed?
+  end
 
   def display_name
     "#{last_name}, #{first_name}"

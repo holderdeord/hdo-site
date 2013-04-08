@@ -249,8 +249,8 @@ ActiveRecord::Schema.define(:version => 20130413221648) do
     t.string   "external_id"
     t.string   "first_name"
     t.string   "last_name"
-    t.datetime "created_at",                       :null => false
-    t.datetime "updated_at",                       :null => false
+    t.datetime "created_at",                                :null => false
+    t.datetime "updated_at",                                :null => false
     t.integer  "district_id"
     t.datetime "date_of_birth"
     t.datetime "date_of_death"
@@ -258,11 +258,26 @@ ActiveRecord::Schema.define(:version => 20130413221648) do
     t.string   "twitter_id"
     t.string   "email"
     t.string   "image"
-    t.boolean  "on_leave",      :default => false
+    t.string   "encrypted_password",     :default => "",    :null => false
+    t.string   "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.integer  "sign_in_count",          :default => 0
+    t.datetime "current_sign_in_at"
+    t.datetime "last_sign_in_at"
+    t.string   "current_sign_in_ip"
+    t.string   "last_sign_in_ip"
+    t.string   "confirmation_token"
+    t.datetime "confirmed_at"
+    t.datetime "confirmation_sent_at"
+    t.boolean  "on_leave",               :default => false
   end
 
+  add_index "representatives", ["confirmation_token"], :name => "index_representatives_on_confirmation_token", :unique => true
   add_index "representatives", ["district_id"], :name => "index_representatives_on_district_id"
+  add_index "representatives", ["email"], :name => "index_representatives_on_email", :unique => true
   add_index "representatives", ["last_name"], :name => "index_representatives_on_last_name"
+  add_index "representatives", ["reset_password_token"], :name => "index_representatives_on_reset_password_token", :unique => true
   add_index "representatives", ["slug"], :name => "index_representatives_on_slug", :unique => true
 
   create_table "taggings", :force => true do |t|
