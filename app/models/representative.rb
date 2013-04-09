@@ -65,6 +65,22 @@ class Representative < ActiveRecord::Base
     email unless confirmed?
   end
 
+  def only_if_unconfirmed
+    pending_any_confirmation { yield }
+  end
+
+  def attempt_set_password(params)
+    p = {
+      password:              params[:password],
+      password_confirmation: params[:password_confirmation]
+    }
+    update_attributes(p)
+  end
+  # new function to return whether a password has been set
+  def has_no_password?
+    self.encrypted_password.blank?
+  end
+
   def display_name
     "#{last_name}, #{first_name}"
   end

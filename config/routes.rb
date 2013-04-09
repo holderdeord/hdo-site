@@ -4,7 +4,10 @@ Hdo::Application.routes.draw do
   # representative sign-in
   #
 
-  devise_for :representatives
+  devise_for :representatives, controllers: { confirmations: 'confirmations'} do
+    put '/representatives/confirmation' => 'confirmations#update', as: :update_representative_confirmation
+  end
+  # map.update_representative_confirmation '/representatives/confirmation', :controller => 'confirmations', :action => 'update', :conditions => { :method => :put }
 
   #
   # user sign-in
