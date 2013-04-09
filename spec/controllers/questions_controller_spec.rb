@@ -3,7 +3,7 @@ require 'spec_helper'
 describe QuestionsController do
 
   def valid_attributes
-    {title: 'Tittel?', body: 'Tekst'}
+    {body: 'Tekst'}
   end
 
   describe "GET index" do

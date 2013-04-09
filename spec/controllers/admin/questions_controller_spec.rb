@@ -6,7 +6,7 @@ describe Admin::QuestionsController do
   before { sign_in user }
 
   def valid_attributes
-    {title: 'Test?', body: 'test test test'}
+    {body: 'test test test'}
   end
 
   describe "GET index" do

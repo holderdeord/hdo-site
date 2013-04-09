@@ -137,7 +137,6 @@ District.blueprint do
 end
 
 Question.blueprint do
-  title { "question #{sn}" }
   body { "question body #{sn}" }
   from_name { "Ola Nordmann" }
   from_email { "ola.nordmann@engasjert.no" }

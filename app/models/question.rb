@@ -3,7 +3,6 @@ class Question < ActiveRecord::Base
 
   STATUSES = %w[pending approved rejected]
 
-  validates :title,      presence: true, length: { maximum: 255 }
   validates :body,       presence: true
   validates :status,     presence: true, inclusion: { in: STATUSES }
   validates :from_email, email: true, allow_nil: true
