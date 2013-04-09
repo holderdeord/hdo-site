@@ -21,6 +21,10 @@ class Question < ActiveRecord::Base
     grouped
   end
 
+  def teaser
+    body.truncate(100)
+  end
+
   def pending?
     status == 'pending'
   end
