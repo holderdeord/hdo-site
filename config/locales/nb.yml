@@ -146,6 +146,7 @@ nb:
         date_of_death: 'Død'
         twitter_id: 'Twitter'
         email: 'Epost'
+        on_leave: 'I permisjon'
       party:
         name: "Navn"
         representatives: "Representanter"
@@ -243,7 +244,6 @@ nb:
         title: "Tittel"
         proposition_type: "Forslagstype"
       question:
-        title: Tittel
         body: Tekst
         from_name: Navn
         from_email: Epost

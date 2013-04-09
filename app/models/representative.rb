@@ -27,7 +27,8 @@ class Representative < ActiveRecord::Base
   update_index_on_change_of :district, :parties, has_many: true
 
   attr_accessible :first_name, :last_name, :committees, :district,
-                  :date_of_birth, :date_of_death, :twitter_id, :email
+                  :date_of_birth, :date_of_death, :twitter_id, :email,
+                  :on_leave
 
   default_scope order: :last_name
 

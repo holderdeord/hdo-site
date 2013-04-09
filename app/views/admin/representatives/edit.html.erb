@@ -17,6 +17,11 @@
           <span class="add-on"><%= Representative.human_attribute_name :email %></span>
           <%= text_field :representative, :email %>
         </div>
+
+        <label>
+          <%= Representative.human_attribute_name(:on_leave)  %>
+          <%= check_box :representative, :on_leave%>
+        </label>
       <% end %>
 
       <%= form.actions do %>

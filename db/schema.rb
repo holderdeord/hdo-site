@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130409172944) do
+ActiveRecord::Schema.define(:version => 20130409181054) do
 
   create_table "answers", :force => true do |t|
     t.text     "body",                                     :null => false
@@ -248,8 +248,8 @@ ActiveRecord::Schema.define(:version => 20130409172944) do
     t.string   "external_id"
     t.string   "first_name"
     t.string   "last_name"
-    t.datetime "created_at",    :null => false
-    t.datetime "updated_at",    :null => false
+    t.datetime "created_at",                       :null => false
+    t.datetime "updated_at",                       :null => false
     t.integer  "district_id"
     t.datetime "date_of_birth"
     t.datetime "date_of_death"
@@ -257,6 +257,7 @@ ActiveRecord::Schema.define(:version => 20130409172944) do
     t.string   "twitter_id"
     t.string   "email"
     t.string   "image"
+    t.boolean  "on_leave",      :default => false
   end
 
   add_index "representatives", ["district_id"], :name => "index_representatives_on_district_id"
