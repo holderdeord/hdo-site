@@ -62,6 +62,10 @@ class Issue < ActiveRecord::Base
              group_by { |i| i.stats.key_for(i.stats.score_for(entity)) }
   end
 
+  def self.grouped_by_accountability(entity)
+    all.to_a.group_by { |i| i.accountability.key_for(entity) }
+  end
+
   def self.in_tag_groups(opts = {})
     count  = opts[:count]
     min    = opts[:minimum]

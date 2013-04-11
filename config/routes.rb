@@ -67,7 +67,11 @@ Hdo::Application.routes.draw do
   # parties, committees
   #
 
-  resources :parties,    only: [:index, :show]
+  resources :parties,    only: [:index, :show] do
+    member do
+      get 'positions'
+    end
+  end
   resources :committees, only: [:index, :show]
 
   #

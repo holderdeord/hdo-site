@@ -25,4 +25,9 @@ class PartiesController < ApplicationController
     end
   end
 
+  def positions
+    @party = Party.find(params[:id])
+    @issue_groups = Issue.published.order(:title).grouped_by_accountability(@party)
+  end
+
 end
