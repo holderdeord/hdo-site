@@ -28,7 +28,10 @@ Hdo::Application.routes.draw do
     end
 
     resources :users
-    resources :representatives, only: [:index, :edit, :update]
+    resources :representatives, only: [:index, :edit, :update] do
+      get 'activate'       => 'representatives#activate',       as: :activate
+      get 'reset_password' => 'representatives#reset_password', as: :reset_password
+    end
 
     # S&S
     resources :questions, only: [:index, :edit, :update, :destroy] do

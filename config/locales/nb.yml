@@ -522,3 +522,12 @@ nb:
       by_party: 'Grupper etter parti'
       by_district: 'Grupper etter fylke'
       by_name: 'Grupper etter navn'
+    questions_and_answers:
+      short: 'S&S'
+      representative:
+        conirmation_mail_sent: "Informasjonsmail sent til %{name}"
+        passwd_reset_mail_sent: "Passord resatt for %{name}"
+        not_found: "Kunne ikke aktivere representant!"
+        forgot_password: "Glemt Passord"
+        activate: "Aktiver"
+        reactivate: "Resend"

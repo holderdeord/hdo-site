@@ -7,10 +7,11 @@
     <th><%= Representative.human_attribute_name :twitter_id %></th>
     <th><%= Representative.human_attribute_name :on_leave %></th>
     <th></th>
+    <th><%= t('app.questions_and_answers.short') %></th>
   </thead>
   <tbody>
     <% @representatives.each do |rep| %>
-      <tr>
+      <tr class="<%= row_class_for_admin_representative(rep) %>">
         <td><%= link_to rep.external_id, rep %></td>
         <td><%= rep.display_name %></td>
         <td><%= rep.latest_party.external_id  %></td>
@@ -18,6 +19,15 @@
         <td><%= link_to rep.twitter_id, rep.twitter_url if rep.twitter_id %> </td>
         <td><%= t(rep.on_leave? ? 'app.yes' : 'app.no') %></td>
         <td><%= link_to t('app.edit'), edit_admin_representative_path(rep), class: 'btn btn-small' %></td>
+        <td>
+          <% if rep.confirmed? %>
+            <%= link_to t('app.questions_and_answers.representative.forgot_password'), admin_representative_reset_password_path(rep), class: 'btn btn-small' %>
+          <% elsif rep.confirmation_sent_at %>
+            <%= link_to t('app.questions_and_answers.representative.reactivate'), admin_representative_activate_path(rep), class: 'btn btn-small' %>
+          <% else %>
+            <%= link_to t('app.questions_and_answers.representative.activate'), admin_representative_activate_path(rep), class: 'btn btn-small' %>
+          <% end %>
+        </td>
       </tr>
     <% end %>
   </tbody>
