@@ -250,6 +250,7 @@ nb:
         created_at: Opprettet
         updated_at: Sist oppdatert
         answers: Svar
+        representative: Representant
       answer:
         body: Tekst
         representative: Representant

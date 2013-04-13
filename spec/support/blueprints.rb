@@ -138,6 +138,7 @@ end
 
 Question.blueprint do
   body { "question body #{sn}" }
+  representative { Representative.make! }
   from_name { "Ola Nordmann" }
   from_email { "ola.nordmann@engasjert.no" }
 end

@@ -7,6 +7,11 @@ describe Question do
     q.save!
   end
 
+  it 'is invalid without a representative' do
+    q.representative = nil
+    q.should_not be_valid
+  end
+
   it 'is invalid without a body' do
     q.body = nil
     q.should_not be_valid
