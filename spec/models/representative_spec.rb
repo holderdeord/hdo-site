@@ -57,6 +57,28 @@ describe Representative do
     rep.latest_party.should == party
   end
 
+  it 'knows if the representative has an image' do
+    representative.stub(image: 'foo/bar/unknown.jpg')
+    representative.should_not have_image
+
+    representative.stub(image: 'foo/bar/baz.jpg')
+    representative.should have_image
+  end
+
+  it 'knows if the representative has a twitter account' do
+    representative.stub(twitter_id: nil)
+    representative.should_not have_twitter
+
+    representative.stub(twitter_id: '')
+    representative.should_not have_twitter
+
+    representative.stub(twitter_id: '    ')
+    representative.should_not have_twitter
+
+    representative.stub(twitter_id: 'foo')
+    representative.should have_twitter
+  end
+
   it "should have stats" do
     representative.stats.should be_kind_of(Hdo::Stats::RepresentativeCounts)
   end

@@ -25,8 +25,11 @@
 
 <hr class="soften">
 
-<% if @representative.twitter_id.present? %>
-  <h3>Twitter <a href="http://twitter.com/<%= @representative.twitter_id %>" class="muted">(@<%= @representative.twitter_id %>)</a></h3>
+<% if @representative.has_twitter? %>
+  <h3>
+    Twitter <%= link_to "(@#{@representative.twitter_id})", @representative.twitter_url, class: 'muted' %>
+  </h3>
+
   <%= twitter_widget_for(@representative.twitter_id) %>
   <hr>
 <% end %>

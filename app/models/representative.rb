@@ -105,6 +105,14 @@ class Representative < ActiveRecord::Base
     memberships.map { |e| e.committee }
   end
 
+  def has_image?
+    !image.to_s.include?("unknown")
+  end
+
+  def has_twitter?
+    twitter_id.present?
+  end
+
   def committee_memberships_at(date)
     if committee_memberships.loaded?
       committee_memberships.select { |e| e.include?(date) }
