@@ -90,6 +90,17 @@ describe Party do
     party.representatives.should == [current_rep, previous_rep]
   end
 
+  it 'does not include representatives marked as "on leave" in current representatives' do
+    party = Party.make!
+
+    rep = Representative.make!
+    rep.party_memberships.create!(party: party, start_date: 1.month.ago)
+    party.current_representatives.should include(rep)
+
+    rep.update_attributes!(on_leave: true)
+    party.current_representatives.should == []
+  end
+
   it 'destroys dependent memeberships when destroyed' do
     party = Party.make!
     rep = Representative.make!
