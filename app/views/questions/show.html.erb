@@ -3,7 +3,10 @@
 </div>
 
 <article class="qa-answer-question">
-  <h4>Innsendt spørsmål</h4>
+  <h4>Spørsmål til
+    <%= link_to @question.representative.full_name, @question.representative %>
+    <small><%= @question.representative.party_at(@question.created_at).try(:name) %></small>
+  </h4>
   <p class="qa-question-body"><%= @question.body %></p>
   <aside class="muted">
     <span>Av <%= @question.from_name || 'Anonym' %></span>
