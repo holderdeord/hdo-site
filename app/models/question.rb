@@ -1,5 +1,5 @@
 class Question < ActiveRecord::Base
-  attr_accessible :title, :body, :from_name, :from_email
+  attr_accessible :body, :from_name, :from_email
 
   STATUSES = %w[pending approved rejected]
 
