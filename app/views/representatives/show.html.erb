@@ -12,8 +12,13 @@
     <%= link_to @representative.district.name, @representative.district %>
     </span>
     <span class="representative-party">
-      <%= party && link_to(party.name, party, class:party.external_id) %>
+      <%= party && link_to(party.name, party, class: party.external_id) %>
     </span>
+
+    <% if @representative.on_leave? %>
+      <p class="muted"><%= Representative.human_attribute_name(:on_leave) %></p>
+    <% end %>
+
     <dl class="representative-comitee-list">
       <% @representative.current_committees.each do |com| %>
         <dd>Medlem av <%= link_to com.name, com %></dd>
