@@ -356,6 +356,7 @@ nb:
       back: Tilbake til saken
       not_published: Denne saken er ikke publisert.
       published: Denne saken er publisert.
+      none: Ingen saker
       status:
         published: Publisert
         in_progress: Under arbeid
