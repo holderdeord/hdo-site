@@ -1,5 +1,5 @@
 class Question < ActiveRecord::Base
-  attr_accessible :body, :from_name, :from_email
+  attr_accessible :body, :from_name, :from_email, :representative
 
   belongs_to :representative
   has_many :answers, dependent: :destroy

@@ -1,10 +1,8 @@
 require 'spec_helper'
 
 describe QuestionsController do
-
-  def valid_attributes
-    {body: 'Tekst'}
-  end
+  let(:representative) { Representative.make! }
+  let(:valid_attributes) { {body: 'Tekst', representative: representative } }
 
   describe "GET index" do
     it "assigns all approved questions as @questions" do
