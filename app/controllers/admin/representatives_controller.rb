@@ -2,6 +2,7 @@ class Admin::RepresentativesController < AdminController
   EDITABLE_ATTRIBUTES = [:twitter_id, :email]
 
   before_filter :fetch_representative, except: [:index]
+  before_filter :authorize_user, except: [:index]
 
   def index
     @representatives = Representative.order(:external_id)
@@ -36,6 +37,13 @@ class Admin::RepresentativesController < AdminController
   end
 
   private
+
+  def authorize_user
+    unless policy(@representative).edit?
+      redirect_to admin_representatives_path, alert: t('app.errors.unauthorized')
+      return
+    end
+  end
 
   def fetch_representative
     @representative = Representative.find(params[:id] || params[:representative_id])
