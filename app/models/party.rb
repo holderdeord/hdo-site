@@ -42,7 +42,7 @@ class Party < ActiveRecord::Base
   end
 
   def representatives_at(date)
-    party_memberships.includes(:representative).for_date(date).map { |e| e.representative }.sort_by { |e| e.last_name }
+    party_memberships.includes(:representative).for_date(date).map(&:representative).sort_by(&:last_name)
   end
 
   def image
