@@ -11,7 +11,7 @@ describe Admin::RepresentativesController do
   end
 
   context 'logged in' do
-    before(:each) { sign_in User.make! }
+    before(:each) { sign_in User.make!(role: 'superadmin') }
 
     it "can update twitter_id and email" do
       put :update, id: representative.to_param, representative: { twitter_id: 'foo' }

@@ -175,4 +175,18 @@ class Representative < ActiveRecord::Base
             only: [:slug, :last_name, :first_name]
   end
 
+  private
+
+  def email_required?
+    false
+  end
+
+  def password_required?
+    false
+  end
+
+  def confirmation_required?
+    false
+  end
+
 end
