@@ -108,7 +108,9 @@ module Hdo
         # the information in 'representatives_today' is more complete,
         # so it takes precedence
 
-        parsing_data_source.representatives_today.each do |rep|
+        representatives_today = parsing_data_source.representatives_today
+
+        representatives_today.each do |rep|
           representatives[rep.external_id] = rep
         end
 
@@ -117,6 +119,14 @@ module Hdo
         end
 
         persister.import_representatives representatives.values
+
+
+        # mark representatives with permanent substitues as on_leave=true
+        # see https://github.com/holderdeord/hdo-site/issues/195
+        on_leave_xids = representatives_today.map { |e| e.permanent_substitute_for }.compact
+        Representative.all.each do |e|
+          e.update_attributes!(on_leave: on_leave_xids.include?(e.external_id))
+        end
       end
 
       def import_promises
