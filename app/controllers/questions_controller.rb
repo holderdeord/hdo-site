@@ -11,10 +11,7 @@ class QuestionsController < ApplicationController
   end
 
   def new
-    @question= Question.new
-    @completion_map = Representative.all.each_with_object({}) do |rep, obj|
-      obj[rep.full_name] = rep.to_param
-    end
+    @question = Question.new
   end
 
   def create

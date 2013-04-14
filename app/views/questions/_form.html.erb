@@ -33,7 +33,7 @@
       <div class="controls">
         <label class="control-label"><%= Question.human_attribute_name :representative %></label>
         <div class="chosen-xlarge">
-          <%= f.select :representative, representative_options %>
+          <%= f.select :representative, representative_options, include_blank: 'Velg en representant...' %>
         </div>
       </div>
     </div>
