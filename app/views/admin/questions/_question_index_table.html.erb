@@ -1,7 +1,7 @@
 <table class="table table-hover">
   <tr>
-    <th><%= Question.human_attribute_name :body %></th>
     <th><%= Question.human_attribute_name :representative %></th>
+    <th><%= Question.human_attribute_name :body %></th>
     <th><%= Question.human_attribute_name :from_name %></th>
 
     <% unless status == 'pending' %>
@@ -16,8 +16,8 @@
 
 <% questions.each do |question| %>
   <tr>
-    <td><%= link_to question.teaser, question %></td>
     <td><%= link_to question.representative.display_name, question.representative %></td>
+    <td><%= link_to question.teaser, question %></td>
 
     <td>
       <p><%= question.from_name %></p>
