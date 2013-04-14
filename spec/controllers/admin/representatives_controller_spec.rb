@@ -27,14 +27,6 @@ describe Admin::RepresentativesController do
       representative.reload.twitter_id.should be_nil
     end
 
-    it 'can update the on_leave parameter' do
-      representative.should_not be_on_leave
-
-      put :update, id: representative.to_param, representative: { on_leave: '1' }
-
-      representative.reload.should be_on_leave
-    end
-
     it 'will not overwrite imported attributes' do
       first_name = representative.first_name
       last_name  = representative.last_name

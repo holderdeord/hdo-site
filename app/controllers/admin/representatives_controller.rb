@@ -1,5 +1,5 @@
 class Admin::RepresentativesController < AdminController
-  EDITABLE_ATTRIBUTES = [:twitter_id, :email, :on_leave]
+  EDITABLE_ATTRIBUTES = [:twitter_id, :email]
 
   before_filter :fetch_representative, only: [:edit, :update]
 
