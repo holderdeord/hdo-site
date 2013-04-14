@@ -21,7 +21,7 @@ class ConfirmationsController < Devise::ConfirmationsController
     end
 
     if !@confirmable.errors.empty?
-      render 'representatives/confirmations/new'
+      render 'representative/confirmations/new'
     end
   end
 
@@ -36,7 +36,7 @@ class ConfirmationsController < Devise::ConfirmationsController
     end
     if !@confirmable.errors.empty?
       self.resource = @confirmable
-      render 'representatives/confirmations/new'
+      render 'representative/confirmations/new'
     end
   end
 
@@ -53,7 +53,7 @@ class ConfirmationsController < Devise::ConfirmationsController
     @confirmation_token = params[:confirmation_token]
     @requires_password = true
     self.resource = @confirmable
-    render 'representatives/confirmations/show'
+    render 'representative/confirmations/show'
   end
 
   def do_confirm
