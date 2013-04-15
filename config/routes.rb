@@ -115,6 +115,15 @@ Hdo::Application.routes.draw do
   get 'votes/page/:page' => 'votes#index'
 
   #
+  # widgets
+  #
+
+  get 'widgets/load', format: :js
+  get 'widgets/issues/:id' => 'widgets#issues'
+  get 'widgets/representatives/:id' => 'widgets#representatives'
+
+
+  #
   # home
   #
 

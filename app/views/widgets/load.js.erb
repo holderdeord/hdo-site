@@ -1,0 +1,51 @@
+var HDO = HDO || {};
+
+HDO.widgets = (function () {
+  this.baseUrl = '<%= request.scheme %>://<%= request.host %>:<%= request.port %>/widgets/';
+
+  function extractWidgetOptions(type, el) {
+      var url;
+
+      if (type == "issue") {
+          url = baseUrl + "issues/" + el.getAttribute('data-issue-id');
+      } else if (type == 'representative') {
+          url = baseUrl + "representatives/" + el.getAttribute('data-representative-id');
+      } else {
+          throw new Error('invalid HDO widget type: ' + type);
+      }
+
+      return {
+          'url': url,
+          'height': el.getAttribute('height') || '500px',
+          'width': el.getAttribute('width') || '100%'
+      };
+  }
+
+  function createWidgetFrame(type, element) {
+      var opts = extractWidgetOptions(type, element),
+          iframe = document.createElement('iframe');
+
+      iframe.src = opts.url;
+      iframe.width = opts.width;
+      iframe.height = opts.height;
+      iframe.frameBorder = 0;
+      // iframe.scrolling = 'no';
+      iframe.title = 'holderdeord.no widget';
+
+      element.parentNode.replaceChild(iframe, element);
+  }
+
+  return {
+      init: function (type) {
+          var elements = document.getElementsByClassName('hdo-' + type + '-widget');
+
+          for (var i = 0; i < elements.length; i++) {
+              createWidgetFrame(type, elements[i]);
+          }
+      }
+  };
+})();
+
+HDO.widgets.init('issue');
+HDO.widgets.init('representative');
+HDO.widgets.init('promises');

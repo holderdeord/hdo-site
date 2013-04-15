@@ -1,0 +1,7 @@
+<h2><%= @issue.title %></h2>
+
+<ul>
+<% Party.order(:name).each do |party| %>
+<li><%= @issue.stats.text_for(party) %></li>
+<% end %>
+</ul>
