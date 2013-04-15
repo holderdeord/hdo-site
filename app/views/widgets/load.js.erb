@@ -1,5 +1,14 @@
 var HDO = HDO || {};
 
+/*
+  Usage example:
+
+    <div class="hdo-issue-widget" height="500" width="20%" data-issue-id="fjerne-formueskatten">Laster sak...</div>
+    <div class="hdo-representative-widget" height="500" width="20%" data-representative-id="maaa">Laster representant...</div>
+
+    <script src="http://holderdeord.no/widgets/load"></script>
+*/
+
 HDO.widgets = (function () {
   this.baseUrl = '<%= request.scheme %>://<%= request.host %>:<%= request.port %>/widgets/';
 
