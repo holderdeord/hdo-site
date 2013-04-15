@@ -7,6 +7,11 @@ Hdo::Application.routes.draw do
   devise_for :representative, controllers: { confirmations: 'confirmations'}
   devise_scope :representative do
     put '/representative/confirmation' => 'confirmations#update', as: :update_representative_confirmation
+
+  end
+
+  namespace :representative do
+    root to: "dashboard#index"
   end
 
   #

@@ -1,0 +1,16 @@
+<div class="container-fluid">
+  <h2>Hei <%= current_representative.name  %></h2>
+
+  <% if AppConfig.questions_enabled %>
+
+    <div class="row-fluid">
+      <h3><%= @pending_questions.count %> <%= Question.model_name.human(count: 2) %> <%= link_to t('app.questions.status.pending').downcase, admin_questions_path %></h3>
+      <ul>
+        <% @pending_questions.each do |q| %>
+          <li><%= q.teaser %></li>
+        <% end %>
+      </ul>
+    </div>
+
+  <% end %>
+</div>

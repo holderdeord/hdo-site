@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130409181054) do
+ActiveRecord::Schema.define(:version => 20130413221648) do
 
   create_table "answers", :force => true do |t|
     t.text     "body",                                     :null => false
@@ -236,8 +236,8 @@ ActiveRecord::Schema.define(:version => 20130409181054) do
   add_index "propositions_votes", ["proposition_id", "vote_id"], :name => "index_propositions_votes_on_proposition_id_and_vote_id"
 
   create_table "questions", :force => true do |t|
-    t.text     "body",                              :null => false
-    t.string   "status",     :default => "pending", :null => false
+    t.text     "body",                                     :null => false
+    t.string   "status",            :default => "pending", :null => false
     t.string   "from_name"
     t.string   "from_email"
     t.datetime "created_at",                               :null => false
