@@ -120,7 +120,6 @@ Hdo::Application.routes.draw do
 
   get 'widgets/load', format: :js
   get 'widgets/issues/:id' => 'widgets#issues'
-  get 'widgets/representatives/:id' => 'widgets#representatives'
 
 
   #
