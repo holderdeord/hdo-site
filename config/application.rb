@@ -73,6 +73,9 @@ module Hdo
     # this is needed on heroku: https://github.com/plataformatec/devise/issues/1339
     config.assets.initialize_on_precompile = false
 
+    # Precompile additional assets (application.js, application.css, and all non-JS/CSS are already added)
+    config.assets.precompile += %w( conditional/html5.js widgets/widgets.css)
+
     # allow cors from other subdomains
     config.middleware.use Rack::Cors do
       allow do
