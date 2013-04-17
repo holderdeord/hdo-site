@@ -14,11 +14,11 @@ describe ApplicationHelper do
 
   it 'renders markdown' do
     md = <<-MARKDOWN
-      # foo
+# foo
 
-      *bar*
+*bar*
     MARKDOWN
 
-    helper.markdown(md).should == ''
+    helper.markdown(md).should == "<h1>foo</h1>\n\n<p><em>bar</em></p>\n"
   end
 end
