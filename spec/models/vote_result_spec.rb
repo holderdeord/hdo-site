@@ -38,4 +38,29 @@ describe VoteResult do
     absent.should_not be_rebel
     rebel.should be_rebel
   end
+
+  it 'has a human text representation of the result' do
+    I18n.with_locale :nb do
+      VoteResult.make(:result => 1).human.should == "For"
+      VoteResult.make(:result => 0).human.should == "Ikke tilstede"
+      VoteResult.make(:result => -1).human.should == "Mot"
+    end
+  end
+
+  it 'has icons' do
+    I18n.with_locale :nb do
+      VoteResult.make(:result => 1).icon.should == "plus-sign"
+      VoteResult.make(:result => 0).icon.should == "question-sign"
+      VoteResult.make(:result => -1).icon.should == "minus-sign"
+    end
+  end
+
+  it 'has alerts' do
+    I18n.with_locale :nb do
+      VoteResult.make(:result => 1).alert.should == "alert-success"
+      VoteResult.make(:result => 0).alert.should == "alert-info"
+      VoteResult.make(:result => -1).alert.should == "alert-error"
+    end
+  end
+
 end

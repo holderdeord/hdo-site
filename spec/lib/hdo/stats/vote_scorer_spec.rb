@@ -162,6 +162,18 @@ module Hdo
         end
       end
 
+      it "has a text representation of an entity's score" do
+        party = stub
+
+        I18n.with_locale :nb do
+          scorer.stub(:score_for).with(party).and_return 33
+          scorer.text_score_for(party).should == '33%'
+
+          scorer.stub(:score_for).with(party).and_return nil
+          scorer.text_score_for(party).should == 'Uvisst'
+        end
+      end
+
       it 'raises an error if the score is invalid' do
         scorer.stub(:score_for).and_return :foo
         lambda { scorer.text_for(:foo) }.should raise_error

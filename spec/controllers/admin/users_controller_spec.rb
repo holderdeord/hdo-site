@@ -1,6 +1,10 @@
 require 'spec_helper'
 
 describe Admin::UsersController do
+  let(:valid_attributes) do
+    { name: 'Ole Nordmann', email: 'ola@holderdeord.no' }
+  end
+
   context 'admin' do
     let(:user)    { User.make! }
     before(:each) { sign_in User.make!(role: 'admin') }
@@ -58,6 +62,9 @@ describe Admin::UsersController do
 
       response.should be_success
       response.should have_rendered(:new)
+
+      put :create, user: valid_attributes
+      response.should be_success
     end
 
     it 'can edit a user' do

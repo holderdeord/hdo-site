@@ -26,6 +26,14 @@ describe HomeController do
     end
   end
 
+  it 'disallows robots in non-production environments' do
+    get :robots
+
+    body = response.body
+    body.should include("User-Agent: *")
+    body.should include("Disallow: /")
+  end
+
   context 'with rendered views' do
     render_views
 

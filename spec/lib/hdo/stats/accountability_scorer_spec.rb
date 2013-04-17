@@ -51,6 +51,19 @@ module Hdo
         AccountabilityScorer.csv_by_category.should be_kind_of(String)
       end
 
+      it "has a text representation of an entity's score" do
+        party  = stub
+        scorer = AccountabilityScorer.new(Issue.make)
+
+        I18n.with_locale :nb do
+          scorer.stub(:score_for).with(party).and_return 33
+          scorer.text_score_for(party).should == '33%'
+
+          scorer.stub(:score_for).with(party).and_return nil
+          scorer.text_score_for(party).should == 'Uvisst'
+        end
+      end
+
     end
   end
 end
