@@ -5,5 +5,9 @@
   </head>
   <body>
     <%= yield %>
+
+    <% if nrk? %>
+      <script src="http://nrk.no/serum/latest/js/sandbox.js"></script>
+    <% end %>
   </body>
 </html>
