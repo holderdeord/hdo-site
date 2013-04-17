@@ -9,6 +9,8 @@ namespace :hdo do
         promises = promises.where('categories.name' => ENV['CATEGORIES'].split(','))
       end
 
+      promises = promises.to_a.uniq.sort_by { |promise| promise.external_id.to_i }
+
       if ENV['OUT']
         out = File.open(ENV['OUT'], 'w')
       else
@@ -17,7 +19,11 @@ namespace :hdo do
 
       CSV(out) do |csv|
         promises.each do |promise|
-          csv << [promise.external_id, promise.categories.map(&:name).join(','), promise.body]
+          csv << [
+            promise.external_id,
+            promise.categories.map(&:name).join(','),
+            promise.body
+          ]
         end
       end
     end
