@@ -212,8 +212,6 @@ module Hdo
       end
 
       def ignore_result?(vote_result, vote_connection)
-        vote = vote_result.vote
-
         vote_result.absent? ||
           (vote_result.against? &&
           (vote_connection.proposition_type == 'alternate_national_budget' && AppConfig.ignore_votes_against_alternate_budget))
