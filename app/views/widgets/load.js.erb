@@ -4,9 +4,7 @@ var HDO = HDO || {};
   Usage example:
 
     <div class="hdo-issue-widget" height="500" width="20%" data-issue-id="fjerne-formueskatten">Laster sak...</div>
-    <div class="hdo-representative-widget" height="500" width="20%" data-representative-id="maaa">Laster representant...</div>
-
-    <script src="http://holderdeord.no/widgets/load"></script>
+    <script src="http://holderdeord.no/widgets"></script>
 */
 
 HDO.widgets = (function () {
@@ -17,8 +15,6 @@ HDO.widgets = (function () {
 
       if (type == "issue") {
           url = baseUrl + "issues/" + el.getAttribute('data-issue-id');
-      } else if (type == 'representative') {
-          url = baseUrl + "representatives/" + el.getAttribute('data-representative-id');
       } else {
           throw new Error('invalid HDO widget type: ' + type);
       }
@@ -56,5 +52,3 @@ HDO.widgets = (function () {
 })();
 
 HDO.widgets.init('issue');
-HDO.widgets.init('representative');
-HDO.widgets.init('promises');

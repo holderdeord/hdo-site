@@ -41,7 +41,8 @@ Hdo::Application.routes.draw do
 
   resources :issues, only: [:index, :show, :votes] do
     member do
-      get 'votes' => 'issues#votes'
+      get 'votes'  => 'issues#votes'
+      get 'widget' => 'widgets#issues'
     end
   end
 
@@ -118,9 +119,7 @@ Hdo::Application.routes.draw do
   # widgets
   #
 
-  get 'widgets/load', format: :js
-  get 'widgets/issues/:id' => 'widgets#issues'
-
+  get 'widgets' => 'widgets#load', format: :js
 
   #
   # home
