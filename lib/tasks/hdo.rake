@@ -17,7 +17,7 @@ namespace :hdo do
 
       CSV(out) do |csv|
         promises.each do |promise|
-          csv << [promise.external_id, promise.body, promise.categories.map(&:name).join(',')]
+          csv << [promise.external_id, promise.categories.map(&:name).join(','), promise.body]
         end
       end
     end
