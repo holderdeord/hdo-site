@@ -1,6 +1,8 @@
 <div class="hdo-issue-widget">
   <h2><%= @issue.title %></h2>
 
+  <p><%= @issue.description %></p>
+
   <ul>
   <% @parties.each do |party| %>
     <li><%= @issue.stats.text_for(party) %></li>
