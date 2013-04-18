@@ -3,9 +3,37 @@
 
   <p><%= @issue.description %></p>
 
-  <ul>
-  <% @parties.each do |party| %>
-    <li><%= @issue.stats.text_for(party) %></li>
-  <% end %>
-  </ul>
+  <div class="positions">
+
+    <!-- LIST AGAINST, BUT ONLY IF ANY -->
+    <div class="position for">
+      <h2>For</h2>
+      <ul>
+      <% @parties.each do |party| %>
+        <li><%= @issue.stats.text_for(party) %></li>
+      <% end %>
+      </ul>
+    </div>
+
+    <!-- LIST UNDECIDED, BUT ONLY IF ANY -->
+    <div class="position undecided">
+      <h2>Både for og imot</h2>
+      <ul>
+      <% @parties.each do |party| %>
+        <li><%= @issue.stats.text_for(party) %></li>
+      <% end %>
+      </ul>
+    </div>
+
+    <!-- LIST AGAINST, BUT ONLY IF ANY -->
+    <div class="position against">
+      <h2>Mot</h2>
+      <ul>
+      <% @parties.each do |party| %>
+        <li><%= @issue.stats.text_for(party) %></li>
+      <% end %>
+      </ul>
+
+  </div>
+
 </div>
