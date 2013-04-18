@@ -9,13 +9,14 @@
   <body>
     <%= yield %>
 
+    <footer>
+      <p>
+        Les mer på <%= link_to 'holderdeord.no', root_url, target: '_top' %>
+      </p>
+    </footer>
+
     <% if nrk? %>
       <script src="http://nrk.no/serum/latest/js/sandbox.js"></script>
     <% end %>
-    <footer>
-      <p>
-        Les mer på <a href="http://holderdeord.no">holderdeord.no</a>
-      </p>
-    </footer>
   </body>
 </html>
