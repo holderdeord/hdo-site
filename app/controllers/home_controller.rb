@@ -72,7 +72,7 @@ class HomeController < ApplicationController
     @all_members = User.where(active: true).sort_by { |e| e.name.split(" ").last }
     @board = @all_members.select { |member| member.board? }
 
-    @alumni = [
+    @other = [
       Person.new('Tage Augustson'),
       Person.new('Martin Bekkelund'),
       Person.new('Anders Berg Hansen'),
@@ -81,6 +81,7 @@ class HomeController < ApplicationController
       Person.new('Anne Raaum Christensen'),
       Person.new('Madeleine Skjelland Eriksen'),
       Person.new('Linn Katrine Erstad'),
+      Person.new('Inge Olav Fure'),
       Person.new('Marte Haabeth Grindaker'),
       Person.new('Vilde Grønn'),
       Person.new('Rigmor Haga'),
@@ -118,7 +119,8 @@ class HomeController < ApplicationController
       Person.new('Frode Hiorth'),
       Person.new('Jostein Holje'),
       Person.new('Markus Krüger'),
-      Person.new('Salve Nilsen')
+      Person.new('Salve Nilsen'),
+      Person.new('Ingrid Ødegaard')
      ]
   end
 
