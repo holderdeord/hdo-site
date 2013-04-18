@@ -10,7 +10,9 @@
           <h2><%= label.text %></h2>
           <ul>
           <% parties.each do |party| %>
-            <li><%= @issue.stats.text_for(party) %></li>
+            <li class="party <%= party.name %>">
+              <%= party.name %>
+            </li>
           <% end %>
           </ul>
         </div>
