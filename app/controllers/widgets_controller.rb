@@ -7,7 +7,7 @@ class WidgetsController < ApplicationController
   end
 
   def issues
-    @issue   = Issue.published.find(params[:id])
+    @issue   = Issue.published.find(params[:id]).decorate
     @parties = Party.order(:name)
   end
 
