@@ -1,29 +1,20 @@
-<h1>
-  <%= Answer.model_name.human(count: 2).capitalize %> <span class="muted"><%= @question.teaser %></span>/<%= @question.id %>
-</h1>
+<h1><%= Answer.model_name.human(count: 2).capitalize %></h1>
+<div class="row-fluid">
+  <div class="tabbable">
+    <ul class="nav nav-tabs">
+      <% Answer::STATUSES.each_with_index do |status, idx| %>
+        <li class="span4 <%= 'active' if idx == 0 %>">
+          <a href="#<%= status %>-tab" data-toggle="tab"><%= t("app.answers.status.#{status}") %> (<%= @answers_by_status[status].try(:size) || 0 %>)</a>
+        </li>
+      <% end %>
+    </ul>
 
-<table class="table table-hover">
-  <tr>
-    <th><%= Answer.human_attribute_name :representative %></th>
-    <th><%= Answer.human_attribute_name :created_at %></th>
-    <th></th>
-  </tr>
-
-<% @answers.each do |answer| %>
-  <tr>
-    <td><%= link_to answer.representative.display_name, answer.representative %></td>
-    <td>
-      <p><%= l answer.updated_at.localtime %></p>
-      <small class="muted">Opprettet: <%= l answer.created_at.localtime %></small>
-    </td>
-    <td>
-      <%= link_to 'Edit', edit_admin_question_answer_path(@question, answer), class: 'btn btn-small' %>
-      <%= link_to 'Destroy', admin_question_answer_path(@question, answer), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-small btn-danger' %>
-    </td>
-  </tr>
-<% end %>
-</table>
-
-<br />
-
-<%= link_to t('app.answers.edit.new'), new_admin_question_answer_path(@question), class: 'btn btn-primary' %>
+    <div class="tab-content">
+      <% Answer::STATUSES.each_with_index do |status, idx| %>
+        <div id="<%= status %>-tab" class="tab-pane <%= 'active' if idx == 0 %>">
+          <%= render partial: 'answer_index_table', locals: { status: status, answers: @answers_by_status[status] || [] } %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

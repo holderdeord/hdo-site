@@ -4,6 +4,35 @@
   <small><%= l @question.updated_at, format: :text_time %></small>
 </div>
 
+<div class="well">
+  <h4>Skriv inn nytt svar:</h4>
+  <%= form_for([:representative, @question, @answer]) do |f| %>
+    <%= hidden_field_tag "answer[question_id]", @question.id %>
+    <%= hidden_field_tag "answer[representative_id]", @question.representative_id %>
+
+    <% if @answer.errors.any? %>
+      <div class="alert alert-error">
+        <ul>
+          <% @answer.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="control-group">
+      <label class="control-label"><%= Answer.human_attribute_name :body %></label>
+      <div class="controls">
+        <%= f.text_area :body %>
+      </div>
+    </div>
+
+    <div class="actions">
+      <%= f.submit class: 'btn btn-primary' %>
+    </div>
+  <% end %>
+</div>
+
 <% @question.answers.each do |answer| %>
   <div class="well">
     <%= image_tag answer.representative.image.versions[:small], alt: answer.representative.full_name %>

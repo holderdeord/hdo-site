@@ -1,0 +1,38 @@
+<table class="table table-hover">
+  <tr>
+    <th><%= Answer.human_attribute_name :representative %></th>
+    <th><%= Answer.human_attribute_name :body %></th>
+    <% unless status == 'pending' %>
+      <th><%= Answer.human_attribute_name :answers %></th>
+    <% end %>
+
+    <th><%= Answer.human_attribute_name :created_at %></th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% answers.each do |answer| %>
+  <tr>
+    <td><%= link_to answer.representative.display_name, answer.representative %></td>
+    <td><%= answer.body %></td>
+
+    <td>
+      <%= link_to Question.model_name.human, admin_question_path(answer.question) %>
+    </td>
+
+    <td>
+      <p><%= l answer.created_at.localtime %></p>
+      <small class="muted">
+        <%= Answer.human_attribute_name :updated_at %>
+        <%= l answer.updated_at.localtime %>
+      </small>
+    </td>
+
+    <td><%= link_to t('app.answers.edit.approve'), approve_admin_question_answer_path(answer.question.id, id: answer.id), method: :put, class: 'btn btn-small btn-success' %></td>
+    <td><%= link_to t('app.answers.edit.reject'), reject_admin_question_answer_path(answer.question, id: answer.id), method: :put, class: 'btn btn-small btn-warning' %></td>
+    <td><%= link_to t('app.destroy'), admin_question_answers_path(answer), method: :delete, class: 'btn btn-small btn-danger',
+                                                                     data: { confirm: t('app.issues.edit.confirm_destroy', title: answer.body.truncate(100)) } %></td>
+  </tr>
+<% end %>
+</table>

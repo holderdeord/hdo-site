@@ -452,6 +452,9 @@ nb:
         created: Svaret ble opprettet.
         updated: Svaret ble oppdatert.
         new: Legg til svar
+      moderate:
+        approved: Svaret er godkjent.
+        rejected: Svaret er avvist.
     external:
       urls:
         parliament_issue: "http://stortinget.no/no/Saker-og-publikasjoner/Saker/Sak/?p=%s"

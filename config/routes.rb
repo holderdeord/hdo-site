@@ -11,7 +11,7 @@ Hdo::Application.routes.draw do
 
   namespace :representative do
     resources :questions, only: [:index, :show] do
-      resources :answers, only: :create
+      resources :answers, only: [:create, :destroy]
     end
 
     root to: "dashboard#index"
@@ -43,7 +43,12 @@ Hdo::Application.routes.draw do
 
     # S&S
     resources :questions, only: [:index, :edit, :update, :destroy] do
-      resources :answers, except: :show
+      resources :answers, except: :show  do
+        member do
+          put 'approve' => 'answers#approve'
+          put 'reject'  => 'answers#reject'
+        end
+      end
 
       member do
         put 'approve' => 'questions#approve'

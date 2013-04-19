@@ -13,6 +13,14 @@ class Answer < ActiveRecord::Base
   scope :approved, lambda { where(:status => 'approved').order('updated_at DESC') }
   scope :pending, lambda { where(:status => 'pending').order('created_at DESC') }
 
+  def self.all_by_status
+    grouped = all.group_by { |a| a.status }
+    grouped.values.each do |answers|
+      answers.sort_by! { |e| e.created_at }
+    end
+
+    grouped
+  end
 
   def party
     representative.party_at created_at
