@@ -1,4 +1,21 @@
 <div class="container-fluid">
   <h2>Spørsmål for <%= current_representative.name  %></h2>
-
 </div>
+<table class="table table-condensed table-hover">
+  <thead>
+    <th>Fra</th>
+    <th>Dato</th>
+    <th>Spørsmål</th>
+    <th></th>
+  </thead>
+  <tbody>
+    <% @questions.each do |question| %>
+      <tr>
+        <td><%= question.from_name %></td>
+        <td><%= question.updated_at || question.created_at %></td>
+        <td><%= question.body  %></td>
+        <td></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
