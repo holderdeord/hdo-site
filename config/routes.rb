@@ -10,7 +10,9 @@ Hdo::Application.routes.draw do
   end
 
   namespace :representative do
-    resources :questions, only: :index
+    resources :questions, only: [:index, :show] do
+      resources :answers, only: :create
+    end
 
     root to: "dashboard#index"
   end
