@@ -56,7 +56,7 @@ describe GoverningPeriod do
 
   it "requires that the start date is before the end date" do
     g = GoverningPeriod.make(
-      :start_date => Date.today,
+      :start_date => Date.today + 1,
       :end_date   => Date.today,
       :party      => Party.make!
     )
