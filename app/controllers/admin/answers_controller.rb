@@ -41,20 +41,12 @@ class Admin::AnswersController < AdminController
 
   def reject
     @answer.reject
-    if @answer.save
-      redirect_to admin_question_answers_url(@question), notice: t('app.answers.moderate.rejected')
-    else
-      redirect_to admin_question_answers_url(@question), alert: @answer.errors.full_message.to_sentence
-    end
+    save_answer
   end
 
   def approve
     @answer.approve
-    if @answer.save
-      redirect_to admin_question_answers_url(@question), notice: t('app.answers.moderate.approved')
-    else
-      redirect_to admin_question_answers_url(@question), alert: @answer.errors.full_message.to_sentence
-    end
+    save_answer
   end
 
   private
@@ -65,5 +57,13 @@ class Admin::AnswersController < AdminController
 
   def fetch_answer
     @answer = Answer.find(params[:id])
+  end
+
+  def save_answer
+    if @answer.save
+      redirect_to admin_question_answers_url(@question), notice: t('app.answers.moderate.approved')
+    else
+      redirect_to admin_question_answers_url(@question), alert: @answer.errors.full_messages.to_sentence
+    end
   end
 end
