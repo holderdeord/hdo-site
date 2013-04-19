@@ -1,0 +1,20 @@
+<h1><%= @issue.title %></h1>
+
+<p><%= @issue.description %></p>
+
+<div class="positions">
+  <% @issue.position_groups.each do |label, parties| %>
+    <% if parties.any? %>
+      <div class="position <%= label.key %>">
+        <h2><%= label.text %></h2>
+        <ul>
+        <% parties.each do |party| %>
+          <li class="party <%= party.name %>">
+            <%= party.name %>
+          </li>
+        <% end %>
+        </ul>
+      </div>
+    <% end %>
+  <% end %>
+</div>

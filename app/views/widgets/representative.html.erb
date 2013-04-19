@@ -1,0 +1,14 @@
+<h1><%= @representative.full_name %></h1>
+
+<p><%= @representative.district.name %></p>
+<p><%= @representative.latest_party.try(:name) %></p>
+
+<ul>
+<% @issues.each do |issue| %>
+  <li>
+    <%= issue.stats.text_for(@representative, name: '', html: true) %>
+    <%= t 'app.lang.infinitive_particle' %>
+    <%= link_to issue.downcased_title, issue, target: '_top' %>
+  </li>
+<% end %>
+</ul>
