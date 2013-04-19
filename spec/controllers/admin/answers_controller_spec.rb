@@ -22,7 +22,7 @@ describe Admin::AnswersController do
       a = answer
 
       get :index, default_params
-      assigns(:answers).should eq([a])
+      assigns(:answers_by_status).should eq({'pending' => [a]})
     end
   end
 
