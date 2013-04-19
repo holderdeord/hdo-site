@@ -107,6 +107,15 @@ module Hdo
             ]
           end
 
+          it 'does closes current memberships with the current date if there are no new ones' do
+            import ['JUSTIS', "2013-04-19", nil]
+            import # nothing
+
+            actual_memberships.should == [
+             ['JUSTIS', "2013-04-19", Date.today.strftime("%Y-%m-%d")]
+            ]
+          end
+
           it 'extends existing memberships' do
             import ['JUSTIS', '2008-01-01', nil]
             import ['JUSTIS', '2010-01-01', nil]

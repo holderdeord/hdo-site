@@ -40,7 +40,9 @@ module Hdo
             to_adjust.each { |new| adjust(existing, new) }
             to_create -= to_adjust
           else
-            close(existing) if existing.current?
+            if existing.current?
+              close(existing, to_create.any? ? (today - 1) : today)
+            end
           end
         end
 
@@ -51,8 +53,8 @@ module Hdo
         existing.committee == committee_for(membership)
       end
 
-      def close(existing)
-        existing.update_attributes! end_date: today - 1
+      def close(existing, close_date)
+        existing.update_attributes! end_date: close_date
       end
 
       def adjust(existing, membership)
