@@ -1,18 +1,13 @@
 class Question < ActiveRecord::Base
+  include Workflows::QuestionWorkflow
   attr_accessible :body, :from_name, :from_email, :representative
 
   belongs_to :representative
   has_many :answers, dependent: :destroy
 
-  STATUSES = %w[pending approved rejected]
-
   validates :body,           presence: true
-  validates :status,         presence: true, inclusion: { in: STATUSES }
   validates :from_email,     email: true, allow_nil: true
   validates :representative, presence: true # TODO: what representatives can be asked questions? (time)
-
-  scope :approved, lambda { where(:status => 'approved').order('updated_at DESC') }
-  scope :pending, lambda { where(:status => 'pending').order('created_at DESC') }
 
   def self.all_by_status
     grouped = all.group_by { |q| q.status }
@@ -25,18 +20,6 @@ class Question < ActiveRecord::Base
 
   def teaser
     body.truncate(100)
-  end
-
-  def pending?
-    status == 'pending'
-  end
-
-  def rejected?
-    status == 'rejected'
-  end
-
-  def approved?
-    status == 'approved'
   end
 
   def status_text

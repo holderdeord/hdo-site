@@ -40,12 +40,12 @@ class Admin::AnswersController < AdminController
   end
 
   def reject
-    @answer.reject
+    @answer.reject!
     save_answer
   end
 
   def approve
-    @answer.approve
+    @answer.approve!
     save_answer
   end
 

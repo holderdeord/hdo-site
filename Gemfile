@@ -122,6 +122,9 @@ gem 'net-http-persistent'
 # cors
 gem 'rack-cors', :require => 'rack/cors'
 
+# state machine
+gem 'workflow'
+
 # data import
 gem 'hdo-storting-importer', "~> 0.3.4", require: 'hdo/storting_importer'
 # gem 'hdo-storting-importer', :path => File.expand_path("../../hdo-storting-importer", __FILE__)
