@@ -10,7 +10,7 @@ Hdo::Application.routes.draw do
   end
 
   namespace :representative do
-    resources :questions, only: [:index, :show] do
+    resources :questions, only: [:show] do
       resources :answers, only: [:create, :destroy]
     end
 

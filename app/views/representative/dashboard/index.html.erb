@@ -1,16 +1,24 @@
 <div class="container-fluid">
-  <h2>Hei <%= current_representative.name  %></h2>
+  <h2>Hei <%= current_representative.name %>!</h2>
 
   <% if AppConfig.questions_enabled %>
-
-    <div class="row-fluid">
-      <h3><%= @pending_questions.count %> <%= Question.model_name.human(count: 2) %> <%= link_to t('app.questions.status.pending').downcase, representative_questions_path %></h3>
-      <ul>
-        <% @pending_questions.each do |q| %>
-          <li><%= q.teaser %></li>
-        <% end %>
-      </ul>
-    </div>
-
+  <table class="table table-condensed table-hover">
+    <thead>
+      <th>Fra</th>
+      <th>Dato</th>
+      <th>Spørsmål</th>
+      <th></th>
+    </thead>
+    <tbody>
+      <% @questions.each do |question| %>
+        <tr>
+          <td><%= question.from_name %></td>
+          <td><%= l question.updated_at, format: :text_time %></td>
+          <td><%= link_to question.body, representative_question_path(question) %></td>
+          <td></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
   <% end %>
 </div>

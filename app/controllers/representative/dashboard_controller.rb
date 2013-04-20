@@ -1,5 +1,5 @@
 class Representative::DashboardController < RepresentativeController
   def index
-    @pending_questions = Question.pending
+    @questions = Question.approved.where("representative_id = ?", current_representative)
   end
 end

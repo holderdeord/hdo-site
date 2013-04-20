@@ -3,10 +3,6 @@
 <nav class="pull-right">
 
   <% if representative_signed_in? %>
-    <% if AppConfig.questions_enabled %>
-      <%= link_to t('app.questions_and_answers.short'), representative_questions_path %>
-    <% end %>
-
     <%= link_to t('app.my_page'), representative_path(current_representative) %>
     <%= link_to t('app.logout'), destroy_representative_session_path, method: 'delete' %>
   <% else %>
