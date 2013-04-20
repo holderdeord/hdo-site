@@ -15,7 +15,7 @@
       <ul class="nav multiple-select">
         <% categories.each do |category| %>
           <% category.children.each do |subcategory| %>
-            <li><%= link_to subcategory.human_name, promises_path(category_id: category.id, subcategory_id: subcategory.id, party_slug: @party_slug %></li>
+            <li><%= link_to subcategory.human_name, promises_path(category_id: category.id, subcategory_id: subcategory.id, party_slug: @party_slug) %></li>
           <% end %>
         <% end %>
       </ul>
