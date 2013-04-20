@@ -1,0 +1,47 @@
+<div class="categories">
+  <!-- VISIBLE IN DESKTOP -->
+  <div class="row span12 well well-small">
+    <div class="span3">
+      <h6>Hovedkategorier</h6>
+      <ul class="nav multiple-select">
+      <% categories.each do |category| %>
+        <li><%= link_to category.human_name, promises_path(category_id: category.id) %></li>
+      <% end %>
+      </ul>
+    </div>
+
+    <div class="span3">
+      <h6>Underkategorier</h6>
+      <ul class="nav multiple-select">
+        <% categories.each do |category| %>
+          <% category.children.each do |subcategory| %>
+            <li><%= link_to subcategory.human_name, promises_path(category_id: category.id, subcategory_id: subcategory.id) %></li>
+          <% end %>
+        <% end %>
+      </ul>
+    </div>
+
+    <div class="span3">
+      <h6>Partier</h6>
+      <ul class="nav multiple-select">
+        <% parties.each do |party| %>
+          <li><%= link_to party.name, promises_path %></li>
+        <% end %>
+      </ul>
+    </div>
+
+  </div>
+
+
+  <!-- VISIBLE IN MOBILE --> 
+<div class="hidden-desktop">
+  <select class="categories">
+    <option>Velg kategori</option>
+    <% categories.each do |category| %>
+      <option data-category-id="<%= category.id %>"><%= category.human_name %></option>
+    <% end %>
+  </select>
+  <select id="subcategory-dropdown" class="hidden">
+    <option>Velg underkategori</option>
+  </select>
+</div>

@@ -4,6 +4,8 @@ class PromisesController < ApplicationController
   def index
     @categories = Category.where(:main => true).includes(:children)
     @parties    = Party.order(:name)
+    @category_id = params[:category_id]
+    @subcategory_id = params[:subcategory_id]
  end
 
   protected
@@ -11,4 +13,5 @@ class PromisesController < ApplicationController
   def find_promise
     @promise = Promise.find(params[:id])
   end
+
 end
