@@ -90,9 +90,6 @@ footer {
 }
 
 
-
-
-
 /* Party specific colors */
 .Fremskrittspartiet        {color: #003798}
 .Høyre                     {color: #005595}
@@ -101,3 +98,23 @@ footer {
 .Arbeiderpartiet           {color: #df1a22}
 .Senterpartiet             {color: #008542}
 .Sosialistisk.Venstreparti {color: #db0027}
+
+
+/* Widget-specific */
+.widget {
+  &.representative {
+    padding-top: 200px;
+    background: -webkit-linear-gradient(top, rgba(255,255,255,0) 25%, rgba(255,255,255,1) 70%);
+    .representative-image {
+      top: 0;
+      position: absolute;
+      z-index: -1;
+    }
+  }
+  &.party {
+
+  }
+  &.issue {
+
+  }
+}
