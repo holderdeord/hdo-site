@@ -32,7 +32,7 @@ class Answer < ActiveRecord::Base
 
   def reject!
     reject
-    save
+    save!
   end
 
   def approve
@@ -41,7 +41,7 @@ class Answer < ActiveRecord::Base
 
   def approve!
     approve
-    save
+    save!
   end
 
   def rejected?

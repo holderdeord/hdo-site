@@ -70,11 +70,11 @@ class Representative < ActiveRecord::Base
   end
 
   def attempt_set_password(params)
-    p = {
+    attrs = {
       password:              params[:password],
       password_confirmation: params[:password_confirmation]
     }
-    update_attributes(p)
+    update_attributes(attrs)
   end
   # new function to return whether a password has been set
   def has_no_password?

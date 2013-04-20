@@ -34,7 +34,7 @@ class ConfirmationsController < Devise::ConfirmationsController
         do_confirm
       end
     end
-    if !@confirmable.errors.empty?
+    if @confirmable.errors.any?
       self.resource = @confirmable
       render 'representative/confirmations/new'
     end
@@ -44,7 +44,7 @@ class ConfirmationsController < Devise::ConfirmationsController
 
   def with_unconfirmed_confirmable
     @confirmable = Representative.find_or_initialize_with_error_by(:confirmation_token, params[:confirmation_token])
-    if !@confirmable.new_record?
+    unless @confirmable.new_record?
       @confirmable.only_if_unconfirmed { yield }
     end
   end
