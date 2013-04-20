@@ -78,8 +78,12 @@ Hdo::Application.routes.draw do
   # promises
   #
 
-  resources :promises, only: [:index]
-  get 'promises/page/:page' => 'promises#index'
+  resources :promises, only: [:index, :show] do
+    member do
+      get 'promises/page/:page' => 'promises#index'
+      get 'promises/show/:promise' => 'promises#show'
+    end
+  end
 
   #
   # parliament_issues
