@@ -12,12 +12,12 @@
       </ul>
     </div>
 
-    <div class="span4">
+    <div class="span4" id="subcategories-select">
       <h6>Underkategorier</h6>
       <ul class="nav multiple-select">
         <% categories.each do |category| %>
           <% category.children.each do |subcategory| %>
-            <li class="<%= subcategory.id == @subcategory_id.to_i ? 'active' : '' %>">
+            <li class="<%= subcategory.id == @subcategory_id.to_i ? 'active' : ''; subcategory.parent_id == @category_id.to_i ? '' : 'hidden' %>">
               <%= link_to subcategory.human_name, promises_path(category_id: category.id, subcategory_id: subcategory.id, party_slug: @party_slug) %>
             </li>
           <% end %>
