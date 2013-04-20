@@ -8,7 +8,7 @@ class PromisesController < ApplicationController
     @parties    = Party.order(:name)
     @category_id = params[:category_id]
     @subcategory_id = params[:subcategory_id]
- end
+    @party_slug = params[:party_slug]
     render_promises_index()
   end
 
@@ -17,7 +17,6 @@ class PromisesController < ApplicationController
   end
 
   protected
-
 
   def find_promise
     @promise = Promise.find(params[:id])
@@ -28,20 +27,17 @@ class PromisesController < ApplicationController
   def render_promises_index(opts = {})
     @promises = Promise.all(:order => 'date')
 
-    category_id = params[:category_id]
-    subcategory_id = params[:subcategory_id]
-    if subcategory_id
-      @promises = Category.find(subcategory_id).promises
-    elsif category_id
-      @promises = Category.find(category_id).promises
+    if @subcategory_id
+      @promises = Category.find(@subcategory_id).promises
+    elsif @category_id
+      @promises = Category.find(@category_id).promises
     end
 
-    party_slug = params[:party_slug]
-    if party_slug && party_slug == "government"
+    if @party_slug && @party_slug == "government"
       parties = Party.in_government
       @promises = @promises.select { |p| (p.parties - parties).empty? }
-    elsif party_slug
-      party = Party.find(party_slug)
+    elsif @party_slug
+      party = Party.find(@party_slug)
       @promises = @promises.select { |p| p.parties.include? party }
     end
 
