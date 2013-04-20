@@ -1,4 +1,6 @@
 class WidgetsController < ApplicationController
+  before_filter { assert_feature(:widgets) }
+
   layout 'widgets'
   hdo_caches_page :load
 
