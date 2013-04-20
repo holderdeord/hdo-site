@@ -23,6 +23,12 @@ class PromisesController < ApplicationController
 
   def render_promises_index(opts = {})
     @promises = Promise.all(:order => 'date')
+
+    categoryId = params[:category_id]
+    if categoryId
+      @promises = Category.find(categoryId).promises
+    end
+
     @promises = @promises.paginate(:page => params[:page], :per_page => DEFAULT_PER_PAGE)
 
     respond_to do |format|
