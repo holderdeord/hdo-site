@@ -1,13 +1,16 @@
 <%= spinner_tag %>
-<div class="promises-results">
+<ul class="promises-results unstyled">
   <%= will_paginate @promises %>
   <% @promises.each do |p| %>
-    <p class="well well-small">
-      <%= link_to p.body, p %>
-    </p>
+    <li class="row-fluid well well-small">
+      <% p.parties.each do |party| %>
+        <%= image_tag party.logo.versions[:small], alt: "#{party.name}s logo" %>
+      <% end %>
+        <%= link_to p.body, p %>
+    </li>
   <% end %>
   <%= will_paginate @promises %>
-  <div class="empty-results-message hidden">
+  <li class="empty-results-message hidden">
     <h3>Partiet har ingen løfter i denne kategorien.</h3>
-  </div>
-</div>
+  </li>
+</ul>
