@@ -5,10 +5,10 @@
 
   <h1><%= @representative.full_name %></h1>
 
-  <p  class="<%= @representative.latest_party.name %>">
-    <%= @representative.district.name %>
-    <%= @representative.latest_party.try(:name) %>
-  </p>
+  <h3>
+    <span class="district"><%= @representative.district.name %></span>
+    <span class="<%= @representative.latest_party.name %>"><%= @representative.latest_party.try(:name) %></span>
+  </h3>
 
   <ul>
   <% @issues.each do |issue| %>
