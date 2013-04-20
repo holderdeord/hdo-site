@@ -1,6 +1,6 @@
 class Representative::QuestionsController < RepresentativeController
   def index
-    @questions = Question.where("representative_id = ?", current_representative)
+    @questions = Question.approved.where("representative_id = ?", current_representative)
   end
 
   def show
