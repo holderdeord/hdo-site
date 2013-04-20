@@ -3,7 +3,7 @@ class WidgetsController < ApplicationController
   hdo_caches_page :load
 
   rescue_from ActiveRecord::RecordNotFound do
-    render 'missing' # TODO: nice error page
+    render 'missing', status: 404 # TODO: nice error page
   end
 
   def issue
