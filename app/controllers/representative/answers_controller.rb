@@ -7,7 +7,7 @@ class Representative::AnswersController < RepresentativeController
       if @answer.question
         redirect_to representative_question_path(@answer.question_id, answer: @answer), alert: @answer.errors.full_messages.to_sentence
       else
-        redirect_to representative_questions_path, alert: @answer.errors.full_messages.to_sentence
+        redirect_to representative_root_path, alert: @answer.errors.full_messages.to_sentence
       end
     end
   end
