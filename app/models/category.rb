@@ -38,6 +38,10 @@ class Category < ActiveRecord::Base
     groups
   end
 
+  def all_promises
+    Promise.joins(:categories).where("categories.id = ? or categories.parent_id = ?", id, id)
+  end
+
   def human_name
     n = name
 

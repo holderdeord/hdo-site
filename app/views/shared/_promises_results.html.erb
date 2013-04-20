@@ -6,7 +6,7 @@
       <% p.parties.each do |party| %>
         <%= image_tag party.logo.versions[:small], alt: "#{party.name}s logo" %>
       <% end %>
-        <%= link_to p.body, p %>
+      <%= link_to p.body, p %>
     </li>
   <% end %>
   <%= will_paginate @promises %>

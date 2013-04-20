@@ -30,7 +30,7 @@ class PromisesController < ApplicationController
     if @subcategory_id
       @promises = Category.find(@subcategory_id).promises
     elsif @category_id
-      @promises = Category.find(@category_id).promises
+      @promises = Category.find(@category_id).all_promises
     end
 
     if @party_slug && @party_slug == "government"
