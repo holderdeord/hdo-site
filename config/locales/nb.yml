@@ -188,6 +188,7 @@ nb:
         parliament_issues: "Stortingssaker"
         external_id: "Ekstern id"
         about: "om"
+        issues: Saker
       vote_result:
         result: "Stemme"
         voted_for: 'har stemt for.'

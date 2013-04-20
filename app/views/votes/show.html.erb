@@ -29,6 +29,15 @@
 
         <dt><%= Vote.human_attribute_name :enacted %></dt>
         <dd><%= @vote.enacted_text %></dd>
+
+        <dt><%= Vote.human_attribute_name :issues %></dt>
+        <dd>
+          <ul>
+            <% @vote.issues.each do |issue| %>
+              <li><%= link_to issue.title, issue %></li>
+            <% end %>
+          </ul>
+        </dd>
       </dl>
     </div>
 
