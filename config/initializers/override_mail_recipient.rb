@@ -6,7 +6,7 @@ unless Rails.env.production?
 
     def self.anon_email(email)
       email['@'] = '_'
-      "hackaton-april+#{email}@holderdeord.no"
+      "test+#{email}@holderdeord.no"
     end
   end
   ActionMailer::Base.register_interceptor(OverrideMailRecipient)
