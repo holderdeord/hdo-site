@@ -34,6 +34,7 @@ describe WidgetsController do
   describe 'GET #representative' do
     it 'assigns the requested representative' do
       get :representative, id: representative.slug
+      response.should be_ok
 
       assigns(:representative).should be_kind_of(Representative)
     end
