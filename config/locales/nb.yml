@@ -528,7 +528,7 @@ nb:
     questions_and_answers:
       short: 'S&S'
       representative:
-        conirmation_mail_sent: "Informasjonsmail sent til %{name}"
+        confirmation_mail_sent: "Informasjonsmail sent til %{name}"
         passwd_reset_mail_sent: "Passord resatt for %{name}"
         not_found: "Kunne ikke aktivere representant!"
         forgot_password: "Glemt Passord"

@@ -4,7 +4,7 @@ class ConfirmationsController < Devise::ConfirmationsController
   skip_before_filter :require_no_authentication
   skip_before_filter :authenticate_user!
 
-  # PUT /resource/confirmation
+  # PUT /representative/confirmation
   def update
     with_unconfirmed_confirmable do
       if @confirmable.has_no_password?
@@ -25,7 +25,7 @@ class ConfirmationsController < Devise::ConfirmationsController
     end
   end
 
-  # GET /resource/confirmation?confirmation_token=abcdef
+  # GET /representative/confirmation?confirmation_token=abcdef
   def show
     with_unconfirmed_confirmable do
       if @confirmable.has_no_password?
