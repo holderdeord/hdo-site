@@ -10,8 +10,10 @@
     <%= yield %>
 
     <footer>
+      <%= image_tag asset_path('widgets/hdo_logo_footer.png'), width: '100', height: '100', alt: "Holder de ord logo" %>
+
       <p>
-        Les mer på <%= link_to 'holderdeord.no', root_url, target: '_top' %>
+        Les mer på <%= link_to 'holderdeord.no', root_url, target: '_top' %>.
       </p>
     </footer>
 

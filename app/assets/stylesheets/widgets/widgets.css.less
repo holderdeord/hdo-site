@@ -1,13 +1,13 @@
 /* Holder de ord header font */
 @font-face {
-    font-family: "Neo Sans";
-    src: font-url("/assets/NeoSansStd-Regular.eot"); /* IE9 Compat Modes */
-    src: font-url("/assets/NeoSansStd-Regular.eot?#iefix") format("embedded-opentype"); /* IE6-IE8 */
-    src: font-url("/assets/NeoSansStd-Regular.otf") format("opentype");
-    src: font-url("/assets/NeoSansStd-Regular.woff") format("woff"); /* Modern Browsers */
-    src: font-url("/assets/NeoSansStd-Regular.ttf") format("truetype"); /* Safari, Android, iOS */
-    font-weight: normal;
-    font-style: normal;
+  font-family: "Neo Sans";
+  src: font-url("/assets/NeoSansStd-Regular.eot"); /* IE9 Compat Modes */
+  src: font-url("/assets/NeoSansStd-Regular.eot?#iefix") format("embedded-opentype"); /* IE6-IE8 */
+  src: font-url("/assets/NeoSansStd-Regular.otf") format("opentype");
+  src: font-url("/assets/NeoSansStd-Regular.woff") format("woff"); /* Modern Browsers */
+  src: font-url("/assets/NeoSansStd-Regular.ttf") format("truetype"); /* Safari, Android, iOS */
+  font-weight: normal;
+  font-style: normal;
 }
 
 body {
@@ -32,16 +32,36 @@ p {
   line-height: 1.4em;
 }
 
+a {
+  color: #019ea2;
+  text-decoration: none;
+  &:hover {
+    text-decoration: underline;
+  };
+}
+
 footer {
   position: absolute;
   font-size: 0.85em;
-  color: #666;
-  left: 2px;
-  right: 2px;
-  bottom: 2px;
-  height: 50px;
-  padding: 0 10px;
-  border-top: 1px solid #ddd;
+  color: #708b8c;
+  left: 1px;
+  right: 1px;
+  bottom: 1px;
+  height: 40px;
+  padding: 5px 9px 5px 50px;
+  background-color: #dcf1f2;
+  border-top: 1px solid #cfe4e5;
+  p {
+    margin: 0;
+    line-height: 40px;
+  }
+  img {
+    height: 32px;
+    width: 32px;
+    position: absolute;
+    left: 10px;
+    top: 9px;
+  }
 }
 
 .positions {
@@ -65,17 +85,19 @@ footer {
       margin: 0;
       padding: 0;
       list-style: none;
-      li {
-        /* Party specific colors */
-        &.Fremskrittspartiet        {color: #003798}
-        &.Høyre                     {color: #005595}
-        &.Venstre                   {color: #83b660}
-        &.Kristelig.Folkeparti      {color: #efae52}
-        &.Arbeiderpartiet           {color: #df1a22}
-        &.Senterpartiet             {color: #008542}
-        &.Sosialistisk.Venstreparti {color: #db0027}
-      }
     }
   }
-
 }
+
+
+
+
+
+/* Party specific colors */
+.Fremskrittspartiet        {color: #003798}
+.Høyre                     {color: #005595}
+.Venstre                   {color: #83b660}
+.Kristelig.Folkeparti      {color: #efae52}
+.Arbeiderpartiet           {color: #df1a22}
+.Senterpartiet             {color: #008542}
+.Sosialistisk.Venstreparti {color: #db0027}
