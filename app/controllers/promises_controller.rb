@@ -28,9 +28,21 @@ class PromisesController < ApplicationController
   def render_promises_index(opts = {})
     @promises = Promise.all(:order => 'date')
 
-    categoryId = params[:category_id]
-    if categoryId
-      @promises = Category.find(categoryId).promises
+    category_id = params[:category_id]
+    subcategory_id = params[:subcategory_id]
+    if subcategory_id
+      @promises = Category.find(subcategory_id).promises
+    elsif category_id
+      @promises = Category.find(category_id).promises
+    end
+
+    party_slug = params[:party_slug]
+    if party_slug && party_slug == "government"
+      parties = Party.in_government
+      @promises = @promises.select { |p| (p.parties - parties).empty? }
+    elsif party_slug
+      party = Party.find(party_slug)
+      @promises = @promises.select { |p| p.parties.include? party }
     end
 
     @promises = @promises.paginate(:page => params[:page], :per_page => DEFAULT_PER_PAGE)
