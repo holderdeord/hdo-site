@@ -37,5 +37,6 @@
     <script>HDO.setupSearchWidget();</script>
     <%= yield :document_ready %>
 
+    <%= ::NewRelic::Agent.browser_timing_footer rescue "" %>
   </body>
 </html>

@@ -1,0 +1,11 @@
+<h1 class="<%= @party.name %>"><%= @party.name %></h1>
+
+<ul>
+<% @issues.each do |issue| %>
+  <li>
+    <%= issue.stats.text_for(@party, name: '', html: true) %>
+    <%= t 'app.lang.infinitive_particle' %>
+    <%= link_to issue.downcased_title, issue, target: '_top' %>
+  </li>
+<% end %>
+</ul>

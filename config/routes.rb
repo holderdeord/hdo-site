@@ -41,7 +41,8 @@ Hdo::Application.routes.draw do
 
   resources :issues, only: [:index, :show, :votes] do
     member do
-      get 'votes' => 'issues#votes'
+      get 'votes'  => 'issues#votes'
+      get 'widget' => 'widgets#issue'
     end
   end
 
@@ -70,6 +71,7 @@ Hdo::Application.routes.draw do
   resources :parties,    only: [:index, :show] do
     member do
       get 'positions'
+      get 'widget' => 'widgets#party'
     end
   end
   resources :committees, only: [:index, :show]
@@ -95,6 +97,7 @@ Hdo::Application.routes.draw do
   resources :representatives, only: [:index, :show] do
     member do
       get 'page/:page' => 'representatives#show'
+      get 'widget'     => 'widgets#representative'
     end
   end
 
@@ -113,6 +116,12 @@ Hdo::Application.routes.draw do
   end
 
   get 'votes/page/:page' => 'votes#index'
+
+  #
+  # widgets
+  #
+
+  get 'widgets' => 'widgets#load', format: :js
 
   #
   # home

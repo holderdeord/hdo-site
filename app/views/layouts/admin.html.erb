@@ -31,5 +31,7 @@
 
     <%= javascript_include_tag "application" %>
     <%= yield :document_ready %>
-    </body>
+
+    <%= ::NewRelic::Agent.browser_timing_footer rescue "" %>
+  </body>
 </html>

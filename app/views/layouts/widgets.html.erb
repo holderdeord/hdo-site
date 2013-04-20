@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!--[if lt IE 9]>
+      <%= javascript_include_tag "conditional/html5" %>
+    <![endif]-->
+    <%= stylesheet_link_tag 'widgets/widgets' %>
+  </head>
+  <body>
+    <%= yield %>
+
+    <footer>
+      <%= image_tag asset_path('widgets/hdo_logo_footer.png'), width: '100', height: '100', alt: "Holder de ord logo" %>
+
+      <p>
+        Les mer på <%= link_to 'holderdeord.no', root_url, target: '_top' %>.
+      </p>
+    </footer>
+
+    <% if nrk? %>
+      <script src="http://nrk.no/serum/latest/js/sandbox.js"></script>
+    <% end %>
+  </body>
+</html>

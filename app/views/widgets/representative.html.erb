@@ -1,0 +1,23 @@
+
+<article class="widget representative">
+
+  <%= image_tag @representative.image.versions[:medium], width: '240', height: '320', class: 'representative-image', alt: @representative.full_name %>
+
+  <h1><%= @representative.full_name %></h1>
+
+  <p  class="<%= @representative.latest_party.name %>">
+    <%= @representative.district.name %>
+    <%= @representative.latest_party.try(:name) %>
+  </p>
+
+  <ul>
+  <% @issues.each do |issue| %>
+    <li>
+      <%= issue.stats.text_for(@representative, name: '', html: true) %>
+      <%= t 'app.lang.infinitive_particle' %>
+      <%= link_to issue.downcased_title, issue, target: '_top' %>
+    </li>
+  <% end %>
+  </ul>
+
+</article>

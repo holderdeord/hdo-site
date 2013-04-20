@@ -1,0 +1,84 @@
+var HDO = HDO || {};
+
+/*
+  Usage example:
+
+    <div class="hdo-issue-widget" height="500" width="20%" data-issue-id="fjerne-formueskatten">Laster sak...</div>
+    <script src="http://holderdeord.no/widgets"></script>
+*/
+
+HDO.widgets = (function () {
+  this.baseUrl = '<%= request.scheme %>://<%= request.host %>:<%= request.port %>/';
+
+  function extractWidgetOptions(type, el) {
+      var url;
+
+      function addIssueParams(el, url) {
+        var issues = el.getAttribute('data-issue-ids');
+        var count = el.getAttribute('data-issue-count');
+
+        url += '?'
+
+        if (issues && issues.length)
+          url += 'issues=' + encodeURIComponent(issues);
+
+        if (count && count.length)
+          url += 'count=' + encodeURIComponent(count);
+
+        return url;
+      }
+
+      if (type == "issue") {
+          url = baseUrl + "issues/" + el.getAttribute('data-issue-id') + '/widget';
+      } else if (type == "representative") {
+          url = baseUrl + "representatives/" + el.getAttribute('data-representative-id') + '/widget';
+          url = addIssueParams(el, url);
+      } else if (type == "party") {
+          url = baseUrl + "parties/" + el.getAttribute('data-party-id') + '/widget';
+          url = addIssueParams(el, url);
+      } else {
+          throw new Error('invalid HDO widget type: ' + type);
+      }
+
+      return {
+          'url': url,
+          'height': el.getAttribute('height') || '500px',
+          'width': el.getAttribute('width') || '100%'
+      };
+  }
+
+  function createWidgetFrame(type, element) {
+      var opts = extractWidgetOptions(type, element),
+          iframe = document.createElement('iframe');
+
+      iframe.src = opts.url;
+      iframe.width = opts.width;
+      iframe.height = opts.height;
+      iframe.frameBorder = 0;
+      iframe.scrolling = 'no';
+      iframe.title = 'holderdeord.no widget';
+
+      element.parentNode.replaceChild(iframe, element);
+  }
+
+  return {
+      init: function (type) {
+          var nodes = document.getElementsByClassName('hdo-' + type + '-widget');
+          var elements = []
+
+          for (var i = 0; i < nodes.length; i++) {
+            elements.push(nodes[i]);
+          }
+
+          for (var i = 0; i < elements.length; i++) {
+            createWidgetFrame(type, elements[i]);
+          }
+
+
+      }
+  };
+})();
+
+HDO.widgets.init('issue');
+HDO.widgets.init('representative');
+HDO.widgets.init('party');
