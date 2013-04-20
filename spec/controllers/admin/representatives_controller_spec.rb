@@ -39,5 +39,10 @@ describe Admin::RepresentativesController do
       representative.first_name.should == first_name
       representative.last_name.should == last_name
     end
+
+    it "should activate the representative"
+    it "should not attempt to activate a representative with no email"
+    it "should reset the representative's password"
+    it "should not attempt to activate a representative with no email"
   end
 end
