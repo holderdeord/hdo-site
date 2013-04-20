@@ -1,5 +1,12 @@
 <%= spinner_tag %>
 <div class="promises-results">
+  <%= will_paginate @promises %>
+  <% @promises.each do |p| %>
+    <p class="well well-small">
+      <%= link_to p.body, p %>
+    </p>
+  <% end %>
+  <%= will_paginate @promises %>
   <div class="empty-results-message hidden">
     <h3>Partiet har ingen løfter i denne kategorien.</h3>
   </div>
