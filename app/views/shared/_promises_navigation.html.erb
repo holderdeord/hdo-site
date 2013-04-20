@@ -5,7 +5,9 @@
       <h6>Hovedkategorier</h6>
       <ul class="nav multiple-select">
       <% categories.each do |category| %>
-        <li><%= link_to category.human_name, promises_path(category_id: category.id, party_slug: @party_slug) %></li>
+        <li class="<%= category.id == @category_id.to_i ? 'active' : '' %>">
+          <%= link_to category.human_name, promises_path(category_id: category.id, party_slug: @party_slug) %>
+        </li>
       <% end %>
       </ul>
     </div>
@@ -15,7 +17,9 @@
       <ul class="nav multiple-select">
         <% categories.each do |category| %>
           <% category.children.each do |subcategory| %>
-            <li><%= link_to subcategory.human_name, promises_path(category_id: category.id, subcategory_id: subcategory.id, party_slug: @party_slug) %></li>
+            <li class="<%= subcategory.id == @subcategory_id.to_i ? 'active' : '' %>">
+              <%= link_to subcategory.human_name, promises_path(category_id: category.id, subcategory_id: subcategory.id, party_slug: @party_slug) %>
+            </li>
           <% end %>
         <% end %>
       </ul>
@@ -25,7 +29,9 @@
       <h6>Partier</h6>
       <ul class="nav multiple-select">
         <% parties.each do |party| %>
-          <li><%= link_to party.name, promises_path(category_id: @category_id, subcategory_id: @subcategory_id, party_slug: party.slug) %></li>
+          <li class="<%= party.slug == @party_slug ? 'active' : '' %>">
+            <%= link_to party.name, promises_path(category_id: @category_id, subcategory_id: @subcategory_id, party_slug: party.slug) %>
+          </li>
         <% end %>
       </ul>
     </div>
