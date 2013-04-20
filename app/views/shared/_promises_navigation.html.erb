@@ -1,4 +1,4 @@
-<div class="well well-small">
+<div class="well well-small" id="top">
   <!-- VISIBLE IN DESKTOP -->
   <div class="row-fluid">
     <div class="span4">
@@ -9,7 +9,7 @@
         </li>
         <% categories.each do |category| %>
           <li class="<%= category.id == @category_id.to_i ? 'active' : '' %>">
-            <%= link_to category.human_name, promises_path(category_id: category.id, party_slug: @party_slug) %>
+            <%= link_to category.human_name, promises_path(category_id: category.id, party_slug: @party_slug, anchor: 'top') %>
           </li>
         <% end %>
       </ul>
@@ -18,13 +18,10 @@
     <div class="span4" id="subcategories-select">
       <h6>Underkategorier</h6>
       <ul class="nav multiple-select">
-        <li>
-          <%= link_to "Vis alle", promises_path(category_id: @category_id, party_slug: @party_slug) %>
-        </li>
         <% categories.each do |category| %>
           <% category.children.each do |subcategory| %>
             <li class="<%= subcategory.id == @subcategory_id.to_i ? 'active' : ''; subcategory.parent_id == @category_id.to_i ? '' : 'hidden' %>">
-              <%= link_to subcategory.human_name, promises_path(category_id: category.id, subcategory_id: subcategory.id, party_slug: @party_slug) %>
+              <%= link_to subcategory.human_name, promises_path(category_id: category.id, subcategory_id: subcategory.id, party_slug: @party_slug, anchor: 'top') %>
             </li>
           <% end %>
         <% end %>
@@ -39,7 +36,7 @@
         </li>
         <% parties.each do |party| %>
           <li class="<%= party.slug == @party_slug ? 'active' : '' %>">
-            <%= link_to party.name, promises_path(category_id: @category_id, subcategory_id: @subcategory_id, party_slug: party.slug) %>
+            <%= link_to party.name, promises_path(category_id: @category_id, subcategory_id: @subcategory_id, party_slug: party.slug, anchor: 'top') %>
           </li>
         <% end %>
       </ul>
