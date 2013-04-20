@@ -1,5 +1,5 @@
 class Question < ActiveRecord::Base
-  include Workflows::QuestionWorkflow
+  include Workflows::BaseQuestionAndAnswerWorkflow
   attr_accessible :body, :from_name, :from_email, :representative
 
   belongs_to :representative
