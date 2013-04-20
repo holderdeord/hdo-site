@@ -1,11 +1,18 @@
-<h1 class="<%= @party.name %>"><%= @party.name %></h1>
+<article class="widget party">
 
-<ul>
-<% @issues.each do |issue| %>
-  <li>
-    <%= issue.stats.text_for(@party, name: '', html: true) %>
-    <%= t 'app.lang.infinitive_particle' %>
-    <%= link_to issue.downcased_title, issue, target: '_top' %>
-  </li>
-<% end %>
-</ul>
+  <h1 class="<%= @party.name %>">
+    <%= image_tag @party.logo, alt: "#{@party.name}s logo", width: '96', height: '96' %>
+    <%= @party.name %>
+  </h1>
+
+  <ul class="votes">
+  <% @issues.each do |issue| %>
+    <li class="vote">
+      <%= issue.stats.text_for(@party, name: '', html: true) %>
+      <%= t 'app.lang.infinitive_particle' %>
+      <%= link_to issue.downcased_title, issue, target: '_top' %>
+    </li>
+  <% end %>
+  </ul>
+
+</article>
