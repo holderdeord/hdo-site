@@ -13,7 +13,7 @@
       <% if @category %>
         <p>
           <small>
-            Valgt kategori: <strong><%= @category.human_name %></strong>
+            Valgt: <strong><%= @category.human_name %></strong>
             (<%= link_to "Vis alle", show_all_except_category %>)
           </small>
         </p>
@@ -35,7 +35,7 @@
       <% if @subcategory %>
         <p>
           <small>
-            Valgt underkategori: <strong><%= @subcategory.human_name %></strong>
+            Valgt: <strong><%= @subcategory.human_name %></strong>
             (<%= link_to "Vis alle", show_all_except_subcategory %>)
           </small>
         </p>
@@ -54,7 +54,7 @@
       <% if @party %>
         <p>
           <small>
-            Valgt parti: <strong><%= @party.name %></strong>
+            Valgt: <strong><%= @party.name %></strong>
             (<%= link_to "Vis alle", show_all_except_party %>)
           </small>
         </p>
