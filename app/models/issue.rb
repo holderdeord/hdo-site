@@ -33,6 +33,7 @@ class Issue < ActiveRecord::Base
   validates_inclusion_of :status, in: STATUSES
 
   has_and_belongs_to_many :categories, uniq: true
+  has_and_belongs_to_many :questions, uniq: true, order: "updated_at DESC"
 
   belongs_to :last_updated_by, foreign_key: 'last_updated_by_id', class_name: 'User'
   belongs_to :editor, class_name: 'User'

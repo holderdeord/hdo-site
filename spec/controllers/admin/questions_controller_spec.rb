@@ -84,4 +84,11 @@ describe Admin::QuestionsController do
     end
   end
 
+  describe "PUT edit" do
+    it "fetches the question"
+    it "lets you edit the texts"
+    it "lets you add issues"
+    it "lets you remove issues"
+  end
+
 end

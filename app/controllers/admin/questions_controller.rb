@@ -9,6 +9,22 @@ class Admin::QuestionsController < AdminController
   def edit
   end
 
+  def update
+    attrs     = normalize_blanks(params[:question])
+    rep       = attrs.delete(:representative)
+    issue_ids = attrs.delete(:issues).reject!(&:blank?)
+
+    @question.update_attributes(attrs)
+    @question.representative = Representative.find(rep) if rep
+    @question.issues         = Issue.find(issue_ids) if issue_ids
+
+    if @question.save
+      redirect_to admin_questions_path, notice: t('app.questions.edit.updated')
+    else
+      redirect_to edit_admin_question_path(@question), alert: @question.errors.full_messages.to_sentence
+    end
+  end
+
   def approve
     @question.status = 'approved'
     save_question

@@ -12,6 +12,7 @@
     <th></th>
     <th></th>
     <th></th>
+    <th></th>
   </tr>
 
 <% questions.each do |question| %>
@@ -38,6 +39,7 @@
       </small>
     </td>
 
+    <td><%= link_to t('app.edit'), edit_admin_question_path(question), method: :get, class: 'btn btn-small btn-primary' %></td>
     <td><%= link_to t('app.questions.edit.approve'), approve_admin_question_path(question), method: :put, class: 'btn btn-small btn-success' %></td>
     <td><%= link_to t('app.questions.edit.reject'), reject_admin_question_path(question), method: :put, class: 'btn btn-small btn-warning' %></td>
     <td><%= link_to t('app.destroy'), admin_question_path(question), method: :delete, class: 'btn btn-small btn-danger',
