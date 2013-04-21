@@ -10,12 +10,12 @@
     <%= yield %>
 
     <footer>
-      <a href="http://holderdeord.no" target: '_top'>
+      <%= link_to root_url, target: '_top' do %>
         <%= image_tag asset_path('widgets/hdo_logo_footer.png'), width: '100', height: '100', alt: "Holder de ord logo" %>
         <p>
           Les mer på holderdeord.no.
         </p>
-      </a>
+      <% end %>
     </footer>
 
     <% if nrk? %>
