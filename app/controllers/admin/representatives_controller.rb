@@ -50,7 +50,7 @@ class Admin::RepresentativesController < AdminController
   end
 
   def with_representative(&block)
-    if @representative
+    if @representative && @representative.email
       yield
     else
       redirect_to admin_representatives_path, alert: t('app.questions_and_answers.representative.not_found')
