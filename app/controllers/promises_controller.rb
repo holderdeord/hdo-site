@@ -25,7 +25,7 @@ class PromisesController < ApplicationController
   private
 
   def render_promises_index(opts = {})
-    @promises = Promise.includes(:issues).all(:order => 'date')
+    @promises = Promise.includes(:issues, :parties).all(:order => 'date')
 
     if @subcategory
       @promises = Category.find(@subcategory.id).promises
@@ -33,10 +33,7 @@ class PromisesController < ApplicationController
       @promises = @category.all_promises
     end
 
-    if @party && @party.slug == "government"
-      parties = Party.in_government
-      @promises = @promises.select { |p| (p.parties - parties).empty? }
-    elsif @party
+    if @party
       @promises = @promises.select { |p| p.parties.include? @party }
     end
 

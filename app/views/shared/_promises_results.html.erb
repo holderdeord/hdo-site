@@ -5,13 +5,13 @@
     <li class="media promise">
       <div class="pull-left">
         <% p.parties.each do |party| %>
-          <%= image_tag party.logo.versions[:medium], alt: "#{party.name}s logo" %>
+          <%= image_tag party.logo.versions[:small], {alt: "#{party.name}s logo", class: "media-object"} %>
         <% end %>
       </div>
       <div class="media-body">
-        <h4 class="media-heading">
+        <p>
           <%= p.body %>
-        </h4>
+        </p>
         <ul class="nav nav-pills">
           <li>
             <%= link_to "Løfteside", p %>
