@@ -2,17 +2,17 @@
 <div class="row-fluid">
   <div class="tabbable">
     <ul class="nav nav-tabs">
-      <% Question::STATUSES.each_with_index do |status, idx| %>
+      <% Question.workflow_spec.state_names.each_with_index do |status, idx| %>
         <li class="span4 <%= 'active' if idx == 0 %>">
-          <a href="#<%= status %>-tab" data-toggle="tab"><%= t("app.questions.status.#{status}") %> (<%= @questions_by_status[status].try(:size) || 0 %>)</a>
+          <a href="#<%= status %>-tab" data-toggle="tab"><%= t("app.questions.status.#{status.to_s}") %> (<%= @questions_by_status[status.to_s].try(:size) || 0 %>)</a>
         </li>
       <% end %>
     </ul>
 
     <div class="tab-content">
-      <% Question::STATUSES.each_with_index do |status, idx| %>
+      <% Question.workflow_spec.state_names.each_with_index do |status, idx| %>
         <div id="<%= status %>-tab" class="tab-pane <%= 'active' if idx == 0 %>">
-          <%= render partial: 'question_index_table', locals: { status: status, questions: @questions_by_status[status] || [] } %>
+          <%= render partial: 'question_index_table', locals: { status: status.to_s, questions: @questions_by_status[status.to_s] || [] } %>
         </div>
       <% end %>
     </div>
