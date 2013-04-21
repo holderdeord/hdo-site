@@ -1,0 +1,74 @@
+module PromisesHelper
+
+  def category_path_for(category)
+    opts = {
+      category_id: category.id,
+      anchor: 'top'
+    }
+
+    opts[:party_slug] = @party.slug if @party
+
+    promises_path opts
+  end
+
+  def subcategory_path_for(subcategory)
+    if @category
+      opts = {
+        category_id: @category.id,
+        subcategory_id: subcategory.id,
+        anchor: 'top'
+      }
+      
+      opts[:party_slug] = @party.slug if @party
+    end
+
+
+    promises_path opts
+  end
+
+  def party_path_for(party)
+    if @category
+      opts = {
+          category_id: @category.id,
+          anchor: 'top',
+          party_slug: party.slug
+      }
+
+      opts[:subcategory_id] = @subcategory.id if @subcategory
+    end
+
+    promises_path opts
+  end
+
+  def show_all_promises_path
+    opts = {}
+    opts[:party_slug] = @party.slug if @party
+
+    promises_path opts
+  end
+
+  def show_category_as_selected(category)
+    if @category
+      css_class = category.id == @category.id ? 'active' : ''
+    end
+
+    css_class
+  end
+
+  def show_subcategory_as_selected(subcategory)
+    if @subcategory
+      css_class = subcategory.id == @subcategory.id ? 'active' : ''
+    end
+
+    css_class
+  end
+
+  def show_party_as_selected(party)
+    if @party
+      css_class = party.slug == @party.slug ? 'active' : ''
+    end
+
+    css_class
+  end
+
+end
