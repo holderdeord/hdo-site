@@ -31,7 +31,7 @@ module PromisesHelper
         party_slug: party.slug
     }
 
-    opts[:cateogory_id] = @category.id if @category
+    opts[:category_id] = @category.id if @category
     opts[:subcategory_id] = @subcategory.id if @subcategory
 
     promises_path opts
