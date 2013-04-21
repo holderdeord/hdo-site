@@ -44,7 +44,7 @@
     </div>
 
     <div class="row-fluid">
-      <div class="control-group span5">
+      <div class="control-group span12">
         <label class="control-label"><%= Issue.model_name.human(count: 2).capitalize %></label>
         <div class="controls">
           <%= f.select :issues, question_issue_options, {}, multiple: true %>
@@ -63,6 +63,7 @@
   <script type="text/javascript" charset="utf-8">
     $(document).ready(function() {
       $("#question_issues").chosen();
+      $("#question_representative").chosen();
     });
   </script>
 <% end %>
