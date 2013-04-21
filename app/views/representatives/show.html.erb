@@ -19,7 +19,7 @@
       <p class="muted"><%= Representative.human_attribute_name(:on_leave) %></p>
     <% end %>
 
-    <dl class="representative-comitee-list">
+    <dl class="representative-committee-list">
       <% @representative.current_committees.each do |com| %>
         <dd>Medlem av <%= link_to com.name, com %></dd>
       <% end %>
