@@ -1,14 +1,21 @@
-<article class="widget issue">
+<% content_for :bodyclass do %>issue<% end %>
 
-  <h1><%= @issue.title %></h1>
+<header>
+  <h1>
+    <%= @issue.title %>
+  </h1>
+  <p>
+    <%= @issue.description %>
+  </p>
+</header>
 
-  <p><%= @issue.description %></p>
+<article>
 
   <div class="positions">
     <% @issue.position_groups.each do |label, parties| %>
       <% if parties.any? %>
         <div class="position <%= label.key %>">
-          <h2><%= label.text %></h2>
+          <h2>Har stemt <%= label.text %></h2>
           <ul>
           <% parties.each do |party| %>
             <li class="party <%= party.name %>">

@@ -1,3 +1,7 @@
+/* Variables */
+@gutter: 55px;
+@padding: 20px;
+
 /* Holder de ord header font */
 @font-face {
   font-family: "Neo Sans";
@@ -10,6 +14,10 @@
   font-style: normal;
 }
 
+html {
+  border: 3px solid #eee;
+}
+
 body {
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
@@ -17,13 +25,18 @@ body {
   -moz-font-smoothing: antialiased;
   -ms-font-smoothing: antialiased;
   font-smoothing: antialiased;
-  background: #fff 50% 0 no-repeat;
+  background-color: #fff;
   font: 15px/18px "Helvetica Neue", sans-serif;
   margin: 0;
-  border: 3px solid #eee;
+  padding-bottom: @padding*2;
+  border: 1px solid #ccc;
   word-break: break-word;
   position: relative;
   color: #000;
+}
+
+img {
+  border: none;
 }
 
 h1, h2, h3 {
@@ -35,6 +48,9 @@ h1, h2, h3 {
 
 h1 {
   font-size: 2em;
+  + p {
+    margin-top: 0;
+  }
 }
 
 h2 {
@@ -50,36 +66,60 @@ a {
   text-decoration: none;
   &:hover {
     text-decoration: underline;
-  };
+  }
+}
+
+header {
+  padding: @padding @padding 0 @padding;
+}
+
+article {
+  display: block;
+  padding: @padding/2 @padding @padding @padding;
 }
 
 footer {
   position: absolute;
   font-size: 0.85em;
-  color: #708b8c;
-  left: 1px;
-  right: 1px;
-  bottom: 1px;
-  height: 40px;
-  padding: 5px 9px 5px 50px;
-  background-color: #dcf1f2;
+  left: 0;
+  right: 0;
+  bottom: 0;
   border-top: 1px solid #cfe4e5;
+  a {
+    height: 24px;
+    display: block;
+    padding: 5px 9px 5px @padding*2.3;
+    background-color: #dcf1f2;
+    color: #708b8c;
+    -webkit-transition: 0.4s;
+    -moz-transition: 0.4s;
+    -ms-transition: 0.4s;
+    transition: 0.4s;
+    &:hover {
+      background-color: #d1eced;
+      text-decoration: none;
+      -webkit-transition: 0;
+      -moz-transition: 0;
+      -ms-transition: 0;
+      transition: 0;
+    }
+  }
   p {
     margin: 0;
-    line-height: 40px;
+    line-height: 24px;
   }
   img {
-    height: 32px;
-    width: 32px;
+    height: 20px;
+    width: 20px;
     position: absolute;
-    left: 10px;
-    top: 9px;
+    left: @padding;
+    top: 6px;
   }
 }
 
 .positions {
   .position {
-    padding-left: 45px;
+    padding-left: @gutter;
     margin: 20px 0;
     background: transparent -5px 10px no-repeat;
     &.for {
@@ -109,7 +149,7 @@ footer {
 }
 
 
-/* Party specific colors */
+/* Party specific text colors */
 .Fremskrittspartiet        {color: #003798}
 .Høyre                     {color: #005595}
 .Venstre                   {color: #83b660}
@@ -118,33 +158,56 @@ footer {
 .Senterpartiet             {color: #008542}
 .Sosialistisk.Venstreparti {color: #db0027}
 
+/* Party specific background colors */
+.background.Fremskrittspartiet        {background-color: #003798}
+.background.Høyre                     {background-color: #005595}
+.background.Venstre                   {background-color: #83b660}
+.background.Kristelig.Folkeparti      {background-color: #efae52}
+.background.Arbeiderpartiet           {background-color: #df1a22}
+.background.Senterpartiet             {background-color: #008542}
+.background.Sosialistisk.Venstreparti {background-color: #db0027}
+
+.deco-bg {
+  height: 4px;
+}
+
 
 /* Non-global styling */
 .widget {
-  padding: 20px 20px 60px 20px;
-  background: transparent 50% 0 no-repeat;
-  position: relative;
-  border: 1px solid #ccc;
   &.representative {
-    background: transparent asset-url("widgets/fade_white.png") 0 -10px repeat-x;
-    padding-top: 200px;
-  }
-  &.party {
-    h1 {
-      position: relative;
-      padding-left: 55px;
+    header {
+      display: block;
+      padding-right: 140px;
       img {
+        background-color: #fff;
         position: absolute;
-        left: 0;
-        top: -16px;
-        height: 50px;
-        width: auto;
+        right: 15px;
+        top: 15px;
+        border: 1px solid #fff;
+        box-shadow: 0 0 0 1px rgba(0,0,0,0.1), 0 0 8px rgba(0,0,0,0.2);
+        height: 160px;
+        width: 120px;
       }
     }
-    .vote {
-      margin-left: 55px;
+  }
+  &.party {
+    header {
+      display: block;
+      padding-right: 100px;
+    }
+    h1 {
+      img {
+        float: left;
+        width: 48px;
+        height: 48px;
+        margin-top: -13px;
+        margin-left: -10px;
+      }
     }
   }
   &.issue {
+    header {
+      border-top: 4px solid #000;
+    }
   }
 }
