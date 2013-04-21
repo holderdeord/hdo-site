@@ -19,6 +19,10 @@ class Answer < ActiveRecord::Base
     grouped
   end
 
+  def self.statuses
+    workflow_spec.state_names.map &:to_s
+  end
+
   def party
     representative.party_at created_at
   end

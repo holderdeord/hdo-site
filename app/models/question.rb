@@ -18,6 +18,10 @@ class Question < ActiveRecord::Base
     grouped
   end
 
+  def self.statuses
+    workflow_spec.state_names.map &:to_s
+  end
+
   def teaser
     body.truncate(100)
   end
