@@ -79,11 +79,12 @@ module PromisesHelper
   end
 
   def show_subcategory_as_selected(subcategory)
+    css_class = ''
     if @category
       css_class += subcategory.parent_id == @category.id ? '' : 'hidden'
     end
     if @subcategory
-      css_class = subcategory.id == @subcategory.id ? 'active' : ''
+      css_class += subcategory.id == @subcategory.id ? 'active' : ''
     end
 
     css_class
