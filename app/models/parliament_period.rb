@@ -9,6 +9,10 @@ class ParliamentPeriod < ActiveRecord::Base
     for_date Date.current
   end
 
+  def named(name)
+    to_a.find { |e| e.name == name }
+  end
+
   def name
     [start_date.year, end_date.year].join('-')
   end

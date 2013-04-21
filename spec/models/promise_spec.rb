@@ -99,12 +99,20 @@ describe Promise do
     issue = Issue.make!
 
     promise.promise_connections.create! issue: issue, status: 'related'
-    
+
     expect {
       promise.promise_connections.create! issue: issue, status: 'related'
     }.to raise_error(ActiveRecord::RecordInvalid)
 
     promise.issues.size.should == 1
+  end
+
+  it 'finds promises for the given parliament period' do
+    period           = ParliamentPeriod.create(start_date: Date.today, end_date: Date.today + 365)
+    included_promise = Promise.make!(date: period.start_date + 10)
+    other_promise    = Promise.make!(date: period.start_date - 10)
+
+    Promise.for_period(period).to_a.should == [included_promise]
   end
 
 end
