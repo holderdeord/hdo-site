@@ -37,6 +37,32 @@ module PromisesHelper
     promises_path opts
   end
 
+  def show_all_except_category
+    opts = {}
+
+    opts[:party_slug] = @party.slug if @party
+
+    promises_path opts
+  end
+
+  def show_all_except_party
+    opts = {}
+
+    opts[:category_id] = @category.id if @category
+    opts[:subcategory_id] = @subcategory.id if @subcategory
+
+    promises_path opts
+  end
+
+  def show_all_except_subcategory
+    opts = {}
+
+    opts[:category_id] = @category.id if @category
+    opts[:party_slug] = @party.slug if @party
+
+    promises_path opts
+  end
+
   def show_all_promises_path
     opts = {}
     opts[:party_slug] = @party.slug if @party
@@ -53,8 +79,11 @@ module PromisesHelper
   end
 
   def show_subcategory_as_selected(subcategory)
+    if @category
+      css_class = subcategory.parent_id == @category.id ? '' : 'hidden'
+    end
     if @subcategory
-      css_class = subcategory.id == @subcategory.id ? 'active' : ''
+      css_class += subcategory.id == @subcategory.id ? 'active' : ''
     end
 
     css_class

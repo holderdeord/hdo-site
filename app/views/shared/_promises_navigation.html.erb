@@ -4,9 +4,6 @@
     <div class="<%= @category.present? ? 'span4' : 'span6' %>">
       <h6>Hovedkategorier</h6>
       <ul class="nav multiple-select">
-        <li>
-          <%= link_to "Vis alle", show_all_promises_path %>
-        </li>
         <% categories.each do |category| %>
           <li class="<%= show_category_as_selected(category) %>">
             <%= link_to category.human_name, category_path_for(category) %>
@@ -14,7 +11,12 @@
         <% end %>
       </ul>
       <% if @category %>
-        <p><small>Valgt kategori: <strong><%= @category.human_name %></strong></small></p>
+        <p>
+          <small>
+            Valgt kategori: <strong><%= @category.human_name %></strong>
+            (<%= link_to "Vis alle", show_all_except_category %>)
+          </small>
+        </p>
       <% end %>
 
     </div>
@@ -31,16 +33,18 @@
         <% end %>
       </ul>
       <% if @subcategory %>
-        <p><small>Valgt underkategori: <strong><%= @subcategory.human_name %></strong></small></p>
+        <p>
+          <small>
+            Valgt underkategori: <strong><%= @subcategory.human_name %></strong>
+            (<%= link_to "Vis alle", show_all_except_subcategory %>)
+          </small>
+        </p>
       <% end %>
     </div>
 
     <div class="<%= @category.present? ? 'span4' : 'span6' %>">
       <h6>Partier</h6>
       <ul class="nav multiple-select">
-        <li>
-          <%= link_to "Vis alle", show_all_promises_path %>
-        </li>
         <% parties.each do |party| %>
           <li class="<%= show_party_as_selected(party) %>">
             <%= link_to party.name, party_path_for(party) %>
@@ -48,7 +52,12 @@
         <% end %>
       </ul>
       <% if @party %>
-        <p><small>Valgt parti: <strong><%= @party.name %></strong></small></p>
+        <p>
+          <small>
+            Valgt parti: <strong><%= @party.name %></strong>
+            (<%= link_to "Vis alle", show_all_except_party %>)
+          </small>
+        </p>
       <% end %>
     </div>
   </div>
