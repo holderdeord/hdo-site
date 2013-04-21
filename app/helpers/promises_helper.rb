@@ -22,20 +22,17 @@ module PromisesHelper
       opts[:party_slug] = @party.slug if @party
     end
 
-
     promises_path opts
   end
 
   def party_path_for(party)
-    if @category
-      opts = {
-          category_id: @category.id,
-          anchor: 'top',
-          party_slug: party.slug
-      }
+    opts = {
+        anchor: 'top',
+        party_slug: party.slug
+    }
 
-      opts[:subcategory_id] = @subcategory.id if @subcategory
-    end
+    opts[:cateogory_id] = @category.id if @category
+    opts[:subcategory_id] = @subcategory.id if @subcategory
 
     promises_path opts
   end
