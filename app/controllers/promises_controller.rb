@@ -25,7 +25,7 @@ class PromisesController < ApplicationController
   private
 
   def render_promises_index(opts = {})
-    @promises = Promise.all(:order => 'date')
+    @promises = Promise.includes(:issues).all(:order => 'date')
 
     if @subcategory
       @promises = Category.find(@subcategory.id).promises

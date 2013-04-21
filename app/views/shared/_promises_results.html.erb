@@ -2,11 +2,27 @@
 <ul class="promises-results unstyled">
   <%= will_paginate @promises %>
   <% @promises.each do |p| %>
-    <li class="row-fluid well well-small">
-      <% p.parties.each do |party| %>
-        <%= image_tag party.logo.versions[:small], alt: "#{party.name}s logo" %>
-      <% end %>
-      <%= link_to p.body, p %>
+    <li class="media promise">
+      <div class="pull-left">
+        <% p.parties.each do |party| %>
+          <%= image_tag party.logo.versions[:medium], alt: "#{party.name}s logo" %>
+        <% end %>
+      </div>
+      <div class="media-body">
+        <h4 class="media-heading">
+          <%= p.body %>
+        </h4>
+        <ul class="nav nav-pills">
+          <li>
+            <%= link_to "Løfteside", p %>
+          </li>
+          <% if p.issues.published.count() > 0 %>
+          <li>
+            <%= link_to "Tilknyttet saker (#{p.issues.published.count()})", promise_path(p, anchor: "issues") %>
+          </li>
+          <% end %>
+        </ul>
+      </div>
     </li>
   <% end %>
   <%= will_paginate @promises %>
