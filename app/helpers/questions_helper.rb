@@ -5,7 +5,7 @@ module QuestionsHelper
   end
 
   def question_issue_options
-    data = Issue.published.map { |i| [i.title, i.id] }
+    data = Issue.search("*", per_page: 1000).map { |e| [e.title, e.id] }
     options_for_select data, selected: @question.issues.map(&:id)
   end
 end
