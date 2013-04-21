@@ -28,6 +28,8 @@ class Promise < ActiveRecord::Base
   validates_length_of :categories, minimum: 1
   validates_length_of :parties,    minimum: 1
 
+  scope :for_period, lambda { |period| where("date >= ? and date <= ?", period.start_date, period.end_date) }
+
   def general_text
     I18n.t(general? ? 'app.yes' : 'app.no')
   end
