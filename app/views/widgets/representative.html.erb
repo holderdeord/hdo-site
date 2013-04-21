@@ -14,6 +14,12 @@
 
 <article>
 
+  <ul class="committees">
+    <% @representative.current_committees.each do |com| %>
+      <li class="committee">Medlem av <%= link_to com.name, com %></li>
+    <% end %>
+  </ul>
+
   <ul class="votes">
   <% @issues.each do |issue| %>
     <li class="vote">
