@@ -16,9 +16,9 @@
           <li>
             <%= link_to "Løfteside", p %>
           </li>
-          <% if p.issues.published.count() > 0 %>
+          <% if p.issues.published.any? %>
           <li>
-            <%= link_to "Tilknyttet saker (#{p.issues.published.count()})", promise_path(p, anchor: "issues") %>
+            <%= link_to "Tilknyttet saker (#{p.issues.published.size})", promise_path(p, anchor: "issues") %>
           </li>
           <% end %>
         </ul>
