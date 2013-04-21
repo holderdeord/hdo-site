@@ -83,12 +83,14 @@ module Hdo
         issue = Issue.make! vote_connections: [VoteConnection.make!, VoteConnection.make!]
         issue.vote_connections.each { |v| v.proposition_type.should be_blank }
 
+        expected_type = VoteConnection::PROPOSITION_TYPES.first
+
         votes = {
           issue.votes[0].id => {
             direction: 'for',
             weight: 1.0,
             title: 'title!!!!!!!!',
-            proposition_type: VoteConnection::PROPOSITION_TYPES.first
+            proposition_type: expected_type
           },
           issue.votes[1].id => {
             direction: 'for',
@@ -101,7 +103,7 @@ module Hdo
         IssueUpdater.new(issue, {votes: votes}, user).update!
         issue.reload
 
-        issue.vote_connections.first.proposition_type.should == VoteConnection::PROPOSITION_TYPES.first
+        issue.vote_connections.map(&:proposition_type).compact.should == [expected_type]
       end
 
       it "updates multiple proposition_types simultaneously" do
