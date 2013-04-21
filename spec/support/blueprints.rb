@@ -104,6 +104,15 @@ Representative.blueprint :full do
   party_memberships(1)
 end
 
+Representative.blueprint :confirmed do
+  external_id  { sn.to_s }
+  first_name   { "first-name-#{sn}" }
+  last_name    { "last-name-#{sn}" }
+  party_memberships(1)
+  email        { "#{sn}@email.com" }
+  confirmed_at { Time.now }
+end
+
 Issue.blueprint do
   title { "issue-title-#{sn}" }
   description { "issue-description-#{sn}" }

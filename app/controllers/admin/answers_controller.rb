@@ -2,10 +2,10 @@ class Admin::AnswersController < AdminController
   before_filter { assert_feature(:questions) }
 
   before_filter :fetch_question
-  before_filter :fetch_answer, only: [:edit, :update, :destroy]
+  before_filter :fetch_answer, only: [:edit, :update, :destroy, :approve, :reject]
 
   def index
-    @answers = @question.answers
+    @answers_by_status = Answer.all_by_status
   end
 
   def new
@@ -39,6 +39,16 @@ class Admin::AnswersController < AdminController
     redirect_to admin_question_answers_url(@question)
   end
 
+  def reject
+    @answer.reject!
+    save_answer
+  end
+
+  def approve
+    @answer.approve!
+    save_answer
+  end
+
   private
 
   def fetch_question
@@ -47,5 +57,13 @@ class Admin::AnswersController < AdminController
 
   def fetch_answer
     @answer = Answer.find(params[:id])
+  end
+
+  def save_answer
+    if @answer.save
+      redirect_to admin_question_answers_url(@question), notice: t('app.answers.moderate.approved')
+    else
+      redirect_to admin_question_answers_url(@question), alert: @answer.errors.full_messages.to_sentence
+    end
   end
 end

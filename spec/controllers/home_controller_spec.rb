@@ -20,7 +20,9 @@ describe HomeController do
       group = assigns(:tag_groups).first
 
       group.first.name.should == "foo"
-      group.last.should == issues.values_at(0, 2, 3)
+      group.last.each do |issue|
+        issue.should be_published
+      end
 
       assigns(:all_tags).map(&:name).should == ["foo"]
     end
