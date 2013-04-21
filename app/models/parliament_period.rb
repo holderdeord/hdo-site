@@ -9,8 +9,8 @@ class ParliamentPeriod < ActiveRecord::Base
     for_date Date.current
   end
 
-  def named(name)
-    to_a.find { |e| e.name == name }
+  def self.named(name)
+    all.find { |e| e.name == name }
   end
 
   def name
