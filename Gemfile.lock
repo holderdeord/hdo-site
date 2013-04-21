@@ -318,6 +318,7 @@ GEM
       rack (>= 1.0)
     websocket (1.0.7)
     will_paginate (3.0.4)
+    workflow (1.0.0)
     yajl-ruby (1.1.0)
     yaml_db (0.2.3)
 
@@ -382,5 +383,6 @@ DEPENDENCIES
   unicode_utils
   valid_email
   will_paginate (~> 3.0.3)
+  workflow
   yajl-ruby
   yaml_db

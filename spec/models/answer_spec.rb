@@ -40,17 +40,4 @@ describe Answer do
 
     a.party.should == party_b
   end
-
-  it 'disallows multiple answers from the same representative' do
-    rep = Representative.make!
-    q   = Question.make!
-    q2  = Question.make!
-
-    q.answers.create!(body: 'a', representative: rep)
-    q.answers.create(body: 'b', representative: rep).should_not be_valid
-
-    # allowed to answer other Qs
-    q2.answers.create!(body: 'a', representative: rep)
-  end
-
 end

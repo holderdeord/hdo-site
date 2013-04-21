@@ -33,23 +33,6 @@ describe Question do
     q.should_not be_valid
   end
 
-  it 'validates statuses' do
-    q.status = 'pending'
-    q.should be_valid
-    q.should be_pending
-
-    q.status = 'approved'
-    q.should be_valid
-    q.should be_approved
-
-    q.status = 'rejected'
-    q.should be_valid
-    q.should be_rejected
-
-    q.status = 'foo'
-    q.should_not be_valid
-  end
-
   it 'has status scopes' do
     pending = Question.make!(status: 'pending')
     approved = Question.make!(status: 'approved')

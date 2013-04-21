@@ -1,6 +1,23 @@
 Hdo::Application.routes.draw do
 
   #
+  # representative sign-in
+  #
+
+  devise_for :representative, controllers: { confirmations: 'confirmations'}
+  devise_scope :representative do
+    put '/representative/confirmation' => 'confirmations#update', as: :update_representative_confirmation
+  end
+
+  namespace :representative do
+    resources :questions, only: [:show] do
+      resources :answers, only: [:create, :destroy]
+    end
+
+    root to: "dashboard#index"
+  end
+
+  #
   # user sign-in
   #
 
@@ -19,11 +36,19 @@ Hdo::Application.routes.draw do
     end
 
     resources :users
-    resources :representatives, only: [:index, :edit, :update]
+    resources :representatives, only: [:index, :edit, :update] do
+      get 'activate'       => 'representatives#activate',       as: :activate
+      get 'reset_password' => 'representatives#reset_password', as: :reset_password
+    end
 
     # S&S
     resources :questions, only: [:index, :edit, :update, :destroy] do
-      resources :answers, except: :show
+      resources :answers, except: :show  do
+        member do
+          put 'approve' => 'answers#approve'
+          put 'reject'  => 'answers#reject'
+        end
+      end
 
       member do
         put 'approve' => 'questions#approve'

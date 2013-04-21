@@ -1,4 +1,10 @@
 class Representative < ActiveRecord::Base
+  devise :database_authenticatable,
+         :recoverable, :rememberable, :trackable, :validatable,
+         :confirmable
+
+  # Setup accessible (or protected) attributes for your model
+  attr_accessible :email, :password, :password_confirmation, :remember_me
   mount_uploader :image, RepresentativeUploader
 
   extend FriendlyId
@@ -54,6 +60,26 @@ class Representative < ActiveRecord::Base
   validates :twitter_id,  allow_nil: true, uniqueness: true, format: /^[^@]/
 
   friendly_id :external_id, use: :slugged
+
+  def unconfirmed_email
+    email unless confirmed?
+  end
+
+  def only_if_unconfirmed
+    pending_any_confirmation { yield }
+  end
+
+  def attempt_set_password(params)
+    attrs = {
+      password:              params[:password],
+      password_confirmation: params[:password_confirmation]
+    }
+    update_attributes(attrs)
+  end
+  # new function to return whether a password has been set
+  def has_no_password?
+    self.encrypted_password.blank?
+  end
 
   def display_name
     "#{last_name}, #{first_name}"
@@ -147,6 +173,20 @@ class Representative < ActiveRecord::Base
     to_json include: [:district],
             methods: [:latest_party, :full_name],
             only: [:slug, :last_name, :first_name]
+  end
+
+  private
+
+  def email_required?
+    false
+  end
+
+  def password_required?
+    false
+  end
+
+  def confirmation_required?
+    false
   end
 
 end

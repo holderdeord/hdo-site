@@ -22,7 +22,7 @@ describe Admin::AnswersController do
       a = answer
 
       get :index, default_params
-      assigns(:answers).should eq([a])
+      assigns(:answers_by_status).should eq({'pending' => [a]})
     end
   end
 
@@ -113,6 +113,56 @@ describe Admin::AnswersController do
         put :update, default_params.merge(id: answer.to_param, answer: {  })
         response.should render_template("edit")
       end
+    end
+  end
+
+  describe "PUT approve" do
+    it "updates the requested answer" do
+      answer = Answer.make!
+
+      put :approve, {:question_id => answer.question.to_param, id: answer.to_param}
+      answer.reload.should be_approved
+    end
+
+    it "redirects to answers#index" do
+      answer = Answer.make!
+
+      put :approve, { :question_id => answer.question.id, :id => answer.to_param}
+      response.should redirect_to(admin_question_answers_path(answer.question))
+    end
+
+    it "informs the user if save fails" do
+      answer = Answer.make!
+      Answer.any_instance.should_receive(:save).and_return false
+
+      put :approve, { :question_id => answer.question.id, :id => answer.to_param}
+      response.should redirect_to(admin_question_answers_path(answer.question))
+      flash.should_not be_empty
+    end
+  end
+
+  describe "PUT reject" do
+    it "updates the requested question" do
+      answer = Answer.make!
+
+      put :reject, {:question_id => answer.question.to_param, id: answer.to_param }
+      answer.reload.should be_rejected
+    end
+
+    it "redirects to answers#index" do
+      answer = Answer.make!
+
+      put :reject, {:question_id => answer.question.to_param, id: answer.to_param}
+      response.should redirect_to(admin_question_answers_path(answer.question))
+    end
+
+    it "informs the user if save fails" do
+      answer = Answer.make!
+      Answer.any_instance.should_receive(:save).and_return false
+
+      put :reject, { :question_id => answer.question.to_param, id: answer.to_param }
+      response.should redirect_to(admin_question_answers_path(answer.question))
+      flash.should_not be_empty
     end
   end
 

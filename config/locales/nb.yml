@@ -318,6 +318,7 @@ nb:
     read_more: "Les mer"
     press: "Presse"
     join: "Bli med"
+    my_page: Min side
     contact_us: 'Kontakt oss'
     friends: Venner
     email: "kontakt@holderdeord.no"
@@ -452,6 +453,9 @@ nb:
         created: Svaret ble opprettet.
         updated: Svaret ble oppdatert.
         new: Legg til svar
+      moderate:
+        approved: Svaret er godkjent.
+        rejected: Svaret er avvist.
     external:
       urls:
         parliament_issue: "http://stortinget.no/no/Saker-og-publikasjoner/Saker/Sak/?p=%s"
@@ -522,3 +526,12 @@ nb:
       by_party: 'Grupper etter parti'
       by_district: 'Grupper etter fylke'
       by_name: 'Grupper etter navn'
+    questions_and_answers:
+      short: 'S&S'
+      representative:
+        confirmation_mail_sent: "Informasjonsmail sent til %{name}"
+        passwd_reset_mail_sent: "Passord resatt for %{name}"
+        not_found: "Kunne ikke aktivere representant!"
+        forgot_password: "Glemt Passord"
+        activate: "Aktiver"
+        reactivate: "Resend"

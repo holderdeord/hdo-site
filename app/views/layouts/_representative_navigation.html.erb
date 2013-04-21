@@ -1,0 +1,14 @@
+<% content_for :navbar_extras do %>
+
+<nav class="pull-right">
+
+  <% if representative_signed_in? %>
+    <%= link_to t('app.my_page'), representative_path(current_representative) %>
+    <%= link_to t('app.logout'), destroy_representative_session_path, method: 'delete' %>
+  <% else %>
+    <%= link_to t('app.login'), new_representative_session_path  %>
+  <% end %>
+
+</nav>
+
+<% end %>
