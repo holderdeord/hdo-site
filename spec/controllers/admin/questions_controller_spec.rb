@@ -92,26 +92,6 @@ describe Admin::QuestionsController do
       assigns(:question).should eq question
     end
 
-    it "lets you edit the texts" do
-      attrs = {
-        body:      "body #{Time.now}",
-        from_name: "asker #{Time.now}"
-      }
-
-      put :update, id: question.id, question: attrs
-
-      question.reload.body.should eq attrs[:body]
-      question.from_name.should eq attrs[:from_name]
-    end
-
-    it "lets the admin change the rep" do
-      rep = Representative.make!
-
-      put :update, id: question.id, question: { representative: rep.slug }
-
-      question.reload.representative.should eq rep
-    end
-
     it "lets you add issues" do
       issue = Issue.make!
 
@@ -124,7 +104,7 @@ describe Admin::QuestionsController do
       issue = Issue.make!
       question = Question.make!(issues: [issue])
 
-      put :update, id:question.id, question: question.attributes.except('id', 'status', 'created_at', 'updated_at')
+      put :update, id:question.id, question: {}
 
       question.reload.issues.should be_empty
     end

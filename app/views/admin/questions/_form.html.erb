@@ -13,7 +13,7 @@
       <div class="controls">
         <label class="control-label"><%= Question.human_attribute_name :representative %></label>
         <div class="chosen-xlarge">
-          <%= f.select :representative, representative_options, include_blank: 'Velg en representant...' %>
+          <big><%= @question.representative.name %></big>
         </div>
       </div>
     </div>
@@ -21,9 +21,7 @@
     <div class="control-group">
       <div class="controls">
         <label class="control-label"><%= Question.human_attribute_name :body %></label>
-        <%= f.text_area :body, class: 'span12 qa-form-body',
-                               rows:  5,
-                               placeholder: "Kjære parti/representant! Hvordan kan det ha seg at..." %>
+        <big><%= @question.body %></big>
       </div>
     </div>
 
@@ -31,14 +29,14 @@
       <div class="control-group span5">
         <label class="control-label"><%= Question.human_attribute_name :from_name %></label>
         <div class="controls">
-          <%= f.text_field :from_name, class: 'span12' %>
+          <big><%= @question.from_name %></big>
         </div>
       </div>
 
       <div class="control-group span5 offset2">
         <label class="control-label"><%= Question.human_attribute_name :from_email %></label>
         <div class="controls">
-          <%= f.text_field :from_email, class: 'span12' %>
+          <big><%= @question.from_email %></big>
         </div>
       </div>
     </div>

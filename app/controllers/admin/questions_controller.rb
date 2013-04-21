@@ -10,15 +10,9 @@ class Admin::QuestionsController < AdminController
   end
 
   def update
-    attrs     = normalize_blanks(params[:question])
-    rep       = attrs.delete(:representative)
+    issue_ids = params[:question][:issues].reject(&:blank?) if params[:question][:issues]
 
-    issue_ids = attrs.delete(:issues).reject(&:blank?) if attrs[:issues]
-    issue_ids ||= []
-
-    @question.update_attributes(attrs)
-    @question.representative = Representative.find(rep) if rep
-    @question.issues         = Issue.find(issue_ids) if issue_ids
+    @question.issues = Issue.find(issue_ids || [])
 
     if @question.save
       redirect_to admin_questions_path, notice: t('app.questions.edit.updated')
