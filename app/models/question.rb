@@ -1,6 +1,6 @@
 class Question < ActiveRecord::Base
   include Workflows::BaseQuestionAndAnswerWorkflow
-  attr_accessible :body, :from_name, :from_email, :representative, :issues
+  attr_accessible :body, :from_name, :from_email, :representative, :issues, :representative_id
 
   belongs_to :representative
   has_many :answers, dependent: :destroy

@@ -265,6 +265,7 @@ ActiveRecord::Schema.define(:version => 20130421131316) do
     t.string   "twitter_id"
     t.string   "email"
     t.string   "image"
+    t.boolean  "on_leave",               :default => false
     t.string   "encrypted_password",     :default => "",    :null => false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
@@ -277,7 +278,6 @@ ActiveRecord::Schema.define(:version => 20130421131316) do
     t.string   "confirmation_token"
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
-    t.boolean  "on_leave",               :default => false
   end
 
   add_index "representatives", ["confirmation_token"], :name => "index_representatives_on_confirmation_token", :unique => true

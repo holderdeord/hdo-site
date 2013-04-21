@@ -12,7 +12,9 @@ class Admin::QuestionsController < AdminController
   def update
     attrs     = normalize_blanks(params[:question])
     rep       = attrs.delete(:representative)
-    issue_ids = attrs.delete(:issues).reject!(&:blank?)
+
+    issue_ids = attrs.delete(:issues).reject(&:blank?) if attrs[:issues]
+    issue_ids ||= []
 
     @question.update_attributes(attrs)
     @question.representative = Representative.find(rep) if rep
