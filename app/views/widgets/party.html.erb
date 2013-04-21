@@ -1,9 +1,16 @@
-<article class="widget party">
+<% content_for :bodyclass do %>party<% end %>
 
+
+<div class="deco-bg background <%= @party.name %>"></div>
+
+<header>
   <h1 class="<%= @party.name %>">
     <%= image_tag @party.logo, alt: "#{@party.name}s logo", width: '96', height: '96' %>
     <%= @party.name %>
   </h1>
+</header>
+
+<article>
 
   <ul class="votes">
   <% @issues.each do |issue| %>

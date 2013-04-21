@@ -1,14 +1,18 @@
-<% content_for :bodystyle do %>
-  background-image: url(<%= @representative.image.versions[:medium] %>)
-<% end %>
-<article class="widget representative">
+<% content_for :bodyclass do %>representative<% end %>
 
-  <h1><%= @representative.full_name %></h1>
+<div class="deco-bg background <%= @representative.latest_party.name %>"></div>
 
-  <h3>
-    <span class="district"><%= @representative.district.name %></span>
-    <span class="<%= @representative.latest_party.name %>"><%= @representative.latest_party.try(:name) %></span>
+<header>
+  <%= image_tag @representative.image.versions[:medium], width: '240', height: '320', alt: @representative.full_name %>
+  <h1>
+    <%= @representative.full_name %>
+  </h1>
+  <h3 class="<%= @representative.latest_party.name %>">
+    Representerer <%= @representative.latest_party.try(:name) %> i <%= @representative.district.name %>
   </h3>
+</header>
+
+<article>
 
   <ul class="votes">
   <% @issues.each do |issue| %>
