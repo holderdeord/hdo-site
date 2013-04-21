@@ -1,5 +1,5 @@
 class Answer < ActiveRecord::Base
-  include Workflows::AnswerWorkflow
+  include Workflows::BaseQuestionAndAnswerWorkflow
 
   attr_accessible :body, :representative_id, :representative, :question, :question_id
 
