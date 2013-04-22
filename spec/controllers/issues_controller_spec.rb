@@ -74,6 +74,13 @@ describe IssuesController do
     JSON.parse(response.body).should_not include('stats', 'accountability')
   end
 
+  it 'does not render admin_info' do
+    get :admin_info, id: issue
+
+    response.should be_success
+    response.body.should be_blank
+  end
+
   context 'as a logged in user' do
     let(:user)    { User.make! }
     before(:each) { sign_in user }
@@ -106,6 +113,13 @@ describe IssuesController do
 
       assigns(:previous_issue).should eq t2
       assigns(:next_issue).should eq t4
+    end
+
+    it 'renders admin_info' do
+      get :admin_info, id: issue
+
+      response.should be_success
+      response.should have_rendered(:admin_info)
     end
   end
 

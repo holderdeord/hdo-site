@@ -1,10 +1,20 @@
 <% page_title "#{@issue.title} - #{t('app.issues.title')} - #{t('app.title')}" %>
 <% page_desc @issue.description %>
 
-<%= render partial: 'admin_info' if user_signed_in? %>
+<div id="admin-info"></div>
+<%= content_for :document_ready do %>
+<script>
+$(document).ready(function() { $.ajax({
+    url: '<%= admin_info_issue_path(@issue) %>',
+    type: 'GET',
+    dataType: 'html',
+    success: function(data, textStatus, xhr) { $("#admin-info").html(data); }
+  });
+});
+</script>
+<% end %>
 
 <% cache @issue do %>
-
   <div class="page-header">
 
     <h1 class="issue-title"><%= @issue.title %></h1>

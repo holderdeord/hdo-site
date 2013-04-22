@@ -9,10 +9,5 @@
   <% end %>
 </div>
 
-<% content_for :jumbotron do %>
-  <div id="view-scores" class="modal hide fade" tabindex="-1"></div>
-<% end %>
-
-<% content_for :document_ready do %>
-  <script>HDO.xhrModal($('#admin-info button'), {width: '30%'})</script>
-<% end %>
+<div id="view-scores" class="modal hide fade" tabindex="-1"></div>
+<script>HDO.xhrModal($('#admin-info button'), {width: '30%'})</script>

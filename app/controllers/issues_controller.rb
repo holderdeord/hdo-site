@@ -1,7 +1,7 @@
 # encoding: UTF-8
 
 class IssuesController < ApplicationController
-  before_filter :fetch_issue, except: :index
+  before_filter :fetch_issue, except: [:index, :admin_info]
 
   def index
     @groups = Issue.published.in_tag_groups
@@ -41,6 +41,17 @@ class IssuesController < ApplicationController
       @issue       = IssueDecorator.decorate(@issue)
     else
       redirect_to new_user_session_path
+    end
+  end
+
+  def admin_info
+    if user_signed_in?
+      fetch_issue
+      @issue = @issue.decorate
+
+      render partial: 'admin_info'
+    else
+      head :ok
     end
   end
 

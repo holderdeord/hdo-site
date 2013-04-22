@@ -66,8 +66,9 @@ Hdo::Application.routes.draw do
 
   resources :issues, only: [:index, :show, :votes] do
     member do
-      get 'votes'  => 'issues#votes'
-      get 'widget' => 'widgets#issue'
+      get 'votes'      => 'issues#votes'
+      get 'widget'     => 'widgets#issue'
+      get 'admin_info' => 'issues#admin_info', as: :admin_info
     end
   end
 
