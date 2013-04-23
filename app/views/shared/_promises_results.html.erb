@@ -14,16 +14,19 @@
         </p>
         <ul class="nav nav-pills">
           <li>
-            <%= link_to "Løfteside", p %>
+            <%= link_to "Se løfteside", p %>
           </li>
           <% if p.issues.published.any? %>
           <li>
-            <%= link_to "Tilknyttet saker (#{p.issues.published.size})", promise_path(p, anchor: "issues") %>
+            <%= link_to "Se tilknyttede saker (#{p.issues.published.size})", promise_path(p, anchor: "issues") %>
           </li>
           <% end %>
         </ul>
       </div>
     </li>
+  <% end %>
+  <% if @promises.empty? %>
+    <li>Ingen løfter finnes med dette filteret</li>
   <% end %>
   <%= will_paginate @promises %>
   <li class="empty-results-message hidden">
