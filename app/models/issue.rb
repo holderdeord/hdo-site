@@ -89,7 +89,7 @@ class Issue < ActiveRecord::Base
   end
 
   def to_param
-    "#{id}-#{slug}"
+    "#{id}-#{slug}".parameterize
   end
 
   def previous_and_next(opts = {})
