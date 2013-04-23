@@ -1,5 +1,5 @@
-<div class="well well-small" id="top">
-  <!-- VISIBLE IN DESKTOP -->
+<!-- VISIBLE IN DESKTOP -->
+<div class="well well-small hidden-phone" id="top">
   <div class="row-fluid">
     <div class="<%= @category.present? ? 'span4' : 'span6' %>">
       <h6>Hovedkategorier</h6>
@@ -24,8 +24,8 @@
     <div class="<%= @category.present? ? 'span4' : 'hidden' %>">
       <h6>Underkategorier</h6>
       <ul class="nav multiple-select">
-        <% categories.each do |category| %>
-          <% category.children.each do |subcategory| %>
+        <% if @category %>
+          <% @category.children.each do |subcategory| %>
             <li class="<%= show_subcategory_as_selected(subcategory) %>">
               <%= link_to subcategory.human_name, subcategory_path_for(subcategory) %>
             </li>
@@ -61,4 +61,19 @@
       <% end %>
     </div>
   </div>
+</div>
+
+<div class="visible-phone">
+  <%= form_tag promises_path, method: 'GET' do %>
+    <%= label_tag 'category_id', 'Kategorier' %>
+    <%= select_tag 'category_id', options_for_select(categories.map { |category| [category.human_name, category.id] }, selected: @category.try(:id)) %>
+    <%= label_tag 'party_slug', 'Partier' %>
+    <%= select_tag 'party_slug', options_for_select(parties.map { |party| [party.name, party.slug] }, selected: @party.try(:slug)) %>
+
+    <% if @category %>
+    <%= label_tag 'subcategory_id', 'Underkategorier' %>
+      <%= select_tag 'subcategory_id', options_for_select(@category.children.map { |subcategory| [subcategory.human_name, subcategory.id] }, selected: @subcategory.try(:id) ) %>
+    <% end %>
+    <%= submit_tag 'Søk' %>
+  <% end %>
 </div>

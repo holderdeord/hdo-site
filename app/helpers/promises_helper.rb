@@ -91,6 +91,7 @@ module PromisesHelper
   end
 
   def show_party_as_selected(party)
+    css_class = ''
     if @party
       css_class = party.slug == @party.slug ? 'active' : ''
     end
