@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130413221648) do
+ActiveRecord::Schema.define(:version => 20130421131316) do
 
   create_table "answers", :force => true do |t|
     t.text     "body",                                     :null => false
@@ -110,6 +110,13 @@ ActiveRecord::Schema.define(:version => 20130413221648) do
   end
 
   add_index "issues", ["slug"], :name => "index_issues_on_slug", :unique => true
+
+  create_table "issues_questions", :id => false, :force => true do |t|
+    t.integer "question_id"
+    t.integer "issue_id"
+  end
+
+  add_index "issues_questions", ["question_id", "issue_id"], :name => "index_issues_questions_on_question_id_and_issue_id"
 
   create_table "parliament_issues", :force => true do |t|
     t.string   "external_id"
