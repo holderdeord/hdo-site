@@ -5,6 +5,10 @@ describe Issue do
   let(:blank_issue) { Issue.new }
   let(:valid_issue) { Issue.make! }
 
+  it 'finds an issue by its to_param' do
+    Issue.find(valid_issue.to_param).should == valid_issue
+  end
+
   it "is invalid without a title" do
     t = blank_issue
 

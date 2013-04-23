@@ -88,6 +88,10 @@ class Issue < ActiveRecord::Base
     count ? groups.first(count) : groups
   end
 
+  def to_param
+    "#{id}-#{slug}"
+  end
+
   def previous_and_next(opts = {})
     issues = self.class
     issues = opts[:policy].scope if opts[:policy]
