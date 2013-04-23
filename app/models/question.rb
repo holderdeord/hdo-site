@@ -1,9 +1,11 @@
 class Question < ActiveRecord::Base
   include Workflows::BaseQuestionAndAnswerWorkflow
-  attr_accessible :body, :from_name, :from_email, :representative
+  attr_accessible :body, :from_name, :from_email, :representative, :issues, :representative_id
 
   belongs_to :representative
   has_many :answers, dependent: :destroy
+
+  has_and_belongs_to_many :issues, uniq: true, order: "updated_at DESC"
 
   validates :body,           presence: true
   validates :from_email,     email: true, allow_nil: true

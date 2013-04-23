@@ -1,17 +1,67 @@
-<%= form_for(@question) do |f| %>
-  <% if @question.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@question.errors.count, "error") %> prohibited this admin_question from being saved:</h2>
+  <%= form_for(@question, url: admin_question_url(@question)) do |f| %>
+    <% if @question.errors.any? %>
+      <div class="alert alert-error">
+        <ul>
+          <% @question.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
 
-      <ul>
-      <% @question.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
+    <div class="control-group">
+      <div class="controls">
+        <label class="control-label"><%= Question.human_attribute_name :representative %></label>
+        <div class="chosen-xlarge">
+          <big><%= @question.representative.name %></big>
+        </div>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <div class="controls">
+        <label class="control-label"><%= Question.human_attribute_name :body %></label>
+        <big><%= @question.body %></big>
+      </div>
+    </div>
+
+    <div class="row-fluid">
+      <div class="control-group span5">
+        <label class="control-label"><%= Question.human_attribute_name :from_name %></label>
+        <div class="controls">
+          <big><%= @question.from_name %></big>
+        </div>
+      </div>
+
+      <div class="control-group span5 offset2">
+        <label class="control-label"><%= Question.human_attribute_name :from_email %></label>
+        <div class="controls">
+          <big><%= @question.from_email %></big>
+        </div>
+      </div>
+    </div>
+
+    <div class="row-fluid">
+      <div class="control-group span12">
+        <label class="control-label"><%= Issue.model_name.human(count: 2).capitalize %></label>
+        <div class="controls">
+          <%= f.select :issues, question_issue_options, {}, multiple: true %>
+        </div>
+      </div>
+    </div>
+
+    <div class="control-group">
+       <div class="controls">
+         <%= f.submit class: 'btn btn-primary' %>
+       </div>
     </div>
   <% end %>
 
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+<% content_for :document_ready do %>
+  <script type="text/javascript" charset="utf-8">
+    $(document).ready(function() {
+      $("#question_issues").chosen();
+      $("#question_representative").chosen();
+    });
+  </script>
 <% end %>

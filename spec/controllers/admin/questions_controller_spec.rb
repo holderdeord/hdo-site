@@ -84,4 +84,30 @@ describe Admin::QuestionsController do
     end
   end
 
+  describe "PUT edit" do
+    let(:question) { Question.make! }
+
+    it "fetches the question" do
+      get :edit, id: question.id
+      assigns(:question).should eq question
+    end
+
+    it "lets you add issues" do
+      issue = Issue.make!
+
+      put :update, id: question.id, question: { issues: [issue.id] }
+
+      question.reload.issues.should eq [issue]
+    end
+
+    it "lets you remove issues" do
+      issue = Issue.make!
+      question = Question.make!(issues: [issue])
+
+      put :update, id:question.id, question: {}
+
+      question.reload.issues.should be_empty
+    end
+  end
+
 end
