@@ -23,6 +23,42 @@ describe PromisesController do
       get :index, {category_id: category.id}
       assigns(:promises).should == [promise_with_category]
     end
+
+    it 'includes promises in subcategory' do
+      category = Category.make!(main:true)
+      promise_in_category = Promise.make!(categories: [category])
+      subcategory = Category.make!(parent: category)
+      promise_in_subcategory = Promise.make!(categories: [subcategory])
+
+      get :index, {category_id: category.id}
+      assigns(:promises).should == [promise_in_category, promise_in_subcategory]
+    end
+
+    it 'can filter promises by party' do
+      party = Party.make!
+      promise_in_party = Promise.make!(parties: [party])
+
+      get :index, {party_id: party.id}
+      assigns(:promises).should == [promise_in_party]
+    end
+
+    it 'can filter promises by party and category' do
+      party = Party.make!
+      category = Category.make!(main:true)
+      promise_in_all = Promise.make!(categories: [category], parties: [party])
+
+      get :index, {category_id: category.id, party_id: party.id}
+      assigns(:promises).should == [promise_in_all]
+    end
+
+    it 'can filter promises by subcategory' do
+      category = Category.make!(main:true)
+      subcategory = Category.make!(parent: category)
+      promise_in_subcategory = Promise.make!(categories: [subcategory])
+
+      get :index, {category_id: category.id, subcategory_id: subcategory.id}
+      assigns(:promises).should == [promise_in_subcategory]
+    end
   end
 
   describe "Get #show" do
