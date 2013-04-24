@@ -31,6 +31,16 @@ describe IssuesController do
     response.should redirect_to(new_user_session_path)
   end
 
+  it 'permanently redirects slug URLs to correct URL' do
+    get :show, id: issue.slug
+    response.should redirect_to(issue_url(issue))
+    response.status.should == 301
+
+    get :votes, id: issue.slug
+    response.should redirect_to(votes_issue_url(issue))
+    response.status.should == 301
+  end
+
   context "with rendered views" do
     render_views
 

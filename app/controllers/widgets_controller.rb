@@ -9,8 +9,14 @@ class WidgetsController < ApplicationController
   end
 
   def issue
-    @issue   = Issue.published.find(params[:id]).decorate
-    @parties = Party.order(:name)
+    issue = Issue.published.find(params[:id])
+
+    if params[:id] !~ /^\d/
+      redirect_to url_for(id: issue.to_param), status: :moved_permanently
+    else
+      @issue = issue.decorate
+      @parties = Party.order(:name)
+    end
   end
 
   def party
@@ -20,7 +26,7 @@ class WidgetsController < ApplicationController
 
   def representative
     @representative = Representative.find(params[:id])
-    @issues         = issues_for(@representative)
+    @issues = issues_for(@representative)
   end
 
   def load
@@ -30,7 +36,7 @@ class WidgetsController < ApplicationController
 
   def issues_for(entity)
     issues = if params[:issues]
-               Issue.published.where(slug: params[:issues].split(','))
+               Issue.published.find(params[:issues].split(','))
              else
                Issue.published.vote_ordered
              end

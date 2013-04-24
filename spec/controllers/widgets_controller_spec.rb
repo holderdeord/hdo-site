@@ -8,23 +8,30 @@ describe WidgetsController do
 
   describe 'GET #issue' do
     it 'assigns the requested issue' do
-      get :issue, id: published_issue.slug
+      get :issue, id: published_issue
       response.should be_ok
 
       assigns(:issue).should be_kind_of(Issue)
     end
 
     it 'does not find non-published issues' do
-      get :issue, id: in_progress_issue.slug
+      get :issue, id: in_progress_issue
       response.should be_not_found
 
       assigns(:issue).should be_nil
+    end
+
+    it 'redirects slugged URLs to the correct URL' do
+      get :issue, id: published_issue.slug
+
+      response.should redirect_to(widget_issue_url(published_issue))
+      response.status.should == 301
     end
   end
 
   describe 'GET #party' do
     it 'assigns the requested party' do
-      get :party, id: party.slug
+      get :party, id: party
       response.should be_ok
 
       assigns(:party).should be_kind_of(Party)

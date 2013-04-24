@@ -63,5 +63,9 @@ class IssuesController < ApplicationController
 
   def fetch_issue
     @issue = Issue.find(params[:id])
+
+    if params[:id] !~ /^\d/
+      redirect_to url_for(id: @issue.to_param), status: :moved_permanently
+    end
   end
 end
