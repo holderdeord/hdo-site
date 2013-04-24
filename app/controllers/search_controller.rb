@@ -31,15 +31,19 @@ class SearchController < ApplicationController
     response = Hdo::Search::Searcher.new(params[:query]).autocomplete
     @results = []
 
-    icons = {
-      'representative' => view_context.asset_path("representative.png"),
-      'issue'          => view_context.asset_path("issue.png")
-    }
+    representative_icon = view_context.asset_path("representative.png")
+    issue_icon          = view_context.asset_path("issue.png")
 
     if response.success?
       @results = response.results.map do |r|
-        url = url_for(controller: r.type.pluralize, action: "show", id: r.slug || r.id)
-        img = icons.fetch(r.type)
+        case r.type
+        when 'representative'
+          img = representative_icon
+          url = representative_url(id: r.slug || r.id)
+        when 'issue'
+          img = issue_icon
+          url = issue_url(id: "#{r.id}-#{r.slug}")
+        end
 
         r.as_json.merge(url: url, img_src: img)
       end.group_by { |e| e["_type"] }
