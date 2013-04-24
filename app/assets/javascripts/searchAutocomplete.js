@@ -80,7 +80,7 @@
       matcher: function () { return true; },
       highlighter: function (item) {
         return "<img src='" + autocomplete.getImgSrc(item) +
-          "' width='24' height='24' style='margin-left:-5px; margin-right:10px;'>" + item;
+          "' width='24' height='24'>" + item;
       }
     });
   };
