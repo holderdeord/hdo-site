@@ -6,7 +6,7 @@
     <![endif]-->
     <%= stylesheet_link_tag 'widgets/widgets' %>
   </head>
-  <body class="widget <%= yield :bodyclass %>">
+  <body class="widget <%= controller.action_name %>">
     <%= yield %>
 
     <footer>
