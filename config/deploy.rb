@@ -71,16 +71,26 @@ namespace :cache do
   end
 end
 
+require "hipchat/capistrano"
+
+namespace :hipchat do
+  task :ensure do
+    if exists?(:stage)
+      if stage.to_s != 'vagrant'
+        token = ENV['HIPCHAT_API_TOKEN'] or abort "must set HIPCHAT_API_TOKEN for deployments"
+
+        set :hipchat_token,     token
+        set :hipchat_room_name, "Teknisk"
+        set :hipchat_announce,  false
+      else
+        puts "ignoring hipchat for vagrant deploy"
+      end
+    end
+  end
+end
+
+
 # alternatively after:update_code, but need to get things in the right order here.
 before 'deploy:assets:precompile', 'config:symlink'
 
-if exists?(:stage)
-  if stage.to_s != 'vagrant'
-    token = ENV['HIPCHAT_API_TOKEN'] or abort "must set HIPCHAT_API_TOKEN"
-    require "hipchat/capistrano"
-
-    set :hipchat_token,     token
-    set :hipchat_room_name, "Teknisk"
-    set :hipchat_announce,  false
-  end
-end
+on :start, "hipchat:ensure"
