@@ -1,0 +1,18 @@
+<section>
+  <h1>Løfter</h1>
+  <dl>
+    <% @promises.each do |promise| %>
+      <dt><%= promise.parties.map(&:name).to_sentence %></dt>
+      <dd><%= promise.body %></dd>
+    <% end %>
+  </dl>
+</section>
+
+<section>
+  <h1>Saker</h1>
+  <ul>
+    <% @issues.each do |issue| %>
+      <li><%= link_to issue.title, issue %></li>
+    <% end %>
+  </ul>
+</section>

@@ -29,6 +29,14 @@ class WidgetsController < ApplicationController
     @issues = issues_for(@representative)
   end
 
+  def topic
+    promises = params[:promises] ? Promise.find(params[:promises].split(',')) : []
+    issues   = params[:issues] ? Issue.published.find(params[:issues].split(',')) : []
+
+    @issues   = IssueDecorator.decorate_collection(issues) if issues.any?
+    @promises = promises
+  end
+
   def load
   end
 
