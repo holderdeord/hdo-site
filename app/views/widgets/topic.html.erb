@@ -2,7 +2,7 @@
   <h1>Løfter</h1>
   <dl>
     <% @promises.each do |promise| %>
-      <dt><%= promise.parties.map(&:name).to_sentence %></dt>
+      <dt><%= promise.party_names %></dt>
       <dd><%= promise.body %></dd>
     <% end %>
   </dl>
