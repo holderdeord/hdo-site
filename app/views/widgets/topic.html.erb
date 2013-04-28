@@ -1,4 +1,4 @@
-<section>
+<article>
   <h1>Løfter</h1>
   <dl>
     <% @promises.each do |promise| %>
@@ -6,13 +6,13 @@
       <dd><%= promise.body %></dd>
     <% end %>
   </dl>
-</section>
+</article>
 
-<section>
+<article>
   <h1>Saker</h1>
   <ul>
     <% @issues.each do |issue| %>
       <li><%= link_to issue.title, issue %></li>
     <% end %>
   </ul>
-</section>
+</article>
