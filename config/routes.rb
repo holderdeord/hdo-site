@@ -147,8 +147,9 @@ Hdo::Application.routes.draw do
   # widgets
   #
 
-  get 'widgets'       => 'widgets#load', format: :js
-  get 'widgets/topic' => 'widgets#topic'
+  get 'widgets'          => 'widgets#load', format: :js
+  get 'widgets/topic'    => 'widgets#topic'
+  get 'widgets/promises' => 'widgets#promises'
 
   #
   # home
