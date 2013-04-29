@@ -21,12 +21,7 @@
     <% if nrk? %>
       <script src="http://nrk.no/serum/latest/js/sandbox.js"></script>
     <% else %>
-      <script>
-        window.addEventListener('DOMContentLoaded', function() {
-            var sizeMessage = 'hdo-widget-size:' + document.body.scrollHeight + 'px';
-            window.top.postMessage(sizeMessage, '<%= params[:origin] || '*' %>');
-        }, false);
-      </script>
+      <%= javascript_include_tag 'widgets/frame' %>
     <% end %>
   </body>
 </html>

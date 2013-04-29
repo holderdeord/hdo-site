@@ -1,5 +1,5 @@
 module.exports = {
-  paths: [ "../app/assets/javascripts/*.js" ],
+  paths: [ "../app/assets/javascripts/*.js", "../app/assets/javascripts/widgets/*.js" ],
   linter: "jslint",
   linterOptions: {
     browser: true,

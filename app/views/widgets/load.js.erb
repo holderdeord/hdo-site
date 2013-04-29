@@ -78,7 +78,6 @@ HDO.widgets = (function () {
 
       return {
           'url': url,
-          'height': el.getAttribute('height') || '500px',
           'width': el.getAttribute('width') || '100%'
       };
   }
@@ -103,7 +102,6 @@ HDO.widgets = (function () {
       iframe.id          = "hdo-widget-" + widgetCount;
       iframe.src         = opts.url;
       iframe.width       = opts.width;
-      iframe.height      = opts.height;
       iframe.frameBorder = 0;
       iframe.scrolling   = 'no';
       iframe.title       = 'holderdeord.no widget';
