@@ -12,28 +12,53 @@ var HDO = HDO || {};
 HDO.widgets = (function () {
   this.host = '<%= request.host %>';
   this.baseUrl = '<%= request.scheme %>://<%= request.host %>:<%= request.port %>/';
+  this.widgetCount = 0;
+
+  window.addEventListener('message', function(e) {
+    var data = e.data.split(':');
+    var action = data[0];
+
+    if (action == 'hdo-widget-size') {
+      var iframe = findIframe(e.source);
+      if (!iframe) { return }
+
+      iframe.style.height = data[1];
+      iframe.style.maxHeight = data[1];
+    }
+  }, false);
+
+  function findIframe(target) {
+		var iframes = document.getElementsByTagName('iframe');
+
+
+		for(var i = 0, l = iframes.length; i<l; i++) {
+			if(iframes[i].contentWindow === target) {
+				return iframes[i];
+			}
+		}
+  };
+
+  function queryParamFor(key, value) {
+    return key + '=' + encodeURIComponent(value);
+  }
+
+  function addIssueParams(el, url) {
+    var issues = el.getAttribute('data-issue-ids');
+    var count = el.getAttribute('data-issue-count');
+
+    url += '?'
+
+    if (issues && issues.length)
+      url += queryParamFor('issues', issues);
+
+    if (count && count.length)
+      url += queryParamFor('count', count);
+
+    return url;
+  }
 
   function extractWidgetOptions(type, el) {
       var url;
-
-      function queryParamFor(key, value) {
-        return key + '=' + encodeURIComponent(value);
-      }
-
-      function addIssueParams(el, url) {
-        var issues = el.getAttribute('data-issue-ids');
-        var count = el.getAttribute('data-issue-count');
-
-        url += '?'
-
-        if (issues && issues.length)
-          url += queryParamFor('issues', issues);
-
-        if (count && count.length)
-          url += queryParamFor('count', count);
-
-        return url;
-      }
 
       if (type == "issue") {
           url = baseUrl + "issues/" + el.getAttribute('data-issue-id') + '/widget';
@@ -49,6 +74,8 @@ HDO.widgets = (function () {
           throw new Error('invalid HDO widget type: ' + type);
       }
 
+      url = addOriginParam(url);
+
       return {
           'url': url,
           'height': el.getAttribute('height') || '500px',
@@ -56,16 +83,30 @@ HDO.widgets = (function () {
       };
   }
 
+  function addOriginParam (url) {
+    if (url.indexOf('?') != -1) {
+      url += '&' + queryParamFor('origin', location.href);
+    } else {
+      url += '?' + queryParamFor('origin', location.href);
+    };
+
+
+    return url;
+  }
+
   function createWidgetFrame(type, element) {
       var opts = extractWidgetOptions(type, element),
           iframe = document.createElement('iframe');
 
-      iframe.src = opts.url;
-      iframe.width = opts.width;
-      iframe.height = opts.height;
+      widgetCount++;
+
+      iframe.id          = "hdo-widget-" + widgetCount;
+      iframe.src         = opts.url;
+      iframe.width       = opts.width;
+      iframe.height      = opts.height;
       iframe.frameBorder = 0;
-      iframe.scrolling = 'no';
-      iframe.title = 'holderdeord.no widget';
+      iframe.scrolling   = 'no';
+      iframe.title       = 'holderdeord.no widget';
 
       element.parentNode.replaceChild(iframe, element);
   }
