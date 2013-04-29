@@ -28,14 +28,14 @@ HDO.widgets = (function () {
   }, false);
 
   function findIframe(target) {
-		var iframes = document.getElementsByTagName('iframe');
+    var iframes = document.getElementsByTagName('iframe');
 
 
-		for(var i = 0, l = iframes.length; i<l; i++) {
-			if(iframes[i].contentWindow === target) {
-				return iframes[i];
-			}
-		}
+    for(var i = 0, l = iframes.length; i<l; i++) {
+      if(iframes[i].contentWindow === target) {
+        return iframes[i];
+      }
+    }
   };
 
   function queryParamFor(key, value) {
