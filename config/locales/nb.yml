@@ -440,7 +440,7 @@ nb:
     questions:
       new: Still et spørsmål
       edit:
-        created: Spørsmålet er sendt til moderasjon.
+        created: Spørsmålet er nå sendt til godkjenning.
         approve: Godkjenn
         reject: Avvis
         updated: Spørsmålet ble oppdatert.

@@ -6,8 +6,7 @@ class QuestionsController < ApplicationController
   end
 
   def show
-    @question = Question.find(params[:id])
-    # TODO: render_not_found unless @question.approved?
+    @question = Question.approved.find(params[:id])
   end
 
   def new
@@ -21,10 +20,7 @@ class QuestionsController < ApplicationController
     @question = Question.new(question)
     @question.representative = Representative.find(rep) if rep
 
-    if @question.save
-      # TODO: show action should not be available unless status=approved
-      redirect_to @question, notice: t('app.questions.edit.created')
-    else
+    unless @question.save
       render action: "new"
     end
   end

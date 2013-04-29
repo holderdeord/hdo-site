@@ -16,9 +16,14 @@ describe QuestionsController do
 
   describe "GET show" do
     it "assigns the requested question as @question" do
-      question = Question.create! valid_attributes
-      get :show, {id: question.to_param}
+      question = Question.make!(status: 'approved')
+      get :show, id: question.to_param
       assigns(:question).should eq(question)
+    end
+
+    it 'only finds approved questions' do
+      get :show, id: Question.make!(status: 'pending')
+      response.should be_not_found
     end
   end
 
