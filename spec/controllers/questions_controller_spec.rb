@@ -22,8 +22,10 @@ describe QuestionsController do
     end
 
     it 'only finds approved questions' do
-      get :show, id: Question.make!(status: 'pending')
-      response.should be_not_found
+      expect {
+        get :show, id: Question.make!(status: 'pending')
+      }.to raise_error(ActiveRecord::RecordNotFound)
+      
     end
   end
 
@@ -50,7 +52,7 @@ describe QuestionsController do
 
       it "redirects to the created question" do
         post :create, {question: valid_attributes}
-        response.should redirect_to(Question.last)
+        response.should have_rendered(:create)
       end
 
       it 'accepts a blank from_name and persists it as nil' do
