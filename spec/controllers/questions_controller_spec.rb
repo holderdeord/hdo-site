@@ -25,7 +25,6 @@ describe QuestionsController do
       expect {
         get :show, id: Question.make!(status: 'pending')
       }.to raise_error(ActiveRecord::RecordNotFound)
-      
     end
   end
 
@@ -40,18 +39,18 @@ describe QuestionsController do
     describe "with valid params" do
       it "creates a new Question" do
         expect {
-          post :create, {question: valid_attributes}
+          post :create, question: valid_attributes
         }.to change(Question, :count).by(1)
       end
 
       it "assigns a newly created question as @question" do
-        post :create, {question: valid_attributes}
+        post :create, question: valid_attributes
         assigns(:question).should be_a(Question)
         assigns(:question).should be_persisted
       end
 
       it "redirects to the created question" do
-        post :create, {question: valid_attributes}
+        post :create, question: valid_attributes
         response.should have_rendered(:create)
       end
 
