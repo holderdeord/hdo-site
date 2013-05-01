@@ -24,8 +24,11 @@
         <dd>Medlem av <%= link_to com.name, com %></dd>
       <% end %>
     </dl>
-  </aside>
 
+    <%# TODO: NEEDS TO PREFILL NEW QUESTION FORM WITH REPRESENTATIVE %>
+    <%# TODO: TEXT SHOULD NOT BE HARDCODED %>
+    <%= link_to "Still #{@representative.name} et spørsmål", new_question_path, class:"btn btn-primary" %>
+  </aside>
 </div>
 
 <hr class="soften">
