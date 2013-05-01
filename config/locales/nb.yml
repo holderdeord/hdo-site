@@ -445,9 +445,11 @@ nb:
         reject: Avvis
         updated: Spørsmålet ble oppdatert.
       status:
-        approved: 'Godkjent'
-        pending: 'Avventer kontroll'
-        rejected: 'Avvist'
+        approved: Godkjent
+        pending: Avventer kontroll
+        rejected: Avvist
+      representative:
+        ask: 'Still %{name} et spørsmål'
     answers:
       edit:
         created: Svaret ble opprettet.

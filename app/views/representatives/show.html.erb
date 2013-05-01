@@ -25,9 +25,11 @@
       <% end %>
     </dl>
 
-    <%# TODO: NEEDS TO PREFILL NEW QUESTION FORM WITH REPRESENTATIVE %>
-    <%# TODO: TEXT SHOULD NOT BE HARDCODED %>
-    <%= link_to "Still #{@representative.name} et spørsmål", new_question_path, class:"btn btn-primary" %>
+    <% if AppConfig.questions_enabled %>
+      <%= link_to t('app.questions.representative.ask', name: @representative.name),
+                  new_question_path(representative: @representative.slug),
+                  class: 'btn btn-primary' %>
+    <% end %>
   </aside>
 </div>
 

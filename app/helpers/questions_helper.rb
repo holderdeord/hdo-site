@@ -4,7 +4,7 @@ module QuestionsHelper
       ["#{r.full_name} (#{r.current_party.try(:name)})", r.slug]
     end
 
-    options_for_select data, selected: @question.representative.try(:slug)
+    options_for_select data, selected: params[:representative] || @question.representative.try(:slug)
   end
 
   def question_issue_options
