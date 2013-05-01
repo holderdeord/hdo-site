@@ -3,9 +3,11 @@
   <head>
     <!--[if lt IE 9]>
       <%= javascript_include_tag "conditional/html5" %>
-      <%= javascript_include_tag "conditional/respond" %>
     <![endif]-->
     <%= stylesheet_link_tag 'widgets/widgets' %>
+    <!--[if lt IE 9]>
+      <%= javascript_include_tag "conditional/respond" %>
+    <![endif]-->
   </head>
   <body class="widget <%= controller.action_name %>">
     <%= yield %>
