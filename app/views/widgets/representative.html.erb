@@ -23,7 +23,7 @@
     <li class="vote">
       <%= issue.stats.text_for(@representative, name: '', html: true) %>
       <%= t 'app.lang.infinitive_particle' %>
-      <%= link_to issue.downcased_title, issue, target: '_top' %>
+      <%= link_to issue.downcased_title, issue %>
     </li>
   <% end %>
   </ul>
