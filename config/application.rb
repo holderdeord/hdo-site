@@ -74,7 +74,7 @@ module Hdo
     config.assets.initialize_on_precompile = false
 
     # Precompile additional assets (application.js, application.css, and all non-JS/CSS are already added)
-    config.assets.precompile += %w( conditional/html5.js widgets/widgets.css widgets/frame.js)
+    config.assets.precompile += %w( conditional/html5.js conditional/respond.js widgets/widgets.css widgets/frame.js)
 
     # allow cors from other subdomains
     config.middleware.use Rack::Cors do
