@@ -1,10 +1,12 @@
 /* HDO-site globals  */
 @import "fonts.css.less";
-
+@import "bootstrap/mixins";
+@import "mixins";
 
 /* Widget variables */
 @gutter: 55px;
 @padding: 20px;
+@parties_num: 7;
 
 
 html {
@@ -125,24 +127,108 @@ footer {
 }
 
 .positions {
-  .position {
-    padding-left: @gutter;
-    min-height: 60px;
-    margin: 20px 0;
-    background: transparent -5px 10px no-repeat;
-    &.for {
-      background-image: asset-url("taxonomy-icons/issue_for.png");
+  margin: 0;
+  .canvas {
+    .issue-graph-party {
+      display: inline-block;
+      width: 64px;
+      img {
+        width: 100%;
+      }
     }
-    &.for_and_against {
-      background-image: asset-url("taxonomy-icons/issue_for_and_against.png");
+    br {
+      display: none;
     }
-    &.against {
-      background-image: asset-url("taxonomy-icons/issue_against.png");
+    &.parties_3,
+    &.parties_4,
+    &.parties_5 {
+      br:nth-child(4n) {
+        display: inline-block;
+      }
     }
-    ul {
-      margin: 0;
-      padding: 0;
-      list-style: none;
+    &.parties_6,
+    &.parties_7 {
+      br:nth-child(6n) {
+        display: inline-block;
+      }
+    }
+  }
+  .issue-graph {
+    text-align: center;
+    padding-bottom: 1em;
+    border-bottom: 2px solid #eee;
+    .position {
+      .clearfix;
+      display: inline-block;
+      width: 33%;
+      vertical-align: top;
+      .axis {
+        display: none;
+      }
+      .canvas {
+        float: none;
+        width: 100%;
+      }
+    }
+    .issue-graph-label {
+      display: inline-block;
+      width: 33%;
+      vertical-align: top;
+      font-weight: normal;
+      font-size: 1.25em;
+      margin-top: 1em;
+    }
+  }
+  .issue-graph-axis {
+    .icon,
+    .text {
+      vertical-align: middle;
+      display: inline-block;
+    }
+  }
+  figcaption {
+    font-size: 0.9em;
+    color: #666;
+  }
+}
+
+@media (max-width: 767px) {
+  .positions {
+    .canvas {
+      br {
+        /* !important is needed because of dynamic classes */
+        display: none !important;
+      }
+      .issue-graph-party {
+        float: left;
+        max-width: 44px;
+      }
+    }
+    .issue-graph {
+      .position {
+        width: 100%;
+        .canvas {
+          float: right;
+          width: 100% / (@parties_num + 1) * @parties_num;
+        }
+        .axis {
+          float: left;
+          width: 100% / (@parties_num + 1);
+          display: block;
+          text-align: center;
+          .icon {
+            max-width: 100%;
+          }
+          p {
+            margin: 0;
+            font-size: 0.7em;
+            color: #666;
+          }
+        }
+      }
+    }
+    .issue-graph-axis {
+      display: none;
     }
   }
 }
