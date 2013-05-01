@@ -1,19 +1,27 @@
-window.addEventListener('DOMContentLoaded', function () {
-  if (!window.postMessage) {
-    return;
+(function () {
+  function reportWidgetSize() {
+    if (!window.postMessage || window.self === window.top) {
+      return;
+    }
+
+    var D, height, sizeMessage;
+
+    D = document;
+    height = Math.max(
+      Math.max(D.body.scrollHeight, D.documentElement.scrollHeight),
+      Math.max(D.body.offsetHeight, D.documentElement.offsetHeight),
+      Math.max(D.body.clientHeight, D.documentElement.clientHeight)
+    );
+
+    sizeMessage = 'hdo-widget-size:' + height + 'px';
+
+    // no sensitive data is being sent here, so * is fine.
+    window.top.postMessage(sizeMessage, '*');
   }
 
-  var D, height, sizeMessage;
-
-  D = document;
-  height = Math.max(
-    Math.max(D.body.scrollHeight, D.documentElement.scrollHeight),
-    Math.max(D.body.offsetHeight, D.documentElement.offsetHeight),
-    Math.max(D.body.clientHeight, D.documentElement.clientHeight)
-  );
-
-  sizeMessage = 'hdo-widget-size:' + height + 'px';
-
-  // no sensitive data is being sent here, so * is fine.
-  window.top.postMessage(sizeMessage, '*');
-}, false);
+  if (window.addEventListener) { // W3C DOM
+    window.addEventListener('DOMContentLoaded', reportWidgetSize, false);
+  } else if (window.attachEvent) { // IE DOM
+    window.attachEvent("onreadystatechange", reportWidgetSize);
+  }
+}());
