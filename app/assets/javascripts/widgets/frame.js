@@ -1,9 +1,8 @@
 (function () {
+  if (!window.postMessage || window.self === window.top) {
+    return;
+  }
   function reportWidgetSize() {
-    if (!window.postMessage || window.self === window.top) {
-      return;
-    }
-
     var D, height, sizeMessage;
 
     D = document;
