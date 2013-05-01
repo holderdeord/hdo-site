@@ -19,8 +19,8 @@
   }
 
   if (window.addEventListener) { // W3C DOM
-    window.addEventListener('DOMContentLoaded', reportWidgetSize, false);
+    window.addEventListener('load', reportWidgetSize, false);
   } else if (window.attachEvent) { // IE DOM
-    window.attachEvent("onreadystatechange", reportWidgetSize);
+    window.attachEvent("onload", reportWidgetSize);
   }
 }());
