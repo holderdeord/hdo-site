@@ -2,13 +2,13 @@
   <h1><%= Promise.model_name.human(count: 2).capitalize %></h1>
 </header>
 
-<% @promise_groups.each do |parties, promises| %>
 <article>
+  <% @promise_groups.each do |parties, promises| %>
   <h2 class="party <%= parties.size == 1 ? parties.first.name : '' %>"><%= parties.map(&:name).to_sentence %></h2>
   <ul>
     <% promises.each do |promise| %>
     <li><%= promise.body %></li>
     <% end %>
   </ul>
+  <% end %>
 </article>
-<% end %>
