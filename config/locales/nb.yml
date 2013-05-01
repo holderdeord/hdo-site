@@ -439,6 +439,7 @@ nb:
         updated: Brukeren ble oppdatert.
     questions:
       new: Still et spørsmål
+      ask_your_representative: Spør din representant
       edit:
         created: Spørsmålet er nå sendt til godkjenning.
         approve: Godkjenn
