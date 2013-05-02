@@ -114,15 +114,39 @@ var HDO = HDO || {};
       return { 'url': url };
     },
 
-    init: function () {
-      var nodes, elements, element, iframe, i, l;
+    findWidgetElements: function () {
+      var elements, nodes, widgetClass, i, l;
 
-      nodes = D.getElementsByClassName('hdo-' + this.type + '-widget');
-      elements = [];
+      elements    = [];
+      widgetClass = 'hdo-' + this.type + '-widget';
 
-      for (i = 0, l = nodes.length; i < l; i++) {
-        elements.push(nodes[i]);
+      if (D.getElementsByClassName) {
+        nodes = D.getElementsByClassName(widgetClass);
+
+        // avoid the live NodeList, since we'll replace nodes
+        for (i = 0, l = nodes.length; i < l; i++) {
+          elements.push(nodes[i]);
+        }
+      } else if (D.querySelectorAll) {
+        elements = D.querySelectorAll('.' + widgetClass);
+      } else {
+        nodes = D.getElementsByTagName('*');
+
+        for (i = 0, l = nodes.length; i < l; i++) {
+          if (nodes[i].className === widgetClass) {
+            elements.push(nodes[i]);
+          }
+        }
       }
+
+      return elements;
+    },
+
+
+    init: function () {
+      var elements, element, iframe, i, l;
+
+      elements = this.findWidgetElements();
 
       for (i = 0, l = elements.length; i < l; i++) {
         element = elements[i];
