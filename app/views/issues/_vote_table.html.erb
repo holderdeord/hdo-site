@@ -4,22 +4,33 @@
   <h5 class="span4">Ikke tilstede</h5>
 </div>
 
-<% all_parties.each do |party| %>
-  <div class="row-fluid state-column">
-    <% [:for, :against, :absent].each do |result_key| %>
-      <div class="span4" data-party-slug="<%= party.slug %>-<%= issue_vote.title %>">
-        <% if !issue_vote.vote_result_groups[result_key][party].empty? %>
-          <%= image_tag party.logo, alt: party.name, width: '24', height: '24' %>
-          <span class="state-party"><%= party.name %>
-          (<%= issue_vote.vote_result_groups[result_key][party].size %>)</span>
-        <% end %>
+<% if issue_vote.has_results? %>
 
-        <div class="representatives-list hidden" data-party-slug="<%= party.slug %>-<%= issue_vote.title %>-reps">
-          <% issue_vote.vote_result_groups[result_key][party].each do |rep| %>
-              <p><%= link_to rep.name, rep %></p>
+  <% all_parties.each do |party| %>
+    <div class="row-fluid state-column">
+      <% [:for, :against, :absent].each do |result_key| %>
+        <div class="span4" data-party-slug="<%= party.slug %>-<%= issue_vote.title %>">
+          <% if issue_vote.vote_result_groups[result_key][party].any? %>
+            <%= image_tag party.logo, alt: party.name, width: '24', height: '24' %>
+            <span class="state-party"><%= party.name %>
+            (<%= issue_vote.vote_result_groups[result_key][party].size %>)</span>
           <% end %>
+
+          <div class="representatives-list hidden" data-party-slug="<%= party.slug %>-<%= issue_vote.title %>-reps">
+            <% issue_vote.vote_result_groups[result_key][party].each do |rep| %>
+                <p><%= link_to rep.name, rep %></p>
+            <% end %>
+          </div>
         </div>
-      </div>
-    <% end %>
+      <% end %>
+    </div>
+  <% end %>
+
+<% else %>
+  <div class="row-fluid">
+    <p>
+      <%= issue_vote.no_results_explanation %>
+      Les mer om <%= link_to 'enstemmige vedtak', home_faq_path(anchor: 'hvordan-vet-dere-hvem-som-var-tilstede-nr-vedtaket-er-enstemmig') %>.
+    </p>
   </div>
 <% end %>

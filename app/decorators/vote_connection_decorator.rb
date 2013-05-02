@@ -24,6 +24,18 @@ class VoteConnectionDecorator < Draper::Decorator
     "vote-#{model.to_param}"
   end
 
+  def has_results?
+    vote.vote_results.size > 0
+  end
+
+  def no_results_explanation
+    if vote.inferred?
+      I18n.t 'app.votes.non_personal.inferred'
+    elsif vote.non_personal?
+      I18n.t 'app.votes.non_personal.unknown'
+    end
+  end
+
   def matches_text
     if matches?
       I18n.t('app.votes.matches_issue.yes', issue_title: issue.downcased_title)
