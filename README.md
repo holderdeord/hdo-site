@@ -226,11 +226,3 @@ or
 # Deployment
 
 Our own servers are set up with Puppet, using the code from the [hdo-puppet repo](http://github.com/holderdeord/hdo-puppet).
-
-For test environments, deploying to [Heroku](http://www.heroku.com/) should work:
-
-    $ [sudo] gem install heroku
-    $ heroku login
-    $ heroku create
-    $ git push heroku master
-    $ heroku run rake db:setup import:dev
