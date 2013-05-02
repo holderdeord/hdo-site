@@ -2,6 +2,7 @@
   if (!window.postMessage || window.self === window.top) {
     return;
   }
+
   function reportWidgetSize() {
     var D, height, sizeMessage;
 

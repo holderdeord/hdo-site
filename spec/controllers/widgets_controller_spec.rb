@@ -46,4 +46,14 @@ describe WidgetsController do
       assigns(:representative).should be_kind_of(Representative)
     end
   end
+
+  describe 'GET #load' do
+    render_views
+
+    it 'renders the load script' do
+      get :load, format: :js
+
+      response.should be_ok
+    end
+  end
 end
