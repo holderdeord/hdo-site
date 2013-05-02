@@ -17,9 +17,9 @@
           <div class="position">
             <div class="canvas parties_<%= parties.count %>"><%=  %>
               <% parties.each do |party| %>
-                <a class="issue-graph-party" href="<%= party_url(party) %>">
+                <%= link_to issue_url(@issue, anchor: party.slug), class: 'issue-graph-party' do %>
                   <%= image_tag party.logo.versions[:medium], alt: "#{party.name}s logo" %>
-                </a>
+                <% end %>
                 <br />
               <% end %>
             </div>
