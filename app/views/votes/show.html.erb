@@ -33,7 +33,7 @@
         <dt><%= Vote.human_attribute_name :issues %></dt>
         <dd>
           <ul>
-            <% @vote.issues.each do |issue| %>
+            <% @vote.issues.published.each do |issue| %>
               <li><%= link_to issue.title, issue %></li>
             <% end %>
           </ul>
