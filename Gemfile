@@ -87,6 +87,7 @@ gem 'tire'
 
 # caching
 gem 'cache_digests'
+gem 'fastly'
 
 # images
 gem 'mini_magick', "~> 3.5"

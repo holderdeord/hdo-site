@@ -45,7 +45,7 @@ class Admin::IssuesController < AdminController
       step = edit_steps.from_param!
       send "edit_#{step}"
     else
-      redirect_to edit_step_admin_issue_path(@issue.id, :step => edit_steps.first)
+      redirect_to edit_step_admin_issue_path(@issue.id, step: edit_steps.first)
     end
   end
 
@@ -54,10 +54,12 @@ class Admin::IssuesController < AdminController
     @issue.last_updated_by = current_user
 
     if @issue.save
+      PageCache.expire_issue(@issue)
+
       if edit_steps.finish?
         redirect_to @issue
       else
-        redirect_to edit_step_admin_issue_path(@issue.id, :step => edit_steps.after)
+        redirect_to edit_step_admin_issue_path(@issue.id, step: edit_steps.after)
       end
     else
       logger.warn "failed to create issue: #{@issue.inspect}: #{@issue.errors.full_messages}"
@@ -76,7 +78,9 @@ class Admin::IssuesController < AdminController
     if update_ok
       if edit_steps.finish?
         edit_steps.clear!
-        redirect_to @issue
+        PageCache.expire_issue(@issue)
+        # make sure we don't render a cached version to the editor
+        redirect_to issue_path(@issue, lv: @issue.lock_version)
       else
         edit_steps.next!
         redirect_to edit_step_admin_issue_path(@issue.id, step: edit_steps.current)
@@ -85,7 +89,7 @@ class Admin::IssuesController < AdminController
       logger.warn "failed to update issue: #{@issue.inspect}: #{@issue.errors.full_messages}"
 
       flash.alert = @issue.errors.full_messages.to_sentence
-      redirect_to edit_step_admin_issue_path(@issue.id, :step => edit_steps.current)
+      redirect_to edit_step_admin_issue_path(@issue.id, step: edit_steps.current)
     end
   end
 

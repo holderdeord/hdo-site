@@ -3,6 +3,8 @@
 class IssuesController < ApplicationController
   before_filter :fetch_issue, except: [:index, :admin_info]
 
+  hdo_caches_page :index, :show, :votes
+
   def index
     @groups = Issue.published.in_tag_groups
     @groups = @groups.sort_by { |t, _| t.name }

@@ -1,5 +1,5 @@
 class PartiesController < ApplicationController
-  hdo_caches_page :index
+  hdo_caches_page :index, :show
 
   def index
     @parties = Party.order(:name).all

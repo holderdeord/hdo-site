@@ -92,5 +92,9 @@ module Hdo
 
     # # This is turned off until we figure out how to deal with caching.
     # config.middleware.use 'Hdo::Rack::Locale'
+
+    # we rely on fastly + instant purges
+    config.middleware.delete 'Rack::Cache'
+    config.middleware.insert_after ActiveRecord::QueryCache, 'Hdo::Rack::UnsetCookie'
   end
 end

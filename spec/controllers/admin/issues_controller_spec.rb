@@ -96,20 +96,6 @@ describe Admin::IssuesController do
     response.should render_template(:new)
   end
 
-  context "failed update" do
-    it 'should re-edit categories if update was unsuccessful' do
-      pending "can this actually happen?"
-    end
-
-    it 'should re-edit promises if update was unsuccessful' do
-      pending "can this actually happen?"
-    end
-
-    it 'should re-edit votes if update was unsuccessful' do
-      pending "can this actually happen?"
-    end
-  end
-
   context 'destroy' do
     it 'should destroy the issue' do
       delete :destroy, id: issue
@@ -190,13 +176,26 @@ describe Admin::IssuesController do
   end
 
   context "finish" do
-    it "should save and redirect to issue when hitting finish from edit step" do
+    before do
+      PageCache.should_receive(:expire_issue).with instance_of(Issue)
+    end
+
+    it "should save and redirect to issue when hit finish from edit step" do
       session[:issue_step] = 'votes'
 
       put :update, finish: true, issue: issue_params(issue), id: issue
 
       assigns(:issue).should == issue
-      response.should redirect_to issue_path(issue)
+      response.should redirect_to issue_path(issue, lv: issue.reload.lock_version)
+    end
+
+    it "should update the published state" do
+      put :update, finish: true, issue: issue_params(issue).merge('status' => 'published'), id: issue
+
+      issue = assigns(:issue)
+      issue.should be_published
+
+      response.should redirect_to issue_path(issue, lv: issue.reload.lock_version)
     end
   end
 
@@ -205,15 +204,6 @@ describe Admin::IssuesController do
   #
 
   context "update" do
-    it "should update the published state" do
-      put :update, finish: true, issue: issue_params(issue).merge('status' => 'published'), id: issue
-
-      issue = assigns(:issue)
-      issue.should be_published
-
-      response.should redirect_to issue_path(issue)
-    end
-
     it 'sets last_updated_by when published state changes' do
       put :update, issue: issue_params(issue).merge('status' => 'published'), id: issue
 
