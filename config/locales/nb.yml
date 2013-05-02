@@ -362,6 +362,7 @@ nb:
       none: Ingen saker
       status:
         published: Publisert
+        publishable: Klar til publisering
         in_progress: Under arbeid
         shelved: Lagt på is
       edit:

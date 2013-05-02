@@ -29,7 +29,12 @@ class Issue < ActiveRecord::Base
   attr_accessible :description, :title, :category_ids, :promise_ids, :status, :lock_version, :editor_id, :tag_list
   validates :title, presence: true, uniqueness: true
 
-  STATUSES = %w[published in_progress shelved]
+  STATUSES = %w[
+    published
+    publishable
+    in_progress
+    shelved
+  ]
   validates_inclusion_of :status, in: STATUSES
 
   has_and_belongs_to_many :categories, uniq: true

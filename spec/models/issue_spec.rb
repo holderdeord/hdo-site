@@ -37,6 +37,9 @@ describe Issue do
     issue.status = 'published'
     issue.should be_valid
 
+    issue.status = 'publishable'
+    issue.should be_valid
+
     issue.status = 'in_progress'
     issue.should be_valid
 
