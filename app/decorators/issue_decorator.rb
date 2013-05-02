@@ -91,7 +91,10 @@ class IssueDecorator < Draper::Decorator
 
   class IssuePartyDecorator < Draper::Decorator
     alias_method :issue, :context
-    delegate :external_id, :image_with_fallback, :name
+    delegate :external_id,
+             :image_with_fallback,
+             :name,
+             :slug
 
     def link(opts = {}, &blk)
       h.link_to h.party_path(model), opts, &blk
