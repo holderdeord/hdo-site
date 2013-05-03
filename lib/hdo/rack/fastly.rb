@@ -6,7 +6,7 @@ module Hdo
     # 1. Fastly (and Varnish, by default) will ignore beresp's with Set-Cookie even though cache headers are set.
     #    We trust the app and delete the Set-Cookie header if Cache-Control is public
     # 2. Fastly sets "Fastly-SSL: 1" for HTTPS requests.
-    #    We translate this to HTTPS=on, which is (one of several alternative) understood by Rack.
+    #    We translate this to HTTPS=on, which is (one of several alternatives) understood by Rack.
     #
 
     class Fastly

@@ -1,3 +1,3 @@
 class UserSessionsController < Devise::SessionsController
-  force_fastly_ssl
+  hdo_force_ssl
 end

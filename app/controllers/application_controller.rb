@@ -6,11 +6,45 @@ class ApplicationController < ActionController::Base
     before_filter :set_default_expiry, only: actions
   end
 
-  def self.force_fastly_ssl
-    force_ssl(host: AppConfig.ssl_host) if AppConfig.ssl_host
+  def self.hdo_force_ssl(options = {})
+    if AppConfig.ssl_enabled
+      before_filter :force_ssl_redirect, options
+    end
   end
 
   protected
+
+  # mostly copied from Rails 4
+  def force_ssl_redirect(host = AppConfig.ssl_host)
+    unless request.ssl?
+      redirect_options = {:protocol => 'https://', :status => :moved_permanently}
+      redirect_options.merge!(:host => host) if host
+      redirect_options.merge!(:params => request.query_parameters)
+      flash.keep if respond_to?(:flash)
+      redirect_to redirect_options
+    end
+  end
+
+  #
+  # for devise
+  #
+
+  def after_sign_in_path_for(model)
+    protocol = AppConfig.ssl_enabled ? 'https' : request.protocol
+
+    case model
+    when Representative
+      representative_root_url protocol: protocol
+    when User
+      admin_root_url protocol: protocol
+    else
+      raise "unknown user model: #{model.inspect}"
+    end
+  end
+
+  def after_sign_out_path_for(model)
+    root_url protocol: 'http'
+  end
 
   def set_default_expiry
     if can_cache?
