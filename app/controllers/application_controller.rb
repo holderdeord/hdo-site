@@ -6,6 +6,17 @@ class ApplicationController < ActionController::Base
     before_filter :set_default_expiry, only: actions
   end
 
+  def self.force_fastly_ssl(options = {})
+    return unless AppConfig.ssl_enabled && AppConfig.ssl_host
+
+    before_filter(options) do
+      if request.env['HTTP_X_IS_SSL'] != 'yes'
+        flash.keep if respond_to?(:flash)
+        redirect_to protocol: 'https://', status: :moved_permanently, host: AppConfig.ssl_host, params: request.query_parameters
+      end
+    end
+  end
+
   protected
 
   def set_default_expiry
