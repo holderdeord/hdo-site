@@ -59,7 +59,7 @@ module Hdo
       end
 
       def locale
-        @locale ||= LOCALE.fetch(I18n.locale)
+        @locale ||= LOCALE.fetch(:nb)
       end
 
       def word_list_path
