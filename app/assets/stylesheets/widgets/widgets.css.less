@@ -128,111 +128,84 @@ footer {
 
 .positions {
   margin: 0;
-  .canvas {
-    .issue-graph-party {
-      display: inline-block;
-      width: 64px;
-      img {
-        width: 100%;
-      }
-    }
-    br {
-      display: none;
-    }
-    &.parties_3,
-    &.parties_4,
-    &.parties_5 {
-      br:nth-child(4n) {
-        display: inline-block;
-      }
-    }
-    &.parties_6,
-    &.parties_7 {
-      br:nth-child(6n) {
-        display: inline-block;
-      }
-    }
-  }
-  .issue-graph {
-    text-align: center;
-    padding-bottom: 1em;
-    border-bottom: 2px solid #eee;
+  .labels, .icons {
     .clearfix;
-    .issue-graph-logos {
-      .clearfix;
-    }
-    .position {
-      float: left;
-      width: 33%;
-      .axis {
-        display: none;
-      }
-      .canvas {
-        float: none;
-        width: 100%;
-      }
-    }
-    .issue-graph-label {
-      float: left;
-      width: 33%;
-      font-weight: normal;
-      font-size: 1.25em;
-      margin-top: 1em;
+    margin: 0 auto;
+    max-width: 1000px;
+  }
+  .labels h3 {
+    img {
+      vertical-align: middle;
+      max-width: 48px;
+      max-height: auto;
     }
   }
-  .issue-graph-axis {
-    .icon,
-    .text {
-      vertical-align: middle;
-      display: inline-block;
+  .position {
+    min-height: 1px;
+    width: 33%;
+    float: left;
+    box-sizing: border-box;
+    padding: 0 5px;
+    text-align: center;
+  }
+  .icons .position-wrapper {
+    margin: 0 auto;
+    max-width: 150px;
+    a {
+      text-decoration: none;
+    }
+    img {
+      max-width: 54px;
+      max-height: auto;
     }
   }
   figcaption {
+    margin-top: 20px;
     font-size: 0.9em;
-    color: #666;
+    color: #999;
+    background-color: #f8f8f8;
+    padding: 10px 15px;
+    border-radius: 2px;
+    p {
+      margin: 0;
+    }
   }
 }
 
-@media (max-width: 767px) {
-  .positions {
-    .canvas {
-      br {
-        /* !important is needed because of dynamic classes */
-        display: none !important;
-      }
-      .issue-graph-party {
-        float: left;
-        max-width: 44px;
-      }
-    }
-    .issue-graph {
-      .position {
-        width: 100%;
-        .canvas {
-          float: right;
-          width: 100% / (@parties_num + 1) * @parties_num;
-        }
-        .axis {
-          float: left;
-          width: 100% / (@parties_num + 1);
-          display: block;
-          text-align: center;
-          .icon {
-            max-width: 100%;
-          }
-          p {
-            margin: 0;
-            font-size: 0.7em;
-            color: #666;
-          }
-        }
-      }
-    }
-    .issue-graph-axis {
-      display: none;
+@media (max-width: 500px) {
+  .positions .icons .position-wrapper img {
+    max-width: 50px;
+  }
+  .positions .labels h3 {
+    font-size: 1.2em;
+    img {
+      max-width: 36px;
     }
   }
 }
+@media (max-width: 400px) {
+  .positions .icons .position-wrapper img {
+    max-width: 42px;
+  }
+  .positions .labels h3 {
+    font-size: 1.1em;
+    img {
+      max-width: 32px;
+    }
+  }
+}
+@media (max-width: 300px) {
+  .positions .icons .position-wrapper img {
+    max-width: 36px;
+  }
+  .positions .labels h3 {
+    font-size: 1em;
+    img {
+      max-width: 28px;
+    }
+  }
+}
+
 
 .votes {
   list-style: none;
@@ -316,6 +289,7 @@ footer {
   &.issue {
     header {
       border-top: 4px solid #000;
+      margin-bottom: 20px;
     }
   }
 }

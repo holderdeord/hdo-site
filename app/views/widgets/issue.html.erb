@@ -11,35 +11,31 @@
 
   <figure class="positions">
 
-    <div class="issue-graph">
-      <div class="issue-graph-logos">
-        <% @issue.position_groups.each do |label, parties| %>
-          <div class="position">
-            <div class="canvas parties_<%= parties.count %>"><%=  %>
-              <% parties.each do |party| %>
-                <%= link_to issue_url(@issue, anchor: party.slug), class: 'issue-graph-party' do %>
-                  <%= image_tag party.logo.versions[:medium], alt: "#{party.name}s logo" %>
-                <% end %>
-                <br />
-              <% end %>
-            </div>
-            <div class="axis">
+    <div class="labels">
+      <% @issue.position_groups.each do |label, parties| %>
+        <div class="position">
+          <div class="position-wrapper">
+            <h3>
               <%= image_tag label.icon, class: "icon" %>
-              <p>
-                <%= label.text %>
-              </p>
-            </div>
+              <%= label.text %>
+            </h3>
           </div>
-        <% end %>
-      </div>
-      <div class="issue-graph-axis">
-        <% @issue.position_groups.each do |label, parties| %>
-          <h3 class="issue-graph-label text">
-            <%= image_tag label.icon, class: "icon" %>
-            <%= label.text %>
-          </h3>
-        <% end %>
-      </div>
+        </div>
+      <% end %>
+    </div>
+
+    <div class="icons">
+      <% @issue.position_groups.each do |label, parties| %>
+        <div class="position">
+          <div class="position-wrapper">
+            <% parties.each do |party| %>
+              <%= link_to issue_url(@issue, anchor: party.slug), class: 'issue-graph-party' do %>
+                <%= image_tag party.logo.versions[:medium], alt: "#{party.name}s logo" %>
+              <% end %>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
     </div>
 
     <figcaption class="muted"><p><%= @issue.explanation %></p></figcaption>
