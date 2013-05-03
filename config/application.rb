@@ -95,6 +95,6 @@ module Hdo
 
     # we rely on fastly + instant purges
     config.middleware.delete 'Rack::Cache'
-    config.middleware.insert_after ActiveRecord::QueryCache, 'Hdo::Rack::UnsetCookie'
+    config.middleware.insert_after ActiveRecord::QueryCache, 'Hdo::Rack::Fastly'
   end
 end
