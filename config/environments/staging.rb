@@ -70,10 +70,4 @@ Hdo::Application.configure do
   # Log the query plan for queries taking more than this (works
   # with SQLite, MySQL, and PostgreSQL)
   # config.active_record.auto_explain_threshold_in_seconds = 0.5
-
-  # force SSL for devise - see https://github.com/plataformatec/devise/wiki/How-To%3a-Use-SSL-%28HTTPS%29
-  config.to_prepare { Devise::SessionsController.force_ssl       host: 'holderdeord.a.ssl.fastly.net' }
-  config.to_prepare { Devise::RegistrationsController.force_ssl  host: 'holderdeord.a.ssl.fastly.net' }
-  config.to_prepare { Devise::PasswordsController.force_ssl      host: 'holderdeord.a.ssl.fastly.net' }
-  config.to_prepare { ConfirmationsController.force_ssl          host: 'holderdeord.a.ssl.fastly.net' }
 end

@@ -6,6 +6,10 @@ class ApplicationController < ActionController::Base
     before_filter :set_default_expiry, only: actions
   end
 
+  def self.force_fastly_ssl
+    force_ssl(host: AppConfig.ssl_host) if AppConfig.ssl_host
+  end
+
   protected
 
   def set_default_expiry
