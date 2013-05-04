@@ -10,12 +10,14 @@ module Hdo
     #
 
     class Fastly
+      HTTPS = 'https'
+
       def initialize(app)
         @app = app
       end
 
       def call(env)
-        if env['HTTP_FASTLY_SSL']
+        if env['HTTP_FASTLY_SSL'] || env['HTTP_X_FORWARDED_PROTO'] == HTTPS
           env['HTTPS'] = 'on'
         end
 

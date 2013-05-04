@@ -30,7 +30,7 @@ class ApplicationController < ActionController::Base
   #
 
   def after_sign_in_path_for(model)
-    protocol = AppConfig.ssl_enabled ? 'https' : request.protocol
+    protocol = AppConfig.ssl_enabled ? 'https://' : request.protocol
 
     case model
     when Representative
