@@ -55,6 +55,40 @@ body > header {
       }
     }
   }
+  form.form-search .input-append {
+    #appendedInputButton {
+      background-color: desaturate(lighten(@hdoPrimaryColor, 35), 50);
+      background-color: rgba(0,0,0, 0.2);
+      border-color: rgba(0,0,0,0.25);
+      box-shadow: 0 1px rgba(255,255,255,0.1),
+                  0 0 0 1px rgba(255,255,255,0.1),
+                  0 1px 3px rgba(0,0,0,0.1) inset;
+      border-radius: 5px 0 0 5px;
+      color: #fff;
+      &:active, &:focus {
+        background-color: rgba(0,0,0, 0.3);
+        box-shadow: 0 1px rgba(255,255,255,0.1);
+        border-color: rgba(0,0,0,0.3);
+      }
+    }
+    button.btn {
+      background: rgba(255,255,255, 0.6);
+      border-color: rgba(0,0,0,0.5);
+      border-radius: 0 5px 5px 0;
+      box-shadow: 0 1px rgba(255,255,255,0.1),
+                  0 0 0 1px rgba(255,255,255,0.1),
+                  0 1px rgba(255,255,255,0.2) inset,
+                  0 -1px rgba(0,0,0,0.05) inset;
+      &:active, &:focus {
+      background: rgba(255,255,255, 0.7);
+      border-color: rgba(0,0,0,0.6);
+      box-shadow: 0 1px rgba(255,255,255,0.1),
+                  0 0 0 1px rgba(255,255,255,0.1),
+                  0 1px rgba(0,0,0,0.2) inset,
+                  0 0 0 3px rgba(0,0,0,0.05) inset;
+      }
+    }
+  }
   .header-decoration {
     background-color: #fff;
     position: relative;
