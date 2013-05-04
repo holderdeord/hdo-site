@@ -3,8 +3,7 @@
   <h1>Løfter</h1>
     <ul class="promises">
       <% @promises.each do |promise| %>
-      <%# TODO: Make party available %>
-      <li class="promise party-slug"><%= promise.body %></li>
+        <li class="promise party-<%= promise.parties.first.slug %>"><%= promise.body %></li>
       <% end %>
     </ul>
 
