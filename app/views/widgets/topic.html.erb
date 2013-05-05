@@ -3,7 +3,10 @@
   <h1>Løfter</h1>
     <ul class="promises">
       <% @promises.each do |promise| %>
-        <li class="promise party-<%= promise.parties.first.slug %>"><%= promise.body %></li>
+        <li class="promise <%= slug_for_parties(promise.parties) %>">
+          <%# promise.party_names %>
+          <%= promise.body %>
+        </li>
       <% end %>
     </ul>
 
