@@ -64,7 +64,7 @@ a {
   }
 }
 
-header {
+body > header {
   padding: @padding @padding 0 @padding;
 }
 
@@ -218,7 +218,6 @@ footer {
 
 
 /* Party specific text colors */
-
 .frp {color: #003798}
 .h   {color: #005595}
 .v   {color: #83b660}
@@ -228,13 +227,50 @@ footer {
 .sv  {color: #db0027}
 
 /* Party specific background colors */
-.background.frp {background-color: #003798}
-.background.h   {background-color: #005595}
-.background.v   {background-color: #83b660}
-.background.krf {background-color: #efae52}
-.background.a   {background-color: #df1a22}
-.background.sp  {background-color: #008542}
-.background.sv  {background-color: #db0027}
+.background {
+  &.frp {background-color: #003798}
+  &.h   {background-color: #005595}
+  &.v   {background-color: #83b660}
+  &.krf {background-color: #efae52}
+  &.a   {background-color: #df1a22}
+  &.sp  {background-color: #008542}
+  &.sv  {background-color: #db0027}
+}
+
+/* Party specific promiseboxes */
+.promise {
+  background-color: #f2f2f2;
+  border-color: #ccc;
+  &.frp {
+    background-color: desaturate(lighten(#003798, 60), 60);
+    border-color: desaturate(lighten(#003798, 50), 40);
+  }
+  &.h {
+    background-color: desaturate(lighten(#005595, 63), 60);
+    border-color: desaturate(lighten(#005595, 50), 50);
+  }
+  &.v {
+    background-color: desaturate(lighten(#83b660, 38), 0);
+    border-color: desaturate(lighten(#83b660, 14), 0);
+  }
+  &.krf {
+    background-color: desaturate(lighten(#efae52, 32), 0);
+    border-color: desaturate(lighten(#efae52, 15), 0);
+  }
+  &.a {
+    background-color: desaturate(lighten(#df1a22, 45), 15);
+    border-color: desaturate(lighten(#df1a22, 35), 10);
+  }
+  &.sp {
+    background-color: desaturate(lighten(#008542, 65), 40);
+    border-color: desaturate(lighten(#008542, 43), 55);
+  }
+  &.sv {
+    background-color: desaturate(lighten(#db0027, 52), 0);
+    border-color: desaturate(lighten(#db0027, 43), 0);
+  }
+}
+
 
 .deco-bg {
   height: 4px;
@@ -291,6 +327,9 @@ footer {
     }
   }
   &.topic {
+    h1 {
+      margin: 2em 0 0.5em 0;
+    }
     .promises {
       margin: 0;
       padding: 0;
@@ -301,15 +340,32 @@ footer {
         vertical-align: top;
         overflow: hidden;
         width: 260px;
-        height: 130px;
-        padding: 20px;
+        height: 140px;
+        padding: 0 10px 20px 40px;
         margin: 0 10px 10px 0;
-        background-color: #eee;
         box-shadow: 0 1px 3px rgba(0,0,0, 0.1);
-        border: 1px solid #ccc;
-        &.party-slug {
-          background-color: pink;
-          border-color: red;
+        border-width: 1px;
+        border-style: solid;
+        border-radius: 3px;
+        header {
+          position: relative;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          font-weight: bold;
+          padding: 20px 10px 10px 35px;
+          margin-left: -35px;
+          img {
+            position: absolute;
+            left: 0;
+            max-width: 32px;
+            max-height: 32px;
+            top: 15px;
+          }
+        }
+        p {
+          margin: -5px 0 0 0;
+          font-size: 0.85em;
         }
       }
     }
@@ -325,6 +381,8 @@ footer {
         position: absolute;
         left: 10px;
         width: 250px;
+        font-size: 0.88em;
+        line-height: 1.6em;
       }
       .positions {
         margin-left: 250px;
