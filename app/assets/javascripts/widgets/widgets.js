@@ -105,8 +105,7 @@ var HDO = HDO || {};
         url = H.widgets.baseUrl + "widgets/topic?" + this.queryParamFor('issues', el.getAttribute('data-issues')) + '&'
                                                    + this.queryParamFor('promises', el.getAttribute('data-promises'));
       } else if (this.type === "promises") {
-        url = H.widgets.baseUrl + "widgets/promises?" +
-              this.queryParamFor('promises', el.getAttribute('data-promises'));
+        url = H.widgets.baseUrl + "promises/" + encodeURIComponent(el.getAttribute('data-promises')) + "/widget";
       } else {
         throw new Error('invalid HDO widget type: ' + this.type);
       }

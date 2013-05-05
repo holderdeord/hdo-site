@@ -51,7 +51,7 @@
       this.element.setAttribute('data-promises', '101,101,102');
 
       assert.equals(widget.widgetOptionsFor(this.element).url,
-        "http://www.holderdeord.no/widgets/promises?promises=101%2C101%2C102")
+        "http://www.holderdeord.no/promises/101%2C101%2C102/widget")
     },
 
   });

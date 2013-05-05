@@ -85,8 +85,8 @@ Hdo::Application.routes.draw do
   resources :categories, only: [:index, :show] do
     member do
       get 'promises'
-      get 'promises/parties/:party' => 'categories#promises'
-      get 'subcategories'           => 'categories#subcategories'
+      get 'promises/parties/:party'   => 'categories#promises'
+      get 'subcategories'             => 'categories#subcategories'
     end
   end
 
@@ -107,7 +107,9 @@ Hdo::Application.routes.draw do
   #
 
   resources :promises, only: [:index]
-  get 'promises/page/:page' => 'promises#index'
+  get 'promises/page/:page'       => 'promises#index'
+  get 'promises/:promises/widget' => 'widgets#promises'
+
 
   #
   # parliament_issues
@@ -149,7 +151,6 @@ Hdo::Application.routes.draw do
 
   get 'widgets'          => 'widgets#load', format: :js
   get 'widgets/topic'    => 'widgets#topic'
-  get 'widgets/promises' => 'widgets#promises'
 
   #
   # home
