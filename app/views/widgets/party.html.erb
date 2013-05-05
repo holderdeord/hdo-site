@@ -2,11 +2,10 @@
 
 <header>
   <h1 class="<%= @party.slug %>">
-    <%# TODO: THE LINK(S) BELOW SHOULD LEAD TO THE PARTY PAGE ON HDO %>
-    <a href="#">
+    <%= link_to @party do %>
       <%= image_tag @party.logo, alt: "#{@party.name}s logo", width: '96', height: '96' %>
       <%= @party.name %>
-    </a>
+    <% end %>
   </h1>
 </header>
 

@@ -5,9 +5,9 @@
 <article>
   <% @promise_groups.each do |parties, promises| %>
     <h2 class="party <%= slug_for_parties(parties) %>">
-      <%# TODO: THE LINK(S) BELOW SHOULD LEAD TO THE PARTY PAGE ON HDO %>
-      <a href="#"><%= parties.map(&:name).to_sentence %></a>
+      <%= links_for_parties(parties).html_safe %>
     </h2>
+
     <ul>
       <% promises.each do |promise| %>
       <li><%= promise.body %></li>
