@@ -4,7 +4,10 @@
 
 <article>
   <% @promise_groups.each do |parties, promises| %>
-    <h2 class="party <%= slug_for_parties(parties) %>"><%= parties.map(&:name).to_sentence %></h2>
+    <h2 class="party <%= slug_for_parties(parties) %>">
+      <%# TODO: THE LINK(S) BELOW SHOULD LEAD TO THE PARTY PAGE ON HDO %>
+      <a href="#"><%= parties.map(&:name).to_sentence %></a>
+    </h2>
     <ul>
       <% promises.each do |promise| %>
       <li><%= promise.body %></li>
