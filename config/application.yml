@@ -12,6 +12,7 @@ defaults: &defaults
   vote_scoring_bins: 3
   show_accountability: true
   widgets_enabled: true
+  representative_widget_enabled: true
 
 development:
   <<: *defaults
@@ -27,4 +28,4 @@ production:
   <<: *defaults
   analytics_enabled: true
   questions_enabled: false
-  widgets_enabled: false
+  representative_widget_enabled: false

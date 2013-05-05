@@ -25,6 +25,8 @@ class WidgetsController < ApplicationController
   end
 
   def representative
+    assert_feature :representative_widget
+
     @representative = Representative.find(params[:id])
     @issues = issues_for(@representative)
   end
