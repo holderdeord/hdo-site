@@ -2,7 +2,7 @@ class WidgetsController < ApplicationController
   before_filter { assert_feature(:widgets) }
 
   layout 'widgets'
-  hdo_caches_page :load
+  hdo_caches_page :load, :issue, :party, :representative, :topic, :promises
 
   rescue_from ActiveRecord::RecordNotFound do
     render 'missing', status: 404 # TODO: nice error page
