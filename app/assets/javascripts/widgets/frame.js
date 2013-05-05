@@ -21,7 +21,9 @@
 
   if (window.addEventListener) { // W3C DOM
     window.addEventListener('load', reportWidgetSize, false);
+    window.addEventListener('resize', reportWidgetSize, false);
   } else if (window.attachEvent) { // IE DOM
     window.attachEvent("onload", reportWidgetSize);
+    window.attachEvent("resize", reportWidgetSize);
   }
 }());
