@@ -1,12 +1,12 @@
-<div class="deco-bg background <%= @representative.latest_party.name %>"></div>
+<div class="deco-bg background <%= @representative.latest_party.slug %>"></div>
 
 <header>
   <%= image_tag @representative.image.versions[:medium], width: '240', height: '320', alt: @representative.full_name %>
   <h1>
     <%= @representative.full_name %>
   </h1>
-  <h3 class="<%= @representative.latest_party.name %>">
-    Representerer <%= @representative.latest_party.try(:name) %> i <%= @representative.district.name %>
+  <h3 class="<%= @representative.latest_party.slug %>">
+    Representerer <%= @representative.latest_party.name %> i <%= @representative.district.name %>
   </h3>
 </header>
 

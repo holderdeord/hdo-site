@@ -1,7 +1,7 @@
-<div class="deco-bg background <%= @party.name %>"></div>
+<div class="deco-bg background <%= @party.slug %>"></div>
 
 <header>
-  <h1 class="<%= @party.name %>">
+  <h1 class="<%= @party.slug %>">
     <%= image_tag @party.logo, alt: "#{@party.name}s logo", width: '96', height: '96' %>
     <%= @party.name %>
   </h1>
