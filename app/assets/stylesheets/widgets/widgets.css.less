@@ -333,15 +333,20 @@ footer {
     h1 {
       margin: 2em 0 0.5em 0;
     }
+    h2 {
+      line-height: 1.5em;
+      margin: 1em 0;
+      border-bottom: 1px solid #eee;
+    }
     .promises {
       margin: 0;
       padding: 0;
       list-style: none;
+      .clearfix;
       .promise {
         display: inline-block;
-        box-sizing: border-box;
-        vertical-align: top;
-        width: 260px;
+        float: left;
+        width: 200px;
         padding: 0 10px 20px 40px;
         margin: 0 10px 10px 0;
         box-shadow: 0 1px 3px rgba(0,0,0, 0.1);
@@ -354,14 +359,14 @@ footer {
           text-overflow: ellipsis;
           white-space: nowrap;
           font-weight: bold;
-          padding: 20px 10px 10px 35px;
+          padding: 15px 10px 10px 35px;
           margin-left: -35px;
           img {
             position: absolute;
             left: 0;
             max-width: 32px;
             max-height: 32px;
-            top: 15px;
+            top: 10px;
           }
         }
         p {
@@ -375,11 +380,8 @@ footer {
     .issue {
       margin-bottom: 20px;
       .clearfix;
-      h2 {
-        line-height: 1.5em;
-        border-bottom: 1px solid #eee;
-      }
       p {
+        margin-top: 0;
         float: left;
         width: 33%;
         font-size: 0.88em;
