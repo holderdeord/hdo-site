@@ -1,21 +1,26 @@
 <article>
 
   <h1>Løfter</h1>
-    <ul class="promises">
-      <% @promises.each do |promise| %>
-        <li class="promise <%= slug_for_parties(promise.parties) %>">
-          <header>
-            <% promise.parties.each do |party| %>
-              <%= image_tag party.logo, alt: "#{party.name}s logo", width: '32', height: '32' %>
-              <%= party.name %>
-            <% end %>
-          </header>
-          <p>
-            <%= promise.body %>
-          </p>
-        </li>
-      <% end %>
-    </ul>
+    <% @promise_groups.each do |title, promises| %>
+      <h2><%= title %></h2>
+
+      <ul class="promises">
+        <% promises.each do |promise| %>
+          <li class="promise <%= slug_for_parties(promise.parties) %>">
+            <header>
+              <% promise.parties.each do |party| %>
+                <%= image_tag party.logo, alt: "#{party.name}s logo", width: '32', height: '32' %>
+                <%= party.name %>
+              <% end %>
+            </header>
+            <p>
+              <%= promise.body %>
+            </p>
+          </li>
+        <% end %>
+      </ul>
+
+    <% end %>
 
   <h1>Saker</h1>
   <% @issues.each do |issue| %>

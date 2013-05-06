@@ -90,6 +90,25 @@ var HDO = HDO || {};
       return url;
     },
 
+    promisesQueryFor: function (str) {
+      if (!(window.JSON && window.JSON.parse)) {
+        return '';
+      }
+
+      var data, result, key, val, i;
+
+      data = JSON.parse(str);
+      result = [];
+
+      for (key in data) {
+        if (data.hasOwnProperty(key)) {
+          result.push('promises[' + key + ']=' + encodeURIComponent(data[key].join(',')));
+        }
+      }
+
+      return result.join('&');
+    },
+
     widgetOptionsFor: function (el) {
       var url;
 
@@ -103,7 +122,7 @@ var HDO = HDO || {};
         url = this.addIssueParams(el, url);
       } else if (this.type === "topic") {
         url = H.widgets.baseUrl + "widgets/topic?" + this.queryParamFor('issues', el.getAttribute('data-issues')) + '&'
-                                                   + this.queryParamFor('promises', el.getAttribute('data-promises'));
+                                                   + this.promisesQueryFor(el.getAttribute('data-promises'));
       } else if (this.type === "promises") {
         url = H.widgets.baseUrl + "promises/" + encodeURIComponent(el.getAttribute('data-promises')) + "/widget";
       } else {

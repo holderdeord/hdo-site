@@ -40,10 +40,10 @@
     "should create topic URLs": function() {
       var widget = H.widgets.create('topic')
       this.element.setAttribute('data-issues', '1,2,3');
-      this.element.setAttribute('data-promises', '101,101,102');
+      this.element.setAttribute('data-promises', '{"Samferdsel":[101,102],"Intercity":[103,104]}');
 
       assert.equals(widget.widgetOptionsFor(this.element).url,
-        "http://www.holderdeord.no/widgets/topic?issues=1%2C2%2C3&promises=101%2C101%2C102")
+        "http://www.holderdeord.no/widgets/topic?issues=1%2C2%2C3&promises[Samferdsel]=101%2C102&promises[Intercity]=103%2C104")
     },
 
     "should create promises URL": function() {

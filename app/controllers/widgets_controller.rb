@@ -32,25 +32,24 @@ class WidgetsController < ApplicationController
   end
 
   def topic
-    promises = selected_promises
-    issues   = selected_issues
+    issues  = selected_issues
+    @issues = IssueDecorator.decorate_collection(issues) if issues.any?
 
-    @issues   = IssueDecorator.decorate_collection(issues) if issues.any?
-    @promises = promises
+    @promise_groups = []
+    params[:promises].each do |title, ids|
+      @promise_groups << [title, Promise.includes(:parties).find(ids.split(','))]
+    end
   end
 
   def promises
-    @promise_groups = selected_promises.group_by { |e| e.parties.to_a }
+    promises = params[:promises] ? Promise.includes(:parties).find(params[:promises].split(',')) : []
+    @promise_groups = promises.group_by { |e| e.parties.to_a }
   end
 
   def load
   end
 
   private
-
-  def selected_promises
-    params[:promises] ? Promise.includes(:parties).find(params[:promises].split(',')) : []
-  end
 
   def selected_issues
     params[:issues] ? Issue.published.find(params[:issues].split(',')) : []
