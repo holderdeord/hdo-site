@@ -373,22 +373,21 @@ footer {
       }
     }
     .issue {
-      position: relative;
-      min-height: 300px;
       margin-bottom: 20px;
+      .clearfix;
       h2 {
         line-height: 1.5em;
         border-bottom: 1px solid #eee;
       }
       p {
-        position: absolute;
-        left: 10px;
-        width: 250px;
+        float: left;
+        width: 33%;
         font-size: 0.88em;
         line-height: 1.6em;
       }
       .positions {
-        margin-left: 250px;
+        width: 67%;
+        float: left;
       }
     }
   }
@@ -400,11 +399,12 @@ footer {
     &.topic {
       .issue {
         p {
-          position: static;
+          float: none;
           width: 100%;
         }
         .positions {
-          margin-left: auto;
+          float: none;
+          width: 100%;
         }
       }
     }
