@@ -84,6 +84,9 @@ module Hdo
         persister.infer_all_votes
         purge_cache
         notify_new_votes if Rails.env.production?
+      rescue Hdo::StortingImporter::DataSource::ServerError
+        notify_api_error if Rails.env.production?
+        raise
       end
 
       def import_api_votes(vote_limit = nil)
@@ -277,9 +280,8 @@ module Hdo
       end
 
       def notify_new_votes
-        require 'hipchat'
+        client = hipchat_client || return
 
-        token = ENV['HIPCHAT_API_TOKEN'] || return
         votes = Vote.where("created_at >= ?", 1.day.ago)
 
         if votes.empty?
@@ -289,7 +291,7 @@ module Hdo
           log.info "#{votes.count} new votes"
         end
 
-        room = HipChat::Client.new(token)['Analyse']
+        room = client['Analyse']
         urls = Rails.application.routes.url_helpers
 
         pis = votes.flat_map { |vote| vote.parliament_issues.to_a }.uniq.map do |pi|
@@ -314,6 +316,23 @@ module Hdo
         message = ERB.new(template, 0, "%-<>").result(binding)
         log.info "sending hipchat message:\n#{message}"
         room.send('Stortinget', message, notify: true)
+      rescue => ex
+        log.error ex.message
+      end
+
+      def notify_api_error
+        client = hipchat_client || return
+        client['Teknisk'].send('API', "Feil hos data.stortinget.no! Hjelp!")
+      rescue => ex
+        log.error ex.message
+      end
+
+      def hipchat_client
+        @hipchat_client ||= (
+          require 'hipchat'
+          token = ENV['HIPCHAT_API_TOKEN'] || return
+          HipChat::Client.new(token)
+        )
       end
 
       def parse_options(args)
