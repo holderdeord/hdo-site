@@ -20,10 +20,7 @@
 
     <div class="control-group">
       <div class="controls">
-        <label class="control-label"><%= Question.human_attribute_name :representative %></label>
-        <div class="chosen-xlarge">
-          <%= f.select :representative, representative_options, include_blank: 'Velg en representant...' %>
-        </div>
+        <%= render partial: 'representative_selector', locals: { form: f, question: @question } %>
       </div>
     </div>
 
@@ -74,11 +71,3 @@
      <button class="btn" data-dismiss="modal" aria-hidden="true">Skjønner!</button>
    </div>
 </div>
-
-<% content_for :document_ready do %>
-  <script type="text/javascript" charset="utf-8">
-    $(document).ready(function() {
-      $("#question_representative").chosen();
-    });
-  </script>
-<% end %>

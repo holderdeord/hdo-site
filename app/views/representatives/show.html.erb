@@ -27,7 +27,7 @@
 
     <% if AppConfig.questions_enabled %>
       <%= link_to t('app.questions.representative.ask', name: @representative.name),
-                  new_question_path(representative: @representative.slug),
+                  new_question_path(representative: @representative.slug, district: @representative.district.slug),
                   class: 'btn btn-primary' %>
     <% end %>
   </aside>

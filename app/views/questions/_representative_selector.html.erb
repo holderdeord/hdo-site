@@ -1,0 +1,21 @@
+<label class="control-label"><%= Question.human_attribute_name :representative %></label>
+<div class="chosen-xlarge">
+  <%= collection_select :district, :name, District.order(:name), :slug, :name,
+                        {include_blank: 'Velg fylke'},
+                        data: { representatives: representative_map } %>
+
+  <%= form.select :representative, [], {}, class: 'hide', data: {placeholder: 'Velg en representant'} %>
+</div>
+
+<% content_for :document_ready do %>
+  <script type="text/javascript" charset="utf-8">
+    $(document).ready(function() {
+      HDO.representativeSelector.init({
+        districtSelect: $("#district_name"),
+        representativeSelect: $("#question_representative"),
+        selectedDistrict: "<%= params[:district] %>",
+        selectedRepresentative: "<%= params[:representative] %>",
+      })
+    });
+  </script>
+<% end %>

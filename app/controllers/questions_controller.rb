@@ -18,7 +18,7 @@ class QuestionsController < ApplicationController
     rep      = question.delete(:representative)
 
     @question = Question.new(question)
-    @question.representative = Representative.find(rep) if rep
+    @question.representative = Representative.find_by_slug(rep) if rep
 
     unless @question.save
       render action: "new"

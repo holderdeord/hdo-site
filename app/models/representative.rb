@@ -94,6 +94,11 @@ class Representative < ActiveRecord::Base
   end
   alias_method :name, :full_name
 
+  def name_with_party
+    # missing spec
+    "#{full_name} (#{latest_party.name})"
+  end
+
   def alternate_text
     alternate? ? I18n.t("app.yes") : I18n.t("app.no")
   end
