@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html class="widget <%= controller.action_name %>">
   <head>
     <base href="<%= root_url %>" target="_top"></base>
 
@@ -11,7 +11,7 @@
       <%= javascript_include_tag "conditional/respond" %>
     <![endif]-->
   </head>
-  <body class="widget <%= controller.action_name %>">
+  <body>
     <%= yield %>
 
     <footer>
