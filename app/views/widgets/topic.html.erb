@@ -26,7 +26,12 @@
   <% @issues.each do |issue| %>
     <div class="issue">
       <h2><%= issue.title %></h2>
-      <p><%= issue.description %></p>
+      <p>
+        <%= issue.description %>
+        <%= link_to issue_url(issue) do %>
+          Les mer
+        <% end %>
+      </p>
       <figure class="positions">
 
         <div class="labels">
