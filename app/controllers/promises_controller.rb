@@ -20,11 +20,12 @@ class PromisesController < ApplicationController
 
     if @party
       @promises = @promises.joins(:parties).where('parties.id' => @party.id)
+    else
+      # Pull request https://github.com/rails/rails/pull/6792
+      @promises = @promises.joins(:parties).order("parties.id").select("parties.id, promises.*")
     end
 
     @promises = @promises.paginate(page: params[:page], per_page: DEFAULT_PER_PAGE)
-
-    # TO DO: find a way to sort promises by party - bug in paginate method
   end
 
   def show

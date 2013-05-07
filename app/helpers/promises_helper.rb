@@ -99,4 +99,8 @@ module PromisesHelper
     css_class
   end
 
+  def category_with_children?
+    @category && @category.children.any?
+  end
+
 end
