@@ -1,6 +1,7 @@
 <%= spinner_tag %>
 <ul class="promises-results unstyled">
-  <%= will_paginate @promises %>
+  <%= will_paginate @promises, :class => "pagination pagination-centered visible-desktop" %>
+  <%= will_paginate @promises, :class => "pagination pagination-small pagination-centered visible-phone", :page_links => false %>
   <% @promises.each do |p| %>
     <li class="media promise">
       <div class="pull-left">
@@ -9,16 +10,13 @@
         <% end %>
       </div>
       <div class="media-body">
-        <p>
-          <%= p.body %>
-        </p>
+        <%= p.body %>
         <ul class="nav nav-pills">
-          <li>
-            <%= link_to "Se løfteside", p %>
-          </li>
           <% if p.issues.published.any? %>
-          <li>
-            <%= link_to "Se tilknyttede saker (#{p.issues.published.size})", promise_path(p, anchor: "issues") %>
+          <li class="muted">
+            <span>Tilknyttede saker:
+            <%= p.issues.published.map { |i| link_to i.title, i }.to_sentence.html_safe %>
+          </span>
           </li>
           <% end %>
         </ul>
@@ -28,7 +26,8 @@
   <% if @promises.empty? %>
     <li>Ingen løfter finnes med dette filteret</li>
   <% end %>
-  <%= will_paginate @promises %>
+  <%= will_paginate @promises, :class => "pagination pagination-centered visible-desktop" %>
+  <%= will_paginate @promises, :class => "pagination pagination-small pagination-centered visible-phone", :page_links => false %>
   <li class="empty-results-message hidden">
     <h3>Partiet har ingen løfter i denne kategorien.</h3>
   </li>

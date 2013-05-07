@@ -1,7 +1,7 @@
 class PromisesController < ApplicationController
   hdo_caches_page :index, :show
 
-  DEFAULT_PER_PAGE = 30
+  DEFAULT_PER_PAGE = 100
 
   def index
     @categories  = Category.where(main: true).includes(:children)
@@ -11,11 +11,11 @@ class PromisesController < ApplicationController
     @party       = @parties.find(params[:party_slug]) if params[:party_slug].present?
 
     if @subcategory
-      @promises = Category.find(@subcategory.id).promises
+      @promises = @subcategory.promises
     elsif @category
       @promises = @category.all_promises
     else
-      @promises = Promise.includes(:parties).order('date')
+      @promises = Promise
     end
 
     if @party
@@ -23,6 +23,8 @@ class PromisesController < ApplicationController
     end
 
     @promises = @promises.paginate(page: params[:page], per_page: DEFAULT_PER_PAGE)
+
+    # TO DO: find a way to sort promises by party - bug in paginate method
   end
 
   def show
