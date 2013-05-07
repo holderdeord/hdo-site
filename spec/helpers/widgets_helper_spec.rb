@@ -1,15 +1,20 @@
 require 'spec_helper'
 
-# Specs in this file have access to a helper object that includes
-# the WidgetsHelper. For example:
-#
-# describe WidgetsHelper do
-#   describe "string concat" do
-#     it "concats two strings with spaces" do
-#       helper.concat_strings("this","that").should == "this that"
-#     end
-#   end
-# end
 describe WidgetsHelper do
-  pending "add some examples to (or delete) #{__FILE__}"
+  let(:parties) { [Party.make!, Party.make!] }
+
+  it "returns the party slug if there's only one party" do
+
+    helper.slug_for_parties(parties).should == ''
+    helper.slug_for_parties([parties.first]).should == parties.first.slug
+  end
+
+  it "returns links for the parties as a sentence" do
+    I18n.with_locale :nb do
+      links = helper.links_for_parties(parties)
+
+      links.should include(%{href="/parties/#{parties.first.slug}"})
+      links.should include(%{href="/parties/#{parties.last.slug}"})
+    end
+  end
 end
