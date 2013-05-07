@@ -106,14 +106,8 @@ Hdo::Application.routes.draw do
   # promises
   #
 
-  resources :promises, only: [:index, :show] do
-    member do
-      get 'promises/page/:page' => 'promises#index'
-      get 'promises/show/:promise' => 'promises#show'
-      get 'promises/:promises/widget' => 'widgets#promises'
-    end
-  end
-
+  resources :promises, only: [:index, :show]
+  get 'promises/:promises/widget' => 'widgets#promises'
 
   #
   # parliament_issues
