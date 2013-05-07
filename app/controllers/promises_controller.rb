@@ -10,19 +10,21 @@ class PromisesController < ApplicationController
     @parties     = Party.order(:name)
     @party       = @parties.find(params[:party_slug]) if params[:party_slug].present?
 
+    # watch out for rails bug: https://github.com/rails/rails/pull/6792
+    @promises = Promise
+
     if @subcategory
-      @promises = @subcategory.promises
+      @promises = @promises.joins(:categories).where('categories.id' => @subcategory.id)
     elsif @category
       @promises = @category.all_promises
-    else
-      @promises = Promise
     end
 
+    @promises = @promises.includes(:parties)
+
     if @party
-      @promises = @promises.joins(:parties).where('parties.id' => @party.id)
+      @promises = @promises.where('parties.id' => @party.id)
     else
-      # Pull request https://github.com/rails/rails/pull/6792
-      @promises = @promises.joins(:parties).order("parties.id").select("parties.id, promises.*")
+      @promises = @promises.order('parties.id')
     end
 
     @promises = @promises.paginate(page: params[:page], per_page: DEFAULT_PER_PAGE)
