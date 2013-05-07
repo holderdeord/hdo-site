@@ -121,6 +121,10 @@ Issue.blueprint do
   }
 end
 
+Issue.blueprint :published do
+  status { 'published' }
+end
+
 Proposition.blueprint do
   external_id { sn.to_s }
   body { "proposition-body-#{sn}" }

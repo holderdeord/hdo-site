@@ -36,6 +36,16 @@ describe WidgetsController do
 
       assigns(:party).should be_kind_of(Party)
     end
+
+    it 'assigns the requested issues' do
+      Issue.any_instance.stub(stats: mock(score_for: 100.0))
+
+      get :party, id: party, issues: published_issue.id
+      response.should be_ok
+
+      assigns(:party).should be_kind_of(Party)
+      assigns(:issues).should == [published_issue]
+    end
   end
 
   describe 'GET #representative' do
@@ -44,6 +54,33 @@ describe WidgetsController do
       response.should be_ok
 
       assigns(:representative).should be_kind_of(Representative)
+    end
+  end
+
+  describe 'GET #topic' do
+    let(:issues) { [Issue.make!(:published), Issue.make!(:published)] }
+    let(:promises) { [Promise.make!, Promise.make! ]}
+
+    it 'assigns the requested issues and promises' do
+      get :topic, promises: {'Topic' => promises.map(&:id).join(',') },
+                  issues: issues.map(&:id).join(',')
+
+      response.should be_ok
+
+      assigns(:issues).should == issues
+      assigns(:promise_groups).should == [['Topic', promises]]
+    end
+  end
+
+  describe 'GET #promises' do
+    let(:parties) { [Party.make!] }
+    let(:promises) { [Promise.make!(parties: parties), Promise.make!(parties: parties)] }
+
+    it 'assigns the requested promises' do
+      get :promises, promises: promises.map(&:id).join(',')
+
+      response.should be_ok
+      assigns(:promise_groups).to_a.should == [[parties, promises]]
     end
   end
 
