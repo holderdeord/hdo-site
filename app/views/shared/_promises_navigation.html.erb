@@ -1,0 +1,84 @@
+<!-- VISIBLE IN DESKTOP -->
+<div class="well well-small hidden-phone" id="top">
+  <div class="row-fluid">
+    <div class="<%= category_with_children? ? 'span4' : 'span6' %>">
+      <h6>Hovedkategorier</h6>
+      <ul class="nav multiple-select">
+        <% categories.each do |category| %>
+          <li class="<%= show_category_as_selected(category) %>">
+            <%= link_to category.human_name, category_path_for(category) %>
+          </li>
+        <% end %>
+      </ul>
+      <% if @category %>
+        <p>
+          <small>
+            Valgt: <strong><%= @category.human_name %></strong>
+            (<%= link_to "Vis alle", show_all_except_category %>)
+          </small>
+        </p>
+      <% end %>
+
+    </div>
+
+    <div class="<%= category_with_children? ? 'span4' : 'hidden' %>">
+      <h6>Underkategorier</h6>
+      <ul class="nav multiple-select">
+        <% if @category %>
+          <% @category.children.each do |subcategory| %>
+            <li class="<%= show_subcategory_as_selected(subcategory) %>">
+              <%= link_to subcategory.human_name, subcategory_path_for(subcategory) %>
+            </li>
+          <% end %>
+        <% end %>
+      </ul>
+      <% if @subcategory %>
+        <p>
+          <small>
+            Valgt: <strong><%= @subcategory.human_name %></strong>
+            (<%= link_to "Vis alle", show_all_except_subcategory %>)
+          </small>
+        </p>
+      <% end %>
+    </div>
+
+    <div class="<%= category_with_children? ? 'span4' : 'span6' %>">
+      <h6>Partier</h6>
+      <ul class="nav multiple-select">
+        <% parties.each do |party| %>
+          <li class="<%= show_party_as_selected(party) %>">
+            <%= link_to party.name, party_path_for(party) %>
+          </li>
+        <% end %>
+      </ul>
+      <% if @party %>
+        <p>
+          <small>
+            Valgt: <strong><%= @party.name %></strong>
+            (<%= link_to "Vis alle", show_all_except_party %>)
+          </small>
+        </p>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<div class="visible-phone">
+  <%= form_tag promises_path, method: 'GET' do %>
+    <%= label_tag 'category_id', 'Kategorier' %>
+    <%= select_tag 'category_id', options_for_select(categories.map { |category| [category.human_name, category.id] }, selected: @category.try(:id)) %>
+    <small><%= link_to "Vis alle", show_all_except_category %></small>
+
+    <%= label_tag 'party_slug', 'Partier' %>
+    <%= select_tag 'party_slug', options_for_select(parties.map { |party| [party.name, party.slug] }, selected: @party.try(:slug)) %>
+    <small><%= link_to "Vis alle", show_all_except_party %></small>
+
+    <% if category_with_children? %>
+    <%= label_tag 'subcategory_id', 'Underkategorier' %>
+      <%= select_tag 'subcategory_id', options_for_select(@category.children.map { |subcategory| [subcategory.human_name, subcategory.id] }, selected: @subcategory.try(:id) ) %>
+    <small><%= link_to "Vis alle", show_all_except_subcategory %></small>
+    <% end %>
+
+    <%= submit_tag 'Søk' %>
+  <% end %>
+</div>

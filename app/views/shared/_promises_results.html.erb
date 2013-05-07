@@ -1,7 +1,34 @@
 <%= spinner_tag %>
-<div class="promises-results">
-  <div id="choose-category">&larr; Velg en kategori</div>
-  <div class="empty-results-message hidden">
+<ul class="promises-results unstyled">
+  <%= will_paginate @promises, :class => "pagination pagination-centered visible-desktop" %>
+  <%= will_paginate @promises, :class => "pagination pagination-small pagination-centered visible-phone", :page_links => false %>
+  <% @promises.each do |p| %>
+    <li class="media promise">
+      <div class="pull-left">
+        <% p.parties.each do |party| %>
+          <%= image_tag party.logo.versions[:small], {alt: "#{party.name}s logo", class: "media-object"} %>
+        <% end %>
+      </div>
+      <div class="media-body">
+        <%= p.body %>
+        <ul class="nav nav-pills">
+          <% if p.issues.published.any? %>
+          <li class="muted">
+            <span>Tilknyttede saker:
+            <%= p.issues.published.map { |i| link_to i.title, i }.to_sentence.html_safe %>
+          </span>
+          </li>
+          <% end %>
+        </ul>
+      </div>
+    </li>
+  <% end %>
+  <% if @promises.empty? %>
+    <li>Ingen løfter finnes med dette filteret</li>
+  <% end %>
+  <%= will_paginate @promises, :class => "pagination pagination-centered visible-desktop" %>
+  <%= will_paginate @promises, :class => "pagination pagination-small pagination-centered visible-phone", :page_links => false %>
+  <li class="empty-results-message hidden">
     <h3>Partiet har ingen løfter i denne kategorien.</h3>
-  </div>
-</div>
+  </li>
+</ul>

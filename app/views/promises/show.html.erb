@@ -1,0 +1,16 @@
+<% page_title "#{@promise.body.truncate(30)} - #{t 'app.title'}" %>
+
+<p class="well">
+  <%= @promise.body %>
+</p>
+
+<% if @promise.issues.published.count() > 0 %>
+<h2>Tilknyttede saker</h2>
+<ul class="nav nav-list">
+  <% @promise.issues.published.each do |i| %>
+  <li>
+    <%= link_to i.title, i %>
+  </li>
+  <% end %>
+</ul>
+<% end %>
