@@ -1,2 +1,0 @@
-module Representative::QuestionsControllerHelper
-end
