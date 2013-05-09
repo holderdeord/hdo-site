@@ -3,7 +3,7 @@
 
 <div class="representative-profile">
 
-  <%= image_tag @representative.image.versions[:medium], width: '240', height: '320', class: 'representative-image', alt: @representative.full_name %>
+  <%= image_tag @representative.image.versions[:large], width: '240', height: '320', class: 'representative-image', alt: @representative.full_name %>
 
   <h1 class="representative-name"><%= @representative.full_name %> (<%= @representative.age %>)</h1>
 
