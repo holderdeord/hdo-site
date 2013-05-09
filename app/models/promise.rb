@@ -29,9 +29,7 @@ class Promise < ActiveRecord::Base
 
   validates_length_of :categories, minimum: 1
   validates_length_of :parties,    minimum: 1
-
-  # TODO: get rid of this
-  scope :for_period, lambda { |period| period.promises }
+  validates_presence_of :parliament_period
 
   def general_text
     I18n.t(general? ? 'app.yes' : 'app.no')

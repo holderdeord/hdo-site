@@ -35,6 +35,14 @@ describe Promise do
     invalid.should_not be_valid
   end
 
+  it 'is invalid without a parliament period' do
+    promise = Promise.make(parliament_period: nil)
+    promise.should be_invalid
+
+    promise.parliament_period = ParliamentPeriod.make!
+    promise.should be_valid
+  end
+
   it 'has a unique body' do
     promise = Promise.make!(body: 'body')
     Promise.make(body: promise.body).should_not be_valid
@@ -106,13 +114,4 @@ describe Promise do
 
     promise.issues.size.should == 1
   end
-
-  it 'finds promises for the given parliament period' do
-    period           = ParliamentPeriod.create(start_date: Date.today, end_date: Date.today + 365)
-    included_promise = Promise.make!(date: period.start_date + 10)
-    other_promise    = Promise.make!(date: period.start_date - 10)
-
-    Promise.for_period(period).to_a.should == [included_promise]
-  end
-
 end

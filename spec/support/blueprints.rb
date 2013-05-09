@@ -50,6 +50,7 @@ Promise.blueprint do
   source { "PP:10" }
   body { "Løftetekst-#{sn}" }
   categories { [Category.make!] }
+  parliament_period { ParliamentPeriod.make! }
 end
 
 Category.blueprint do
