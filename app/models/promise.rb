@@ -13,7 +13,7 @@ class Promise < ActiveRecord::Base
   }
   update_index_on_change_of :parties, has_many: true
 
-  attr_accessible :parties, :general, :categories, :source, :body, :page, :date
+  attr_accessible :parties, :general, :categories, :source, :body, :page, :parliament_period
 
   validates :body,        presence: true, uniqueness: true
   validates :external_id, presence: true, uniqueness: true

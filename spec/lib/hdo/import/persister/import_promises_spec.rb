@@ -12,7 +12,8 @@ module Hdo
           example.categories.each do |cat|
             Category.make!(:name => cat)
           end
-          Party.make! :external_id => example.parties.first
+          ParliamentPeriod.make!(external_id: '2009-2013')
+          Party.make! external_id: example.parties.first
 
           persister.import_promises [example]
 
@@ -26,6 +27,7 @@ module Hdo
           promise.source.should == example.source
           promise.page.should == example.page
           promise.general.should == example.general
+          promise.parliament_period.name.should == '2009-2013'
         end
       end
     end

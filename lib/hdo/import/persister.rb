@@ -352,6 +352,12 @@ module Hdo
           return
         end
 
+        parliament_period = ParliamentPeriod.find_by_external_id(promise.period)
+        unless parliament_period
+          @log.error "promise #{promise.external_id}: unknown parliament period: #{parliament_period}"
+          return
+        end
+
         pr = Promise.find_or_create_by_external_id(promise.external_id)
 
         if pr.new_record?
@@ -369,7 +375,7 @@ module Hdo
           source: promise.source,
           page: promise.page,
           body: promise.body,
-          date: Date.strptime(promise.date)
+          parliament_period: parliament_period
         )
 
         unless pr.save
