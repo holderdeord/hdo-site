@@ -15,7 +15,18 @@ describe District do
     invalid.should_not be_valid
   end
 
-  it 'can add representatives'
-  it "won't add the same representative twice"
+  it 'can add representatives' do
+    valid_district.representatives << Representative.make!
+    valid_district.representatives.size.should == 1
+  end
+
+  it "won't add the same representative twice" do
+    representative = Representative.make!
+
+    valid_district.representatives << representative
+    valid_district.representatives << representative
+
+    valid_district.representatives.size.should == 1
+  end
 
 end

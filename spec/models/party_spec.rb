@@ -52,29 +52,6 @@ describe Party do
     party.promises.count.should == 1
   end
 
-  it 'destroys dependent promises when no other parties are associated' do
-    pending "need to figure this out"
-
-    party = Party.make!
-    Promise.make!(parties: [party])
-
-    Promise.count.should == 1
-
-    party.promises = []
-    Promise.count.should == 0
-  end
-
-  it 'destroys dependent promises when destroyed and no other parties are associated' do
-    pending "need to figure this out"
-
-    party = Party.make!
-    Promise.make!(parties: [party])
-    Promise.count.should == 1
-
-    party.destroy
-    Promise.count.should == 0
-  end
-
   it 'knows its current representatives' do
     party = Party.make!
 
