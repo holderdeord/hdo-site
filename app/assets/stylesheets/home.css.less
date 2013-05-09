@@ -64,3 +64,12 @@
     word-break:break-word;
   }
 }
+
+.promoboxes {
+  > div {
+    padding: 5px 15px;
+    &.promoted {
+      background-color: lighten(desaturate(@hdoPrimaryColor,50),60);
+    }
+  }
+}
