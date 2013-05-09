@@ -19,6 +19,8 @@ $(document).ready(function() { $.ajax({
 
     <h1 class="issue-title"><%= @issue.title %></h1>
     <%= render partial: 'aside', locals: { issue: @issue } %>
+  </div>
+
 
     <figure class="position">
       <div class="issue-graph">
@@ -48,13 +50,28 @@ $(document).ready(function() { $.ajax({
         </div>
       </div>
 
-      <figcaption class="muted"><p><%= @issue.explanation %></p></figcaption>
+      <figcaption class="muted">
+
+        <div class="social">
+          <a href="https://twitter.com/share" class="twitter-share-button" data-via="holderdeord" data-lang="no" data-dnt="true">Tweet</a>
+          <div class="fb-like" data-layout="button_count" data-send="false" data-show-faces="false" data-font="arial" data-action="recommend"></div>
+          <div id="fb-root"></div>
+          <script>(function(d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) return;
+            js = d.createElement(s); js.id = id;
+            js.src = "//connect.facebook.net/nb_NO/all.js#xfbml=1";
+            fjs.parentNode.insertBefore(js, fjs);
+          }(document, 'script', 'facebook-jssdk'));</script>
+          <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+        </div>
+
+        <p><%= @issue.explanation %></p>
+      </figcaption>
 
     </figure>
 
     <p class="issue-description"><%= @issue.description %></p>
-  </div>
-
 
   <div>
     <% @issue.party_groups.each do |party_group| %>
