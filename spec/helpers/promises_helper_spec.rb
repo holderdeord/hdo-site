@@ -39,5 +39,19 @@ describe PromisesHelper do
     helper.party_path_for(stub(slug: 'krf')).should include "/promises?category_id=1&party_slug=krf&subcategory_id=2"
   end
 
-  # TODO: more
+  it 'returns the party - category filter path' do
+    @party    = stub(slug: 'krf')
+    @category = stub(id: 1)
+
+    helper.show_all_except_category.should == '/promises?party_slug=krf'
+  end
+
+  it 'returns the party + category - subcategory filter path' do
+    @party       = stub(slug: 'krf')
+    @category    = stub(id: 1)
+    @subcategory = stub(id: 2)
+
+    helper.show_all_except_subcategory.should == '/promises?category_id=1&party_slug=krf'
+  end
+
 end
