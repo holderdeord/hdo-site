@@ -7,13 +7,10 @@ module QuestionsHelper
     options_for_select data, selected: params[:representative] || @question.representative.try(:slug)
   end
 
-  def representative_map
-    result = Hash.new { |hash, key| hash[key] = [] }
-    Representative.includes(:district).order(:last_name).each do |rep|
-      result[rep.district.slug] << rep.as_json(only: [:slug], methods: :name_with_party)
+  def representatives
+    Representative.includes(:district).order(:last_name).map do |rep|
+      { slug: rep.slug, name: rep.name_with_party, district: rep.district.slug }
     end
-
-    result
   end
 
   def question_issue_options

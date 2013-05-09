@@ -3,20 +3,28 @@ var HDO = HDO || {};
 (function (H, $) {
   H.representativeSelector = {
     init: function (opts) {
-      var districtSelect, representativeSelect, representativeMap;
+      var districtSelect, representativeSelect, representatives, selectedRepresentatives;
 
       districtSelect       = opts.districtSelect;
       representativeSelect = opts.representativeSelect;
-      representativeMap    = districtSelect.data('representatives');
+      representatives      = districtSelect.data('representatives');
 
       function useRepresentativesFrom(district) {
-        representativeSelect.html($('<option/>').text(representativeSelect.data('placeholder')));
+        representativeSelect.html('<option/>');
 
-        $.each(representativeMap[district], function () {
-          representativeSelect.append($("<option />").val(this.slug).text(this.name_with_party));
+        if (district === '') {
+          selectedRepresentatives = representatives;
+        } else {
+          selectedRepresentatives = $(representatives).filter(function () {
+            return district === this.district;
+          });
+        }
+
+        $.each(selectedRepresentatives, function () {
+          representativeSelect.append($("<option />").val(this.slug).text(this.name));
         });
 
-        representativeSelect.show();
+        representativeSelect.trigger('liszt:updated'); // chosen
       }
 
       districtSelect.change(function (e) {
@@ -30,6 +38,10 @@ var HDO = HDO || {};
       if (opts.selectedDistrict !== '') {
         districtSelect.val(opts.selectedDistrict).change();
       }
+
+      representativeSelect.chosen({});
+      districtSelect.chosen({});
+
     }
   };
 }(HDO, window.jQuery));

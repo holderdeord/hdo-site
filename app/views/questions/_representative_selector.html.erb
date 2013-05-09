@@ -1,10 +1,19 @@
 <label class="control-label"><%= Question.human_attribute_name :representative %></label>
-<div class="chosen-xlarge">
-  <%= collection_select :district, :name, District.order(:name), :slug, :name,
-                        {include_blank: 'Velg fylke'},
-                        data: { representatives: representative_map } %>
 
-  <%= form.select :representative, [], {}, class: 'hide', data: {placeholder: 'Velg en representant'} %>
+<div class="row-fluid">
+  <div class="span6">
+    <%= collection_select :district, :name, District.order(:name), :slug, :name,
+                          {include_blank: 'Alle fylker'},
+                          class: 'chosen-large',
+                          data: { representatives: representatives } %>
+  </div>
+
+  <div class="span6">
+    <%= form.collection_select :representative, Representative.all, :slug, :name_with_party,
+                               {include_blank: true},
+                               class: 'chosen-xlarge',
+                               data: {placeholder: 'Velg en representant'} %>
+  </div>
 </div>
 
 <% content_for :document_ready do %>
