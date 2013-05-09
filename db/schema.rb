@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130421131316) do
+ActiveRecord::Schema.define(:version => 20130509150856) do
 
   create_table "answers", :force => true do |t|
     t.text     "body",                                     :null => false
@@ -218,11 +218,11 @@ ActiveRecord::Schema.define(:version => 20130421131316) do
     t.text     "body"
     t.boolean  "general"
     t.string   "source"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+    t.datetime "created_at",           :null => false
+    t.datetime "updated_at",           :null => false
     t.string   "external_id"
     t.integer  "page"
-    t.date     "date"
+    t.integer  "parliament_period_id"
   end
 
   create_table "propositions", :force => true do |t|

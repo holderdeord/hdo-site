@@ -1,6 +1,8 @@
 class ParliamentPeriod < ActiveRecord::Base
   attr_accessible :start_date, :end_date
 
+  has_many :promises
+
   def self.for_date(date)
     where('start_date <= date(?) AND end_date >= date(?)', date, date).first
   end
