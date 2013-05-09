@@ -108,7 +108,12 @@ class Representative < ActiveRecord::Base
   end
 
   def latest_party
-    membership = party_memberships.order(:start_date).last
+    membership = if party_memberships.loaded?
+                   party_memberships.sort_by(&:start_date).last
+                 else
+                   party_memberships.order(:start_date).last
+                 end
+
     membership && membership.party
   end
 

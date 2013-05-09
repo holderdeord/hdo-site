@@ -2,14 +2,14 @@
 
 <div class="row-fluid">
   <div class="span6">
-    <%= collection_select :district, :name, District.order(:name), :slug, :name,
+    <%= collection_select :district, :name, @districts, :slug, :name,
                           {include_blank: 'Alle fylker'},
                           class: 'chosen-large',
-                          data: { representatives: representatives } %>
+                          data: { representatives: data_representatives } %>
   </div>
 
   <div class="span6">
-    <%= form.collection_select :representative, Representative.all, :slug, :name_with_party,
+    <%= form.collection_select :representative, @representatives, :slug, :name_with_party,
                                {include_blank: true},
                                class: 'chosen-xlarge',
                                data: {placeholder: 'Velg en representant'} %>

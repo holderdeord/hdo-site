@@ -10,6 +10,14 @@ class QuestionsController < ApplicationController
   end
 
   def new
+    @representatives = Rails.cache.fetch('question-form/representatives', expires_in: 1.day) do
+      Representative.includes(:district, party_memberships: :party).order(:last_name).to_a
+    end
+
+    @districts = Rails.cache.fetch('question-form/districts') do
+      District.order(:name).to_a
+    end
+
     @question = Question.new
   end
 

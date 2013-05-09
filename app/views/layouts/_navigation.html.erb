@@ -12,7 +12,7 @@
     </a>
 
     <ul class="dropdown-menu">
-      <% Party.order(:name).each do |party| %>
+      <% Rails.cache.fetch('menu/parties', expires_in: 1.day) { Party.order(:name).to_a }.each do |party| %>
         <li><%= link_to party.name, party %></li>
       <% end %>
     </ul>
