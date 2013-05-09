@@ -10,8 +10,11 @@ class PromisesController < ApplicationController
     @parties     = Party.order(:name)
     @party       = @parties.find(params[:party_slug]) if params[:party_slug].present?
 
+    @parliament_periods = [ParliamentPeriod.find(1), ParliamentPeriod.find(18)]
+    @period = params[:period].present? ? ParliamentPeriod.find(params[:period]) : ParliamentPeriod.find(18)
+
     # watch out for rails bug: https://github.com/rails/rails/pull/6792
-    @promises = Promise
+    @promises = params[:period].present? ? Promise.where(parliament_period_id: params[:period]) : Promise.where(parliament_period_id: 18)
 
     if @subcategory
       @promises = @promises.joins(:categories).where('categories.id' => @subcategory.id)

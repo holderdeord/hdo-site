@@ -2,13 +2,22 @@
 <div class="page-header">
   <h1>
     <%= Promise.model_name.human(count: 2).capitalize %>
-    <small class="hidden-phone pull-right"><%= @promises.count %> løfter fra valgprogrammene 2009-2013</small>
+    <small class="hidden-phone pull-right"><%= @promises.count %> løfter fra valgprogrammene <%= @period.external_id %></small>
   </h1>
 </div>
 
 <!--<div class="alert alert-info">
   Les mer om <%= link_to 'vår løftedatabase', home_about_path(anchor: 'valglfter-og-lftedatabasen')  %>.
 </div>-->
+<p><strong>Velg periode: </strong>
+<% @parliament_periods.each do |pp| %>
+  <% if pp.id == @period.id %>
+    <%= link_to pp.external_id, { period: pp.id }, class: "active-period" %>&nbsp;&nbsp;
+  <% else %>
+    <%= link_to pp.external_id, { period: pp.id } %>&nbsp;&nbsp;
+  <% end %>
+<% end %>
+</p>
 
 <div class="row-fluid">
   <%= render partial: 'promises_navigation', locals: { categories: @categories, parties: @parties } %>
