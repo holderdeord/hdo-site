@@ -67,13 +67,28 @@
 
 .promoboxes {
   > div {
-    padding: 5px 15px;
-    border-left: 4px solid #eee;
-    background-color: #f8f8f8;
+    padding: 5px 15px 5px 86px;
     margin-bottom: 10px;
+    position: relative;
+    background: #eee;
+    background: -webkit-linear-gradient(top, #eee 50%, #fff);
+    background: -moz-linear-gradient(top, #eee 50%, #fff);
+    background: -ms-linear-gradient(top, #eee 50%, #fff);
+    background: linear-gradient(top, #eee 50%, #fff);
     &.promoted {
-      background-color: lighten(desaturate(@hdoPrimaryColor,50),60);
-      border-color: lighten(desaturate(@hdoPrimaryColor,50),50);
+      @dimmedPrimary: lighten(desaturate(@hdoPrimaryColor,50),60);
+      background: @dimmedPrimary;
+      background: -webkit-linear-gradient(top, @dimmedPrimary 50%, #fff);
+      background: -moz-linear-gradient(top, @dimmedPrimary 50%, #fff);
+      background: -ms-linear-gradient(top, @dimmedPrimary 50%, #fff);
+      background: linear-gradient(top, @dimmedPrimary 50%, #fff);
+    }
+    .promoimage {
+      position: absolute;
+      left: 10px;
+      top: 10px;
+      width: 64px;
+      height: auto;
     }
   }
 }
