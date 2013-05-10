@@ -114,4 +114,13 @@ describe Promise do
 
     promise.issues.size.should == 1
   end
+
+  it 'has a list of parliament periods' do
+    Promise.parliament_periods.should == []
+    Promise.make!(parliament_period: ParliamentPeriod.make!)
+    Promise.parliament_periods.size.should == 1
+
+    Promise.make!(parliament_period: ParliamentPeriod.make!)
+    Promise.parliament_periods.size.should == 2
+  end
 end

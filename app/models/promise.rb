@@ -31,6 +31,10 @@ class Promise < ActiveRecord::Base
   validates_length_of :parties,    minimum: 1
   validates_presence_of :parliament_period
 
+  def self.parliament_periods
+    ParliamentPeriod.joins(:promises).uniq.order(:start_date)
+  end
+
   def general_text
     I18n.t(general? ? 'app.yes' : 'app.no')
   end

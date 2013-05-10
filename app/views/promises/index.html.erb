@@ -11,10 +11,10 @@
 </div>-->
 <p><strong>Velg periode: </strong>
 <% @parliament_periods.each do |pp| %>
-  <% if pp == @period.external_id %>
-    <%= link_to pp, { period: pp }, class: "period active-period" %>
+  <% if pp.external_id == @period.external_id %>
+    <%= link_to pp.external_id, { period: pp.external_id }, class: "period active-period" %>
   <% else %>
-    <%= link_to pp, { period: pp }, class: "period" %>
+    <%= link_to pp.external_id, { period: pp.external_id }, class: "period" %>
   <% end %>
 <% end %>
 </p>
