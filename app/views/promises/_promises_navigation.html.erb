@@ -1,7 +1,7 @@
 <!-- VISIBLE IN DESKTOP -->
 <div class="row-fluid" id="period-choices">
   <% if @parliament_periods.size > 1 %>
-  <strong id="top">Velg periode: </strong>
+  <strong>Velg periode: </strong>
     <% @parliament_periods.each do |pp| %>
       <% if pp.external_id == @period.external_id %>
         <%= link_to pp.external_id, period_filter_path_for(pp), class: "period active-period" %>

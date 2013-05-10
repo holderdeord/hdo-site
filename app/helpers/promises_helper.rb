@@ -1,9 +1,7 @@
 module PromisesHelper
 
   def default_url_options
-    opts = {
-      anchor: 'top'
-    }
+    opts = {}
     opts[:period] = @period.external_id if @period
 
     opts
