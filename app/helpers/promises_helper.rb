@@ -1,11 +1,29 @@
 module PromisesHelper
 
-  def category_path_for(category)
+  def default_url_options
     opts = {
-      category_id: category.id,
       anchor: 'top'
     }
+    opts[:period] = @period.external_id if @period
 
+    opts
+  end
+
+  def period_filter_path_for(period)
+    opts = default_url_options
+
+    opts[:period] = period.external_id
+    opts[:category_id] = @category.id if @category
+    opts[:subcategory_id] = @subcategory.id if @subcategory
+    opts[:party_slug] = @party.slug if @party
+
+    promises_path opts
+  end
+
+  def category_path_for(category)
+    opts = default_url_options
+
+    opts[:category_id] = category.id
     opts[:party_slug] = @party.slug if @party
 
     promises_path opts
@@ -13,12 +31,11 @@ module PromisesHelper
 
   def subcategory_path_for(subcategory)
     if @category
-      opts = {
-        category_id: @category.id,
-        subcategory_id: subcategory.id,
-        anchor: 'top'
-      }
-      
+      opts = default_url_options
+
+
+      opts[:category_id] = @category.id
+      opts[:subcategory_id] = subcategory.id
       opts[:party_slug] = @party.slug if @party
     end
 
@@ -26,11 +43,9 @@ module PromisesHelper
   end
 
   def party_path_for(party)
-    opts = {
-        anchor: 'top',
-        party_slug: party.slug
-    }
+    opts = default_url_options
 
+    opts[:party_slug] = party.slug
     opts[:category_id] = @category.id if @category
     opts[:subcategory_id] = @subcategory.id if @subcategory
 
@@ -38,7 +53,7 @@ module PromisesHelper
   end
 
   def show_all_except_category
-    opts = {}
+    opts = default_url_options
 
     opts[:party_slug] = @party.slug if @party
 
@@ -46,7 +61,7 @@ module PromisesHelper
   end
 
   def show_all_except_party
-    opts = {}
+    opts = default_url_options
 
     opts[:category_id] = @category.id if @category
     opts[:subcategory_id] = @subcategory.id if @subcategory
@@ -55,7 +70,7 @@ module PromisesHelper
   end
 
   def show_all_except_subcategory
-    opts = {}
+    opts = default_url_options
 
     opts[:category_id] = @category.id if @category
     opts[:party_slug] = @party.slug if @party
@@ -64,7 +79,7 @@ module PromisesHelper
   end
 
   def show_all_promises_path
-    opts = {}
+    opts = default_url_options
     opts[:party_slug] = @party.slug if @party
 
     promises_path opts

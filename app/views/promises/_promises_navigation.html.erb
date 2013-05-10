@@ -1,12 +1,12 @@
 <!-- VISIBLE IN DESKTOP -->
 <div class="row-fluid" id="period-choices">
   <% if @parliament_periods.size > 1 %>
-  <strong>Velg periode: </strong>
+  <strong id="top">Velg periode: </strong>
     <% @parliament_periods.each do |pp| %>
       <% if pp.external_id == @period.external_id %>
-        <%= link_to pp.external_id, { period: pp.external_id }, class: "period active-period" %>
+        <%= link_to pp.external_id, period_filter_path_for(pp), class: "period active-period" %>
       <% else %>
-        <%= link_to pp.external_id, { period: pp.external_id }, class: "period" %>
+        <%= link_to pp.external_id, period_filter_path_for(pp), class: "period" %>
       <% end %>
     <% end %>
   <% end %>
@@ -17,7 +17,7 @@
 
 </div>
 
-<div class="well well-small hidden-phone" id="top">
+<div class="well well-small hidden-phone">
   <div class="row-fluid">
     <div class="<%= category_with_children? ? 'span4' : 'span6' %>">
       <h6>Hovedkategorier</h6>
