@@ -39,9 +39,8 @@ var HDO = HDO || {};
         districtSelect.val(opts.selectedDistrict).change();
       }
 
-      representativeSelect.chosen({});
-      districtSelect.chosen({});
-
+      representativeSelect.chosen({search_contains: true});
+      districtSelect.chosen({disable_search: true});
     }
   };
 }(HDO, window.jQuery));
