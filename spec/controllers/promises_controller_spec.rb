@@ -4,6 +4,7 @@ describe PromisesController do
   let(:promise) { Promise.make! }
 
   describe "GET #index" do 
+
     it 'renders promises#index' do
       get :index
       response.should have_rendered(:index)
@@ -25,7 +26,7 @@ describe PromisesController do
     end
 
     it 'includes promises in subcategory' do
-      category = Category.make!(main:true)
+      category = Category.make!(main: true)
       promise_in_category = Promise.make!(categories: [category])
       subcategory = Category.make!(parent: category)
       promise_in_subcategory = Promise.make!(categories: [subcategory])
@@ -44,7 +45,7 @@ describe PromisesController do
 
     it 'can filter promises by party and category' do
       party = Party.make!
-      category = Category.make!(main:true)
+      category = Category.make!(main: true)
       promise_in_all = Promise.make!(categories: [category], parties: [party])
 
       get :index, {category_id: category.id, party_id: party.id}
@@ -52,12 +53,20 @@ describe PromisesController do
     end
 
     it 'can filter promises by subcategory' do
-      category = Category.make!(main:true)
+      category = Category.make!(main: true)
       subcategory = Category.make!(parent: category)
       promise_in_subcategory = Promise.make!(categories: [subcategory])
 
       get :index, {category_id: category.id, subcategory_id: subcategory.id}
       assigns(:promises).should == [promise_in_subcategory]
+    end
+
+    it 'can filter promises by parliament period' do
+      parliament_period = ParliamentPeriod.make!
+      promise = Promise.make!(parliament_period: parliament_period)
+
+      get :index, {period: parliament_period.external_id }
+      assigns(:promises).should == [promise]
     end
   end
 

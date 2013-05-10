@@ -9,12 +9,11 @@ class PromisesController < ApplicationController
     @subcategory = Category.find(params[:subcategory_id]) if params[:subcategory_id].present?
     @parties     = Party.order(:name)
     @party       = @parties.find(params[:party_slug]) if params[:party_slug].present?
-
-    @parliament_periods = [ParliamentPeriod.find(1), ParliamentPeriod.find(18)]
-    @period = params[:period].present? ? ParliamentPeriod.find(params[:period]) : ParliamentPeriod.find(18)
+    @parliament_periods = ["2009-2013", "2013-2017"]
+    @period = params[:period].present? ? ParliamentPeriod.find_by_external_id(params[:period]) : ParliamentPeriod.find_by_external_id("2013-2017")
 
     # watch out for rails bug: https://github.com/rails/rails/pull/6792
-    @promises = params[:period].present? ? Promise.where(parliament_period_id: params[:period]) : Promise.where(parliament_period_id: 18)
+    @promises =  @period ? @period.promises : Promise
 
     if @subcategory
       @promises = @promises.joins(:categories).where('categories.id' => @subcategory.id)
