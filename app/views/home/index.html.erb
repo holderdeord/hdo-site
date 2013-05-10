@@ -9,7 +9,7 @@
   <div class="row-fluid promoboxes">
     <div class="span6 promoted">
       <h4>Spør en representant</h4>
-      <p>Nå kan du enkelt spørre dine representanter på Stortinget om sakene som opptar deg. Bli med og test vår nye spørretjeneste!</p>
+      <p>Nå kan du spørre dine representanter på Stortinget om sakene som opptar deg. Bli med og test vår nye spørretjeneste!</p>
       <p>
         <%= link_to t('app.questions.new'), new_question_path, class: 'btn btn-primary' %>
       </p>
@@ -26,9 +26,9 @@
 <% end %>
 
 <% @tag_groups.each do |tag, issues| %>
-  <h3 class="lead tagblock-caption">
-    <%= link_to tag.name, issues_path(anchor: "tag-#{tag.slug}") %>
-  </h3>
+  <h2 class="lead tagblock-caption">
+    Tema: <%= link_to tag.name, issues_path(anchor: "tag-#{tag.slug}") %>
+  </h2>
 
   <section class="tagblock">
     <div class="row-fluid">

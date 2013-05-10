@@ -68,8 +68,12 @@
 .promoboxes {
   > div {
     padding: 5px 15px;
+    border-left: 4px solid #eee;
+    background-color: #f8f8f8;
+    margin-bottom: 10px;
     &.promoted {
       background-color: lighten(desaturate(@hdoPrimaryColor,50),60);
+      border-color: lighten(desaturate(@hdoPrimaryColor,50),50);
     }
   }
 }
