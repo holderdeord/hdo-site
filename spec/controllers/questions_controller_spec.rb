@@ -79,6 +79,10 @@ describe QuestionsController do
         # Trigger the behavior that occurs when invalid params are submitted
         Question.any_instance.stub(:save).and_return(false)
         post :create, {question: {  }}
+
+        assigns(:representatives).should_not be_nil
+        assigns(:districts).should_not be_nil
+
         response.should render_template("new")
       end
     end

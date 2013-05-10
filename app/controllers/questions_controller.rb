@@ -10,14 +10,7 @@ class QuestionsController < ApplicationController
   end
 
   def new
-    @representatives = Rails.cache.fetch('question-form/representatives', expires_in: 1.day) do
-      Representative.includes(:district, party_memberships: :party).order(:last_name).to_a
-    end
-
-    @districts = Rails.cache.fetch('question-form/districts') do
-      District.order(:name).to_a
-    end
-
+    fetch_representatives_and_districts
     @question = Question.new
   end
 
@@ -29,7 +22,20 @@ class QuestionsController < ApplicationController
     @question.representative = Representative.find_by_slug(rep) if rep
 
     unless @question.save
+      fetch_representatives_and_districts
       render action: "new"
+    end
+  end
+
+  private
+
+  def fetch_representatives_and_districts
+    @representatives=  Rails.cache.fetch('question-form/representatives', expires_in: 1.day) do
+      Representative.includes(:district, party_memberships: :party).order(:last_name).to_a
+    end
+
+    @districts = Rails.cache.fetch('question-form/districts') do
+      District.order(:name).to_a
     end
   end
 end
