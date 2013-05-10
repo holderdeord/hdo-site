@@ -1,4 +1,22 @@
 <!-- VISIBLE IN DESKTOP -->
+<div class="row-fluid" id="period-choices">
+  <% if @parliament_periods.size > 1 %>
+  <strong>Velg periode: </strong>
+    <% @parliament_periods.each do |pp| %>
+      <% if pp.external_id == @period.external_id %>
+        <%= link_to pp.external_id, { period: pp.external_id }, class: "period active-period" %>
+      <% else %>
+        <%= link_to pp.external_id, { period: pp.external_id }, class: "period" %>
+      <% end %>
+    <% end %>
+  <% end %>
+
+  <div class="pull-right">
+    Les mer om <%= link_to 'vår løftedatabase', home_about_path(anchor: 'valglfter-og-lftedatabasen')  %>.
+  </div>
+
+</div>
+
 <div class="well well-small hidden-phone" id="top">
   <div class="row-fluid">
     <div class="<%= category_with_children? ? 'span4' : 'span6' %>">

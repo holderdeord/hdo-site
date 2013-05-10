@@ -6,19 +6,6 @@
   </h1>
 </div>
 
-<!--<div class="alert alert-info">
-  Les mer om <%= link_to 'vår løftedatabase', home_about_path(anchor: 'valglfter-og-lftedatabasen')  %>.
-</div>-->
-<p><strong>Velg periode: </strong>
-<% @parliament_periods.each do |pp| %>
-  <% if pp.external_id == @period.external_id %>
-    <%= link_to pp.external_id, { period: pp.external_id }, class: "period active-period" %>
-  <% else %>
-    <%= link_to pp.external_id, { period: pp.external_id }, class: "period" %>
-  <% end %>
-<% end %>
-</p>
-
 <div class="row-fluid">
   <%= render partial: 'promises_navigation', locals: { categories: @categories, parties: @parties } %>
 </div>
