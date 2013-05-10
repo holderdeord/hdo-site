@@ -16,10 +16,13 @@
   </div>
 </div>
 
-<div class="well well-small hidden-phone">
+<div class="hidden-phone">
   <div class="row-fluid">
     <div class="<%= category_with_children? ? 'span4' : 'span6' %>">
-      <h6>Hovedkategorier</h6>
+      <h4>
+        Hovedkategorier
+        <% if @category %>(<%= link_to "Vis alle", show_all_except_category %>)<% end %>
+      </h4>
       <ul class="nav multiple-select">
         <% categories.each do |category| %>
           <li class="<%= show_category_as_selected(category) %>">
@@ -27,19 +30,13 @@
           </li>
         <% end %>
       </ul>
-      <% if @category %>
-        <p>
-          <small>
-            Valgt: <strong><%= @category.human_name %></strong>
-            (<%= link_to "Vis alle", show_all_except_category %>)
-          </small>
-        </p>
-      <% end %>
-
     </div>
 
     <div class="<%= category_with_children? ? 'span4' : 'hidden' %>">
-      <h6>Underkategorier</h6>
+      <h4>
+        Underkategorier
+        <% if @subcategory %>(<%= link_to "Vis alle", show_all_except_subcategory %>)<% end %>
+      </h4>
       <ul class="nav multiple-select">
         <% if @category %>
           <% @category.children.each do |subcategory| %>
@@ -49,18 +46,13 @@
           <% end %>
         <% end %>
       </ul>
-      <% if @subcategory %>
-        <p>
-          <small>
-            Valgt: <strong><%= @subcategory.human_name %></strong>
-            (<%= link_to "Vis alle", show_all_except_subcategory %>)
-          </small>
-        </p>
-      <% end %>
     </div>
 
     <div class="<%= category_with_children? ? 'span4' : 'span6' %>">
-      <h6>Partier</h6>
+      <h4>
+        Partier
+        <% if @party %>(<%= link_to "Vis alle", show_all_except_party %>)<% end %>
+      </h4>
       <ul class="nav multiple-select">
         <% parties.each do |party| %>
           <li class="<%= show_party_as_selected(party) %>">
@@ -68,16 +60,21 @@
           </li>
         <% end %>
       </ul>
-      <% if @party %>
-        <p>
-          <small>
-            Valgt: <strong><%= @party.name %></strong>
-            (<%= link_to "Vis alle", show_all_except_party %>)
-          </small>
-        </p>
-      <% end %>
     </div>
   </div>
+
+ <!-- COULD BE USEFUL
+  <% if @category %>
+    <%= @category.human_name %>
+  <% end %>
+  <% if @subcategory %>
+    <%= @subcategory.human_name %>
+  <% end %>
+  <% if @party %>
+    <%= @party.name %>
+  <% end %>
+  -->
+
 </div>
 
 <div class="visible-phone">

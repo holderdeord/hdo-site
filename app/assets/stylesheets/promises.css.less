@@ -1,28 +1,26 @@
-.multiple-select {
-  margin-bottom: 0px;
-  margin-left: 5px;
-  max-height: 8.5em;
+@hdoPrimaryColor: #019ea2;
+
+.multiple-select.nav {
   overflow: auto;
+  border: 0px solid #ccc;
+  border-width: 1px 0;
+  height: 12em;
   a {
-    line-height: 1.2em;
+    padding: 1px 10px;
   }
-  .active > a {
-    background-color: #454545;
-    color: white;
+  li:hover > a {
+    background-color: desaturate(lighten(@hdoPrimaryColor, 65), 60);
   }
-  .active > a:hover {
-    color: black;
+  li:active > a, li.active > a {
+    background-color: @hdoPrimaryColor;
+    color: #fff;
   }
 }
 
 @media (min-width: 768px) {
   .multiple-select {
-    height: 8.5em;
+    height: 12em;
   }
-}
-
-.promises-results > li {
-  padding: 0;
 }
 
 .active-period {
@@ -35,4 +33,11 @@
 
 #period-choices {
   margin-bottom: 1em;
+}
+
+
+.promise {
+  .logos {
+    text-align: right;
+  }
 }
