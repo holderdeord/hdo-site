@@ -14,7 +14,6 @@
   <div class="pull-right">
     Les mer om <%= link_to 'vår løftedatabase', home_about_path(anchor: 'valglfter-og-lftedatabasen')  %>.
   </div>
-
 </div>
 
 <div class="well well-small hidden-phone">
@@ -82,7 +81,7 @@
 </div>
 
 <div class="visible-phone">
-  <%= form_tag promises_path, method: 'GET' do %>
+  <%= form_tag promises_path, :id => 'MobileSearch', method: 'GET' do %>
     <%= label_tag 'category_id', 'Kategorier' %>
     <%= select_tag 'category_id', options_for_select(categories.map { |category| [category.human_name, category.id] }, selected: @category.try(:id)) %>
     <small><%= link_to "Vis alle", show_all_except_category %></small>
@@ -100,3 +99,11 @@
     <%= submit_tag 'Søk' %>
   <% end %>
 </div>
+
+<% content_for :document_ready do %>
+  <script>
+    $(document).ready(function () {
+      $("#MobileSearch").autoSelect();
+    });
+  </script>
+<% end %>
