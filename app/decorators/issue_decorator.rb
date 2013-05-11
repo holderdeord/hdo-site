@@ -173,11 +173,20 @@ class IssueDecorator < Draper::Decorator
 
     def votes
       votes = issue.vote_connections.includes(:vote).sort_by { |e| e.vote.time }.reverse
-      votes.map { |vc| PartyVote.new(model, vc) }.select(&:participated?)
+      votes.map { |vc| PartyVote.new(model, vc) }.reject(&:ignore?)
     end
   end
 
   class PartyVote < Struct.new(:party, :vote_connection)
+    def ignored?
+      !participated? || against_alternate_budget?
+    end
+
+    def against_alternate_budget?
+      vote_connection.proposition_type == 'alternate_national_budget' &&
+        direction == 'against'
+    end
+
     def participated?
       stats.party_participated? party
     end
