@@ -74,12 +74,11 @@ class Admin::IssuesController < AdminController
     update_ok = Hdo::IssueUpdater.new(@issue, params, current_user).update
 
     if update_ok
-      edit_steps.next!
-
       if edit_steps.finish?
-        session.delete :issue_step
+        edit_steps.clear!
         redirect_to @issue
       else
+        edit_steps.next!
         redirect_to edit_step_admin_issue_path(@issue.id, step: edit_steps.current)
       end
     else

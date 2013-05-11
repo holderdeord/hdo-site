@@ -20,7 +20,13 @@ module Hdo
     end
 
     def next!
-      @session[:issue_step] = next_step
+      unless save?
+        @session[:issue_step] = next_step
+      end
+    end
+
+    def clear!
+      @session.delete :issue_step
     end
 
     def first
@@ -53,6 +59,10 @@ module Hdo
 
     def finish?
       !!@params[:finish]
+    end
+
+    def save?
+      !!@params[:save]
     end
 
     private

@@ -176,8 +176,21 @@ describe Admin::IssuesController do
     end
   end
 
+  context 'save' do
+    it 'should stay on the same step when saving' do
+      session[:issue_step] = 'categories'
+
+      put :update, save: true, issue: issue_params(issue), id: issue
+
+      assigns(:issue).should == issue
+      session[:issue_step].should == 'categories'
+
+      response.should redirect_to edit_step_admin_issue_url(issue.id, step: 'categories')
+    end
+  end
+
   context "finish" do
-    it "should save and redirect to issue when hit finish from edit step" do
+    it "should save and redirect to issue when hitting finish from edit step" do
       session[:issue_step] = 'votes'
 
       put :update, finish: true, issue: issue_params(issue), id: issue
