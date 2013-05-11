@@ -28,7 +28,7 @@ describe PromisesController do
       category = Category.make!(main: true)
       promise_with_category = Promise.make!(categories: [category])
 
-      get :index, { category_id: category.id, period: promise.parliament_period.external_id }
+      get :index, { category_id: category.id, period: promise_with_category.parliament_period.external_id }
       assigns(:promises).should == [promise_with_category]
     end
 
