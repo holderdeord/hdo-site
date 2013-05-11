@@ -287,6 +287,7 @@ nb:
       unauthorized: Du har ikke tilgang til å utføre handlingen.
       issues:
         unable_to_save: "Kunne ikke lagre, saken er blitt endret i mellomtiden."
+        must_be_published: "Status må være 'publisert' før den kan komme på forsiden. Endringene ble ikke lagret."
     admin:
       latest_from_parliament: Siste fra Stortinget
     published: Publisert

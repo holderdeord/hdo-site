@@ -120,6 +120,11 @@ Issue.blueprint do
   vote_connections {
     Array.new(2) { VoteConnection.make!(:issue => object) }
   }
+<<<<<<< HEAD
+  frontpage { false }
+=======
+  frontpage { "false" }
+>>>>>>> 0a2681b... added option to make an issue frontpageable
 end
 
 Issue.blueprint :published do
