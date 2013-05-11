@@ -10,10 +10,17 @@ describe PromisesController do
       response.should have_rendered(:index)
     end
 
-    it 'contains all promises by default' do
+    it 'contains all promises in a period by default' do
       promises = [promise]
 
-      get :index
+      get :index, { period: promise.parliament_period.external_id }
+      assigns(:promises).should == promises
+    end
+
+    it 'contains all promises if period is nil' do
+      promises = [promise]
+
+      get :index, { period: nil }
       assigns(:promises).should == promises
     end
 
@@ -21,11 +28,11 @@ describe PromisesController do
       category = Category.make!(main: true)
       promise_with_category = Promise.make!(categories: [category])
 
-      get :index, {category_id: category.id}
+      get :index, { category_id: category.id, period: promise.parliament_period.external_id }
       assigns(:promises).should == [promise_with_category]
     end
 
-    it 'includes promises in subcategory' do
+    it 'filters by category and includes promises in subcategories' do
       period = ParliamentPeriod.make!
 
       category               = Category.make!(main: true)
@@ -34,26 +41,9 @@ describe PromisesController do
       promise_in_category    = Promise.make!(categories: [category], parliament_period: period)
       promise_in_subcategory = Promise.make!(categories: [subcategory], parliament_period: period)
 
-      get :index, {category_id: category.id}
+      get :index, { category_id: category.id, period: promise_in_category.parliament_period.external_id }
 
       assigns(:promises).should == [promise_in_category, promise_in_subcategory]
-    end
-
-    it 'can filter promises by party' do
-      party = Party.make!
-      promise_in_party = Promise.make!(parties: [party])
-
-      get :index, {party_id: party.id}
-      assigns(:promises).should == [promise_in_party]
-    end
-
-    it 'can filter promises by party and category' do
-      party = Party.make!
-      category = Category.make!(main: true)
-      promise_in_all = Promise.make!(categories: [category], parties: [party])
-
-      get :index, {category_id: category.id, party_id: party.id}
-      assigns(:promises).should == [promise_in_all]
     end
 
     it 'can filter promises by subcategory' do
@@ -61,16 +51,25 @@ describe PromisesController do
       subcategory = Category.make!(parent: category)
       promise_in_subcategory = Promise.make!(categories: [subcategory])
 
-      get :index, category_id: category.id, subcategory_id: subcategory.id
+      get :index, { category_id: category.id, subcategory_id: subcategory.id, period: promise_in_subcategory.parliament_period.external_id }
       assigns(:promises).should == [promise_in_subcategory]
     end
 
-    it 'can filter promises by parliament period' do
-      parliament_period = ParliamentPeriod.make!
-      promise = Promise.make!(parliament_period: parliament_period)
+    it 'can filter promises by category and party' do
+      party = Party.make!
+      category = Category.make!(main: true)
+      promise_in_cat_and_party = Promise.make!(categories: [category], parties: [party])
 
-      get :index, period: parliament_period.external_id
-      assigns(:promises).should == [promise]
+      get :index, { category_id: category.id, party_id: party.id, period: promise_in_cat_and_party.parliament_period.external_id }
+      assigns(:promises).should == [promise_in_cat_and_party]
+    end
+
+    it 'can filter promises by party' do
+      party = Party.make!
+      promise_in_party = Promise.make!(parties: [party])
+
+      get :index, { party_id: party.id, period: promise_in_party.parliament_period.external_id }
+      assigns(:promises).should == [promise_in_party]
     end
 
     it 'can filter promises by category and parliament period' do
