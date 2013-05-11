@@ -26,15 +26,18 @@ class Issue < ActiveRecord::Base
 
   acts_as_taggable
 
-  attr_accessible :description, :title, :category_ids, :promise_ids, :status, :lock_version, :editor_id, :tag_list
+  attr_accessible :description, :title, :category_ids, :promise_ids, :status,
+  :lock_version, :editor_id, :tag_list, :frontpage
+
   validates :title, presence: true, uniqueness: true
+  validate :can_be_on_frontpage
 
   STATUSES = %w[
     published
     publishable
     in_progress
     shelved
-  ]
+  ].freeze
   validates_inclusion_of :status, in: STATUSES
 
   has_and_belongs_to_many :categories, uniq: true
@@ -159,6 +162,12 @@ class Issue < ActiveRecord::Base
   def accountability
     # TODO: cache this when it's being used for real.
     Hdo::Stats::AccountabilityScorer.new(self)
+  end
+
+  def can_be_on_frontpage
+    if frontpage
+      errors.add(:frontpage, I18n.t('app.errors.issues.must_be_published')) unless published?
+    end
   end
 
   private

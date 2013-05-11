@@ -4,6 +4,9 @@ module Hdo
     class Unauthorized < StandardError
     end
 
+    class NotPublished < StandardError
+    end
+
     def initialize(issue, params, user)
       @issue          = issue
       @attributes     = params[:issue]
@@ -15,16 +18,16 @@ module Hdo
 
     def update
       update!
-    rescue ActiveRecord::StaleObjectError
-      @issue.errors.add :base, I18n.t('app.errors.issues.unable_to_save')
-      false
-    rescue Unauthorized
-      @issue.errors.add :base, I18n.t('app.errors.unauthorized')
-      false
-    rescue ActiveRecord::RecordInvalid => ex
-      # failure could be from association
-      @issue.errors.empty? && @issue.errors.add(:base, ex.message)
-      false
+      rescue ActiveRecord::StaleObjectError
+        @issue.errors.add :base, I18n.t('app.errors.issues.unable_to_save')
+        false
+      rescue Unauthorized
+        @issue.errors.add :base, I18n.t('app.errors.unauthorized')
+        false
+      rescue ActiveRecord::RecordInvalid => ex
+        # failure could be from association
+        @issue.errors.empty? && @issue.errors.add(:base, ex.message)
+        false
     end
 
     def update!
