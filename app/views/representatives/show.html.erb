@@ -15,8 +15,8 @@
       <%= party && link_to(party.name, party, class: party.external_id) %>
     </span>
 
-    <% if @representative.on_leave? %>
-      <p class="muted"><%= Representative.human_attribute_name(:on_leave) %></p>
+    <% unless @representative.attending? %>
+      <p class="muted"><%= Representative.human_attribute_name(:not_attending) %></p>
     <% end %>
 
     <dl class="representative-committee-list">
@@ -25,7 +25,7 @@
       <% end %>
     </dl>
 
-    <% if AppConfig.questions_enabled %>
+    <% if AppConfig.questions_enabled && @representative.attending? %>
       <%= link_to t('app.questions.representative.ask', name: @representative.name),
                   new_question_path(representative: @representative.slug, district: @representative.district.slug),
                   class: 'btn btn-primary' %>

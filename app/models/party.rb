@@ -42,7 +42,7 @@ class Party < ActiveRecord::Base
   end
 
   def current_representatives
-    representatives_at(Date.today).reject(&:on_leave?)
+    representatives_at(Date.today).select(&:attending?)
   end
 
   def representatives_at(date)

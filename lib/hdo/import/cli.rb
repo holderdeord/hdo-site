@@ -123,12 +123,11 @@ module Hdo
 
         persister.import_representatives representatives.values
 
-
-        # mark representatives with permanent substitues as on_leave=true
+        # mark currently attending representatives
         # see https://github.com/holderdeord/hdo-site/issues/195
-        on_leave_xids = representatives_today.map { |e| e.permanent_substitute_for }.compact
-        Representative.all.each do |e|
-          e.update_attributes!(on_leave: on_leave_xids.include?(e.external_id))
+        attending_xids = representatives_today.map(&:external_id)
+        Representative.all.each do |rep|
+          rep.update_attributes!(attending: attending_xids.include?(rep.external_id))
         end
       end
 

@@ -34,7 +34,7 @@ class Representative < ActiveRecord::Base
 
   attr_accessible :first_name, :last_name, :committees, :district,
                   :date_of_birth, :date_of_death, :twitter_id, :email,
-                  :on_leave
+                  :attending
 
   default_scope order: :last_name
 
@@ -58,6 +58,8 @@ class Representative < ActiveRecord::Base
   validates :external_id, presence: true, uniqueness: true
   validates :email,       allow_nil: true, uniqueness: true, email: true
   validates :twitter_id,  allow_nil: true, uniqueness: true, format: /^[^@]/
+
+  scope :attending, -> { where(attending: true) }
 
   friendly_id :external_id, use: :slugged
 

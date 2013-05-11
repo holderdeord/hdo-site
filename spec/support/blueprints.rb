@@ -105,6 +105,10 @@ Representative.blueprint :full do
   party_memberships(1)
 end
 
+Representative.blueprint :attending do
+  attending { true }
+end
+
 Representative.blueprint :confirmed do
   external_id  { sn.to_s }
   first_name   { "first-name-#{sn}" }

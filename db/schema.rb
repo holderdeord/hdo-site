@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130509150856) do
+ActiveRecord::Schema.define(:version => 20130511134036) do
 
   create_table "answers", :force => true do |t|
     t.text     "body",                                     :null => false
@@ -277,9 +277,10 @@ ActiveRecord::Schema.define(:version => 20130509150856) do
     t.string   "confirmation_token"
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
-    t.boolean  "on_leave",               :default => false
+    t.boolean  "attending",              :default => false
   end
 
+  add_index "representatives", ["attending"], :name => "index_representatives_on_attending"
   add_index "representatives", ["confirmation_token"], :name => "index_representatives_on_confirmation_token", :unique => true
   add_index "representatives", ["district_id"], :name => "index_representatives_on_district_id"
   add_index "representatives", ["email"], :name => "index_representatives_on_email", :unique => true

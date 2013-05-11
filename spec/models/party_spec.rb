@@ -55,10 +55,10 @@ describe Party do
   it 'knows its current representatives' do
     party = Party.make!
 
-    current_rep = Representative.make!
+    current_rep = Representative.make!(:attending)
     current_rep.party_memberships.create!(party: party, start_date: 1.month.ago)
 
-    previous_rep = Representative.make!
+    previous_rep = Representative.make!(:attending)
     previous_rep.party_memberships.create!(party: party, start_date: 2.months.ago, end_date: 1.month.ago)
 
     party.current_representatives.should == [current_rep]
@@ -67,14 +67,14 @@ describe Party do
     party.representatives.should == [current_rep, previous_rep]
   end
 
-  it 'does not include representatives marked as "on leave" in current representatives' do
+  it 'does not include non-attending representatives in current representatives' do
     party = Party.make!
 
-    rep = Representative.make!
+    rep = Representative.make!(:attending)
     rep.party_memberships.create!(party: party, start_date: 1.month.ago)
     party.current_representatives.should include(rep)
 
-    rep.update_attributes!(on_leave: true)
+    rep.update_attributes!(attending: false)
     party.current_representatives.should == []
   end
 

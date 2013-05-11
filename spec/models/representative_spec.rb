@@ -160,4 +160,8 @@ describe Representative do
     representative.twitter_url.should == "https://twitter.com/foo"
   end
 
+  it 'finds attending representatives' do
+    a, b = [Representative.make!(attending: true), Representative.make!(attending: false)]
+    Representative.attending.to_a.should == [a]
+  end
 end

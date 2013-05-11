@@ -70,7 +70,7 @@ nb:
         invalid: "er ugyldig"
         accepted: "må aksepteres"
         empty: "kan ikke være tom"
-        blank: "kan ikke være blank"
+        blank: "kan ikke være tom"
         too_long: "er for lang (forventet maksimum %{count})"
         too_short: "er for kort (forventet minimum %{count})"
         wrong_length: "er feil lengde (forventet %{count})"
@@ -146,7 +146,8 @@ nb:
         date_of_death: 'Død'
         twitter_id: 'Twitter'
         email: 'Epost'
-        on_leave: 'I permisjon'
+        attending: 'Møtende'
+        not_attending: 'Møter for tiden ikke på Stortinget'
       party:
         name: "Navn"
         representatives: "Representanter"
