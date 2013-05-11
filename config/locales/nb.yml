@@ -443,7 +443,7 @@ nb:
       new: Still et spørsmål
       title: Spør en representant
       edit:
-        created: Spørsmålet er nå sendt til godkjenning.
+        created: Spørsmålet er nå sendt til godkjenning. Tjenesten er for tiden under utvikling og det kan ta litt tid før spørsmålet ditt publiseres. Du vil da motta en e-post.
         approve: Godkjenn
         reject: Avvis
         updated: Spørsmålet ble oppdatert.
