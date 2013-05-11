@@ -13,12 +13,12 @@ class PromisesController < ApplicationController
     @period = params[:period].present? ? ParliamentPeriod.find_by_external_id(params[:period]) : @parliament_periods.first
 
     # watch out for rails bug: https://github.com/rails/rails/pull/6792
-    @promises =  @period ? @period.promises : Promise
+    @promises = @period ? @period.promises : Promise
 
     if @subcategory
       @promises = @promises.joins(:categories).where('categories.id' => @subcategory.id)
     elsif @category
-      @promises = @category.all_promises
+      @promises = @promises.joins(:categories).where("categories.id = ? or categories.parent_id = ?", @category.id, @category.id)
     end
 
     @promises = @promises.includes(:parties)

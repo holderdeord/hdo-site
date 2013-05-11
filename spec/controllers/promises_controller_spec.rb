@@ -3,7 +3,7 @@ require 'spec_helper'
 describe PromisesController do
   let(:promise) { Promise.make! }
 
-  describe "GET #index" do 
+  describe "GET #index" do
 
     it 'renders promises#index' do
       get :index
@@ -26,12 +26,16 @@ describe PromisesController do
     end
 
     it 'includes promises in subcategory' do
-      category = Category.make!(main: true)
-      promise_in_category = Promise.make!(categories: [category])
-      subcategory = Category.make!(parent: category)
-      promise_in_subcategory = Promise.make!(categories: [subcategory])
+      period = ParliamentPeriod.make!
+
+      category               = Category.make!(main: true)
+      subcategory            = Category.make!(parent: category)
+
+      promise_in_category    = Promise.make!(categories: [category], parliament_period: period)
+      promise_in_subcategory = Promise.make!(categories: [subcategory], parliament_period: period)
 
       get :index, {category_id: category.id}
+
       assigns(:promises).should == [promise_in_category, promise_in_subcategory]
     end
 
@@ -57,7 +61,7 @@ describe PromisesController do
       subcategory = Category.make!(parent: category)
       promise_in_subcategory = Promise.make!(categories: [subcategory])
 
-      get :index, {category_id: category.id, subcategory_id: subcategory.id}
+      get :index, category_id: category.id, subcategory_id: subcategory.id
       assigns(:promises).should == [promise_in_subcategory]
     end
 
@@ -65,8 +69,24 @@ describe PromisesController do
       parliament_period = ParliamentPeriod.make!
       promise = Promise.make!(parliament_period: parliament_period)
 
-      get :index, {period: parliament_period.external_id }
+      get :index, period: parliament_period.external_id
       assigns(:promises).should == [promise]
+    end
+
+    it 'can filter promises by category and parliament period' do
+      period_a = ParliamentPeriod.make!
+      period_b = ParliamentPeriod.make!
+
+      category = Category.make!(main: true)
+
+      promises = [
+        Promise.make!(parliament_period: period_a, categories: [category]),
+        Promise.make!(parliament_period: period_b, categories: [category])
+      ]
+
+      get :index, period: period_a.external_id, category_id: category.id
+
+      assigns(:promises).should == [promises.first]
     end
   end
 
