@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe QuestionsController do
-  let(:representative) { Representative.make! }
+  let(:representative) { Representative.make!(:attending) }
   let(:valid_attributes) { {body: 'Tekst', representative: representative } }
 
   describe "GET index" do
