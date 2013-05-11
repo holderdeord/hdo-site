@@ -1,7 +1,7 @@
 class PromisesController < ApplicationController
   hdo_caches_page :index, :show
 
-  DEFAULT_PER_PAGE = 100
+  DEFAULT_PER_PAGE = 20
 
   def index
     @categories  = Category.where(main: true).includes(:children)
