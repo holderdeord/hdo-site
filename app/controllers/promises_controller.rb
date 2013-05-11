@@ -24,7 +24,9 @@ class PromisesController < ApplicationController
     @promises = @promises.includes(:parties)
 
     if @party
-      @promises = @promises.where('parties.id' => @party.id)
+      # TODO: for some reason, this query makes promise.parties (in the view)
+      # return only the selected party..
+      @promises = @promises.where('parties.id' => [@party])
     else
       @promises = @promises.order('parties.id')
     end
