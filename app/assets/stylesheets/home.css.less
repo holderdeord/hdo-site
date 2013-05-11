@@ -65,23 +65,24 @@
   }
 }
 
-.promoboxes {
+.row-fluid.promoboxes {
   > div {
     padding: 5px 15px 5px 86px;
     margin-bottom: 10px;
+    min-height: 190px;
     position: relative;
     background: #eee;
     background: -webkit-linear-gradient(top, #eee 50%, #fff);
-    background: -moz-linear-gradient(top, #eee 50%, #fff);
-    background: -ms-linear-gradient(top, #eee 50%, #fff);
-    background: linear-gradient(top, #eee 50%, #fff);
+    background:    -moz-linear-gradient(top, #eee 50%, #fff);
+    background:     -ms-linear-gradient(top, #eee 50%, #fff);
+    background:         linear-gradient(top, #eee 50%, #fff);
     &.promoted {
       @dimmedPrimary: lighten(desaturate(@hdoPrimaryColor,50),60);
       background: @dimmedPrimary;
       background: -webkit-linear-gradient(top, @dimmedPrimary 50%, #fff);
-      background: -moz-linear-gradient(top, @dimmedPrimary 50%, #fff);
-      background: -ms-linear-gradient(top, @dimmedPrimary 50%, #fff);
-      background: linear-gradient(top, @dimmedPrimary 50%, #fff);
+      background:    -moz-linear-gradient(top, @dimmedPrimary 50%, #fff);
+      background:     -ms-linear-gradient(top, @dimmedPrimary 50%, #fff);
+      background:         linear-gradient(top, @dimmedPrimary 50%, #fff);
     }
     .promoimage {
       position: absolute;
