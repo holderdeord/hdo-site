@@ -15,7 +15,7 @@ class QuestionsController < ApplicationController
   end
 
   def create
-    question = normalize_blanks(params[:question])
+    question = params[:question]
     rep      = question.delete(:representative)
 
     @question = Question.new(question)

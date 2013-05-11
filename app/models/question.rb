@@ -9,7 +9,8 @@ class Question < ActiveRecord::Base
   has_and_belongs_to_many :issues, uniq: true, order: "updated_at DESC"
 
   validates :body,           presence: true
-  validates :from_email,     email: true, allow_nil: true
+  validates :from_name,      presence: true
+  validates :from_email,     email: true
   validates :representative, presence: true # TODO: what representatives can be asked questions? (time)
 
   def self.all_by_status

@@ -6,7 +6,12 @@ describe Admin::QuestionsController do
   before { sign_in user }
 
   def valid_attributes
-    {body: 'test test test', representative: Representative.make! }
+    {
+      body: 'test test test',
+      representative: Representative.make!,
+      from_name: 'Ola Nordmann',
+      from_email: 'ola@nordmann.no'
+    }
   end
 
   describe "GET index" do

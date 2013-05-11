@@ -2,7 +2,10 @@ require 'spec_helper'
 
 describe QuestionsController do
   let(:representative) { Representative.make!(:attending) }
-  let(:valid_attributes) { {body: 'Tekst', representative: representative } }
+
+  let(:valid_attributes) do
+    { body: 'Tekst', representative: representative, from_name: 'Ola', from_email: 'ola@nordmann.no' }
+  end
 
   describe "GET index" do
     it "assigns all approved questions as @questions" do
@@ -54,16 +57,22 @@ describe QuestionsController do
         response.should have_rendered(:create)
       end
 
-      it 'accepts a blank from_name and persists it as nil' do
-        post :create, { question: valid_attributes.merge('from_name' => '') }
-        assigns(:question).should be_a(Question)
-        assigns(:question).from_name.should be_nil
+      it 'does not accepts a blank from_name' do
+        post :create, question: valid_attributes.merge(from_name: '')
+
+        q = assigns(:question)
+        q.should_not be_valid
+
+        response.should have_rendered(:new)
       end
 
-      it 'accepts a blank from_email and persists it as nil' do
-        post :create, { question: valid_attributes.merge('from_email' => '') }
-        assigns(:question).should be_a(Question)
-        assigns(:question).from_name.should be_nil
+      it 'does not accept a blank from_email' do
+        post :create, question: valid_attributes.merge(from_email: '')
+
+        q = assigns(:question)
+        q.should_not be_valid
+
+        response.should have_rendered(:new)
       end
     end
 

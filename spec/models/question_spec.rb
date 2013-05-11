@@ -17,12 +17,12 @@ describe Question do
     q.should_not be_valid
   end
 
-  it 'is valid without name or email' do
+  it 'is invalid without name or email' do
     q.from_name = nil
-    q.should be_valid
+    q.should_not be_valid
 
     q.from_email = nil
-    q.should be_valid
+    q.should_not be_valid
   end
 
   it 'validates that from_email is a valid email address' do
