@@ -1,10 +1,9 @@
-
 <div class="row-fluid">
   <div class="span6">
     <label class="control-label"><%= District.model_name.human(count: 2).capitalize %></label>
 
-    <%= collection_select :district, :name, @districts, :slug, :name,
-                          {include_blank: 'Alle fylker'},
+    <%= collection_select :_district, :name, @districts, :slug, :name,
+                          {include_blank: 'Alle fylker', selected: @question.representative.try(:district).try(:slug) },
                           class: 'chosen-large',
                           data: { representatives: data_representatives } %>
   </div>
@@ -13,7 +12,7 @@
     <label class="control-label"><%= Question.human_attribute_name :representative %></label>
 
     <%= form.collection_select :representative, @representatives, :slug, :name_with_party,
-                               {include_blank: true},
+                               {include_blank: true, selected: @question.representative.try(:slug)},
                                class: 'chosen-xlarge',
                                data: {placeholder: 'Velg en representant'} %>
   </div>
@@ -23,7 +22,7 @@
   <script type="text/javascript" charset="utf-8">
     $(document).ready(function() {
       HDO.representativeSelector.init({
-        districtSelect: $("#district_name"),
+        districtSelect: $("#_district_name"),
         representativeSelect: $("#question_representative"),
         selectedDistrict: "<%= params[:district] %>",
         selectedRepresentative: "<%= params[:representative] %>",
