@@ -80,18 +80,15 @@
 <div class="visible-phone">
   <%= form_tag promises_path, :id => 'MobileSearch', method: 'GET' do %>
     <%= label_tag 'category_id', 'Kategorier' %>
-    <%= select_tag 'category_id', options_for_select(categories.map { |category| [category.human_name, category.id] }, selected: @category.try(:id)), prompt: "Velg kategori" %>
-    <small><%= link_to "Vis alle", show_all_except_category %></small>
+    <%= select_tag 'category_id', options_for_select(categories.map { |category| [category.human_name, category.id] }, selected: @category.try(:id)), prompt: 'Alle kategoriene' %>
 
     <% if category_with_children? %>
     <%= label_tag 'subcategory_id', 'Underkategorier' %>
-      <%= select_tag 'subcategory_id', options_for_select(@category.children.map { |subcategory| [subcategory.human_name, subcategory.id] }, selected: @subcategory.try(:id)),  prompt: "Velg underkategori" %>
-    <small><%= link_to "Vis alle", show_all_except_subcategory %></small>
+      <%= select_tag 'subcategory_id', options_for_select(@category.children.map { |subcategory| [subcategory.human_name, subcategory.id] }, selected: @subcategory.try(:id)),  prompt: "Alle underkategoriene" %>
     <% end %>
 
     <%= label_tag 'party_slug', 'Partier' %>
-    <%= select_tag 'party_slug', options_for_select(parties.map { |party| [party.name, party.slug] }, selected: @party.try(:slug)), prompt: "Velg parti" %>
-    <small><%= link_to "Vis alle", show_all_except_party %></small>
+    <%= select_tag 'party_slug', options_for_select(parties.map { |party| [party.name, party.slug] }, selected: @party.try(:slug)), prompt: "Alle partiene" %>
 
   <% end %>
 </div>
