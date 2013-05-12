@@ -63,4 +63,14 @@ describe Question do
 
     expect { a.reload }.to raise_error(ActiveRecord::RecordNotFound)
   end
+
+  it 'uses the full sender name if show_sender is true' do
+    q = Question.make(from_name: 'Ola Nordmann', show_sender: true)
+    q.from_display_name.should == 'Ola Nordmann'
+  end
+
+  it 'uses the shortened name if show_sender is false' do
+    q = Question.make(from_name: 'Ola Nordmann', show_sender: false)
+    q.from_display_name.should == 'O. N.'
+  end
 end

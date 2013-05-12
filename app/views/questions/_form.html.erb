@@ -38,10 +38,14 @@
 
     <div class="row-fluid">
       <div class="control-group span5">
-        <label class="control-label"><%= Question.human_attribute_name :from_name %></label>
+        <label class="control-label">
+          <%= Question.human_attribute_name :from_name %>
+        </label>
+
         <div class="controls">
           <%= f.text_field :from_name, class: 'span12' %>
         </div>
+        <small ><%= f.check_box :show_sender %> Vis fullt navn</small>
       </div>
 
       <div class="control-group span5 offset2">

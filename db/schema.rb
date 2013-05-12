@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130511134036) do
+ActiveRecord::Schema.define(:version => 20130511173932) do
 
   create_table "answers", :force => true do |t|
     t.text     "body",                                     :null => false
@@ -250,6 +250,7 @@ ActiveRecord::Schema.define(:version => 20130511134036) do
     t.datetime "created_at",                               :null => false
     t.datetime "updated_at",                               :null => false
     t.integer  "representative_id"
+    t.boolean  "show_sender",       :default => true
   end
 
   create_table "representatives", :force => true do |t|

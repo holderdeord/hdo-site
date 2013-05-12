@@ -9,7 +9,7 @@
   </h4>
   <p class="qa-question-body"><%= @question.body %></p>
   <aside class="muted">
-    <span>Av <%= @question.from_name || 'Anonym' %></span>
+    <span>Av <%= @question.from_display_name %></span>
     <span><%= l @question.created_at.localtime, format: :text_time %></span>
   </aside>
 </article>

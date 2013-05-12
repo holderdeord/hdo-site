@@ -1,7 +1,8 @@
 class Question < ActiveRecord::Base
   include Workflows::BaseQuestionAndAnswerWorkflow
 
-  attr_accessible :body, :from_name, :from_email, :representative, :issues, :representative_id
+  attr_accessible :body, :from_name, :from_email, :representative, :representative_id,
+                  :issues, :show_sender
 
   belongs_to :representative
   has_many :answers, dependent: :destroy
@@ -30,7 +31,17 @@ class Question < ActiveRecord::Base
     body.truncate(100)
   end
 
+  def from_display_name
+    show_sender? ? from_name : from_initials
+  end
+
   def status_text
     I18n.t "app.questions.status.#{status}"
+  end
+
+  private
+
+  def from_initials
+    from_name.split(/\W/).map { |e| "#{e[0]}." }.join(' ')
   end
 end
