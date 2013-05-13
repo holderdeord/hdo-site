@@ -30,11 +30,7 @@ class Issue < ActiveRecord::Base
   :lock_version, :editor_id, :tag_list, :frontpage
 
   validates :title, presence: true, uniqueness: true
-<<<<<<< HEAD
   validate :only_published_issues_on_frontpage
-=======
-  validate :can_be_on_frontpage
->>>>>>> 0a2681b... added option to make an issue frontpageable
 
   STATUSES = %w[
     published
@@ -168,15 +164,9 @@ class Issue < ActiveRecord::Base
     Hdo::Stats::AccountabilityScorer.new(self)
   end
 
-<<<<<<< HEAD
   def only_published_issues_on_frontpage
     if frontpage && !published?
       errors.add(:frontpage, I18n.t('app.errors.issues.must_be_published'))
-=======
-  def can_be_on_frontpage
-    if frontpage
-      errors.add(:frontpage, I18n.t('app.errors.issues.must_be_published')) unless published?
->>>>>>> 0a2681b... added option to make an issue frontpageable
     end
   end
 
