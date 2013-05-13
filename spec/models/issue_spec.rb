@@ -148,6 +148,10 @@ describe Issue do
     Issue.make(:title => "Øke ditt og datt").downcased_title.should == "øke ditt og datt"
   end
 
+  it 'correctly downcases a title with trailing whitespace' do
+    Issue.make(:title => " Øke ditt og datt").downcased_title.should == "øke ditt og datt"
+  end
+
   it 'finds the latest issues based on vote time' do
     i1 = Issue.make!
     i2 = Issue.make!

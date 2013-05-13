@@ -125,7 +125,10 @@ class Issue < ActiveRecord::Base
 
   def downcased_title
     # TODO: move to decorators?
-    @downcased_title ||= "#{UnicodeUtils.downcase title[0]}#{title[1..-1]}"
+    @downcased_title ||= (
+      t = title.strip
+      "#{UnicodeUtils.downcase t[0]}#{t[1..-1]}"
+    )
   end
 
   def status_text
