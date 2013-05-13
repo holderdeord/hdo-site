@@ -1,9 +1,11 @@
 <aside class="span4 pull-right qa-form-help">
+  <h4>Hjelp oss å utvikle vår nye spørretjeneste!</h4>
 
-  <p>Denne tjenesten er fremdeles under utvikling, og det vil derfor ta noe tid før ditt spørsmål når din representant.  Vi holder deg oppdatert og sender en epost når spørsmålet er besvart og kan leses på vår nettside. </p>
+  <p>Vi jobber nå med å gjøre det lettere for velgere og folkevalgte å diskutere politikk. Tjenesten er under utvikling, og det vil derfor ta noe tid før ditt spørsmål når din representant. Du vil få beskjed når spørsmålet ditt er sendt.</p>
 
-  <p>Vi ber om at du oppgir fullt navn og epostadresse. Alle spørsmål og svar modereres av Holder de ord, og må være i tråd med <a href="#" data-toggle="modal" data-target="#code-of-conduct">våre retningslinjer</a>.</p>
+  <p>Vi ber at du oppgir fullt navn og epostadresse. Alle spørsmål og svar modereres av Holder de ord, og må være i tråd med <a href="#" data-toggle="modal" data-target="#code-of-conduct">våre retningslinjer</a>.</p>
 
+  <p>Innspill eller noe du lurer på? <%= mail_to t('app.email'), 'Ta kontakt!', encode: 'hex', subject: t('app.questions.title') %></p>
 </aside>
 
 <div class="span7">
@@ -19,9 +21,6 @@
     <% end %>
 
     <div class="control-group">
-      <p>Hjelp oss å utvikle vår nye spørretjeneste! Her kan du spørre din representant om saker som er viktige for deg, hvorfor de har stemt som de har gjort, eller hvordan de skal følge opp et løfte.
-        Søk etter en representant eller velg ditt hjemfylke.</p>
-
       <div class="controls">
         <%= render partial: 'representative_selector', locals: { form: f, question: @question } %>
       </div>
@@ -29,7 +28,6 @@
 
     <div class="control-group">
       <div class="controls">
-        <label class="control-label"><%= Question.human_attribute_name :body %></label>
         <%= f.text_area :body, class: 'span12 qa-form-body',
                                rows:  5,
                                placeholder: "Kjære representant! Hvordan kan det ha seg at..." %>
