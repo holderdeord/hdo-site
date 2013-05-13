@@ -161,7 +161,20 @@ describe Representative do
   end
 
   it 'finds attending representatives' do
-    a, b = [Representative.make!(attending: true), Representative.make!(attending: false)]
+    a, b = [
+      Representative.make!(attending: true),
+      Representative.make!(attending: false)
+    ]
+
     Representative.attending.to_a.should == [a]
+  end
+
+  it 'finds representatives with email' do
+    a, b = [
+      Representative.make!(email: 'foo@bar.com'),
+      Representative.make!(email: nil),
+    ]
+
+    Representative.with_email.to_a.should == [a]
   end
 end

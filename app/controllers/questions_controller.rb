@@ -19,7 +19,7 @@ class QuestionsController < ApplicationController
     rep      = question.delete(:representative)
 
     @question = Question.new(question)
-    @question.representative = Representative.attending.find_by_slug(rep) if rep
+    @question.representative = Representative.attending.with_email.find_by_slug(rep) if rep
 
     unless @question.save
       fetch_representatives_and_districts

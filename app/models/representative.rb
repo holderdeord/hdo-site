@@ -61,6 +61,7 @@ class Representative < ActiveRecord::Base
   validates :twitter_id,  allow_nil: true, uniqueness: true, format: /^[^@]/
 
   scope :attending, -> { where(attending: true) }
+  scope :with_email, -> { where('email IS NOT NULL') }
 
   friendly_id :external_id, use: :slugged
 
