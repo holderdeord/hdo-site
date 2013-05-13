@@ -5,7 +5,7 @@ class Admin::IssuesController < AdminController
   helper_method :edit_steps
 
   def index
-    issues = Issue.order(:frontpage).includes(:tags, :editor, :last_updated_by)
+    issues = Issue.order('frontpage IS FALSE, title').includes(:tags, :editor, :last_updated_by)
     @issues_by_status = issues.group_by { |e| e.status }
 
     respond_to do |format|
