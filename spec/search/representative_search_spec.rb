@@ -52,5 +52,21 @@ describe Representative, :search do
 
       Representative.search('*').results.first.latest_party.name.should == party.name
     end
+
+    it 'updates the index when party membership changes' do
+      party_before = Party.make!
+      party_after  = Party.make!
+      rep          = Representative.make!
+
+      rep.party_memberships.create!(party: party_before, start_date: 2.months.ago)
+      refresh_index
+
+      Representative.search('*').results.first.latest_party.name.should == party_before.name
+
+      rep.party_memberships.first.update_attributes!(party: party_after)
+      refresh_index
+
+      Representative.search('*').results.first.latest_party.name.should == party_after.name
+    end
   end
 end

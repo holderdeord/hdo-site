@@ -30,7 +30,7 @@ class Representative < ActiveRecord::Base
     end
   }
 
-  update_index_on_change_of :district, has_many: true
+  update_index_on_change_of :district, :parties, has_many: true
   update_index_on_change_of :party_memberships
 
   attr_accessible :first_name, :last_name, :committees, :district,
