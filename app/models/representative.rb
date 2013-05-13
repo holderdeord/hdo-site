@@ -195,16 +195,10 @@ class Representative < ActiveRecord::Base
 
   private
 
-  def email_required?
-    false
-  end
+  # for devise:
 
-  def password_required?
-    false
+  def email_required?() false end
+  def password_required?() false end
+  def confirmation_required?() false end
+  def postpone_email_change?() false end
   end
-
-  def confirmation_required?
-    false
-  end
-
-end
