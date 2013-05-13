@@ -82,8 +82,8 @@ module Hdo
         end
 
         persister.infer_all_votes
-        purge_cache
         notify_new_votes if Rails.env.production?
+        notify_missing_emails if Rails.env.production?
       rescue Hdo::StortingImporter::DataSource::ServerError
         notify_api_error if Rails.env.production?
         raise
@@ -273,11 +273,6 @@ module Hdo
         )
       end
 
-      def purge_cache
-        # crude cache purge for now
-        FileUtils.rm_rf Rails.root.join('public/cache')
-      end
-
       def notify_new_votes
         client = hipchat_client || return
 
@@ -294,7 +289,7 @@ module Hdo
         urls = Rails.application.routes.url_helpers
 
         pis = votes.flat_map { |vote| vote.parliament_issues.to_a }.uniq.map do |pi|
-          [urls.parliament_issue_url(pi, host: "holderdeord.no"), pi.summary]
+          [urls.parliament_issue_url(pi, host: "www.holderdeord.no"), pi.summary]
         end
 
         max = 10
@@ -315,6 +310,25 @@ module Hdo
         message = ERB.new(template, 0, "%-<>").result(binding)
         log.info "sending hipchat message:\n#{message}"
         room.send('Stortinget', message, notify: true)
+      rescue => ex
+        log.error ex.message
+      end
+
+      def notify_missing_emails
+        client = hipchat_client || return
+        missing = Representative.attending.where('email is null')
+
+        template = <<-HTML
+        <h2>Møtende representanter uten epostaddresse:</h2>
+        <ul>
+          <% missing.each do |rep| %>
+          <li><%= rep.external_id %>: <%= rep.full_name %></li>
+          <% end %>
+        </ul>
+        HTML
+
+        message = ERB.new(template, 0, "%-<>").result(binding)
+        client['Teknisk'].send('Stortinget', message, notify: true)
       rescue => ex
         log.error ex.message
       end
