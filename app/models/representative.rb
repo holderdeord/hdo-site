@@ -3,7 +3,6 @@ class Representative < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable,
          :confirmable
 
-  # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :remember_me
   mount_uploader :image, RepresentativeUploader
 
@@ -30,7 +29,9 @@ class Representative < ActiveRecord::Base
       indexes :slug
     end
   }
-  update_index_on_change_of :district, :parties, has_many: true
+
+  update_index_on_change_of :district, has_many: true
+  update_index_on_change_of :party_memberships
 
   attr_accessible :first_name, :last_name, :committees, :district,
                   :date_of_birth, :date_of_death, :twitter_id, :email,
