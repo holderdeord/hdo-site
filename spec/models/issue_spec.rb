@@ -67,6 +67,15 @@ describe Issue do
     valid_issue.categories.size.should == 1
   end
 
+  it "won't allow adding to frontpage unless status is 'published'" do
+    (Issue::STATUSES - ['published']).each do |status|
+      valid_issue.status = status
+      valid_issue.frontpage = true
+
+      valid_issue.should_not be_valid
+    end
+  end
+
   it "can add promises" do
     valid_issue.promise_connections.create!(promise: Promise.make!, status: 'related')
     valid_issue.promises.first.body.should_not be_empty

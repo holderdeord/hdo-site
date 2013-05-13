@@ -15,7 +15,7 @@
   </thead>
   <tbody>
     <% issues.each do |issue| %>
-      <tr>
+      <tr class="<%= issue.frontpage? ? 'info' : '' %>">
         <td>
           <p><%= link_to issue.title, issue %></p>
           <small class="muted">

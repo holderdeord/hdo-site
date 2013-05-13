@@ -124,6 +124,8 @@ Issue.blueprint do
   vote_connections {
     Array.new(2) { VoteConnection.make!(:issue => object) }
   }
+  frontpage { false }
+
 end
 
 Issue.blueprint :published do

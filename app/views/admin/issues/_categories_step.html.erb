@@ -11,7 +11,7 @@
         <%= form.text_area :description, rows: 5 %>
       </div>
 
-      <div class="span6">
+      <div class="span3">
         Status
         <ul class="unstyled">
           <% Issue::STATUSES.each do |status| %>
@@ -19,6 +19,12 @@
                                   checked: @issue.status == status,
                                   disabled: !policy(@issue).change_status? %>
           <% end %>
+        </ul>
+      </div>
+
+      <div class="span3">
+        <ul class="unstyled">
+          <%= form.check_box :frontpage, "Forsidesak" %>
         </ul>
       </div>
     </div>
