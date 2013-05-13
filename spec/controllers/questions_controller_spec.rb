@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe QuestionsController do
-  let(:representative) { Representative.make!(:attending) }
+  let(:representative) { Representative.make!(:attending, email: 'representative@example.com') }
 
   let(:valid_attributes) do
     { body: 'Tekst', representative: representative, from_name: 'Ola', from_email: 'ola@nordmann.no' }
