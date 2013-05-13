@@ -4,7 +4,7 @@ class VoteResult < ActiveRecord::Base
   belongs_to :representative
   belongs_to :vote
 
-  validates_uniqueness_of :representative_id, :scope => [:vote_id]
+  validates_uniqueness_of :representative_id, scope: [:vote_id]
 
   def human
     case result

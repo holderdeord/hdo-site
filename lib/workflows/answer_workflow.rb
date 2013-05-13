@@ -18,8 +18,8 @@ module Workflows
         end
       end
 
-      base.scope :approved, lambda { where(:status => 'approved').order('updated_at DESC') }
-      base.scope :pending, lambda { where(:status => 'pending').order('created_at DESC') }
+      base.scope :approved, -> { where(:status => 'approved').order('updated_at DESC') }
+      base.scope :pending,  -> { where(:status => 'pending').order('created_at DESC') }
     end
   end
 end

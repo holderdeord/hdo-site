@@ -61,10 +61,10 @@ class Issue < ActiveRecord::Base
 
   friendly_id :title, use: :slugged
 
-  scope :vote_ordered, includes(:votes).order('votes.time DESC')
-  scope :published, where(:status => 'published')
-  scope :latest, lambda { |limit| order(:updated_at).reverse_order.limit(limit) }
-  scope :random, lambda { |limit| order("random()").limit(limit) }
+  scope :vote_ordered, -> { includes(:votes).order('votes.time DESC') }
+  scope :published,    -> { where(:status => 'published') }
+  scope :latest,       ->(limit) { order(:updated_at).reverse_order.limit(limit) }
+  scope :random,       ->(limit) { order("random()").limit(limit) }
 
   def self.grouped_by_position(entity)
     all.to_a.reject { |i| i.stats.score_for(entity).nil? }.

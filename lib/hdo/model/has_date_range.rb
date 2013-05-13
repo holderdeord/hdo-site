@@ -6,8 +6,8 @@ module Hdo
         base.validate :start_date_must_be_before_end_date
         base.validates_presence_of :start_date
 
-        base.scope :for_date, lambda { |date| base.where('start_date <= date(?) AND (end_date >= date(?) OR end_date IS NULL)', date, date) }
-        base.scope :current, lambda { base.for_date(Time.current) }
+        base.scope :for_date, ->(date) { base.where('start_date <= date(?) AND (end_date >= date(?) OR end_date IS NULL)', date, date) }
+        base.scope :current,  -> { base.for_date(Time.current) }
       end
 
       def current?

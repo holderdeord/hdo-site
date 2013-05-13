@@ -15,7 +15,7 @@ class Category < ActiveRecord::Base
 
   friendly_id :name, use: :slugged
 
-  scope :all_with_children, includes(:children).all(order: :name)
+  scope :all_with_children, -> { includes(:children).all(order: :name) }
 
   def self.column_groups column_count
     target_size  = Category.count / column_count
