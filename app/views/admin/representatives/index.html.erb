@@ -21,11 +21,22 @@
         <td><%= link_to t('app.edit'), edit_admin_representative_path(rep), class: 'btn btn-small', disabled: !policy(rep).edit? %></td>
         <td>
           <% if rep.confirmed? %>
-            <%= link_to t('app.questions_and_answers.representative.forgot_password'), admin_representative_reset_password_path(rep), class: 'btn btn-small', disabled: !policy(rep).edit? %>
+            <%= link_to t('app.questions_and_answers.representative.forgot_password'),
+                        admin_representative_reset_password_path(rep),
+                        class: 'btn btn-small',
+                        disabled: !policy(rep).edit? %>
           <% elsif rep.confirmation_sent_at %>
-            <%= link_to t('app.questions_and_answers.representative.reactivate'), admin_representative_activate_path(rep), class: 'btn btn-small', disabled: !policy(rep).edit? %>
+            <%= link_to t('app.questions_and_answers.representative.reactivate'),
+                        admin_representative_activate_path(rep),
+                        class: 'btn btn-small',
+                        disabled: !policy(rep).edit?,
+                        confirm: 'Er du sikker på at du vil sende aktiveringsepost til representanten?' %>
           <% else %>
-            <%= link_to t('app.questions_and_answers.representative.activate'), admin_representative_activate_path(rep), class: 'btn btn-small', disabled: !policy(rep).edit? %>
+            <%= link_to t('app.questions_and_answers.representative.activate'),
+                        admin_representative_activate_path(rep),
+                        class: 'btn btn-small',
+                        disabled: !policy(rep).edit?,
+                        confirm: 'Er du sikker på at du vil sende aktiveringsepost til representanten?' %>
           <% end %>
         </td>
       </tr>
