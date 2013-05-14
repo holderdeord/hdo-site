@@ -51,10 +51,6 @@ class IssuesController < ApplicationController
 
   private
 
-  def assign_previous_and_next_issues
-    @previous_issue, @next_issue = @issue.previous_and_next(policy: policy(@issue))
-  end
-
   def fetch_issue
     @issue = Issue.find(params[:id])
 
