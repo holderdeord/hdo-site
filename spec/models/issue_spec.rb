@@ -197,6 +197,30 @@ describe Issue do
     i.last_updated_by_name.should == u.name
   end
 
+  describe 'next and previous' do
+    it "should provide previous and next issues" do
+      t1 = Issue.make! title: 'aaaa1', status: 'published'
+      t2 = Issue.make! title: 'aaaa2', status: 'published'
+      t3 = Issue.make! title: 'aaaa3', status: 'published'
+
+      left, right = t2.previous_and_next
+
+      left.should eq t1
+      right.should eq t3
+    end
+
+    it "ignores uses the given scope" do
+      t1 = Issue.make! title: 'aaaa1', status: 'published'
+      t2 = Issue.make! title: 'aaaa2', status: 'published'
+      t3 = Issue.make! title: 'aaaa3', status: 'in_progress'
+
+      left, right = t2.previous_and_next(policy: mock(scope: Issue.published))
+
+      left.should == t1
+      right.should be_nil
+    end
+  end
+
   describe 'optimistic locking' do
     before(:each) do
       @issue = Issue.make!
