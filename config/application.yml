@@ -34,3 +34,4 @@ production:
   analytics_enabled: true
   questions_enabled: false
   representative_widget_enabled: false
+  fastly_enabled: true
