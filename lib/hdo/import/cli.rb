@@ -319,7 +319,7 @@ module Hdo
         missing = Representative.attending.where('email is null')
 
         template = <<-HTML
-        <h2>Møtende representanter uten epostaddresse:</h2>
+        <h2>Møtende representanter uten epostadresse:</h2>
         <ul>
           <% missing.each do |rep| %>
           <li><%= rep.external_id %>: <%= rep.full_name %></li>
