@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe SearchController do
   let(:searcher) { mock(Hdo::Search::Searcher) }
-  let(:search_response) { mock(Hdo::Search::Searcher::Response, :success? => true, :results => []) }
+  let(:search_response) { mock(Hdo::Search::Searcher::Response, :success? => true, results: []) }
   let(:issue_result) { mock(type: 'issue')  }
 
   it 'can search for #all' do

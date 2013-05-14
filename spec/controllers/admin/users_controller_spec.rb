@@ -27,6 +27,11 @@ describe Admin::UsersController do
 
       response.should redirect_to admin_users_path
       flash.alert.should_not be_empty
+
+      get :create
+
+      response.should redirect_to admin_users_path
+      flash.alert.should_not be_empty
     end
 
     it 'can not edit a user' do
