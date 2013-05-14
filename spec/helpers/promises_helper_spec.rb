@@ -63,4 +63,10 @@ describe PromisesHelper do
     helper.party_path_for(@party).should include "/promises?category_id=1&party_slug=frp&period=2009-2013"
   end
 
+  it 'returns the period filter path' do
+    period = stub(external_id: '2009-2013')
+
+    helper.period_filter_path_for(period).should include('/promises?period=2009-2013')
+  end
+
 end
