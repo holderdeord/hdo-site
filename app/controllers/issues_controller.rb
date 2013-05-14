@@ -14,23 +14,15 @@ class IssuesController < ApplicationController
     policy = policy(@issue)
 
     if policy.show?
-      respond_to do |format|
-        format.html {
-          assign_previous_and_next_issues
-          @issue = IssueDecorator.decorate(@issue)
-        }
-
-        format.json {
-          render json: policy.view_stats? ? @issue.to_json_with_stats : @issue.to_json
-        }
-      end
+      fresh_when @issue, public: can_cache?
+      @issue = IssueDecorator.decorate(@issue)
     else
       redirect_to new_user_session_path
     end
   end
 
   def votes
-    if policy(@issue).show?
+    if policy(@issue).show? && stale?(@issue, public: can_cache?)
       connections = @issue.vote_connections.includes(:vote).order("votes.time DESC")
       views       = VoteConnectionDecorator.decorate_collection(connections, context: @issue)
 

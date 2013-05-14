@@ -14,8 +14,10 @@ class WidgetsController < ApplicationController
     if params[:id] !~ /^\d/
       redirect_to url_for(id: issue.to_param), status: :moved_permanently
     else
-      @issue = issue.decorate
-      @parties = Party.order(:name)
+      if stale?(issue, public: can_cache?)
+        @issue = issue.decorate
+        @parties = Party.order(:name)
+      end
     end
   end
 

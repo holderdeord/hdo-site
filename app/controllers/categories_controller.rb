@@ -3,22 +3,11 @@ class CategoriesController < ApplicationController
 
   def index
     @categories = Category.all_with_children
-
-    respond_to do |format|
-      format.html
-      format.json { render json: @categories }
-      format.xml  { render xml:  @categories }
-    end
   end
 
   def show
     @category = Category.includes(:parliament_issues).find(params[:id])
-
-    respond_to do |format|
-      format.html
-      format.json { render json: @category }
-      format.xml  { render xml:  @category }
-    end
+    fresh_when @category, public: can_cache?
   end
 
   def promises

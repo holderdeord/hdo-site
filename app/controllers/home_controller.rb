@@ -61,7 +61,7 @@ class HomeController < ApplicationController
       file.exist? ? file.read : `git rev-parse HEAD`.strip
     )
 
-    render :text => rev, content_type: 'text/plain'
+    render text: rev, content_type: 'text/plain'
   end
 
   def healthz
