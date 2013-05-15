@@ -318,6 +318,8 @@ module Hdo
         client = hipchat_client || return
         missing = Representative.attending.where('email is null')
 
+        return if missing.empty?
+
         template = <<-HTML
         <h2>Møtende representanter uten epostadresse:</h2>
         <ul>
