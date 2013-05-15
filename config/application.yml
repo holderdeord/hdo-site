@@ -35,3 +35,4 @@ production:
   questions_enabled: false
   representative_widget_enabled: false
   fastly_enabled: true
+  ssl_enabled: true
