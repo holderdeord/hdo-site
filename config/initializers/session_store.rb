@@ -3,7 +3,7 @@
 Hdo::Application.config.session_store :cookie_store, key: '_hdo_session',
                                                      secure: AppConfig.ssl_enabled,
                                                      httponly: true,
-                                                     expire_after: 60.minutes
+                                                     expire_after: 5.hours
 
 # Use the database for sessions instead of the cookie-based default,
 # which shouldn't be used to store highly confidential information
