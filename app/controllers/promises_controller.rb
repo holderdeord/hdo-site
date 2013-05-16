@@ -4,7 +4,7 @@ class PromisesController < ApplicationController
   DEFAULT_PER_PAGE = 20
 
   def index
-    @categories  = Category.where(main: true).includes(:children)
+    @categories  = Category.where(main: true).includes(:children).order(:name)
     @category    = @categories.find(params[:category_id]) if params[:category_id].present?
     @subcategory = Category.find(params[:subcategory_id]) if params[:subcategory_id].present?
     @parties     = Party.order(:name)
