@@ -10,7 +10,9 @@
 
     <ul>
       <% promises.each do |promise| %>
-      <li><%= promise.body %></li>
+      <li>
+        <%= link_to promise.body, link_for_promise(promise) %>
+      </li>
       <% end %>
     </ul>
   <% end %>
