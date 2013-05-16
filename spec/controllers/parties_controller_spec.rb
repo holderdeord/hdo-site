@@ -27,7 +27,7 @@ describe PartiesController do
       t1 = Issue.make! status: 'published',   title: 'a'
       t2 = Issue.make! status: 'published',   title: 'b'
       t3 = Issue.make! status: 'in_progress', title: 'c'
-      t4 = Issue.make! status: 'shelved',     title: 'd'
+      t4 = Issue.make! status: 'in_review',   title: 'd'
 
       t1.vote_connections.map { |e| e.vote.update_attributes!(time: 4.days.ago) }
       t2.vote_connections.map { |e| e.vote.update_attributes!(time: 3.days.ago) }

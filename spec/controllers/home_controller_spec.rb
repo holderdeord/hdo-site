@@ -6,7 +6,7 @@ describe HomeController do
       issues = []
 
       issues << Issue.make!(status: 'published')
-      issues << Issue.make!(status: 'shelved')
+      issues << Issue.make!(status: 'in_progress')
       issues << Issue.make!(status: 'published')
       issues << Issue.make!(status: 'published')
 
