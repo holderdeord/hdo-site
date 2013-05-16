@@ -28,6 +28,7 @@ staging:
   <<: *defaults
   statsd_enabled: true
   fastly_enabled: true
+  ssl_enabled: true
 
 production:
   <<: *defaults
