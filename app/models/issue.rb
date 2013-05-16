@@ -27,7 +27,7 @@ class Issue < ActiveRecord::Base
   acts_as_taggable
 
   attr_accessible :description, :title, :category_ids, :promise_ids, :status,
-  :lock_version, :editor_id, :tag_list, :frontpage
+                  :lock_version, :editor_id, :tag_list, :frontpage
 
   validates :title, presence: true, uniqueness: true
   validate :only_published_issues_on_frontpage
