@@ -11,7 +11,11 @@
     <ul>
       <% promises.each do |promise| %>
       <li>
-        <%= link_to promise.body, link_for_promise(promise) %>
+        <% if params[:linked] %>
+          <%= link_to promise.body, link_for_promise(promise) %>
+        <% else %>
+          <%= promise.body %>
+        <% end %>
       </li>
       <% end %>
     </ul>
