@@ -35,8 +35,8 @@ class Issue < ActiveRecord::Base
   STATUSES = %w[
     published
     publishable
+    in_review
     in_progress
-    shelved
   ].freeze
   validates_inclusion_of :status, in: STATUSES
 

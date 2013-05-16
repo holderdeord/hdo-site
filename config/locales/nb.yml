@@ -366,7 +366,7 @@ nb:
         published: Publisert
         publishable: Klar til publisering
         in_progress: Under arbeid
-        shelved: Lagt på is
+        in_review: Klar til godkjenning
       edit:
         new: "Ny sak"
         submit: "Lagre sak"

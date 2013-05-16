@@ -43,7 +43,7 @@ describe Issue do
     issue.status = 'in_progress'
     issue.should be_valid
 
-    issue.status = 'shelved'
+    issue.status = 'in_review'
     issue.should be_valid
 
     issue.status = 'foobar'
