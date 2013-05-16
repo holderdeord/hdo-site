@@ -2,9 +2,10 @@
   <h1>
     <%= @issue.title %>
   </h1>
-  <p>
-    <%= @issue.description %>
-  </p>
+
+  <% if description_top? %>
+  <p><%= @issue.description %></p>
+  <% end %>
 </header>
 
 <article>
@@ -41,5 +42,9 @@
     <figcaption class="muted"><p><%= @issue.explanation %></p></figcaption>
 
   </figure>
+
+  <% if description_bottom? %>
+  <p><%= @issue.description %></p>
+  <% end %>
 
 </article>

@@ -10,4 +10,12 @@ module WidgetsHelper
   def links_for_parties(parties)
     parties.map { |party| link_to party.name, party }.to_sentence
   end
+
+  def description_top?
+    params[:desc].blank? || params[:desc] == 'top'
+  end
+
+  def description_bottom?
+    params[:desc] == 'bottom'
+  end
 end
