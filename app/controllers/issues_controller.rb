@@ -22,7 +22,9 @@ class IssuesController < ApplicationController
   end
 
   def votes
-    if policy(@issue).show? && stale?(@issue, public: can_cache?)
+    return unless stale?(@issue, public: can_cache?)
+
+    if policy(@issue).show?
       connections = @issue.vote_connections.includes(:vote).order("votes.time DESC")
       views       = VoteConnectionDecorator.decorate_collection(connections, context: @issue)
 
