@@ -30,10 +30,6 @@ class IssuePolicy
   end
   alias_method :create?, :edit?
 
-  def view_stats?
-    logged_in?
-  end
-
   def change_status?
     edit? && user.superadmin?
   end
