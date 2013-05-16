@@ -7,10 +7,7 @@ class RepresentativesController < ApplicationController
 
   def show
     @representative = Representative.find(params[:id])
-
-    if stale?(@representative, public: can_cache?)
-      @party          = @representative.latest_party
-      @issue_groups   = Issue.published.order(:title).grouped_by_position(@representative)
-    end
+    @party          = @representative.latest_party
+    @issue_groups   = Issue.published.order(:title).grouped_by_position(@representative)
   end
 end

@@ -3,12 +3,6 @@ class PartiesController < ApplicationController
 
   def index
     @parties = Party.order(:name).all
-
-    respond_to do |format|
-      format.html
-      format.json { render json: @parties }
-      format.xml  { render xml:  @parties }
-    end
   end
 
   def show
@@ -19,12 +13,6 @@ class PartiesController < ApplicationController
 
     @issue_groups = Issue.published.order(:title).grouped_by_position(@party)
     @categories = Category.where(:main => true).includes(:children => :promises)
-
-    respond_to do |format|
-      format.html
-      format.json { render json: @party }
-      format.xml  { render xml:  @party }
-    end
   end
 
   def positions
