@@ -1,4 +1,6 @@
 class SearchController < ApplicationController
+  hdo_caches_page :all, :autocomplete
+
 
   TYPE_ORDER = %w[
     issue
