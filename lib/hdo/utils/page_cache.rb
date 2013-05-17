@@ -76,7 +76,9 @@ module Hdo
           request = Typhoeus::Request.new(url, method: :purge)
 
           request.on_complete do |response|
-            unless response.success?
+            if response.success?
+              Rails.logger.info "#{self.class}: purged #{request.url}: #{response.code}"
+            else
               Rails.logger.error "#{self.class}: error purging #{request.url}: #{response.code} - #{response.return_message}"
             end
           end
