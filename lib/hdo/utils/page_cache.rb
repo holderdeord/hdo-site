@@ -8,11 +8,11 @@ module Hdo
       end
 
       def self.dummy
-        new(Purger.new)
+        new Purger.new
       end
 
-      def self.fastly(client)
-        new(FastlyPurger.new(client))
+      def self.fastly
+        new FastlyPurger.new
       end
 
       def initialize(purger)
@@ -54,11 +54,6 @@ module Hdo
       end
 
       class FastlyPurger < Purger
-        def initialize(client)
-          @client = client
-          super()
-        end
-
         def execute
           Thread.new(@urls) { |urls| purge(urls) }
           @urls = []
@@ -67,15 +62,26 @@ module Hdo
         private
 
         def purge(urls)
-          urls.each do |url|
-            Rails.logger.info "#{self.class}: purging #{url}"
+          hydra = Typhoeus::Hydra.new(max_concurrency: 50)
 
-            begin
-              @client.purge url
-            rescue => ex
-              Rails.logger.error "#{self.class}: #{ex.message}"
+          urls.each do |url|
+            Rails.logger.info "#{self.class}: queuing purge of #{url}"
+            hydra.queue request_for(url)
+          end
+
+          hydra.run
+        end
+
+        def request_for(url)
+          request = Typhoeus::Request.new(url, method: :purge)
+
+          request.on_complete do |response|
+            unless response.success?
+              Rails.logger.error "#{self.class}: error purging #{request.url}: #{response.code} - #{response.return_message}"
             end
           end
+
+          request
         end
       end
 

@@ -87,7 +87,6 @@ gem 'tire'
 
 # caching
 gem 'cache_digests'
-gem 'fastly'
 
 # images
 gem 'mini_magick', "~> 3.5"
@@ -118,6 +117,7 @@ gem 'newrelic_rpm'
 
 # http
 gem 'faraday'
+gem 'typhoeus'
 gem 'net-http-persistent'
 
 # cors
