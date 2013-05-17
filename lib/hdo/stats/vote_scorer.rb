@@ -17,8 +17,8 @@ module Hdo
           csv << ['Tittel', 'Vektet tekst', 'Vektet %', 'Uvektet tekst', 'Uvektet %', 'Differanse']
 
           Issue.published.each do |issue|
-            weighted   = new(issue, bins: 3)
-            unweighted = new(issue, weighted: false, bins: 3)
+            weighted   = new(issue)
+            unweighted = new(issue, weighted: false)
 
             parties.each do |party|
               weighted_score   = weighted.score_for(party)
@@ -39,10 +39,8 @@ module Hdo
 
       def initialize(model, opts = {})
         @weighted = opts.fetch(:weighted) { true }
-        @bins     = opts.fetch(:bins) { AppConfig.vote_scoring_bins }
 
         vote_connections = model.vote_connections.includes(vote: {vote_results: {representative: {party_memberships: :party}}})
-
         @data = compute(vote_connections)
       end
 
@@ -103,31 +101,13 @@ module Hdo
         end
 
         # if you change the scoring, remember to change the 'about method' page as well.
-        case @bins
-        when 3
-          case score
-          when 0...33
-            :against
-          when 33...66
-            :for_and_against
-          when 66..100
-            :for
-          end
-        when 5
-          case score
-          when 0...21
-            :against
-          when 21...41
-            :mostly_against
-          when 41...61
-            :for_and_against
-          when 61...81
-            :mostly_for
-          when 81..100
-            :for
-          end
-        else
-          raise "unknown # of vote scoring bins: #{@bins}"
+        case score
+        when 0...33
+          :against
+        when 33...66
+          :for_and_against
+        when 66..100
+          :for
         end
       end
 
@@ -173,8 +153,6 @@ module Hdo
 
       private
 
-      IGNORE_VOTES_AGAINST = %w[proposal_attached_to_the_minutes alternate_national_budget]
-
       def vote_percentages_for(vote_connection, weight)
         vote         = vote_connection.vote
         vote_results = vote.vote_results
@@ -213,8 +191,7 @@ module Hdo
 
       def ignore_result?(vote_result, vote_connection)
         vote_result.absent? ||
-          (vote_result.against? &&
-          (vote_connection.proposition_type == 'alternate_national_budget' && AppConfig.ignore_votes_against_alternate_budget))
+          (vote_result.against? && vote_connection.proposition_type == 'alternate_national_budget')
       end
 
     end
