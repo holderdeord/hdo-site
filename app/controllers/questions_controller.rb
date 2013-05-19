@@ -30,7 +30,7 @@ class QuestionsController < ApplicationController
   private
 
   def fetch_representatives_and_districts
-    @representatives=  Rails.cache.fetch('question-form/representatives', expires_in: 1.day) do
+    @representatives = Rails.cache.fetch('question-form/representatives', expires_in: 1.day) do
       Representative.attending.includes(:district, party_memberships: :party).order(:last_name).to_a
     end
 
