@@ -2,7 +2,7 @@
 <div class="page-header">
   <h1>
     <%= Promise.model_name.human(count: 2).capitalize %>
-    <small class="hidden-phone pull-right"><%= @promises.count %> løfter fra valgprogrammene <%= @period.external_id %></small>
+    <small class="hidden-phone pull-right"><%= @promises.count %> løfter fra valgprogrammene <%= @period.try :external_id %></small>
   </h1>
 </div>
 
