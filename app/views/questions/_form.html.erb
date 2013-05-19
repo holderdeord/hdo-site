@@ -39,26 +39,24 @@
         <label class="control-label">
           <%= Question.human_attribute_name :from_name %>
         </label>
-
         <div class="controls">
           <%= f.text_field :from_name, class: 'span12' %>
         </div>
-        <small ><%= f.check_box :show_sender %> Vis fullt navn</small>
       </div>
 
       <div class="control-group span5 offset2">
-        <label class="control-label"><%= Question.human_attribute_name :from_email %></label>
+        <label class="control-label">
+          <%= Question.human_attribute_name :from_email %>
+        </label>
         <div class="controls">
           <%= f.text_field :from_email, class: 'span12' %>
         </div>
       </div>
     </div>
 
-    <div class="control-group">
-       <div class="controls">
-         <%= f.submit class: 'btn btn-primary', value: 'Send' %>
-       </div>
-    </div>
+    <%= f.submit class: 'btn btn-primary', value: 'Send' %>
+    <label class="show_name"><%= f.check_box :show_sender %> Vis fullt navn</label>
+
   <% end %>
 </div>
 

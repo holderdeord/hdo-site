@@ -11,7 +11,6 @@
     border-radius: 3px;
     border: 1px solid transparent;
     &:hover {
-      xcolor: #fff;
       background-color: #fafafa;
       border-color: #eee;
     }
@@ -64,7 +63,25 @@
 }
 
 #new_question {
-  label {
-    font-weight: bold;
+  .control-group {
+    .chzn-container {
+      max-width: 100% !important; /* Override to make tablets look ok */
+    }
+    label {
+      text-indent: 0.5em;
+      margin-bottom: 0;
+      font-size: 0.8em;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: #666;
+    }
+  }
+  .show_name {
+    margin: 0 20px;
+    display: inline;
+    vertical-align: -2px;
+    input {
+      vertical-align: 1px;
+    }
   }
 }
