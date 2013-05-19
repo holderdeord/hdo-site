@@ -32,7 +32,7 @@
     <%= render 'layouts/footer'%>
 
     <%= javascript_include_tag "application" %>
-    <%= render 'layouts/ga' if AppConfig.analytics_enabled  %>
+    <%= render 'shared/ga' if AppConfig.analytics_enabled %>
 
     <script>HDO.setupSearchWidget();</script>
     <%= yield :document_ready %>
