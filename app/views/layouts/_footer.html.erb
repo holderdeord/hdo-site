@@ -3,7 +3,11 @@
     <div class="row-fluid">
 
       <div class="span4">
-        <%= render 'layouts/social'%>
+        <p>
+          <a href="https://twitter.com/holderdeord" class="twitter-follow-button" data-show-count="true">Følg @holderdeord</a>
+          <div class="fb-like" data-href="https://www.facebook.com/holderdeord" data-send="false" data-layout="button_count" data-width="70" data-show-faces="false"></div>
+        </p>
+        <div id="fb-root"></div>
         <p>
           <span class="muted"><%=t 'app.title' %> &copy; <%= Time.now.year %></span>
           <small><%= link_to 'Admin', admin_root_path %></small>
