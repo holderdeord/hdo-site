@@ -8,6 +8,7 @@ defaults: &defaults
   statsd_enabled: false
   analytics_enabled: false
   questions_enabled: true
+  answers_enabled: true
   show_accountability: true
   widgets_enabled: true
   representative_widget_enabled: true
@@ -30,6 +31,7 @@ production:
   <<: *defaults
   analytics_enabled: true
   questions_enabled: false
+  answers_enabled: false
   representative_widget_enabled: false
   fastly_enabled: true
   ssl_enabled: true
