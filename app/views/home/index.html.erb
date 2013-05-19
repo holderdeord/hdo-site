@@ -10,7 +10,7 @@
     <div class="span6 promoted">
       <img class="promoimage" src="<%= asset_path('promoarea/promo_question.png') %>" alt="Spørsmålsgrafikk">
       <h4>Spør en representant</h4>
-      <p>Nå kan du spørre dine representanter på Stortinget om sakene som opptar deg. Bli med og test vår nye spørretjeneste!</p>
+      <p>Nå kan du stille spørsmål til en stortingspolitiker om saker som opptar deg. Bli med og test vår nye tjeneste.</p>
       <p>
         <%= link_to t('app.questions.new'), new_question_path, class: 'btn btn-primary' %>
       </p>
@@ -19,9 +19,7 @@
       <img class="promoimage" src="<%= asset_path('promoarea/promo_money.png') %>" alt="Pengegrafikk">
       <h4>Støtt vårt arbeid</h4>
       <p>
-        Lurer du på om politikerne holder det de lover?
-        Send kodeord <strong>HOLDERDEORD til 2160</strong>
-        for å støtte oss med 150 kr. Vi tar også i mot større gaver og sponsorbidrag.
+        Send kodeord HOLDERDEORD til 2160 for å støtte oss med 150 kr. Vi tar også i mot større gaver og sponsorbidrag.
         <span class="read-more"><%= link_to t('app.read_more'), home_support_path %></span>
       </p>
     </div>
