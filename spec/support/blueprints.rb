@@ -166,7 +166,7 @@ end
 Answer.blueprint do
   body { "answer body" }
   representative { Representative.make! }
-  question { Question.make! }
+  question { Question.make!(status: 'approved') }
 end
 
 PartyComment.blueprint do

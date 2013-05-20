@@ -10,6 +10,8 @@ class Answer < ActiveRecord::Base
   validates :representative, presence: true
   validates :question,       presence: true
 
+  validate :question_is_approved
+
   def self.all_by_status
     grouped = all.group_by { |a| a.status }
     grouped.values.each do |answers|
@@ -25,5 +27,14 @@ class Answer < ActiveRecord::Base
 
   def party
     representative.party_at created_at
+  end
+
+  private
+
+  def question_is_approved
+    if question && !question.approved?
+      # TODO: i18n
+      errors.add :question, "must be approved (status=#{question.status})"
+    end
   end
 end

@@ -56,7 +56,9 @@ describe Question do
   end
 
   it 'destroys dependent answers' do
+    q.status = 'approved'
     q.save!
+
     a = q.answers.create!(body: 'text', representative: Representative.make!)
 
     q.destroy

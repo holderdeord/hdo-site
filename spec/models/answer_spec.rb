@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe Answer do
-  let(:q) { Question.make! }
   let(:a) { Answer.make }
 
   it 'has a valid blueprint' do
@@ -21,6 +20,14 @@ describe Answer do
   it 'is invalid qithout a question' do
     a.question = nil
     a.should_not be_valid
+  end
+
+  it 'is invalid if the question is not approved' do
+    a.question.reject!
+    a.should_not be_valid
+
+    a.question.approve!
+    a.should be_valid
   end
 
   it "returns the representative's party when the answer was posted" do
