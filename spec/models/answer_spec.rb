@@ -55,4 +55,34 @@ describe Answer do
     Answer.make!(question: q)
     q.updated_at.should > old_time
   end
+
+  it 'has statuses' do
+    Answer.statuses.should == %w[pending approved rejected]
+  end
+
+  it 'has a status text' do
+    I18n.with_locale(:nb) do
+      a.status = 'pending'
+      a.status_text.should == 'Avventer kontroll'
+
+      a.status = 'approved'
+      a.status_text.should == 'Godkjent'
+
+      a.status = 'rejected'
+      a.status_text.should == 'Avvist'
+    end
+  end
+
+  it 'groups all answers by status' do
+    pending = Answer.make!(status: 'pending')
+    approved = Answer.make!(status: 'approved')
+    rejected = Answer.make!(status: 'rejected')
+
+    Answer.all_by_status.should == {
+      "pending" => [pending],
+      "approved" => [approved],
+      "rejected" => [rejected]
+    }
+  end
+
 end

@@ -122,7 +122,7 @@ Issue.blueprint do
   title { "issue-title-#{sn}" }
   description { "issue-description-#{sn}" }
   vote_connections {
-    Array.new(2) { VoteConnection.make!(:issue => object) }
+    Array.new(2) { VoteConnection.make!(issue: object) }
   }
   frontpage { false }
 
