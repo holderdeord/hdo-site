@@ -9,7 +9,7 @@ class PromiseConnection < ActiveRecord::Base
   belongs_to :promise
   belongs_to :issue
 
-  validates :promise_id, presence: true, uniqueness: {scope: :issue_id }
+  validates :promise_id, presence: true, uniqueness: { scope: :issue_id }
   validates :issue_id, presence: true
   validates :status, presence: true, inclusion: { in: STATES }
 

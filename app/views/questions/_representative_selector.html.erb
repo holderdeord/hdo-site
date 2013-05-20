@@ -9,12 +9,12 @@
   </div>
 
   <div class="span6">
-    <label class="control-label"><%= Question.human_attribute_name :representative %></label>
+    <label class="control-label">Stortingspolitiker</label>
 
     <%= form.collection_select :representative, @representatives, :slug, :name_with_party,
                                {include_blank: true, selected: @question.representative.try(:slug)},
                                class: 'chosen-xlarge',
-                               data: {placeholder: 'Velg en representant'} %>
+                               data: {placeholder: 'Velg en stortingspolitiker'} %>
   </div>
 </div>
 

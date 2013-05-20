@@ -444,7 +444,7 @@ nb:
         updated: Brukeren ble oppdatert.
     questions:
       new: Still et spørsmål
-      title: Spør en representant
+      title: Spør en stortingspolitiker
       edit:
         created: Spørsmålet er nå sendt til godkjenning. Tjenesten er for tiden under utvikling og det kan ta litt tid før spørsmålet ditt publiseres. Du vil da motta en e-post.
         approve: Godkjenn
