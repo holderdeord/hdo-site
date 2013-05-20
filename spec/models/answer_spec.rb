@@ -47,4 +47,12 @@ describe Answer do
 
     a.party.should == party_b
   end
+
+  it 'touches the corresponding question' do
+    q = Question.make!(status: 'approved')
+    old_time = q.updated_at
+
+    Answer.make!(question: q)
+    q.updated_at.should > old_time
+  end
 end

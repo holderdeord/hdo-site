@@ -3,7 +3,7 @@ class Answer < ActiveRecord::Base
 
   attr_accessible :body, :representative_id, :representative, :question, :question_id
 
-  belongs_to :question
+  belongs_to :question, touch: true
   belongs_to :representative
 
   validates :body,           presence: true
