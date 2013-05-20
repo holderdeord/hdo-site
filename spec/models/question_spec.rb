@@ -75,4 +75,31 @@ describe Question do
     q = Question.make(from_name: 'Ola Nordmann', show_sender: false)
     q.from_display_name.should == 'O. N.'
   end
+
+  it 'finds answered questions' do
+    q1 = Question.make!
+    q2 = Question.make!
+    q3 = Question.make!
+
+    [q1, q2, q3].map(&:approve!)
+
+    Answer.make!(question: q1, status: 'approved')
+    Answer.make!(question: q2, status: 'pending')
+
+    Question.answered.should == [q1, q2]
+
+    q1.should be_answered
+    q2.should be_answered
+    q3.should_not be_answered
+  end
+
+  it 'finds unanswered questions' do
+    q1 = Question.make!
+    q2 = Question.make!
+
+    [q1, q2].map(&:approve!)
+    Answer.make!(question: q1)
+
+    Question.unanswered.should == [q2]
+  end
 end

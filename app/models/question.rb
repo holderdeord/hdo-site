@@ -14,6 +14,9 @@ class Question < ActiveRecord::Base
   validates :from_email,     email: true
   validates :representative, presence: true # TODO: what representatives can be asked questions? (time)
 
+  scope :answered,   -> { joins(:answers) }
+  scope :unanswered, -> { where('(select count(*) from answers where question_id = questions.id) = 0') }
+
   def self.all_by_status
     grouped = all.group_by { |q| q.status }
     grouped.values.each do |qs|
@@ -25,6 +28,10 @@ class Question < ActiveRecord::Base
 
   def self.statuses
     workflow_spec.state_names.map &:to_s
+  end
+
+  def answered?
+    answers.any?
   end
 
   def teaser
