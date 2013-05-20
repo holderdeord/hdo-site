@@ -105,13 +105,30 @@ describe Admin::QuestionsController do
       question.reload.issues.should eq [issue]
     end
 
-    it "lets you remove issues" do
+    it "removes issues" do
       issue = Issue.make!
       question = Question.make!(issues: [issue])
 
-      put :update, id:question.id, question: {}
+      put :update, id: question.id, question: {}
 
       question.reload.issues.should be_empty
+    end
+
+    it 'sets question status' do
+      question = Question.make!(status: 'pending')
+
+      put :update, id: question, question: {status: 'approved' }
+
+      question.reload.should be_approved
+    end
+
+    it 'sets answer status' do
+      question = Question.make!(status: 'approved')
+      answer = question.create_answer!(representative: question.representative, body: 'foo', status: 'pending')
+
+      put :update, id: question, question: {answer: {status: 'approved'}}
+
+      question.reload.answer.should be_approved
     end
   end
 

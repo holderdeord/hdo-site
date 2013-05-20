@@ -27,6 +27,10 @@ nb:
        user:
          signed_in: 'Du er nå logget inn.'
          signed_out: 'Du er nå logget ut.'
+    representative_sessions:
+       representative:
+         signed_in: 'Du er nå logget inn.'
+         signed_out: 'Du er nå logget ut.'
     passwords:
       send_instructions: 'Du vil snart motta en epost med instruksjoner for å nullstille passordet ditt.'
       updated: 'Ditt passord er endret og du er nå innlogget.'

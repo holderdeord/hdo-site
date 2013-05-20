@@ -7,12 +7,15 @@ class Admin::QuestionsController < AdminController
   end
 
   def edit
+    @answer = @question.answer
   end
 
   def update
     issue_ids = params[:question][:issues].reject(&:blank?) if params[:question][:issues]
 
     @question.issues = Issue.find(issue_ids || [])
+    @question.status = params[:question][:status]
+    @question.answer.update_attributes(params[:question][:answer]) if params[:question][:answer]
 
     if @question.save
       redirect_to admin_questions_path, notice: t('app.questions.edit.updated')

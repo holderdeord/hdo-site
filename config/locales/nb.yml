@@ -251,8 +251,10 @@ nb:
         from_email: Epost
         created_at: Opprettet
         updated_at: Sist oppdatert
-        answers: Svar
+        answer: Svar
         representative: Representant
+        issues: Saker
+        show_sender: Vis fullt navn
       answer:
         body: Tekst
         representative: Representant

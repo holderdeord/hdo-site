@@ -9,7 +9,7 @@
 
   <aside>
     <span class="representative-district">
-    <%= link_to @representative.district.name, @representative.district %>
+      <%= link_to @representative.district.name, @representative.district %>
     </span>
     <span class="representative-party">
       <%= party && link_to(party.name, party, class: party.external_id) %>
@@ -37,9 +37,9 @@
 
 <div class="row-fluid">
   <% if AppConfig.answers_enabled %>
-    <h3>Spørsmål</h3>
-
     <div class="span6">
+      <h3>Spørsmål</h3>
+
       <%= render partial: 'question_list', locals: { representative: @representative, questions: @questions } %>
     </div>
   <% end %>

@@ -1,7 +1,7 @@
 class Answer < ActiveRecord::Base
   include Workflows::BaseQuestionAndAnswerWorkflow
 
-  attr_accessible :body, :representative_id, :representative, :question, :question_id
+  attr_accessible :body, :representative_id, :representative, :question, :question_id, :status
 
   belongs_to :question, touch: true
   belongs_to :representative
@@ -27,6 +27,10 @@ class Answer < ActiveRecord::Base
 
   def party
     representative.party_at created_at
+  end
+
+  def status_text
+    I18n.t "app.questions.status.#{status}"
   end
 
   private

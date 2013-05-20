@@ -5,7 +5,7 @@ describe Representative::AnswersController do
   let(:question)       { Question.make!(status: 'approved') }
   let(:user)           { User.make! }
   let(:representative) { Representative.make! }
-  let(:answer)         { question.answers.create!(valid_attributes) }
+  let(:answer)         { question.create_answer!(valid_attributes) }
 
   def valid_attributes
     { body: 'text', :representative_id => representative.id, question_id: question.id }
@@ -20,9 +20,8 @@ describe Representative::AnswersController do
   describe "POST create" do
     describe "with valid params" do
       it "creates a new Answer" do
-        expect {
-          post :create, default_params.merge(answer: valid_attributes)
-        }.to change(question.answers, :count).by(1)
+        post :create, default_params.merge(answer: valid_attributes)
+        question.reload.answer.should be_a(Answer)
       end
 
       it "assigns a newly created answer as @answer" do

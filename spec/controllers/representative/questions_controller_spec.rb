@@ -8,7 +8,7 @@ describe Representative::QuestionsController do
   describe "GET show" do
     it "assigns the question" do
       question = Question.make!(status: 'approved', representative: rep)
-      question.answers.create!(body: "answer", representative: rep)
+      question.create_answer!(body: "answer", representative: rep)
 
       get :show, {id: question}
       assigns(:question).should eq question

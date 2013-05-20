@@ -4,7 +4,7 @@
   <small><%= l @question.updated_at, format: :text_time %></small>
 </div>
 
-<div class="well">
+<div class="row-fluid">
   <h4>Skriv inn nytt svar:</h4>
   <%= form_for([:representative, @question, @answer]) do |f| %>
     <%= hidden_field_tag "answer[question_id]", @question.id %>
@@ -33,20 +33,18 @@
   <% end %>
 </div>
 
-<% @question.answers.each do |answer| %>
-  <div class="well">
-    <%= image_tag answer.representative.image.versions[:small], alt: answer.representative.full_name %>
-    <p class="pull-right">
-      <% case answer.status %>
-      <% when 'pending' %>
-        <span class="label label-warning">Avventer kontroll</span>
-      <% when 'rejected' %>
-        <span class="label label-important">Avvist</span>
-      <% when 'approved' %>
-        <span class="label label-success">Godkjent</span>
-      <% end %>
-      <small><%= l answer.updated_at, text_time: :format %></small>
-    </p>
-    <p><big><%= answer.body %></big></p>
-  </div>
-<% end %>
+<div class="well">
+  <%= image_tag @answer.representative.image.versions[:small], alt: @answer.representative.full_name %>
+  <p class="pull-right">
+    <% case @answer.status %>
+    <% when 'pending' %>
+      <span class="label label-warning">Avventer kontroll</span>
+    <% when 'rejected' %>
+      <span class="label label-important">Avvist</span>
+    <% when 'approved' %>
+      <span class="label label-success">Godkjent</span>
+    <% end %>
+
+  </p>
+  <p><big><%= @answer.body %></big></p>
+</div>

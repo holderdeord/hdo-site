@@ -14,7 +14,7 @@
         <tr>
           <td><%= question.from_name %></td>
           <td><%= l question.updated_at, format: :text_time %></td>
-          <td><%= link_to question.body, representative_question_path(question) %></td>
+          <td><%= link_to question.teaser, representative_question_path(question) %></td>
           <td></td>
         </tr>
       <% end %>

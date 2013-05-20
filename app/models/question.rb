@@ -5,16 +5,16 @@ class Question < ActiveRecord::Base
                   :issues, :show_sender
 
   belongs_to :representative
-  has_many :answers, dependent: :destroy
-
+  has_one    :answer, dependent: :destroy
   has_and_belongs_to_many :issues, uniq: true, order: "updated_at DESC"
 
   validates :body,           presence: true
   validates :from_name,      presence: true
   validates :from_email,     email: true
-  validates :representative, presence: true # TODO: what representatives can be asked questions? (time)
+  validates :representative, presence: true
+  validates :answer,         associated: true
 
-  scope :answered,   -> { joins(:answers) }
+  scope :answered,   -> { joins(:answer) }
   scope :unanswered, -> { where('(select count(*) from answers where question_id = questions.id) = 0') }
 
   def self.all_by_status
@@ -31,7 +31,7 @@ class Question < ActiveRecord::Base
   end
 
   def answered?
-    answers.any?
+    not answer.nil?
   end
 
   def teaser

@@ -36,6 +36,7 @@ Hdo::Application.routes.draw do
     end
 
     resources :users
+
     resources :representatives, only: [:index, :edit, :update] do
       get 'activate'       => 'representatives#activate',       as: :activate
       get 'reset_password' => 'representatives#reset_password', as: :reset_password
@@ -43,16 +44,11 @@ Hdo::Application.routes.draw do
 
     # S&S
     resources :questions, only: [:index, :edit, :update, :destroy] do
-      resources :answers, except: :show  do
-        member do
-          put 'approve' => 'answers#approve'
-          put 'reject'  => 'answers#reject'
-        end
-      end
-
       member do
-        put 'approve' => 'questions#approve'
-        put 'reject'  => 'questions#reject'
+        put 'answer/approve' => 'questions#approve_answer' # unused?
+        put 'answer/reject'  => 'questions#reject_answer'  # unused?
+        put 'approve'        => 'questions#approve'
+        put 'reject'         => 'questions#reject'
       end
     end
 
@@ -194,17 +190,12 @@ Hdo::Application.routes.draw do
   get 'search/autocomplete' => 'search#autocomplete', :as => :search_autocomplete
 
   #
-  # robots
-  #
-
-  get '/robots.txt' => 'home#robots'
-
-  #
   # various
   #
 
+  get 'robots.txt'    => 'home#robots'
   get 'info/revision' => 'home#revision'
-  get '/healthz'      => 'home#healthz' # cheap health check for varnish/others
+  get 'healthz'       => 'home#healthz' # cheap health check for varnish/others
 
   root to: 'home#index'
 end

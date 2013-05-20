@@ -5,9 +5,12 @@
     <% questions.each do |question| %>
       <li>
         <%= link_to question.teaser, question %>
+
         <p class="muted">
+          Av <strong><%= question.from_display_name %></strong>.
+
           <% if question.answered? %>
-            Besvart <%= l question.answers.first.created_at %>
+            Besvart <%= l question.answer.created_at, format: :text %>
           <% else %>
             Venter på svar.
           <% end %>

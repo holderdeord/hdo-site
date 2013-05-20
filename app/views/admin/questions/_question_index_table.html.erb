@@ -3,13 +3,11 @@
     <th><%= Question.human_attribute_name :representative %></th>
     <th><%= Question.human_attribute_name :body %></th>
     <th><%= Question.human_attribute_name :from_name %></th>
+    <th><%= Question.human_attribute_name :created_at %></th>
 
     <% unless status == 'pending' %>
-      <th><%= Question.human_attribute_name :answers %></th>
+      <th><%= Question.human_attribute_name :svar %></th>
     <% end %>
-
-    <th><%= Question.human_attribute_name :created_at %></th>
-    <th></th>
     <th></th>
     <th></th>
     <th></th>
@@ -18,18 +16,19 @@
 <% questions.each do |question| %>
   <tr>
     <td><%= link_to question.representative.display_name, question.representative %></td>
-    <td><%= link_to question.teaser, question %></td>
+
+    <td>
+      <% if status == 'pending' %>
+        <%= question.teaser %>
+      <% else %>
+        <%= link_to question.teaser, question, target: '_blank' %>
+      <% end %>
+    </td>
 
     <td>
       <p><%= question.from_name %></p>
       <small class="muted"><%= question.from_email %></small>
     </td>
-
-    <% unless status == 'pending' %>
-      <td>
-        <%= link_to "#{question.answers.size} #{Answer.model_name.human}", admin_question_answers_path(question) %>
-      </td>
-    <% end %>
 
     <td>
       <p><%= l question.created_at.localtime %></p>
@@ -39,11 +38,13 @@
       </small>
     </td>
 
-    <td><%= link_to t('app.edit'), edit_admin_question_path(question), method: :get, class: 'btn btn-small btn-primary' %></td>
+    <% unless status == 'pending' %>
+      <td><%= question.answer.nil? ? 'Ikke besvart' : t("app.questions.status.#{question.answer.status}") %></td>
+    <% end %>
+
+    <td><%= link_to t('app.edit'), edit_admin_question_path(question), class: 'btn btn-small btn-primary' %></td>
     <td><%= link_to t('app.questions.edit.approve'), approve_admin_question_path(question), method: :put, class: 'btn btn-small btn-success' %></td>
     <td><%= link_to t('app.questions.edit.reject'), reject_admin_question_path(question), method: :put, class: 'btn btn-small btn-warning' %></td>
-    <td><%= link_to t('app.destroy'), admin_question_path(question), method: :delete, class: 'btn btn-small btn-danger',
-                                                                     data: { confirm: t('app.issues.edit.confirm_destroy', title: question.teaser) } %></td>
   </tr>
 <% end %>
 </table>

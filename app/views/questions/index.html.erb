@@ -9,7 +9,7 @@
   <%= link_to question, class: "qa-list-item row-fluid" do %>
     <div class="span9"><%= question.body %></div>
     <div class="span2"><%= l question.updated_at.localtime, format: :text_time %></div>
-    <div class="span1"><%= question.answers.size %> <%= Answer.model_name.human(count: 2) %></div>
+    <div class="span1"><%= question.answered? ? 'Besvart' : 'Ubesvart' %> </div>
   <% end %>
 <% end %>
 </section>

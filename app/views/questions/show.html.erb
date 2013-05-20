@@ -20,25 +20,20 @@
 <div class="qa-answer-answers">
   <h4>Representantenes svar</h4>
 
-  <% if @question.answers.empty? %>
+  <% if @answer.nil? %>
     <p>Ingen svar foreløpig, klikk her for å få epost når spørsmålet blir besvart osv.</p>
   <% else %>
-    <% @question.answers.each do |answer| %>
-      <article class="qa-answer-answer">
-        <a class="qa-answer-representative" href="/representatives/<%= answer.representative.slug %>">
-          <%= image_tag answer.representative.image.versions[:small] %>
-        </a>
-        <h4 class="qa-answer-heading lead">
-          <a class="qa-answer-representative" href="/representatives/<%= answer.representative.slug %>">
-            <%= answer.representative.name %>
-          </a>
-          for
-          <a class="qa-answer-party <%= answer.representative.party_at(answer.created_at).try(:external_id) %>" href="/parties/<%= answer.representative.party_at(answer.created_at).try(:slug) %>">
-            <%= answer.representative.party_at(answer.created_at).try(:name) %>
-          </a>
-        </h4>
-        <p><%= answer.body %></p>
-      </article>
-    <% end %>
+    <article class="qa-answer-answer">
+      <%= link_to @answer.representative, class: 'qa-answer-representative' do %>
+        <%= image_tag @answer.representative.image.versions[:small] %>
+      <% end %>
+
+      <h4 class="qa-answer-heading lead">
+        <%= link_to @answer.representative.name, @answer.representative, class: 'qa-answer-representative' %>
+        for
+        <%= link_to @answer.party.try(:name), @answer.party, class: "qa-answer-party #{@answer.party.try :external_id}" %>
+      </h4>
+      <p><%= @answer.body %></p>
+    </article>
   <% end %>
 </div>

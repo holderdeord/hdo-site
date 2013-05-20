@@ -1,6 +1,85 @@
-<h1>Redigere spørsmål</h1>
+<h3>
+  Spørsmål
+  <small class="pull-right <%= alert_class_for_status(@question.status) %>"><%= @question.status_text %></small>
+</h3>
 
-<%= render 'form' %>
+<%= form_for(@question, url: admin_question_url(@question)) do |f| %>
+  <div class="row-fluid">
+    <dl class="span6">
+      <dt><%= Question.human_attribute_name :created_at %></dt>
+      <dd><%= l @question.created_at.localtime %></dd>
 
-<%= link_to 'Show', @admin_question %> |
-<%= link_to 'Back', admin_questions_path %>
+      <dt><%= Question.human_attribute_name :representative %></dt>
+      <dd><%= link_to @question.representative.name, @question.representative %></dd>
+
+      <dt><%= Question.human_attribute_name :from_name %></dt>
+      <dd><%= @question.from_name %></dd>
+
+      <dt><%= Question.human_attribute_name :from_email %></dt>
+      <dd><%= @question.from_email %></dd>
+
+      <dt><%= Question.human_attribute_name :show_sender %></dt>
+      <dd><%= @question.show_sender? ? t('app.yes') : t('app.no') %></dd>
+
+      <dt><%= Question.human_attribute_name :body %></dt>
+      <dd class="well"><%= @question.body %></dd>
+    </dl>
+
+    <dl class="span6">
+      <dt><%= Question.human_attribute_name :status %></dt>
+      <dd><%= f.select :status, question_status_options %></dd>
+
+      <dt><%= Question.human_attribute_name :issues %></dt>
+      <dd><%= f.select :issues, question_issue_options, {}, multiple: true, data: {placeholder: 'Velg saker'} %></dd>
+    </dl>
+  </div>
+
+  <hr class="soften">
+
+  <div class="row-fluid">
+    <h3>
+      Svar
+
+      <% if @answer %>
+        <small>fra <%= @answer.representative.full_name %></small>
+        <small class="pull-right <%= alert_class_for_status(@answer.status) %>"><%= @answer.status_text %></small>
+      <% end %>
+    </h3>
+
+    <div class="row-fluid">
+      <% if @answer.nil? %>
+        Ingen svar foreløπig.
+      <% else %>
+        <dl class="span6">
+          <dt><%= Answer.human_attribute_name :created_at %></dt>
+          <dd><%= l @answer.created_at.localtime %></dd>
+
+          <dt><%= Answer.human_attribute_name :body %></dt>
+          <dd class="well"><%= @answer.body %></dd>
+        </dl>
+
+        <dl class="span6">
+          <dt><%= Question.human_attribute_name :status %></dt>
+          <dd><%= select_tag 'question[answer][status]', answer_status_options %></dd>
+        </dl>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="form-actions">
+    <%= f.submit t('app.save'), class: 'btn btn-primary' %>
+    <%= link_to t('app.back'), admin_questions_path, class: 'btn' %>
+    <%= link_to t('app.destroy'), admin_question_path(@question),
+                                  method: :delete,
+                                  class: 'btn btn-danger',
+                                  data: { confirm: t('app.issues.edit.confirm_destroy', title: @question.teaser) } %>
+  </div>
+<% end %>
+
+<% content_for :document_ready do %>
+  <script type="text/javascript" charset="utf-8">
+    $(document).ready(function() {
+      $("#question_issues").chosen();
+    });
+  </script>
+<% end %>

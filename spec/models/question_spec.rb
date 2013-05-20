@@ -33,6 +33,17 @@ describe Question do
     q.should_not be_valid
   end
 
+  it 'is invalid if the answer is invalid' do
+    q.status = 'approved'
+    q.save!
+
+    q.create_answer!(representative: q.representative, body: 'foo')
+    q.should be_valid
+
+    q.answer.body = nil
+    q.should_not be_valid
+  end
+
   it 'has status scopes' do
     pending = Question.make!(status: 'pending')
     approved = Question.make!(status: 'approved')
@@ -55,11 +66,10 @@ describe Question do
     end
   end
 
-  it 'destroys dependent answers' do
+  it 'destroys dependent answer' do
     q.status = 'approved'
     q.save!
-
-    a = q.answers.create!(body: 'text', representative: Representative.make!)
+    a = q.create_answer!(representative: q.representative, body: 'text')
 
     q.destroy
 
