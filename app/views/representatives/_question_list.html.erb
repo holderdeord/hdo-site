@@ -1,0 +1,18 @@
+<% if questions.empty? %>
+  <%= representative.full_name %> har foreløpig ingen spørsmål.
+<% else %>
+  <ul>
+    <% questions.each do |question| %>
+      <li>
+        <%= link_to question.teaser, question %>
+        <p class="muted">
+          <% if question.answered? %>
+            Besvart <%= l question.answers.first.created_at %>
+          <% else %>
+            Venter på svar.
+          <% end %>
+        </p>
+      </li>
+    <% end %>
+  </ul>
+<% end %>

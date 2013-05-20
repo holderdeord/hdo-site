@@ -35,13 +35,26 @@
 
 <hr class="soften">
 
-<% if @representative.has_twitter? %>
-  <h3>
-    Twitter <%= link_to "(@#{@representative.twitter_id})", @representative.twitter_url, class: 'muted' %>
-  </h3>
+<div class="row-fluid">
+  <% if AppConfig.answers_enabled %>
+    <h3>Spørsmål</h3>
 
-  <%= twitter_widget_for(@representative.twitter_id) %>
-  <hr>
-<% end %>
+    <div class="span6">
+      <%= render partial: 'question_list', locals: { representative: @representative, questions: @questions } %>
+    </div>
+  <% end %>
+
+  <div class="span<%= AppConfig.answers_enabled ? '6' : '12' %>">
+    <% if @representative.has_twitter? %>
+      <h3>
+        Twitter <%= link_to "(@#{@representative.twitter_id})", @representative.twitter_url, class: 'muted' %>
+      </h3>
+
+      <%= twitter_widget_for(@representative.twitter_id) %>
+    <% end %>
+  </div>
+</div>
+
+<hr>
 
 <%= render partial: 'shared/issue_positions', locals: { issue_groups: @issue_groups } %>
