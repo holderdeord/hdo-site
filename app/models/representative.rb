@@ -74,6 +74,8 @@ class Representative < ActiveRecord::Base
   end
 
   def attempt_set_password(params)
+    return false unless params && params[:password]
+
     attrs = {
       password:              params[:password],
       password_confirmation: params[:password_confirmation]

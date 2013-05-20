@@ -109,6 +109,10 @@ Representative.blueprint :attending do
   attending { true }
 end
 
+Representative.blueprint :with_email do
+  email { "#{sn}@email.com" }
+end
+
 Representative.blueprint :confirmed do
   external_id  { sn.to_s }
   first_name   { "first-name-#{sn}" }
