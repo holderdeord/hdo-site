@@ -10,8 +10,9 @@
         </a>
 
         <%= render 'shared/global_search' if AppConfig.front_page_search_enabled %>
-        <%= render 'layouts/admin_navigation' %>
         <%= render 'layouts/navigation' %>
+        <%= render 'layouts/admin_navigation' if user_signed_in? %>
+        <%= render 'layouts/representative_navigation' if representative_signed_in? %>
 
         <% if content_for?(:jumbotron) %>
           <div class="jumbotron">

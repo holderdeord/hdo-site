@@ -1,4 +1,4 @@
 class RepresentativeController < ApplicationController
-  layout 'representative'
+  layout 'logged_in'
   before_filter :authenticate_representative!
 end
