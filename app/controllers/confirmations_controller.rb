@@ -15,7 +15,7 @@ class ConfirmationsController < Devise::ConfirmationsController
           @confirmable.errors.clear #so that we wont render :new
         end
       else
-        self.class.add_error_on(self, :email, :password_allready_set)
+        @confirmable.errors.add(:base, :password_already_set)
       end
     end
 
