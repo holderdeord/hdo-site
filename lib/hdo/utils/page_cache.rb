@@ -36,6 +36,10 @@ module Hdo
         @purger.execute
       end
 
+      def expire_question(question)
+        # TODO: expire_question
+      end
+
       class Purger
         attr_reader :urls
 

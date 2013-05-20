@@ -40,6 +40,8 @@ module Hdo
 
         actual.should == expected
       end
+
+      it 'should expire a question'
     end
   end
 end
