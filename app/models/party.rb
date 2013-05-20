@@ -26,10 +26,6 @@ class Party < ActiveRecord::Base
 
   attr_accessible :name
 
-  def self.cached
-    Rails.cache.fetch("party/all") { Party.all.to_a }
-  end
-
   def self.in_government
     today = Date.today
 

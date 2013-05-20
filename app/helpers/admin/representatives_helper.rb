@@ -1,11 +1,11 @@
 module Admin::RepresentativesHelper
   def row_class_for_admin_representative(rep)
     if rep.confirmed?
-      return "success"
+      "success"
     elsif rep.confirmation_sent_at
-      return "warning"
+      "warning"
     else
-      return "error"
+      "error"
     end
   end
 end

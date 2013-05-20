@@ -13,6 +13,13 @@ describe Admin::RepresentativesController do
   context 'logged in' do
     before(:each) { sign_in User.make!(role: 'superadmin') }
 
+    it 'can fetch the index' do
+      get :index
+
+      assigns(:representatives).should_not be_nil
+      response.should have_rendered(:index)
+    end
+
     it "can update twitter_id and email" do
       put :update, id: representative.to_param, representative: { twitter_id: 'foo' }
 

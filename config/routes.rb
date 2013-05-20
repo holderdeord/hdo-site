@@ -78,13 +78,7 @@ Hdo::Application.routes.draw do
   # categories
   #
 
-  resources :categories, only: [:index, :show] do
-    member do
-      get 'promises'
-      get 'promises/parties/:party'   => 'categories#promises'
-      get 'subcategories'             => 'categories#subcategories'
-    end
-  end
+  resources :categories, only: [:index, :show]
 
   #
   # parties, committees

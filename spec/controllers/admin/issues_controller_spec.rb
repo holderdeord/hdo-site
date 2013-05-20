@@ -96,6 +96,11 @@ describe Admin::IssuesController do
     response.should render_template(:new)
   end
 
+  it 'should perform a vote search' do
+    post :votes_search, id: issue, filter: 'selected-categories', keyword: 'skatt'
+    response.should have_rendered(:votes_search_result)
+  end
+
   context 'destroy' do
     it 'should destroy the issue' do
       delete :destroy, id: issue
