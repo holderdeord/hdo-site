@@ -179,7 +179,13 @@ describe Issue do
     i3 = Issue.make!(status: "published", frontpage: true)
     i4 = Issue.make!(status: "in_review", frontpage: false)
 
-    Issue.for_frontpage(3).should == [i3, i1, i2]
+    data = Issue.for_frontpage(3).map { |e| [e.status, e.frontpage?] }
+    
+    data.should == [
+      ['published', true],
+      ['published', false],
+      ['published', false]
+    ]
   end
 
   it 'has a #status_text' do

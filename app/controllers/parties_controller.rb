@@ -12,7 +12,7 @@ class PartiesController < ApplicationController
     @representatives = @representatives.sort_by { |e| e.has_image? ? 0 : 1 }
 
     @issue_groups = Issue.published.order(:title).grouped_by_position(@party)
-    @categories = Category.where(:main => true).includes(:children => :promises)
+    @categories = Category.where(main: true).includes(children: :promises)
   end
 
   def positions
