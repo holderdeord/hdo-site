@@ -162,7 +162,7 @@ module Hdo
       let(:admin) { User.make! role: 'admin' }
       let(:superadmin) { User.make! role: 'superadmin' }
 
-      it "can not change status if authorized as admin" do
+      it "can not publish if authorized as admin" do
         updater = IssueUpdater.new(issue, {issue: {status: 'published'}}, admin)
         expect {
           updater.update!
@@ -172,8 +172,15 @@ module Hdo
         issue.errors.should_not be_empty
       end
 
-      it "can change status if authorized as superadmin" do
+      it "can publish if authorized as superadmin" do
         updater = IssueUpdater.new(issue, {issue: {status: 'published'}}, superadmin)
+        updater.update.should be_true
+        issue.errors.should be_empty
+      end
+
+      it "can change other statuses if authorized as admin" do
+        updater = IssueUpdater.new(issue, {issue: {status: 'in_review'}}, admin)
+
         updater.update.should be_true
         issue.errors.should be_empty
       end
