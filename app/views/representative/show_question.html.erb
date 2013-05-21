@@ -7,11 +7,11 @@
 </div>
 
 <% if @question.answer %>
-  <%= render partial: 'answer' %>
+  <%= render partial: 'representative/questions/answer' %>
 <% end %>
 
 <% if @question.answer.nil? || @question.answer.rejected? %>
-  <%= render partial: 'form' %>
+  <%= render partial: 'representative/questions/form' %>
 <% end %>
 
 <%= render partial: 'questions/conduct_modal' %>
