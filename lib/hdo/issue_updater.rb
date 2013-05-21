@@ -71,10 +71,10 @@ module Hdo
 
       status_change = @issue.changes[:status]
 
-      if status_change
-        assert_status_change_allowed
+      if status_change && status_change.last == 'published'
+        assert_publish_allowed
 
-        if @issue.published_at.nil? && status_change.last == 'published'
+        if @issue.published_at.nil?
           @issue.published_at = Time.now
         end
       end
@@ -175,8 +175,8 @@ module Hdo
       @issue.save!
     end
 
-    def assert_status_change_allowed
-      raise Unauthorized unless issue_policy.change_status?
+    def assert_publish_allowed
+      raise Unauthorized unless issue_policy.publish?
     end
 
     def assert_editing_allowed

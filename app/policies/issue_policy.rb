@@ -30,7 +30,7 @@ class IssuePolicy
   end
   alias_method :create?, :edit?
 
-  def change_status?
+  def publish?
     edit? && user.superadmin?
   end
 
