@@ -40,7 +40,7 @@ Hdo::Application.routes.draw do
     end
 
     # S&S
-    resources :questions, only: [:index, :edit, :update, :destroy] do
+    resources :questions, only: [:index, :edit, :update] do
       member do
         put 'answer/approve' => 'questions#approve_answer' # unused?
         put 'answer/reject'  => 'questions#reject_answer'  # unused?

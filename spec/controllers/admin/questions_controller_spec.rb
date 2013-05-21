@@ -73,22 +73,6 @@ describe Admin::QuestionsController do
     end
   end
 
-  describe "DELETE destroy" do
-    it "destroys the requested question" do
-      question = Question.create! valid_attributes
-      expect {
-        delete :destroy, {:id => question.to_param}
-      }.to change(Question, :count).by(-1)
-    end
-
-    it "redirects to the questions list" do
-      question = Question.create! valid_attributes
-
-      delete :destroy, {:id => question.to_param}
-      response.should redirect_to(admin_questions_path)
-    end
-  end
-
   describe "PUT edit" do
     let(:question) { Question.make! }
 

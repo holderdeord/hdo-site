@@ -34,12 +34,6 @@ class Admin::QuestionsController < AdminController
     save_question
   end
 
-  def destroy
-    @question.destroy
-
-    redirect_to admin_questions_path
-  end
-
   private
 
   def fetch_question
