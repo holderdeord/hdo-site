@@ -30,9 +30,9 @@ describe Representative::AnswersController do
         assigns(:answer).should be_persisted
       end
 
-      it "redirects to the list of answers" do
+      it "redirects to the dashboard" do
         post :create, default_params.merge(answer: valid_attributes)
-        response.should redirect_to(representative_question_path(question))
+        response.should redirect_to(representative_root_path)
       end
     end
 

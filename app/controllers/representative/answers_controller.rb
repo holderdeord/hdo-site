@@ -1,7 +1,7 @@
 class Representative::AnswersController < RepresentativeController
   def create
-    question = Question.find(params[:answer][:question_id])
-    @answer = question.answer =  Answer.new(params[:answer])
+    question = Question.find(params[:question_id])
+    @answer = question.create_answer(params[:answer])
     if question.save
       redirect_to representative_root_path, notice: t('app.answers.edit.created')
     else
