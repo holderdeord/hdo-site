@@ -26,12 +26,12 @@
   </div>
 <% end %>
 
-<h2 class="lead tagblock-caption">
+<h2 class="lead top-issues-caption">
   Aktuelle saker
 </h2>
 
-<% @issues.each_slice(3) do |issues| %>
-  <section class="tagblock">
+<section class="top-issues">
+  <% @issues.each_slice(3) do |issues| %>
     <div class="row-fluid">
       <% issues.each do |issue| %>
         <article class="issue span4">
@@ -45,8 +45,9 @@
         </article>
       <% end %>
     </div>
-  </section>
-<% end %>
+  <% end %>
+</section>
+
 
 <h3 class="lead">Alle tema</h3>
 <% @all_tags.each_slice(4) do |tags| %>

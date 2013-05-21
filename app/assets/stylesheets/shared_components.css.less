@@ -65,14 +65,47 @@
     p {
       color: #555;
     }
-    figure {
-      margin: 0;
-      display: block;
-      height: 100px;
-      background-size: cover;
+    h4 {
+      font-weight: inherit;
+      margin-bottom: 0.25em;
+    }
+    .read-more {
+      color: @hdoPrimaryColor;
+    }
+    &:hover .read-more {
+      text-decoration: underline;
+      color: darken(@hdoPrimaryColor, 5%);
+    }
+  }
+}
+
+.top-issues-caption {
+  margin-bottom: 0;
+  border-bottom: 1px solid #eee;
+}
+
+.top-issues {
+  padding: 10px 0;
+  article {
+    word-break: break-word;
+    padding: 0 10px;
+    margin-bottom: 10px;
+    &:hover {
+      background-color: desaturate( lighten(@hdoPrimaryColor, 60%), 55%);
+    }
+    &:active {
+      background-color: desaturate( lighten(@hdoPrimaryColor, 55%), 55%);
+    }
+    > a {
+      color: inherit;
+      text-decoration: none;
+    }
+    p {
+      color: #555;
     }
     h4 {
       font-weight: inherit;
+      color: #000;
       margin-bottom: 0.25em;
     }
     .read-more {
