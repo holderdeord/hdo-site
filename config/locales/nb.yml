@@ -464,6 +464,10 @@ nb:
       moderate:
         approved: Svaret er godkjent.
         rejected: Svaret er avvist.
+      status:
+        approved: 'Godkjent'
+        pending:  'Avventer kontroll'
+        rejected: 'Avvist'
     external:
       urls:
         parliament_issue: "http://stortinget.no/no/Saker-og-publikasjoner/Saker/Sak/?p=%s"

@@ -1,50 +1,71 @@
+<%= link_to 'Tilbake til oversikt over spørsmål', '/representative' %>
+<h1>Svar på spørsmål</h1>
 <div class="well">
   <h3><%= @question.from_name %> spurte:</h3>
   <big><%= @question.body %></big>
-  <small><%= l @question.updated_at, format: :text_time %></small>
+  <small class="pull-right"><%= l @question.updated_at, format: :text_time %></small>
 </div>
 
-<div class="row-fluid">
-  <h4>Skriv inn nytt svar:</h4>
-  <%= form_for([:representative, @question, @answer]) do |f| %>
-    <%= hidden_field_tag "answer[question_id]", @question.id %>
-    <%= hidden_field_tag "answer[representative_id]", @question.representative_id %>
+<% if @question.answer %>
+  <div class="well">
+    <span class="pull-right">
+      <span class="<%= label_for_status(@question.answer.status) %>">
+        <%= t "app.answers.status.#{@question.answer.status}"%>
+      </span>
+    </span>
+    <h3>Du svarte:</h4>
+    <p><big><%= @question.answer.body %></big></p>
+    <small class="pull-right"><%= l @question.answer.updated_at, format: :text_time %></small>
+  </div>
 
-    <% if @answer.errors.any? %>
-      <div class="alert alert-error">
-        <ul>
-          <% @answer.errors.full_messages.each do |msg| %>
-            <li><%= msg %></li>
-          <% end %>
-        </ul>
+  <div class="row-fluid">
+    <%= explanation_for_status(@question.answer.status).html_safe %>
+  </div>
+<% end %>
+
+<% if @question.answer.nil? || @question.answer.rejected? %>
+  <div class="row-fluid">
+    <h4>Skriv inn svar:</h4>
+    <%= form_for([:representative, @question, @answer]) do |f| %>
+      <%= hidden_field_tag "answer[question_id]", @question.id %>
+      <%= hidden_field_tag "answer[representative_id]", @question.representative_id %>
+
+      <% if @answer.errors.any? %>
+        <div class="alert alert-error">
+          <ul>
+            <% @answer.errors.full_messages.each do |msg| %>
+              <li><%= msg %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+
+      <div class="control-group">
+        <div class="controls">
+          <%= f.text_area :body, class: 'span12 qa-form-body', rows:  5%>
+        </div>
+      </div>
+
+      <div class="actions">
+        <p class="muted">Før publisering blir svaret moderert i henhold til <a href="#" data-toggle="modal" data-target="#code-of-conduct">retningslinjene</a>.</p>
+        <%= f.submit class: 'btn btn-primary' %>
       </div>
     <% end %>
+  </div>
+<% end %>
 
-    <div class="control-group">
-      <label class="control-label"><%= Answer.human_attribute_name :body %></label>
-      <div class="controls">
-        <%= f.text_area :body %>
-      </div>
-    </div>
 
-    <div class="actions">
-      <%= f.submit class: 'btn btn-primary' %>
-    </div>
-  <% end %>
-</div>
+<div id="code-of-conduct" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="code-of-conduct" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3>Retningslinjer</h3>
+  </div>
 
-<div class="well">
-  <%= image_tag @answer.representative.image.versions[:small], alt: @answer.representative.full_name %>
-  <p class="pull-right">
-    <% case @answer.status %>
-    <% when 'pending' %>
-      <span class="label label-warning">Avventer kontroll</span>
-    <% when 'rejected' %>
-      <span class="label label-important">Avvist</span>
-    <% when 'approved' %>
-      <span class="label label-success">Godkjent</span>
-    <% end %>
+  <div class="modal-body">
+    <%= render partial: 'questions/conduct' %>
+  </div>
 
-  </p>
-  <p><big><%= @answer.body %></big></p>
+  <div class="modal-footer">
+     <button class="btn" data-dismiss="modal" aria-hidden="true">Skjønner!</button>
+   </div>
 </div>
