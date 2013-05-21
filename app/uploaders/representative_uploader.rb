@@ -31,8 +31,8 @@ class RepresentativeUploader < CarrierWave::Uploader::Base
   end
 
   version :avatar do
-    process scale: [64, 96]
-    process crop: [64, 64, 0, 0]
+    process scale: [256, 384]
+    process crop: [256, 256, 0, 0]
   end
 
   def filename
