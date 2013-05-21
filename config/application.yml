@@ -30,7 +30,7 @@ staging:
 production:
   <<: *defaults
   analytics_enabled: true
-  questions_enabled: false
+  questions_enabled: true
   answers_enabled: false
   representative_widget_enabled: false
   fastly_enabled: true
