@@ -10,11 +10,10 @@ Hdo::Application.routes.draw do
   end
 
   namespace :representative do
-    resources :questions, only: [:show] do
-      resources :answers, only: [:create, :destroy]
-    end
+    post 'questions/:question_id/answers' => 'representative#create_answer', as: :question_answers
+    get  'questions/:id'                  => 'representative#show_question', as: :question
 
-    root to: "dashboard#index"
+    root to: "representative#index"
   end
 
   #
