@@ -21,13 +21,33 @@ describe QuestionsController do
     it "assigns the requested question as @question" do
       question = Question.make!(status: 'approved')
       get :show, id: question.to_param
+
       assigns(:question).should eq(question)
+      assigns(:answer).should be_nil
     end
 
     it 'only finds approved questions' do
       expect {
         get :show, id: Question.make!(status: 'pending')
       }.to raise_error(ActiveRecord::RecordNotFound)
+    end
+
+    it 'assigns approved answers as @answer' do
+      question = Question.make!(status: 'approved')
+      question.create_answer!(body: 'foo', representative: question.representative, status: 'approved')
+
+      get :show, id: question
+
+      assigns(:answer).should == question.answer
+    end
+
+    it 'ignores non-approved answers' do
+      question = Question.make!(status: 'approved')
+      question.create_answer!(body: 'foo', representative: question.representative, status: 'pending')
+
+      get :show, id: question
+
+      assigns(:answer).should be_nil
     end
   end
 

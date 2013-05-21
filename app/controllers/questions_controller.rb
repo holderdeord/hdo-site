@@ -7,7 +7,7 @@ class QuestionsController < ApplicationController
 
   def show
     @question = Question.approved.find(params[:id])
-    @answer   = @question.answer
+    @answer   = @question.answer if @question.answer.try(:approved?)
   end
 
   def new
