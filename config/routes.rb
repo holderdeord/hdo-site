@@ -6,15 +6,13 @@ Hdo::Application.routes.draw do
 
   devise_for :representative, controllers: { confirmations: 'confirmations', sessions: 'representative_sessions' }
   devise_scope :representative do
-    put '/representative/confirmation' => 'confirmations#update', as: :update_representative_confirmation
+    put  'representative/confirmation'  => 'confirmations#update',         as: :update_representative_confirmation
   end
 
-  namespace :representative do
-    post 'questions/:question_id/answers' => 'representative#create_answer', as: :question_answers
-    get  'questions/:id'                  => 'representative#show_question', as: :question
+  get  'representative'                       => 'representative#index',         as: :representative_root
+  get  'representative/questions/:id'         => 'representative#show_question', as: :representative_question
+  post 'representative/questions/:id/answers' => 'representative#create_answer', as: :representative_question_answers
 
-    root to: "representative#index"
-  end
 
   #
   # user sign-in
