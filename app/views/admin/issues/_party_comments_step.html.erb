@@ -2,16 +2,20 @@
   <h3><%= PartyComment.model_name.human(count: 2) %></h3>
 
   <table class="table" id="party-comments-table">
+    <thead>
     <tr>
       <th><%= PartyComment.human_attribute_name :party %></th>
       <th><%= PartyComment.human_attribute_name :body %></th>
       <th></th>
       <th></th>
     </tr>
+    </thead>
 
-    <% @party_comments.each do |party_comment| %>
-    <%= render partial: "comment_row", locals: { party_comment_id: party_comment.id, party_comment_body: party_comment && party_comment.body, party_comment_party: party_comment.party.id, party_comment_id: party_comment.id, issue_id: party_comment.issue_id } %>
-    <% end %>
+    <tbody>
+      <% @party_comments.each do |party_comment| %>
+        <%= render partial: "comment_row", locals: { party_comment_id: party_comment.id, party_comment_body: party_comment && party_comment.body, party_comment_party: party_comment.party.id, party_comment_id: party_comment.id, issue_id: party_comment.issue_id } %>
+      <% end %>
+    </tbody>
   </table>
   <button class="btn" id="new-comment-button" type="submit">Ny</button>
 </div>
