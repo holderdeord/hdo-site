@@ -173,6 +173,15 @@ describe Issue do
     Issue.vote_ordered.should == [i3, i2, i1]
   end
 
+  it 'finds frontpage issues' do
+    i1 = Issue.make!(status: "published", frontpage: false)
+    i2 = Issue.make!(status: "published", frontpage: false)
+    i3 = Issue.make!(status: "published", frontpage: true)
+    i4 = Issue.make!(status: "in_review", frontpage: false)
+
+    Issue.for_frontpage(3).should == [i3, i1, i2]
+  end
+
   it 'has a #status_text' do
     i = Issue.make!
     i.status_text.should be_kind_of(String)

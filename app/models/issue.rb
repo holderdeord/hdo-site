@@ -62,9 +62,22 @@ class Issue < ActiveRecord::Base
   friendly_id :title, use: :slugged
 
   scope :vote_ordered, -> { includes(:votes).order('votes.time DESC') }
-  scope :published,    -> { where(:status => 'published') }
+  scope :published,    -> { where(status: 'published') }
   scope :latest,       ->(limit) { order(:updated_at).reverse_order.limit(limit) }
-  scope :random,       ->(limit) { order("random()").limit(limit) }
+  scope :random,       -> { order("random()") }
+
+  def self.for_frontpage(limit)
+    frontpage = where(frontpage: true).random.limit(limit)
+    count     = frontpage.count
+
+    if count >= limit
+      result = frontpage
+    else
+      result = frontpage.to_a + (published.where(frontpage: false).limit(limit - count)).random
+    end
+
+    result
+  end
 
   def self.grouped_by_position(entity)
     all.to_a.reject { |i| i.stats.score_for(entity).nil? }.

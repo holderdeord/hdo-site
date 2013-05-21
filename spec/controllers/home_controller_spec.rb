@@ -10,17 +10,14 @@ describe HomeController do
       issues << Issue.make!(status: 'published')
       issues << Issue.make!(status: 'published')
 
-      issues.each do |i|
-        i.tag_list << 'foo'
+      issues.first.tap do |i|
+        i.tag_list << "foo"
         i.save!
       end
 
       get :index
 
-      group = assigns(:tag_groups).first
-
-      group.first.name.should == "foo"
-      group.last.each do |issue|
+      assigns(:issues).each do |issue|
         issue.should be_published
       end
 
