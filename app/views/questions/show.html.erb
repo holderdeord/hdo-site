@@ -1,43 +1,52 @@
-<div class="page-header">
-  <h1>Spørsmål og svar</h1>
+<div class="qa-single">
 
-  <div class="pull-right">
-    <%= render partial: 'shared/social_sharing' %>
+  <div class="page-header">
+    <div class="pull-right"><%= render partial: 'shared/social_sharing' %></div>
+    <h1>Spørsmål til
+      <%= link_to @question.representative.full_name, @question.representative %>
+    </h1>
   </div>
-</div>
 
-<article class="qa-answer-question">
-  <h4>Spørsmål til
-    <%= link_to @question.representative.full_name, @question.representative %>
-    <small><%= @question.representative.party_at(@question.created_at).try(:name) %></small>
-  </h4>
-  <p class="qa-question-body"><%= @question.body %></p>
-  <aside class="muted">
-    <span>Av <%= @question.from_display_name %></span>
-    <span><%= l @question.created_at.localtime, format: :text_time %></span>
-  </aside>
-</article>
+  <article class="row-fluid question">
 
-<hr class="soften">
+    <div class="span2">
+      <img src="<%= gravatar_url(@question.from_email) %>" class='avatar'>
+    </div>
 
+    <div class="span8">
+      <div><%= @question.body %></div>
+      <aside class="muted">
+        <span>Av <%= @question.from_display_name %></span>
+        <span><%= l @question.created_at.localtime, format: :text_time %></span>
+      </aside>
+    </div>
 
-<div class="qa-answer-answers">
-  <h4>Representantenes svar</h4>
+   </article>
 
-  <% if @answer.nil? %>
-    <p>Ingen svar foreløpig, klikk her for å få epost når spørsmålet blir besvart osv.</p>
-  <% else %>
-    <article class="qa-answer-answer">
-      <%= link_to @answer.representative, class: 'qa-answer-representative' do %>
-        <%= image_tag @answer.representative.image.versions[:small] %>
-      <% end %>
+  <article class="row-fluid answer">
+    <% if @answer.nil? %>
+      <p>Ingen svar foreløpig, klikk her for å få epost når spørsmålet blir besvart osv.</p>
+    <% else %>
+      <article>
 
-      <h4 class="qa-answer-heading lead">
-        <%= link_to @answer.representative.name, @answer.representative, class: 'qa-answer-representative' %>
-        for
-        <%= link_to @answer.party.try(:name), @answer.party, class: "qa-answer-party #{@answer.party.try :external_id}" %>
-      </h4>
-      <p><%= @answer.body %></p>
-    </article>
-  <% end %>
+        <div class="span2">
+        <%= link_to @answer.representative do %>
+          <%= image_tag @answer.representative.image.versions[:avatar], class:'avatar' %>
+        <% end %>
+
+        </div>
+
+        <div class="span8">
+          <h4>
+            <%= link_to @answer.representative.name, @answer.representative, class: 'qa-answer-representative' %>
+            for
+            <%= link_to @answer.party.try(:name), @answer.party, class: "qa-answer-party #{@answer.party.try :external_id}" %>
+          </h4>
+          <p><%= @answer.body %></p>
+        </div>
+
+      </article>
+    <% end %>
+  </article>
+
 </div>
