@@ -53,7 +53,7 @@ class ApplicationController < ActionController::Base
   end
 
   def can_cache?
-    flash.empty? && current_user.nil?
+    flash.empty? && !signed_in?
   end
 
   def xhr_only(&blk)
