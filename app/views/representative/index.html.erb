@@ -2,6 +2,8 @@
   <h2>Hei <%= current_representative.name %>!</h2>
 
   <% if AppConfig.questions_enabled %>
+  <big>Dette er din personlige side på Holder de ord. Hit kommer spørsmål fra velgerne etter at de er blitt moderert. Trykk på spørsmålsteksten for å gi ditt svar. Lurer du på noe? Send oss en <a href="mailto:kontakt@holderdeord.no">epost</a>.</big>
+  <hr class="soften" />
   <table class="table table-condensed table-hover">
     <thead>
       <th>Fra</th>
@@ -15,7 +17,9 @@
           <td><%= question.from_name %></td>
           <td><%= l question.updated_at, format: :text_time %></td>
           <td><%= link_to question.teaser, representative_question_path(question) %></td>
-          <td></td>
+          <td>
+            <span class="<%= label_for(question) %> %>"><%= label_text_for(question)%></span>
+          </td>
         </tr>
       <% end %>
     </tbody>

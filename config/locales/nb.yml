@@ -465,9 +465,10 @@ nb:
         approved: Svaret er godkjent.
         rejected: Svaret er avvist.
       status:
-        approved: 'Godkjent'
-        pending:  'Avventer kontroll'
-        rejected: 'Avvist'
+        approved: 'Publisert'
+        pending:  'Avventer godkjenning'
+        rejected: 'Svar avvist'
+        no_answer: 'Ikke besvart'
       status_text:
         pending: 'Svaret ditt er sendt til godkjenning. Det vil bli publisert så snart vi har moderert det i henhold til våre <a href="#" data-toggle="modal" data-target="#code-of-conduct">retningslinjer</a>.'
         approved: 'Svaret ditt er publisert!'
