@@ -1,5 +1,8 @@
 class QuestionsController < ApplicationController
   before_filter { assert_feature(:questions) }
+  skip_before_filter :verify_authenticity_token, only: :create
+
+  hdo_caches_page :index, :new
 
   def index
     @questions = Question.approved
