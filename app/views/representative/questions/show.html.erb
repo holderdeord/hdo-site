@@ -1,5 +1,5 @@
-<%= link_to 'Tilbake til oversikt over spørsmål', '/representative' %>
-<h1>Svar på spørsmål</h1>
+<%= link_to t('app.answers.page.back'), '/representative' %>
+<h1><%= t 'app.answers.page.title' %></h1>
 <div class="well">
   <h3><%= @question.from_name %> spurte:</h3>
   <big><%= @question.body %></big>
@@ -13,7 +13,7 @@
         <%= t "app.answers.status.#{@question.answer.status}"%>
       </span>
     </span>
-    <h3>Du svarte:</h4>
+    <h3><%= t 'app.answers.page.your_answer' %></h4>
     <p><big><%= @question.answer.body %></big></p>
     <small class="pull-right"><%= l @question.answer.updated_at, format: :text_time %></small>
   </div>
@@ -47,7 +47,7 @@
       </div>
 
       <div class="actions">
-        <p class="muted">Før publisering blir svaret moderert i henhold til <a href="#" data-toggle="modal" data-target="#code-of-conduct">retningslinjene</a>.</p>
+        <p class="muted"><%= t('app.answers.page.before_publishing_info').html_safe %></p>
         <%= f.submit class: 'btn btn-primary' %>
       </div>
     <% end %>

@@ -468,6 +468,15 @@ nb:
         approved: 'Godkjent'
         pending:  'Avventer kontroll'
         rejected: 'Avvist'
+      status_text:
+        pending: 'Svaret ditt avventer kontroll. Det vil bli publisert så snart vi har moderert det i henhold til <a href="#" data-toggle="modal" data-target="#code-of-conduct">retningslinjene</a>.'
+        approved: 'Svaret ditt er publisert!'
+        rejected: 'Svaret ble ikke godkjent i henhold til <a href="#" data-toggle="modal" data-target="#code-of-conduct">retningslinjene</a>. Du kan skrive et nytt svar under.'
+      page:
+        back: Tilbake til oversikt over spørsmål
+        title: Svar på spørsmål
+        your_answer: 'Du svarte:'
+        before_publishing_info: Før publisering blir svaret moderert i henhold til <a href="#" data-toggle="modal" data-target="#code-of-conduct">retningslinjene</a>.
     external:
       urls:
         parliament_issue: "http://stortinget.no/no/Saker-og-publikasjoner/Saker/Sak/?p=%s"
