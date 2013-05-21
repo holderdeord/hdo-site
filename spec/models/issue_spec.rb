@@ -142,17 +142,6 @@ describe Issue do
     Issue.find(valid_issue.id).stats # 2 - cached
   end
 
-  it 'deletes the cached stats on save' do
-    Hdo::Stats::VoteScorer.should_receive(:new).twice
-
-    Issue.find(valid_issue.id).stats # 1 - not cached
-    Issue.find(valid_issue.id).stats # 2 - cached
-
-    valid_issue.vote_connections.create! :vote => Vote.make!, :matches => true
-
-    Issue.find(valid_issue.id).stats # 3 - no longer cached
-  end
-
   it 'correctly downcases a title with non-ASCII characters' do
     Issue.make(:title => "Øke ditt og datt").downcased_title.should == "øke ditt og datt"
   end
