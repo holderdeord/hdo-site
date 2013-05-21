@@ -47,14 +47,8 @@ class Issue < ActiveRecord::Base
   belongs_to :editor, class_name: 'User'
 
   has_many :party_comments, dependent: :destroy
-
-  has_many :vote_connections, dependent:     :destroy,
-                              before_add:    :clear_stats_cache,
-                              before_remove: :clear_stats_cache
-
-  has_many :promise_connections, dependent:     :destroy,
-                                 before_add:    :clear_stats_cache,
-                                 before_remove: :clear_stats_cache
+  has_many :vote_connections, dependent: :destroy
+  has_many :promise_connections, dependent: :destroy
 
   has_many :votes,    through: :vote_connections,    order: :time
   has_many :promises, through: :promise_connections
