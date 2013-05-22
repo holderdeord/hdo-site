@@ -1,20 +1,57 @@
 <div class="row-fluid">
-  <% [:kept, :partially_kept, :broken, :no_promises].each do |key| %>
-  <div class="span3">
+  <% [:kept].each do |key| %>
+  <div class="span6">
     <h4 class="lead"><%= t("app.promises.scores.caption.#{key}").capitalize %></h4>
-    <ul class="issue-list">
+    <ol class="toplist <%= key %>">
       <% Array(@issue_groups[key]).each do |issue| %>
         <li>
-          <%= link_to issue do %>
+          <%= link_to issue, class:"issue" do %>
             <% score = issue.stats.score_for(@party); vote_key = issue.stats.key_for(score) %>
-            <span class="issue-<%= vote_key %>"><%= t "app.#{vote_key}" %></span>
-            <span class="issue-list-text">
-              <%= t 'app.lang.infinitive_particle' %>  <%= issue.downcased_title %>.
-            </span>
+            <span class="issue-title"><%= issue.downcased_title %>.</span>
+            <span class="issue-vote issue-<%= vote_key %>"><%= @party.name %> stemte <%= t "app.#{vote_key}" %></span>
           <% end %>
         </li>
       <% end %>
-    </ul>
+    </ol>
+  </div>
+  <% end %>
+
+
+  <div class="span6">
+    <% [:broken, :partially_kept].each do |key| %>
+      <h4 class="lead"><%= t("app.promises.scores.caption.#{key}").capitalize %></h4>
+      <ol class="toplist <%= key %>">
+        <% Array(@issue_groups[key]).each do |issue| %>
+        <li>
+          <%= link_to issue, class:"issue" do %>
+            <% score = issue.stats.score_for(@party); vote_key = issue.stats.key_for(score) %>
+            <span class="issue-title"><%= issue.downcased_title %>.</span>
+            <span class="issue-vote issue-<%= vote_key %>"><%= @party.name %> stemte <%= t "app.#{vote_key}" %></span>
+          <% end %>
+        </li>
+        <% end %>
+      </ol>
+    <% end %>
+  </div>
+</div>
+
+
+
+<div class="row-fluid">
+  <% [:no_promises].each do |key| %>
+  <div class="span12">
+    <h4 class="lead"><%= t("app.promises.scores.caption.#{key}").capitalize %></h4>
+    <ol class="toplist <%= key %>">
+      <% Array(@issue_groups[key]).each do |issue| %>
+        <li>
+          <%= link_to issue, class:"issue" do %>
+            <% score = issue.stats.score_for(@party); vote_key = issue.stats.key_for(score) %>
+            <span class="issue-title"><%= issue.downcased_title %>.</span>
+            <span class="issue-vote issue-<%= vote_key %>"><%= @party.name %> stemte <%= t "app.#{vote_key}" %></span>
+          <% end %>
+        </li>
+      <% end %>
+    </ol>
   </div>
   <% end %>
 </div>
