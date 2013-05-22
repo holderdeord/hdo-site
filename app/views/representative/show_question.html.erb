@@ -1,17 +1,48 @@
-<%= link_to t('app.answers.page.back'), representative_root_path %>
-<h1><%= t 'app.answers.page.title' %></h1>
-<div class="well">
-  <h3><%= @question.from_name %> spurte:</h3>
-  <big><%= @question.body %></big>
-  <small class="pull-right"><%= l @question.updated_at, format: :text_time %></small>
+<small>&larr; <%= link_to t('app.answers.page.back'), representative_root_path %></small>
+
+<div class="page-header">
+  <h1><%= t 'app.answers.page.title' %></h1>
 </div>
 
-<% if @question.answer %>
-  <%= render partial: 'representative/questions/answer' %>
-<% end %>
+<div class=""></div>
 
-<% if @question.answer.nil? || @question.answer.rejected? %>
-  <%= render partial: 'representative/questions/form' %>
-<% end %>
+<div class="row-fluid">
+  <div class="span9">
+    <p><%= @question.body %></p>
+
+    <p class="muted">
+      fra <strong><%= @question.from_name %> </strong>
+      for <%= distance_of_time_in_words @question.created_at, Time.now %> siden
+    </p>
+  </div>
+
+  <div class="span3">
+  </div>
+</div>
+
+<hr class="soften">
+
+<h3><%= t 'app.answers.page.your_answer' %></h3>
+
+
+<div class="row-fluid">
+  <div class="span9">
+    <% if @question.answer %>
+      <%= render partial: 'representative/questions/answer' %>
+    <% end %>
+
+    <% if @question.answer.nil? || @question.answer.rejected? %>
+      <%= render partial: 'representative/questions/form' %>
+    <% end %>
+  </div>
+
+  <div class="span3">
+    <% if @question.answer %>
+      <p class="alert alert-<%= class_for_status @question.answer.status %>">
+        <%= explanation_for_status(@question.answer.status).html_safe %>
+      </p>
+    <% end %>
+  </div>
+</div>
 
 <%= render partial: 'questions/conduct_modal' %>

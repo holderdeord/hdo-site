@@ -1,17 +1,15 @@
 module AnswersHelper
-  def label_for_status(status)
-    klass = 'label '
-
+  def class_for_status(status)
     case status
     when 'approved'
-      klass << 'label-success'
+      'success'
     when 'pending'
-      klass << 'label-warning'
+      'warning'
     when 'rejected'
-      klass << 'label-important'
+      'important'
+    else
+      'info'
     end
-
-    klass
   end
 
   def explanation_for_status(status)

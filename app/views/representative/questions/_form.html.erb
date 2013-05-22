@@ -1,28 +1,25 @@
-<div class="row-fluid">
-  <h4>Skriv inn svar:</h4>
-  <%= form_for([:representative, @question, @answer]) do |f| %>
-    <%= hidden_field_tag "answer[question_id]", @question.id %>
-    <%= hidden_field_tag "answer[representative_id]", @question.representative_id %>
+<%= form_for([:representative, @question, @answer]) do |f| %>
+  <%= hidden_field_tag "answer[question_id]", @question.id %>
+  <%= hidden_field_tag "answer[representative_id]", @question.representative_id %>
 
-    <% if @answer.errors.any? %>
-      <div class="alert alert-error">
-        <ul>
-          <% @answer.errors.full_messages.each do |msg| %>
-            <li><%= msg %></li>
-          <% end %>
-        </ul>
-      </div>
-    <% end %>
-
-    <div class="control-group">
-      <div class="controls">
-        <%= f.text_area :body, class: 'span12 qa-form-body', rows:  5%>
-      </div>
-    </div>
-
-    <div class="actions">
-      <p class="muted"><%= t('app.answers.page.before_publishing_info').html_safe %></p>
-      <%= f.submit class: 'btn btn-primary' %>
+  <% if @answer.errors.any? %>
+    <div class="alert alert-error">
+      <ul>
+        <% @answer.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
     </div>
   <% end %>
-</div>
+
+  <div class="control-group">
+    <div class="controls">
+      <%= f.text_area :body, class: 'span12 qa-form-body', rows:  5%>
+    </div>
+  </div>
+
+  <div class="actions">
+    <p class="muted"><%= t('app.answers.page.before_publishing_info').html_safe %></p>
+    <%= f.submit 'Send', class: 'btn btn-primary' %>
+  </div>
+<% end %>

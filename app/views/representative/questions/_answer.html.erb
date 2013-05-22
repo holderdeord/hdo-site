@@ -1,14 +1,6 @@
-<div class="well">
-  <span class="pull-right">
-    <span class="<%= label_for_status(@question.answer.status) %>">
-      <%= t "app.answers.status.#{@question.answer.status}"%>
-    </span>
-  </span>
-  <h3><%= t 'app.answers.page.your_answer' %></h4>
-  <p><big><%= @question.answer.body %></big></p>
-  <small class="pull-right"><%= l @question.answer.updated_at, format: :text_time %></small>
-</div>
-
-<div class="row-fluid">
-  <%= explanation_for_status(@question.answer.status).html_safe %>
-</div>
+<p><%= @question.answer.body %></p>
+<p class="muted">
+  Oppdatert for
+  <%= distance_of_time_in_words @question.answer.updated_at, Time.now %>
+  siden
+</p>

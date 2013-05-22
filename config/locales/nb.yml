@@ -476,7 +476,7 @@ nb:
       page:
         back: Tilbake til oversikt over spørsmål
         title: Svar på spørsmål
-        your_answer: 'Du svarte:'
+        your_answer: Ditt svar
         before_publishing_info: 'Før publisering blir svaret moderert i henhold til <a href="#" data-toggle="modal" data-target="#code-of-conduct">retningslinjene</a>.'
     external:
       urls:
