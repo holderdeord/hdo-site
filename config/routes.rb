@@ -58,6 +58,10 @@ Hdo::Application.routes.draw do
   #
 
   resources :issues, only: [:index, :show, :votes] do
+    collection do
+      get 'ids' => 'issues#ids'
+    end
+
     member do
       get 'votes'      => 'issues#votes'
       get 'widget'     => 'widgets#issue'

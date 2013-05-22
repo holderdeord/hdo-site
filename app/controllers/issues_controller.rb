@@ -1,13 +1,17 @@
 # encoding: UTF-8
 
 class IssuesController < ApplicationController
-  before_filter :fetch_issue, except: [:index, :admin_info]
+  before_filter :fetch_issue, except: [:index, :admin_info, :ids]
 
   hdo_caches_page :index, :show, :votes
 
   def index
     @groups = Issue.published.in_tag_groups
     @groups = @groups.sort_by { |t, _| t.name }
+  end
+
+  def ids
+    @issues = Issue.published.order(:title)
   end
 
   def show

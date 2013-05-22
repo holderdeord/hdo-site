@@ -12,6 +12,16 @@ describe IssuesController do
     assigns(:issue).should be_decorated_with(IssueDecorator)
   end
 
+  it 'should get :ids for published issues' do
+    issue.should_not be_published
+    published = Issue.make!(status: 'published')
+
+    get :ids
+
+    assigns(:issues).should == [published]
+    response.should have_rendered(:ids)
+  end
+
   it 'should get :votes if the issue is published' do
     issue.update_attributes! status: 'published'
 
