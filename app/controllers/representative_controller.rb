@@ -20,7 +20,7 @@ class RepresentativeController < ApplicationController
     @counts = [
       ['spørsmål venter på svar', @unanswered_questions.size],
       ['svar til godkjenning', @pending_answers.size],
-      ['publiserte svar', @published_answers.size]
+      ['svar publisert', @published_answers.size]
     ]
 
     @questions = questions.sort_by { |q| question_sorter q }
