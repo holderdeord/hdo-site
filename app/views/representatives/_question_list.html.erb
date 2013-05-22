@@ -10,7 +10,7 @@
           Av <strong><%= question.from_display_name %></strong>.
 
           <% if question.answered? %>
-            Besvart <%= l question.answer.created_at, format: :text %>
+            Besvart for <%= distance_of_time_in_words question.answer.created_at, Time.now %> siden.
           <% else %>
             Venter på svar.
           <% end %>
