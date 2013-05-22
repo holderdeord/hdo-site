@@ -3,8 +3,27 @@ class RepresentativeController < ApplicationController
   before_filter :authenticate_representative!
 
   def index
-    @questions = Question.approved.where("representative_id = ?", current_representative)
-    @questions.sort_by! { |q| question_sorter q }
+    questions = current_representative.questions.approved
+    answers   = current_representative.answers
+
+    @unanswered_questions = questions.unanswered
+    @published_answers    = questions.answered.where('answers.status' => 'approved')
+    @pending_answers      = answers.pending
+    @rejected_answers     = answers.rejected
+
+    # TODO:
+    #
+    # - plural if size == 1
+    # - i18n
+    # - specs
+
+    @counts = [
+      ['spørsmål venter på svar', @unanswered_questions.size],
+      ['svar til godkjenning', @pending_answers.size],
+      ['publiserte svar', @published_answers.size]
+    ]
+
+    @questions = questions.sort_by { |q| question_sorter q }
   end
 
   def show_question
