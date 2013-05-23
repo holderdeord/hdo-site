@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::Base
   include Pundit
+  rescue_from Pundit::NotAuthorizedError, with: :policy_not_allowed
   protect_from_forgery
 
   def self.hdo_caches_page(*actions)
@@ -80,6 +81,11 @@ class ApplicationController < ActionController::Base
 
   def render_not_found
     render file: 'public/404', formats: [:html], layout: false, status: 404
+  end
+
+  def policy_not_allowed
+    session[:return_to] ||= request.referer
+    redirect_to session[:return_to], alert: t('app.errors.unauthorized')
   end
 
 end
