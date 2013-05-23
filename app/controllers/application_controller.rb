@@ -1,6 +1,7 @@
 class ApplicationController < ActionController::Base
   include Pundit
   protect_from_forgery
+  rescue_from Pundit::NotAuthorizedError, with: :policy_not_allowed
 
   def self.hdo_caches_page(*actions)
     before_filter :set_default_expiry, only: actions
@@ -82,4 +83,7 @@ class ApplicationController < ActionController::Base
     render file: 'public/404', formats: [:html], layout: false, status: 404
   end
 
+  def policy_not_allowed
+    render file: 'public/422', formats: [:html], layout: false, status: 401
+  end
 end

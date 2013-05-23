@@ -1,6 +1,7 @@
 class Admin::QuestionsController < AdminController
   before_filter { assert_feature(:questions) }
   before_filter :fetch_question, except: :index
+  before_filter :assert_moderator, except: :index
 
   def index
     @questions_by_status = Question.all_by_status
@@ -46,5 +47,9 @@ class Admin::QuestionsController < AdminController
     else
       redirect_to admin_questions_path, alert: @question.errors.full_messages.to_sentence
     end
+  end
+
+  def assert_moderator
+    authorize @question, :moderate?
   end
 end
