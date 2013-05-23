@@ -1,6 +1,6 @@
 class ApplicationController < ActionController::Base
-  protect_from_forgery
   include Pundit
+  protect_from_forgery
   rescue_from Pundit::NotAuthorizedError, with: :policy_not_allowed
 
   def self.hdo_caches_page(*actions)

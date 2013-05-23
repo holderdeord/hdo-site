@@ -3,7 +3,6 @@ class QuestionsController < ApplicationController
   before_filter :redirect_unless_answers_enabled, only: [:index, :show]
   skip_before_filter :verify_authenticity_token, only: :create
 
-
   hdo_caches_page :index, :new
 
   def index
