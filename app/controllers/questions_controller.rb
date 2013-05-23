@@ -1,6 +1,8 @@
 class QuestionsController < ApplicationController
   before_filter { assert_feature(:questions) }
+  before_filter :redirect_unless_answers_enabled, only: [:index, :show]
   skip_before_filter :verify_authenticity_token, only: :create
+
 
   hdo_caches_page :index, :new
 
@@ -41,5 +43,9 @@ class QuestionsController < ApplicationController
     @districts = Rails.cache.fetch('question-form/districts', expires_in: 1.day) do
       District.order(:name).to_a
     end
+  end
+
+  def redirect_unless_answers_enabled
+    redirect_to new_question_path unless AppConfig["answers_enabled"]
   end
 end
