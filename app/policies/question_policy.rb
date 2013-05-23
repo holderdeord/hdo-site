@@ -6,7 +6,7 @@ class QuestionPolicy
   end
 
   def moderate?
-    user.role == 'superadmin'
+    user.superadmin?
   end
 
 end
