@@ -1,6 +1,7 @@
 # encoding: UTF-8
 
 class IssuesController < ApplicationController
+  include Pundit
   before_filter :fetch_issue, except: [:index, :admin_info, :ids]
 
   hdo_caches_page :index, :show, :votes
