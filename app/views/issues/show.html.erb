@@ -1,5 +1,6 @@
 <% page_title "#{@issue.title} - #{t('app.issues.title')} - #{t('app.title')}" %>
 <% page_desc @issue.description %>
+<% page_type 'article' %>
 
 <div id="admin-info"></div>
 <%= content_for :document_ready do %>
@@ -51,7 +52,6 @@ $(document).ready(function() { $.ajax({
       </div>
 
       <figcaption class="muted">
-
         <%= render partial: 'shared/social_sharing' %>
         <p><%= @issue.explanation %></p>
       </figcaption>

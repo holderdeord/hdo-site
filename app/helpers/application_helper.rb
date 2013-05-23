@@ -64,6 +64,11 @@ module ApplicationHelper
     "//gravatar.com/avatar/#{Digest::MD5.hexdigest email}?s=300&d=#{default}"
   end
 
+  def page_type(page_type = nil)
+    @page_type = page_type if page_type
+    @page_type || 'website'
+  end
+
   def page_title(page_title = nil)
     if page_title
       @page_title = page_title
