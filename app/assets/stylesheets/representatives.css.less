@@ -96,6 +96,10 @@
     text-align: center;
     h1 {
       font-size: 3.2em;
+      font-weight: inherit;
+    }
+    &.attention {
+      font-weight: bold;
     }
   }
   .question {
@@ -104,5 +108,17 @@
   }
   table {
     table-layout: fixed;
+    font-size: 0.9em;
+    th, td {
+      padding-top: 10px;
+      padding-bottom: 10px;
+    }
+    .dimmed {
+      background-color: #fafafa;
+      color: #999;
+      .muted {
+        color: #ccc;
+      }
+    }
   }
 }

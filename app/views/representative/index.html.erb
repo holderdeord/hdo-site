@@ -13,7 +13,7 @@
 
     <div class="row-fluid">
       <% @counts.each do |caption, count, muted| %>
-        <div class="stat <%= 'muted' if muted %> span<%= 12 / @counts.size %>">
+        <div class="stat <%= 'attention' unless muted %> span<%= 12 / @counts.size %>">
           <h1><%= count %></h1>
           <%= caption %>
         </div>
@@ -24,7 +24,7 @@
 
     <h3>Dine spørsmål</h3>
 
-    <table class="table table-condensed table-hover">
+    <table class="table table-condensed">
       <thead>
         <th>Fra</th>
         <th>Spørsmål</th>
@@ -33,10 +33,10 @@
 
       <tbody>
         <% @questions.each do |question| %>
-          <tr class="<%= 'muted' if question.answer %>">
+          <tr class="<%= 'dimmed' if question.answer %>">
             <td>
-              <%= question.from_name %>
-              <p class="muted"><%= distance_of_time_in_words question.updated_at, Time.now %> siden</p>
+              <div><%= question.from_name %></div>
+              <div class="muted"><%= distance_of_time_in_words question.updated_at, Time.now %> siden</div>
             </td>
             <td><%= question.teaser %></td>
             <td>
@@ -45,7 +45,7 @@
               <% else %>
                 <%= link_to 'Les', representative_question_path(question), class: 'btn pull-right' %>
               <% end %>
-              <p><span class="<%= label_for(question) %> %>"><%= label_text_for(question)%></span></p>
+              <div><%= label_text_for(question)%></div>
             </td>
           </tr>
         <% end %>
