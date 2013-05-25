@@ -1,6 +1,6 @@
 <h2>Endre passord</h2>
 
-<%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put }) do |f| %>
+<%= form_for(resource, :as => resource_name, :url => representative_registration_url, :html => { :method => :put }) do |f| %>
   <%= devise_error_messages! %>
 
   <div><%= f.label 'Nåværende passord' %>
@@ -11,7 +11,6 @@
 
   <div><%= f.label 'Gjenta nytt passord' %>
   <%= f.password_field :password_confirmation %></div>
-
 
   <div><%= f.submit "Endre" %></div>
   <%= link_to 'Tilbake', representative_root_path %>

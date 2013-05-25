@@ -4,23 +4,22 @@ Hdo::Application.routes.draw do
   # representative sign-in
   #
 
-  devise_for :representative, controllers: { confirmations: 'confirmations', sessions: 'representative_sessions' }
+  devise_for :representative, controllers: { confirmations: 'confirmations', sessions: 'sessions' }
   devise_scope :representative do
-    put  'representative/confirmation'          => 'confirmations#update',         as: :update_representative_confirmation
-    get  'representative/edit'                  => 'devise/registrations#edit',    as: :edit_representative_registration
-    put  'representative'                       => 'devise/registrations#update',  as: :representative_registration
+    put  'representative/confirmation' => 'confirmations#update',         as: :update_representative_confirmation
+    get  'representative/edit'         => 'devise/registrations#edit',    as: :edit_representative_registration
+    put  'representative'              => 'devise/registrations#update',  as: :representative_registration
   end
 
   get  'representative'                       => 'representative#index',         as: :representative_root
   get  'representative/questions/:id'         => 'representative#show_question', as: :representative_question
   post 'representative/questions/:id/answers' => 'representative#create_answer', as: :representative_question_answers
 
-
   #
   # user sign-in
   #
 
-  devise_for :users, controllers: { sessions: 'user_sessions' }
+  devise_for :users, controllers: { sessions: 'sessions' }
 
   #
   # admin
@@ -164,7 +163,11 @@ Hdo::Application.routes.draw do
   # Q & A
   #
 
-  resources :questions
+  resources :questions, only: [:index, :create, :show, :new] do
+    collection do
+      get 'conduct'
+    end
+  end
 
   #
   # norwegian aliases - don't overdo this without a proper solution
