@@ -212,7 +212,6 @@ nb:
       user:
         name: "Navn"
         email: "E-post"
-        email_or_id: "E-post eller stortinget-id"
         password: "Passord"
         password_confirmation: "Bekreft passord"
         new: "Ny bruker"

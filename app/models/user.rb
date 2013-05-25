@@ -7,7 +7,6 @@ class User < ActiveRecord::Base
          :rememberable,
          :trackable,
          :validatable
-  attr_accessor :login
 
   attr_accessible :email, :password, :password_confirmation, :remember_me, :name, :role, :description, :active, :board, :title
 
@@ -34,15 +33,6 @@ class User < ActiveRecord::Base
       0
     else
       issues.size * 100 / Issue.count
-    end
-  end
-
-  def self.find_first_by_auth_conditions(warden_conditions)
-    conditions = warden_conditions.dup
-    if login = conditions.delete(:login)
-      where(conditions).where(["lower(email) = :value", { :value => login.downcase }]).first
-    else
-      where(conditions).first
     end
   end
 end

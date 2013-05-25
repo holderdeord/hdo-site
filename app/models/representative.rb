@@ -198,13 +198,4 @@ class Representative < ActiveRecord::Base
   def password_required?() false end
   def confirmation_required?() false end
   def postpone_email_change?() false end
-
-  def self.find_first_by_auth_conditions(warden_conditions)
-    conditions = warden_conditions.dup
-    if login = conditions.delete(:login)
-      where(conditions).where(["lower(external_id) = :value OR lower(email) = :value", { :value => login.downcase }]).first
-    else
-      where(conditions).first
-    end
-  end
 end

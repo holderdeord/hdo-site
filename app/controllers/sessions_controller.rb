@@ -19,7 +19,7 @@ class SessionsController < Devise::SessionsController
   private
 
   def hdo_resource_name
-    @resource_name ||= if User.find_by_email(params[resource_name][:login])
+    @resource_name ||= if User.find_by_email(params[resource_name][:email])
       :user
     else
       :representative
