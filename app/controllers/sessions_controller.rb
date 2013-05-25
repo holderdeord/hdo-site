@@ -1,5 +1,6 @@
 class SessionsController < Devise::SessionsController
   hdo_force_ssl
+  before_filter :enforce_devise_user_scope, only: :new
 
   def create
     setup_params_for_hdo_resource
@@ -28,5 +29,9 @@ class SessionsController < Devise::SessionsController
 
   def setup_params_for_hdo_resource
     params[hdo_resource_name] = params.delete(resource_name)
+  end
+
+  def enforce_devise_user_scope
+    redirect_to new_user_session_path unless request.path == new_user_session_path
   end
 end
