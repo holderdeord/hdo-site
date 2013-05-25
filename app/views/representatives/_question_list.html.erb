@@ -1,7 +1,7 @@
 <% if questions.empty? %>
   <%= representative.full_name %> har foreløpig ingen spørsmål.
 <% else %>
-  <ul>
+  <ul class="representative-questions">
     <% questions.each do |question| %>
       <li>
         <%= link_to question.teaser, question %>

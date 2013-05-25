@@ -46,6 +46,29 @@
   }
 }
 
+.representative-questions {
+  list-style: none;
+  margin: 0;
+  li {
+    margin: 0 0 20px 0;
+    a {
+      margin-top: 10px;
+      padding: 5px 10px 0 10px;
+      color: inherit;
+      display: block;
+        &:hover {
+          background-color: #eee;
+          text-decoration: none;
+        }
+    }
+    p {
+      padding: 0 10px 5px 10px;
+      font-size: 0.9em;
+    }
+  }
+}
+
+
 @media (max-width: 767px) {
   .representative-profile {
     .representative-name {
@@ -75,15 +98,11 @@
       font-size: 3.2em;
     }
   }
-
   .question {
     border-bottom: 1px solid #ddd;
     margin-bottom: 1em;
   }
-
   table {
     table-layout: fixed;
   }
-
-
 }
