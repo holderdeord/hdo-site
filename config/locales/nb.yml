@@ -87,6 +87,10 @@ nb:
             password:
               too_short: 'er for kort (minimum 6 tegn).'
               confirmation: 'ble ikke bekreftet.'
+        representative:
+          attributes:
+            password:
+              confirmation: 'må skrives likt to ganger'
     models:
       representative:
         one: "representant"
@@ -150,6 +154,7 @@ nb:
         attending: 'Møtende'
         not_attending: 'Møter for tiden ikke på Stortinget'
         password: Passord
+        current_password: Nåværende passord
       party:
         name: "Navn"
         representatives: "Representanter"
