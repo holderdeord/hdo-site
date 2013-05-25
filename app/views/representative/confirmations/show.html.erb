@@ -6,10 +6,20 @@
              html: {method: 'put'},
              id: 'activation-form' do |f| %>
 
-  <%= devise_error_messages! %>
+  <% if resource.errors.any? %>
+    <div class="alert alert-error">
+      <strong>Oops!</strong> Det gikk ikke helt etter planen:
+
+      <ul>
+        <% resource.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
 
   <fieldset>
-    <legend>Kontoaktivering <% if resource.name %> for <%= resource.name %><% end %></legend>
+    <legend>Aktiver din konto hos Holder de ord</legend>
 
   <% if @requires_password %>
       <p><%= f.label :password, 'Velg et passord:' %> <%= f.password_field :password %></p>

@@ -148,6 +148,7 @@ nb:
         email: 'Epost'
         attending: 'Møtende'
         not_attending: 'Møter for tiden ikke på Stortinget'
+        password: Passord
       party:
         name: "Navn"
         representatives: "Representanter"
