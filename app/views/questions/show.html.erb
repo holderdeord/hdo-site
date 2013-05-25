@@ -11,16 +11,14 @@
 
   <article class="row-fluid question">
 
-    <div class="span2">
+    <div class="span2 hidden-phone">
       <img src="<%= gravatar_url(@question.from_email) %>" class='avatar'>
     </div>
 
     <div class="span8">
+      <h4><%= @question.from_display_name %></h4>
+      <time class="muted"><%= l @question.created_at.localtime, format: :text_time %></time>
       <div><%= @question.body %></div>
-      <aside class="muted">
-        <span>Av <%= @question.from_display_name %></span>
-        <span><%= l @question.created_at.localtime, format: :text_time %></span>
-      </aside>
     </div>
 
    </article>
@@ -29,25 +27,22 @@
     <% if @answer.nil? %>
       <p>Ingen svar foreløpig, klikk her for å få epost når spørsmålet blir besvart osv.</p>
     <% else %>
-      <article>
 
-        <div class="span2">
+      <div class="span2 hidden-phone">
         <%= link_to @answer.representative do %>
           <%= image_tag @answer.representative.image.versions[:avatar], class:'avatar' %>
         <% end %>
+      </div>
 
-        </div>
+      <div class="span8">
+        <h4>
+          <%= link_to @answer.representative.name, @answer.representative, class: 'qa-answer-representative' %>
+          for <%= link_to @answer.party.try(:name), @answer.party, class: "qa-answer-party #{@answer.party.try :external_id}" %>
+        </h4>
+        <time class="muted"><%= l @answer.created_at.localtime, format: :text_time %></time>
+        <div><%= @answer.body %></div>
+      </div>
 
-        <div class="span8">
-          <h4>
-            <%= link_to @answer.representative.name, @answer.representative, class: 'qa-answer-representative' %>
-            for
-            <%= link_to @answer.party.try(:name), @answer.party, class: "qa-answer-party #{@answer.party.try :external_id}" %>
-          </h4>
-          <p><%= @answer.body %></p>
-        </div>
-
-      </article>
     <% end %>
   </article>
 

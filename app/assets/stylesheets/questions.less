@@ -59,23 +59,27 @@
 }
 
 .qa-single {
-  h1 {
-    a:first-child {
-      color: inherit;
-    }
+  h1 a {
+    color: inherit;
   }
-  .question {
-  }
-  .answer {
+  .question, .answer {
+    margin-bottom: 60px;
     h4 {
+      margin-bottom: 0;
+      font-weight: normal;
       a:first-child {
         color: inherit;
       }
     }
-    margin-top: 20px;
+    time {
+      display: block;
+      margin-bottom: 0.5em;
+    }
   }
-  .avatar {
-    width: 100%;
-    margin-top: 20px;
+  .span2 {
+    padding: 10px 10px 0 10px;
+    .avatar {
+      width: 100%;
+    }
   }
 }
