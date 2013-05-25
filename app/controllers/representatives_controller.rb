@@ -7,8 +7,11 @@ class RepresentativesController < ApplicationController
 
   def show
     @representative = Representative.find(params[:id])
-    @questions      = @representative.questions.approved
     @party          = @representative.latest_party
     @issue_groups   = Issue.published.order(:title).grouped_by_position(@representative)
+
+    @questions = @representative.questions.approved.sort_by do |q|
+      (q.answer && q.answer.approved?) ? q.answer.created_at : q.created_at
+    end.reverse
   end
 end

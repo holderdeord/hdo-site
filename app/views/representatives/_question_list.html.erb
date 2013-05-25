@@ -9,10 +9,10 @@
         <p class="muted">
           Av <strong><%= question.from_display_name %></strong>.
 
-          <% if question.answered? %>
-            Besvart for <%= distance_of_time_in_words question.answer.created_at, Time.now %> siden.
+          <% if question.answered? && question.answer.approved? %>
+            Besvart for <%= distance_of_time_in_words_to_now question.answer.created_at %> siden.
           <% else %>
-            Venter på svar.
+            Venter på svar, stilt for <%= distance_of_time_in_words_to_now question.created_at %> siden.
           <% end %>
         </p>
       </li>
