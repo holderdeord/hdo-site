@@ -467,8 +467,8 @@ nb:
         approved: Svaret er godkjent.
         rejected: Svaret er avvist.
       status:
-        approved: 'Publisert'
-        pending:  'Avventer godkjenning'
+        approved: 'Svar publisert'
+        pending:  'Svar avventer godkjenning'
         rejected: 'Svar avvist'
         no_answer: 'Ikke besvart'
       status_text:
