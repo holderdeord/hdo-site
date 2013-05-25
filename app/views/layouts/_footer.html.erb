@@ -17,9 +17,8 @@
       <div class="span4"></div>
 
       <div class="span4">
-        <p>
-          Ris, ros eller noe som ikke virker? <%= link_to 'Gi beskjed!', "mailto:#{t 'app.email'}?subject=Tilbakemelding" %>
-        </p>
+        <div>Ris, ros eller noe som ikke virker?</div>
+        <%= mail_to t('app.email'), 'Gi beskjed!', encode: 'hex', subject: 'Tilbakemelding'  %>
       </div>
 
     </div>
