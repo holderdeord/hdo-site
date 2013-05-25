@@ -56,6 +56,8 @@ class Representative < ActiveRecord::Base
 
   validates_uniqueness_of :first_name, scope: :last_name # TODO: scope: :period ?!
 
+  validates_confirmation_of :password
+
   validates :external_id, presence: true, uniqueness: true
   validates :email,       allow_nil: true, uniqueness: true, email: true
   validates :twitter_id,  allow_nil: true, uniqueness: true, format: /^[^@]/
