@@ -1,0 +1,9 @@
+<h2><%= t 'app.login' %></h2>
+
+<%= form_for("user", :url => user_session_path) do |f| %>
+  <%= f.label :email %>
+  <%= f.text_field :email %>
+  <%= f.label :password %>
+  <%= f.password_field :password %><br/>
+  <%= f.submit t('app.login') %><br/>
+<% end %>
