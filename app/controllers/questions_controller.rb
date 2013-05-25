@@ -32,6 +32,10 @@ class QuestionsController < ApplicationController
     end
   end
 
+  def conduct
+    render '_conduct'
+  end
+
   private
 
   def fetch_representatives_and_districts

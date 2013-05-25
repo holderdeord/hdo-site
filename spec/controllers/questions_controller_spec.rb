@@ -116,4 +116,11 @@ describe QuestionsController do
       end
     end
   end
+
+  describe 'GET conduct' do
+    it 'renders the code of conduct' do
+      get :conduct
+      response.should have_rendered(:_conduct)
+    end
+  end
 end

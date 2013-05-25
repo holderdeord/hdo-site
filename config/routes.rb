@@ -162,7 +162,11 @@ Hdo::Application.routes.draw do
   # Q & A
   #
 
-  resources :questions
+  resources :questions, only: [:index, :create, :show, :new] do
+    collection do
+      get 'conduct'
+    end
+  end
 
   #
   # norwegian aliases - don't overdo this without a proper solution
