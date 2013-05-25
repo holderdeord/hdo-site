@@ -40,12 +40,12 @@
             </td>
             <td><%= question.teaser %></td>
             <td>
-              <p><span class="<%= label_for(question) %> %>"><%= label_text_for(question)%></span></p>
               <% if question.answer.nil? %>
-                <%= link_to 'Svar!', representative_question_path(question), class: 'btn btn-small btn-primary' %>
+                <%= link_to 'Svar!', representative_question_path(question), class: 'btn btn-primary pull-right' %>
               <% else %>
-                <%= link_to 'Les', representative_question_path(question), class: 'btn btn-small' %>
+                <%= link_to 'Les', representative_question_path(question), class: 'btn pull-right' %>
               <% end %>
+              <p><span class="<%= label_for(question) %> %>"><%= label_text_for(question)%></span></p>
             </td>
           </tr>
         <% end %>
