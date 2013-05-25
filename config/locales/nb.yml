@@ -86,6 +86,7 @@ nb:
           attributes:
             password:
               too_short: 'Passordet er for kort (minimum 6 tegn).'
+              confirmation: 'Passordene må være like.'
     models:
       representative:
         one: "representant"
