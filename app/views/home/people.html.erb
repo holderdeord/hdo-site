@@ -7,7 +7,7 @@
   <div class="row-fluid">
   <% persons.each do |person| %>
     <div class="person span4">
-      <%= image_tag "#{gravatar_url(person.email)}", class: 'photo'%>
+      <%= image_tag gravatar_url(person.email), class: 'photo' %>
       <h4 class="name lead"><%= person.name %></h4>
       <div class="profession"><%=h person.title %></div>
     </div>
@@ -23,7 +23,7 @@
   <div class="row-fluid">
   <% persons.each do |person| %>
     <div class="person board span6">
-      <%= image_tag "#{gravatar_url(person.email)}", class: 'photo'%>
+      <%= image_tag gravatar_url(person.email), class: 'photo'%>
       <h4 class="name lead">
         <% if person.email %>
         <a class="name" href="mailto:<%= obscure_email person.email %>">

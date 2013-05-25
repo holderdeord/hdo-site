@@ -12,7 +12,7 @@
   <article class="row-fluid question">
 
     <div class="span2 hidden-phone">
-      <img src="<%= gravatar_url(@question.from_email) %>" class='avatar'>
+      <%= image_tag gravatar_url(@question.from_email), class: 'avatar' %>
     </div>
 
     <div class="span8">
@@ -25,7 +25,7 @@
 
   <article class="row-fluid answer">
     <% if @answer.nil? %>
-      <p>Ingen svar foreløpig, klikk her for å få epost når spørsmålet blir besvart osv.</p>
+      <p>Ingen svar foreløpig.</p>
     <% else %>
 
       <div class="span2 hidden-phone">

@@ -61,7 +61,7 @@ module ApplicationHelper
 
   def gravatar_url(email)
     default = asset_url("representatives/unknown.jpg")
-    "//gravatar.com/avatar/#{Digest::MD5.hexdigest email}?s=300&d=#{default}"
+    "//gravatar.com/avatar/#{Digest::MD5.hexdigest email}?s=300&d=#{URI.encode default}"
   end
 
   def page_type(page_type = nil)
