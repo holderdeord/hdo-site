@@ -5,15 +5,15 @@
 
   <% if AppConfig.answers_enabled %>
     <big>
-      <p>Dette er din personlige side på Holder de ord. Hit kommer spørsmål fra velgerne etter at de er blitt moderert. Trykk på spørsmålsteksten for å gi ditt svar.</p>
+      <p>Dette er din personlige side på Holder de ord. Hit kommer spørsmål fra velgerne etter at de er blitt moderert.</p>
       <p>Lurer du på noe? Send oss en <%= mail_to 'kontakt@holderdeord.no', 'epost', encode: 'hex' %></a>.</p>
     </big>
 
     <hr class="soften">
 
     <div class="row-fluid">
-      <% @counts.each do |caption, count| %>
-        <div class="stat span<%= 12 / @counts.size %>">
+      <% @counts.each do |caption, count, muted| %>
+        <div class="stat <%= 'muted' if muted %> span<%= 12 / @counts.size %>">
           <h1><%= count %></h1>
           <%= caption %>
         </div>
@@ -33,14 +33,19 @@
 
       <tbody>
         <% @questions.each do |question| %>
-          <tr>
+          <tr class="<%= 'muted' if question.answer %>">
             <td>
               <%= question.from_name %>
               <p class="muted"><%= distance_of_time_in_words question.updated_at, Time.now %> siden</p>
             </td>
-            <td><%= link_to question.teaser, representative_question_path(question) %></td>
+            <td><%= question.teaser %></td>
             <td>
-              <span class="<%= label_for(question) %> %>"><%= label_text_for(question)%></span>
+              <p><span class="<%= label_for(question) %> %>"><%= label_text_for(question)%></span></p>
+              <% if question.answer.nil? %>
+                <%= link_to 'Svar!', representative_question_path(question), class: 'btn btn-small btn-primary' %>
+              <% else %>
+                <%= link_to 'Les', representative_question_path(question), class: 'btn btn-small' %>
+              <% end %>
             </td>
           </tr>
         <% end %>
