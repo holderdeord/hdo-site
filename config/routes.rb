@@ -12,6 +12,10 @@ Hdo::Application.routes.draw do
   get  'representative'                       => 'representative#index',         as: :representative_root
   get  'representative/questions/:id'         => 'representative#show_question', as: :representative_question
   post 'representative/questions/:id/answers' => 'representative#create_answer', as: :representative_question_answers
+  as :representative do
+    get  'representative/edit'                  => 'devise/registrations#edit',    as: :edit_representative_registration
+    put  'representative'                       => 'devise/registrations#update',  as: :representative_registration
+  end
 
 
   #

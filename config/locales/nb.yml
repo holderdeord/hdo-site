@@ -442,6 +442,7 @@ nb:
       edit:
         created: Brukeren ble opprettet.
         updated: Brukeren ble oppdatert.
+      change_password: Endre passord
     questions:
       new: Still et spørsmål
       title: Spør en stortingspolitiker
