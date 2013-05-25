@@ -11,7 +11,6 @@ describe RepresentativesController do
     end
   end
 
-
   describe "GET #show" do
     let(:rep) { Representative.make! }
 
