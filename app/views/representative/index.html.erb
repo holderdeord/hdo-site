@@ -1,7 +1,5 @@
 <div class="representative-dashboard">
-  <div class="page-header">
     <h2>Hei <%= current_representative.name %>!</h2>
-  </div>
 
   <% if AppConfig.answers_enabled %>
     <div class="row-fluid">
@@ -24,6 +22,8 @@
         <%= render partial: 'shared/social' %>
       </div>
     <% end %>
+
+    <hr>
 
     <div class="row-fluid">
       <% @counts.each do |caption, count, muted| %>
