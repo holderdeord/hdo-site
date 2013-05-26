@@ -85,7 +85,7 @@ nb:
         user:
           attributes:
             password:
-              too_short: 'er for kort (minimum 6 tegn).'
+              too_short: 'er for kort (må være minst seks tegn).'
               confirmation: 'ble ikke bekreftet.'
         representative:
           attributes:
