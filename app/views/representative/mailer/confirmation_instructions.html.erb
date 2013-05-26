@@ -12,7 +12,8 @@
 
 <p>
   Vi har utviklet et system som gjør det enkelt for deg å sjekke spørsmål og legge inn svar.
-  <%= link_to 'Klikk her', confirmation_url(@resource, confirmation_token: @resource.confirmation_token) %> for å komme i gang!
+  <%= link_to 'Klikk her', confirmation_url(@resource,
+                              confirmation_token: @resource.confirmation_token, protocol: AppConfig.ssl_enabled ? 'https' : 'http') %> for å komme i gang!
 </p>
 
 <p>Alle spørsmål rettes direkte til en representant, og Holder de ord modererer spørsmål slik at de er i tråd med våre retningslinjer. </p>
