@@ -11,6 +11,22 @@
 
     <hr class="soften">
 
+    <% if @questions.empty? %>
+      <div class="alert alert-info">
+        <p>
+          Du har foreløpig ikke fått noen spørsmål fra velgerne. Fortvil ikke, vi gir beskjed så fort et spørsmål kommer inn!
+          I mellomtiden kan du for eksempel dele din <%= link_to 'offentlige profil', representative_path(current_representative) %> på Holder de ord med dine velgere.
+        </p>
+
+        <div>
+          <a href="https://twitter.com/holderdeord" class="twitter-follow-button" data-show-count="true" data-lang="no">Følg @holderdeord</a>
+          <div class="fb-like" data-href="https://www.facebook.com/holderdeord" data-send="false" data-layout="button_count" data-width="70" data-show-faces="false"></div>
+        </div>
+
+        <%= render partial: 'shared/social' %>
+      </div>
+    <% end %>
+
     <div class="row-fluid">
       <% @counts.each do |caption, count, muted| %>
         <div class="stat <%= 'attention' unless muted %> span<%= 12 / @counts.size %>">
@@ -22,35 +38,37 @@
 
     <hr>
 
-    <h3>Dine spørsmål</h3>
+    <% if @questions.any? %>
+      <h3>Dine spørsmål</h3>
 
-    <table class="table table-condensed">
-      <thead>
-        <th>Fra</th>
-        <th>Spørsmål</th>
-        <th>Status</th>
-      </thead>
+      <table class="table table-condensed">
+        <thead>
+          <th>Fra</th>
+          <th>Spørsmål</th>
+          <th>Status</th>
+        </thead>
 
-      <tbody>
-        <% @questions.each do |question| %>
-          <tr class="<%= 'dimmed' if question.answer %>">
-            <td>
-              <div><%= question.from_name %></div>
-              <div class="muted"><%= distance_of_time_in_words question.updated_at, Time.now %> siden</div>
-            </td>
-            <td><%= question.teaser %></td>
-            <td>
-              <% if question.answer.nil? %>
-                <%= link_to 'Svar!', representative_question_path(question), class: 'btn btn-primary pull-right' %>
-              <% else %>
-                <%= link_to 'Les', representative_question_path(question), class: 'btn pull-right' %>
-              <% end %>
-              <div><%= label_text_for(question)%></div>
-            </td>
-          </tr>
-        <% end %>
-      </tbody>
-    </table>
+        <tbody>
+          <% @questions.each do |question| %>
+            <tr class="<%= 'dimmed' if question.answer %>">
+              <td>
+                <div><%= question.from_name %></div>
+                <div class="muted"><%= distance_of_time_in_words question.updated_at, Time.now %> siden</div>
+              </td>
+              <td><%= question.teaser %></td>
+              <td>
+                <% if question.answer.nil? %>
+                  <%= link_to 'Svar!', representative_question_path(question), class: 'btn btn-primary pull-right' %>
+                <% else %>
+                  <%= link_to 'Les', representative_question_path(question), class: 'btn pull-right' %>
+                <% end %>
+                <div><%= label_text_for(question)%></div>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    <% end %>
 
   <% end %>
 </div>
