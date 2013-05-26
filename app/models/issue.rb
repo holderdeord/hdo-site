@@ -170,8 +170,7 @@ class Issue < ActiveRecord::Base
   end
 
   def accountability
-    # TODO: cache this when it's being used for real.
-    Hdo::Stats::AccountabilityScorer.new(self)
+    Rails.cache.fetch("#{cache_key}/accountability") { Hdo::Stats::AccountabilityScorer.new(self) }
   end
 
   def only_published_issues_on_frontpage

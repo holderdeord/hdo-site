@@ -22,6 +22,7 @@ describe HomeController do
       end
 
       assigns(:all_tags).map(&:name).should == ["foo"]
+      assigns(:top_lists).should be_kind_of(Hdo::Stats::TopLists)
     end
   end
 

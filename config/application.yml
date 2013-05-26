@@ -12,6 +12,7 @@ defaults: &defaults
   show_accountability: true
   widgets_enabled: true
   representative_widget_enabled: true
+  top_lists_enabled: true
   ssl_enabled: false
   ssl_host: ~
 
@@ -35,3 +36,4 @@ production:
   representative_widget_enabled: false
   fastly_enabled: true
   ssl_enabled: true
+  top_lists_enabled: false

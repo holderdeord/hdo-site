@@ -76,4 +76,26 @@
   </div>
 </div>
 
+<% if AppConfig.top_lists_enabled %>
+  <div class="row-fluid">
+    <div class="span6">
+      <h3>Holdt ord</h3>
+      <ol class="unstyled">
+        <% @top_lists.fetch(:kept).each do |party, count| %>
+          <li><%= count %> saker: <%= link_to party.name, party %></li>
+        <% end %>
+      </ol>
+    </div>
+
+    <div class="span6">
+      <h3>Ikke holdt</h3>
+      <ol class="unstyled">
+        <% @top_lists.fetch(:broken).each do |party, count| %>
+          <li><%= count %> saker: <%= link_to party.name, party %></li>
+        <% end %>
+      </ol>
+    </div>
+  </div>
+<% end %>
+
 <hr class="soften">

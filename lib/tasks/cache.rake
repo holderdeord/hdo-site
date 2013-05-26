@@ -3,8 +3,9 @@ namespace :cache do
     task :issues => :environment do
       puts "precomputing stats cache for issues"
       Issue.published.each do |e|
-        puts e.slug
         e.stats
+        e.accountability
+        puts e.slug
       end
     end
   end
