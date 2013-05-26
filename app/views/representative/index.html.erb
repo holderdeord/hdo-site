@@ -4,12 +4,10 @@
   </div>
 
   <% if AppConfig.answers_enabled %>
-    <big>
-      <p>Dette er din personlige side på Holder de ord. Hit kommer spørsmål fra velgerne etter at de er blitt moderert.</p>
-      <p>Lurer du på noe? Send oss en <%= mail_to 'kontakt@holderdeord.no', 'epost', encode: 'hex' %></a>.</p>
-    </big>
-
-    <hr class="soften">
+    <div class="row-fluid">
+      <div>Dette er din personlige side på Holder de ord. Hit kommer spørsmål fra velgerne etter at de er blitt moderert.</div>
+      <div>Lurer du på noe? Send oss en <%= mail_to 'kontakt@holderdeord.no', 'epost', encode: 'hex' %></a>.</div>
+    </div>
 
     <% if @questions.empty? %>
       <div class="alert alert-info">
