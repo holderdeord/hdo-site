@@ -13,7 +13,7 @@ module Pages
     end
 
     def loaded?
-      text =~ /sjekk ditt parti/i
+      text =~ /Din uavhengige kilde for fakta om stortingspolitikk/i
     end
   end
 end
