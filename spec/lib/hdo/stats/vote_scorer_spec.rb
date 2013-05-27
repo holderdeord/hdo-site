@@ -270,7 +270,7 @@ module Hdo
         scorer.score_for(rep1).should be_nil
       end
 
-      xit 'ignores positive rebels on alternate budgets (50/50)' do 
+      it 'ignores positive rebels on alternate budgets (50/50)' do
         # see https://github.com/holderdeord/hdo-site/issues/520
         party = rep1.current_party
 
@@ -282,14 +282,14 @@ module Hdo
           VoteResult.new(representative: rep2, result: -1)
         ])
 
-        issue.vote_connections.create! vote: vote, matches: true, weight: 1
+        issue.vote_connections.create! vote: vote, matches: true, weight: 1, proposition_type: 'alternate_national_budget'
 
         scorer.score_for(rep1).should == 100  # voted for
         scorer.score_for(rep2).should == nil  # voted against, treated as absent
         scorer.score_for(party).should == nil # positive rebel vote for ignored
       end
 
-      xit 'ignores positive rebels on alternate budgets (>50%)' do 
+      it 'ignores positive rebels on alternate budgets (>50%)' do
         # see https://github.com/holderdeord/hdo-site/issues/520
         party = rep1.current_party
 
@@ -305,9 +305,9 @@ module Hdo
           VoteResult.new(representative: rep3, result: -1)
         ])
 
-        issue.vote_connections.create! vote: vote, matches: false, weight: 1
+        issue.vote_connections.create! vote: vote, matches: false, weight: 1, proposition_type: 'alternate_national_budget'
 
-        scorer.score_for(rep1).should == 100 # voted for
+        scorer.score_for(rep1).should == 0   # voted for
         scorer.score_for(rep2).should == nil # voted against, treated as absent
         scorer.score_for(rep3).should == nil # voted against, treated as absent
         scorer.score_for(party).should == nil # positive rebel vote for ignored

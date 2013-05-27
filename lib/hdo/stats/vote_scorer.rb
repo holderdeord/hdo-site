@@ -159,31 +159,37 @@ module Hdo
         by_party     = vote_results.group_by { |v| v.representative.party_at(vote.time) }
         res          = {}
 
-        matches = vote_connection.matches?
+        matches             = vote_connection.matches?
+        is_alternate_budget = vote_connection.proposition_type == 'alternate_national_budget'
 
         by_party.each do |party, votes|
-          for_count, against_count = 0, 0
+          for_count, against_count, ignored_count = 0, 0, 0
 
           votes.each do |vote_result|
-            next if vote_result.absent? || (vote_result.against? && vote_connection.proposition_type == 'alternate_national_budget')
+            next if vote_result.absent?
 
-            if vote_result.for?
-              res[vote_result.representative] = matches ? weight : 0
-              for_count += 1
+            if is_alternate_budget && vote_result.against?
+              ignored_count += 1
             else
-              res[vote_result.representative] = matches ? 0 : weight
-              against_count += 1
+              if vote_result.for?
+                res[vote_result.representative] = matches ? weight : 0
+                for_count += 1
+              else
+                res[vote_result.representative] = matches ? 0 : weight
+                against_count += 1
+              end
             end
           end
 
-          total = (for_count + against_count)
+          participiated_count = (for_count + against_count)
+          participiated_count = 0 if is_alternate_budget && for_count <= ignored_count
 
-          if total.zero?
-            # only absence
+          if participiated_count.zero?
+            # only absence == no
             res[party] = nil
           else
             support_issue_count = matches ? for_count : against_count
-            res[party] = (support_issue_count / total.to_f) * weight
+            res[party] = (support_issue_count / participiated_count.to_f) * weight
           end
         end
 
