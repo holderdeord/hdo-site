@@ -13,7 +13,7 @@
   <% @issue_votes.each do |issue_vote| %>
     <article class="vote" id="<%= issue_vote.anchor %>">
       <h3 class="lead vote-caption"><%= issue_vote.title %></h3>
-      <time class="muted"><%= issue_vote.time_text %></time>
+      <time class="muted"><%= link_to issue_vote.time_text, issue_vote.vote %></time>
       <div class="row-fluid">
         <div class="span7">
           <p><%= raw(markdown(issue_vote.comment)) %></p>
