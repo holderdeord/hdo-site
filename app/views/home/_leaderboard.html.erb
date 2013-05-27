@@ -1,0 +1,52 @@
+  <section class="home-leaderboard">
+    <h3 class="lead">Holder de ords liste over syndere</h3>
+    <p>
+      Det er ikke lett å alltid stemme som man lover. Noen ganger finnes det gode
+      grunner til å endre mening. Holder de ord tar ikke hensyn til slike faktorer i
+      sin rangering. Den er kun basert på om avgitte løfter er fulgt av den nødvendige
+      handling i Stortinget.
+    </p>
+
+    <div class="row-fluid">
+      <div class="span6">
+        <h4 class="leaderboard-title">
+          <img alt="Ikon for holdt løfte" src='<%= asset_path("taxonomy-icons/promise_kept.png") %>'>
+          <span>Flest holdte løfter</span>
+        </h4>
+        <ol class="leaderboard kept">
+          <% @top_lists.fetch(:kept).each do |party, count| %>
+            <li>
+              <%= link_to party, class: party.external_id do %>
+                <%= image_tag party.logo, alt: party.name, width: '48', height: '48' %>
+                <span class="text">
+                  <div class="title"><%= party.name %></div>
+                  <div class="muted">Holdt ord i <%= count %> saker</div>
+                </span>
+              <% end %>
+            </li>
+          <% end %>
+        </ol>
+      </div>
+
+      <div class="span6">
+        <h4 class="leaderboard-title">
+          <img alt="Ikon for brutt løfte" src='<%= asset_path("taxonomy-icons/promise_broken.png") %>'>
+          <span>Flest brutte løfter</span>
+        </h4>
+        <ol class="leaderboard broken">
+          <% @top_lists.fetch(:broken).each do |party, count| %>
+            <li>
+              <%= link_to party, class: party.external_id do %>
+                <%= image_tag party.logo, alt: party.name, width: '48', height: '48' %>
+                <span class="text">
+                  <div class="title"><%= party.name %></div>
+                  <div class="muted">Brøt løfter i <%= count %> saker</div>
+                </span>
+              <% end %>
+            </li>
+          <% end %>
+        </ol>
+      </div>
+    </div>
+
+  </section>
