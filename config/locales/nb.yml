@@ -466,7 +466,7 @@ nb:
         ask: 'Still %{name} et spørsmål'
     answers:
       edit:
-        created: Svaret ble opprettet.
+        created: Svaret ble opprettet og sendt til godkjenning.
         updated: Svaret ble oppdatert.
         new: Legg til svar
       moderate:

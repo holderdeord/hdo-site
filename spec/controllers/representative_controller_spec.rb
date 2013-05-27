@@ -5,6 +5,8 @@ describe RepresentativeController do
   let(:representative) { Representative.make! :confirmed }
 
   describe 'GET index' do
+    render_views
+
     it 'renders the dashboard' do
       sign_in representative
 

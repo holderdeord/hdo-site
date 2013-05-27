@@ -3,15 +3,17 @@
 
   <% if AppConfig.answers_enabled %>
     <div class="row-fluid">
-      <div>Dette er din personlige side på Holder de ord. Hit kommer spørsmål fra velgerne etter at de er blitt moderert.</div>
-      <div>Lurer du på noe? Send oss en <%= mail_to 'kontakt@holderdeord.no', 'epost', encode: 'hex' %></a>.</div>
+      <div>Dette er din personlige side på Holder de ord. Her kan du svare på spørsmål fra velgerne.</div>
+      <div>Vi modererer både spørsmål og svar basert på våre <a href="#" data-toggle="modal" data-target="#code-of-conduct">retningslinjer</a>. Lurer du på noe? Send oss en <%= mail_to 'kontakt@holderdeord.no', 'epost', encode: 'hex' %></a>.</div>
     </div>
 
     <% if @questions.empty? %>
+      <hr class="soften"></hr>
+
       <div class="alert alert-info">
         <p>
           Du har foreløpig ikke fått noen spørsmål fra velgerne. Fortvil ikke, vi gir beskjed så fort et spørsmål kommer inn!
-          I mellomtiden kan du for eksempel dele din <%= link_to 'offentlige profil', representative_path(current_representative) %> på Holder de ord med dine velgere.
+          I mellomtiden kan du for eksempel dele din <%= link_to 'offentlige profil', representative_path(current_representative), target: '_blank' %> på Holder de ord med dine velgere.
         </p>
 
         <div>
@@ -37,7 +39,7 @@
     <hr>
 
     <% if @questions.any? %>
-      <h3>Dine spørsmål</h3>
+      <h3>Spørsmål fra dine velgere</h3>
 
       <table class="table table-condensed">
         <thead>
@@ -70,3 +72,5 @@
 
   <% end %>
 </div>
+
+<%= render partial: 'questions/conduct_modal' %>
