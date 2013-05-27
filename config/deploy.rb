@@ -59,7 +59,7 @@ end
 
 namespace :cache do
   task :precompute do
-    run "cd #{current_path} && RAILS_ENV=#{rails_env} #{rake} cache:precompute"
+    run "cd #{latest_release} && RAILS_ENV=#{rails_env} #{rake} cache:precompute"
   end
 
   namespace :pages do
@@ -93,3 +93,4 @@ end
 
 after  'hipchat:trigger_notification', 'hipchat:ensure'
 before 'deploy:assets:precompile', 'config:symlink'
+before 'deploy:symlink', 'cache:precompute' # important
