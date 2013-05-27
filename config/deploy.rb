@@ -58,14 +58,12 @@ namespace :search do
 end
 
 namespace :cache do
+  desc 'Precompute issue/vote/promise calculations'
   task :precompute do
     run "cd #{latest_release} && RAILS_ENV=#{rails_env} #{rake} cache:precompute"
   end
 
-  namespace :pages do
-    task(:clear) { run "rm -r #{current_path}/public/cache/*" }
-  end
-
+  desc 'Reset images'
   task :images do
     run "cd #{current_path} && RAILS_ENV=#{rails_env} #{rake} images:reset"
   end
