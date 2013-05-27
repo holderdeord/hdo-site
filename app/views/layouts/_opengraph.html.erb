@@ -1,9 +1,10 @@
-<meta property="og:title" content="<%= metadata[:title] %>" />
-<meta property="og:site_name" content="<%=t 'app.title' %>" />
-<meta property="og:description" content="<%= metadata[:description] %>" />
-<meta property="og:type" content="<%= metadata[:type] %>" />
-<meta property="og:url" content="<%= metadata[:url] %>" />
-<meta property="og:image" content="<%= File.join(root_url, asset_path('og_logo.jpg')) %>" />
-<%- t('app.opengraph.admins').split(':').each do |fbid| -%>
+
+  <meta property="og:title" content="<%= metadata[:title] %>" />
+  <meta property="og:site_name" content="<%=t 'app.title' %>" />
+  <meta property="og:description" content="<%= metadata[:description] %>" />
+  <meta property="og:type" content="<%= metadata[:type] %>" />
+  <meta property="og:url" content="<%= metadata[:url].sub('https', 'http') %>" />
+  <meta property="og:image" content="<%= File.join(root_url, asset_path('og_logo.jpg')) %>" />
+  <%- t('app.opengraph.admins').split(':').each do |fbid| -%>
   <meta property="fb:admins" content="<%= fbid %>" />
-<%- end -%>
+  <%- end -%>
