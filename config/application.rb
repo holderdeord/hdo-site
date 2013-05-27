@@ -77,6 +77,7 @@ module Hdo
     config.assets.precompile += %w[
       conditional/html5.js
       conditional/respond.js
+      conditional/spring.js
       widgets/widgets.css
       widgets/frame.js
       widgets/widgets.js
