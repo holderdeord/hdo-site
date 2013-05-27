@@ -128,81 +128,86 @@ a:hover .avatar {
   box-shadow: 0 0 5px rgba(0,0,0,0.15), 0 0 0 1px rgba(0,0,0,0.05), 0 0 0 10px rgba(0,0,0,0.05);
 }
 
-.toplist {
-  counter-reset: a;
-  list-style: none;
+
+.leaderboard-title {
+  img {
+    height: 48px;
+    width: 48px;
+    margin: 0 10px;
+  }
+}
+
+.leaderboard {
   margin-left: 0;
   padding-left: 0;
+  list-style: none;
+  &.issues {
+    li {
+      a {
+        img {
+          opacity: 0.5;
+        }
+        &:hover img {
+          opacity: 1;
+        }
+      }
+    }
+    &.broken li, &.partially_kept li {
+      a {
+        color: @hdoSecondaryColor;
+      }
+    }
+  }
+  &.kept li {
+    a {
+      background-color: desaturate(lighten(@hdoPrimaryColor, 64), 30);
+    }
+    + li a {
+      background-color: desaturate(lighten(@hdoPrimaryColor, 66), 30);
+    }
+  }
+  &.broken li, &.partially_kept li {
+    a {
+      background-color: lighten(saturate(@hdoSecondaryColor, 40), 47);
+    }
+    + li a {
+      background-color: lighten(saturate(@hdoSecondaryColor, 40), 48);
+    }
+  }
   li {
-    margin-bottom: 5px;
     a {
       display: block;
       position: relative;
-      background-color: #eee;
-      border: 1px solid #ccc;
-      color: inherit;
-      border-radius: 3px;
-      padding-left: 75px;
+      background-color: #fafafa;
+      border-bottom: 2px solid #fff;
+      padding: 10px;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
       &:hover {
         text-decoration: none;
-        background-color: #fafafa;
+        color: #000 !important;
+        box-shadow: 0 0 0 50px rgba(0,0,0,0.05) inset ;
+        .muted {
+          color: #333;
+        }
       }
-      &:before {
-        position: absolute;
-        background-color: #ddd;
-        border-right: 1px solid #ccc;
-        top: 0;
-        bottom: 0;
-        left: 0;
-        font-size: 2em;
-        width: 75px;
-        line-height: 70px;
-        text-align: center;
-        content: counter(a);
-        counter-increment: a;
+      img {
+        margin-right: 10px;
+        width: 48px;
+        height: 48px;
       }
-      .issue-title {
-        display: block;
-        overflow: hidden;
-        white-space: nowrap;
-        text-overflow: ellipsis;
-        font-size: 1.2em;
-        border-bottom: 1px solid #ccc;
-        padding: 10px 10px 5px 10px;
+      .text {
+        display: inline-block;
+        vertical-align: middle;
+        line-height: 1.5em;
+        .title {
+          font-size: 1.1em;
+        }
+        .muted {
+          font-size: 0.85em;
+        }
       }
-      .issue-vote {
-        display: block;
-        padding: 0 10px 5px 10px;
-        text-transform: lowercase;
-      }
-    }
-  }
-  &.kept li a {
-    background-color: desaturate(lighten(@hdoPrimaryColor, 55), 60);
-    border-color: desaturate(lighten(@hdoPrimaryColor, 35), 45);
-    &:hover {
-      background-color: desaturate(lighten(@hdoPrimaryColor, 58), 60);
-    }
-    &:before {
-      background-color: desaturate(lighten(@hdoPrimaryColor, 50), 60);
-      border-color: desaturate(lighten(@hdoPrimaryColor, 35), 45);
-    }
-    .issue-title {
-      border-color: desaturate(lighten(@hdoPrimaryColor, 35), 45);
-    }
-  }
-  &.broken li a, &.partially_kept li a {
-    background-color: desaturate(lighten(@hdoSecondaryColor, 40), 30);
-    border-color: desaturate(lighten(@hdoSecondaryColor, 30), 30);
-    &:hover {
-      background-color: desaturate(lighten(@hdoSecondaryColor, 43), 30);
-    }
-    &:before {
-      background-color: desaturate(lighten(@hdoSecondaryColor, 35), 30);
-      border-color: desaturate(lighten(@hdoSecondaryColor, 30), 30);
-    }
-    .issue-title {
-      border-color: desaturate(lighten(@hdoSecondaryColor, 30), 30);
     }
   }
 }

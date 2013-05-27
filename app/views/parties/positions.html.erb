@@ -1,14 +1,20 @@
 <div class="row-fluid">
   <% [:kept].each do |key| %>
   <div class="span6">
-    <h4 class="lead"><%= t("app.promises.scores.caption.#{key}").capitalize %></h4>
-    <ol class="toplist <%= key %>">
+    <h4 class="lead leaderboard-title">
+      <img alt="Ikon for holdt løfte" src='<%= asset_path("taxonomy-icons/promise_kept.png") %>'>
+      <span><%= t("app.promises.scores.caption.#{key}").capitalize %> ord i følgende saker</span>
+    </h4>
+    <ol class="leaderboard issues <%= key %>">
       <% Array(@issue_groups[key]).each do |issue| %>
         <li>
           <%= link_to issue, class:"issue" do %>
             <% score = issue.stats.score_for(@party); vote_key = issue.stats.key_for(score) %>
-            <span class="issue-title"><%= issue.downcased_title %>.</span>
-            <span class="issue-vote issue-<%= vote_key %>"><%= @party.name %> stemte <%= t "app.#{vote_key}" %></span>
+            <img alt="Issue_<%= vote_key %>" src='<%= asset_path("taxonomy-icons/issue_#{vote_key}.png") %>'>
+            <span class="text">
+              <div class="title"><%= issue.title %></div>
+              <div class="muted"><%= @party.name %> stemte <%= t("app.#{vote_key}").downcase %></div>
+            </span>
           <% end %>
         </li>
       <% end %>
@@ -19,14 +25,20 @@
 
   <div class="span6">
     <% [:broken, :partially_kept].each do |key| %>
-      <h4 class="lead"><%= t("app.promises.scores.caption.#{key}").capitalize %></h4>
-      <ol class="toplist <%= key %>">
+      <h4 class="lead leaderboard-title">
+        <img alt="Ikon for brutt løfte" src='<%= asset_path("taxonomy-icons/promise_broken.png") %>'>
+        <span><%= t("app.promises.scores.caption.#{key}").capitalize %> ord i følgende saker</span>
+      </h4>
+      <ol class="leaderboard issues <%= key %>">
         <% Array(@issue_groups[key]).each do |issue| %>
         <li>
           <%= link_to issue, class:"issue" do %>
             <% score = issue.stats.score_for(@party); vote_key = issue.stats.key_for(score) %>
-            <span class="issue-title"><%= issue.downcased_title %>.</span>
-            <span class="issue-vote issue-<%= vote_key %>"><%= @party.name %> stemte <%= t "app.#{vote_key}" %></span>
+            <img alt="Issue_<%= vote_key %>" src='<%= asset_path("taxonomy-icons/issue_#{vote_key}.png") %>'>
+            <span class="text">
+              <div class="title"><%= issue.title %></div>
+              <div class="muted"><%= @party.name %> stemte <%= t("app.#{vote_key}").downcase %></div>
+            </span>
           <% end %>
         </li>
         <% end %>
@@ -40,14 +52,19 @@
 <div class="row-fluid">
   <% [:no_promises].each do |key| %>
   <div class="span12">
-    <h4 class="lead"><%= t("app.promises.scores.caption.#{key}").capitalize %></h4>
-    <ol class="toplist <%= key %>">
+    <h4 class="lead leaderboard-title">
+      <span>For følgende saker har <%= @party.name %> <%= t("app.promises.scores.caption.#{key}").capitalize %></span>
+    </h4>
+    <ol class="leaderboard issues <%= key %>">
       <% Array(@issue_groups[key]).each do |issue| %>
         <li>
           <%= link_to issue, class:"issue" do %>
             <% score = issue.stats.score_for(@party); vote_key = issue.stats.key_for(score) %>
-            <span class="issue-title"><%= issue.downcased_title %>.</span>
-            <span class="issue-vote issue-<%= vote_key %>"><%= @party.name %> stemte <%= t "app.#{vote_key}" %></span>
+            <img alt="Issue_<%= vote_key %>" src='<%= asset_path("taxonomy-icons/issue_#{vote_key}.png") %>'>
+            <span class="text">
+              <div class="title"><%= issue.title %></div>
+              <div class="muted"><%= @party.name %> stemte <%= t("app.#{vote_key}").downcase %></div>
+            </span>
           <% end %>
         </li>
       <% end %>
