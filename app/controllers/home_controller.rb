@@ -20,7 +20,7 @@ class HomeController < ApplicationController
     @all_tags = published.flat_map(&:tags).uniq.sort_by(&:name)
     @parties  = Party.order(:name)
 
-    if AppConfig.top_lists_enabled
+    if AppConfig.leaderboard_enabled
       @top_lists = Hdo::Stats::TopLists.new(published)
     end
   end
