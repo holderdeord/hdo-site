@@ -1,4 +1,6 @@
-<% page_type 'article' %>
+<% page_title "Spørsmål til #{@question.representative.full_name} - #{t 'app.title'}" %>
+<% metadata[:type] = 'article' %>
+<% metadata[:url] = question_url(@question) %>
 
 <div class="qa-single">
 

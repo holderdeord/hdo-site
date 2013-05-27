@@ -64,9 +64,13 @@ module ApplicationHelper
     "//gravatar.com/avatar/#{Digest::MD5.hexdigest email}?s=300&d=#{URI.encode default}"
   end
 
-  def page_type(page_type = nil)
-    @page_type = page_type if page_type
-    @page_type || 'website'
+  def metadata
+    @metadata ||= {
+      type: 'website',
+      title: page_title,
+      description: t('app.opengraph.description'),
+      url: "http://#{request.host}#{request.fullpath}"
+    }
   end
 
   def page_title(page_title = nil)
@@ -76,17 +80,6 @@ module ApplicationHelper
 
     @page_title || t('app.title')
   end
-
-  alias_method :title, :page_title
-
-  def page_description(desc = nil)
-    if desc
-      @page_description = desc
-    end
-
-    @page_description || t('app.opengraph.description')
-  end
-  alias_method :page_desc, :page_description
 
   def markdown(text)
     @markdown ||= Redcarpet::Markdown.new(Redcarpet::Render::HTML)

@@ -1,6 +1,7 @@
 <% page_title "#{@issue.title} - #{t('app.issues.title')} - #{t('app.title')}" %>
-<% page_desc @issue.description %>
-<% page_type 'article' %>
+<% metadata[:description] = @issue.description %>
+<% metadata[:type] = 'article' %>
+<% metadata[:url] = issue_url(@issue) %>
 
 <div id="admin-info"></div>
 <%= content_for :document_ready do %>
