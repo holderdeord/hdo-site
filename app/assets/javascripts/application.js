@@ -17,4 +17,4 @@
 //= require jquery-tablesorter
 //= require ./lib/lodash-0.3.2.min.js
 //= require_tree ./lib
-//= require_tree .
+//= require_directory .
