@@ -8,7 +8,7 @@ module Hdo
 
       def fetch(key)
         list = @data[key] || {}
-        list.sort_by { |party, count| -count }
+        list.sort_by { |party, count| [-count, party.name] }
       end
 
       private
