@@ -110,7 +110,7 @@ class IssueDecorator < Draper::Decorator
       if key.nil? || key == :not_participated
         # could add taxonomy-icons/issue_not_participated.png
       else
-        h.image_tag "taxonomy-icons/issue_#{key}.png"
+        h.image_tag "taxonomy-icons/issue_#{key}.png", alt: position_caption
       end
     end
 
@@ -138,7 +138,7 @@ class IssueDecorator < Draper::Decorator
         key = :kept
       end
 
-      h.image_tag "taxonomy-icons/promise_#{key}.png"
+      h.image_tag "taxonomy-icons/promise_#{key}.png", alt: promise_caption
     end
 
     def promise_caption
