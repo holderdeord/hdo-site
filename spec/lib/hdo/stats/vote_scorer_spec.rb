@@ -263,6 +263,56 @@ module Hdo
         scorer.score_for(rep1).should == 100
       end
 
+      it 'treats votes against alternate budgets as absent' do
+        vote = Vote.make!(vote_results: [VoteResult.new(representative: rep1, result: -1)])
+        issue.vote_connections.create! vote: vote, matches: true, weight: 1, proposition_type: 'alternate_national_budget'
+
+        scorer.score_for(rep1).should be_nil
+      end
+
+      xit 'ignores positive rebels on alternate budgets (50/50)' do 
+        # see https://github.com/holderdeord/hdo-site/issues/520
+        party = rep1.current_party
+
+        rep2 = Representative.make!
+        rep2.party_memberships.make!(party: party)
+
+        vote = Vote.make!(vote_results: [
+          VoteResult.new(representative: rep1, result: 1),
+          VoteResult.new(representative: rep2, result: -1)
+        ])
+
+        issue.vote_connections.create! vote: vote, matches: true, weight: 1
+
+        scorer.score_for(rep1).should == 100  # voted for
+        scorer.score_for(rep2).should == nil  # voted against, treated as absent
+        scorer.score_for(party).should == nil # positive rebel vote for ignored
+      end
+
+      xit 'ignores positive rebels on alternate budgets (>50%)' do 
+        # see https://github.com/holderdeord/hdo-site/issues/520
+        party = rep1.current_party
+
+        rep2 = Representative.make!
+        rep2.party_memberships.make!(party: party)
+
+        rep3 = Representative.make!
+        rep3.party_memberships.make!(party: party)
+
+        vote = Vote.make!(vote_results: [
+          VoteResult.new(representative: rep1, result: 1),
+          VoteResult.new(representative: rep2, result: -1),
+          VoteResult.new(representative: rep3, result: -1)
+        ])
+
+        issue.vote_connections.create! vote: vote, matches: false, weight: 1
+
+        scorer.score_for(rep1).should == 100 # voted for
+        scorer.score_for(rep2).should == nil # voted against, treated as absent
+        scorer.score_for(rep3).should == nil # voted against, treated as absent
+        scorer.score_for(party).should == nil # positive rebel vote for ignored
+      end
+
       it "uses the representative's party membership at vote time" do
         p1 = Party.make!
         p2 = Party.make!

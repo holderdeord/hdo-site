@@ -159,19 +159,19 @@ module Hdo
         by_party     = vote_results.group_by { |v| v.representative.party_at(vote.time) }
         res          = {}
 
-        meth = vote_connection.matches? ? :for? : :against?
+        matches = vote_connection.matches?
 
         by_party.each do |party, votes|
           for_count, against_count = 0, 0
 
           votes.each do |vote_result|
-            next if ignore_result?(vote_result, vote_connection)
+            next if vote_result.absent? || (vote_result.against? && vote_connection.proposition_type == 'alternate_national_budget')
 
-            if vote_result.__send__(meth)
-              res[vote_result.representative] = weight
+            if vote_result.for?
+              res[vote_result.representative] = matches ? weight : 0
               for_count += 1
             else
-              res[vote_result.representative] = 0
+              res[vote_result.representative] = matches ? 0 : weight
               against_count += 1
             end
           end
@@ -182,16 +182,12 @@ module Hdo
             # only absence
             res[party] = nil
           else
-            res[party] = (for_count / total.to_f) * weight
+            support_issue_count = matches ? for_count : against_count
+            res[party] = (support_issue_count / total.to_f) * weight
           end
         end
 
         res
-      end
-
-      def ignore_result?(vote_result, vote_connection)
-        vote_result.absent? ||
-          (vote_result.against? && vote_connection.proposition_type == 'alternate_national_budget')
       end
 
     end
