@@ -65,7 +65,7 @@ namespace :cache do
 
   desc 'Reset images'
   task :images do
-    run "cd #{current_path} && RAILS_ENV=#{rails_env} #{rake} images:reset"
+    run "cd #{latest_release} && RAILS_ENV=#{rails_env} #{rake} images:reset"
   end
 end
 

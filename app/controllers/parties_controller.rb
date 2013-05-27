@@ -8,14 +8,12 @@ class PartiesController < ApplicationController
   end
 
   def show
-    @representatives = @party.current_representatives
-    @representatives = @representatives.sort_by { |e| e.has_image? ? 0 : 1 }
-
+    fetch_representatives
     @issue_groups = Issue.published.order(:title).grouped_by_position(@party)
-    @categories = Category.where(main: true).includes(children: :promises)
   end
 
   def positions
+    fetch_representatives
     @issue_groups = Issue.published.order(:title).grouped_by_accountability(@party)
   end
 
@@ -23,6 +21,11 @@ class PartiesController < ApplicationController
 
   def fetch_issue
     @party = Party.find(params[:id])
+  end
+
+  def fetch_representatives
+    @representatives = @party.current_representatives
+    @representatives = @representatives.sort_by { |e| e.has_image? ? 0 : 1 }
   end
 
 end
