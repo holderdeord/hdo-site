@@ -78,19 +78,18 @@ namespace :hipchat do
     if exists?(:stage)
       if stage.to_s != 'vagrant'
         token = ENV['HIPCHAT_API_TOKEN'] or abort "must set HIPCHAT_API_TOKEN for deployments"
-
-        set :hipchat_token,     token
+        set :hipchat_send_notification, true
+        set :hipchat_token, token
         set :hipchat_room_name, "Teknisk"
         set :hipchat_announce,  false
       else
+        set :hipchat_send_notification, false
         puts "ignoring hipchat for vagrant deploy"
       end
+
     end
   end
 end
 
-
-# alternatively after:update_code, but need to get things in the right order here.
+after  'hipchat:trigger_notification', 'hipchat:ensure'
 before 'deploy:assets:precompile', 'config:symlink'
-
-on :start, "hipchat:ensure"
