@@ -21,7 +21,7 @@ class HomeController < ApplicationController
     @parties  = Party.order(:name)
 
     if AppConfig.leaderboard_enabled
-      @top_lists = Hdo::Stats::TopLists.new(published)
+      @leaderboard = Hdo::Stats::Leaderboard.new(published)
     end
   end
 

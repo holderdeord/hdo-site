@@ -14,7 +14,7 @@
           <span>Flest holdte løfter</span>
         </h4>
         <ol class="leaderboard kept">
-          <% @top_lists.fetch(:kept).each do |party, count| %>
+          <% @leaderboard.fetch(:kept).each do |party, count| %>
             <li>
               <%= link_to party, class: party.external_id do %>
                 <%= image_tag party.logo, alt: party.name, width: '48', height: '48' %>
@@ -34,7 +34,7 @@
           <span>Flest brutte løfter</span>
         </h4>
         <ol class="leaderboard broken">
-          <% @top_lists.fetch(:broken).each do |party, count| %>
+          <% @leaderboard.fetch(:broken).each do |party, count| %>
             <li>
               <%= link_to party, class: party.external_id do %>
                 <%= image_tag party.logo, alt: party.name, width: '48', height: '48' %>

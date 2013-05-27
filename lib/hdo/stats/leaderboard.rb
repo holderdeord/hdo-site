@@ -1,6 +1,6 @@
 module Hdo
   module Stats
-    class TopLists
+    class Leaderboard
 
       def initialize(issues)
         @data = compute(issues)
