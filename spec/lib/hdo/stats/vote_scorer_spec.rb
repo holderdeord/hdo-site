@@ -5,7 +5,7 @@ require 'spec_helper'
 module Hdo
   module Stats
     describe VoteScorer do
-      let(:issue)  { Issue.create!(:title => "issue") }
+      let(:issue)  { Issue.create!(title: "issue") }
       let(:scorer) { VoteScorer.new issue }
 
       let(:rep1) { Representative.make!(:full) }
@@ -13,13 +13,13 @@ module Hdo
 
       it 'calculates scores for a single vote' do
         # issue has one vote, with one rep for and one against
-        vote = Vote.make!(:vote_results => [
-          VoteResult.new(:representative => rep1, :result => 1),
-          VoteResult.new(:representative => rep2, :result => -1)
+        vote = Vote.make!(vote_results: [
+          VoteResult.new(representative: rep1, result: 1),
+          VoteResult.new(representative: rep2, result: -1)
         ])
 
         # the vote matches the issue
-        issue.vote_connections.create! :vote => vote, :matches => true, :weight => 1
+        issue.vote_connections.create! vote: vote, matches: true, weight: 1
 
         scorer.score_for(rep1.current_party).should == 100
         scorer.score_for(rep2.current_party).should == 0
@@ -30,13 +30,13 @@ module Hdo
 
       it "calculates scores for a single vote that doesn't match the issue" do
         # issue has one vote, with one rep for and one against
-        vote = Vote.make!(:vote_results => [
-          VoteResult.new(:representative => rep1, :result => 1),
-          VoteResult.new(:representative => rep2, :result => -1)
+        vote = Vote.make!(vote_results: [
+          VoteResult.new(representative: rep1, result: 1),
+          VoteResult.new(representative: rep2, result: -1)
         ])
 
         # the vote does not match the issue
-        issue.vote_connections.create! :vote => vote, :matches => false, :weight => 1
+        issue.vote_connections.create! vote: vote, matches: false, weight: 1
 
         scorer.score_for(rep1.current_party).should == 0
         scorer.score_for(rep2.current_party).should == 100
@@ -47,21 +47,21 @@ module Hdo
 
       it 'calculates scores for a two votes with different weights' do
         # first vote matches the issue with weight=2
-        vote = Vote.make!(:vote_results => [
-          VoteResult.new(:representative => rep1, :result => 1),
-          VoteResult.new(:representative => rep2, :result => -1)
+        vote = Vote.make!(vote_results: [
+          VoteResult.new(representative: rep1, result: 1),
+          VoteResult.new(representative: rep2, result: -1)
         ])
 
-        issue.vote_connections.create! :vote => vote, :matches => true, :weight => 2
+        issue.vote_connections.create! vote: vote, matches: true, weight: 2
 
         # second vote does not match the issue and has weight=1
-        vote = Vote.make!(:vote_results => [
-          VoteResult.new(:representative => rep1, :result => 1),
-          VoteResult.new(:representative => rep2, :result => 1)
+        vote = Vote.make!(vote_results: [
+          VoteResult.new(representative: rep1, result: 1),
+          VoteResult.new(representative: rep2, result: 1)
         ])
 
         # the vote does not match the issue
-        issue.vote_connections.create! :vote => vote, :matches => false, :weight => 1
+        issue.vote_connections.create! vote: vote, matches: false, weight: 1
 
         scorer.score_for(rep1.current_party).should == 66
         scorer.score_for(rep2.current_party).should == 0
@@ -180,38 +180,38 @@ module Hdo
       end
 
       it 'calculates score for a groupings' do
-        vote = Vote.make!(:vote_results => [
-          VoteResult.new(:representative => rep1, :result => 1),
-          VoteResult.new(:representative => rep2, :result => -1)
+        vote = Vote.make!(vote_results: [
+          VoteResult.new(representative: rep1, result: 1),
+          VoteResult.new(representative: rep2, result: -1)
         ])
 
         # the vote matches the issue
-        issue.vote_connections.create! :vote => vote, :matches => true, :weight => 1
+        issue.vote_connections.create! vote: vote, matches: true, weight: 1
 
         scorer.score_for_group([rep1.current_party, rep2.current_party]).should eq 50
         scorer.score_for_group([rep1, rep2]).should eq 50
       end
 
       it 'uses group name as a text in text_for when group_name option is given' do
-        vote = Vote.make!(:vote_results => [
-          VoteResult.new(:representative => rep1, :result => 1),
-          VoteResult.new(:representative => rep2, :result => -1)
+        vote = Vote.make!(vote_results: [
+          VoteResult.new(representative: rep1, result: 1),
+          VoteResult.new(representative: rep2, result: -1)
         ])
 
         # the vote matches the issue
-        issue.vote_connections.create! :vote => vote, :matches => true, :weight => 1
+        issue.vote_connections.create! vote: vote, matches: true, weight: 1
 
         scorer.text_for_group([rep1.current_party, rep2.current_party], name: 'Ze Germans').should start_with 'Ze Germans'
       end
 
       it 'allows you to overwrite the party name' do
-        vote = Vote.make!(:vote_results => [
-          VoteResult.new(:representative => rep1, :result => 1),
-          VoteResult.new(:representative => rep2, :result => -1)
+        vote = Vote.make!(vote_results: [
+          VoteResult.new(representative: rep1, result: 1),
+          VoteResult.new(representative: rep2, result: -1)
         ])
 
         # the vote matches the issue
-        issue.vote_connections.create! :vote => vote, :matches => true, :weight => 1
+        issue.vote_connections.create! vote: vote, matches: true, weight: 1
 
         scorer.text_for(rep1.current_party, name: 'Ze Frenchies').should start_with 'Ze Frenchies'
       end
@@ -225,26 +225,26 @@ module Hdo
       end
 
       it 'returns 0 scores when all votes are weighted 0' do
-        vote = Vote.make!(:vote_results => [
-          VoteResult.new(:representative => rep1, :result => 1),
-          VoteResult.new(:representative => rep2, :result => -1)
+        vote = Vote.make!(vote_results: [
+          VoteResult.new(representative: rep1, result: 1),
+          VoteResult.new(representative: rep2, result: -1)
         ])
 
-        issue.vote_connections.create! :vote => vote, :matches => true, :weight => 0
+        issue.vote_connections.create! vote: vote, matches: true, weight: 0
 
         scorer.score_for(rep1.current_party).should == 0
       end
 
       it 'correctly handles rebel votes' do
         rep2 = Representative.make!
-        rep2.party_memberships.make!(:party => rep1.current_party)
+        rep2.party_memberships.make!(party: rep1.current_party)
 
-        vote = Vote.make!(:vote_results => [
-          VoteResult.new(:representative => rep1, :result => 1),
-          VoteResult.new(:representative => rep2, :result => -1)
+        vote = Vote.make!(vote_results: [
+          VoteResult.new(representative: rep1, result: 1),
+          VoteResult.new(representative: rep2, result: -1)
         ])
 
-        issue.vote_connections.create! :vote => vote, :matches => true, :weight => 1
+        issue.vote_connections.create! vote: vote, matches: true, weight: 1
 
         scorer.score_for(rep1.current_party).should == 50
 
@@ -253,11 +253,11 @@ module Hdo
       end
 
       it 'is not affected by absence' do
-        vote1 = Vote.make!(:vote_results => [VoteResult.new(:representative => rep1, :result => 1)])
-        vote2 = Vote.make!(:vote_results => [VoteResult.new(:representative => rep1, :result => 0)])
+        vote1 = Vote.make!(vote_results: [VoteResult.new(representative: rep1, result: 1)])
+        vote2 = Vote.make!(vote_results: [VoteResult.new(representative: rep1, result: 0)])
 
-        issue.vote_connections.create! :vote => vote1, :matches => true, :weight => 1
-        issue.vote_connections.create! :vote => vote2, :matches => true, :weight => 1
+        issue.vote_connections.create! vote: vote1, matches: true, weight: 1
+        issue.vote_connections.create! vote: vote2, matches: true, weight: 1
 
         scorer.score_for(rep1.current_party).should == 100
         scorer.score_for(rep1).should == 100
