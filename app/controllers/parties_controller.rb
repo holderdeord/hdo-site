@@ -9,12 +9,18 @@ class PartiesController < ApplicationController
 
   def show
     fetch_representatives
+
+    @new_view = @false
     @issue_groups = Issue.published.order(:title).grouped_by_position(@party)
   end
 
   def positions
     fetch_representatives
+
+    @new_view = true
     @issue_groups = Issue.published.order(:title).grouped_by_accountability(@party)
+
+    render 'show'
   end
 
   private
