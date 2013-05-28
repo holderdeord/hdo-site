@@ -1,6 +1,7 @@
 <h2><%= t 'app.login' %></h2>
 
 <%= form_for("user", :url => user_session_path) do |f| %>
+  <%= flash[:alert] %>
   <%= f.label :email %>
   <%= f.text_field :email, autofocus: true %>
   <%= f.label :password %>
