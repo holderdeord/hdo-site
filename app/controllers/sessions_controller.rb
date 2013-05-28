@@ -14,6 +14,7 @@ class SessionsController < Devise::SessionsController
   private
 
   def enforce_devise_user_scope
+    flash.keep
     redirect_to new_user_session_path unless request.path == new_user_session_path
   end
 end
