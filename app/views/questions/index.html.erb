@@ -17,15 +17,24 @@
         </div>
       </div>
 
-      <div class="span1">
-        <img src="<%= path_to_image question.representative.image.versions[:small] %>">
+      <div class="visible-desktop">
+        <div class="span1">
+          <img src="<%= path_to_image question.representative.image.versions[:small] %>">
+        </div>
+
+        <div class="span1">
+          <%= image_tag question.representative.current_party.logo, alt: question.representative.current_party.name %>
+        </div>
       </div>
 
-      <div class="span1">
-        <%= image_tag question.representative.current_party.logo, alt: question.representative.current_party.name %>
+      <div class="visible-phone">
+        <div class="images-row">
+          <img src="<%= path_to_image question.representative.image.versions[:small] %>">
+          <%= image_tag question.representative.current_party.logo, alt: question.representative.current_party.name %>
+        </div>
       </div>
     </div>
-    <hr>
+    <hr class="visible-desktop">
     <div><%= question.teaser %></div>
 
     <% if question.answered? %>
