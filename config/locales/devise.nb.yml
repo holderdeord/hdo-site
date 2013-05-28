@@ -17,6 +17,7 @@ nb:
       unconfirmed: 'Du må bekrefte kontoen din for å kunne fortsette.'
       locked: 'Din konto er låst.'
       invalid: 'Epostadresse eller passord er ikke gyldig.'
+      not_found_in_database: 'Epostadresse eller passord er ikke gyldig.'
       invalid_token: 'Ugyldig autentiseringstoken.'
       timeout: 'Din sesjon er utløpt. Logg inn igjen for å kunne fortsette.'
       inactive: 'Din konto er ikke aktivert.'
