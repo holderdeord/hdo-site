@@ -67,7 +67,7 @@ class IssueDecorator < Draper::Decorator
   end
 
   def party_groups
-    government = Party.in_government.to_a
+    government = Party.in_government.order(:name).to_a
     opposition = Party.order(:name).to_a - government
 
     gov = IssuePartyDecorator.decorate_collection government, context: self
