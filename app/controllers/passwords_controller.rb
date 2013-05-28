@@ -16,6 +16,7 @@ class PasswordsController < Devise::PasswordsController
   private
 
   def enforce_devise_user_scope
+    flash.keep
     redirect_to new_user_password_path unless request.path == new_user_password_path
   end
 end
