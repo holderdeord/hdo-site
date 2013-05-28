@@ -245,25 +245,25 @@ footer {
 
 /* Party specific promiseboxes */
 .promise {
-  &.frp {
+  &.frp p {
     color: darken(#003798, 40);
   }
-  &.h {
+  &.h p {
     color: darken(#005595, 40);
   }
-  &.v {
+  &.v p {
     color: darken(#83b660, 40);
   }
-  &.krf {
+  &.krf p {
     color: darken(#efae52, 40);
   }
-  &.a {
+  &.a p {
     color: darken(#df1a22, 40);
   }
-  &.sp {
+  &.sp p {
     color: darken(#008542, 40);
   }
-  &.sv {
+  &.sv p {
     color: darken(#db0027, 40);
   }
 }
@@ -369,6 +369,19 @@ footer {
           height: 50px;
           overflow: hidden;
           color: #000;
+          position: relative;
+          &:after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            height: 1em;
+            left: 0;
+            right: 0;
+            background: -webkit-linear-gradient(top, rgba(255,255,255,0), rgba(255,255,255,1));
+            background: -moz-linear-gradient(top, rgba(255,255,255,0), rgba(255,255,255,1));
+            background: -ms-linear-gradient(top, rgba(255,255,255,0), rgba(255,255,255,1));
+            background: linear-gradient(top, rgba(255,255,255,0), rgba(255,255,255,1));
+          }
         }
       }
     }
