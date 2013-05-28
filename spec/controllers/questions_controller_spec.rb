@@ -56,6 +56,16 @@ describe QuestionsController do
       get :new
       assigns(:question).should be_a_new(Question)
     end
+
+    it "assigns the correct representative list" do
+      attending_with_email     = Representative.make!(attending: true, email: 'a@stortinget.no')
+      attending_without_email  = Representative.make!(attending: true, email: nil)
+      not_attending_with_email = Representative.make!(attending: false, email: 'b@stortinget.no')
+
+      get :new
+
+      assigns(:representatives).should == [attending_with_email]
+    end
   end
 
   describe "POST create" do
