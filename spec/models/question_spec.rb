@@ -112,4 +112,12 @@ describe Question do
 
     Question.unanswered.should == [q2]
   end
+
+  it 'doesnt allow answers from other representatives' do
+    q = Question.make! status: 'approved'
+    r = Representative.make! :confirmed
+    a = Answer.make! representative: r
+    q.answer = a
+    q.should_not be_valid
+  end
 end
