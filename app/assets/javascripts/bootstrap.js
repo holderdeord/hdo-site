@@ -1,4 +1,4 @@
 $(document).ready(function () {
-  $("table").tablesorter();
+  $(".table").tablesorter();
   $('.dropdown-toggle').dropdown();
 });
