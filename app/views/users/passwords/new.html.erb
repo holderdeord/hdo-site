@@ -1,0 +1,11 @@
+<h3>Uffda...</h3>
+<p>Skriv inn e-postadressa di, så fikser vi nytt passord.</p>
+
+<%= form_for(:user, :url => user_password_path, :html => { :method => :post }) do |f| %>
+  <%= devise_error_messages! %>
+
+  <div><%= f.email_field :email, :autofocus => true %></div>
+
+  <div><%= f.submit "Klikk her" %></div>
+<% end %>
+Ikke glemt likevel? <%= link_to t('app.login'), new_user_session_path %>

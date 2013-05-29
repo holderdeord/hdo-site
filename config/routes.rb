@@ -4,7 +4,7 @@ Hdo::Application.routes.draw do
   # representative sign-in
   #
 
-  devise_for :representative, controllers: { confirmations: 'confirmations', sessions: 'sessions' }
+  devise_for :representative, controllers: { confirmations: 'confirmations', sessions: 'sessions', passwords: 'passwords' }
   devise_scope :representative do
     put  'representative/confirmation' => 'confirmations#update',         as: :update_representative_confirmation
     get  'representative/edit'         => 'devise/registrations#edit',    as: :edit_representative_registration
@@ -19,7 +19,7 @@ Hdo::Application.routes.draw do
   # user sign-in
   #
 
-  devise_for :users, controllers: { sessions: 'sessions' }
+  devise_for :users, controllers: { sessions: 'sessions', passwords: 'passwords' }
 
   #
   # admin
