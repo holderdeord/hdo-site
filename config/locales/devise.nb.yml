@@ -13,7 +13,7 @@ nb:
   devise:
     failure:
       already_authenticated: 'Du er allerede logget inn.'
-      unauthenticated: 'Du må logge inn eller registrere deg for å kunne fortsette.'
+      unauthenticated: 'Du må logge inn for å kunne fortsette.'
       unconfirmed: 'Du må bekrefte kontoen din for å kunne fortsette.'
       locked: 'Din konto er låst.'
       invalid: 'Epostadresse eller passord er ikke gyldig.'
