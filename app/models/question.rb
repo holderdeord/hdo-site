@@ -13,6 +13,7 @@ class Question < ActiveRecord::Base
   validates :from_email,     email: true
   validates :representative, presence: true
   validates :answer,         associated: true
+  validate :answer_comes_from_asked_representative
 
   scope :answered,   -> { joins(:answer) }
   scope :unanswered, -> { where('(select count(*) from answers where question_id = questions.id) = 0') }
@@ -50,5 +51,11 @@ class Question < ActiveRecord::Base
 
   def from_initials
     from_name.split(/\W/).map { |e| "#{e[0]}." }.join(' ')
+  end
+
+  def answer_comes_from_asked_representative
+    if answer && answer.representative != representative
+      errors.add(:representative, :must_match_question_representative)
+    end
   end
 end

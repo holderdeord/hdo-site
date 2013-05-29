@@ -1,8 +1,8 @@
 require 'spec_helper'
 
 describe RepresentativeController do
-  let(:question)       { Question.make!(status: 'approved') }
   let(:representative) { Representative.make! :confirmed }
+  let(:question)       { Question.make!(status: 'approved', representative: representative) }
 
   describe 'GET index' do
     render_views
@@ -38,7 +38,7 @@ describe RepresentativeController do
     before { sign_in representative }
 
     def valid_attributes
-      { body: 'text', :representative_id => representative.id, question_id: question.id }
+      { body: 'text', representative_id: representative.id, question_id: question.id }
     end
 
     def default_params
@@ -69,6 +69,37 @@ describe RepresentativeController do
         Answer.any_instance.stub(:save).and_return(false)
         post :create_answer, default_params.merge(:answer => {})
         assigns(:answer).should be_a_new(Answer)
+      end
+    end
+
+    describe "with a hacker politician" do
+      let(:hacked_representative) { Representative.make! :confirmed }
+      let(:hacked_question) { Question.make! status: 'approved', representative: hacked_representative }
+
+      it "doesn't let a hacker answer questions posed to others" do
+        post :create_answer, {
+          id:                hacked_question,
+          answer: {
+            body:              'text',
+            representative_id: representative.id,
+            question_id:       hacked_question.id
+          }
+        }
+
+        hacked_question.reload.answer.should be_nil
+      end
+
+      it "doesn't let the hacker impersonate another rep and answer as them" do
+        post :create_answer, {
+          id:                hacked_question,
+          answer: {
+            body:              'text',
+            representative_id: hacked_representative.id,
+            question_id:       hacked_question.id
+          }
+        }
+
+        hacked_question.reload.answer.should be_nil
       end
     end
   end

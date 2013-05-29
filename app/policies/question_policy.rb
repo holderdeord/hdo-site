@@ -9,5 +9,9 @@ class QuestionPolicy
     user.superadmin?
   end
 
+  def answer?
+    record.representative == user
+  end
+
 end
 

@@ -35,8 +35,9 @@ class RepresentativeController < ApplicationController
 
   def create_answer
     question = Question.find(params[:id])
-    @answer = question.create_answer(params[:answer])
+    authorize question, :answer?
 
+    @answer = question.build_answer(params[:answer])
     if question.save
       redirect_to representative_root_path, notice: t('app.answers.edit.created')
     else
@@ -60,6 +61,12 @@ class RepresentativeController < ApplicationController
     else
       3
     end
+  end
+
+
+  # to work with pundit here. better ideas?
+  def current_user
+    current_representative
   end
 
 end
