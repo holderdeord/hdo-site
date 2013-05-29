@@ -98,6 +98,9 @@ Devise.setup do |config|
   # unconfirmed email column, and copied to email column on successful confirmation.
   config.reconfirmable = true
 
+  # explicitly never expire confirmation tokens
+  config.confirm_within = nil
+
   # Defines which key will be used when confirming an account
   # config.confirmation_keys = [ :email ]
 

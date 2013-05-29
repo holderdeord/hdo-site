@@ -36,8 +36,7 @@ class ConfirmationsController < Devise::ConfirmationsController
       end
     end
     if @confirmable.errors.any?
-      self.resource = @confirmable
-      render 'representative/confirmations/new'
+      redirect_to new_user_session_path
     end
   end
 

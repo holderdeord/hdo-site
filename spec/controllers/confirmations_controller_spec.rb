@@ -65,6 +65,10 @@ describe ConfirmationsController do
       rep.should_not be_confirmed
       assigns(:confirmable).errors.should_not be_empty
     end
+  end
 
+  it "redirects to login for a non-existant confirmation token" do
+    get :show, confirmation_token: 'a'
+    response.should redirect_to new_user_session_path
   end
 end
