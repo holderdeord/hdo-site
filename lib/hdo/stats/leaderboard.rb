@@ -11,6 +11,11 @@ module Hdo
         list.sort_by { |party, count| [-count, party.name] }
       end
 
+      def thermo
+        @thermo ||= 100 * @data[:kept].values.sum.to_f / (@data[:kept].values.sum + @data[:broken].values.sum)
+        @thermo
+      end
+
       private
 
       def compute(issues)
@@ -28,5 +33,6 @@ module Hdo
       end
 
     end
+
   end
 end
