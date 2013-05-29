@@ -35,7 +35,7 @@ class RepresentativeController < ApplicationController
 
   def create_answer
     question = Question.find(params[:id])
-    authorize question, :answer?
+    ensure_representative_authorized(question)
 
     @answer = question.build_answer(params[:answer])
     if question.save
@@ -63,10 +63,10 @@ class RepresentativeController < ApplicationController
     end
   end
 
-
-  # to work with pundit here. better ideas?
-  def current_user
-    current_representative
+  def ensure_representative_authorized(question)
+    unless Pundit.policy(current_representative, question).answer?
+      raise Pundit::NotAuthorizedError
+    end
   end
 
 end
