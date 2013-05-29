@@ -31,8 +31,10 @@ class ConfirmationsController < Devise::ConfirmationsController
     with_unconfirmed_confirmable do
       if @confirmable.has_no_password?
         do_show
+        return
       else
         do_confirm
+        return
       end
     end
     if @confirmable.errors.any?
