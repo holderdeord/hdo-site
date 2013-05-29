@@ -1,19 +1,34 @@
   <section class="home-leaderboard">
-    <h3 class="lead">Holder de ords liste over syndere</h3>
-    <p>
-      Det er ikke lett å alltid stemme som man lover. Noen ganger finnes det gode
-      grunner til å endre mening. Holder de ord tar ikke hensyn til slike faktorer i
-      sin rangering. Den er kun basert på om avgitte løfter er fulgt av den nødvendige
-      handling i Stortinget.
-    </p>
+
+    <div class="average row-fluid">
+      <div class="thermometer span3 offset1">
+        <img class='bg' src='<%= asset_path("thermo/bg.png") %>'>
+        <img style='top: 28%' class='graph' src='<%= asset_path("thermo/graph.png") %>'>
+        <img class='cover' src='<%= asset_path("thermo/cover.png") %>'>
+      </div>
+
+      <div class="span6">
+        <br><br>
+        <h1>72% av løftene er holdt</h1>
+        <h2 class="lead">De folkevalgte holder i stor grad ord</h2>
+        <p>
+          Det er ikke lett å alltid stemme som man lover. Noen ganger finnes det gode
+          grunner til å endre mening. Holder de ord tar ikke hensyn til slike faktorer i
+          sin rangering. Den er kun basert på om avgitte løfter er fulgt av den nødvendige
+          handling i Stortinget.
+        </p>
+      </div>
+    </div>
+
+    <hr class="soften">
 
     <div class="row-fluid">
       <div class="span6">
-        <h4 class="leaderboard-title">
+        <h4 class="leaderboard-title lead">
           <img alt="Ikon for holdt løfte" src='<%= asset_path("taxonomy-icons/promise_kept.png") %>'>
           <span>Flest holdte løfter</span>
         </h4>
-        <ol class="leaderboard kept">
+        <ol class="leaderboard">
           <% @leaderboard.fetch(:kept).each do |party, count| %>
             <li>
               <%= link_to party, class: party.external_id do %>
@@ -29,11 +44,11 @@
       </div>
 
       <div class="span6">
-        <h4 class="leaderboard-title">
+        <h4 class="leaderboard-title lead">
           <img alt="Ikon for brutt løfte" src='<%= asset_path("taxonomy-icons/promise_broken.png") %>'>
           <span>Flest brutte løfter</span>
         </h4>
-        <ol class="leaderboard broken">
+        <ol class="leaderboard">
           <% @leaderboard.fetch(:broken).each do |party, count| %>
             <li>
               <%= link_to party, class: party.external_id do %>
