@@ -14,8 +14,8 @@ class ConfirmationsController < Devise::ConfirmationsController
           do_confirm
         else
           do_show
-          @confirmable.errors.clear #so that we wont render :new
         end
+        return
       else
         @confirmable.errors.add(:base, :password_already_set)
       end
@@ -31,11 +31,10 @@ class ConfirmationsController < Devise::ConfirmationsController
     with_unconfirmed_confirmable do
       if @confirmable.has_no_password?
         do_show
-        return
       else
         do_confirm
-        return
       end
+      return
     end
     if @confirmable.errors.any?
       redirect_to new_user_session_path
