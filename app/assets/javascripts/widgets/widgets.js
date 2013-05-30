@@ -129,6 +129,16 @@ var HDO = HDO || {};
         throw new Error('invalid HDO widget type: ' + this.type);
       }
 
+      var target = el.getAttribute('data-target');
+
+      if (target && target.length) {
+        if (url.indexOf('?') > 0) {
+          url += '&' + this.queryParamFor('target', target);
+        } else {
+          url += '?' + this.queryParamFor('target', target);
+        }
+      }
+
       return { 'url': url };
     },
 

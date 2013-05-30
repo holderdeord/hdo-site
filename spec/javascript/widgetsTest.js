@@ -54,5 +54,24 @@
         "http://www.holderdeord.no/promises/101%2C101%2C102/widget")
     },
 
+    "should set target correctly on an issue": function () {
+      var widget = H.widgets.create('issue')
+      this.element.setAttribute('data-issue-id', '1');
+      this.element.setAttribute('data-target', 'blank');
+
+      assert.equals(widget.widgetOptionsFor(this.element).url,
+        "http://www.holderdeord.no/issues/1/widget?target=blank")
+    },
+
+    "should set target correctly on a topic": function () {
+      var widget = H.widgets.create('topic')
+      this.element.setAttribute('data-issues', '1,2,3');
+      this.element.setAttribute('data-promises', '{"Samferdsel":[101,102]}');
+      this.element.setAttribute('data-target', 'blank')
+
+      assert.equals(widget.widgetOptionsFor(this.element).url,
+      "http://www.holderdeord.no/widgets/topic?issues=1%2C2%2C3&promises[Samferdsel]=101%2C102&target=blank")
+    }
+
   });
 }(HDO));
