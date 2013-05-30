@@ -110,7 +110,7 @@ var HDO = HDO || {};
     },
 
     widgetOptionsFor: function (el) {
-      var url;
+      var url, target;
 
       if (this.type === "issue") {
         url = H.widgets.baseUrl + "issues/" + el.getAttribute('data-issue-id') + '/widget';
@@ -129,7 +129,7 @@ var HDO = HDO || {};
         throw new Error('invalid HDO widget type: ' + this.type);
       }
 
-      var target = el.getAttribute('data-target');
+      target = el.getAttribute('data-target');
 
       if (target && target.length) {
         if (url.indexOf('?') > 0) {
