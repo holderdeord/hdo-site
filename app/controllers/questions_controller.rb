@@ -5,8 +5,11 @@ class QuestionsController < ApplicationController
 
   hdo_caches_page :index, :new
 
+  DEFAULT_PER_PAGE = 20
+
   def index
     @questions = Question.approved
+    @questions = @questions.paginate(page: params[:page], per_page: DEFAULT_PER_PAGE)
   end
 
   def show

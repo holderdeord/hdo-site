@@ -3,43 +3,48 @@
   <h1>Spør en stortingspolitiker</h1>
 </div>
 
-<% @questions.each do |question| %>
-  <div class="question-display span5">
-    <div class="row">
-      <div class="span3">
-        <div class="timestamp">
-          <%= l question.updated_at.localtime, format: :text_time %>
+<div class="container">
+  <% @questions.each do |question| %>
+    <div class="question-display span5">
+      <div class="row">
+        <div class="span3">
+          <div class="timestamp">
+            <%= l question.updated_at.localtime, format: :text_time %>
+          </div>
+
+          <div class="recipient">
+            Til: <%= question.representative.name %>
+            <div class="district"><%= question.representative.district.name %></div>
+          </div>
         </div>
 
-        <div class="recipient">
-          Til: <%= question.representative.name %>
-          <div class="district"><%= question.representative.district.name %></div>
+        <div class="visible-desktop">
+          <div class="span1">
+            <img src="<%= path_to_image question.representative.image.versions[:small] %>">
+          </div>
+
+          <div class="span1">
+            <%= image_tag question.representative.current_party.logo, alt: question.representative.current_party.name %>
+          </div>
+        </div>
+
+        <div class="visible-phone">
+          <div class="images-row">
+            <img src="<%= path_to_image question.representative.image.versions[:small] %>">
+            <%= image_tag question.representative.current_party.logo, alt: question.representative.current_party.name %>
+          </div>
         </div>
       </div>
+      <hr class="visible-desktop">
+      <div><%= question.teaser %></div>
 
-      <div class="visible-desktop">
-        <div class="span1">
-          <img src="<%= path_to_image question.representative.image.versions[:small] %>">
-        </div>
+      <% if question.answered? %>
+        <p><%= link_to "Les svaret", question %></p>
+      <% end %>
 
-        <div class="span1">
-          <%= image_tag question.representative.current_party.logo, alt: question.representative.current_party.name %>
-        </div>
-      </div>
-
-      <div class="visible-phone">
-        <div class="images-row">
-          <img src="<%= path_to_image question.representative.image.versions[:small] %>">
-          <%= image_tag question.representative.current_party.logo, alt: question.representative.current_party.name %>
-        </div>
-      </div>
     </div>
-    <hr class="visible-desktop">
-    <div><%= question.teaser %></div>
+  <% end %>
+</div>
 
-    <% if question.answered? %>
-      <p><%= link_to "Les svaret", question %></p>
-    <% end %>
-
-  </div>
-<% end %>
+<%= will_paginate @questions, class: "pagination pagination-centered visible-desktop" %>
+<%= will_paginate @questions, class: "pagination pagination-small pagination-centered visible-phone", page_links: false %>
