@@ -22,6 +22,8 @@
   <link href="/images/apple-touch-icon-precomposed.png" rel="apple-touch-icon-precomposed" />
 
   <script>
-    var HDO = HDO || {};
+    var HDO = HDO || {
+      ssl: <%= AppConfig.ssl_enabled.to_json.html_safe %>
+    };
   </script>
 </head>
