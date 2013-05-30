@@ -102,3 +102,74 @@
     font-weight: normal;
   }
 }
+
+.bubble-mixin (){
+  1% {
+    top: 100%;
+    opacity: 1;
+  }
+  100%, 0% {
+    top: 20%;
+    opacity: 0;
+  }
+}
+
+@-webkit-keyframes bubble {.bubble-mixin}
+@-moz-keyframes bubble {.bubble-mixin}
+@-ms-keyframes bubble {.bubble-mixin}
+@-o-keyframes bubble {.bubble-mixin}
+@keyframes bubble {.bubble-mixin}
+
+
+.thermometer {
+  position: relative;
+  overflow: hidden;
+  .cover, .graph {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+  .bg {
+    width: 100%;
+    height: auto;
+  }
+  .bubble1, .bubble2, .bubble3 {
+    position: absolute;
+    left: 50%;
+    border-radius: 50%;
+    background-color: rgba(255,255,255,0.1);
+    box-shadow: 0 0 3px rgba(255,255,255, 0.3) inset, 0 -4px 6px rgba(255,255,255, 0.3) inset, 0 4px 4px rgba(255,255,255, 0.3) inset;
+    -webkit-animation: bubble 3s ease-in infinite;
+    -moz-animation: bubble 3s ease-in infinite;
+    -ms-animation: bubble 3s ease-in infinite;
+    animation: bubble 3s ease-in infinite;
+  }
+  .bubble1 {
+    height: 20px;
+    width: 20px;
+    margin-left: -15px;
+    top: 30%;
+    -webkit-animation-duration: 6s;
+    -moz-animation-duration: 6s;
+    -ms-animation-duration: 6s;
+    animation-duration: 6s;
+  }
+  .bubble2 {
+    height: 10px;
+    width: 10px;
+    margin-left: 10px;
+    top: 40%;
+    -webkit-animation-duration: 4s;
+    -moz-animation-duration: 4s;
+    -ms-animation-duration: 4s;
+    animation-duration: 4s;
+  }
+  .bubble3 {
+    height: 4px;
+    width: 4px;
+    margin-left: -5px;
+    top: 60%;
+  }
+}
