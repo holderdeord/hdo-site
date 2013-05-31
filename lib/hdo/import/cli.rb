@@ -330,14 +330,14 @@ module Hdo
         HTML
 
         message = ERB.new(template, 0, "%-<>").result(binding)
-        client['Teknisk'].send('Stortinget', message, notify: true)
+        client['Teknisk'].send('Stortinget', message, color: 'red', notify: true)
       rescue => ex
         log.error ex.message
       end
 
       def notify_api_error
         client = hipchat_client || return
-        client['Teknisk'].send('API', "Feil hos data.stortinget.no! Hjelp!")
+        client['Teknisk'].send('API', "Feil hos data.stortinget.no! Hjelp!", color: 'red', notify: true)
       rescue => ex
         log.error ex.message
       end
