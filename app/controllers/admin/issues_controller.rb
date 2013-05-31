@@ -30,11 +30,6 @@ class Admin::IssuesController < AdminController
 
     fetch_categories
     edit_steps.first!
-
-    respond_to do |format|
-      format.html
-      format.json { render json: @issue }
-    end
   end
 
   def edit
@@ -95,11 +90,7 @@ class Admin::IssuesController < AdminController
 
   def destroy
     @issue.destroy
-
-    respond_to do |format|
-      format.html { redirect_to admin_issues_url }
-      format.json { head :no_content }
-    end
+    redirect_to admin_issues_url
   end
 
   def votes_search
