@@ -9,6 +9,7 @@ class QuestionsController < ApplicationController
 
   def index
     @questions = Question.approved
+    @questions = @questions.not_ours if AppConfig.ignore_our_questions
     @questions = @questions.paginate(page: params[:page], per_page: DEFAULT_PER_PAGE)
   end
 

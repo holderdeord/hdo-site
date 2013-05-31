@@ -15,6 +15,14 @@ describe QuestionsController do
       get :index
       assigns(:questions).should eq([approved])
     end
+
+    it "ignores questions from our domain" do
+      ours = Question.make!(from_email: 'test@holderdeord.no', status: 'approved')
+      not_ours = Question.make!(from_email: 'test@example.com', status: 'approved')
+
+      get :index
+      assigns(:questions).should eq([not_ours])
+    end
   end
 
   describe "GET show" do

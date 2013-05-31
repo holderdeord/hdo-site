@@ -16,7 +16,8 @@ class Question < ActiveRecord::Base
   validate :answer_comes_from_asked_representative
 
   scope :answered,   -> { joins(:answer) }
-  scope :unanswered, -> { where('(select count(*) from answers where question_id = questions.id) = 0') }
+  scope :unanswered, -> { where('(select count(*) FROM answers WHERE question_id = questions.id) = 0') }
+  scope :not_ours,   -> { where("from_email NOT LIKE '%holderdeord.no'")}
 
   def self.all_by_status
     grouped = all.group_by { |q| q.status }

@@ -120,4 +120,11 @@ describe Question do
     q.answer = a
     q.should_not be_valid
   end
+
+  it 'knows if a question is from us' do
+    a = Question.make!(from_email: 'foo@holderdeord.no')
+    b = Question.make!(from_email: 'foo@example.com')
+
+    Question.not_ours.should == [b]
+  end
 end
