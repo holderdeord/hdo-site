@@ -104,11 +104,15 @@
 }
 
 .bubble-mixin (){
+  0% {
+    top: 100%;
+    opacity: 0;
+  }
   1% {
     top: 100%;
     opacity: 1;
   }
-  100%, 0% {
+  100% {
     top: 20%;
     opacity: 0;
   }
