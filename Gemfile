@@ -126,6 +126,9 @@ gem 'rack-cors', :require => 'rack/cors'
 # state machine
 gem 'workflow'
 
+# for multipart emails
+gem 'markerb'
+
 # data import
 gem 'hdo-storting-importer', "~> 0.3.6", require: 'hdo/storting_importer'
 # gem 'hdo-storting-importer', :path => File.expand_path("../../hdo-storting-importer", __FILE__)
