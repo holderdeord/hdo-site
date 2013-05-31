@@ -17,32 +17,4 @@ describe WidgetsHelper do
       links.should include(%{href="/parties/#{parties.last.slug}"})
     end
   end
-
-  context 'promise links' do
-    it 'links to the first main category' do
-      category = Category.make!(main: true)
-      promise = Promise.make!(categories: [category, Category.make!(main: false)])
-
-      link = helper.link_for_promise(promise)
-      link.should include "category_id=#{category.id}"
-    end
-
-    it 'falls back to the parent of the first' do
-      main = Category.make!(main: true)
-      child = Category.make!(main: false)
-
-      main.children << child
-
-      promise = Promise.make!(categories: [child])
-
-      url = helper.link_for_promise(promise)
-      url.should include "category_id=#{main.id}"
-    end
-
-    it 'includes party and parliament period' do
-      url = helper.link_for_promise(Promise.make!)
-      url.should include('party_slug=')
-      url.should include('period=')
-    end
-  end
 end

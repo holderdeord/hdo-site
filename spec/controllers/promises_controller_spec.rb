@@ -92,7 +92,7 @@ describe PromisesController do
   describe "Get #show" do
     it 'renders promises#show' do
       get :show, id: promise
-      response.should have_rendered(:show)
+      response.should have_rendered(:index)
     end
 
     it 'assigns the requested promise as @promise' do

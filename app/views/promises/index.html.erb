@@ -10,4 +10,17 @@
   <%= render partial: 'promises_navigation', locals: { categories: @categories, parties: @parties } %>
 </div>
 
-<%= render partial: 'promises_results' %>
+<ul class="promises-results unstyled">
+  <% if @promises.empty? && !@promise %>
+    <li>Ingen løfter finnes med dette filteret</li>
+  <% end %>
+
+  <%= render partial: 'promise_item', locals: { promise: @promise, highlight: true } if @promise %>
+
+  <% @promises.each do |promise| %>
+    <%= render partial: 'promise_item', locals: { promise: promise, highlight: false } %>
+  <% end %>
+
+  <%= will_paginate @promises, class: "pagination pagination-centered visible-desktop" %>
+  <%= will_paginate @promises, class: "pagination pagination-small pagination-centered visible-phone", page_links: false %>
+</ul>

@@ -1,0 +1,24 @@
+<li class="promise <%= 'alert alert-info' if highlight %> row-fluid">
+
+  <div class="span2 logos">
+    <% promise.parties.each do |party| %>
+      <%= image_tag party.logo.versions[:medium], width: "32", height: "32", alt: "#{party.name}s logo", class: "media-object" %>
+    <% end %>
+  </div>
+
+  <div class="span10">
+    <%= promise.body %>
+
+    <ul class="nav nav-pills">
+      <% if (issues = promise.issues.published).any? %>
+        <li>
+          <span>
+            <strong>Tilknyttede saker:</strong>
+            <%= issues.map { |i| link_to i.title, i }.to_sentence.html_safe %>
+          </span>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+
+</li>

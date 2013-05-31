@@ -35,6 +35,10 @@ class Promise < ActiveRecord::Base
     ParliamentPeriod.joins(:promises).uniq.order(:start_date)
   end
 
+  def main_category
+    categories.where(main: true).first || categories.first.parent
+  end
+
   def general_text
     I18n.t(general? ? 'app.yes' : 'app.no')
   end

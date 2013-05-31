@@ -123,4 +123,16 @@ describe Promise do
     Promise.make!(parliament_period: ParliamentPeriod.make!)
     Promise.parliament_periods.size.should == 2
   end
+
+  it 'has a main category' do
+    main = Category.make!(main: true)
+    child = Category.make!(main: false)
+    main.children << child
+
+    with_main = Promise.make!(categories: [main])
+    without_main = Promise.make!(categories: [child])
+
+    with_main.main_category.should == main
+    without_main.main_category.should == main
+  end
 end
