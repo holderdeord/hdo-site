@@ -15,7 +15,7 @@ defaults: &defaults
   widgets_enabled: true
   representative_widget_enabled: true
   leaderboard_enabled: true
-  ignore_our_questions: false
+  ignore_our_questions: true
 
 development:
   <<: *defaults
