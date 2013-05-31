@@ -12,7 +12,7 @@
       <% promises.each do |promise| %>
       <li>
         <% if params[:linked] %>
-          <%= link_to promise.body, link_for_promise(promise) %>
+          <%= link_to promise.body, promise_path(promise) %>
         <% else %>
           <%= promise.body %>
         <% end %>

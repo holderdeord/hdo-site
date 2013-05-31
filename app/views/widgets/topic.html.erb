@@ -6,17 +6,19 @@
 
       <ul class="promises">
         <% promises.each do |promise| %>
-          <li class="promise <%= slug_for_parties(promise.parties) %>">
-            <header>
-              <% promise.parties.each do |party| %>
-                <%= image_tag party.logo, alt: "#{party.name}s logo", width: '32', height: '32' %>
-                <%= party.name %>
-              <% end %>
-            </header>
-            <p>
-              <%= promise.body %>
-            </p>
-          </li>
+          <%= link_to promise_path(promise) do %>
+            <li class="promise <%= slug_for_parties(promise.parties) %>">
+              <header>
+                <% promise.parties.each do |party| %>
+                  <%= image_tag party.logo, alt: "#{party.name}s logo", width: '32', height: '32' %>
+                  <%= party.name %>
+                <% end %>
+              </header>
+              <p>
+                <%= promise.body %>
+              </p>
+            </li>
+          <% end %>
         <% end %>
       </ul>
 
