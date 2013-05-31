@@ -16,6 +16,10 @@ defaults: &defaults
   representative_widget_enabled: true
   leaderboard_enabled: true
   ignore_our_questions: true
+  ssl_enabled: false
+  ssl_host: ~
+  default_bcc_email: test@holderdeord.no
+  default_reply_to_email: kontakt@holderdeord.no
 
 development:
   <<: *defaults
