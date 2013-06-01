@@ -39,7 +39,7 @@ describe PartiesController do
 
       get :show, id: party
 
-      assigns(:issue_groups).should == {'for' => [t1, t2]}
+      assigns(:issue_groups).should == {'no_promises' => [t1, t2]}
     end
 
     it 'renders the :show template' do

@@ -26,7 +26,6 @@ module Hdo
 
         Party.all.map do |pr|
           @purger.add party_url(pr)
-          @purger.add positions_party_url(pr)
         end
 
         Representative.all.map do |r|

@@ -28,7 +28,6 @@ module Hdo
         expected += Party.all.flat_map do |p|
           [
             "http://localhost:3000/parties/#{p.slug}",
-            "http://localhost:3000/parties/#{p.slug}/positions",
           ]
         end
 
