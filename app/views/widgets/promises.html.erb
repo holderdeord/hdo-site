@@ -11,11 +11,7 @@
     <ul>
       <% promises.each do |promise| %>
       <li>
-        <% if params[:linked] %>
-          <%= link_to promise.body, promise_path(promise) %>
-        <% else %>
-          <%= promise.body %>
-        <% end %>
+        <%= link_to promise.body, promise_path(promise), class: 'promise-link' %>
       </li>
       <% end %>
     </ul>
