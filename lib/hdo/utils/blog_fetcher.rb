@@ -37,12 +37,17 @@ module Hdo
       end
 
       class Post
-        attr_reader :title, :url, :updated_at
+        attr_reader :title, :url, :updated_at, :content
 
         def initialize(entry)
           @title      = entry.css('title').text
           @url        = entry.css('link[rel=alternate][type="text/html"]').first.try(:attr, 'href')
           @updated_at = Time.parse(entry.css('updated').text)
+          @html       = entry.css('content[type=html]').text
+        end
+
+        def text
+          Nokogiri::HTML.parse(@html).text
         end
       end
 
