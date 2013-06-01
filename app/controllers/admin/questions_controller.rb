@@ -36,7 +36,6 @@ class Admin::QuestionsController < AdminController
     save_question
   end
 
-  # TODO add event logging for these
   def question_approved_email_rep
     ModerationMailer.question_approved_representative_email(@question).deliver
     redirect_to edit_admin_question_path(@question), notice: t('app.questions.edit.email_sent', email: @question.representative.email)
