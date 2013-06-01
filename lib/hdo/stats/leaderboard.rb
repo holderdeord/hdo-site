@@ -1,6 +1,7 @@
 module Hdo
   module Stats
     class Leaderboard
+      attr_reader :by_party, :by_key
 
       def initialize(issues)
         parties = Party.all
@@ -15,14 +16,6 @@ module Hdo
             @by_key[acc.key_for(party)][party] += 1
           end
         end
-      end
-
-      def by_party(&blk)
-        @by_party.each(&blk)
-      end
-
-      def by_key(&blk)
-        @by_key.each(&blk)
       end
 
       def thermo

@@ -101,6 +101,101 @@
   h4 {
     font-weight: normal;
   }
+  .party-list {
+    .party {
+      background-color: #fff;
+      border-radius: 5px;
+      display: block;
+      position: relative;
+      margin-bottom: 20px;
+      padding: 10px 100px 10px 100px;
+      line-height: 50px;
+      height: 50px;
+      color: inherit;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      box-shadow: 0 -5px 40px rgba(0,0,0,0.075) inset,
+                  0 0 0 1px rgba(0,0,0,0.1) inset,
+                  0 1px 3px rgba(0,0,0,0.075);
+      &:hover {
+        text-decoration: none;
+        background-color: #fafafa;
+      }
+      &:active {
+        background-color: #eee;
+      }
+      .logo {
+        position: absolute;
+        border-radius: 4px 0 0 4px;
+        width: 90px;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        font-size: 1.75em;
+        color: #666;
+        text-align: center;
+        line-height: 40px;
+        box-shadow: -1px 0 rgba(0,0,0,0.05) inset,
+                    -1px 0 rgba(255,255,255,0.75);
+        img {
+          position: absolute;
+          top: 50%;
+          left: 15px;
+          height: 64px;
+          margin-top: -32px;
+          width: 64px;
+        }
+      }
+      .name {
+        font-size: 1.2em;
+      }
+      .counters {
+        background: rgba(0,0,0,0.1);
+        position: absolute;
+        border-radius: 0 4px 4px 0;
+        width: 80px;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        font-size: 1.75em;
+        color: #666;
+        text-align: right;
+        line-height: 36px;
+        box-shadow: 1px 0 3px rgba(0,0,0,0.1) inset,
+                    2px 0 2px rgba(255,255,255,0.75);
+        .kept, .broken {
+          position: absolute;
+          height: 50%;
+          left: 0;
+          right: 0;
+          padding-right: 10px;
+          &:after {
+            display: inline-block;
+            vertical-align: 4px;
+            font-size: 0.5em;
+            font-weight: normal;
+            line-height: 1em;
+            color: rgba(0,0,0,0.4);
+            margin-left: 5px;
+          }
+        }
+        .kept {
+          top: 0;
+          box-shadow: 0 1px rgba(0,0,0,0.1);
+          &:after {
+            content: "holdt";
+          }
+        }
+        .broken {
+          bottom: 0 ;
+          &:after {
+            content: "brutt";
+          }
+        }
+      }
+    }
+  }
 }
 
 .bubble-mixin (){
