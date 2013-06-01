@@ -36,6 +36,22 @@ class Admin::QuestionsController < AdminController
     save_question
   end
 
+  # TODO add event logging for these
+  def question_approved_email_rep
+    ModerationMailer.question_approved_representative_email(@question).deliver
+    redirect_to admin_questions_path, notice: t('app.questions.edit.email_sent', email: @question.representative.email)
+  end
+
+  def question_approved_email_user
+    ModerationMailer.question_approved_user_email(@question).deliver
+    redirect_to admin_questions_path, notice: t('app.questions.edit.email_sent', email: @question.from_email)
+  end
+
+  def answer_approved_email_user
+    ModerationMailer.answer_approved_user_email(@question).deliver
+    redirect_to admin_questions_path, notice: t('app.questions.edit.email_sent', email: @question.from_email)
+  end
+
   private
 
   def fetch_question
