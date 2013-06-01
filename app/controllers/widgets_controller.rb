@@ -54,17 +54,21 @@ class WidgetsController < ApplicationController
   def configure
     user = current_user || authenticate_with_http_basic { |u, p| Hdo::BasicAuth.ok?(u, p) }
     if user
-      @issues = Issue.published.order(:title)
+      issues = Issue.published
 
-      @example_party = Party.first
-      @example_promises = Promise.order('random()').first(5).map(&:id).join(',')
+      example_party = Party.first
+      example_promises = Promise.order('random()').first(5)
 
-      @examples = {
-        :script   => "<script src='#{widget_load_url}'></script>",
-        :issue    => "<a class='hdo-issue-widget' href='#{root_url}' data-issue-id='#{@issues.first.try(:id)}'>Laster innhold fra Holder de ord</a>",
-        :party    => "<a class='hdo-party-widget' href='#{root_url}' data-party-id='#{@example_party.try(:id)}'>Laster innhold fra Holder de ord</a>",
-        :promises => "<a class='hdo-promises-widget' href='#{root_url}' data-promises='#{@example_promises}'>Laster innhold fra Holder de ord</a>",
-      }
+      docs = Hdo::WidgetDocs.new
+      @examples = [
+        docs.specific_issue(issues.first),
+        docs.party_default(example_party),
+        docs.party_count(example_party, 10),
+        docs.party_issues(example_party, issues.order('random()').first(5)),
+        docs.promises(example_promises)
+      ]
+
+      @issues = issues.order(:title)
 
       render layout: 'application'
     else

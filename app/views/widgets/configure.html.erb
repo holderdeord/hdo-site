@@ -1,5 +1,5 @@
 <h1 class="page-header">
-  Widgettjeneste
+  Widgets
 </h1>
 
 <ul class="nav nav-tabs">
@@ -10,58 +10,31 @@
 
 <div class="tab-content">
   <div class="tab-pane active" id="docs">
-    <p>Her er noen eksempler på hvordan konfigurere Holder de ord sine widgets.</p>
-
-    <div class="row-fluid">
-      <h3>Sakswidget</h3>
-
-      <div class="span5"> <!-- tab-pane messes up grid? -->
-        Script:
-        <pre class="prettyprint"><code class="language-html"><%= @examples[:issue] %><%= @examples[:script] %></code></pre>
-        Iframe:
-        <pre class="prettyprint"><code class="language-html"><%= "<iframe src='#{widget_issue_url(@issues.first)}?nrk=1'>" %></code></pre>
-      </div>
-
-      <div class="span6">
-        <%= @examples[:issue].html_safe %>
-      </div>
+    <div class="alert alert-info">
+      <strong>NB</strong>: NRK-brukere må legge på parameteret <code>nrk=1</code> bak alle iframe-URLer for bruk på nrk.no.
     </div>
 
-    <hr class="soften">
+    <% @examples.each do |widget| %>
+      <div class="row-fluid">
+        <h3>
+          <%= widget.title %>
+          <small>- <%= widget.subtitle %></small>
+        </h3>
 
-    <div class="row-fluid">
-      <h3>Partiwidget</h3>
+        <div class="span5"> <!-- tab-pane messes up grid? -->
+          Script
+          <pre class="prettyprint"><code class="language-html"><%= "#{widget.script}<script src='#{widget_load_url}'></script>" %></code></pre>
+          Iframe
+          <pre class="prettyprint"><code class="language-html"><%= widget.iframe %></code></pre>
+        </div>
 
-      <div class="span5"> <!-- tab-pane messes up grid? -->
-        Script:
-        <pre class="prettyprint"><code class="language-html"><%= @examples[:party] %><%= @examples[:script] %></code></pre>
-        Iframe:
-        <pre class="prettyprint"><code class="language-html"><%= "<iframe src='#{widget_party_url(@example_party)}?nrk=1'>" %></code></pre>
+        <div class="span6">
+          <%= widget.script.html_safe %>
+        </div>
       </div>
 
-      <div class="span6">
-        <%= @examples[:party].html_safe %>
-      </div>
-    </div>
-
-    <hr>
-
-    <div class="row-fluid">
-      <h3>Løftewidget</h3>
-
-      <div class="span5">
-        Script:
-        <pre class="prettyprint"><code class="language-html"><%= @examples[:promises] %><%= @examples[:script] %></code></pre>
-        Iframe:
-        <pre class="prettyprint"><code class="language-html"><%= "<iframe src='#{widget_promises_url(promises: @example_promises)}?nrk=1'>" %></code></pre>
-      </div>
-
-      <div class="span6">
-        <%= @examples[:promises].html_safe %>
-      </div>
-    </div>
-
-    <hr>
+      <hr class="soften">
+    <% end %>
   </div>
 
 
@@ -74,9 +47,9 @@
       </div>
     </form>
 
+    <div id="promise-hits" class="pull-right"></div>
     <%= spinner_tag %>
 
-    <span id="promise-hits"></span>
 
     <table class="table">
       <thead>
@@ -140,6 +113,7 @@
 
           if (promises) {
             hits.html(promises.length + ' treff');
+
             $.each(promises, function () {
               $(tbody).append('<tr><td>' + this.id + '</td><td>' + this.parliament_period_name + '</td><td>' + this.party_names + '</td><td>' + this.body + '</td>');
             });
@@ -156,4 +130,4 @@
 </script>
 <% end %>
 
-<%= @examples[:script].html_safe %>
+<script src='<%= widget_load_url %>'></script>

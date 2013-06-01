@@ -110,7 +110,7 @@ var HDO = HDO || {};
     },
 
     widgetOptionsFor: function (el) {
-      var url, target;
+      var url, target, count;
 
       if (this.type === "issue") {
         url = H.widgets.baseUrl + "issues/" + el.getAttribute('data-issue-id') + '/widget';
@@ -119,7 +119,13 @@ var HDO = HDO || {};
         url = this.addIssueParams(el, url);
       } else if (this.type === "party") {
         url = H.widgets.baseUrl + "parties/" + el.getAttribute('data-party-id') + '/widget';
-        url = this.addIssueParams(el, url);
+        count = el.getAttribute('data-count');
+        if (count && count.length)
+          url = this.addParam(url, 'count', count);
+        else {
+          url = this.addIssueParams(el, url);
+        }
+
       } else if (this.type === "topic") {
         url = H.widgets.baseUrl + "widgets/topic?" + this.queryParamFor('issues', el.getAttribute('data-issues')) + '&'
                                                    + this.promisesQueryFor(el.getAttribute('data-promises'));
@@ -132,14 +138,22 @@ var HDO = HDO || {};
       target = el.getAttribute('data-target');
 
       if (target && target.length) {
-        if (url.indexOf('?') > 0) {
-          url += '&' + this.queryParamFor('target', target);
-        } else {
-          url += '?' + this.queryParamFor('target', target);
-        }
+        url = this.addParam(url, 'target', target)
       }
 
       return { 'url': url };
+    },
+
+    addParam: function (url, key, value) {
+      var param = this.queryParamFor(key, value);
+
+      if (url.indexOf('?') > 0) {
+        url += '&' + param;
+      } else {
+        url += '?' + param;
+      }
+
+      return url;
     },
 
     findWidgetElements: function () {
