@@ -51,9 +51,5 @@
 <% end %>
 
 <div class="row-fluid">
-  <% if @new_view %>
-    <%= render partial: 'positions' %>
-  <% else %>
-    <%= render partial: 'shared/issue_positions', locals: { issue_groups: @issue_groups } %>
-  <% end %>
+  <%= render partial: 'positions' %>
 </div>

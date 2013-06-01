@@ -84,7 +84,6 @@ Hdo::Application.routes.draw do
 
   resources :parties,    only: [:index, :show] do
     member do
-      get 'positions'
       get 'widget' => 'widgets#party'
     end
   end
