@@ -8,8 +8,8 @@ Velkommen til Spørsmål og Svar, en tjeneste utviklet av Holder de ord.
 Spørsmål- og svartjenesten skal skape en arena hvor politikere og velgere kan delta i saklig politisk debatt med stor takhøyde.
 
 Vi har utviklet et system som gjør det enkelt for deg å sjekke spørsmål og legge inn svar.
-[Klikk her](<%= confirmation_url(@resource,
-                            confirmation_token: @resource.confirmation_token, protocol: AppConfig.ssl_enabled ? 'https' : 'http') %>) for å komme i gang!
+Følg <%= confirmation_url(@resource,
+                            confirmation_token: @resource.confirmation_token, protocol: AppConfig.ssl_enabled ? 'https' : 'http') %> for å komme i gang!
 
 Alle spørsmål rettes direkte til en representant, og Holder de ord modererer spørsmål slik at de er i tråd med våre retningslinjer.
 

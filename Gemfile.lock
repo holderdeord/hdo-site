@@ -167,8 +167,6 @@ GEM
       i18n (>= 0.4.0)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
-    markerb (1.0.1)
-      redcarpet (>= 2.0)
     method_source (0.8.1)
     mime-types (1.23)
     mini_magick (3.5.0)
@@ -361,7 +359,6 @@ DEPENDENCIES
   lograge
   machinist (~> 2.0)
   mail
-  markerb
   mini_magick (~> 3.5)
   multi_json
   net-http-persistent
