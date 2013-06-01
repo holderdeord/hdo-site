@@ -37,7 +37,7 @@ module Hdo
       end
 
       class Post
-        attr_reader :title, :url, :updated_at, :content
+        attr_reader :title, :url, :updated_at, :html
 
         def initialize(entry)
           @title      = entry.css('title').text
