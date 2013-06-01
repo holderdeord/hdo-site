@@ -1,3 +1,10 @@
-<p>Ditt spørsmål er godkjent og kan ses på holderdeord.no!</p>
-<p>Vi vil sende deg en e-post til så fort <%= @question.representative.name %> har svart.</p>
-<p>Hilsen, Holder de ord.</p>
+<p>Kjære <%= @question.from_name %>,</p>
+
+<p>Ditt spørsmål er nå videresendt til <%= @question.representative.name %>, og har blitt publisert <%= link_to 'her', question_url(@question) %>. På denne siden kan du også dele spørsmålet ditt på Facebook og Twitter. Vi vil kontakte deg igjen når vi mottar et svar. 
+
+<p>Ha en god dag!</p>
+
+<p>Vennlig hilsen,</p>
+<p>Holder de ord</p>
+
+<p style="font-size: small; color: #666;">Hvis det ikke er du som har sendt inn dette spørsmålet, si gjerne fra ved å svare på denne mailen.</p>
