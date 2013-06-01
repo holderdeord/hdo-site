@@ -8,7 +8,7 @@ class Question < ActiveRecord::Base
   has_one    :answer, dependent: :destroy
   has_and_belongs_to_many :issues, uniq: true, order: "updated_at DESC"
   has_many :email_event_connections, as: :email_event_associable
-  has_many :email_events, through: :email_event_connections
+  has_many :email_events, through: :email_event_connections, order: "created_at DESC"
 
   validates :body,           presence: true
   validates :from_name,      presence: true

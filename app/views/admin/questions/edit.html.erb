@@ -84,25 +84,26 @@
   </div>
 
   <% if @question.email_events.any? %>
-    <div class="row-fluid">
       <h4>Sendte e-poster</h4>
       <table class="table table-hover">
-        <tr>
-          <th>Sendt</th>
-          <th>Til</th>
-          <th>Type</th>
-        </tr>
-
-        <% @question.email_events.each do |email_event| %>
+        <thead>
           <tr>
-            <td><%= l email_event.created_at %></td>
-            <td><%= email_event.email_address %><td>
-            <td><%= email_event.email_type %><td>
+            <th>Sendt</th>
+            <th>Til</th>
+            <th>Emne</th>
           </tr>
-        <% end %>
+        </thead>
 
+        <tbody>
+          <% @question.email_events.each do |email_event| %>
+            <tr>
+              <td><%= l email_event.created_at %></td>
+              <td><%= email_event.email_address %></td>
+              <td><%= email_event.email_type %></td>
+            </tr>
+          <% end %>
+        </tbody>
       </table>
-    </div>
   <% end %>
 
   <div class="form-actions">
