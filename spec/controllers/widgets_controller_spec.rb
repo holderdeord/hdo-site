@@ -84,6 +84,34 @@ describe WidgetsController do
     end
   end
 
+  describe 'GET #configuration' do
+    let(:auth) do
+      ActionController::HttpAuthentication::Basic.encode_credentials(*Hdo::BasicAuth.users.first)
+    end
+
+    it 'expects basic auth' do
+      get :configure
+      response.status.should == 401
+    end
+
+    it 'ignores basic auth if the user is signed in' do
+      sign_in User.make!
+
+      get :configure
+      response.should be_success
+    end
+
+    it 'assigns published issues' do
+      published, issue = Issue.make!(:published), Issue.make!
+
+      request.env['HTTP_AUTHORIZATION'] = auth
+      get :configure
+
+      response.should be_success
+      assigns(:issues).should == [published]
+    end
+  end
+
   describe 'GET #load' do
     render_views
 

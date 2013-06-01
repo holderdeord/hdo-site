@@ -51,6 +51,27 @@ class WidgetsController < ApplicationController
   def load
   end
 
+  def configure
+    user = current_user || authenticate_with_http_basic { |u, p| Hdo::BasicAuth.ok?(u, p) }
+    if user
+      @issues = Issue.published.order(:title)
+
+      @example_party = Party.first
+      @example_promises = Promise.order('random()').first(5).map(&:id).join(',')
+
+      @examples = {
+        :script   => "<script src='#{widget_load_url}'></script>",
+        :issue    => "<a class='hdo-issue-widget' href='#{root_url}' data-issue-id='#{@issues.first.try(:id)}'>Laster innhold fra Holder de ord</a>",
+        :party    => "<a class='hdo-party-widget' href='#{root_url}' data-party-id='#{@example_party.try(:id)}'>Laster innhold fra Holder de ord</a>",
+        :promises => "<a class='hdo-promises-widget' href='#{root_url}' data-promises='#{@example_promises}'>Laster innhold fra Holder de ord</a>",
+      }
+
+      render layout: 'application'
+    else
+      request_http_basic_authentication('HDO Widgets')
+    end
+  end
+
   private
 
   def selected_issues

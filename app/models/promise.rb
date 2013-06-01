@@ -51,7 +51,11 @@ class Promise < ActiveRecord::Base
     parties.map(&:external_id).to_sentence
   end
 
+  def parliament_period_name
+    parliament_period.name
+  end
+
   def to_indexed_json
-    to_json methods: :party_names, only: :body
+    to_json methods: [:party_names, :parliament_period_name], only: :body
   end
 end

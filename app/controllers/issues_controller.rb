@@ -10,17 +10,6 @@ class IssuesController < ApplicationController
     @groups = @groups.sort_by { |t, _| t.name }
   end
 
-  def ids
-    @issues = Issue.published.order(:title)
-
-    respond_to do |format|
-      format.html
-      format.json do
-        render json: @issues.map { |i| i.as_json(only: [:id, :title]).merge(url: issue_url(i)) }
-      end
-    end
-  end
-
   def show
     policy = policy(@issue)
 

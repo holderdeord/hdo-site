@@ -6,7 +6,7 @@ describe SearchController do
   let(:issue_result) { mock(type: 'issue')  }
 
   it 'can search for #all' do
-    Hdo::Search::Searcher.should_receive(:new).with("skatt").and_return(searcher)
+    Hdo::Search::Searcher.should_receive(:new).with("skatt", nil).and_return(searcher)
 
     search_response.stub(:results => [issue_result])
     searcher.should_receive(:all).and_return search_response

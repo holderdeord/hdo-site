@@ -12,11 +12,7 @@ class SearchController < ApplicationController
   ]
 
   def all
-    response = nil
-
-    ActiveSupport::Notifications.instrument("search.all", :query => params[:query]) {
-      response = Hdo::Search::Searcher.new(params[:query]).all
-    }
+    response = Hdo::Search::Searcher.new(params[:query], params[:size]).all
 
     @results = []
 
@@ -24,6 +20,11 @@ class SearchController < ApplicationController
       @results = response.results.
                           group_by { |e| e.type }.
                           sort_by { |t, _| TYPE_ORDER.index(t) || 10 }
+
+      respond_to do |format|
+        format.html
+        format.json { render json: @results }
+      end
     else
       flash.alert = t('app.errors.search')
     end

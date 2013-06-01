@@ -59,10 +59,6 @@ Hdo::Application.routes.draw do
   #
 
   resources :issues, only: [:index, :show, :votes] do
-    collection do
-      get 'ids' => 'issues#ids'
-    end
-
     member do
       get 'votes'      => 'issues#votes'
       get 'widget'     => 'widgets#issue'
@@ -99,7 +95,7 @@ Hdo::Application.routes.draw do
   #
 
   resources :promises, only: [:index, :show]
-  get 'promises/:promises/widget' => 'widgets#promises'
+  get 'promises/:promises/widget' => 'widgets#promises', as: :widget_promises
 
   #
   # parliament_issues
@@ -139,8 +135,9 @@ Hdo::Application.routes.draw do
   # widgets
   #
 
-  get 'widgets'          => 'widgets#load', format: :js
-  get 'widgets/topic'    => 'widgets#topic'
+  get 'widgets'           => 'widgets#load', format: :js, as: :widget_load
+  get 'widgets/topic'     => 'widgets#topic'
+  get 'widgets/config'    => 'widgets#configure'
 
   #
   # home

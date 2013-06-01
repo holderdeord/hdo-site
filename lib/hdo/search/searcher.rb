@@ -10,14 +10,15 @@ module Hdo
         ParliamentIssue.index_name => { boost: 1   }
       }
 
-      def initialize(query)
+      def initialize(query, size = nil)
         @query = query.blank? ? '*' : query
+        @size = size || 100
       end
 
       def all
         response_from {
           Tire.search(INDECES) do |s|
-            s.size 100
+            s.size @size
             s.query do |query|
               query.string @query, default_operator: 'AND'
             end
