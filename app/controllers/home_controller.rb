@@ -12,6 +12,8 @@ class HomeController < ApplicationController
                   :robots,
                   :faq,
                   :friends,
+                  :services,
+                  :terms
 
   def index
     published = Issue.published.includes(:tags)
