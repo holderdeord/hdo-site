@@ -1,4 +1,4 @@
-<li class="promise <%= 'alert alert-info' if highlight %> row-fluid">
+<li class="promise <%= 'alert' if highlight %> row-fluid">
 
   <div class="span2 logos">
     <% promise.parties.each do |party| %>
@@ -9,16 +9,16 @@
   <div class="span10">
     <%= promise.body %>
 
-    <ul class="nav nav-pills">
-      <% if (issues = promise.issues.published).any? %>
-        <li>
-          <span>
-            <strong>Tilknyttede saker:</strong>
-            <%= issues.map { |i| link_to i.title, i }.to_sentence.html_safe %>
-          </span>
-        </li>
-      <% end %>
-    </ul>
+    <% if (issues = promise.issues.published).any? %>
+      <ul class="nav nav-pills">
+          <li>
+            <span>
+              <strong>Tilknyttede saker:</strong>
+              <%= issues.map { |i| link_to i.title, i }.to_sentence.html_safe %>
+            </span>
+          </li>
+      </ul>
+    <% end %>
   </div>
 
 </li>
