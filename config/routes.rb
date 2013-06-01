@@ -148,7 +148,6 @@ Hdo::Application.routes.draw do
   get 'home/support'
   get 'home/member'
   get 'home/people'
-  get 'home/future'
   get 'home/faq'        => 'home#faq', as: :home_faq
   get 'home/friends'
 

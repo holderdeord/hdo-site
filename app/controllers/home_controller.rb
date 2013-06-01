@@ -8,7 +8,6 @@ class HomeController < ApplicationController
                   :people,
                   :about,
                   :member,
-                  :future,
                   :robots,
                   :faq,
                   :friends,
@@ -53,9 +52,6 @@ class HomeController < ApplicationController
   end
 
   def member
-  end
-
-  def future
   end
 
   def friends
