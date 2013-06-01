@@ -53,11 +53,13 @@ Hdo::Application.configure do
   # Disable delivery errors, bad email addresses will be ignored
   # config.action_mailer.raise_delivery_errors = false
   config.action_mailer.default_url_options = { host: 'www.holderdeord.no' }
+  config.action_mailer.raise_delivery_errors = true
+  config.action_mailer.delivery_method     = :smtp
+  config.action_mailer.smtp_settings       = { :address => "post.holderdeord.no", :port => 25 }
 
   # Enable threaded mode
   config.threadsafe! unless $rails_rake_task
   config.eager_load_paths += %W(#{config.root}/lib)
-
 
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
   # the I18n.default_locale when a translation can not be found)
