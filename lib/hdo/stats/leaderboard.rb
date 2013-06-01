@@ -4,7 +4,10 @@ module Hdo
       attr_reader :by_party, :by_key
 
       def initialize(issues)
-        parties = Party.all
+        parties = Party.order(:name)
+
+        @government = parties.in_government
+        @opposition = parties.to_a - @government
 
         @by_party = Hash.new { |hash, key| hash[key] = Hash.new(0) }
         @by_key = Hash.new { |hash, key| hash[key] = Hash.new(0) }
@@ -15,6 +18,12 @@ module Hdo
             @by_party[party][acc.key_for(party)] += 1
             @by_key[acc.key_for(party)][party] += 1
           end
+        end
+      end
+
+      def parties
+        [@government, @opposition].map do |group|
+          group.map { |party| [party, @by_party[party]] }
         end
       end
 

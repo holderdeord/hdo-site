@@ -48,6 +48,9 @@
   <% end %>
 </section>
 
+<% if AppConfig.leaderboard_enabled %>
+  <%= render partial: 'leaderboard' %>
+<% end %>
 
 <h3 class="lead">Alle tema</h3>
 <% @all_tags.each_slice(4) do |tags| %>
@@ -62,9 +65,7 @@
 
 <hr class="soften">
 
-<% if AppConfig.leaderboard_enabled %>
-  <%= render partial: 'leaderboard' %>
-<% else %>
+<% unless AppConfig.leaderboard_enabled %>
   <h3 align="center">SJEKK DITT PARTI</h3>
 
   <div class="row-fluid">

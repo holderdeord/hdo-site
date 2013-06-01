@@ -30,7 +30,7 @@
     <p>Explanations from Tiina</p>
     <div class="party-list row-fluid">
 
-      <% @leaderboard.by_party.each_slice(4) do |parties| %>
+      <% @leaderboard.parties.each do |parties| %>
         <div class="span6">
           <% parties.each do |party| %>
 
