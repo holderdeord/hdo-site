@@ -337,45 +337,57 @@ footer {
       padding: 0;
       list-style: none;
       .clearfix;
-      .promise {
-        display: inline-block;
+      a {
         float: left;
-        width: 225px;
-        padding: 0 0 0 40px;
-        margin: 0 20px 10px 0;
-        header {
-          position: relative;
-          overflow: hidden;
-          text-overflow: ellipsis;
-          white-space: nowrap;
-          font-weight: bold;
-          padding: 15px 10px 10px 35px;
-          margin: 0 0 -10px -35px;
-          img {
-            position: absolute;
-            left: 0;
-            max-width: 32px;
-            max-height: 32px;
-            top: 10px;
+        margin: 0 10px 10px 0;
+        &:hover {
+          background-color: #eee;
+          text-decoration: none;
+          .promise p:after {
+            background: -webkit-linear-gradient(top, rgba(238,238,238,0), rgba(238,238,238,1));
+            background: -moz-linear-gradient(top, rgba(238,238,238,0), rgba(238,238,238,1));
+            background: -ms-linear-gradient(top, rgba(238,238,238,0), rgba(238,238,238,1));
+            background: linear-gradient(top, rgba(238,238,238,0), rgba(238,238,238,1));
           }
         }
-        p {
-          margin: -5px 0 0 0;
-          font-size: 0.9em;
-          height: 50px;
-          overflow: hidden;
-          position: relative;
-          &:after {
-            content: "";
-            position: absolute;
-            bottom: 0;
-            height: 2em;
-            left: 0;
-            right: 0;
-            background: -webkit-linear-gradient(top, rgba(255,255,255,0), rgba(255,255,255,1));
-            background: -moz-linear-gradient(top, rgba(255,255,255,0), rgba(255,255,255,1));
-            background: -ms-linear-gradient(top, rgba(255,255,255,0), rgba(255,255,255,1));
-            background: linear-gradient(top, rgba(255,255,255,0), rgba(255,255,255,1));
+        .promise {
+          width: 225px;
+          padding: 0 0 0 40px;
+          margin: 0;
+          header {
+            position: relative;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            font-weight: bold;
+            padding: 15px 10px 10px 35px;
+            margin: 0 0 -10px -35px;
+            img {
+              position: absolute;
+              left: 0;
+              max-width: 32px;
+              max-height: 32px;
+              top: 10px;
+            }
+          }
+          p {
+            margin: -5px 0 0 0;
+            font-size: 0.9em;
+            height: 50px;
+            overflow: hidden;
+            position: relative;
+            &:after {
+              content: "";
+              position: absolute;
+              bottom: 0;
+              height: 2em;
+              left: 0;
+              right: 0;
+              background: -webkit-linear-gradient(top, rgba(255,255,255,0), rgba(255,255,255,1));
+              background: -moz-linear-gradient(top, rgba(255,255,255,0), rgba(255,255,255,1));
+              background: -ms-linear-gradient(top, rgba(255,255,255,0), rgba(255,255,255,1));
+              background: linear-gradient(top, rgba(255,255,255,0), rgba(255,255,255,1));
+            }
           }
         }
       }
