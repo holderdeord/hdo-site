@@ -6,7 +6,7 @@ module Hdo
     end
 
     def self.users
-      @users ||= AppConfig.basic_auth_users.split(',').map { |e| e.split(':') }
+      @users ||= AppConfig.basic_auth_users.to_s.split(',').map { |e| e.split(':') }
     end
 
   end
