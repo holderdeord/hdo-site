@@ -262,6 +262,7 @@ nb:
         representative: Representant
         issues: Saker
         show_sender: Vis fullt navn
+        internal_comment: Kommentar
       answer:
         body: Tekst
         representative: Representant

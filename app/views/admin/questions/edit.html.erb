@@ -23,6 +23,9 @@
 
       <dt><%= Question.human_attribute_name :body %></dt>
       <dd class="well"><%= @question.body %></dd>
+
+      <dt><%= Question.human_attribute_name :internal_comment %></dt>
+      <dd><%= f.text_area :internal_comment, rows:  5, cols: 50 %></dd>
     </dl>
 
     <dl class="span6">

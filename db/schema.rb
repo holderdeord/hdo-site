@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130516162348) do
+ActiveRecord::Schema.define(:version => 20130601110526) do
 
   create_table "answers", :force => true do |t|
     t.text     "body",                                     :null => false
@@ -252,6 +252,7 @@ ActiveRecord::Schema.define(:version => 20130516162348) do
     t.datetime "updated_at",                               :null => false
     t.integer  "representative_id"
     t.boolean  "show_sender",       :default => true
+    t.string   "internal_comment"
   end
 
   create_table "representatives", :force => true do |t|

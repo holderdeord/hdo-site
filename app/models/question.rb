@@ -2,7 +2,7 @@ class Question < ActiveRecord::Base
   include Workflows::BaseQuestionAndAnswerWorkflow
 
   attr_accessible :body, :from_name, :from_email, :representative, :representative_id,
-                  :issues, :show_sender
+                  :issues, :show_sender, :internal_comment
 
   belongs_to :representative
   has_one    :answer, dependent: :destroy

@@ -143,6 +143,12 @@ describe Admin::QuestionsController do
 
         question.reload.answer.should be_approved
       end
+
+      it 'sets the internal comment' do
+        put :update, id: question, question: { internal_comment: 'doobeedoo' }
+
+        question.reload.internal_comment.should eq 'doobeedoo'
+      end
     end
   end
 
