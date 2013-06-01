@@ -27,45 +27,14 @@
     <hr class="soften">
 
     <div class="row-fluid">
-      <div class="span6">
-        <h4 class="leaderboard-title lead">
-          <img alt="Ikon for holdt løfte" src='<%= asset_path("taxonomy-icons/promise_kept.png") %>'>
-          <span>Flest holdte løfter</span>
-        </h4>
-        <ol class="leaderboard">
-          <% @leaderboard.fetch(:kept).each do |party, count| %>
-            <li>
-              <%= link_to party, class: party.external_id do %>
-                <%= image_tag party.logo, alt: party.name, width: '48', height: '48' %>
-                <span class="text">
-                  <div class="title"><%= party.name %></div>
-                  <div class="muted">Holdt ord i <%= count %> saker</div>
-                </span>
-              <% end %>
-            </li>
-          <% end %>
-        </ol>
-      </div>
-
-      <div class="span6">
-        <h4 class="leaderboard-title lead">
-          <img alt="Ikon for brutt løfte" src='<%= asset_path("taxonomy-icons/promise_broken.png") %>'>
-          <span>Flest brutte løfter</span>
-        </h4>
-        <ol class="leaderboard">
-          <% @leaderboard.fetch(:broken).each do |party, count| %>
-            <li>
-              <%= link_to party, class: party.external_id do %>
-                <%= image_tag party.logo, alt: party.name, width: '48', height: '48' %>
-                <span class="text">
-                  <div class="title"><%= party.name %></div>
-                  <div class="muted">Brøt løfter i <%= count %> saker</div>
-                </span>
-              <% end %>
-            </li>
-          <% end %>
-        </ol>
-      </div>
+      <ul>
+        <% @leaderboard.by_party do |party, counts| %>
+        <li>
+          <%= party.name %> <%= counts[:kept] %> holdt, <%= counts[:broken] %> brutt
+        </li>
+        <% end %>
+      </ul>
     </div>
+
 
   </section>
