@@ -159,13 +159,13 @@ describe Admin::QuestionsController do
         it "can send the user an email" do
           ModerationMailer.should_receive(:question_approved_user_email).with(question).and_call_original
 
-          post :question_approved_email_user, id: question
+          get :question_approved_email_user, id: question
         end
 
         it "can send the representative an email" do
           ModerationMailer.should_receive(:question_approved_representative_email).with(question).and_call_original
 
-          post :question_approved_email_rep, id: question
+          get :question_approved_email_rep, id: question
         end
       end
 
@@ -173,7 +173,7 @@ describe Admin::QuestionsController do
         it "can send the user an email" do
           ModerationMailer.should_receive(:answer_approved_user_email).with(question).and_call_original
 
-          post :answer_approved_email_user, id: question
+          get :answer_approved_email_user, id: question
         end
       end
     end

@@ -25,7 +25,7 @@
       <dd class="well"><%= @question.body %></dd>
 
       <dt><%= Question.human_attribute_name :internal_comment %></dt>
-      <dd><%= f.text_area :internal_comment, rows:  5, cols: 50 %></dd>
+      <dd><%= f.text_area :internal_comment, rows:  5, style: 'width: 100%' %></dd>
     </dl>
 
     <dl class="span6">
@@ -66,6 +66,20 @@
           <dd><%= select_tag 'question[answer][status]', answer_status_options %></dd>
         </dl>
       <% end %>
+    </div>
+
+    <hr class="soften">
+
+  <h3>E-poster</h3>
+  <div class="row-fluid">
+    <div class="span5<%= @question.approved? ? '' : ' muted' %>">
+      <h4>Ved godkjent spørsmål</h4>
+      <div class="row-fluid"><%= link_to 'Send e-post til bruker', question_approved_email_user_admin_question_path(@question), class: 'btn', disabled: !@question.approved? %></div>
+      <div class="row-fluid"><%= link_to 'Send e-post til representant', question_approved_email_rep_admin_question_path(@question), class: 'btn', disabled: !@question.approved? %></div>
+    </div>
+    <div class="span5<%= @question.answer && @question.answer.approved? ? '' : ' muted' %>">
+      <h4>Ved godkjent svar</h4>
+      <div class="row-fluid"><%= link_to 'Send e-post til bruker', answer_approved_email_user_admin_question_path(@question), class: 'btn', disabled: !@question.answer || !@question.answer.approved? %></div>
     </div>
   </div>
 
