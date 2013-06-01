@@ -47,7 +47,12 @@ module Hdo
         end
 
         def text
-          Nokogiri::HTML.parse(@html).text
+          spans = []
+          Nokogiri::HTML.parse(@html).css('span').each do |s|
+            spans << s.text
+          end
+
+          spans
         end
       end
 

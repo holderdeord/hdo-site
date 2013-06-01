@@ -24,6 +24,8 @@ class HomeController < ApplicationController
     if AppConfig.leaderboard_enabled
       @leaderboard = Hdo::Stats::Leaderboard.new(published)
     end
+
+    @latest_post = Hdo::Utils::BlogFetcher.posts.first
   end
 
   def robots

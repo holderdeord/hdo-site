@@ -27,40 +27,38 @@
 <% end %>
 
 <div class="row">
-<div class="span7 pull-left">
-  <h3>Aktuelle saker</h3>
+  <div class="span7">
+    <h3>Aktuelle saker</h3>
 
-  <section class="top-issues">
-    <% @issues.each_slice(2) do |issues| %>
-      <div class="row-fluid">
-        <% issues.each do |issue| %>
-          <article class="issue span6">
-            <%= link_to issue do %>
-              <h4><%= issue.title %></h4>
-              <p>
-                <%= awesome_truncate issue.description, 200 %>
-                <span class="read-more"><%= t('app.read_more') %></span>
-              </p>
-            <% end %>
-          </article>
-        <% end %>
-      </div>
-    <% end %>
-  </section>
-</div>
-
-<div class="span4 offset1 pull-right blog">
-  <h3>Blogger de ord?</h3>
-
-  <section>
-    <ul class="unstyled">
-      <% Hdo::Utils::BlogFetcher.posts.each do |post| %>
-        <%= post.as_json %>
-        <li><%= link_to post.title, post.url %> (<%= l post.updated_at %>)</li>
+    <section class="top-issues">
+      <% @issues.each_slice(2) do |issues| %>
+        <div class="row-fluid">
+          <% issues.each do |issue| %>
+            <article class="issue span6">
+              <%= link_to issue do %>
+                <h4><%= issue.title %></h4>
+                <p>
+                  <%= awesome_truncate issue.description, 200 %>
+                  <span class="read-more"><%= t('app.read_more') %></span>
+                </p>
+              <% end %>
+            </article>
+          <% end %>
+        </div>
       <% end %>
-    </ul>
-  </section>
-</div>
+    </section>
+  </div>
+
+  <div class="span4 offset1 blog">
+    <h3>Blogger de ord?</h3>
+
+    <div>
+      <h4><%= link_to @latest_post.title, @latest_post.url %></h4>
+      <%= @latest_post.text.each do |paragraph| %>
+        <p><%= paragraph %></p>
+      <% end %>
+    </div>
+  </div>
 </div>
 
 
