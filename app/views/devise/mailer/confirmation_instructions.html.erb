@@ -1,19 +1,39 @@
-
 <div style="font: 14px/22px arial,sans-serif; max-width: 500px">
-  <h2>Kjære <%= @resource.name %></h2>
+<h2>Kjære <%= @resource.name %></h2>
 
-  <p>Velkommen til Spørsmål og Svar, en tjeneste utviklet av Holder de ord.</p>
+<p>Holder de ord er en partipolitisk uavhengig organisasjon som ønsker å gjøre det lettere å følge med på hva som skjer i norsk politikk.</p>
 
-  <p><%= link_to 'holderdeord.no', root_url %> ønsker å være din uavhengige kilde for fakta om norsk stortingspolitikk, og gjør det enkelt å sjekke hva politikerne på Stortinget stemmer og lover i saker du er opptatt av. Vårt mål er å bidra til en samfunnsdebatt preget av åpenhet, saklighet, samfunnsengasjement og dialog.</p>
+<p>Vi vil nå gjerne invitere deg sammen med alle andre stortingsrepresentanter til vår nye tjeneste ”Spør en stortingspolitiker”. Her kan velgere enkelt stille spørsmål til representanter om politiske saker, med utgangspunkt i avstemninger og valgløfter på Holder de ord. Alle godkjente spørsmål og svar publiseres på representantens profilside på <%= link_to 'holderdeord.no', root_url %>, og dere trenger derfor kun å svare på samme spørsmål én gang. </p>
 
-  <p>Spørsmål- og svartjenesten skal skape en arena hvor politikere og velgere kan delta i saklig politisk debatt med stor takhøyde.</p>
+<p>Formålet med denne tjenesten er å skape en attraktiv kanal for dialog om politiske saker mellom velgere og stortingsrepresentanter. For å sikre dette modererer vi alle spørsmål og svar basert på våre retningslinjer. </p>
 
-  <p>Vi har utviklet et system som gjør det enkelt for deg å sjekke spørsmål og legge inn svar.
-  <%= link_to 'Klikk her', confirmation_url(@resource,
-                              confirmation_token: @resource.confirmation_token, protocol: AppConfig.ssl_enabled ? 'https' : 'http')%> for å komme i gang!</p>
+<h4>HVORDAN KOMME I GANG</h4>
+<ol>
+  <li>
+    <%= link_to 'Klikk her', confirmation_url(@resource, confirmation_token: @resource.confirmation_token, protocol: AppConfig.ssl_enabled ? 'https' : 'http') %> for å logge inn første gang på din personlige side på Holder de ord. Du blir bedt om å velge et passord som du bruker for å besvare spørsmål fra velgerne.
+  </li>
+  <li>
+    Når du har valgt et passord, kommer du inn på din personlige side. Her vil spørsmålene fra velgerne som er godkjent komme opp, og du kan også se tidligere spørsmål og status for de enkelte spørsmål.
+  </li>
 
-  <p>Alle spørsmål rettes direkte til en representant, og Holder de ord modererer spørsmål slik at de er i tråd med våre retningslinjer.</p>
+  <li>
+    Trykk på ”svar” for å svare på et spørsmål. Du får da opp et skjema hvor du skriver inn ditt svar. Når du trykker ”send inn” blir svaret ditt sendt til Holder de ord for godkjenning. 
+  </li>
+  <li>
+    Når svaret er godkjent, blir det publisert sammen med spørsmålet på din personlige side. Du kan enkelt dele både <%= link_to 'din profilside', representative_url(@resource) %> og et enkelt spørsmål med dine velgere via Facebook og Twitter.
+  </li>
+</ol>
 
-  <p style="color:#666">Vennlig hilsen,<br>
-    Holder de ord</p>
+<h4>HVORDAN FÅR JEG SPØRSMÅLENE</h4>
+<p>Med en gang et spørsmål er godkjent, blir det publisert på din offentlige profilside. Vi sender deg en epost når du får et spørsmål. Dersom du får mange spørsmål, vil vi begrense epostutsendelsene til én gang per uke.</p>
+
+<p>Våre søsterorganisasjoner i andre land har hatt stor suksess med liknende tjenester, ikke minst i Tyskland hvor dette har gjort mye for å styrke kontakten mellom velgere og representanter. Vi håper det samme blir tilfelle i Norge. Hvis du har noen spørsmål eller innspill til hvordan vi kan gjøre tjenesten bedre, vil vi gjerne at du tar kontakt.</p>
+
+<h4>OM HOLDER DE ORD</h4>
+<p>Holder de ord er en partipolitisk uavhengig organisasjon som ble grunnlagt på slutten av 2010 med et ønske om å gjøre det lettere å følge med på hva som skjer i norsk politikk. Hos oss finner du informasjon om hvordan partier og stortingsrepresentanter stemmer i konkrete politiske saker og hvordan dette henger sammen med partiprogram. Vi samler løfter og avstemninger under politiske saker slik vi kjenner de fra samfunnsdebatten, og gjør det enkelt for folk å få oversikt over norsk politikk.</p>
+
+<p>Ha en god dag!</p>
+
+<p style="color:#666">Vennlig hilsen,<br>
+Holder de ord</p>
 </div>
