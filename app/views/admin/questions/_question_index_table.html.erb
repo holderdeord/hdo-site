@@ -15,10 +15,14 @@
         <td><%= link_to question.representative.display_name, question.representative %></td>
 
         <td>
-          <% unless question_approved %>
+          <% if !question_approved %>
             <%= question.body %>
           <% else %>
             <%= link_to question.teaser, question, target: '_blank' %>
+          <% end %>
+          <% if show_answer %>
+            <h5>Svar:</h5>
+            <em><%= question.answer.body %></em>
           <% end %>
         </td>
 
