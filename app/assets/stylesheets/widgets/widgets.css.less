@@ -326,13 +326,21 @@ footer {
     > body {
       border: none;
       margin: 0;
+      > article {
+        padding: 0;
+      }
+      > footer {
+        a {
+          border-top: none;
+        }
+      }
     }
     h1 {
       margin: 1em 0 0 0;
     }
     h2 {
       line-height: 1.5em;
-      margin: 1em 0;
+      margin: 2em 0 0.5em 0;
       border-bottom: 1px solid #eee;
     }
     .promises {
@@ -399,15 +407,17 @@ footer {
       margin-bottom: 20px;
       .clearfix;
       p {
-        margin-top: 0;
         float: left;
         width: 33%;
-        font-size: 0.95em;
         line-height: 1.6em;
       }
       .positions {
         width: 67%;
         float: left;
+        margin-top: 10px;
+        .icons .position-wrapper img {
+          max-width: 48px;
+        }
       }
     }
   }
