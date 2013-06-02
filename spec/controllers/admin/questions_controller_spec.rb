@@ -150,6 +150,33 @@ describe Admin::QuestionsController do
         question.reload.internal_comment.should eq 'doobeedoo'
       end
     end
+
+    describe "emails" do
+      let(:representative) { Representative.make! :confirmed }
+      let(:question) { Question.make! :approved, representative: representative }
+
+      describe "approving questions" do
+        it "can send the user an email" do
+          ModerationMailer.should_receive(:question_approved_user_email).with(question).and_call_original
+
+          get :question_approved_email_user, id: question
+        end
+
+        it "can send the representative an email" do
+          ModerationMailer.should_receive(:question_approved_representative_email).with(question).and_call_original
+
+          get :question_approved_email_rep, id: question
+        end
+      end
+
+      describe "approving answers" do
+        it "can send the user an email" do
+          ModerationMailer.should_receive(:answer_approved_user_email).with(question).and_call_original
+
+          get :answer_approved_email_user, id: question
+        end
+      end
+    end
   end
 
 end

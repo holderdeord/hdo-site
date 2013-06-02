@@ -127,4 +127,10 @@ describe Question do
 
     Question.not_ours.should == [b]
   end
+
+  it 'can have associated email events' do
+    q = Question.make!
+    q.email_events.create!(email_address: 'yona@test.hdo', email_type: 'test email')
+    q.should be_valid
+  end
 end

@@ -460,6 +460,7 @@ nb:
         approve: Godkjenn
         reject: Avvis
         updated: Spørsmålet ble oppdatert.
+        email_sent: 'E-post er sent til %{email}.'
       status:
         approved: Godkjent
         pending: Avventer kontroll

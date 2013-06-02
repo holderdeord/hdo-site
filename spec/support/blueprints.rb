@@ -167,6 +167,10 @@ Question.blueprint do
   from_email { "ola.nordmann@engasjert.no" }
 end
 
+Question.blueprint :approved do
+  status { "approved" }
+end
+
 Answer.blueprint do
   body { "answer body" }
   representative { Representative.make! }
