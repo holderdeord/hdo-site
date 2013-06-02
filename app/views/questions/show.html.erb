@@ -20,7 +20,7 @@
     <div class="span8">
       <h4><%= @question.from_display_name %></h4>
       <time class="muted"><%= l @question.created_at.localtime, format: :text_time %></time>
-      <div><%= @question.body %></div>
+      <div><%= simple_format @question.body %></div>
     </div>
 
    </article>
