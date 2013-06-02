@@ -3,6 +3,7 @@ namespace :cache do
     task :issues => :environment do
       unless Issue.table_exists?
         puts "database not created - moving on"
+        next
       end
 
       puts "precomputing stats cache for issues"
