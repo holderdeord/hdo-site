@@ -361,7 +361,7 @@ module Hdo
         pr = Promise.find_or_create_by_external_id(promise.external_id)
 
         if pr.new_record?
-          duplicate = Promise.where(body: promise.body, parliament_period: parliament_period).first
+          duplicate = Promise.where(body: promise.body, parliament_period_id: parliament_period).first
           if duplicate
             @log.error "promise #{promise.external_id}: duplicate of #{duplicate.external_id}"
             return
