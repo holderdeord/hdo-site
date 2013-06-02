@@ -26,8 +26,8 @@
   </div>
 <% end %>
 
-<div class="row">
-  <div class="span7">
+<div class="row-fluid">
+  <div class="span8">
     <h3>Aktuelle saker</h3>
 
     <section class="top-issues">
@@ -49,10 +49,11 @@
     </section>
   </div>
 
-  <%= render partial: 'blog', locals: { latest_post: @latest_post, last_three_posts: @last_three_posts } %>
+  <div class="span4">
+    <%= render partial: 'blog', locals: { latest_post: @latest_post, last_three_posts: @last_three_posts } %>
+  </div>
 
 </div>
-
 
 
 <% if AppConfig.leaderboard_enabled %>
