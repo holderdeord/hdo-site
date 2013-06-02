@@ -25,20 +25,10 @@ class Admin::QuestionsController < AdminController
     @question.update_attributes(internal_comment: params[:question][:internal_comment])
 
     if @question.save
-      redirect_to admin_questions_path, notice: t('app.questions.edit.updated')
+      redirect_to edit_admin_question_path(@question), notice: t('app.questions.edit.updated')
     else
       redirect_to edit_admin_question_path(@question), alert: @question.errors.full_messages.to_sentence
     end
-  end
-
-  def approve
-    @question.status = 'approved'
-    save_question
-  end
-
-  def reject
-    @question.status = 'rejected'
-    save_question
   end
 
   def question_approved_email_rep
@@ -60,14 +50,6 @@ class Admin::QuestionsController < AdminController
 
   def fetch_question
     @question = Question.find(params[:id])
-  end
-
-  def save_question
-    if @question.save
-      redirect_to admin_questions_path, notice: t('app.questions.edit.updated')
-    else
-      redirect_to admin_questions_path, alert: @question.errors.full_messages.to_sentence
-    end
   end
 
   def assert_moderator

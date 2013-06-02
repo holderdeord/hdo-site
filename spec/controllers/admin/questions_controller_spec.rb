@@ -10,24 +10,6 @@ describe Admin::QuestionsController do
     let(:user) { User.make! role: 'contributor' }
     before { sign_in user }
 
-    describe "PUT approve" do
-      it "does not approve the requested question" do
-        question = Question.make!
-
-        put :approve, {:id => question.to_param}
-        question.reload.should_not be_approved
-      end
-    end
-
-    describe "PUT reject" do
-      it "does not reject the requested question" do
-        question = Question.make!
-
-        put :reject, {:id => question.to_param}
-        question.reload.should be_pending
-      end
-    end
-
     describe "PUT edit" do
       it "cannot edit questions" do
         question = Question.make!(status: 'pending')
@@ -95,56 +77,6 @@ describe Admin::QuestionsController do
         get :index
 
         assigns(:questions_unanswered).should eq [q]
-      end
-    end
-
-    describe "PUT approve" do
-      it "updates the requested question" do
-        question = Question.make!
-
-        put :approve, {:id => question.to_param}
-        question.reload.should be_approved
-      end
-
-      it "redirects to questions#index" do
-        question = Question.make!
-
-        put :approve, {:id => question.to_param}
-        response.should redirect_to(admin_questions_path)
-      end
-
-      it "informs the user if save fails" do
-        question = Question.make!
-        Question.any_instance.should_receive(:save).and_return false
-
-        put :reject, {:id => question.to_param}
-        response.should redirect_to(admin_questions_path)
-        flash.should_not be_empty
-      end
-    end
-
-    describe "PUT reject" do
-      it "updates the requested question" do
-        question = Question.make!
-
-        put :reject, {:id => question.to_param}
-        question.reload.should be_rejected
-      end
-
-      it "redirects to questions#index" do
-        question = Question.make!
-
-        put :reject, {:id => question.to_param}
-        response.should redirect_to(admin_questions_path)
-      end
-
-      it "informs the user if save fails" do
-        question = Question.make!
-        Question.any_instance.should_receive(:save).and_return false
-
-        put :reject, {:id => question.to_param}
-        response.should redirect_to(admin_questions_path)
-        flash.should_not be_empty
       end
     end
 

@@ -4,6 +4,11 @@
 </h3>
 
 <%= form_for(@question, url: admin_question_url(@question)) do |f| %>
+  <div class="form-actions">
+    <%= f.submit t('app.save'), class: 'btn btn-primary' %>
+    <%= link_to t('app.back'), admin_questions_path, class: 'btn' %>
+  </div>
+
   <div class="row-fluid">
     <dl class="span6">
       <dt><%= Question.human_attribute_name :created_at %></dt>
