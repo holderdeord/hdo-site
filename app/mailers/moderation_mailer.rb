@@ -1,3 +1,5 @@
+# encoding: UTF-8
+
 class ModerationMailer < ActionMailer::Base
   default bcc:      AppConfig.default_bcc_email,
           from:     'sporsmalsvar@holderdeord.no'
