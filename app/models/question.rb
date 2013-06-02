@@ -7,6 +7,7 @@ class Question < ActiveRecord::Base
   belongs_to :representative
   has_one    :answer, dependent: :destroy
   has_and_belongs_to_many :issues, uniq: true, order: "updated_at DESC"
+  has_many :email_events, as: :email_eventable, order: "created_at DESC"
 
   validates :body,           presence: true
   validates :from_name,      presence: true
