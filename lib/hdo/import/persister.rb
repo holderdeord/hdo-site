@@ -347,7 +347,7 @@ module Hdo
         end
 
         parties = promise.parties.map { |e| Party.find_by_external_id(e) }
-        unless parties
+        if parties.compact.empty?
           @log.error "promise #{promise.external_id}: unknown party: #{promise.parties}"
           return
         end
