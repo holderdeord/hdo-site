@@ -10,6 +10,13 @@ describe Admin::QuestionsController do
     let(:user) { User.make! role: 'contributor' }
     before { sign_in user }
 
+    describe "GET edit" do
+      it "is unauthorized" do
+        get :edit, id: Question.make!
+        response.status.should eq 401
+      end
+    end
+
     describe "PUT edit" do
       it "cannot edit questions" do
         question = Question.make!(status: 'pending')
