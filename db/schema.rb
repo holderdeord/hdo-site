@@ -86,20 +86,16 @@ ActiveRecord::Schema.define(:version => 20130601220913) do
 
   add_index "districts", ["slug"], :name => "index_districts_on_slug", :unique => true
 
-  create_table "email_event_connections", :force => true do |t|
-    t.integer "email_event_id"
-    t.integer "email_event_associable_id"
-    t.string  "email_event_associable_type"
-  end
-
-  add_index "email_event_connections", ["email_event_id", "email_event_associable_type", "email_event_associable_id"], :name => "email_event_association_index", :unique => true
-
   create_table "email_events", :force => true do |t|
-    t.string   "email_address", :null => false
-    t.string   "email_type",    :null => false
-    t.datetime "created_at",    :null => false
-    t.datetime "updated_at",    :null => false
+    t.string   "email_address",        :null => false
+    t.string   "email_type",           :null => false
+    t.integer  "email_eventable_id"
+    t.string   "email_eventable_type"
+    t.datetime "created_at",           :null => false
+    t.datetime "updated_at",           :null => false
   end
+
+  add_index "email_events", ["id", "email_eventable_type", "email_eventable_id"], :name => "email_event_index", :unique => true
 
   create_table "governing_periods", :force => true do |t|
     t.date     "start_date"
