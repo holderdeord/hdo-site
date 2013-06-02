@@ -16,8 +16,9 @@ defaults: &defaults
   representative_widget_enabled: true
   leaderboard_enabled: true
   ignore_our_questions: true
+  question_answer_email: sporsmalsvar@holderdeord.no
   default_bcc_email: test@holderdeord.no
-  default_reply_to_email: kontakt@holderdeord.no
+  default_reply_to_email: sporsmalsvar@holderdeord.no
   basic_auth_users: <%= ENV['HDO_BASIC_AUTH'] || '' %>
 
 development:

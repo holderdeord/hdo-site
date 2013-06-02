@@ -5,7 +5,7 @@
 
   <p>Vi ber at du oppgir fullt navn og epostadresse. Alle spørsmål og svar modereres, og må være i tråd med våre <a href="#" data-toggle="modal" data-target="#code-of-conduct">retningslinjer</a>.</p>
 
-  <p>Innspill eller noe du lurer på? <%= mail_to 'sporsmalsvar@holderdeord.no', 'Ta kontakt!', encode: 'hex', subject: t('app.questions.title') %></p>
+  <p>Innspill eller noe du lurer på? <%= mail_to AppConfig.question_answer_email, 'Ta kontakt!', encode: 'hex', subject: t('app.questions.title') %></p>
 </aside>
 
 <div class="span7">
