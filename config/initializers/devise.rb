@@ -7,7 +7,7 @@ Devise.setup do |config|
   config.mailer_sender = "Holder de ord <no-reply@holderdeord.no>"
 
   # Configure the class responsible to send e-mails.
-  config.mailer = "Hdo::Mailer"
+  config.mailer = "DeviseMailer"
 
   # ==> ORM configuration
   # Load and configure the ORM. Supports :active_record (default) and
