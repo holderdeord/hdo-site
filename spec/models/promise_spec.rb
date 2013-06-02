@@ -43,9 +43,13 @@ describe Promise do
     promise.should be_valid
   end
 
-  it 'has a unique body' do
-    promise = Promise.make!(body: 'body')
-    Promise.make(body: promise.body).should_not be_valid
+  it 'has a unique body per parliament period' do
+    period_a = ParliamentPeriod.make!
+    period_b = ParliamentPeriod.make!
+    promise  = Promise.make!(body: 'body', parliament_period: period_a)
+
+    Promise.make(body: promise.body, parliament_period: period_a).should_not be_valid
+    Promise.make(body: promise.body, parliament_period: period_b).should be_valid
   end
 
   it 'has a unique external id' do
