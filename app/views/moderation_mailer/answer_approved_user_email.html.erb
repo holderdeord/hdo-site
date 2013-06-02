@@ -1,8 +1,8 @@
-<p>Kjære <%= @question.from_name %>,</p>
+<h2>Kjære <%= @question.from_name %>,</h2>
 
 <p><%= @question.representative.name %> har nå besvart spørsmålet ditt. Les svaret og sjekk andre spørsmål og svar <%= link_to 'her', question_url(@question) %>. På denne siden kan du også dele spørsmålet ditt på Facebook og Twitter.</p>
 
 <p>Ha en god dag!</p>
 
-<p>Vennlig hilsen,</p>
-<p>Holder de ord</p>
+<p style="color:#666">Vennlig hilsen,<br/>
+  Holder de ord</p>

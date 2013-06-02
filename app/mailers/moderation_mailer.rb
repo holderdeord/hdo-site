@@ -1,6 +1,7 @@
 # encoding: UTF-8
 
 class ModerationMailer < ActionMailer::Base
+  layout 'hdo_mail'
   default bcc:      AppConfig.default_bcc_email,
           from:     AppConfig.question_answer_email
 
