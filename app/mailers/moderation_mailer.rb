@@ -7,21 +7,21 @@ class ModerationMailer < ActionMailer::Base
   def question_approved_user_email(question)
     @question = question
     with_event mail(to:       question.from_email,
-         subject:  'Ditt spørsmål er godkjent av holderdeord.no',
+         subject:  'Ditt spørsmål er godkjent',
          reply_to: reply_to_address(question))
   end
 
   def question_approved_representative_email(question)
     @question = question
     with_event mail(to:       question.representative.email,
-         subject:  'Du mottatt et spørsmål fra en velger',
+         subject:  'Du har fått et nytt spørsmål',
          reply_to: reply_to_address(question))
   end
 
   def answer_approved_user_email(question)
     @question = question
     with_event mail(to:       question.from_email,
-         subject:  "Svar mottatt fra #{question.representative.name}",
+         subject:  "Ditt spørsmål er besvart",
          reply_to: reply_to_address(question))
   end
 
