@@ -49,20 +49,7 @@
     </section>
   </div>
 
-  <div class="span4 blog">
-    <h3>Blogger de ord?</h3>
-
-    <div>
-      <h4><%= link_to @latest_post.title, @latest_post.url %></h4>
-      <small>Skrevet av: <%= @latest_post.author %></small>
-      <% @latest_post.text.each do |paragraph| %>
-        <% if (!paragraph.to_s.include? "<br>") %>
-          <p><%= paragraph.to_s.html_safe %><p>
-        <% end %>
-      <% end %>
-      <%= link_to "Les hele innlegget", @latest_post.url %>
-    </div>
-  </div>
+  <%= render partial: 'blog', locals: { latest_post: @latest_post, last_three_posts: @last_three_posts } %>
 
 </div>
 

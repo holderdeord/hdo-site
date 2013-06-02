@@ -44,7 +44,7 @@ module Hdo
           @url        = entry.css('link[rel=alternate][type="text/html"]').first.try(:attr, 'href')
           @author     = entry.css('author name').text
           @updated_at = Time.parse(entry.css('updated').text)
-          @html       = entry.css('content[type=html]').text.truncate(2000)
+          @html       = entry.css('content[type=html]').text.truncate(1000)
         end
 
         def text

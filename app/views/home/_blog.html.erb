@@ -1,0 +1,23 @@
+<div class="span4 blog">
+    <h3>Blogger de ord?</h3>
+
+    <div>
+      <h4><%= link_to latest_post.title, latest_post.url %></h4>
+      <small>Skrevet av: <%= latest_post.author %></small>
+      <% latest_post.text.each do |paragraph| %>
+        <% if (!paragraph.to_s.include? "<br>") %>
+          <p><%= paragraph.to_s.html_safe %><p>
+        <% end %>
+      <% end %>
+      <%= link_to "Les hele innlegget", @latest_post.url %>
+    </div>
+
+    <hr class="soften">
+    <h5>Eldre innlegg</h5>
+    <ul class="unstyled">
+      <% last_three_posts.each do |post| %>
+        <li><%= link_to post.title, post.url %></li>
+      <% end %>
+    </ul>
+  </div>
+</div>

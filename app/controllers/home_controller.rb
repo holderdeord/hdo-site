@@ -25,7 +25,9 @@ class HomeController < ApplicationController
       @leaderboard = Hdo::Stats::Leaderboard.new(published)
     end
 
-    @latest_post = Hdo::Utils::BlogFetcher.posts.first
+    posts = Hdo::Utils::BlogFetcher.posts
+    @latest_post = posts.first
+    @last_three_posts = posts[1..3]
   end
 
   def robots
