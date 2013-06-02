@@ -37,19 +37,20 @@ module Hdo
       end
 
       class Post
-        attr_reader :title, :url, :updated_at, :html
+        attr_reader :title, :url, :updated_at, :html, :author
 
         def initialize(entry)
           @title      = entry.css('title').text
           @url        = entry.css('link[rel=alternate][type="text/html"]').first.try(:attr, 'href')
+          @author     = entry.css('author name').text
           @updated_at = Time.parse(entry.css('updated').text)
-          @html       = entry.css('content[type=html]').text
+          @html       = entry.css('content[type=html]').text.truncate(2000)
         end
 
         def text
           spans = []
           Nokogiri::HTML.parse(@html).css('span').each do |s|
-            spans << s.text
+            spans << s
           end
 
           spans
