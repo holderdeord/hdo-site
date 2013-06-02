@@ -134,6 +134,12 @@ describe Admin::QuestionsController do
 
         question.reload.internal_comment.should eq 'doobeedoo'
       end
+
+      it 'sets the question body' do
+        put :update, id: question, question: { body: 'doobeedoo' }
+
+        question.reload.body.should eq 'doobeedoo'
+      end
     end
 
     describe "emails" do

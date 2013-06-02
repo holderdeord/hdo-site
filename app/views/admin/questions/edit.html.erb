@@ -27,7 +27,10 @@
       <dd><%= @question.show_sender? ? t('app.yes') : t('app.no') %></dd>
 
       <dt><%= Question.human_attribute_name :body %></dt>
-      <dd class="well"><%= @question.body %></dd>
+      <dd class="well">
+        <%= f.text_area :body, rows: 5, style: 'width: 100%;' %>
+        <small class="muted">Suπerforsiktig, superadmin...</small>
+      </dd>
 
       <dt><%= Question.human_attribute_name :internal_comment %></dt>
       <dd><%= f.text_area :internal_comment, rows:  5, style: 'width: 100%' %></dd>

@@ -25,6 +25,7 @@ class Admin::QuestionsController < AdminController
     @question.status = params[:question][:status]
     @question.answer.update_attributes(params[:question][:answer]) if params[:question][:answer]
     @question.update_attributes(internal_comment: params[:question][:internal_comment])
+    @question.update_attributes(body: params[:question][:body])
 
     if @question.save
       redirect_to edit_admin_question_path(@question), notice: t('app.questions.edit.updated')
