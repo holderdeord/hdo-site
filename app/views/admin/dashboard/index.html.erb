@@ -41,6 +41,21 @@
 
   <% end %>
 
+  <% if AppConfig.answers_enabled %>
+
+    <div class="row-fluid">
+      <h3><%= @questions_answer_pending.count %> <%= Answer.model_name.human(count: 2) %> <%= link_to t('app.questions.status.pending').downcase, "#{admin_questions_path}#pending-answers" %></h3>
+      <ul>
+        <% @questions_answer_pending.each do |q| %>
+          <li><%= q.teaser %></li>
+        <% end %>
+      </ul>
+    </div>
+
+    <hr class="soften">
+
+  <% end %>
+
   <div class="row-fluid">
     <div class="span6">
       <h3>Siste <%= Vote.model_name.human(count: 2) %></h3>

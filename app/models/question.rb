@@ -16,9 +16,10 @@ class Question < ActiveRecord::Base
   validates :answer,         associated: true
   validate :answer_comes_from_asked_representative
 
-  scope :answered,   -> { joins(:answer) }
-  scope :unanswered, -> { where('(select count(*) FROM answers WHERE question_id = questions.id) = 0') }
-  scope :not_ours,   -> { where("from_email NOT LIKE '%holderdeord.no'")}
+  scope :answered,             -> { joins(:answer) }
+  scope :unanswered,           -> { where('(select count(*) FROM answers WHERE question_id = questions.id) = 0') }
+  scope :not_ours,             -> { where("from_email NOT LIKE '%holderdeord.no'")}
+  scope :with_pending_answers, -> { answered.where('answers.status = ?', 'pending') }
 
   def self.all_by_status
     grouped = all.group_by { |q| q.status }

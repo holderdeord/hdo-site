@@ -10,15 +10,6 @@ describe Admin::QuestionsController do
     let(:user) { User.make! role: 'contributor' }
     before { sign_in user }
 
-    describe "GET index" do
-      it "assigns all questions grouped by status" do
-        question = Question.make!
-
-        get :index, {}
-        assigns(:questions_by_status).should eq({'pending' => [question]})
-      end
-    end
-
     describe "PUT approve" do
       it "does not approve the requested question" do
         question = Question.make!
@@ -37,6 +28,17 @@ describe Admin::QuestionsController do
       end
     end
 
+    describe "PUT edit" do
+      it "cannot edit questions" do
+        question = Question.make!(status: 'pending')
+
+        put :update, id: question, question: {status: 'approved' }
+
+        question.reload.should_not be_approved
+        response.status.should eq 401
+      end
+    end
+
   end
 
   context "superadmin" do
@@ -44,11 +46,55 @@ describe Admin::QuestionsController do
     before { sign_in user }
 
     describe "GET index" do
-      it "assigns all questions grouped by status" do
-        question = Question.make!
+      it "assigns pending questions" do
+        q = Question.make!
 
-        get :index, {}
-        assigns(:questions_by_status).should eq({'pending' => [question]})
+        get :index
+
+        assigns(:questions_pending).should eq [q]
+      end
+
+      it "assigns questions with pending answers" do
+        q = Question.make! :approved
+        Answer.make! question: q
+
+        get :index
+
+        assigns(:questions_answer_pending).should eq [q]
+      end
+
+      it "assigns rejected questions" do
+        q = Question.make! status: 'rejected'
+
+        get :index
+
+        assigns(:questions_rejected).should eq [q]
+      end
+
+      it "assigns questions with rejected answers" do
+        q = Question.make! :approved
+        Answer.make! question: q, status: 'rejected'
+
+        get :index
+
+        assigns(:questions_answer_rejected).should eq [q]
+      end
+
+      it "assigns approved questions and answers" do
+        q = Question.make! :approved
+        Answer.make! question:q, status: 'approved'
+
+        get :index
+
+        assigns(:questions_approved).should eq [q]
+      end
+
+      it "assigns unanswered questions" do
+        q = Question.make! :approved
+
+        get :index
+
+        assigns(:questions_unanswered).should eq [q]
       end
     end
 

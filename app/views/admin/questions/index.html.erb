@@ -1,20 +1,41 @@
 <h1><%= Question.model_name.human(count: 2).capitalize %></h1>
-<div class="row-fluid">
-  <div class="tabbable">
-    <ul class="nav nav-tabs">
-      <% Question.statuses.each_with_index do |status, idx| %>
-        <li class="span4 <%= 'active' if idx == 0 %>">
-          <a href="#<%= status %>-tab" data-toggle="tab"><%= t("app.questions.status.#{status}") %> (<%= @questions_by_status[status].try(:size) || 0 %>)</a>
-        </li>
-      <% end %>
-    </ul>
 
-    <div class="tab-content">
-      <% Question.statuses.each_with_index do |status, idx| %>
-        <div id="<%= status %>-tab" class="tab-pane <%= 'active' if idx == 0 %>">
-          <%= render partial: 'question_index_table', locals: { status: status, questions: @questions_by_status[status] || [] } %>
-        </div>
-      <% end %>
+<div class="row-fluid">
+  <% if @questions_pending.any? %>
+    <div class="well">
+      <h3>Spørsmål som avventer kontroll</h3>
+        <%= render partial: 'question_index_table', locals: { questions: @questions_pending, status: 'pending' } %>
     </div>
-  </div>
+<% end %>
+  <% if @questions_answer_pending.any? %>
+    <div class="well" id="pending-answers">
+      <h3>Spørsmål med svar som avventer kontroll</h3>
+        <%= render partial: 'question_index_table', locals: { questions: @questions_answer_pending, status: 'approved' } %>
+    </div>
+  <% end %>
+  <% if @questions_rejected.any? %>
+    <div class="well">
+      <h3>Avviste spørsmål</h3>
+        <%= render partial: 'question_index_table', locals: { questions: @questions_rejected, status: 'rejected' } %>
+    </div>
+  <% end %>
+  <% if @questions_unanswered.any? %>
+    <div class="well">
+      <h3>Spørsmål som avventer svar</h3>
+        <%= render partial: 'question_index_table', locals: { questions: @questions_unanswered, status: 'approved' } %>
+    </div>
+  <% end %>
+  <% if @questions_answer_rejected.any? %>
+    <div class="well">
+      <h3>Spørsmål med avviste svar</h3>
+        <%= render partial: 'question_index_table', locals: { questions: @questions_answer_rejected, status: 'approved' } %>
+    </div>
+  <% end %>
+  <% if @questions_approved.any? %>
+    <div class="well">
+      <h3>Godkjente spørsmål og svar</h3>
+        <%= render partial: 'question_index_table', locals: { questions: @questions_approved, status: '' } %>
+    </div>
+  <% end %>
+
 </div>

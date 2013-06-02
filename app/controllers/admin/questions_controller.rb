@@ -4,7 +4,12 @@ class Admin::QuestionsController < AdminController
   before_filter :assert_moderator, except: :index
 
   def index
-    @questions_by_status = Question.all_by_status
+    @questions_pending         = Question.pending
+    @questions_answer_pending  = Question.with_pending_answers
+    @questions_approved        = Question.answered.where('answers.status = ?', 'approved')
+    @questions_rejected        = Question.rejected
+    @questions_answer_rejected = Question.answered.where('answers.status = ?', 'rejected')
+    @questions_unanswered      = Question.approved.unanswered
   end
 
   def edit
