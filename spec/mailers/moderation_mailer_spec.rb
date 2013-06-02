@@ -27,6 +27,12 @@ describe ModerationMailer do
         question.reload
       }.to change(question.email_events, :count).by 1
     end
+
+    it "makes a bracketed email" do
+      Hdo::Utils::OverrideMailRecipient.stub!(:delivering_email)
+      mail = ModerationMailer.question_approved_representative_email(question)
+      mail[:to].field.value.should eq "#{representative.name} <#{representative.email}>"
+    end
   end
 
   describe "Answer approved emails" do
