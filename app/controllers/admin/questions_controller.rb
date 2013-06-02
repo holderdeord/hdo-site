@@ -9,7 +9,7 @@ class Admin::QuestionsController < AdminController
     @questions_approved        = Question.answered.where('answers.status = ?', 'approved')
     @questions_rejected        = Question.rejected
     @questions_answer_rejected = Question.answered.where('answers.status = ?', 'rejected')
-    @questions_unanswered      = Question.approved.unanswered
+    @questions_unanswered      = Question.not_ours.approved.unanswered
 
     @show_edit = policy(Question).moderate?
   end
