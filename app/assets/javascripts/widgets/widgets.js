@@ -120,12 +120,7 @@ var HDO = HDO || {};
       } else if (this.type === "party") {
         url = H.widgets.baseUrl + "parties/" + el.getAttribute('data-party-id') + '/widget';
         count = el.getAttribute('data-count');
-        if (count && count.length)
-          url = this.addParam(url, 'count', count);
-        else {
-          url = this.addIssueParams(el, url);
-        }
-
+        url = (count && count.length) ? this.addParam(url, 'count', count) : this.addIssueParams(el, url);
       } else if (this.type === "topic") {
         url = H.widgets.baseUrl + "widgets/topic?" + this.queryParamFor('issues', el.getAttribute('data-issues')) + '&'
                                                    + this.promisesQueryFor(el.getAttribute('data-promises'));
@@ -138,7 +133,7 @@ var HDO = HDO || {};
       target = el.getAttribute('data-target');
 
       if (target && target.length) {
-        url = this.addParam(url, 'target', target)
+        url = this.addParam(url, 'target', target);
       }
 
       return { 'url': url };
