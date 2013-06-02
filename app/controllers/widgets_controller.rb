@@ -59,14 +59,16 @@ class WidgetsController < ApplicationController
       example_party = Party.first
       example_promises = Promise.order('random()').first(5)
 
-      docs = Hdo::WidgetDocs.new
-      @examples = [
-        docs.specific_issue(issues.first),
-        docs.party_default(example_party),
-        docs.party_count(example_party, 10),
-        docs.party_issues(example_party, issues.order('random()').first(5)),
-        docs.promises(example_promises)
-      ]
+      @examples = []
+
+      if issues.any?
+        docs = Hdo::WidgetDocs.new
+        @examples << docs.specific_issue(issues.first)
+        @examples << docs.party_default(example_party)
+        @examples << docs.party_count(example_party, 10)
+        @examples << docs.party_issues(example_party, issues.order('random()').first(5))
+        @examples << docs.promises(example_promises)
+      end
 
       @issues = issues.order(:title)
 

@@ -31,6 +31,7 @@ module Hdo
 
     def party_issues(party, issues)
       ids = issues.map(&:id).join(",")
+
       Widget.new(
         'Parti',
         'utvalgte saker',
