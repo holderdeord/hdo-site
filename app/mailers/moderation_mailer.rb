@@ -1,6 +1,6 @@
 class ModerationMailer < ActionMailer::Base
   default bcc:      AppConfig.default_bcc_email,
-          from:     'sporsmalogsvar@holderdeord.no'
+          from:     'sporsmalsvar@holderdeord.no'
 
   def question_approved_user_email(question)
     @question = question
@@ -26,7 +26,7 @@ class ModerationMailer < ActionMailer::Base
   private
 
   def reply_to_address(question)
-    "sporsmalogsvar-#{question.id}@holderdeord.no"
+    "sporsmalsvar+#{question.id}@holderdeord.no"
   end
 
   def with_event(message)
