@@ -1,5 +1,6 @@
 <div class="span4 blog">
-    <h3>Blogger de ord?</h3>
+    <h3>Blogg</h3>
+    <small id="description">Her skriver vi om små og store ting som opptar oss.</small>
 
     <div>
       <h4><%= link_to latest_post.title, latest_post.url %></h4>
@@ -11,13 +12,4 @@
       <% end %>
       <%= link_to "Les hele innlegget", @latest_post.url %>
     </div>
-
-    <hr class="soften">
-    <h5>Eldre innlegg</h5>
-    <ul class="unstyled">
-      <% last_three_posts.each do |post| %>
-        <li><%= link_to post.title, post.url %></li>
-      <% end %>
-    </ul>
-  </div>
 </div>
