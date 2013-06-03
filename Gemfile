@@ -127,7 +127,7 @@ gem 'rack-cors', :require => 'rack/cors'
 gem 'workflow'
 
 # data import
-gem 'hdo-storting-importer', "~> 0.3.6", require: 'hdo/storting_importer'
+gem 'hdo-storting-importer', "~> 0.3.7", require: 'hdo/storting_importer'
 # gem 'hdo-storting-importer', :path => File.expand_path("../../hdo-storting-importer", __FILE__)
 
 if Gem::Version.new(Bundler::VERSION) >= Gem::Version.new("1.2.0.rc2")
