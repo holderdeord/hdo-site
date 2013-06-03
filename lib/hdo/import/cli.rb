@@ -344,9 +344,8 @@ module Hdo
 
       def hipchat_client
         @hipchat_client ||= (
-          require 'hipchat'
-          token = ENV['HIPCHAT_API_TOKEN'] || return
-          HipChat::Client.new(token)
+          token = AppConfig.hipchat_api_token
+          HipChat::Client.new(token) unless token.blank?
         )
       end
 

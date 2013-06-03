@@ -1,6 +1,7 @@
 defaults: &defaults
   elasticsearch_url: <%= ENV['ELASTICSEARCH_URL'] || ENV['BONSAI_URL'] || 'http://localhost:9200' %>
   basic_auth_users: <%= ENV['HDO_BASIC_AUTH'] || '' %>
+  hipchat_api_token: <%= ENV['HIPCHAT_API_TOKEN'] || '' %>
   question_answer_email: sporsmalsvar@holderdeord.no
   default_bcc_email: test@holderdeord.no
   default_reply_to_email: sporsmalsvar@holderdeord.no
@@ -22,6 +23,7 @@ defaults: &defaults
   ignore_our_questions: true
   thermo_enabled: false
   frontpage_blog_enabled: true
+  chat_notifications_enabled: false
 
 development:
   <<: *defaults
@@ -36,6 +38,7 @@ staging:
   statsd_enabled: true
   fastly_enabled: true
   ssl_enabled: true
+  chat_notifications_enabled: true
 
 production:
   <<: *defaults
@@ -48,3 +51,4 @@ production:
   leaderboard_enabled: false
   frontpage_blog_enabled: false
   default_bcc_email: test@holderdeord.no
+  chat_notifications_enabled: true

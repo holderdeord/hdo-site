@@ -52,7 +52,7 @@ end
 gem 'capistrano', '~> 2.13'
 gem 'capistrano-maintenance'
 gem 'capistrano-ext'
-gem 'hipchat', require: false
+gem 'hipchat'
 
 # frontend stuff
 gem 'jquery-rails', '2.1.4'
