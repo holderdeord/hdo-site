@@ -41,7 +41,7 @@ production:
   <<: *defaults
   analytics_enabled: true
   questions_enabled: true
-  answers_enabled: false
+  answers_enabled: true
   representative_widget_enabled: false
   fastly_enabled: true
   ssl_enabled: true
