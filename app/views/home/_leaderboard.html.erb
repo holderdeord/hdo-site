@@ -29,7 +29,7 @@
     <% end %>
 
     <h2>Ordholding i <%= Issue.published.count %> saker</h2>
-    <p>Explanations from Tiina</p>
+    <p>Her kan du se hvor ofte partiene på Stortinget stemmer i tråd med partiprogrammene. Listen oppdateres jevnlig med flere analyser. <%= link_to 'Ler mer', home_about_path %></p>
     <div class="party-list row-fluid">
 
       <% @leaderboard.parties.each do |parties| %>
