@@ -45,7 +45,7 @@ describe HomeController do
   end
 
   context 'blog' do
-      it 'shows only the newest blog post'
-      it 'shows links to the last three posts'
+    it 'shows only the newest blog post'
+    it 'shows links to the last three posts'
   end
 end

@@ -6,10 +6,8 @@
     <h4><%= latest_post.title %></h4>
     <p class="byline">av <%= latest_post.author %></p>
     <div class="content">
-      <% latest_post.text.each do |paragraph| %>
-        <% if (!paragraph.to_s.include? "<br>") %>
-          <p><%= paragraph.to_s.html_safe %><p>
-        <% end %>
+      <% latest_post.paragraphs.each do |paragraph| %>
+        <p><%= paragraph.to_s.html_safe %><p>
       <% end %>
     </div>
     <%= link_to "Les hele innlegget", @latest_post.url %>

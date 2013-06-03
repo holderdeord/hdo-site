@@ -47,13 +47,8 @@ module Hdo
           @html       = entry.css('content[type=html]').text.truncate(1000)
         end
 
-        def text
-          spans = []
-          Nokogiri::HTML.parse(@html).css('span').each do |s|
-            spans << s
-          end
-
-          spans
+        def paragraphs
+          Nokogiri::HTML.parse(@html).css('span').to_a.reject { |e| e.include?('<br>') }
         end
       end
 
