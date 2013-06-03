@@ -16,16 +16,20 @@ class HomeController < ApplicationController
 
   def index
     published = Issue.published.includes(:tags)
-    @issues   = published.for_frontpage(6)
 
     @all_tags = published.flat_map(&:tags).uniq.sort_by(&:name)
     @parties  = Party.order(:name)
 
+    if AppConfig.frontpage_blog_enabled
+      @latest_post = Hdo::Utils::BlogFetcher.posts.first
+      @issues = published.for_frontpage(6)
+    else
+      @issues = published.for_frontpage(9)
+    end
+
     if AppConfig.leaderboard_enabled
       @leaderboard = Hdo::Stats::Leaderboard.new(published)
     end
-
-    @latest_post = Hdo::Utils::BlogFetcher.posts.first
   end
 
   def robots

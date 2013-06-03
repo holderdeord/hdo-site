@@ -27,32 +27,11 @@
 <% end %>
 
 <div class="row-fluid">
-  <div class="span8">
-    <h3>Aktuelle saker</h3>
-
-    <section class="top-issues">
-      <% @issues.each_slice(2) do |issues| %>
-        <div class="row-fluid">
-          <% issues.each do |issue| %>
-            <article class="issue span6">
-              <%= link_to issue do %>
-                <h4><%= issue.title %></h4>
-                <p>
-                  <%= awesome_truncate issue.description, 200 %>
-                  <span class="read-more"><%= t('app.read_more') %></span>
-                </p>
-              <% end %>
-            </article>
-          <% end %>
-        </div>
-      <% end %>
-    </section>
-  </div>
-
-  <div class="span4">
-    <%= render partial: 'blog', locals: { latest_post: @latest_post, last_three_posts: @last_three_posts } %>
-  </div>
-
+  <% if AppConfig.frontpage_blog_enabled %>
+    <%= render partial: 'issues_and_blog' %>
+  <% else %>
+    <%= render partial: 'issues' %>
+  <% end %>
 </div>
 
 
@@ -71,9 +50,8 @@
   </div>
 <% end %>
 
-<hr class="soften">
-
 <% unless AppConfig.leaderboard_enabled %>
+  <hr class="soften">
   <h3 align="center">SJEKK DITT PARTI</h3>
 
   <div class="row-fluid">
@@ -88,5 +66,3 @@
     </div>
   </div>
 <% end %>
-
-<hr class="soften">

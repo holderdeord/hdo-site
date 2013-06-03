@@ -21,6 +21,7 @@ defaults: &defaults
   leaderboard_enabled: true
   ignore_our_questions: true
   thermo_enabled: false
+  frontpage_blog_enabled: true
 
 development:
   <<: *defaults
@@ -45,3 +46,4 @@ production:
   fastly_enabled: true
   ssl_enabled: true
   leaderboard_enabled: false
+  frontpage_blog_enabled: false

@@ -1,0 +1,17 @@
+<section class="top-issues">
+  <% @issues.each_slice(3) do |issues| %>
+    <div class="row-fluid">
+      <% issues.each do |issue| %>
+        <article class="issue span4">
+          <%= link_to issue do %>
+            <h4><%= issue.title %></h4>
+            <p>
+              <%= awesome_truncate issue.description, 250 %>
+              <span class="read-more"><%= t('app.read_more') %></span>
+            </p>
+          <% end %>
+        </article>
+      <% end %>
+    </div>
+  <% end %>
+</section>
