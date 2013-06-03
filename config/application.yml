@@ -2,7 +2,7 @@ defaults: &defaults
   elasticsearch_url: <%= ENV['ELASTICSEARCH_URL'] || ENV['BONSAI_URL'] || 'http://localhost:9200' %>
   basic_auth_users: <%= ENV['HDO_BASIC_AUTH'] || '' %>
   question_answer_email: sporsmalsvar@holderdeord.no
-  default_bcc_email: test@holderdeord.no
+  default_bcc_email: prodcopy@holderdeord.no
   default_reply_to_email: sporsmalsvar@holderdeord.no
   statsd_host: 5.9.122.47 # ops1.holderdeord.no, but avoid DNS lookup
   statsd_port: 8125
