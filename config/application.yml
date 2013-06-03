@@ -50,5 +50,5 @@ production:
   ssl_enabled: true
   leaderboard_enabled: false
   frontpage_blog_enabled: false
-  default_bcc_email: test@holderdeord.no
+  default_bcc_email: prodcopy@holderdeord.no
   chat_notifications_enabled: true
