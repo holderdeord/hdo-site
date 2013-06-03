@@ -27,11 +27,15 @@
 <% end %>
 
 <div class="row-fluid">
-  <% if AppConfig.frontpage_blog_enabled %>
-    <%= render partial: 'issues_and_blog' %>
-  <% else %>
-    <%= render partial: 'issues' %>
-  <% end %>
+  <h3>Aktuelt</h3>
+
+  <div class="row-fluid">
+    <% if AppConfig.frontpage_blog_enabled %>
+      <%= render partial: 'issues_and_blog' %>
+    <% else %>
+      <%= render partial: 'issues' %>
+    <% end %>
+  </div>
 </div>
 
 
