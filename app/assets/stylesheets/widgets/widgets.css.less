@@ -351,9 +351,11 @@ footer {
       a {
         float: left;
         margin: 0 10px 10px 0;
+        border-radius: 2px;
         &:hover {
           background-color: #eee;
           text-decoration: none;
+          box-shadow: 0 0 0 1px rgba(0,0,0,0.1) inset;
           .promise p:after {
             background: -webkit-linear-gradient(top, rgba(238,238,238,0), rgba(238,238,238,1));
             background: -moz-linear-gradient(top, rgba(238,238,238,0), rgba(238,238,238,1));
@@ -371,27 +373,27 @@ footer {
             text-overflow: ellipsis;
             white-space: nowrap;
             font-weight: bold;
-            padding: 15px 10px 10px 35px;
-            margin: 0 0 -10px -35px;
+            padding: 10px 10px 15px 35px;
+            margin: 0 0 -15px -35px;
             img {
               position: absolute;
               left: 0;
               max-width: 32px;
               max-height: 32px;
-              top: 10px;
+              top: 5px;
             }
           }
           p {
             margin: -5px 0 0 0;
             font-size: 0.9em;
-            height: 50px;
+            height: 45px;
             overflow: hidden;
             position: relative;
             &:after {
               content: "";
               position: absolute;
               bottom: 0;
-              height: 2em;
+              height: 1.5em;
               left: 0;
               right: 0;
               background: -webkit-linear-gradient(top, rgba(255,255,255,0), rgba(255,255,255,1));
@@ -415,8 +417,9 @@ footer {
         width: 67%;
         float: left;
         margin-top: 10px;
+        .labels h3 img,
         .icons .position-wrapper img {
-          max-width: 48px;
+          max-width: 42px;
         }
       }
     }
