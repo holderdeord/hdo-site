@@ -37,7 +37,7 @@ class QuestionsController < ApplicationController
     rep      = question.delete(:representative)
 
     @question = Question.new(question)
-    @question.representative = Representative.attending.with_email.find_by_slug(rep) if rep
+    @question.representative = Representative.askable.find_by_slug(rep) if rep
 
     unless @question.save
       fetch_representatives_and_districts
@@ -53,7 +53,7 @@ class QuestionsController < ApplicationController
 
   def fetch_representatives_and_districts
     @representatives = Rails.cache.fetch('question-form/representatives', expires_in: 1.day) do
-      Representative.attending.with_email.includes(:district, party_memberships: :party).order(:last_name).to_a
+      Representative.askable.includes(:district, party_memberships: :party).order(:last_name).to_a
     end
 
     @districts = Rails.cache.fetch('question-form/districts', expires_in: 1.day) do

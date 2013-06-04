@@ -64,6 +64,7 @@ class Representative < ActiveRecord::Base
 
   scope :attending,  -> { where(attending: true) }
   scope :with_email, -> { where('email IS NOT NULL') }
+  scope :askable,    -> { attending.with_email }
 
   friendly_id :external_id, use: :slugged
 
@@ -84,6 +85,7 @@ class Representative < ActiveRecord::Base
     }
     update_attributes(attrs)
   end
+
   # new function to return whether a password has been set
   def has_no_password?
     self.encrypted_password.blank?
@@ -101,6 +103,10 @@ class Representative < ActiveRecord::Base
   def name_with_party
     # missing spec
     "#{full_name} (#{latest_party.name})"
+  end
+
+  def askable?
+    attending? && !email.blank?
   end
 
   def alternate_text

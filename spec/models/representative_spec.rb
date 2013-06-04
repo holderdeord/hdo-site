@@ -177,4 +177,18 @@ describe Representative do
 
     Representative.with_email.to_a.should == [a]
   end
+
+  it 'finds askable representatives' do
+    a, b, c = [
+      Representative.make!(email: 'foo@bar.com', attending: false),
+      Representative.make!(email: nil, attending: true),
+      Representative.make!(email: 'bah@bar.com', attending: true)
+    ]
+
+    a.should_not be_askable
+    b.should_not be_askable
+    c.should be_askable
+
+    Representative.askable.should == [c]
+  end
 end
