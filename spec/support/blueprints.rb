@@ -105,6 +105,7 @@ end
 
 Representative.blueprint :full do
   party_memberships(1)
+  district
 end
 
 Representative.blueprint :attending do

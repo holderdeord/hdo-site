@@ -8,9 +8,11 @@ class QuestionsController < ApplicationController
   DEFAULT_PER_PAGE = 20
 
   def index
-    @questions = Question.approved
-    @questions = @questions.answered_or_not_ours if AppConfig.ignore_our_questions
-    @questions = @questions.order(:updated_at).paginate(page: params[:page], per_page: DEFAULT_PER_PAGE)
+    questions = Question.approved
+    questions = questions.answered_or_not_ours if AppConfig.ignore_our_questions
+    questions = questions.order(:updated_at).paginate(page: params[:page], per_page: DEFAULT_PER_PAGE)
+
+    @questions = QuestionsDecorator.new(questions)
   end
 
   def show

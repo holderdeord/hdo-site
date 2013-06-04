@@ -11,18 +11,18 @@
         <%= link_to question, class: 'question' do %>
 
           <div class="avatar-container">
-            <img src="<%= path_to_image question.representative.image.versions[:avatar]  %>" class="representative" alt="<%= question.representative.name %>">
-            <%= image_tag question.representative.current_party.logo, alt: question.representative.current_party.name, class: "party-logo" %>
+            <img src="<%= path_to_image question.representative_avatar  %>" class="representative" alt="<%= question.representative_name %>">
+            <%= image_tag question.party_logo, alt: question.party_name, class: "party-logo" %>
           </div>
           <p><%= question.teaser %></p>
           <aside class="muted">
             <div>
-              Til <%= question.representative.name %>
-              fra <span class="party"><%= question.representative.current_party.name %></span>
-              i <span class="district"><%= question.representative.district.name %></span>
+              Til <%= question.representative_name %>
+              fra <span class="party"><%= question.party_name %></span>
+              i <span class="district"><%= question.district_name %></span>
             </div>
             <div>
-              Oppdatert for <%= distance_of_time_in_words_to_now question.updated_at.localtime %> siden
+              <%= question.status_description %>
             </div>
           </aside>
         <% end %>
