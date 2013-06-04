@@ -19,7 +19,7 @@ class Question < ActiveRecord::Base
   scope :answered,             -> { joins(:answer) }
   scope :unanswered,           -> { where('(select count(*) FROM answers WHERE question_id = questions.id) = 0') }
   scope :not_ours,             -> { where("from_email NOT LIKE '%holderdeord.no'")}
-  scope :answered_or_not_ours, -> { where("from_email NOT LIKE '%holderdeord.no' OR (select count(*) FROM answers WHERE question_id = questions.id) > 0")}
+  scope :answered_or_not_ours, -> { where("from_email NOT LIKE '%holderdeord.no' OR EXISTS (select 1 FROM answers WHERE question_id = questions.id)")}
   scope :with_pending_answers, -> { answered.where('answers.status = ?', 'pending') }
 
   def self.all_by_status
