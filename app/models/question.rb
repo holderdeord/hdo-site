@@ -39,6 +39,10 @@ class Question < ActiveRecord::Base
     not answer.nil?
   end
 
+  def has_approved_answer?
+    answer && answer.approved?
+  end
+
   def teaser
     body.truncate(100)
   end

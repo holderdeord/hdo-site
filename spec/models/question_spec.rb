@@ -99,6 +99,8 @@ describe Question do
     Question.answered.should == [q1, q2]
 
     q1.should be_answered
+    q1.should have_approved_answer
+
     q2.should be_answered
     q3.should_not be_answered
   end
