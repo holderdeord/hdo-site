@@ -15,7 +15,16 @@ class QuestionsController < ApplicationController
 
   def show
     @question = Question.approved.find(params[:id])
-    @answer   = @question.answer if @question.answer.try(:approved?)
+
+    if @question.answer.try(:approved?)
+      @answer         = @question.answer
+      @representative = @answer.representative
+      @party          = @answer.party
+    else
+      @answer         = nil
+      @representative = @question.representative
+      @party          = @representative.party_at(@question.created_at)
+    end
   end
 
   def new

@@ -35,11 +35,13 @@ describe QuestionsController do
 
   describe "GET show" do
     it "assigns the requested question as @question" do
-      question = Question.make!(status: 'approved')
+      question = Question.make!(status: 'approved', representative: Representative.make!(:full))
       get :show, id: question.to_param
 
       assigns(:question).should eq(question)
       assigns(:answer).should be_nil
+      assigns(:representative).should eq(question.representative)
+      assigns(:party).should eq(question.representative.latest_party)
     end
 
     it 'only finds approved questions' do
@@ -49,12 +51,14 @@ describe QuestionsController do
     end
 
     it 'assigns approved answers as @answer' do
-      question = Question.make!(status: 'approved')
+      question = Question.make!(status: 'approved', representative: Representative.make!(:full))
       question.create_answer!(body: 'foo', representative: question.representative, status: 'approved')
 
       get :show, id: question
 
       assigns(:answer).should == question.answer
+      assigns(:representative).should == question.answer.representative
+      assigns(:party).should eq(question.answer.representative.latest_party)
     end
 
     it 'ignores non-approved answers' do
