@@ -121,11 +121,21 @@ describe Question do
     q.should_not be_valid
   end
 
-  it 'knows if a question is from us' do
+  it 'knows if a question is not from us' do
     a = Question.make!(from_email: 'foo@holderdeord.no')
     b = Question.make!(from_email: 'foo@example.com')
 
     Question.not_ours.should == [b]
+  end
+
+  it 'knows if a question is not from us or answered' do
+    a = Question.make!(:approved, from_email: 'foo@holderdeord.no')
+    b = Question.make!(:approved, from_email: 'foo@example.com')
+
+    c = Question.make!(:approved, from_email: 'foo@holderdeord.no')
+    c.create_answer!(representative: c.representative, body: 'test')
+
+    Question.order(:id).answered_or_not_ours.should == [b, c]
   end
 
   it 'can have associated email events' do
