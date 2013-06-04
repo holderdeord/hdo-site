@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 class QuestionDecorator < Draper::Decorator
   delegate :teaser,
            :has_approved_answer?
