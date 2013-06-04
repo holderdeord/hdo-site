@@ -9,6 +9,10 @@ module Hdo
         @instance.posts
       end
 
+      def self.latest_post
+        Rails.cache.fetch('blog/latest', expires_in: 5.minutes) { posts.first }
+      end
+
       def initialize
         @posts = []
       end
