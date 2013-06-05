@@ -38,8 +38,11 @@ class WidgetsController < ApplicationController
     @issues = IssueDecorator.decorate_collection(issues) if issues.any?
 
     @promise_groups = []
-    params[:promises].each do |title, ids|
-      @promise_groups << [title, Promise.includes(:parties).find(ids.split(','))]
+
+    if params[:promises]
+      params[:promises].each do |title, ids|
+        @promise_groups << [title, Promise.includes(:parties).find(ids.split(','))]
+      end
     end
   end
 
