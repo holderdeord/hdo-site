@@ -1,0 +1,15 @@
+class ImportMailer < ActionMailer::Base
+  layout 'hdo_mail'
+
+  default from: 'teknisk@holderdeord.no',
+          to:   'analyse@holderdeord.no'
+
+  def votes_today_email
+    votes = Vote.where("created_at >= ?", 1.day.ago)
+    return unless votes.any?
+
+    @parliament_issues = votes.flat_map { |vote| vote.parliament_issues.to_a }.uniq
+
+    mail subject: "#{votes.size} nye saker behandlet"
+  end
+end

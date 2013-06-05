@@ -1,0 +1,5 @@
+Saker med nye avstemninger for <%= l 1.day.ago, format: :text %>:
+
+<% @parliament_issues.each do |pi| %>
+* <%= parliament_issue_url pi %> <%= pi.summary %>
+<% end %>

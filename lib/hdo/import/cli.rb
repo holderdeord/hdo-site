@@ -274,42 +274,11 @@ module Hdo
       end
 
       def notify_new_votes
+        mail    = ImportMailer.votes_today_email
+        message = mail.parts.last.body.raw_source
+
         client = hipchat_client || return
-
-        votes = Vote.where("created_at >= ?", 1.day.ago)
-
-        if votes.empty?
-          log.info "no new votes"
-          return
-        else
-          log.info "#{votes.count} new votes"
-        end
-
-        room = client['Analyse']
-        urls = Rails.application.routes.url_helpers
-
-        pis = votes.flat_map { |vote| vote.parliament_issues.to_a }.uniq.map do |pi|
-          [urls.parliament_issue_url(pi, host: "www.holderdeord.no"), pi.summary]
-        end
-
-        max = 10
-
-        template = <<-HTML
-        <h2>Saker med nye avstemninger i dag:</h2>
-        <ul>
-          <% pis.first(max).each do |url, summary| %>
-            <li><a href="<%= url %>"><%= summary %></a></li>
-          <% end %>
-
-          <% if pis.size > max %>
-            <li>...og <%= pis.size - max %> flere</li>
-          <% end %>
-        </ul>
-        HTML
-
-        message = ERB.new(template, 0, "%-<>").result(binding)
-        log.info "sending hipchat message:\n#{message}"
-        room.send('Stortinget', message, notify: true)
+        client['Analyse'].send('Stortinget', message, notify: true)
       rescue => ex
         log.error ex.message
       end

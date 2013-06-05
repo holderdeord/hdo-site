@@ -1,0 +1,7 @@
+<h2>Saker med nye avstemninger for <%= l 1.day.ago, format: :text %></h2>
+
+<ul>
+  <% @parliament_issues.each do |pi| %>
+    <li><%= link_to pi.summary, pi %></li>
+  <% end %>
+</ul>
