@@ -10,6 +10,6 @@ class ImportMailer < ActionMailer::Base
 
     @parliament_issues = votes.flat_map { |vote| vote.parliament_issues.to_a }.uniq
 
-    mail subject: "#{votes.size} nye saker behandlet"
+    mail subject: "#{@parliament_issues.size} nye saker behandlet"
   end
 end
