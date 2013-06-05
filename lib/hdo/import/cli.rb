@@ -275,6 +275,8 @@ module Hdo
 
       def notify_new_votes
         mail    = ImportMailer.votes_today_email
+        return if mail.to.nil?
+
         message = mail.parts.last.body.raw_source
 
         client = hipchat_client || return
