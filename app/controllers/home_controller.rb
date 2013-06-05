@@ -22,7 +22,7 @@ class HomeController < ApplicationController
 
     if AppConfig.frontpage_blog_enabled
       @latest_post = Hdo::Utils::BlogFetcher.latest_post
-      @issues = published.for_frontpage(6)
+      @issues = published.for_frontpage(@latest_post ? 6 : 9)
     else
       @issues = published.for_frontpage(9)
     end

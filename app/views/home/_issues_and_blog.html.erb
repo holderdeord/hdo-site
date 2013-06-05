@@ -21,15 +21,17 @@
 
 <div class="span4">
   <div class="blog">
-    <h3>Blogg</h3>
-    <p class="description">Her skriver vi om små og store ting som opptar oss.</p>
+    <h3>Apropos</h3>
+    <p class="description">
+      Her skriver folk tilknyttet Holder de ord om små og store ting som opptar dem. Helt uhøytidelig og etter innfallsmetoden.
+    </p>
 
     <article>
       <h4><%= @latest_post.title %></h4>
       <p class="byline">av <%= @latest_post.author %></p>
       <div class="content">
-        <% @latest_post.paragraphs.each do |paragraph| %>
-          <p><%= paragraph.to_s.html_safe %><p>
+        <% @latest_post.paragraphs.first(2).each do |pg| %>
+          <p><%= pg.html_safe %></p>
         <% end %>
       </div>
       <%= link_to "Les hele innlegget", @latest_post.url %>

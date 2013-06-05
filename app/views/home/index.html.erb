@@ -28,7 +28,7 @@
 
 <div class="row-fluid">
   <div class="row-fluid">
-    <% if AppConfig.frontpage_blog_enabled %>
+    <% if AppConfig.frontpage_blog_enabled && @latest_post %>
       <%= render partial: 'issues_and_blog' %>
     <% else %>
       <%= render partial: 'issues' %>

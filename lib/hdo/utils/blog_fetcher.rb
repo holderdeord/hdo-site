@@ -10,7 +10,10 @@ module Hdo
       end
 
       def self.latest_post
-        Rails.cache.fetch('blog/latest', expires_in: 5.minutes) { posts.first }
+        @latest_post = Rails.cache.fetch('blog/latest', expires_in: 5.minutes) { posts.first }
+      rescue => ex
+        Rails.logger.error "#{self.class}: #{ex.message}"
+        @latest_post # serve stale on exception
       end
 
       def initialize
@@ -19,9 +22,6 @@ module Hdo
 
       def posts
         @posts = extract_posts(fetch)
-      rescue => ex
-        Rails.logger.error "#{self.class}: #{ex.message}"
-        @posts
       end
 
       private
@@ -48,12 +48,26 @@ module Hdo
           @url        = entry.css('link[rel=alternate][type="text/html"]').first.try(:attr, 'href')
           @author     = entry.css('author name').text
           @updated_at = Time.parse(entry.css('updated').text)
-          @html       = entry.css('content[type=html]').text.truncate(1000)
+          @html       = entry.css('content[type=html]').text
         end
 
         def paragraphs
-          Nokogiri::HTML.parse(@html).css('span').to_a.reject { |e| e.include?('<br>') }
+          @paragraphs ||= (
+            paragraphs = ['']
+
+            Nokogiri::HTML.parse(@html).css('body *').children.each do |node|
+              if node.name == 'br'
+                paragraphs << ''
+              else
+                paragraphs.last << node.to_s
+              end
+            end
+
+            paragraphs.delete ''
+            paragraphs
+          )
         end
+
       end
 
     end
