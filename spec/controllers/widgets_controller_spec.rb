@@ -81,6 +81,7 @@ describe WidgetsController do
 
       response.should be_ok
       assigns(:promise_groups).to_a.should == [[parties, promises]]
+      assigns(:parliament_period_name).should == '2009-2013'
     end
   end
 

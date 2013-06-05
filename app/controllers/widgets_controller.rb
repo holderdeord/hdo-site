@@ -48,6 +48,9 @@ class WidgetsController < ApplicationController
 
   def promises
     promises = params[:promises] ? Promise.includes(:parties).find(params[:promises].split(',')) : []
+    periods = promises.map { |e| e.parliament_period }.uniq.sort_by { |e| e.start_date }
+
+    @parliament_period_name = periods.map { |e| e.external_id }.join(', ')
     @promise_groups = promises.group_by { |e| e.parties.to_a }
   end
 
@@ -57,10 +60,11 @@ class WidgetsController < ApplicationController
   def configure
     user = current_user || authenticate_with_http_basic { |u, p| Hdo::BasicAuth.ok?(u, p) }
     if user
-      issues = Issue.published
-
-      example_party = Party.first
-      example_promises = Promise.order('random()').first(5)
+      issues           = Issue.published
+      example_party    = Party.first
+      example_promises = []
+      period           = ParliamentPeriod.order(:start_date).last
+      example_promises = period.promises.order('random()').first(5) if period
 
       @examples = []
 

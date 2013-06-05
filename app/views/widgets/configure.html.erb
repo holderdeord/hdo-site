@@ -104,7 +104,7 @@
       spinner.show();
 
       $.ajax({
-        url: '/search/all.json?size=500&query=' + encodeURIComponent(query + ' _type:promise'),
+        url: '/search/all.json?size=500&query=' + encodeURIComponent(query + ' _type:promise parliament_period_name:2013-2017'),
         type: 'GET',
         dataType: 'json',
         complete: function(xhr, textStatus) { spinner.hide(); },
