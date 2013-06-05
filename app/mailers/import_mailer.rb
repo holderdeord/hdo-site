@@ -1,8 +1,8 @@
 class ImportMailer < ActionMailer::Base
   layout 'hdo_mail'
 
-  default from: 'teknisk@holderdeord.no',
-          to:   'analyse@holderdeord.no'
+  default from: 'Teknisk <teknisk@holderdeord.no>',
+          to:   'Analyse <analyse@holderdeord.no>'
 
   def votes_today_email
     votes = Vote.since_yesterday
