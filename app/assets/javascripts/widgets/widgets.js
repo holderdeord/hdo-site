@@ -1,4 +1,5 @@
 //= require ../lib/object.create
+//= require ../conditional/json2
 
 var HDO = HDO || {};
 
