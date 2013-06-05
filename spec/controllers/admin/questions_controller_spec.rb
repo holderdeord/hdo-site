@@ -158,6 +158,13 @@ describe Admin::QuestionsController do
 
           get :question_approved_email_rep, id: question
         end
+
+        it "does not send an uninvited representative e-mails" do
+          question = Question.make!
+
+          ModerationMailer.should_not_receive(:question_approved_representative_email)
+          get :question_approved_email_rep, id: question
+        end
       end
 
       describe "approving answers" do

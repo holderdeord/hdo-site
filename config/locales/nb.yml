@@ -461,6 +461,7 @@ nb:
         reject: Avvis
         updated: Spørsmålet ble oppdatert.
         email_sent: 'E-post er sent til %{email}.'
+        rep_not_invited: 'Representanten har ikke blitt invitert til å delta i tjenesten enda!'
       status:
         approved: Godkjent
         pending: Avventer kontroll
