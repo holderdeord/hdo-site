@@ -33,10 +33,11 @@ class Vote < ActiveRecord::Base
 
   friendly_id :timestamp_and_enacted, use: :slugged
 
-  scope :latest,       ->(limit) { order(:time).reverse_order.limit(limit) }
-  scope :personal,     -> { where(:personal => true) }
-  scope :non_personal, -> { where(:personal => false) }
-  scope :with_results, -> { includes(:parliament_issues, vote_results: {representative: {party_memberships: :party}}) }
+  scope :latest,          ->(limit) { order(:time).reverse_order.limit(limit) }
+  scope :personal,        -> { where(:personal => true) }
+  scope :non_personal,    -> { where(:personal => false) }
+  scope :with_results,    -> { includes(:parliament_issues, vote_results: {representative: {party_memberships: :party}}) }
+  scope :since_yesterday, -> { where("created_at >= ?", 1.day.ago) }
 
   def self.admin_search(filter, query, selected_categories = [])
     query = '*' if query.blank?

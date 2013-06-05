@@ -141,4 +141,11 @@ describe Vote do
     v1.should_not be_alternate_of unrelated_by_enacted
   end
 
+  it 'finds votes since yesterday' do
+    a = Vote.make!(created_at: 25.hours.ago)
+    b = Vote.make!(created_at: 23.hours.ago)
+
+    Vote.since_yesterday.should == [b]
+  end
+
 end
