@@ -50,7 +50,8 @@ namespace :import do
     Hdo::Import::CLI.new(['daily']).run
   end
 
-  desc 'Import a DB dump from production (assumes SSH access)' do
+  desc 'Import a DB dump from production (assumes SSH access)'
+  task :dump do
     sh "ssh hdo@db2 'pg_dump --clean hdo_production | gzip' | gunzip | psql hdo_development"
   end
 
