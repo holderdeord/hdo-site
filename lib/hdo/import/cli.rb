@@ -275,12 +275,13 @@ module Hdo
 
       def notify_new_votes
         mail    = ImportMailer.votes_today_email
-        return if mail.to.nil?
+        return if mail.to.nil? # no new votes
 
+        mail.deliver
         message = mail.parts.last.body.raw_source
 
         client = hipchat_client || return
-        client['Analyse'].send('Stortinget', message, notify: true)
+        client['Analyse'].send('Stortinget', message.to_param, notify: true)
       rescue => ex
         log.error [ex.message, ex.backtrace].join("\n")
       end
