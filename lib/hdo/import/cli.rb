@@ -282,7 +282,7 @@ module Hdo
         client = hipchat_client || return
         client['Analyse'].send('Stortinget', message, notify: true)
       rescue => ex
-        log.error ex.message
+        log.error [ex.message, ex.backtrace].join("\n")
       end
 
       def notify_missing_emails
