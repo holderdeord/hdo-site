@@ -140,6 +140,19 @@ describe Admin::QuestionsController do
 
         question.reload.body.should eq 'doobeedoo'
       end
+
+      it 'sets the answer body' do
+        question = Question.make!(status: 'approved')
+        answer = question.create_answer!(representative: question.representative, body: 'foo', status: 'pending')
+
+        put :update, id: question, question: {
+          answer: {
+            body: 'bar'
+          }
+        }
+
+        question.reload.answer.body.should eq 'bar'
+      end
     end
 
     describe "emails" do

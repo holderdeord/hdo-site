@@ -23,9 +23,13 @@ class Admin::QuestionsController < AdminController
 
     @question.issues = Issue.find(issue_ids || [])
     @question.status = params[:question][:status]
-    @question.answer.update_attributes(params[:question][:answer]) if params[:question][:answer]
     @question.update_attributes(internal_comment: params[:question][:internal_comment])
     @question.update_attributes(body: params[:question][:body])
+
+    if @question && @question.answer
+      @question.answer.update_attributes(params[:question][:answer]) if params[:question][:answer]
+      @question.answer.update_attributes(body: params[:question][:answer_body])
+    end
 
     if @question.save
       redirect_to edit_admin_question_path(@question), notice: t('app.questions.edit.updated')

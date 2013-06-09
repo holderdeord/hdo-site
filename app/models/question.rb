@@ -35,6 +35,10 @@ class Question < ActiveRecord::Base
     workflow_spec.state_names.map &:to_s
   end
 
+  def answer_body
+    answer.body
+  end
+
   def answered?
     not answer.nil?
   end

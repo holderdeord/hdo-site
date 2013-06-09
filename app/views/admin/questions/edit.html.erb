@@ -66,7 +66,10 @@
           <dd><%= l @answer.created_at.localtime %></dd>
 
           <dt><%= Answer.human_attribute_name :body %></dt>
-          <dd class="well"><%= @answer.body %></dd>
+          <dd class="well">
+            <%= f.text_area :answer_body, rows: 5, style: 'width: 100%;' %>
+            <small class="muted">Suπerforsiktig, superadmin...</small>
+          </dd>
         </dl>
 
         <dl class="span6">
