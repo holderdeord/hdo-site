@@ -1,7 +1,7 @@
 <article>
 
   <h1>Partienes løfter 2013-2017</h1>
-  <p>Hentet fra partienes programmer og regjeringserklæringen</p>
+  <p>Hentet fra partienes stortingsvalgprogrammer</p>
     <% @promise_groups.each do |title, promises| %>
       <h2><%= title %></h2>
 
@@ -26,6 +26,7 @@
     <% end %>
 
   <h1>Stemmegivning 2009-2013</h1>
+  <p>Oversiktsbilde over alle avstemninger om saken på Stortinget siste fire år.</p>
   <% @issues.each do |issue| %>
     <div class="issue">
       <h2><%= issue.title %></h2>
