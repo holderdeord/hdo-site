@@ -38,13 +38,19 @@ class WidgetsController < ApplicationController
     @issues = IssueDecorator.decorate_collection(issues) if issues.any?
 
     @promise_groups = []
-    params[:promises].each do |title, ids|
-      @promise_groups << [title, Promise.includes(:parties).find(ids.split(','))]
+
+    if params[:promises]
+      params[:promises].each do |title, ids|
+        @promise_groups << [title, Promise.includes(:parties).find(ids.split(','))]
+      end
     end
   end
 
   def promises
     promises = params[:promises] ? Promise.includes(:parties).find(params[:promises].split(',')) : []
+    periods = promises.map { |e| e.parliament_period }.uniq.sort_by { |e| e.start_date }
+
+    @parliament_period_name = periods.map { |e| e.external_id }.join(', ')
     @promise_groups = promises.group_by { |e| e.parties.to_a }
   end
 
@@ -52,19 +58,37 @@ class WidgetsController < ApplicationController
   end
 
   def configure
-    user = current_user || authenticate_with_http_basic { |u, p| Hdo::BasicAuth.ok?(u, p) }
+    user = current_user
+
+    # temporarily hide promises from external users
+
     if user
-      @issues = Issue.published.order(:title)
+      @internal_user = true
+    else
+      user = authenticate_with_http_basic { |u, p| Hdo::BasicAuth.ok?(u, p) }
+      @internal_user = false
+    end
 
-      @example_party = Party.first
-      @example_promises = Promise.order('random()').first(5).map(&:id).join(',')
+    if user
+      issues           = Issue.published
+      example_party    = Party.first
+      example_promises = []
+      period           = ParliamentPeriod.order(:start_date).last
+      example_promises = period.promises.order('random()').first(5) if period
 
-      @examples = {
-        :script   => "<script src='#{widget_load_url}'></script>",
-        :issue    => "<a class='hdo-issue-widget' href='#{root_url}' data-issue-id='#{@issues.first.try(:id)}'>Laster innhold fra Holder de ord</a>",
-        :party    => "<a class='hdo-party-widget' href='#{root_url}' data-party-id='#{@example_party.try(:id)}'>Laster innhold fra Holder de ord</a>",
-        :promises => "<a class='hdo-promises-widget' href='#{root_url}' data-promises='#{@example_promises}'>Laster innhold fra Holder de ord</a>",
-      }
+      @examples = []
+
+      if issues.any?
+        docs = Hdo::WidgetDocs.new
+
+        @examples << docs.specific_issue(issues.first)
+        @examples << docs.party_default(example_party)
+        @examples << docs.party_count(example_party, 10)
+        @examples << docs.party_issues(example_party, issues.order('random()').first(5))
+        @examples << docs.promises(example_promises) if @internal_user
+      end
+
+      @issues = issues.order(:title)
 
       render layout: 'application'
     else

@@ -81,11 +81,10 @@
 
 .top-issues-caption {
   margin-bottom: 0;
-  border-bottom: 1px solid #eee;
+  padding-left: 10px;
 }
 
 .top-issues {
-  padding: 10px 0;
   article {
     word-break: break-word;
     padding: 0 10px;
@@ -130,10 +129,11 @@ a:hover .avatar {
 
 
 .leaderboard-title {
+  margin-bottom: 0;
   img {
     height: 48px;
     width: 48px;
-    margin: 0 10px;
+    margin: 0 5px 0 10px;
   }
 }
 
@@ -141,73 +141,59 @@ a:hover .avatar {
   margin-left: 0;
   padding-left: 0;
   list-style: none;
-  &.issues {
-    li {
-      a {
-        img {
-          opacity: 0.5;
-        }
-        &:hover img {
-          opacity: 1;
-        }
+  &.issues a {
+    img {
+      opacity: 0.5;
+    }
+    &:hover img {
+      opacity: 1;
+    }
+  }
+  &.kept a {
+    background-color: desaturate(lighten(@hdoPrimaryColor, 64), 30);
+  }
+  &.broken a, &.partially_kept  a{
+    color: @hdoSecondaryColor;
+    background-color: lighten(saturate(@hdoSecondaryColor, 40), 47);
+  }
+  a {
+    display: block;
+    border-radius: 2px;
+    position: relative;
+    background-color: #fff;
+    margin-bottom: 3px;
+    padding: 0.5em 10px 0.5em 70px;
+    &:hover {
+      text-decoration: none;
+      color: #000 !important;
+      box-shadow: 0 0 0 50px rgba(0,0,0,0.03) inset, 0 0 0 1px rgba(0,0,0,0.03) inset;
+      .muted {
+        color: #333;
       }
     }
-    &.broken li, &.partially_kept li {
-      a {
-        color: @hdoSecondaryColor;
-      }
+    &:active {
+      box-shadow: 0 0 0 50px rgba(0,0,0,0.08) inset, 0 0 0 1px rgba(0,0,0,0.03) inset;
     }
-  }
-  &.kept li {
-    a {
-      background-color: desaturate(lighten(@hdoPrimaryColor, 64), 30);
+    img {
+      position: absolute;
+      left: 10px;
+      top: 50%;
+      margin-top: -24px;
+      width: 48px;
+      height: 48px;
     }
-    + li a {
-      background-color: desaturate(lighten(@hdoPrimaryColor, 66), 30);
-    }
-  }
-  &.broken li, &.partially_kept li {
-    a {
-      background-color: lighten(saturate(@hdoSecondaryColor, 40), 47);
-    }
-    + li a {
-      background-color: lighten(saturate(@hdoSecondaryColor, 40), 48);
-    }
-  }
-  li {
-    a {
-      display: block;
-      position: relative;
-      background-color: #fff;
-      border-bottom: 2px solid #fff;
-      padding: 10px;
+    .title {
+      font-size: 1.1em;
       overflow: hidden;
       white-space: nowrap;
       text-overflow: ellipsis;
-      &:hover {
-        text-decoration: none;
-        color: #000 !important;
-        box-shadow: 0 0 0 50px rgba(0,0,0,0.05) inset ;
-        .muted {
-          color: #333;
-        }
-      }
-      img {
-        margin-right: 10px;
-        width: 48px;
-        height: 48px;
-      }
-      .text {
-        display: inline-block;
-        vertical-align: middle;
-        line-height: 1.5em;
-        .title {
-          font-size: 1.1em;
-        }
-        .muted {
-          font-size: 0.85em;
-        }
-      }
+    }
+    .muted {
+      font-size: 0.85em;
+      margin-top: -0.5em;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
     }
   }
 }

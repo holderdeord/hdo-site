@@ -50,6 +50,6 @@ nb:
       confirmation_instructions:
         subject: 'Velkommen til Holder de ord'
       reset_password_instructions:
-        subject: 'Nullstilling av passord'
+        subject: 'Lag nytt passord'
       unlock_instructions:
         subject: 'Gjenåpning av konto'

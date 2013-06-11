@@ -24,6 +24,6 @@ describe SessionsController do
   it "doesn't sign in some random dude" do
     post :create, user: { email: 'random@haker.com', password: '13377331' }
 
-    response.should redirect_to new_user_session_path
+    response.should_not redirect_to admin_root_path
   end
 end

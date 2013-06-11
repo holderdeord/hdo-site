@@ -29,6 +29,14 @@ module Hdo
           promise.general.should == example.general
           promise.parliament_period.name.should == '2009-2013'
         end
+
+        it 'fails if the promise has no parties' do
+          promise = Hdo::StortingImporter::Promise.example('parties' => [])
+
+          expect {
+            persister.import_promises [promise]
+          }.to_not change(Promise, :count)
+        end
       end
     end
   end

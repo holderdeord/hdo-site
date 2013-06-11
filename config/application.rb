@@ -78,6 +78,7 @@ module Hdo
       conditional/html5.js
       conditional/respond.js
       conditional/spring.js
+      conditional/json2.js
       widgets/widgets.css
       widgets/frame.js
       widgets/widgets.js

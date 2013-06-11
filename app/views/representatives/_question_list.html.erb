@@ -7,13 +7,8 @@
         <%= link_to question.teaser, question %>
 
         <p class="muted">
-          Av <strong><%= question.from_display_name %></strong>.
-
-          <% if question.answered? && question.answer.approved? %>
-            Besvart for <%= distance_of_time_in_words_to_now question.answer.created_at %> siden.
-          <% else %>
-            Venter på svar, stilt for <%= distance_of_time_in_words_to_now question.created_at %> siden.
-          <% end %>
+          Fra <strong><%= question.from_display_name %></strong>.
+          <%= question.decorate.status_description %>
         </p>
       </li>
     <% end %>

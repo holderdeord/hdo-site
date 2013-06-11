@@ -6,18 +6,3 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
-
-if Rails.env.development?
-  existing = User.find_by_email("admin@holderdeord.no")
-  existing && existing.destroy
-
-  puts "creating development user u=admin@holderdeord.no p=hdo123"
-
-  User.create!(
-    name: 'admin',
-    email: "admin@holderdeord.no",
-    password: "hdo123",
-    password_confirmation: "hdo123",
-    remember_me: false
-  )
-end

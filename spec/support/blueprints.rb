@@ -50,7 +50,9 @@ Promise.blueprint do
   source { "PP:10" }
   body { "Løftetekst-#{sn}" }
   categories { [Category.make!] }
-  parliament_period { ParliamentPeriod.make! }
+  parliament_period do
+    ParliamentPeriod.find_by_external_id('2009-2013') || ParliamentPeriod.make!(external_id: '2009-2013')
+  end
 end
 
 Category.blueprint do
@@ -103,6 +105,7 @@ end
 
 Representative.blueprint :full do
   party_memberships(1)
+  district
 end
 
 Representative.blueprint :attending do
@@ -129,7 +132,6 @@ Issue.blueprint do
     Array.new(2) { VoteConnection.make!(issue: object) }
   }
   frontpage { false }
-
 end
 
 Issue.blueprint :published do
@@ -165,6 +167,10 @@ Question.blueprint do
   representative { Representative.make! }
   from_name { "Ola Nordmann" }
   from_email { "ola.nordmann@engasjert.no" }
+end
+
+Question.blueprint :approved do
+  status { "approved" }
 end
 
 Answer.blueprint do

@@ -10,30 +10,21 @@ describe Admin::QuestionsController do
     let(:user) { User.make! role: 'contributor' }
     before { sign_in user }
 
-    describe "GET index" do
-      it "assigns all questions grouped by status" do
-        question = Question.make!
-
-        get :index, {}
-        assigns(:questions_by_status).should eq({'pending' => [question]})
+    describe "GET edit" do
+      it "is unauthorized" do
+        get :edit, id: Question.make!
+        response.status.should eq 401
       end
     end
 
-    describe "PUT approve" do
-      it "does not approve the requested question" do
-        question = Question.make!
+    describe "PUT edit" do
+      it "cannot edit questions" do
+        question = Question.make!(status: 'pending')
 
-        put :approve, {:id => question.to_param}
+        put :update, id: question, question: {status: 'approved' }
+
         question.reload.should_not be_approved
-      end
-    end
-
-    describe "PUT reject" do
-      it "does not reject the requested question" do
-        question = Question.make!
-
-        put :reject, {:id => question.to_param}
-        question.reload.should be_pending
+        response.status.should eq 401
       end
     end
 
@@ -44,61 +35,55 @@ describe Admin::QuestionsController do
     before { sign_in user }
 
     describe "GET index" do
-      it "assigns all questions grouped by status" do
-        question = Question.make!
+      it "assigns pending questions" do
+        q = Question.make!
 
-        get :index, {}
-        assigns(:questions_by_status).should eq({'pending' => [question]})
-      end
-    end
+        get :index
 
-    describe "PUT approve" do
-      it "updates the requested question" do
-        question = Question.make!
-
-        put :approve, {:id => question.to_param}
-        question.reload.should be_approved
+        assigns(:questions_pending).should eq [q]
       end
 
-      it "redirects to questions#index" do
-        question = Question.make!
+      it "assigns questions with pending answers" do
+        q = Question.make! :approved
+        Answer.make! question: q
 
-        put :approve, {:id => question.to_param}
-        response.should redirect_to(admin_questions_path)
+        get :index
+
+        assigns(:questions_answer_pending).should eq [q]
       end
 
-      it "informs the user if save fails" do
-        question = Question.make!
-        Question.any_instance.should_receive(:save).and_return false
+      it "assigns rejected questions" do
+        q = Question.make! status: 'rejected'
 
-        put :reject, {:id => question.to_param}
-        response.should redirect_to(admin_questions_path)
-        flash.should_not be_empty
-      end
-    end
+        get :index
 
-    describe "PUT reject" do
-      it "updates the requested question" do
-        question = Question.make!
-
-        put :reject, {:id => question.to_param}
-        question.reload.should be_rejected
+        assigns(:questions_rejected).should eq [q]
       end
 
-      it "redirects to questions#index" do
-        question = Question.make!
+      it "assigns questions with rejected answers" do
+        q = Question.make! :approved
+        Answer.make! question: q, status: 'rejected'
 
-        put :reject, {:id => question.to_param}
-        response.should redirect_to(admin_questions_path)
+        get :index
+
+        assigns(:questions_answer_rejected).should eq [q]
       end
 
-      it "informs the user if save fails" do
-        question = Question.make!
-        Question.any_instance.should_receive(:save).and_return false
+      it "assigns approved questions and answers" do
+        q = Question.make! :approved
+        Answer.make! question:q, status: 'approved'
 
-        put :reject, {:id => question.to_param}
-        response.should redirect_to(admin_questions_path)
-        flash.should_not be_empty
+        get :index
+
+        assigns(:questions_approved).should eq [q]
+      end
+
+      it "assigns unanswered questions" do
+        q = Question.make! :approved
+
+        get :index
+
+        assigns(:questions_unanswered).should eq [q]
       end
     end
 
@@ -148,6 +133,59 @@ describe Admin::QuestionsController do
         put :update, id: question, question: { internal_comment: 'doobeedoo' }
 
         question.reload.internal_comment.should eq 'doobeedoo'
+      end
+
+      it 'sets the question body' do
+        put :update, id: question, question: { body: 'doobeedoo' }
+
+        question.reload.body.should eq 'doobeedoo'
+      end
+
+      it 'sets the answer body' do
+        question = Question.make!(status: 'approved')
+        answer = question.create_answer!(representative: question.representative, body: 'foo', status: 'pending')
+
+        put :update, id: question, question: {
+          answer: {
+            body: 'bar'
+          }
+        }
+
+        question.reload.answer.body.should eq 'bar'
+      end
+    end
+
+    describe "emails" do
+      let(:representative) { Representative.make! :confirmed }
+      let(:question) { Question.make! :approved, representative: representative }
+
+      describe "approving questions" do
+        it "can send the user an email" do
+          ModerationMailer.should_receive(:question_approved_user_email).with(question).and_call_original
+
+          get :question_approved_email_user, id: question
+        end
+
+        it "can send the representative an email" do
+          ModerationMailer.should_receive(:question_approved_representative_email).with(question).and_call_original
+
+          get :question_approved_email_rep, id: question
+        end
+
+        it "does not send an uninvited representative e-mails" do
+          question = Question.make!
+
+          ModerationMailer.should_not_receive(:question_approved_representative_email)
+          get :question_approved_email_rep, id: question
+        end
+      end
+
+      describe "approving answers" do
+        it "can send the user an email" do
+          ModerationMailer.should_receive(:answer_approved_user_email).with(question).and_call_original
+
+          get :answer_approved_email_user, id: question
+        end
       end
     end
   end

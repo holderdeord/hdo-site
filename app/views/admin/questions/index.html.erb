@@ -1,20 +1,37 @@
 <h1><%= Question.model_name.human(count: 2).capitalize %></h1>
-<div class="row-fluid">
-  <div class="tabbable">
-    <ul class="nav nav-tabs">
-      <% Question.statuses.each_with_index do |status, idx| %>
-        <li class="span4 <%= 'active' if idx == 0 %>">
-          <a href="#<%= status %>-tab" data-toggle="tab"><%= t("app.questions.status.#{status}") %> (<%= @questions_by_status[status].try(:size) || 0 %>)</a>
-        </li>
-      <% end %>
-    </ul>
+<h2 class="muted"><%=Question.pending.count %> spørsmål og <%= Question.with_pending_answers.count %> svar avventer godkjenning!</h2>
 
-    <div class="tab-content">
-      <% Question.statuses.each_with_index do |status, idx| %>
-        <div id="<%= status %>-tab" class="tab-pane <%= 'active' if idx == 0 %>">
-          <%= render partial: 'question_index_table', locals: { status: status, questions: @questions_by_status[status] || [] } %>
-        </div>
-      <% end %>
+<div class="row-fluid">
+  <% if @questions_pending.any? %>
+    <div class="well">
+      <h3>Spørsmål som avventer kontroll</h3>
+        <%= render partial: 'question_index_table', locals: { questions: @questions_pending, show_answer: false, show_edit: @show_edit, question_approved: false } %>
     </div>
+  <% end %>
+  <% if @questions_answer_pending.any? %>
+    <div class="well" id="question_approved-answers">
+      <h3>Spørsmål med svar som avventer kontroll</h3>
+        <%= render partial: 'question_index_table', locals: { questions: @questions_answer_pending, show_answer: true, show_edit: @show_edit, question_approved: true } %>
+    </div>
+  <% end %>
+
+  <div class="well">
+    <% if @questions_unanswered.any? %>
+      <h3>Spørsmål som avventer svar</h3>
+      <%= render partial: 'question_index_table', locals: { questions: @questions_unanswered, show_answer: false, show_edit: @show_edit, question_approved: true } %>
+    <% end %>
+    <% if @questions_answer_rejected.any? %>
+      <h3>Spørsmål med avviste svar</h3>
+      <%= render partial: 'question_index_table', locals: { questions: @questions_answer_rejected, show_answer: true, show_edit: @show_edit, question_approved: true } %>
+    <% end %>
+    <% if @questions_rejected.any? %>
+      <h3>Avviste spørsmål</h3>
+      <%= render partial: 'question_index_table', locals: { questions: @questions_rejected, show_answer: false, show_edit: @show_edit, question_approved: true } %>
+    <% end %>
+    <% if @questions_approved.any? %>
+      <h3>Godkjente spørsmål og svar</h3>
+      <%= render partial: 'question_index_table', locals: { questions: @questions_approved, show_answer: false, show_edit: @show_edit, question_approved: true } %>
+    <% end %>
   </div>
+
 </div>

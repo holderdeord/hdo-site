@@ -4,6 +4,11 @@
 </h3>
 
 <%= form_for(@question, url: admin_question_url(@question)) do |f| %>
+  <div class="form-actions">
+    <%= f.submit t('app.save'), class: 'btn btn-primary' %>
+    <%= link_to t('app.back'), admin_questions_path, class: 'btn' %>
+  </div>
+
   <div class="row-fluid">
     <dl class="span6">
       <dt><%= Question.human_attribute_name :created_at %></dt>
@@ -22,10 +27,13 @@
       <dd><%= @question.show_sender? ? t('app.yes') : t('app.no') %></dd>
 
       <dt><%= Question.human_attribute_name :body %></dt>
-      <dd class="well"><%= @question.body %></dd>
+      <dd class="well">
+        <%= f.text_area :body, rows: 5, style: 'width: 100%;' %>
+        <small class="muted">Suπerforsiktig, superadmin...</small>
+      </dd>
 
       <dt><%= Question.human_attribute_name :internal_comment %></dt>
-      <dd><%= f.text_area :internal_comment, rows:  5, cols: 50 %></dd>
+      <dd><%= f.text_area :internal_comment, rows:  5, style: 'width: 100%' %></dd>
     </dl>
 
     <dl class="span6">
@@ -58,7 +66,10 @@
           <dd><%= l @answer.created_at.localtime %></dd>
 
           <dt><%= Answer.human_attribute_name :body %></dt>
-          <dd class="well"><%= @answer.body %></dd>
+          <dd class="well">
+            <%= f.text_area :answer_body, rows: 5, style: 'width: 100%;' %>
+            <small class="muted">Suπerforsiktig, superadmin...</small>
+          </dd>
         </dl>
 
         <dl class="span6">
@@ -67,7 +78,44 @@
         </dl>
       <% end %>
     </div>
+
+    <hr class="soften">
+
+  <h3>E-poster</h3>
+  <div class="row-fluid">
+    <div class="span5<%= @question.approved? ? '' : ' muted' %>">
+      <h4>Ved godkjent spørsmål</h4>
+      <div class="row-fluid"><%= link_to 'Send e-post til bruker', question_approved_email_user_admin_question_path(@question), class: 'btn', disabled: !@question.approved? %></div>
+      <div class="row-fluid"><%= link_to 'Send e-post til representant', question_approved_email_rep_admin_question_path(@question), class: 'btn', disabled: !@question.approved? %></div>
+    </div>
+    <div class="span5<%= @question.answer && @question.answer.approved? ? '' : ' muted' %>">
+      <h4>Ved godkjent svar</h4>
+      <div class="row-fluid"><%= link_to 'Send e-post til bruker', answer_approved_email_user_admin_question_path(@question), class: 'btn', disabled: !@question.answer || !@question.answer.approved? %></div>
+    </div>
   </div>
+
+  <% if @question.email_events.any? %>
+      <h4>Sendte e-poster</h4>
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th>Sendt</th>
+            <th>Til</th>
+            <th>Emne</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <% @question.email_events.each do |email_event| %>
+            <tr>
+              <td><%= l email_event.created_at %></td>
+              <td><%= email_event.email_address %></td>
+              <td><%= email_event.email_type %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+  <% end %>
 
   <div class="form-actions">
     <%= f.submit t('app.save'), class: 'btn btn-primary' %>

@@ -23,7 +23,7 @@
   <% end %>
 
   <% if AppConfig.questions_enabled %>
-    <%= link_to new_question_path, class:"#{active_status_for(:questions)}" do %>
+    <%= link_to questions_path, class:"#{active_status_for(:questions)}" do %>
       <%= Question.model_name.human(count: 2).capitalize %>
     <% end %>
   <% end %>

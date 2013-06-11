@@ -161,17 +161,6 @@ footer {
       max-height: auto;
     }
   }
-  figcaption {
-    margin-top: 20px;
-    font-size: 0.9em;
-    color: #999;
-    background-color: #f8f8f8;
-    padding: 10px 15px;
-    border-radius: 2px;
-    p {
-      margin: 0;
-    }
-  }
 }
 
 @media (max-width: 500px) {
@@ -217,6 +206,19 @@ footer {
     padding: 3px 0;
   }
 }
+
+figcaption.muted {
+  margin-top: 20px;
+  font-size: 0.9em;
+  color: #999;
+  background-color: #f8f8f8;
+  padding: 10px 15px;
+  border-radius: 2px;
+  p {
+    margin: 0;
+  }
+}
+
 
 
 /* Party specific text colors */
@@ -303,6 +305,13 @@ footer {
     }
   }
   &.promises {
+    header {
+      small {
+        color: #666;
+        text-align: right;
+        float: right;
+      }
+    }
     .promise-link {
       color: #000;
     }
@@ -326,13 +335,16 @@ footer {
     > body {
       border: none;
       margin: 0;
+      > article {
+        padding: 0;
+      }
     }
     h1 {
       margin: 1em 0 0 0;
     }
     h2 {
       line-height: 1.5em;
-      margin: 1em 0;
+      margin: 2em 0 0.5em 0;
       border-bottom: 1px solid #eee;
     }
     .promises {
@@ -343,9 +355,11 @@ footer {
       a {
         float: left;
         margin: 0 10px 10px 0;
+        border-radius: 2px;
         &:hover {
           background-color: #eee;
           text-decoration: none;
+          box-shadow: 0 0 0 1px rgba(0,0,0,0.1) inset;
           .promise p:after {
             background: -webkit-linear-gradient(top, rgba(238,238,238,0), rgba(238,238,238,1));
             background: -moz-linear-gradient(top, rgba(238,238,238,0), rgba(238,238,238,1));
@@ -363,27 +377,27 @@ footer {
             text-overflow: ellipsis;
             white-space: nowrap;
             font-weight: bold;
-            padding: 15px 10px 10px 35px;
-            margin: 0 0 -10px -35px;
+            padding: 10px 10px 15px 35px;
+            margin: 0 0 -15px -35px;
             img {
               position: absolute;
               left: 0;
               max-width: 32px;
               max-height: 32px;
-              top: 10px;
+              top: 5px;
             }
           }
           p {
             margin: -5px 0 0 0;
             font-size: 0.9em;
-            height: 50px;
+            height: 63px;
             overflow: hidden;
             position: relative;
             &:after {
               content: "";
               position: absolute;
               bottom: 0;
-              height: 2em;
+              height: 1.5em;
               left: 0;
               right: 0;
               background: -webkit-linear-gradient(top, rgba(255,255,255,0), rgba(255,255,255,1));
@@ -399,15 +413,18 @@ footer {
       margin-bottom: 20px;
       .clearfix;
       p {
-        margin-top: 0;
         float: left;
         width: 33%;
-        font-size: 0.95em;
         line-height: 1.6em;
       }
       .positions {
         width: 67%;
         float: left;
+        margin-top: 10px;
+        .labels h3 img,
+        .icons .position-wrapper img {
+          max-width: 42px;
+        }
       }
     }
   }

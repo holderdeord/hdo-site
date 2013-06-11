@@ -1,21 +1,6 @@
 Hdo::Application.routes.draw do
 
   #
-  # representative sign-in
-  #
-
-  devise_for :representative, controllers: { confirmations: 'confirmations', sessions: 'sessions', passwords: 'passwords' }
-  devise_scope :representative do
-    put  'representative/confirmation' => 'confirmations#update',         as: :update_representative_confirmation
-    get  'representative/edit'         => 'devise/registrations#edit',    as: :edit_representative_registration
-    put  'representative'              => 'devise/registrations#update',  as: :representative_registration
-  end
-
-  get  'representative'                       => 'representative#index',         as: :representative_root
-  get  'representative/questions/:id'         => 'representative#show_question', as: :representative_question
-  post 'representative/questions/:id/answers' => 'representative#create_answer', as: :representative_question_answers
-
-  #
   # user sign-in
   #
 
@@ -43,15 +28,32 @@ Hdo::Application.routes.draw do
     # S&S
     resources :questions, only: [:index, :edit, :update] do
       member do
-        put 'answer/approve' => 'questions#approve_answer' # unused?
-        put 'answer/reject'  => 'questions#reject_answer'  # unused?
         put 'approve'        => 'questions#approve'
         put 'reject'         => 'questions#reject'
+
+        get 'email/question/approved/rep'  => 'questions#question_approved_email_rep',  as: :question_approved_email_rep
+        get 'email/question/approved/user' => 'questions#question_approved_email_user', as: :question_approved_email_user
+        get 'email/answer/approved/user'   => 'questions#answer_approved_email_user',   as: :answer_approved_email_user
       end
     end
 
     root to: "dashboard#index"
   end
+
+  #
+  # representative sign-in
+  #
+
+  devise_for :representative, controllers: { confirmations: 'confirmations', sessions: 'sessions', passwords: 'passwords' }
+  devise_scope :representative do
+    put  'representative/confirmation' => 'confirmations#update',         as: :update_representative_confirmation
+    get  'representative/edit'         => 'devise/registrations#edit',    as: :edit_representative_registration
+    put  'representative'              => 'devise/registrations#update',  as: :representative_registration
+  end
+
+  get  'representative'                       => 'representative#index',         as: :representative_root
+  get  'representative/questions/:id'         => 'representative#show_question', as: :representative_question
+  post 'representative/questions/:id/answers' => 'representative#create_answer', as: :representative_question_answers
 
 
   #

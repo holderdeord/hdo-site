@@ -26,44 +26,15 @@
   </div>
 <% end %>
 
-<div class="row">
-<div class="span7 pull-left">
-  <h3>Aktuelle saker</h3>
-
-  <section class="top-issues">
-    <% @issues.each_slice(2) do |issues| %>
-      <div class="row-fluid">
-        <% issues.each do |issue| %>
-          <article class="issue span6">
-            <%= link_to issue do %>
-              <h4><%= issue.title %></h4>
-              <p>
-                <%= awesome_truncate issue.description, 200 %>
-                <span class="read-more"><%= t('app.read_more') %></span>
-              </p>
-            <% end %>
-          </article>
-        <% end %>
-      </div>
+<div class="row-fluid">
+  <div class="row-fluid">
+    <% if AppConfig.frontpage_blog_enabled && @latest_post %>
+      <%= render partial: 'issues_and_blog' %>
+    <% else %>
+      <%= render partial: 'issues' %>
     <% end %>
-  </section>
+  </div>
 </div>
-
-<div class="span4 offset1 pull-right blog">
-  <h3>Blogger de ord?</h3>
-
-  <section>
-    <ul class="unstyled">
-      <% Hdo::Utils::BlogFetcher.posts.each do |post| %>
-        <%= post.as_json %>
-        <li><%= link_to post.title, post.url %> (<%= l post.updated_at %>)</li>
-      <% end %>
-    </ul>
-  </section>
-</div>
-</div>
-
-
 
 <% if AppConfig.leaderboard_enabled %>
   <%= render partial: 'leaderboard' %>
@@ -80,9 +51,8 @@
   </div>
 <% end %>
 
-<hr class="soften">
-
 <% unless AppConfig.leaderboard_enabled %>
+  <hr class="soften">
   <h3 align="center">SJEKK DITT PARTI</h3>
 
   <div class="row-fluid">
@@ -97,5 +67,3 @@
     </div>
   </div>
 <% end %>
-
-<hr class="soften">

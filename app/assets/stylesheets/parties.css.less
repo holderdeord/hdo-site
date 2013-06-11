@@ -28,6 +28,9 @@
         font-size: 0.85em;
         line-height: 1.25em;
       }
+      img {
+        border-radius: 2px;
+      }
     }
   }
 }
@@ -69,10 +72,20 @@
 .swiper-container {
   overflow:hidden;
   height: 200px;
-  &:hover .representative {
-    opacity: 0.5 !important;
-    &:hover {
-      opacity: 1 !important;
+  .representative {
+    &:hover a:after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(0,0,0,0.05);
+      border-radius: 2px;
+      box-shadow: 0 0 0 1px rgba(0,0,0,0.1) inset;
+    }
+    &:active a:after {
+      background-color: rgba(0,0,0,0.2);
     }
   }
 }

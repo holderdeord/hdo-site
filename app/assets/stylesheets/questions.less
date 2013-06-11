@@ -85,45 +85,51 @@
 }
 
 .questions-index {
-  .question-row {
-    margin-bottom: 2em;
-  }
-
   .question {
+    display: block;
     color: inherit;
-    text-decoration: none;
-    border: 1px solid white;
-
+    position: relative;
+    margin-bottom: 10px;
+    margin-right: 50px;
+    padding: 10px 10px 10px 80px;
+    border-radius: 2px;
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.05) inset;
+    background-color: #fff;
+    .avatar-container {
+      position: absolute;
+      width: 64px;
+      height: 64px;
+      box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.05s), 0 1px 2px rgba(0, 0, 0, 0.2s);
+      border-radius: 2px;
+      margin-bottom: 1em;
+      left: -10px;
+      top: 10px;
+      .representative {
+        border-radius: 2px;
+        width: 100%;
+        height: 100%;
+      }
+      .party-logo {
+        position: absolute;
+        width: 32px;
+        height: 32px;
+        right: -15px;
+        bottom: -10px;
+      }
+    }
+    p {
+      min-height: 2em;
+    }
+    aside {
+      font-size: 0.85em;
+      line-height: 1.5em;
+    }
     &:hover {
-      text-decoration: underline;
-
+      background-color: #eee;
+      text-decoration: none;
     }
-  }
-
-  .timestamp {
-    color: #666;
-  }
-
-  .recipient {
-    font-size: 1.1em;
-    font-weight: bold;
-
-    .district {
-      font-weight: normal;
-      font-style: italic;
-    }
-  }
-
-  hr {
-    margin-top: 3px;
-    margin-bottom: 5px;
-    width: 90%;
-  }
-
-  .images-row {
-    img {
-      width: 60px;
-      margin-right: 10px;
+    &:active {
+      background-color: #ddd;
     }
   }
 }

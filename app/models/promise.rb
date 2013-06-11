@@ -15,7 +15,7 @@ class Promise < ActiveRecord::Base
 
   attr_accessible :parties, :general, :categories, :source, :body, :page, :parliament_period
 
-  validates :body,        presence: true, uniqueness: true
+  validates :body,        presence: true, uniqueness: {scope: :parliament_period_id}
   validates :external_id, presence: true, uniqueness: true
   validates :source,      presence: true
 

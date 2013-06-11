@@ -1,33 +1,35 @@
   <section class="home-leaderboard">
 
-    <div class="average row-fluid">
-      <div class="thermometer span3 offset1">
-        <img class='bg' src='<%= asset_path("thermo/bg.png") %>'>
-        <img style='top: <%= 100 - @leaderboard.thermo %>%' class='graph' src='<%= asset_path("thermo/graph.png") %>'>
-        <span class="bubble1"></span>
-        <span class="bubble2"></span>
-        <span class="bubble3"></span>
-        <img class='cover' src='<%= asset_path("thermo/cover.png") %>'>
+    <% if AppConfig.thermo_enabled %>
+      <div class="average row-fluid">
+        <div class="thermometer span3 offset1">
+          <img class='bg' src='<%= asset_path("thermo/bg.png") %>'>
+          <img style='top: <%= 100 - @leaderboard.thermo %>%' class='graph' src='<%= asset_path("thermo/graph.png") %>'>
+          <span class="bubble1"></span>
+          <span class="bubble2"></span>
+          <span class="bubble3"></span>
+          <img class='cover' src='<%= asset_path("thermo/cover.png") %>'>
+        </div>
+
+        <div class="span6">
+          <br><br>
+          <h1><%= number_with_precision(@leaderboard.thermo, :precision => 0) %>% av løftene<sup class="muted">*</sup> er holdt</h1>
+          <h2 class="lead">De folkevalgte holder i stor grad ord</h2>
+          <p>
+            Det er ikke lett å alltid stemme som man lover. Noen ganger finnes det gode
+            grunner til å endre mening. Holder de ord tar ikke hensyn til slike faktorer i
+            sin rangering. Den er kun basert på om avgitte løfter er fulgt av den nødvendige
+            handling i Stortinget.
+          </p>
+          <small class="muted">* løftene som er brukt i våre analyser</small>
+        </div>
       </div>
 
-      <div class="span6">
-        <br><br>
-        <h1><%= number_with_precision(@leaderboard.thermo, :precision => 0) %>% av løftene<sup class="muted">*</sup> er holdt</h1>
-        <h2 class="lead">De folkevalgte holder i stor grad ord</h2>
-        <p>
-          Det er ikke lett å alltid stemme som man lover. Noen ganger finnes det gode
-          grunner til å endre mening. Holder de ord tar ikke hensyn til slike faktorer i
-          sin rangering. Den er kun basert på om avgitte løfter er fulgt av den nødvendige
-          handling i Stortinget.
-        </p>
-        <small class="muted">* løftene som er brukt i våre analyser</small>
-      </div>
-    </div>
-
-    <hr class="soften">
+      <hr class="soften">
+    <% end %>
 
     <h2>Ordholding i <%= Issue.published.count %> saker</h2>
-    <p>Explanations from Tiina</p>
+    <p>Her kan du se hvor ofte partiene på Stortinget stemmer i tråd med partiprogrammene. Listen oppdateres jevnlig med flere analyser. <%= link_to 'Ler mer', home_about_path %></p>
     <div class="party-list row-fluid">
 
       <% @leaderboard.parties.each do |parties| %>

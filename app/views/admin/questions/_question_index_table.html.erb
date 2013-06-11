@@ -1,50 +1,49 @@
 <table class="table table-hover">
-  <tr>
-    <th><%= Question.human_attribute_name :representative %></th>
-    <th><%= Question.human_attribute_name :body %></th>
-    <th><%= Question.human_attribute_name :from_name %></th>
-    <th><%= Question.human_attribute_name :created_at %></th>
+  <thead>
+    <tr>
+      <th><%= Question.human_attribute_name :representative %></th>
+      <th><%= Question.human_attribute_name :body %></th>
+      <th><%= Question.human_attribute_name :from_name %></th>
+      <th><%= Question.human_attribute_name :updated_at %></th>
 
-    <% unless status == 'pending' %>
-      <th><%= Question.human_attribute_name :svar %></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% questions.each do |question| %>
+      <tr>
+        <td><%= link_to question.representative.display_name, question.representative %></td>
+
+        <td>
+          <% if !question_approved %>
+            <%= question.body %>
+          <% else %>
+            <%= link_to question.teaser, question, target: '_blank' %>
+          <% end %>
+          <% if show_answer %>
+            <h5>Svar:</h5>
+            <em><%= question.answer.body %></em>
+          <% end %>
+        </td>
+
+        <td>
+          <p><%= question.from_name %>
+          <small class="muted"><%= question.from_email %></small></p>
+        </td>
+
+        <td>
+          <small class="muted">
+            <%= l question.updated_at.localtime %>
+          </small>
+        </td>
+
+        <td>
+          <% if show_edit %>
+            <%= link_to t('app.edit'), edit_admin_question_path(question), class: 'btn btn-small btn-primary' %>
+          <% end %>
+        </td>
+      </tr>
     <% end %>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
+  </tbody>
 
-<% questions.each do |question| %>
-  <tr>
-    <td><%= link_to question.representative.display_name, question.representative %></td>
-
-    <td>
-      <% if status == 'pending' %>
-        <%= question.teaser %>
-      <% else %>
-        <%= link_to question.teaser, question, target: '_blank' %>
-      <% end %>
-    </td>
-
-    <td>
-      <p><%= question.from_name %></p>
-      <small class="muted"><%= question.from_email %></small>
-    </td>
-
-    <td>
-      <p><%= l question.created_at.localtime %></p>
-      <small class="muted">
-        <%= Question.human_attribute_name :updated_at %>
-        <%= l question.updated_at.localtime %>
-      </small>
-    </td>
-
-    <% unless status == 'pending' %>
-      <td><%= question.answer.nil? ? 'Ikke besvart' : t("app.questions.status.#{question.answer.status}") %></td>
-    <% end %>
-
-    <td><%= link_to t('app.edit'), edit_admin_question_path(question), class: 'btn btn-small btn-primary' %></td>
-    <td><%= link_to t('app.questions.edit.approve'), approve_admin_question_path(question), method: :put, class: 'btn btn-small btn-success' %></td>
-    <td><%= link_to t('app.questions.edit.reject'), reject_admin_question_path(question), method: :put, class: 'btn btn-small btn-warning' %></td>
-  </tr>
-<% end %>
 </table>

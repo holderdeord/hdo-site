@@ -49,4 +49,15 @@ describe PromiseConnection do
     end
   end
 
+  it 'disallows promises from the next period' do
+    current_period = ParliamentPeriod.make!(external_id: '2009-2013')
+    next_period    = ParliamentPeriod.make!(external_id: '2013-2017')
+
+    current_promise = Promise.make!(parliament_period: current_period)
+    next_promise = Promise.make!(parliament_period: next_period)
+
+    PromiseConnection.make(promise: current_promise).should be_valid
+    PromiseConnection.make(promise: next_promise).should_not be_valid
+  end
+
 end

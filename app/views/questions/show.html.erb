@@ -20,32 +20,33 @@
     <div class="span8">
       <h4><%= @question.from_display_name %></h4>
       <time class="muted"><%= l @question.created_at.localtime, format: :text_time %></time>
-      <div><%= @question.body %></div>
+      <div><%= simple_format @question.body %></div>
     </div>
 
    </article>
 
   <article class="row-fluid answer">
-    <% if @answer.nil? %>
-      <p>Ingen svar foreløpig.</p>
-    <% else %>
+    <div class="span2 hidden-phone">
+      <%= link_to @representative do %>
+        <%= image_tag @representative.image.versions[:avatar], class: 'avatar' %>
+      <% end %>
+    </div>
 
-      <div class="span2 hidden-phone">
-        <%= link_to @answer.representative do %>
-          <%= image_tag @answer.representative.image.versions[:avatar], class:'avatar' %>
-        <% end %>
-      </div>
+    <div class="span8">
+      <h4>
+        <%= link_to @representative.name, @representative, class: 'qa-answer-representative' %>
+        for <%= link_to @party.name, @party, class: "qa-answer-party #{@party.external_id}" %>
+      </h4>
 
-      <div class="span8">
-        <h4>
-          <%= link_to @answer.representative.name, @answer.representative, class: 'qa-answer-representative' %>
-          for <%= link_to @answer.party.try(:name), @answer.party, class: "qa-answer-party #{@answer.party.try :external_id}" %>
-        </h4>
+      <% if @answer %>
         <time class="muted"><%= l @answer.created_at.localtime, format: :text_time %></time>
         <div><%= @answer.body %></div>
-      </div>
+      <% else %>
+        <time></time>
+        <div><strong>Spørsmålet venter på svar.</strong></div>
+      <% end %>
+    </div>
 
-    <% end %>
   </article>
 
 </div>

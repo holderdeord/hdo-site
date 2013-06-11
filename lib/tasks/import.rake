@@ -13,6 +13,17 @@ namespace :import do
     task :promises => %w[db:clear:promises import:env] do
       Hdo::Import::CLI.new(['json', "http://files.holderdeord.no/dev/data/promises.dev.json"]).run
     end
+
+    desc 'Import a (reduced) production dump to the development db'
+    task :dump => 'tmp/db.download.sql' do
+      puts "Importing production dump"
+      sh "psql hdo_development < tmp/db.download.sql"
+    end
+
+    file 'tmp/db.download.sql' do |t|
+      puts "Downloading DB dump..."
+      sh "curl", "-s", "http://files.holderdeord.no/dev/data/db.dev.sql", "--create-dirs", "--output", t.name
+    end
   end
 
   desc 'Import a subset of data for development'
@@ -38,5 +49,12 @@ namespace :import do
   task :daily => "import:env" do
     Hdo::Import::CLI.new(['daily']).run
   end
+
+  desc 'Import a DB dump from production (assumes SSH access)'
+  task :dump do
+    sh "ssh hdo@db2 'pg_dump --clean hdo_production | gzip' | gunzip | psql hdo_development"
+  end
+
+
 
 end

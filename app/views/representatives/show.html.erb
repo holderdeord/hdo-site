@@ -25,7 +25,7 @@
       <% end %>
     </dl>
 
-    <% if AppConfig.questions_enabled && @representative.attending? %>
+    <% if AppConfig.questions_enabled && @representative.askable? %>
       <%= link_to t('app.questions.representative.ask', name: @representative.name),
                   new_question_path(representative: @representative.slug, district: @representative.district.slug),
                   class: 'btn btn-primary' %>
@@ -57,4 +57,4 @@
 
 <hr>
 
-<%= render partial: 'shared/issue_positions', locals: { issue_groups: @issue_groups } %>
+<%= render partial: 'issue_positions', locals: { issue_groups: @issue_groups, representative: @representative } %>

@@ -7,6 +7,7 @@ class Question < ActiveRecord::Base
   belongs_to :representative
   has_one    :answer, dependent: :destroy
   has_and_belongs_to_many :issues, uniq: true, order: "updated_at DESC"
+  has_many :email_events, as: :email_eventable, order: "created_at DESC"
 
   validates :body,           presence: true
   validates :from_name,      presence: true
@@ -15,9 +16,11 @@ class Question < ActiveRecord::Base
   validates :answer,         associated: true
   validate :answer_comes_from_asked_representative
 
-  scope :answered,   -> { joins(:answer) }
-  scope :unanswered, -> { where('(select count(*) FROM answers WHERE question_id = questions.id) = 0') }
-  scope :not_ours,   -> { where("from_email NOT LIKE '%holderdeord.no'")}
+  scope :answered,             -> { joins(:answer) }
+  scope :unanswered,           -> { where('(select count(*) FROM answers WHERE question_id = questions.id) = 0') }
+  scope :not_ours,             -> { where("from_email NOT LIKE '%holderdeord.no'")}
+  scope :answered_or_not_ours, -> { where("from_email NOT LIKE '%holderdeord.no' OR EXISTS (select 1 FROM answers WHERE question_id = questions.id)")}
+  scope :with_pending_answers, -> { answered.where('answers.status = ?', 'pending') }
 
   def self.all_by_status
     grouped = all.group_by { |q| q.status }
@@ -32,8 +35,16 @@ class Question < ActiveRecord::Base
     workflow_spec.state_names.map &:to_s
   end
 
+  def answer_body
+    answer.body
+  end
+
   def answered?
     not answer.nil?
+  end
+
+  def has_approved_answer?
+    answer && answer.approved?
   end
 
   def teaser

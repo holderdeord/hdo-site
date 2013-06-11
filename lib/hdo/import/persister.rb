@@ -347,7 +347,7 @@ module Hdo
         end
 
         parties = promise.parties.map { |e| Party.find_by_external_id(e) }
-        unless parties
+        if parties.compact.empty?
           @log.error "promise #{promise.external_id}: unknown party: #{promise.parties}"
           return
         end
@@ -361,7 +361,7 @@ module Hdo
         pr = Promise.find_or_create_by_external_id(promise.external_id)
 
         if pr.new_record?
-          duplicate = Promise.find_by_body(promise.body)
+          duplicate = Promise.where(body: promise.body, parliament_period_id: parliament_period).first
           if duplicate
             @log.error "promise #{promise.external_id}: duplicate of #{duplicate.external_id}"
             return

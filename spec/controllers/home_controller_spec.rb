@@ -43,4 +43,9 @@ describe HomeController do
       response.should have_rendered(:index)
     end
   end
+
+  context 'blog' do
+    it 'shows only the newest blog post'
+    it 'shows links to the last three posts'
+  end
 end

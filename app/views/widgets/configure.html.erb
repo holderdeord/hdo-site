@@ -1,96 +1,73 @@
 <h1 class="page-header">
-  Widgettjeneste
+  Widgets
 </h1>
 
 <ul class="nav nav-tabs">
   <li class="active"><a href="#docs" data-toggle="tab">Dokumentasjon</a></li>
   <li><a href="#issues" data-toggle="tab">Finn saker</a></li>
-  <li><a href="#promises" data-toggle="tab">Finn løfter</a></li>
+
+  <% if @internal_user %>
+    <li><a href="#promises" data-toggle="tab">Finn løfter</a></li>
+  <% end %>
 </ul>
 
 <div class="tab-content">
   <div class="tab-pane active" id="docs">
-    <p>Her er noen eksempler på hvordan konfigurere Holder de ord sine widgets.</p>
-
-    <div class="row-fluid">
-      <h3>Sakswidget</h3>
-
-      <div class="span5"> <!-- tab-pane messes up grid? -->
-        Script:
-        <pre class="prettyprint"><code class="language-html"><%= @examples[:issue] %><%= @examples[:script] %></code></pre>
-        Iframe:
-        <pre class="prettyprint"><code class="language-html"><%= "<iframe src='#{widget_issue_url(@issues.first)}?nrk=1'>" %></code></pre>
-      </div>
-
-      <div class="span6">
-        <%= @examples[:issue].html_safe %>
-      </div>
+    <div class="alert alert-info">
+      <strong>NB</strong>: NRK-brukere må legge på parameteret <code>nrk=1</code> bak alle iframe-URLer for bruk på nrk.no.
     </div>
 
-    <hr class="soften">
+    <% @examples.each do |widget| %>
+      <div class="row-fluid">
+        <h3>
+          <%= widget.title %>
+          <small>- <%= widget.subtitle %></small>
+        </h3>
 
-    <div class="row-fluid">
-      <h3>Partiwidget</h3>
+        <div class="span5"> <!-- tab-pane messes up grid? -->
+          Script
+          <pre class="prettyprint"><code class="language-html"><%= "#{widget.script}<script src='#{widget_load_url}'></script>" %></code></pre>
+          Iframe
+          <pre class="prettyprint"><code class="language-html"><%= widget.iframe %></code></pre>
+        </div>
 
-      <div class="span5"> <!-- tab-pane messes up grid? -->
-        Script:
-        <pre class="prettyprint"><code class="language-html"><%= @examples[:party] %><%= @examples[:script] %></code></pre>
-        Iframe:
-        <pre class="prettyprint"><code class="language-html"><%= "<iframe src='#{widget_party_url(@example_party)}?nrk=1'>" %></code></pre>
+        <div class="span6">
+          <%= widget.script.html_safe %>
+        </div>
       </div>
 
-      <div class="span6">
-        <%= @examples[:party].html_safe %>
-      </div>
-    </div>
-
-    <hr>
-
-    <div class="row-fluid">
-      <h3>Løftewidget</h3>
-
-      <div class="span5">
-        Script:
-        <pre class="prettyprint"><code class="language-html"><%= @examples[:promises] %><%= @examples[:script] %></code></pre>
-        Iframe:
-        <pre class="prettyprint"><code class="language-html"><%= "<iframe src='#{widget_promises_url(promises: @example_promises)}?nrk=1'>" %></code></pre>
-      </div>
-
-      <div class="span6">
-        <%= @examples[:promises].html_safe %>
-      </div>
-    </div>
-
-    <hr>
+      <hr class="soften">
+    <% end %>
   </div>
 
+  <% if @internal_user %>
+    <div class="tab-pane" id="promises">
 
-  <div class="tab-pane" id="promises">
+      <form class="form-search span6" id="promise-search">
+        <div class="input-append">
+          <input type="search" autofocus class="span2 search-query">
+          <button type="submit" class="btn">Search</button>
+        </div>
+      </form>
 
-    <form class="form-search span6" id="promise-search">
-      <div class="input-append">
-        <input type="search" autofocus class="span2 search-query">
-        <button type="submit" class="btn">Search</button>
-      </div>
-    </form>
+      <div id="promise-hits" class="pull-right"></div>
+      <%= spinner_tag %>
 
-    <%= spinner_tag %>
 
-    <span id="promise-hits"></span>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Id</th>
+            <th style="min-width: 90px;">Periode</th>
+            <th>Parti</th>
+            <th>Tekst</th>
+          </tr>
+        </thead>
 
-    <table class="table">
-      <thead>
-        <tr>
-          <th>Id</th>
-          <th style="min-width: 90px;">Periode</th>
-          <th>Parti</th>
-          <th>Tekst</th>
-        </tr>
-      </thead>
-
-      <tbody id="promises-body"></tbody>
-    </table>
-  </div>
+        <tbody id="promises-body"></tbody>
+      </table>
+    </div>
+  <% end %>
 
   <div class="tab-pane" id="issues">
     <table class="table table-striped">
@@ -112,48 +89,55 @@
 </div>
 
 <%= content_for :document_ready do %>
-<script type="text/javascript" charset="utf-8">
-  $(document).ready(function () {
-    prettyPrint();
+  <% if @internal_user %>
+    <script type="text/javascript" charset="utf-8">
+      $(document).ready(function () {
+        prettyPrint();
 
-    $("#promise-search").submit(function (e) {
-      e.preventDefault();
+        $("#promise-search").submit(function (e) {
+          e.preventDefault();
 
-      var query, spinner, tbody, hits;
+          var query, spinner, tbody, hits;
 
-      query   = $(this).find("input").val();
-      spinner = $("#spinner");
-      tbody   = $("#promises-body");
-      hits    = $("#promise-hits");
+          query   = $(this).find("input").val();
+          spinner = $("#spinner");
+          tbody   = $("#promises-body");
+          hits    = $("#promise-hits");
 
-      tbody.html('');
-      hits.html('');
-      spinner.show();
+          tbody.html('');
+          hits.html('');
+          spinner.show();
 
-      $.ajax({
-        url: '/search/all.json?size=500&query=' + encodeURIComponent(query + ' _type:promise'),
-        type: 'GET',
-        dataType: 'json',
-        complete: function(xhr, textStatus) { spinner.hide(); },
-        success: function(data, textStatus, xhr) {
-          var promises = data[0] && data[0][1];
+          $.ajax({
+            url: '/search/all.json?size=500&query=' + encodeURIComponent(query + ' _type:promise parliament_period_name:2013-2017'),
+            type: 'GET',
+            dataType: 'json',
+            complete: function(xhr, textStatus) { spinner.hide(); },
+            success: function(data, textStatus, xhr) {
+              var promises = data[0] && data[0][1];
 
-          if (promises) {
-            hits.html(promises.length + ' treff');
-            $.each(promises, function () {
-              $(tbody).append('<tr><td>' + this.id + '</td><td>' + this.parliament_period_name + '</td><td>' + this.party_names + '</td><td>' + this.body + '</td>');
-            });
-          }
-        },
-        error: function(xhr, textStatus, errorThrown) {
-          alert('Oops, noe gikk galt.');
-        }
+              if (promises) {
+                hits.html(promises.length + ' treff');
+
+                $.each(promises, function () {
+                  $(tbody).append('<tr><td>' + this.id + '</td><td>' + this.parliament_period_name + '</td><td>' + this.party_names + '</td><td>' + this.body + '</td>');
+                });
+              }
+            },
+            error: function(xhr, textStatus, errorThrown) {
+              alert('Oops, noe gikk galt.');
+            }
+          });
+
+          return false;
+        });
       });
-
-      return false;
-    });
-  });
-</script>
+    </script>
+  <% else %>
+    <script type="text/javascript" charset="utf-8">
+      $(document).ready(function () { prettyPrint(); });
+    </script>
+  <% end %>
 <% end %>
 
-<%= @examples[:script].html_safe %>
+<script src='<%= widget_load_url %>'></script>

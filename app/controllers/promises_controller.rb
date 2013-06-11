@@ -9,7 +9,7 @@ class PromisesController < ApplicationController
     @category    = @categories.find(params[:category_id]) if params[:category_id].present?
     @subcategory = Category.find(params[:subcategory_id]) if params[:subcategory_id].present?
     @party       = @parties.find(params[:party_slug]) if params[:party_slug].present?
-    @period      = params[:period].present? ? ParliamentPeriod.find_by_external_id(params[:period]) : @parliament_periods.first
+    @period      = params[:period].present? ? ParliamentPeriod.find_by_external_id(params[:period]) : @parliament_periods.last
 
     # watch out for rails bug: https://github.com/rails/rails/pull/6792
     @promises = @period ? @period.promises : Promise
@@ -39,7 +39,7 @@ class PromisesController < ApplicationController
   def fetch_shared
     @categories         = Category.where(main: true).includes(:children).order(:name)
     @parties            = Party.order(:name)
-    @parliament_periods = Promise.parliament_periods
+    @parliament_periods = Promise.parliament_periods.order(:start_date)
   end
 
   def filter_and_paginate

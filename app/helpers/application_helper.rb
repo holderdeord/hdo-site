@@ -60,7 +60,7 @@ module ApplicationHelper
   end
 
   def gravatar_url(email, opts = {})
-    default = opts[:fallback] == 'blank' ? 'blank' : asset_url("representatives/unknown.jpg")
+    default = opts[:fallback] == 'blank' ? 'blank' : asset_url("representatives/fallback_avatar.png")
     "//gravatar.com/avatar/#{Digest::MD5.hexdigest email}?s=300&d=#{URI.encode default}"
   end
 

@@ -23,6 +23,24 @@
         "http://www.holderdeord.no/parties/a/widget")
     },
 
+    "should set issues correctly on a party": function () {
+      var widget = H.widgets.create('party')
+      this.element.setAttribute('data-party-id', 'a');
+      this.element.setAttribute('data-issue-ids', '161');
+
+      assert.equals(widget.widgetOptionsFor(this.element).url,
+        "http://www.holderdeord.no/parties/a/widget?issues=161")
+    },
+
+    "should set count correctly on a party": function () {
+      var widget = H.widgets.create('party')
+      this.element.setAttribute('data-party-id', 'a');
+      this.element.setAttribute('data-count', '10');
+
+      assert.equals(widget.widgetOptionsFor(this.element).url,
+        "http://www.holderdeord.no/parties/a/widget?count=10")
+    },
+
     "should create representative URLs": function () {
       var widget = H.widgets.create('representative')
 

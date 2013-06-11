@@ -32,7 +32,6 @@ describe Category do
       categories.map { |e| e.children.size }.sum
     end
 
-    sums.should == [18, 16, 23]
     sums.sum.should == Category.where(:main => false).count
   end
 

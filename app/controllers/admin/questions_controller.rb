@@ -4,7 +4,14 @@ class Admin::QuestionsController < AdminController
   before_filter :assert_moderator, except: :index
 
   def index
-    @questions_by_status = Question.all_by_status
+    @questions_pending         = Question.pending
+    @questions_answer_pending  = Question.with_pending_answers
+    @questions_approved        = Question.answered.where('answers.status = ?', 'approved')
+    @questions_rejected        = Question.rejected
+    @questions_answer_rejected = Question.answered.where('answers.status = ?', 'rejected')
+    @questions_unanswered      = Question.not_ours.approved.unanswered
+
+    @show_edit = policy(Question).moderate?
   end
 
   def edit
@@ -16,38 +23,44 @@ class Admin::QuestionsController < AdminController
 
     @question.issues = Issue.find(issue_ids || [])
     @question.status = params[:question][:status]
-    @question.answer.update_attributes(params[:question][:answer]) if params[:question][:answer]
     @question.update_attributes(internal_comment: params[:question][:internal_comment])
+    @question.update_attributes(body: params[:question][:body])
+
+    if @question && @question.answer
+      @question.answer.update_attributes(params[:question][:answer]) if params[:question][:answer]
+      @question.answer.update_attributes(body: params[:question][:answer_body])
+    end
 
     if @question.save
-      redirect_to admin_questions_path, notice: t('app.questions.edit.updated')
+      redirect_to edit_admin_question_path(@question), notice: t('app.questions.edit.updated')
     else
       redirect_to edit_admin_question_path(@question), alert: @question.errors.full_messages.to_sentence
     end
   end
 
-  def approve
-    @question.status = 'approved'
-    save_question
+  def question_approved_email_rep
+    if !@question.representative.confirmed? && @question.representative.confirmation_token.nil?
+      redirect_to edit_admin_question_path(@question), alert: t('app.questions.edit.rep_not_invited')
+    else
+      ModerationMailer.question_approved_representative_email(@question).deliver
+      redirect_to edit_admin_question_path(@question), notice: t('app.questions.edit.email_sent', email: @question.representative.email)
+    end
   end
 
-  def reject
-    @question.status = 'rejected'
-    save_question
+  def question_approved_email_user
+    ModerationMailer.question_approved_user_email(@question).deliver
+    redirect_to edit_admin_question_path(@question), notice: t('app.questions.edit.email_sent', email: @question.from_email)
+  end
+
+  def answer_approved_email_user
+    ModerationMailer.answer_approved_user_email(@question).deliver
+    redirect_to edit_admin_question_path(@question), notice: t('app.questions.edit.email_sent', email: @question.from_email)
   end
 
   private
 
   def fetch_question
     @question = Question.find(params[:id])
-  end
-
-  def save_question
-    if @question.save
-      redirect_to admin_questions_path, notice: t('app.questions.edit.updated')
-    else
-      redirect_to admin_questions_path, alert: @question.errors.full_messages.to_sentence
-    end
   end
 
   def assert_moderator

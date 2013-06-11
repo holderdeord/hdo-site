@@ -61,13 +61,6 @@ describe PasswordsController do
   context "representative" do
     let(:rep) { Representative.make! :confirmed, password: '123456', password_confirmation: '123456' }
 
-    it "redirects to the user devise scope" do
-      @request.path = new_representative_password_path
-      get :new
-
-      response.should redirect_to new_user_password_path
-    end
-
     it "sends an e-mail" do
       @request.env["devise.mapping"] = Devise.mappings[:user]
       Representative.should_receive(:send_reset_password_instructions).with({ 'email' => rep.email }).and_return(rep)
