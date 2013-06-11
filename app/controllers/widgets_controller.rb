@@ -41,7 +41,7 @@ class WidgetsController < ApplicationController
 
     if params[:promises]
       params[:promises].each do |title, ids|
-        @promise_groups << [title, Promise.includes(:parties).find(ids.split(',')).sort_by { |p| p.parties.first }]
+        @promise_groups << [title, Promise.includes(:parties).find(ids.split(',')).sort_by { |p| p.parties.first.name }]
       end
     end
   end
