@@ -58,7 +58,7 @@
           <h5 class="issue-party-promise-title">Løfter fra <%= source %></h5>
           <ul class="issue-party-promise-list">
             <% promises.each do |promise| %>
-              <li><%= promise.body %></li>
+              <li><%= link_to promise.body, promise_path(promise) %></li>
             <% end %>
           </ul>
         <% end %>
