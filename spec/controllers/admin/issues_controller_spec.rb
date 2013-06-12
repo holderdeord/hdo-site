@@ -24,6 +24,32 @@ describe Admin::IssuesController do
     params
   end
 
+  context "read only mode" do
+    before do
+      AppConfig.any_instance.stub(:read_only).and_return(true)
+    end
+
+    it "redirects from edit if read_only" do
+      get :edit, id: Issue.make!
+      response.code.should eq '307'
+    end
+
+    it "redirects from new if read_only" do
+      get :new
+      response.code.should eq '307'
+    end
+
+    it "redirects from update if read_only" do
+      put :update, id: Issue.make!
+      response.code.should eq '307'
+    end
+
+    it "redirects from create" do
+      post :create
+      response.code.should eq '307'
+    end
+  end
+
   it "should get :index" do
     issues = [issue]
 

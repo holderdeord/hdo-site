@@ -86,9 +86,21 @@ describe QuestionsController do
 
       assigns(:representatives).should == [attending_with_email]
     end
+
+    it "redirects if read_only" do
+      AppConfig.any_instance.stub(:read_only).and_return(true)
+      get :new
+      response.code.should eq '307'
+    end
   end
 
   describe "POST create" do
+    it "redirects if read_only" do
+      AppConfig.any_instance.stub(:read_only).and_return(true)
+      post :create
+      response.code.should eq '307'
+    end
+
     describe "with valid params" do
       it "creates a new Question" do
         expect {

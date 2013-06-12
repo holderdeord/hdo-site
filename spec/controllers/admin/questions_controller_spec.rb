@@ -90,6 +90,18 @@ describe Admin::QuestionsController do
     describe "PUT edit" do
       let(:question) { Question.make! }
 
+      it "redirects form edit page if read_only" do
+        AppConfig.any_instance.stub(:read_only).and_return(true)
+        get :edit, id: question
+        response.code.should eq '307'
+      end
+
+      it "redirects from put update if read_only" do
+        AppConfig.any_instance.stub(:read_only).and_return(true)
+        put :update, id: question
+        response.code.should eq '307'
+      end
+
       it "fetches the question" do
         get :edit, id: question.id
         assigns(:question).should eq question

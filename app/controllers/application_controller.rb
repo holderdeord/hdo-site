@@ -87,4 +87,5 @@ class ApplicationController < ActionController::Base
   def policy_not_allowed
     render file: 'public/422', formats: [:html], layout: false, status: 401
   end
+
 end
