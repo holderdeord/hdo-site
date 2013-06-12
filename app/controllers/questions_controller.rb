@@ -1,6 +1,7 @@
 class QuestionsController < ApplicationController
   before_filter { assert_feature(:questions) }
   before_filter :redirect_unless_answers_enabled, only: [:index, :show]
+  before_filter :require_edit, only: [:new, :create]
   skip_before_filter :verify_authenticity_token, only: :create
 
   hdo_caches_page :index, :new

@@ -2,6 +2,7 @@ class Admin::QuestionsController < AdminController
   before_filter { assert_feature(:questions) }
   before_filter :fetch_question, except: :index
   before_filter :assert_moderator, except: :index
+  before_filter :require_edit, except: :index
 
   def index
     @questions_pending         = Question.pending

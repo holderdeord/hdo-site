@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::Base
   include Pundit
+  include Hdo::ReadOnly
   protect_from_forgery
   rescue_from Pundit::NotAuthorizedError, with: :policy_not_allowed
 

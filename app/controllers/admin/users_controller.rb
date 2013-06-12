@@ -1,5 +1,6 @@
 class Admin::UsersController < AdminController
   before_filter :fetch_user, only: [:show, :edit, :update, :destroy]
+  before_filter :require_edit, except: [:index, :show]
 
   def index
     @users = User.order(:name).all

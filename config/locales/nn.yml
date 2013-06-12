@@ -331,8 +331,6 @@ nn:
     expand: 'Åpne'
     collapse: 'Lat att'
     nobody: ingen
-    mode:
-      read_only: På grunn av tenarbyte er saksredigering mellombels deaktivert.
     search:
       button: Søk
       result: Søkeresultat

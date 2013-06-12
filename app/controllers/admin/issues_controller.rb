@@ -1,6 +1,7 @@
 class Admin::IssuesController < AdminController
-  before_filter :ensure_editable, except: :index
+  before_filter :authorize_edit, except: :index
   before_filter :fetch_issue, only: [:show, :edit, :update, :destroy, :votes_search]
+  before_filter :require_edit, except: [:index, :show]
 
   helper_method :edit_steps
 
@@ -142,10 +143,8 @@ class Admin::IssuesController < AdminController
     @edit_steps ||= Hdo::IssueEditSteps.new(params, session)
   end
 
-  def ensure_editable
-    if AppConfig.read_only
-      redirect_to admin_root_path
-    elsif !policy(@issue || Issue.new).edit?
+  def authorize_edit
+    unless policy(@issue || Issue.new).edit?
       flash.alert = t('app.errors.unauthorized')
       redirect_to admin_root_path
     end

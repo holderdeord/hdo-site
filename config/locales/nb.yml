@@ -357,8 +357,6 @@ nb:
     expand: 'Åpne'
     collapse: 'Lukke'
     nobody: ingen
-    mode:
-      read_only: På grunn av serverbytte er saksredigering midlertidig deaktivert.
     search:
       button: Søk
       result: Søkeresultat
