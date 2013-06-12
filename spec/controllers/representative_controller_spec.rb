@@ -61,6 +61,12 @@ describe RepresentativeController do
         post :create_answer, default_params.merge(answer: valid_attributes)
         response.should redirect_to(representative_root_path)
       end
+
+      it "redirects if read_only" do
+        AppConfig.any_instance.stub(:read_only).and_return(true)
+        post :create_answer, default_params
+        response.code.should eq '307'
+      end
     end
 
     describe "with invalid params" do

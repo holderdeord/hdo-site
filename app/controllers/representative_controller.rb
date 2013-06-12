@@ -3,6 +3,7 @@
 class RepresentativeController < ApplicationController
   layout 'logged_in'
   before_filter :authenticate_representative!
+  before_filter :require_edit, only: :create_answer
 
   def index
     questions = current_representative.questions.approved
