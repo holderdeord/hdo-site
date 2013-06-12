@@ -17,6 +17,10 @@
           <span class="add-on"><%= Representative.human_attribute_name :email %></span>
           <%= text_field :representative, :email %>
         </div>
+
+        <div>
+          <%= check_box :representative, :will_not_answer %> Representative will not participate in Q & A.
+        </div>
       <% end %>
 
       <%= form.actions do %>

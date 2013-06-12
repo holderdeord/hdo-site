@@ -35,7 +35,7 @@ class Representative < ActiveRecord::Base
 
   attr_accessible :first_name, :last_name, :committees, :district,
                   :date_of_birth, :date_of_death, :twitter_id, :email,
-                  :attending
+                  :attending, :will_not_answer
 
   default_scope order: :last_name
 
