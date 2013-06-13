@@ -12,6 +12,13 @@ describe Question do
     q.should_not be_valid
   end
 
+  it 'is invalid with an opted out representative' do
+    representative = Representative.make! opted_out: true
+    q = Question.make representative: representative
+
+    q.should_not be_valid
+  end
+
   it 'is invalid without a body' do
     q.body = nil
     q.should_not be_valid

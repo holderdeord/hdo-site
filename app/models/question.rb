@@ -15,6 +15,7 @@ class Question < ActiveRecord::Base
   validates :representative, presence: true
   validates :answer,         associated: true
   validate :answer_comes_from_asked_representative
+  validate :representative_is_askable
 
   scope :answered,             -> { joins(:answer) }
   scope :unanswered,           -> { where('(select count(*) FROM answers WHERE question_id = questions.id) = 0') }
@@ -68,6 +69,12 @@ class Question < ActiveRecord::Base
   def answer_comes_from_asked_representative
     if answer && answer.representative != representative
       errors.add(:representative, :must_match_question_representative)
+    end
+  end
+
+  def representative_is_askable
+    unless representative && representative.askable?
+      errors.add(:representative, :must_be_askable)
     end
   end
 end

@@ -117,6 +117,7 @@ Representative.blueprint :with_email do
 end
 
 Representative.blueprint :confirmed do
+  attending    { true }
   external_id  { sn.to_s }
   first_name   { "first-name-#{sn}" }
   last_name    { "last-name-#{sn}" }
@@ -164,7 +165,7 @@ end
 
 Question.blueprint do
   body { "question body #{sn}" }
-  representative { Representative.make! }
+  representative { Representative.make!(:confirmed) }
   from_name { "Ola Nordmann" }
   from_email { "ola.nordmann@engasjert.no" }
 end
