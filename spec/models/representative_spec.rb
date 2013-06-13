@@ -179,16 +179,20 @@ describe Representative do
   end
 
   it 'finds askable representatives' do
-    a, b, c = [
+    a, b, c, d = [
       Representative.make!(email: 'foo@bar.com', attending: false),
       Representative.make!(email: nil, attending: true),
-      Representative.make!(email: 'bah@bar.com', attending: true)
+      Representative.make!(email: 'bah@bar.com', attending: true),
+      Representative.make!(:confirmed,  { attending: true, opted_out: true })
     ]
 
     a.should_not be_askable
     b.should_not be_askable
     c.should be_askable
+    d.should_not be_askable
 
-    Representative.askable.should == [c]
+    Representative.askable.should eq [c]
+    Representative.potentially_askable.should eq [c,d]
+    Representative.opted_out.should eq [d]
   end
 end

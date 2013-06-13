@@ -155,6 +155,7 @@ nb:
         not_attending: 'Møter for tiden ikke på Stortinget'
         password: Passord
         current_password: Nåværende passord
+        opted_out: Har valgt å ikke delta i S&S
       party:
         name: "Navn"
         representatives: "Representanter"

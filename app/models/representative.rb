@@ -35,7 +35,7 @@ class Representative < ActiveRecord::Base
 
   attr_accessible :first_name, :last_name, :committees, :district,
                   :date_of_birth, :date_of_death, :twitter_id, :email,
-                  :attending, :will_not_answer
+                  :attending, :opted_out
 
   default_scope order: :last_name
 
@@ -62,9 +62,11 @@ class Representative < ActiveRecord::Base
   validates :email,       allow_nil: true, uniqueness: true, email: true
   validates :twitter_id,  allow_nil: true, uniqueness: true, format: /^[^@]/
 
-  scope :attending,  -> { where(attending: true) }
-  scope :with_email, -> { where('email IS NOT NULL') }
-  scope :askable,    -> { attending.with_email }
+  scope :attending,              -> { where(attending: true) }
+  scope :with_email,             -> { where('email IS NOT NULL') }
+  scope :potentially_askable,    -> { attending.with_email }
+  scope :askable,                -> { potentially_askable.where('opted_out IS NULL or opted_out IS FALSE') }
+  scope :opted_out,              -> { potentially_askable.where('opted_out IS TRUE') }
 
   friendly_id :external_id, use: :slugged
 
@@ -106,7 +108,11 @@ class Representative < ActiveRecord::Base
   end
 
   def askable?
-    attending? && !email.blank?
+    attending? && !email.blank? && !opted_out
+  end
+
+  def opted_out?
+    opted_out
   end
 
   def alternate_text

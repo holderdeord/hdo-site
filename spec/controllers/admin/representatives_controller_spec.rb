@@ -27,6 +27,18 @@ describe Admin::RepresentativesController do
       representative.reload.twitter_id.should == 'foo'
     end
 
+    it 'can set the opted_out flag' do
+      put :update, id: representative, representative: { opted_out: true }
+      representative.reload.should be_opted_out
+    end
+
+    it 'can clear the opted_out flag' do
+      representative = Representative.make! opted_out: true
+      put :update, id: representative, representative: { opted_out: false }
+
+      representative.reload.should_not be_opted_out
+    end
+
     it "sets twitter_id to nil if blank" do
       put :update, id: representative.to_param, representative: { twitter_id: '' }
 

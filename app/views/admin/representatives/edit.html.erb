@@ -19,7 +19,7 @@
         </div>
 
         <div>
-          <%= check_box :representative, :will_not_answer %> Representative will not participate in Q & A.
+          <div class="row-fluid"><div class="span1"><%= check_box :representative, :opted_out, class: "pull-right" %></div><div class="span5"><%= form.label :opted_out %></div></div>
         </div>
       <% end %>
 

@@ -38,9 +38,12 @@
 <div class="row-fluid">
   <% if AppConfig.answers_enabled %>
     <div class="span6">
-      <h3>Spørsmål</h3>
-
-      <%= render partial: 'question_list', locals: { representative: @representative, questions: @questions } %>
+      <h3>Spørsmål fra velgerne</h3>
+      <% if @representative.askable? %>
+        <%= render partial: 'question_list', locals: { representative: @representative, questions: @questions } %>
+      <% else %>
+        <p><%= @representative.name %> har reservert seg mot å svare på spørsmål fra velgerne via Holder de ord.</p>
+      <% end %>
     </div>
   <% end %>
 

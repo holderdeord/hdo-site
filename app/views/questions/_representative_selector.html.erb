@@ -12,7 +12,7 @@
     <label class="control-label">Stortingspolitiker</label>
 
     <%= form.collection_select :representative, @representatives, :slug, :name_with_party,
-                               {include_blank: true, selected: @question.representative.try(:slug), disabled: lambda{|rep| rep.will_not_answer } },
+                               {include_blank: true, selected: @question.representative.try(:slug), disabled: lambda{|rep| rep.opted_out? } },
                                class: 'chosen-xlarge',
                                data: {placeholder: 'Velg en stortingspolitiker'}%>
   </div>
