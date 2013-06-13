@@ -85,12 +85,21 @@
   <div class="row-fluid">
     <div class="span5<%= @question.approved? ? '' : ' muted' %>">
       <h4>Ved godkjent spørsmål</h4>
-      <div class="row-fluid"><%= link_to 'Send e-post til bruker', question_approved_email_user_admin_question_path(@question), class: 'btn', disabled: !@question.approved? %></div>
-      <div class="row-fluid"><%= link_to 'Send e-post til representant', question_approved_email_rep_admin_question_path(@question), class: 'btn', disabled: !@question.approved? %></div>
+      <% if @question.approved? %>
+        <div class="row-fluid"><%= link_to 'Send e-post til bruker', question_approved_email_user_admin_question_path(@question), class: 'btn', disabled: !@question.approved? %></div>
+        <div class="row-fluid"><%= link_to 'Send e-post til representant', question_approved_email_rep_admin_question_path(@question), class: 'btn', disabled: !@question.approved? %></div>
+      <% else %>
+        <div class="row-fluid"><div class="btn disabled">Send e-post til bruker</div></div>
+        <div class="row-fluid"><div class="btn disabled">Send e-post til representant</div></div>
+      <% end %>
     </div>
     <div class="span5<%= @question.answer && @question.answer.approved? ? '' : ' muted' %>">
       <h4>Ved godkjent svar</h4>
-      <div class="row-fluid"><%= link_to 'Send e-post til bruker', answer_approved_email_user_admin_question_path(@question), class: 'btn', disabled: !@question.answer || !@question.answer.approved? %></div>
+      <% if @question.has_approved_answer? %>
+        <div class="row-fluid"><%= link_to 'Send e-post til bruker', answer_approved_email_user_admin_question_path(@question), class: 'btn' %></div>
+      <% else %>
+        <div class="row-fluid"><div class="btn disabled">Send e-post til bruker</div></div>
+      <% end %>
     </div>
   </div>
 

@@ -186,8 +186,14 @@ describe Admin::QuestionsController do
 
         it "does not send an uninvited representative e-mails" do
           representative = Representative.make! :attending
-          question = Question.make! representative: representative
+          question = Question.make! :approved, representative: representative
 
+          ModerationMailer.should_not_receive(:question_approved_representative_email)
+          get :question_approved_email_rep, id: question
+        end
+
+        it 'does not send email unless question is approved' do
+          question = Question.make!
           ModerationMailer.should_not_receive(:question_approved_representative_email)
           get :question_approved_email_rep, id: question
         end
@@ -195,7 +201,21 @@ describe Admin::QuestionsController do
 
       describe "approving answers" do
         it "can send the user an email" do
+          question.create_answer!(representative: question.representative, body: 'foo', status: 'approved')
           ModerationMailer.should_receive(:answer_approved_user_email).with(question).and_call_original
+
+          get :answer_approved_email_user, id: question
+        end
+
+        it 'does not send an email if there is no answer' do
+          ModerationMailer.should_not_receive(:answer_approved_user_email).with(question)
+
+          get :answer_approved_email_user, id: question
+        end
+
+        it 'does not send an email unless answer is approved' do
+          question.create_answer!(representative: question.representative, body: 'foo', status: 'pending')
+          ModerationMailer.should_not_receive(:answer_approved_user_email).with(question)
 
           get :answer_approved_email_user, id: question
         end

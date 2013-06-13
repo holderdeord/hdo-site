@@ -42,6 +42,8 @@ class Admin::QuestionsController < AdminController
   def question_approved_email_rep
     if !@question.representative.confirmed? && @question.representative.confirmation_token.nil?
       redirect_to edit_admin_question_path(@question), alert: t('app.questions.edit.rep_not_invited')
+    elsif !@question.approved?
+      redirect_to edit_admin_question_path(@question), alert: t('app.questions.edit.question_not_approved')
     else
       ModerationMailer.question_approved_representative_email(@question).deliver
       redirect_to edit_admin_question_path(@question), notice: t('app.questions.edit.email_sent', email: @question.representative.email)
@@ -49,13 +51,21 @@ class Admin::QuestionsController < AdminController
   end
 
   def question_approved_email_user
-    ModerationMailer.question_approved_user_email(@question).deliver
-    redirect_to edit_admin_question_path(@question), notice: t('app.questions.edit.email_sent', email: @question.from_email)
+    unless @question.approved?
+      redirect_to edit_admin_question_path(@question), alert: t('app.questions.edit.question_not_approved')
+    else
+      ModerationMailer.question_approved_user_email(@question).deliver
+      redirect_to edit_admin_question_path(@question), notice: t('app.questions.edit.email_sent', email: @question.from_email)
+    end
   end
 
   def answer_approved_email_user
-    ModerationMailer.answer_approved_user_email(@question).deliver
-    redirect_to edit_admin_question_path(@question), notice: t('app.questions.edit.email_sent', email: @question.from_email)
+    unless @question.has_approved_answer?
+      redirect_to edit_admin_question_path(@question), alert: t('app.questions.edit.answer_not_approved')
+    else
+      ModerationMailer.answer_approved_user_email(@question).deliver
+      redirect_to edit_admin_question_path(@question), notice: t('app.questions.edit.email_sent', email: @question.from_email)
+    end
   end
 
   private
