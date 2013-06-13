@@ -20,6 +20,11 @@ describe Admin::RepresentativesController do
       response.should have_rendered(:index)
     end
 
+    it 'deletes the cache from the representative selector for questions' do
+      Rails.cache.should_receive(:delete).with('question-form/representatives')
+      put :update, id: representative, representative: {  }
+    end
+
     it "can update twitter_id and email" do
       put :update, id: representative.to_param, representative: { twitter_id: 'foo' }
 

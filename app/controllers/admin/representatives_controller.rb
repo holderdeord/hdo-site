@@ -16,6 +16,7 @@ class Admin::RepresentativesController < AdminController
     normalize_blanks(attrs)
 
     if @representative.update_attributes(attrs)
+      Rails.cache.delete('question-form/representatives')
       redirect_to admin_representatives_path, notice: t('app.updated.representative')
     else
       redirect_to edit_admin_representative_path(@representative), alert: @representative.errors.full_messages.to_sentence
