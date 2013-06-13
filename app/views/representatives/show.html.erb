@@ -31,7 +31,7 @@
                     new_question_path(representative: @representative.slug, district: @representative.district.slug),
                     class: 'btn btn-primary' %>
       <% elsif @representative.opted_out? %>
-        <div class="btn btn-primary disabled"><%= t('app.questions.representative.ask', name: @representative.name) %></div>
+        <div class="btn disabled"><%= t('app.questions.representative.ask', name: @representative.name) %></div>
       <% end %>
     <% end %>
   </aside>
