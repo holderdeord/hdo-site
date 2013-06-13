@@ -56,7 +56,7 @@ class QuestionsController < ApplicationController
 
   def fetch_representatives_and_districts
     @representatives = Rails.cache.fetch('question-form/representatives', expires_in: 1.day) do
-      Representative.askable.includes(:district, party_memberships: :party).order(:last_name).to_a
+      Representative.potentially_askable.includes(:district, party_memberships: :party).order(:last_name).to_a
     end
 
     @districts = Rails.cache.fetch('question-form/districts', expires_in: 1.day) do
