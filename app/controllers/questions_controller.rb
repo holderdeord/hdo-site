@@ -55,13 +55,8 @@ class QuestionsController < ApplicationController
   private
 
   def fetch_representatives_and_districts
-    @representatives = Rails.cache.fetch('question-form/representatives', expires_in: 1.day) do
-      Representative.potentially_askable.includes(:district, party_memberships: :party).order(:last_name).to_a
-    end
-
-    @districts = Rails.cache.fetch('question-form/districts', expires_in: 1.day) do
-      District.order(:name).to_a
-    end
+    @representatives = Representative.potentially_askable.includes(:district, party_memberships: :party).order(:last_name).to_a
+    @districts = District.order(:name).to_a
   end
 
   def redirect_unless_answers_enabled
