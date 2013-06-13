@@ -35,7 +35,7 @@ describe QuestionsController do
 
   describe "GET show" do
     it "assigns the requested question as @question" do
-      question = Question.make!(status: 'approved', representative: Representative.make!(:full))
+      question = Question.make!(status: 'approved', representative: Representative.make!(:confirmed))
       get :show, id: question.to_param
 
       assigns(:question).should eq(question)
@@ -51,7 +51,7 @@ describe QuestionsController do
     end
 
     it 'assigns approved answers as @answer' do
-      question = Question.make!(status: 'approved', representative: Representative.make!(:full))
+      question = Question.make!(status: 'approved', representative: Representative.make!(:confirmed))
       question.create_answer!(body: 'foo', representative: question.representative, status: 'approved')
 
       get :show, id: question

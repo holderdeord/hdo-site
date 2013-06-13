@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe QuestionDecorator do
-  let(:question) { Question.make!(representative: Representative.make!(:full)) }
+  let(:question) { Question.make!(representative: Representative.make!(:confirmed)) }
   let(:decorator) { question.decorate }
 
   it "has the representative's avatar" do

@@ -110,6 +110,7 @@ end
 
 Representative.blueprint :attending do
   attending { true }
+  email     { "rep-#{sn}@stortinget.no" }
 end
 
 Representative.blueprint :with_email do
@@ -122,6 +123,7 @@ Representative.blueprint :confirmed do
   first_name   { "first-name-#{sn}" }
   last_name    { "last-name-#{sn}" }
   party_memberships(1)
+  district
   email        { "#{sn}@email.com" }
   confirmed_at { Time.now }
 end

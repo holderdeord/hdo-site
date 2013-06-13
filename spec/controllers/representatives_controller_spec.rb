@@ -12,7 +12,7 @@ describe RepresentativesController do
   end
 
   describe "GET #show" do
-    let(:rep) { Representative.make! }
+    let(:rep) { Representative.make! :confirmed }
 
     it 'assigns the requested representative to @representative' do
       get :show, id: rep
@@ -36,7 +36,7 @@ describe RepresentativesController do
     it 'assigns approved questions to @questions' do
       approved  = Question.make!(representative: rep, status: 'approved')
       pending   = Question.make!(representative: rep, status: 'pending')
-      other_rep = Question.make!(representative: Representative.make!, status: 'approved')
+      other_rep = Question.make!(representative: Representative.make!(:confirmed), status: 'approved')
 
       get :show, id: rep
 
