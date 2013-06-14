@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130613145522) do
+ActiveRecord::Schema.define(:version => 20130614112405) do
 
   create_table "answers", :force => true do |t|
     t.text     "body",                                     :null => false
@@ -374,7 +374,7 @@ ActiveRecord::Schema.define(:version => 20130613145522) do
     t.integer  "against_count"
     t.integer  "absent_count"
     t.boolean  "enacted"
-    t.string   "subject"
+    t.text     "subject"
     t.datetime "time"
     t.datetime "created_at",                      :null => false
     t.datetime "updated_at",                      :null => false
