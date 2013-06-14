@@ -39,7 +39,7 @@
 <div class="row-fluid">
   <div class="span12">
     <h4 class="lead leaderboard-title">
-      <span>I følgende saker har <%= @party.name %> <%= t("app.promises.scores.caption.no_promises") %></span>
+      <span>Saker hvor <%= @party.name %> har ingen konkrete løfter i partiprogrammet:</span>
     </h4>
     <ol class="leaderboard issues no_promises">
       <% Array(@issue_groups[:no_promises]).each do |issue| %>
