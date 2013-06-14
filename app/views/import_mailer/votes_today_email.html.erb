@@ -2,6 +2,6 @@
 
 <ul>
   <% @parliament_issues.each do |pi| %>
-    <li><%= link_to pi.summary, pi %></li>
+    <li><%= link_to pi.summary, parliament_issue_url(pi) %></li>
   <% end %>
 </ul>
