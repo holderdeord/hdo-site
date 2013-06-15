@@ -465,6 +465,9 @@ nb:
         approved: Godkjent
         pending: Avventer kontroll
         rejected: Avvist
+        answer_pending: Svar avventer kontroll
+        answer_rejected: Svar avvist
+        unanswered: Venter svar
       representative:
         ask: 'Still %{name} et spørsmål'
     answers:

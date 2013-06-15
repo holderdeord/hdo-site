@@ -4,13 +4,32 @@ class Admin::QuestionsController < AdminController
   before_filter :assert_moderator, except: :index
   before_filter :require_edit, except: :index
 
+  STATUSES = [
+    :pending,
+    :answer_pending,
+    :approved,
+    :rejected,
+    :answer_rejected,
+    :unanswered
+  ].freeze
+
   def index
-    @questions_pending         = Question.pending
-    @questions_answer_pending  = Question.with_pending_answers
-    @questions_approved        = Question.answered.where('answers.status = ?', 'approved')
-    @questions_rejected        = Question.rejected
-    @questions_answer_rejected = Question.answered.where('answers.status = ?', 'rejected')
-    @questions_unanswered      = Question.not_ours.approved.unanswered
+    @questions_by_status = {
+      pending:         Question.pending,
+      answer_pending:  Question.with_pending_answers,
+      approved:        Question.answered.where('answers.status = ?', 'approved'),
+      rejected:        Question.rejected,
+      answer_rejected: Question.answered.where('answers.status = ?', 'rejected'),
+      unanswered:      Question.not_ours.approved.unanswered
+    }
+
+    @active_tab = if @questions_by_status[:answer_pending].any?
+      :answer_pending
+    elsif @questions_by_status[:pending].any?
+      :pending
+    else
+      :approved
+    end
 
     @show_edit = policy(Question).moderate?
   end
