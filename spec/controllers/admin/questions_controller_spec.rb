@@ -40,7 +40,7 @@ describe Admin::QuestionsController do
 
         get :index
 
-        assigns(:questions_pending).should eq [q]
+        assigns(:questions_by_status)[:pending].should eq [q]
       end
 
       it "assigns questions with pending answers" do
@@ -49,7 +49,7 @@ describe Admin::QuestionsController do
 
         get :index
 
-        assigns(:questions_answer_pending).should eq [q]
+        assigns(:questions_by_status)[:answer_pending].should eq [q]
       end
 
       it "assigns rejected questions" do
@@ -57,7 +57,7 @@ describe Admin::QuestionsController do
 
         get :index
 
-        assigns(:questions_rejected).should eq [q]
+        assigns(:questions_by_status)[:rejected].should eq [q]
       end
 
       it "assigns questions with rejected answers" do
@@ -66,7 +66,7 @@ describe Admin::QuestionsController do
 
         get :index
 
-        assigns(:questions_answer_rejected).should eq [q]
+        assigns(:questions_by_status)[:answer_rejected].should eq [q]
       end
 
       it "assigns approved questions and answers" do
@@ -75,7 +75,7 @@ describe Admin::QuestionsController do
 
         get :index
 
-        assigns(:questions_approved).should eq [q]
+        assigns(:questions_by_status)[:approved].should eq [q]
       end
 
       it "assigns unanswered questions" do
@@ -83,7 +83,7 @@ describe Admin::QuestionsController do
 
         get :index
 
-        assigns(:questions_unanswered).should eq [q]
+        assigns(:questions_by_status)[:unanswered].should eq [q]
       end
     end
 
