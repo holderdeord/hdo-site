@@ -42,10 +42,11 @@
 <div class="row-fluid">
   <% if AppConfig.answers_enabled %>
     <div class="span6">
-      <h3>Spørsmål fra velgerne</h3>
       <% if @representative.askable? %>
+        <h3>Spørsmål fra velgerne</h3>
         <%= render partial: 'question_list', locals: { representative: @representative, questions: @questions } %>
-      <% else %>
+      <% elsif @representative.opted_out? %>
+        <h3>Spørsmål fra velgerne</h3>
         <p><%= @representative.name %> har reservert seg mot å svare på spørsmål fra velgerne via Holder de ord.</p>
       <% end %>
     </div>
