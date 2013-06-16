@@ -122,8 +122,11 @@ module Hdo
       end
 
       def compute(connections)
-        weight_sums = Hash.new(0)
-        sums        = Hash.new(0)
+        weight_sums  = Hash.new(0)
+        sums         = Hash.new(0)
+
+        participated = Hash.new(0)
+        half         = connections.count.to_f / 2
 
         connections.each do |vote_connection|
           weight = @weighted ? vote_connection.weight : 1
@@ -132,6 +135,7 @@ module Hdo
             if percent
               weight_sums[entity] += weight
               sums[entity] += percent
+              participated[entity] += 1
             end
           end
         end
@@ -143,7 +147,7 @@ module Hdo
 
           if weight_sum.zero?
             result[entity] = 0
-          elsif partook_in_fewer_than_half(connections, entity)
+          elsif entity.is_a?(Representative) && participated[entity] < half
             result[entity] = nil
           else
             result[entity] = (total * 100 / weight_sum).to_i
@@ -196,19 +200,6 @@ module Hdo
         end
 
         res
-      end
-
-      def partook_in_fewer_than_half(connections, entity)
-        return unless entity.is_a? Representative
-
-        participation = connections.reduce(0) do |sum,vote_connection|
-          if vote_connection.vote.vote_results.map(&:representative_id).include? entity.id
-            sum + 1
-          else
-            sum
-          end
-        end
-        participation < (connections.count.to_f / 2)
       end
 
     end
