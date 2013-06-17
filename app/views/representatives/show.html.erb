@@ -25,14 +25,10 @@
       <% end %>
     </dl>
 
-    <% if AppConfig.questions_enabled %>
-      <% if  @representative.askable? %>
-        <%= link_to t('app.questions.representative.ask', name: @representative.name),
-                    new_question_path(representative: @representative.slug, district: @representative.district.slug),
-                    class: 'btn btn-primary' %>
-      <% elsif @representative.opted_out? %>
-        <div class="btn disabled"><%= t('app.questions.representative.ask', name: @representative.name) %></div>
-      <% end %>
+    <% if AppConfig.questions_enabled && @representative.askable? %>
+      <%= link_to t('app.questions.representative.ask', name: @representative.name),
+                  new_question_path(representative: @representative.slug, district: @representative.district.slug),
+                  class: 'btn btn-primary' %>
     <% end %>
   </aside>
 </div>
@@ -46,9 +42,9 @@
       <% if @representative.askable? %>
         <%= render partial: 'question_list', locals: { representative: @representative, questions: @questions } %>
       <% elsif @representative.opted_out? %>
-        <p><%= @representative.name %> har reservert seg mot å svare på spørsmål fra velgerne via Holder de ord.</p>
+        <p><%= @representative.name %> har reservert seg mot å svare på spørsmål.</p>
       <% else %>
-        <p><%= @representative.name %> møter for tiden ikke på stortinget. Du kan bare stille spørsmål til møtende representanter.</p>
+        <p><%= @representative.name %> møter for tiden ikke på Stortinget. Du kan bare stille spørsmål til møtende representanter.</p>
         <!-- TODO: <%= link_to 'Hva betyr dette?' '/home/faq#hvem-kan-jeg-sporre' %> -->
       <% end %>
     </div>
