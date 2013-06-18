@@ -122,25 +122,15 @@ If you used [Postgres.app](http://postgresapp.com/), make sure you've set up the
 
 # Data
 
-## Import data for development:
+## Set up development data
 
-A subset from [data.stortinget.no](http://data.stortinget.no):
+Import a stripped DB dump, reindex and set up images:
 
-    $ rake import:dev
-
-## Create ElasticSearch indices
-
+    $ rake import:dev:dump
     $ rake search:setup search:reindex
+    $ rake images:reset
 
-## Set up images:
-
-Run this task:
-
-    $ rake images:all
-
-This will download representative images and associate party logos with the imported parties. If you have broken images, try:
-
-    $ rake images:representatives:reset images:all
+The last command will download representative images and associate party logos with the imported parties.
 
 ## Data model
 
