@@ -54,7 +54,4 @@ namespace :import do
   task :dump do
     sh "ssh hdo@db2 'pg_dump --clean hdo_production | gzip' | gunzip | psql hdo_development"
   end
-
-
-
 end
