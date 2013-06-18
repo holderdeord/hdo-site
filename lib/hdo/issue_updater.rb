@@ -65,6 +65,11 @@ module Hdo
     def update_attributes
       return unless @attributes
 
+      # avoid @changed = true for identical tag list
+      if @attributes[:tag_list].kind_of?(String)
+        @attributes[:tag_list] = @attributes[:tag_list].split(',').map(&:strip)
+      end
+
       @changed ||= (association_changed?(:category_ids) || association_changed?(:tags))
       @issue.attributes = @attributes
       @changed ||= @issue.changed?

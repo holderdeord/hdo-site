@@ -157,6 +157,19 @@ module Hdo
       end
     end
 
+    describe 'tags' do
+      let(:issue) { Issue.make! }
+
+      it 'does not update the issue if tag list did not change' do
+        issue.tag_list = 'tannlege, helse og sosial'
+        issue.save!
+        issue.last_updated_by.should be_nil
+
+        IssueUpdater.new(issue, {issue: {tag_list: 'tannlege,helse og sosial'}}, user).update!
+        issue.reload.last_updated_by.should be_nil
+      end
+    end
+
     describe 'authorization' do
       let(:issue) { Issue.make! status: 'in_progress' }
       let(:admin) { User.make! role: 'admin' }
