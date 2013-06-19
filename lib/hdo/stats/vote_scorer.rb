@@ -135,8 +135,9 @@ module Hdo
             if percent
               weight_sums[entity] += weight
               sums[entity] += percent
-              participated[entity] += 1
             end
+
+            participated[entity] += 1
           end
         end
 
@@ -172,7 +173,7 @@ module Hdo
           for_count, against_count, ignored_count = 0, 0, 0
 
           votes.each do |vote_result|
-            next if vote_result.absent?
+            res[vote_result.representative] = nil
 
             if is_alternate_budget && vote_result.against?
               ignored_count += 1
@@ -180,7 +181,7 @@ module Hdo
               if vote_result.for?
                 res[vote_result.representative] = matches ? weight : 0
                 for_count += 1
-              else
+              elsif vote_result.against?
                 res[vote_result.representative] = matches ? 0 : weight
                 against_count += 1
               end

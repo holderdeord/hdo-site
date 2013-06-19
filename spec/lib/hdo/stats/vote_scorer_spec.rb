@@ -45,7 +45,7 @@ module Hdo
         scorer.score_for(rep2).should == 100
       end
 
-      it 'calculates scores for a two votes with different weights' do
+      it 'calculates scores for two votes with different weights' do
         # first vote matches the issue with weight=2
         vote = Vote.make!(vote_results: [
           VoteResult.new(representative: rep1, result: 1),
@@ -400,6 +400,26 @@ module Hdo
         issue.vote_connections.create! vote: vote4, matches: true, weight: 1
 
         VoteScorer.new(issue).score_for(rep1).should_not be_nil
+      end
+
+      it "takes 'absent' vote results into account" do
+        vote1 = Vote.make!(vote_results: [
+          VoteResult.new(representative: rep1, result: 1),
+        ])
+
+        vote2 = Vote.make!(vote_results: [
+          VoteResult.new(representative: rep1, result: 0)
+        ])
+
+        vote3 = Vote.make!(vote_results: [
+          VoteResult.new(representative: rep1, result: 0)
+        ])
+
+        issue.vote_connections.create! vote: vote1, matches: true, weight: 1
+        issue.vote_connections.create! vote: vote2, matches: true, weight: 1
+        issue.vote_connections.create! vote: vote3, matches: true, weight: 1
+
+        VoteScorer.new(issue).score_for(rep1).should == 100
       end
 
     end
