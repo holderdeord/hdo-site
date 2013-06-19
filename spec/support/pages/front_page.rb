@@ -13,7 +13,7 @@ module Pages
     end
 
     def loaded?
-      text =~ /Din uavhengige kilde for fakta om stortingspolitikk/i
+      driver.title == 'Holder de ord'
     end
   end
 end
