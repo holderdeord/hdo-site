@@ -111,7 +111,7 @@ var HDO = HDO || {};
     },
 
     widgetOptionsFor: function (el) {
-      var url, target, count;
+      var url, target, partner, count;
 
       if (this.type === "issue") {
         url = H.widgets.baseUrl + "issues/" + el.getAttribute('data-issue-id') + '/widget';
@@ -135,6 +135,12 @@ var HDO = HDO || {};
 
       if (target && target.length) {
         url = this.addParam(url, 'target', target);
+      }
+
+      partner = el.getAttribute('data-partner');
+
+      if (partner && partner.length) {
+        url = this.addParam(url, 'partner', partner);
       }
 
       return { 'url': url };
