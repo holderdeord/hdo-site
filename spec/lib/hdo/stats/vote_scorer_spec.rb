@@ -353,73 +353,75 @@ module Hdo
         VoteScorer.csv.should be_kind_of(String)
       end
 
-      it 'does not count representatives that participated in less than 50% of votes on issue' do
-        rep2 = Representative.make!
+      context 'minimum participation' do
+        it 'does not count representatives that participated in less than 50% of votes on issue' do
+          rep2 = Representative.make!
 
-        vote1 = Vote.make!(vote_results: [
-          VoteResult.new(representative: rep1, result: 1),
-          VoteResult.new(representative: rep2, result: 1)
-        ])
+          vote1 = Vote.make!(vote_results: [
+            VoteResult.new(representative: rep1, result: 1),
+            VoteResult.new(representative: rep2, result: 1)
+          ])
 
-        vote2 = Vote.make!(vote_results: [
-          VoteResult.new(representative: rep2, result: 1)
-        ])
+          vote2 = Vote.make!(vote_results: [
+            VoteResult.new(representative: rep2, result: 1)
+          ])
 
-        vote3 = Vote.make!(vote_results: [
-          VoteResult.new(representative: rep2, result: 1)
-        ])
+          vote3 = Vote.make!(vote_results: [
+            VoteResult.new(representative: rep2, result: 1)
+          ])
 
-        issue.vote_connections.create! vote: vote1, matches: true, weight: 1
-        issue.vote_connections.create! vote: vote2, matches: true, weight: 1
-        issue.vote_connections.create! vote: vote3, matches: true, weight: 1
+          issue.vote_connections.create! vote: vote1, matches: true, weight: 1
+          issue.vote_connections.create! vote: vote2, matches: true, weight: 1
+          issue.vote_connections.create! vote: vote3, matches: true, weight: 1
 
-        VoteScorer.new(issue).score_for(rep1).should be_nil
-      end
+          VoteScorer.new(issue).score_for(rep1).should be_nil
+        end
 
-      it 'does count representatives that participated in 50% of votes on issue' do
-        rep2 = Representative.make!
+        it 'does count representatives that participated in 50% of votes on issue' do
+          rep2 = Representative.make!
 
-        vote1 = Vote.make!(vote_results: [
-          VoteResult.new(representative: rep1, result: 1),
-          VoteResult.new(representative: rep2, result: 1)
-        ])
-        vote2 = Vote.make!(vote_results: [
-          VoteResult.new(representative: rep1, result: 1),
-          VoteResult.new(representative: rep2, result: 1)
-        ])
-        vote3 = Vote.make!(vote_results: [
-          VoteResult.new(representative: rep2, result: 1)
-        ])
-        vote4 = Vote.make!(vote_results: [
-          VoteResult.new(representative: rep2, result: 1)
-        ])
+          vote1 = Vote.make!(vote_results: [
+            VoteResult.new(representative: rep1, result: 1),
+            VoteResult.new(representative: rep2, result: 1)
+          ])
+          vote2 = Vote.make!(vote_results: [
+            VoteResult.new(representative: rep1, result: 1),
+            VoteResult.new(representative: rep2, result: 1)
+          ])
+          vote3 = Vote.make!(vote_results: [
+            VoteResult.new(representative: rep2, result: 1)
+          ])
+          vote4 = Vote.make!(vote_results: [
+            VoteResult.new(representative: rep2, result: 1)
+          ])
 
-        issue.vote_connections.create! vote: vote1, matches: true, weight: 1
-        issue.vote_connections.create! vote: vote2, matches: true, weight: 1
-        issue.vote_connections.create! vote: vote3, matches: true, weight: 1
-        issue.vote_connections.create! vote: vote4, matches: true, weight: 1
+          issue.vote_connections.create! vote: vote1, matches: true, weight: 1
+          issue.vote_connections.create! vote: vote2, matches: true, weight: 1
+          issue.vote_connections.create! vote: vote3, matches: true, weight: 1
+          issue.vote_connections.create! vote: vote4, matches: true, weight: 1
 
-        VoteScorer.new(issue).score_for(rep1).should_not be_nil
-      end
+          VoteScorer.new(issue).score_for(rep1).should_not be_nil
+        end
 
-      it "takes 'absent' vote results into account" do
-        vote1 = Vote.make!(vote_results: [
-          VoteResult.new(representative: rep1, result: 1),
-        ])
+        it "takes 'absent' vote results into account" do
+          vote1 = Vote.make!(vote_results: [
+            VoteResult.new(representative: rep1, result: 1),
+          ])
 
-        vote2 = Vote.make!(vote_results: [
-          VoteResult.new(representative: rep1, result: 0)
-        ])
+          vote2 = Vote.make!(vote_results: [
+            VoteResult.new(representative: rep1, result: 0)
+          ])
 
-        vote3 = Vote.make!(vote_results: [
-          VoteResult.new(representative: rep1, result: 0)
-        ])
+          vote3 = Vote.make!(vote_results: [
+            VoteResult.new(representative: rep1, result: 0)
+          ])
 
-        issue.vote_connections.create! vote: vote1, matches: true, weight: 1
-        issue.vote_connections.create! vote: vote2, matches: true, weight: 1
-        issue.vote_connections.create! vote: vote3, matches: true, weight: 1
+          issue.vote_connections.create! vote: vote1, matches: true, weight: 1
+          issue.vote_connections.create! vote: vote2, matches: true, weight: 1
+          issue.vote_connections.create! vote: vote3, matches: true, weight: 1
 
-        VoteScorer.new(issue).score_for(rep1).should == 100
+          VoteScorer.new(issue).score_for(rep1).should == 100
+        end
       end
 
     end
