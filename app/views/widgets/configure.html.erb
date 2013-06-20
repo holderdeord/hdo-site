@@ -5,10 +5,7 @@
 <ul class="nav nav-tabs">
   <li class="active"><a href="#docs" data-toggle="tab">Dokumentasjon</a></li>
   <li><a href="#issues" data-toggle="tab">Finn saker</a></li>
-
-  <% if @internal_user %>
-    <li><a href="#promises" data-toggle="tab">Finn løfter</a></li>
-  <% end %>
+  <li><a href="#promises" data-toggle="tab">Finn løfter</a></li>
 </ul>
 
 <div class="tab-content">
@@ -40,34 +37,32 @@
     <% end %>
   </div>
 
-  <% if @internal_user %>
-    <div class="tab-pane" id="promises">
+  <div class="tab-pane" id="promises">
 
-      <form class="form-search span6" id="promise-search">
-        <div class="input-append">
-          <input type="search" autofocus class="span2 search-query">
-          <button type="submit" class="btn">Search</button>
-        </div>
-      </form>
+    <form class="form-search span6" id="promise-search">
+      <div class="input-append">
+        <input type="search" autofocus class="span2 search-query">
+        <button type="submit" class="btn">Search</button>
+      </div>
+    </form>
 
-      <div id="promise-hits" class="pull-right"></div>
-      <%= spinner_tag %>
+    <div id="promise-hits" class="pull-right"></div>
+    <%= spinner_tag %>
 
 
-      <table class="table">
-        <thead>
-          <tr>
-            <th>Id</th>
-            <th style="min-width: 90px;">Periode</th>
-            <th>Parti</th>
-            <th>Tekst</th>
-          </tr>
-        </thead>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Id</th>
+          <th style="min-width: 90px;">Periode</th>
+          <th>Parti</th>
+          <th>Tekst</th>
+        </tr>
+      </thead>
 
-        <tbody id="promises-body"></tbody>
-      </table>
-    </div>
-  <% end %>
+      <tbody id="promises-body"></tbody>
+    </table>
+  </div>
 
   <div class="tab-pane" id="issues">
     <table class="table table-striped">
@@ -89,55 +84,49 @@
 </div>
 
 <%= content_for :document_ready do %>
-  <% if @internal_user %>
-    <script type="text/javascript" charset="utf-8">
-      $(document).ready(function () {
-        prettyPrint();
+  <script type="text/javascript" charset="utf-8">
+    $(document).ready(function () {
+      prettyPrint();
 
-        $("#promise-search").submit(function (e) {
-          e.preventDefault();
+      $("#promise-search").submit(function (e) {
+        e.preventDefault();
 
-          var query, spinner, tbody, hits;
+        var query, spinner, tbody, hits;
 
-          query   = $(this).find("input").val();
-          spinner = $("#spinner");
-          tbody   = $("#promises-body");
-          hits    = $("#promise-hits");
+        query   = $(this).find("input").val();
+        spinner = $("#spinner");
+        tbody   = $("#promises-body");
+        hits    = $("#promise-hits");
 
-          tbody.html('');
-          hits.html('');
-          spinner.show();
+        tbody.html('');
+        hits.html('');
+        spinner.show();
 
-          $.ajax({
-            url: '/search/all.json?size=500&query=' + encodeURIComponent(query + ' _type:promise parliament_period_name:2013-2017'),
-            type: 'GET',
-            dataType: 'json',
-            complete: function(xhr, textStatus) { spinner.hide(); },
-            success: function(data, textStatus, xhr) {
-              var promises = data[0] && data[0][1];
+        $.ajax({
+          url: '/search/all.json?size=500&query=' + encodeURIComponent(query + ' _type:promise parliament_period_name:2013-2017'),
+          type: 'GET',
+          dataType: 'json',
+          complete: function(xhr, textStatus) { spinner.hide(); },
+          success: function(data, textStatus, xhr) {
+            var promises = data[0] && data[0][1];
 
-              if (promises) {
-                hits.html(promises.length + ' treff');
+            if (promises) {
+              hits.html(promises.length + ' treff');
 
-                $.each(promises, function () {
-                  $(tbody).append('<tr><td>' + this.id + '</td><td>' + this.parliament_period_name + '</td><td>' + this.party_names + '</td><td>' + this.body + '</td>');
-                });
-              }
-            },
-            error: function(xhr, textStatus, errorThrown) {
-              alert('Oops, noe gikk galt.');
+              $.each(promises, function () {
+                $(tbody).append('<tr><td>' + this.id + '</td><td>' + this.parliament_period_name + '</td><td>' + this.party_names + '</td><td>' + this.body + '</td>');
+              });
             }
-          });
-
-          return false;
+          },
+          error: function(xhr, textStatus, errorThrown) {
+            alert('Oops, noe gikk galt.');
+          }
         });
+
+        return false;
       });
-    </script>
-  <% else %>
-    <script type="text/javascript" charset="utf-8">
-      $(document).ready(function () { prettyPrint(); });
-    </script>
-  <% end %>
+    });
+  </script>
 <% end %>
 
 <script src='<%= widget_load_url %>'></script>

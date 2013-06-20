@@ -58,16 +58,7 @@ class WidgetsController < ApplicationController
   end
 
   def configure
-    user = current_user
-
-    # temporarily hide promises from external users
-
-    if user
-      @internal_user = true
-    else
-      user = authenticate_with_http_basic { |u, p| Hdo::BasicAuth.ok?(u, p) }
-      @internal_user = false
-    end
+    user = current_user || authenticate_with_http_basic { |u, p| Hdo::BasicAuth.ok?(u, p) }
 
     if user
       issues           = Issue.published
@@ -85,7 +76,7 @@ class WidgetsController < ApplicationController
         @examples << docs.party_default(example_party)
         @examples << docs.party_count(example_party, 10)
         @examples << docs.party_issues(example_party, issues.order('random()').first(5))
-        @examples << docs.promises(example_promises) if @internal_user
+        @examples << docs.promises(example_promises)
       end
 
       @issues = issues.order(:title)
