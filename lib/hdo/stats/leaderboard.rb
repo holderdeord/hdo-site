@@ -1,9 +1,11 @@
 module Hdo
   module Stats
     class Leaderboard
-      attr_reader :by_party, :by_key
+      attr_reader :by_party, :by_key, :issue_count
 
       def initialize(issues)
+        @issue_count = issues.size
+
         parties = Party.order(:name)
 
         @government = parties.in_government
