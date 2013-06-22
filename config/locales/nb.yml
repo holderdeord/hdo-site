@@ -426,8 +426,8 @@ nb:
         mostly_against_html: "%{name} har <strong>stort sett stemt mot</strong>"
         mostly_for: "%{name} har stort sett stemt for"
         mostly_for_html: "%{name} har <strong>stort sett stemt for</strong>"
-        not_participated: "%{name} har ikke deltatt i avstemninger om"
-        not_participated_html: "%{name} har ikke deltatt i avstemninger om"
+        not_participated: "%{name} har ikke deltatt i nok avstemninger om"
+        not_participated_html: "%{name} har ikke deltatt i nok avstemninger om"
       proposition_types:
         none: '--Velg forslagstype--'
         alternate_national_budget: 'Alternativt statsbudsjett'
