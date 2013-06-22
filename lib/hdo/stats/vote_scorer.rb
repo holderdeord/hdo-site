@@ -105,9 +105,9 @@ module Hdo
         end
 
         if AppConfig.new_boundaries
-          if score < 33.4
+          if score <= 33.33
             :against
-          elsif score < 66.66666666
+          elsif score < 66.66
             :for_and_against
           else
             :for
@@ -165,7 +165,7 @@ module Hdo
           elsif entity.is_a?(Representative) && participated[entity] < half
             result[entity] = nil
           else
-            result[entity] = (total * 100 / weight_sum)
+            result[entity] = (total * 100 / weight_sum).round(2)
           end
         end
 

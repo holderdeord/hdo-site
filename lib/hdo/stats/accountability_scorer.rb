@@ -97,9 +97,9 @@ module Hdo
         end
 
         if AppConfig.new_boundaries
-          if score < 33.4
+          if score <= 33.33
             :broken
-          elsif score < 66.66666666
+          elsif score < 66.66
             :partially_kept
           else
             :kept
