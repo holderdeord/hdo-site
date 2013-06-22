@@ -30,7 +30,7 @@ module Hdo
                 weighted_score,
                 unweighted.text_for(party),
                 unweighted_score,
-                weighted_score.to_i - unweighted_score.to_i
+                weighted_score - unweighted_score
               ]
             end
           end
@@ -50,7 +50,7 @@ module Hdo
 
       def text_score_for(entity)
         s = score_for(entity)
-        s ? "#{s.to_i}%" : I18n.t('app.uncertain')
+        s ? "%2.f%%" % s : I18n.t('app.uncertain')
       end
 
       def score_for_group(parties)
@@ -151,7 +151,7 @@ module Hdo
           elsif entity.is_a?(Representative) && participated[entity] < half
             result[entity] = nil
           else
-            result[entity] = (total * 100 / weight_sum).to_i
+            result[entity] = (total * 100 / weight_sum)
           end
         end
 
