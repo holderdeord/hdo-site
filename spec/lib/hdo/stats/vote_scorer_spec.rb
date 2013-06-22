@@ -167,7 +167,7 @@ module Hdo
 
         I18n.with_locale :nb do
           scorer.stub(:score_for).with(party).and_return 33
-          scorer.text_score_for(party).should == '33%'
+          scorer.text_score_for(party).should == '33.00%'
 
           scorer.stub(:score_for).with(party).and_return nil
           scorer.text_score_for(party).should == 'Uvisst'
