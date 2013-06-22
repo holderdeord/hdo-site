@@ -24,6 +24,7 @@ defaults: &defaults
   thermo_enabled: false
   frontpage_blog_enabled: true
   chat_notifications_enabled: false
+  new_boundaries: false
 
 development:
   <<: *defaults

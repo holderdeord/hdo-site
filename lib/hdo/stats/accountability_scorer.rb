@@ -88,17 +88,31 @@ module Hdo
       def key_for(party)
         score = score_for(party)
 
-        case score
-        when nil
-          :no_promises
-        when 0...33
-          :broken
-        when 33...66
-          :partially_kept
-        when 66..100
-          :kept
-        else
+        if score.nil?
+          return :no_promises
+        end
+
+        if score < 0 || score > 100
           raise "score out of range: #{score.inspect}"
+        end
+
+        if AppConfig.new_boundaries
+          if score < 33.4
+            :broken
+          elsif score < 66.66666666
+            :partially_kept
+          else
+            :kept
+          end
+        else
+          case score
+          when 0...33
+            :broken
+          when 33...66
+            :partially_kept
+          when 66..100
+            :kept
+          end
         end
       end
 

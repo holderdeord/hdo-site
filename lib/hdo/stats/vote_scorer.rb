@@ -100,14 +100,28 @@ module Hdo
           return :not_participated
         end
 
-        # if you change the scoring, remember to change the 'about method' page as well.
-        case score
-        when 0...33
-          :against
-        when 33...66
-          :for_and_against
-        when 66..100
-          :for
+        if score < 0 || score > 100
+          raise "score out of range: #{score.inspect}"
+        end
+
+        if AppConfig.new_boundaries
+          if score < 33.4
+            :against
+          elsif score < 66.66666666
+            :for_and_against
+          else
+            :for
+          end
+        else
+          # if you change the scoring, remember to change the 'about method' page as well.
+          case score
+          when 0...33
+            :against
+          when 33...66
+            :for_and_against
+          when 66..100
+            :for
+          end
         end
       end
 
