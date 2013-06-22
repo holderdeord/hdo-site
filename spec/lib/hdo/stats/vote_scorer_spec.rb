@@ -63,11 +63,11 @@ module Hdo
         # the vote does not match the issue
         issue.vote_connections.create! vote: vote, matches: false, weight: 1
 
-        scorer.score_for(rep1.current_party).should == 66
-        scorer.score_for(rep2.current_party).should == 0
+        scorer.score_for(rep1.current_party).to_i.should == 66
+        scorer.score_for(rep2.current_party).to_i.should == 0
 
-        scorer.score_for(rep1).should == 66
-        scorer.score_for(rep2).should == 0
+        scorer.score_for(rep1).to_i.should == 66
+        scorer.score_for(rep2).to_i.should == 0
       end
 
       it 'has a string description of all valid scores' do
