@@ -50,7 +50,7 @@ module Hdo
 
       def text_score_for(entity)
         s = score_for(entity)
-        s ? "%2.f%%" % s : I18n.t('app.uncertain')
+        s ? "%.2f%%" % s : I18n.t('app.uncertain')
       end
 
       def score_for_group(parties)
