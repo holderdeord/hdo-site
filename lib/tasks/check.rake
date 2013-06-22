@@ -54,7 +54,7 @@ namespace :check do
 
       representatives.each do |representative|
         puts "representative=#{representative.slug.ljust(5)} | issue=#{issue.title}[#{issue.id}] | #{stats.score_for(representative).inspect}"
-        puts "representative=#{representative.slug.ljust(5)} | issue=#{issue.title}[#{issue.id}] | #{stats.key_for(representative).inspect}"
+        puts "representative=#{representative.slug.ljust(5)} | issue=#{issue.title}[#{issue.id}] | #{stats.text_for(representative).inspect}"
       end
     end
   end
