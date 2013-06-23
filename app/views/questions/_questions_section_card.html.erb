@@ -1,0 +1,20 @@
+<div class="span6 question-<%= category %>">
+  <%= link_to question, class: 'question' do %>
+
+    <div class="avatar-container">
+      <img src="<%= path_to_image question.representative_avatar  %>" class="representative" alt="<%= question.representative_name %>">
+      <%= image_tag question.party_logo, alt: question.party_name, class: "party-logo" %>
+    </div>
+    <p><%= question.teaser %></p>
+    <aside class="muted">
+      <div>
+        Til <%= question.representative_name %>
+        fra <span class="party"><%= question.party_name %></span>
+        i <span class="district"><%= question.district_name %></span>
+      </div>
+      <div>
+        <%= question.status_description %>
+      </div>
+    </aside>
+  <% end %>
+</div>
