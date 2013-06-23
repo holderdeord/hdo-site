@@ -38,7 +38,7 @@ module Hdo
       end
 
       def initialize(model, opts = {})
-        @weighted = opts.fetch(:weighted) { true }
+        @weighted = opts.fetch(:weighted) { AppConfig.weights_enabled }
 
         vote_connections = model.vote_connections.includes(vote: {vote_results: {representative: {party_memberships: :party}}})
         @data = compute(vote_connections)

@@ -18,6 +18,7 @@ defaults: &defaults
   answers_enabled: true
   show_accountability: true
   widgets_enabled: true
+  weights_enabled: true
   representative_widget_enabled: true
   leaderboard_enabled: true
   ignore_our_questions: true
