@@ -37,8 +37,42 @@ module Hdo
         end
       end
 
+      #
+      # Return CSV for comparing the effect of alternate budget ignorance in all published issues
+      #
+
+      def self.csv_alt_budget
+        require 'csv'
+
+        parties = Party.order(:name)
+
+        CSV.generate do |csv|
+          csv << ['Tittel', 'Før', 'Før %', 'Etter', 'Etter %', 'Differanse']
+
+          Issue.published.each do |issue|
+            before = new(issue)
+            after  = new(issue, ignore_votes_against_alternate_budget: false)
+
+            parties.each do |party|
+              before_score = before.score_for(party)
+              after_score  = after.score_for(party)
+
+              csv << [
+                issue.title,
+                before.text_for(party),
+                before_score,
+                after.text_for(party),
+                after_score,
+                before_score.to_f - after_score.to_f
+              ]
+            end
+          end
+        end
+      end
+
       def initialize(model, opts = {})
-        @weighted = opts.fetch(:weighted) { AppConfig.weights_enabled }
+        @weighted          = opts.fetch(:weighted) { AppConfig.weights_enabled }
+        @ignore_alt_budget = opts.fetch(:ignore_votes_against_alternate_budget) { AppConfig.ignore_votes_against_alternate_budget }
 
         vote_connections = model.vote_connections.includes(vote: {vote_results: {representative: {party_memberships: :party}}})
         @data = compute(vote_connections)
@@ -181,7 +215,7 @@ module Hdo
         res          = {}
 
         matches             = vote_connection.matches?
-        is_alternate_budget = vote_connection.proposition_type == 'alternate_national_budget'
+        is_alternate_budget = @ignore_alt_budget && vote_connection.proposition_type == 'alternate_national_budget'
 
         by_party.each do |party, votes|
           for_count, against_count, ignored_count = 0, 0, 0

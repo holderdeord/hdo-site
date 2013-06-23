@@ -26,10 +26,12 @@ defaults: &defaults
   frontpage_blog_enabled: true
   chat_notifications_enabled: false
   new_boundaries: false
+  ignore_votes_against_alternate_budget: true
 
 development:
   <<: *defaults
   basic_auth_users: 'test:test'
+  new_boundaries: true
 
 test:
   <<: *defaults
