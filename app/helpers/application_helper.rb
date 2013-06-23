@@ -3,10 +3,6 @@ module ApplicationHelper
   def header_class
     header_class = []
 
-    if @party
-      header_class << "party-#{@party.external_id}"
-    end
-
     if content_for?(:jumbotron)
       header_class << 'jumbotron'
     end
