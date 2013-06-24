@@ -49,6 +49,7 @@ class Issue < ActiveRecord::Base
   has_many :party_comments, dependent: :destroy
   has_many :vote_connections, dependent: :destroy
   has_many :promise_connections, dependent: :destroy
+  has_many :issue_overrides, dependent: :destroy
 
   has_many :votes,    through: :vote_connections,    order: :time
   has_many :promises, through: :promise_connections
@@ -131,6 +132,14 @@ class Issue < ActiveRecord::Base
 
   def connection_for(vote)
     vote_connections.where(:vote_id => vote.id).first
+  end
+
+  def position_overrides
+    issue_overrides kind: 'position'
+  end
+
+  def promise_overrides
+    issue_overrides kind: 'promise'
   end
 
   def downcased_title

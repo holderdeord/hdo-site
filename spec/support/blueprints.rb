@@ -187,3 +187,10 @@ PartyComment.blueprint do
   party
   issue
 end
+
+IssueOverride.blueprint do
+  issue
+  party
+  score { 100.0 }
+  kind { "position" }
+end

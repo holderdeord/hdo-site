@@ -74,8 +74,10 @@ module Hdo
         @weighted          = opts.fetch(:weighted) { AppConfig.weights_enabled }
         @ignore_alt_budget = opts.fetch(:ignore_votes_against_alternate_budget) { AppConfig.ignore_votes_against_alternate_budget }
 
+        overrides        = model.position_overrides.includes(:party).each_with_object({}) { |e, obj| obj[e.party] = e.score }
         vote_connections = model.vote_connections.includes(vote: {vote_results: {representative: {party_memberships: :party}}})
-        @data = compute(vote_connections)
+
+        @data = compute(vote_connections, overrides)
       end
 
       def score_for(entity)
@@ -169,10 +171,9 @@ module Hdo
         I18n.t(key, name: entity_name).html_safe
       end
 
-      def compute(connections)
+      def compute(connections, overrides)
         weight_sums  = Hash.new(0)
         sums         = Hash.new(0)
-
         participated = Hash.new(0)
         half         = connections.count.to_f / 2
 
@@ -201,6 +202,10 @@ module Hdo
           else
             result[entity] = (total * 100 / weight_sum).round(2)
           end
+        end
+
+        overrides.each do |party, score|
+          result[party] = score
         end
 
         result

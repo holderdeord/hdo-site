@@ -28,6 +28,22 @@ module Hdo
         scorer.score_for(rep2).should == 0
       end
 
+      it 'takes overrides into account for party and representative scores' do
+        vote = Vote.make!(vote_results: [
+          VoteResult.new(representative: rep1, result: 1),
+          VoteResult.new(representative: rep2, result: -1)
+        ])
+
+        # the vote matches the issue
+        issue.vote_connections.create! vote: vote, matches: true, weight: 1
+        VoteScorer.new(issue).score_for(rep1.current_party).should == 100
+
+        IssueOverride.create!(issue: issue, party: rep1.current_party, score: 0.0, kind: 'position')
+
+        VoteScorer.new(issue).score_for(rep1.current_party).should == 0
+        # TODO: scorer.score_for(rep1).should be_nil
+      end
+
       it "calculates scores for a single vote that doesn't match the issue" do
         # issue has one vote, with one rep for and one against
         vote = Vote.make!(vote_results: [

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130614112405) do
+ActiveRecord::Schema.define(:version => 20130624160817) do
 
   create_table "answers", :force => true do |t|
     t.text     "body",                                     :null => false
@@ -106,6 +106,17 @@ ActiveRecord::Schema.define(:version => 20130614112405) do
   end
 
   add_index "governing_periods", ["party_id"], :name => "index_governing_periods_on_party_id"
+
+  create_table "issue_overrides", :force => true do |t|
+    t.integer  "issue_id"
+    t.integer  "party_id"
+    t.float    "score"
+    t.string   "kind"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "issue_overrides", ["issue_id", "kind"], :name => "index_issue_overrides_on_issue_id_and_kind"
 
   create_table "issues", :force => true do |t|
     t.string   "title"
