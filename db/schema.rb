@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130624184110) do
+ActiveRecord::Schema.define(:version => 20130624215827) do
 
   create_table "answers", :force => true do |t|
     t.text     "body",                                     :null => false
@@ -119,6 +119,7 @@ ActiveRecord::Schema.define(:version => 20130624184110) do
     t.integer  "editor_id"
     t.datetime "published_at"
     t.boolean  "frontpage",          :default => false
+    t.boolean  "valence_issue"
   end
 
   add_index "issues", ["slug"], :name => "index_issues_on_slug", :unique => true

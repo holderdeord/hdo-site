@@ -190,6 +190,6 @@ end
 
 ValenceIssueExplanation.blueprint do
   parties { [Party.make!] }
-  issue
+  issue { Issue.make! valence_issue: true }
   explanation { 'the reason i am here in paris is...'}
 end
