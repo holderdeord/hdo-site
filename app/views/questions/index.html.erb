@@ -3,34 +3,6 @@
   <h1>Spør en stortingspolitiker</h1>
 </div>
 
-<div class="questions-index container-fluid">
-  <% @questions.each_slice(2) do |questions| %>
-    <div class="question-row row-fluid">
-      <% questions.each do |question| %>
-      <div class="span6">
-        <%= link_to question, class: 'question' do %>
-
-          <div class="avatar-container">
-            <img src="<%= path_to_image question.representative_avatar  %>" class="representative" alt="<%= question.representative_name %>">
-            <%= image_tag question.party_logo, alt: question.party_name, class: "party-logo" %>
-          </div>
-          <p><%= question.teaser %></p>
-          <aside class="muted">
-            <div>
-              Til <%= question.representative_name %>
-              fra <span class="party"><%= question.party_name %></span>
-              i <span class="district"><%= question.district_name %></span>
-            </div>
-            <div>
-              <%= question.status_description %>
-            </div>
-          </aside>
-        <% end %>
-      </div>
-      <% end %>
-    </div>
-    <% end %>
-</div>
-
-<%= will_paginate @questions, class: "pagination pagination-centered visible-desktop" %>
-<%= will_paginate @questions, class: "pagination pagination-small pagination-centered visible-phone", page_links: false %>
+<% @questions.each do |category, questions| %>
+  <%= render partial: 'questions_section', locals: { category: category, questions: questions} %>
+<% end %>

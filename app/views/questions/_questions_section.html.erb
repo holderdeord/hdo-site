@@ -1,0 +1,18 @@
+<h4><%= t("app.questions.scope.#{category}") %> spørsmål</h4>
+<div class="row-fluid questions-index">
+  <h5>Siste <%= t("app.questions.scope.#{category}").downcase %> spørsmål:</h5>
+  <%= render partial: 'questions_section_card', locals: { question: questions.shift, category: category } %>
+</div>
+<hr/>
+<div class="questions-index container-fluid">
+  <% questions.each_slice(2) do |questions| %>
+    <div class="question-row row-fluid">
+      <% questions.each do |question| %>
+        <%= render partial: 'questions_section_card', locals: { question: question, category: category } %>
+      <% end %>
+    </div>
+    <% end %>
+</div>
+
+<%= will_paginate questions, class: "pagination pagination-centered visible-desktop" %>
+<%= will_paginate questions, class: "pagination pagination-small pagination-centered visible-phone", page_links: false %>

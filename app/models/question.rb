@@ -17,11 +17,12 @@ class Question < ActiveRecord::Base
   validate :answer_comes_from_asked_representative
   validate :representative_is_askable
 
-  scope :answered,             -> { joins(:answer) }
-  scope :unanswered,           -> { where('(select count(*) FROM answers WHERE question_id = questions.id) = 0') }
-  scope :not_ours,             -> { where("from_email NOT LIKE '%holderdeord.no'")}
-  scope :answered_or_not_ours, -> { where("from_email NOT LIKE '%holderdeord.no' OR EXISTS (select 1 FROM answers WHERE question_id = questions.id)")}
-  scope :with_pending_answers, -> { answered.where('answers.status = ?', 'pending') }
+  scope :answered,                 -> { joins(:answer) }
+  scope :unanswered,               -> { where('(select count(*) FROM answers WHERE question_id = questions.id) = 0') }
+  scope :not_ours,                 -> { where("from_email NOT LIKE '%holderdeord.no'")}
+  scope :with_pending_answers,     -> { answered.where('answers.status = ?', 'pending') }
+  scope :with_approved_answers,    -> { answered.where('answers.status = ?', 'approved') }
+  scope :without_approved_answers, -> { where("(select count(*) FROM answers WHERE question_id = questions.id AND status = 'approved') = 0") }
 
   def self.all_by_status
     grouped = all.group_by { |q| q.status }

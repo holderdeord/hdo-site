@@ -475,6 +475,9 @@ nb:
         answer_pending: Svar avventer kontroll
         answer_rejected: Svar avvist
         unanswered: Venter svar
+      scope:
+        answered: 'Besvarte'
+        unanswered: 'Ubesvarte'
       representative:
         ask: 'Still %{name} et spørsmål'
     answers:

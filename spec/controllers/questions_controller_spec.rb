@@ -9,12 +9,12 @@ describe QuestionsController do
 
   describe "GET index" do
 
-    it "assigns all approved questions as @questions" do
+    it "assigns unanswered questions as @questions[:unanswered]" do
       pending = Question.make!
       approved = Question.make!(status: 'approved')
 
       get :index
-      assigns(:questions).should eq([approved])
+      assigns(:questions)[:unanswered].should eq([approved])
     end
 
     it "ignores non-answered questions from our domain" do
@@ -25,11 +25,27 @@ describe QuestionsController do
       ours_with_approved_answer.create_answer!(body: 'test123', status: 'approved', representative: ours_with_approved_answer.representative)
 
       ours_with_pending_answer = Question.make!(from_email: 'test@holderdeord.no', status: 'approved')
-      ours_with_approved_answer.create_answer!(body: 'test123', status: 'pending', representative: ours_with_pending_answer.representative)
+      ours_with_pending_answer.create_answer!(body: 'test123', status: 'pending', representative: ours_with_pending_answer.representative)
 
       get :index
+      assigns(:questions)[:unanswered].should eq([not_ours])
+      assigns(:questions)[:answered].should eq([ours_with_approved_answer])
+    end
 
-      assigns(:questions).should eq([ours_with_approved_answer, not_ours])
+    it "assigns answered questions as @questions[:answered]" do
+      q = Question.make! :approved
+      a = Answer.make! question: q, status: 'approved'
+
+      get :index
+      assigns(:questions)[:answered].should eq([q])
+    end
+
+    it "puts questions with pending answers in the unanswered bin" do
+      q = Question.make! :approved
+      a = Answer.make! question: q, status: 'pending'
+
+      get :index
+      assigns(:questions)[:unanswered].should eq [q]
     end
   end
 
