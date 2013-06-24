@@ -5,7 +5,7 @@ module Hdo
     let(:user) { User.make! }
 
     describe 'valence issue explanations' do
-      let(:issue) { Issue.make!}
+      let(:issue) { Issue.make! valence_issue: true }
 
       it 'adds explanations' do
         party = Party.make!
@@ -25,7 +25,7 @@ module Hdo
       end
 
       it 'modifies explanations' do
-        e = ValenceIssueExplanation.make!
+        e = ValenceIssueExplanation.make! issue: issue
 
         explanations = {
           e.id => {
@@ -41,7 +41,7 @@ module Hdo
       end
 
       it 'deletes explanations' do
-        e = ValenceIssueExplanation.make!
+        e = ValenceIssueExplanation.make! issue: issue
 
         explanations = {
           e.id => {

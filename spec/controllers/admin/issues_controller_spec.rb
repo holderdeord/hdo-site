@@ -159,8 +159,19 @@ describe Admin::IssuesController do
       response.should redirect_to(edit_step_admin_issue_url(issue.id, step: 'party_comments'))
     end
 
-    it "should show categories step when hit next from party comments" do
+    it "should show valence_issue step when hit next from party comments" do
       session[:issue_step] = 'party_comments'
+
+      put :update, issue: issue_params(issue), id: issue
+
+      assigns(:issue).should == issue
+      session[:issue_step].should == 'valence_issue'
+
+      response.should redirect_to(edit_step_admin_issue_url(issue.id, step: 'valence_issue'))
+    end
+
+    it "should show categories step when hit next from valence issue" do
+      session[:issue_step] = 'valence_issue'
 
       put :update, issue: issue_params(issue), id: issue
 
