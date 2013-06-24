@@ -182,8 +182,8 @@ module Hdo
 
         existing.save!
       else
-        new_explanation = @issue.valence_issue_explanations.create!(data.except('id', 'parties'))
-        new_explanation.parties << Party.find(data['parties'])
+        new_explanation = @issue.valence_issue_explanations.create(data.except('id', 'parties'))
+        new_explanation.parties = Party.find(data['parties'])
         @changed = true
       end
     end

@@ -20,7 +20,6 @@
   });
   </script>
 <% end %>
-
 <% cache @issue do %>
   <div class="page-header">
 
@@ -28,7 +27,9 @@
     <%= render partial: 'aside', locals: { issue: @issue } %>
   </div>
 
-
+  <% if AppConfig.valence_issues_enabled && @issue.valence_issue %>
+    <%= render partial: 'valence_issue', locals: {issue: @issue } %>
+  <% else %>
     <figure class="position">
       <div class="issue-graph">
         <div class="row-fluid">
@@ -65,6 +66,7 @@
     </figure>
 
     <p class="issue-description"><%= @issue.description %></p>
+  <% end %>
 
   <div>
     <% @issue.party_groups.each do |party_group| %>

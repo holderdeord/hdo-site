@@ -1,0 +1,32 @@
+<h5>Dette er en <em>enighetssak</em>. Dette betyr at partiene ikke nødvendigvis er uenige om at saken er riktig; de kan fortsatt være uenige om hvordan den skal gjennomføres. <a href="/home/faq#enighetssak">Les mer.</a></h5>
+<figure class="position">
+  <div class="row-fluid issue-graph">
+    <table class="table" id="explanations-table">
+      <tbody>
+        <% @issue.valence_issue_explanations.each do |explanation| %>
+        <tr>
+          <td class="position span3" style='border-top: none;'>
+            <div class="canvas parties_<%= explanation.parties.count %>">
+              <% explanation.parties.each do |party| %>
+                <a class="issue-graph-party" href="#<%= party.slug %>">
+                  <%= image_tag party.logo.versions[:medium], alt: "#{party.name}s logo" %>
+                </a>
+                <br />
+              <% end %>
+            </div>
+          </td>
+          <td style='border-top: none;'>
+            <big><%= explanation.explanation %></big>
+          </td>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+
+  <figcaption class="muted">
+    <%= render partial: 'shared/social_sharing' %>
+    <p><%= @issue.explanation %></p>
+  </figcaption>
+
+</figure>
