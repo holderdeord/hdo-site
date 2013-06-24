@@ -4,6 +4,57 @@ module Hdo
   describe IssueUpdater do
     let(:user) { User.make! }
 
+    describe 'valence issue explanations' do
+      let(:issue) { Issue.make!}
+
+      it 'adds explanations' do
+        party = Party.make!
+
+        explanations = {
+          'new1' => {
+            'id'       => '1',
+            'parties'  => [party.id],
+            'explanation'     => 'Offer one gazillion!',
+            'issue_id' => issue.id
+          }
+        }
+
+        expect {
+          IssueUpdater.new(issue, {valence_issue_explanations: explanations}, user).update!
+        }.to change(issue.valence_issue_explanations, :count).by(1)
+      end
+
+      it 'modifies explanations' do
+        e = ValenceIssueExplanation.make!
+
+        explanations = {
+          e.id => {
+            'id'          => e.id,
+            'explanation' => 'foo',
+            'issue_id'    => e.issue_id,
+            'parties'     => e.parties
+          }
+        }
+
+        IssueUpdater.new(issue, { valence_issue_explanations: explanations }, user).update!
+        issue.reload.valence_issue_explanations.first.explanation.should eq 'foo'
+      end
+
+      it 'deletes explanations' do
+        e = ValenceIssueExplanation.make!
+
+        explanations = {
+          e.id => {
+            'deleted' => 'true'
+          }
+        }
+
+        expect {
+          IssueUpdater.new(issue, { valence_issue_explanations: explanations }, user).update!
+        }.to change(issue.valence_issue_explanations, :count).by(-1)
+      end
+    end
+
     describe 'party comments' do
       let(:issue) { Issue.make! }
       let(:party) { Party.make! }

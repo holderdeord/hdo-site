@@ -187,3 +187,9 @@ PartyComment.blueprint do
   party
   issue
 end
+
+ValenceIssueExplanation.blueprint do
+  parties { [Party.make!] }
+  issue
+  explanation { 'the reason i am here in paris is...'}
+end

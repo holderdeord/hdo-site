@@ -1,0 +1,41 @@
+<% if AppConfig.valence_issues_enabled %>
+  <div class="well">
+    <h3><%= ValenceIssueExplanation.model_name.human(count: 2) %></h3>
+
+    <table class="table" id="explanations-table">
+      <thead>
+      <tr>
+        <th><%= ValenceIssueExplanation.human_attribute_name :parties %></th>
+        <th><%= ValenceIssueExplanation.human_attribute_name :explanation %></th>
+        <th></th>
+        <th></th>
+      </tr>
+      </thead>
+
+      <tbody>
+        <% @explanations.each do |explanation| %>
+          <%= render partial: "valence_explanation_row", locals: { explanation_id: explanation.id, explanation_body: explanation && explanation.explanation, explanation_parties: explanation.parties.map(&:id), issue_id: explanation.issue_id } %>
+        <% end %>
+      </tbody>
+    </table>
+    <button class="btn" id="new-explanation-button" type="submit">Ny</button>
+  </div>
+
+  <% content_for :document_ready do %>
+    <script>
+      $(document).ready(function () {
+        var url = <%= vote_search_admin_issue_path(@issue).to_json.html_safe %>;
+
+        var editor = HDO.valenceIssueExplanationsEditor.create(url);
+        var newRowHtml = '<%= render(partial: "valence_explanation_row", locals: { explanation_id: 'newExplanation', explanation_parties: [], explanation_body: '', issue_id: @issue.id }).to_json.html_safe %>';
+        editor.init(newRowHtml);
+        editor.initializeMarkdownEditors(<%= @explanations.map &:id %>);
+
+        $('.explanation-parties').chosen();
+
+      });
+    </script>
+  <% end %>
+<% else %>
+  <p>Ikke tilgjengelig.</p>
+<% end %>

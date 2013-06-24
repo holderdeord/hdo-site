@@ -10,6 +10,7 @@ module Hdo
       @votes          = params[:votes]
       @promises       = params[:promises]
       @party_comments = params[:party_comments]
+      @explanations   = params[:valence_issue_explanations]
       @user           = user
     end
 
@@ -37,6 +38,7 @@ module Hdo
         update_votes
         update_promises
         update_party_comments
+        update_valence_issue_explanations
         update_meta
         save!
       }
@@ -59,6 +61,12 @@ module Hdo
     def update_party_comments
       Array(@party_comments).each do |comment_id, data|
         update_or_create_or_destroy_party_comment(comment_id, data)
+      end
+    end
+
+    def update_valence_issue_explanations
+      Array(@explanations).each do |explanation_id, data|
+        update_or_create_or_destroy_valence_issue_explanation(explanation_id, data)
       end
     end
 
@@ -155,6 +163,27 @@ module Hdo
         existing.save!
       else
         new_party_comment = @issue.party_comments.create!(data.except(:id))
+        @changed = true
+      end
+    end
+
+    def update_or_create_or_destroy_valence_issue_explanation(id, data)
+      existing = ValenceIssueExplanation.find_by_issue_id_and_id(@issue.id, id)
+      if data["deleted"]
+        @changed = true
+        existing.destroy
+        return
+      end
+
+      if existing
+        existing.attributes = data.except('parties')
+        existing.parties = Party.find(data['parties'])
+        @changed ||= existing.changed?
+
+        existing.save!
+      else
+        new_explanation = @issue.valence_issue_explanations.create!(data.except('id', 'parties'))
+        new_explanation.parties << Party.find(data['parties'])
         @changed = true
       end
     end

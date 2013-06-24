@@ -49,6 +49,8 @@ class Issue < ActiveRecord::Base
   has_many :party_comments, dependent: :destroy
   has_many :vote_connections, dependent: :destroy
   has_many :promise_connections, dependent: :destroy
+  has_many :valence_issue_explanations, dependent: :destroy
+
 
   has_many :votes,    through: :vote_connections,    order: :time
   has_many :promises, through: :promise_connections
