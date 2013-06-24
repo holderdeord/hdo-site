@@ -8,7 +8,6 @@
       <% Array(@issue_groups[:kept]).each do |issue| %>
         <%= link_to issue, class:"issue" do %>
           <% score = issue.stats.score_for(@party); vote_key = issue.stats.key_for(score) %>
-          <img alt="Issue_<%= vote_key %>" src='<%= asset_path("taxonomy-icons/issue_#{vote_key}.png") %>'>
           <div class="title"><%= issue.title %></div>
           <div class="muted"><%= @party.name %> stemte <%= t("app.#{vote_key}").downcase %></div>
         <% end %>
@@ -26,7 +25,6 @@
         <% Array(@issue_groups[key]).each do |issue| %>
           <%= link_to issue, class: "issue" do %>
             <% score = issue.stats.score_for(@party); vote_key = issue.stats.key_for(score) %>
-            <img alt="Issue_<%= vote_key %>" src='<%= asset_path("taxonomy-icons/issue_#{vote_key}.png") %>'>
             <div class="title"><%= issue.title %></div>
             <div class="muted"><%= @party.name %> stemte <%= t("app.#{vote_key}").downcase %></div>
           <% end %>
@@ -46,7 +44,6 @@
         <li>
           <%= link_to issue, class: "issue" do %>
             <% score = issue.stats.score_for(@party); vote_key = issue.stats.key_for(score) %>
-            <img alt="Issue_<%= vote_key %>" src='<%= asset_path("taxonomy-icons/issue_#{vote_key}.png") %>'>
             <span class="text">
               <div class="title"><%= issue.title %></div>
               <div class="muted"><%= @party.name %> stemte <%= t("app.#{vote_key}").downcase %></div>
