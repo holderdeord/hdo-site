@@ -60,4 +60,29 @@ describe PromiseConnection do
     PromiseConnection.make(promise: next_promise).should_not be_valid
   end
 
+  it 'allows manual overrides' do
+    pc = PromiseConnection.make
+    pc.should_not be_overridden
+
+    pc.override = -1
+    pc.should be_overridden
+    pc.should_not be_valid
+
+    pc.override = 0
+    pc.should be_overridden
+    pc.should be_valid
+
+    pc.override = 1
+    pc.should be_overridden
+    pc.should be_valid
+
+    pc.override = 100
+    pc.should be_overridden
+    pc.should be_valid
+
+    pc.override = 101
+    pc.should be_overridden
+    pc.should_not be_valid
+  end
+
 end

@@ -228,6 +228,7 @@ ActiveRecord::Schema.define(:version => 20130628155159) do
     t.integer  "issue_id"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+    t.integer  "override"
   end
 
   add_index "promise_connections", ["promise_id", "issue_id"], :name => "index_promise_connections_on_promise_id_and_issue_id"

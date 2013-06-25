@@ -12,6 +12,7 @@ class PromiseConnection < ActiveRecord::Base
   validates :promise_id, presence: true, uniqueness: { scope: :issue_id }
   validates :issue_id, presence: true
   validates :status, presence: true, inclusion: { in: STATES }
+  validates :override, inclusion: 0..100, allow_nil: true
 
   validate :no_new_promises
 
@@ -34,6 +35,10 @@ class PromiseConnection < ActiveRecord::Base
     else
       raise "unknown status: #{status.inspect}"
     end
+  end
+
+  def overridden?
+    override != nil
   end
 
   private

@@ -155,6 +155,8 @@ module Hdo
         promise_connection.promise.parties.each do |party|
           party_score = vote_scores.score_for(party)
 
+          if promise_connection.overridden?
+            scores[party] = promise_connection.override
           if party_score.nil?
             scores[party] = nil
           elsif promise_connection.for?
