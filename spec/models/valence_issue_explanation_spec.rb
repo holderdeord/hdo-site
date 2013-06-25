@@ -6,13 +6,6 @@ describe ValenceIssueExplanation do
     e.should be_valid
   end
 
-  it 'cannot belong to non-valence issue' do
-    i = Issue.make!
-    e = ValenceIssueExplanation.make issue: i
-
-    e.should_not be_valid
-  end
-
   it 'is invalid without parties' do
     e = ValenceIssueExplanation.make parties: []
 

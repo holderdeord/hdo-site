@@ -5,14 +5,5 @@ class ValenceIssueExplanation < ActiveRecord::Base
 
   validates :parties,     presence: true
   validates :explanation, presence: true
-  validate :issue_is_valence_issue
 
-
-  private
-
-  def issue_is_valence_issue
-    unless issue && issue.valence_issue
-      errors.add(:issue, :must_be_valence_issue)
-    end
-  end
 end
