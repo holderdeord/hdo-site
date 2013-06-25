@@ -44,6 +44,7 @@ staging:
   fastly_enabled: true
   ssl_enabled: true
   chat_notifications_enabled: true
+  new_boundaries: true
 
 production:
   <<: *defaults
