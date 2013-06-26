@@ -16,7 +16,9 @@
       </h3>
 
       <p class="issue-party-summary">
-        <%= party.position_text %>.
+        <% unless issue.valence_issue? %>
+          <%= party.position_text %>.
+        <% end %>
         <%= party.accountability_text if AppConfig.show_accountability %>
       </p>
     </div>

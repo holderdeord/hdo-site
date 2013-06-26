@@ -27,7 +27,7 @@
     <%= render partial: 'aside', locals: { issue: @issue } %>
   </div>
 
-  <% if AppConfig.valence_issues_enabled && @issue.valence_issue %>
+  <% if AppConfig.valence_issues_enabled && @issue.valence_issue? %>
     <%= render partial: 'valence_issue', locals: {issue: @issue } %>
   <% else %>
     <figure class="position">
@@ -71,7 +71,7 @@
   <div>
     <% @issue.party_groups.each do |party_group| %>
       <% party_group.parties.each do |party| %>
-        <%= render partial: 'issue_party', locals: { party: party, party_group: party_group } %>
+        <%= render partial: 'issue_party', locals: { issue: @issue, party: party, party_group: party_group } %>
       <% end %>
     <% end %>
   </div>

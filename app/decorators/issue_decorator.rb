@@ -9,7 +9,7 @@ class IssueDecorator < Draper::Decorator
            :cache_key,
            :party_comments,
            :tags,
-           :valence_issue,
+           :valence_issue?,
            :valence_issue_explanations,
 
            # move to decorator?
