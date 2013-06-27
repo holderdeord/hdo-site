@@ -58,4 +58,4 @@ production:
   frontpage_blog_enabled: true
   default_bcc_email: prodcopy@holderdeord.no
   chat_notifications_enabled: true
-  valence_issues_enabled: false
+  valence_issues_enabled: true
