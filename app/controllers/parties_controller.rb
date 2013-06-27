@@ -10,6 +10,6 @@ class PartiesController < ApplicationController
     @representatives = @party.current_representatives
     @representatives = @representatives.sort_by { |e| e.has_image? ? 0 : 1 }
 
-    @issue_groups = Issue.published.order(:title).grouped_by_accountability(@party)
+    @issue_groups = Issue.published.non_valence.order(:title).grouped_by_accountability(@party)
   end
 end

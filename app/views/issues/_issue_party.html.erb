@@ -18,8 +18,8 @@
       <p class="issue-party-summary">
         <% unless issue.valence_issue? %>
           <%= party.position_text %>.
+          <%= party.accountability_text if AppConfig.show_accountability %>
         <% end %>
-        <%= party.accountability_text if AppConfig.show_accountability %>
       </p>
     </div>
   </header>

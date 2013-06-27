@@ -58,6 +58,10 @@ describe Issue do
     blank_issue.published_at.should be_nil
   end
 
+  it 'is not a valence issue by default' do
+    blank_issue.valence_issue.should be_false
+  end
+
   it "won't add the same category twice" do
     cat = Category.make!
 
@@ -169,7 +173,7 @@ describe Issue do
     i4 = Issue.make!(status: "in_review", frontpage: false)
 
     data = Issue.for_frontpage(3).map { |e| [e.status, e.frontpage?] }
-    
+
     data.should == [
       ['published', true],
       ['published', false],
@@ -201,6 +205,13 @@ describe Issue do
     i.last_updated_by_name.should == u.name
   end
 
+  it 'finds non-valence issues' do
+    i1 = Issue.make!(valence_issue: true)
+    i2 = Issue.make!(valence_issue: false)
+
+    Issue.non_valence.should == [i2]
+  end
+
   describe 'next and previous' do
     it "should provide previous and next issues" do
       t1 = Issue.make! title: 'aaaa1', status: 'published'
@@ -213,7 +224,7 @@ describe Issue do
       right.should eq t3
     end
 
-    it "ignores uses the given scope" do
+    it "uses the given scope" do
       t1 = Issue.make! title: 'aaaa1', status: 'published'
       t2 = Issue.make! title: 'aaaa2', status: 'published'
       t3 = Issue.make! title: 'aaaa3', status: 'in_progress'

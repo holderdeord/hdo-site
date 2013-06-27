@@ -61,6 +61,7 @@ class Issue < ActiveRecord::Base
   scope :published,    -> { where(status: 'published') }
   scope :latest,       ->(limit) { order(:updated_at).reverse_order.limit(limit) }
   scope :random,       -> { order("random()") }
+  scope :non_valence,  -> { where(valence_issue: false) }
 
   def self.for_frontpage(limit)
     frontpage = where(frontpage: true).random.limit(limit)
