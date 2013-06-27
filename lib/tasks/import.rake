@@ -27,7 +27,7 @@ namespace :import do
   end
 
   desc 'Import a subset of data for development'
-  task :dev => %w[import:dev:parliament import:dev:promises]
+  task :dev => %w[import:dev:dump images:reset cache:precompute search:reindex]
 
   desc 'Import all promises. Set SPREADSHEET to the master .xlsx'
   task :promises  => "import:env" do
