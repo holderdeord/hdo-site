@@ -25,14 +25,13 @@ defaults: &defaults
   thermo_enabled: false
   frontpage_blog_enabled: true
   chat_notifications_enabled: false
-  new_boundaries: false
+  new_boundaries: true
   ignore_votes_against_alternate_budget: true
   valence_issues_enabled: true
 
 development:
   <<: *defaults
   basic_auth_users: 'test:test'
-  new_boundaries: true
 
 test:
   <<: *defaults
@@ -44,7 +43,6 @@ staging:
   fastly_enabled: true
   ssl_enabled: true
   chat_notifications_enabled: true
-  new_boundaries: true
 
 production:
   <<: *defaults
