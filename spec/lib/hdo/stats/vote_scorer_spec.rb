@@ -84,12 +84,21 @@ module Hdo
           scorer.text_for(p1).should == "#{p1.name} har stemt mot"
 
           scorer.stub(:score_for).with(p1).and_return 33
+          scorer.text_for(p1).should == "#{p1.name} har stemt mot"
+
+          scorer.stub(:score_for).with(p1).and_return 33.33
+          scorer.text_for(p1).should == "#{p1.name} har stemt mot"
+
+          scorer.stub(:score_for).with(p1).and_return 33.34
           scorer.text_for(p1).should == "#{p1.name} har stemt både for og mot"
 
           scorer.stub(:score_for).with(p1).and_return 65.2
           scorer.text_for(p1).should == "#{p1.name} har stemt både for og mot"
 
           scorer.stub(:score_for).with(p1).and_return 66
+          scorer.text_for(p1).should == "#{p1.name} har stemt både for og mot"
+
+          scorer.stub(:score_for).with(p1).and_return 66.66
           scorer.text_for(p1).should == "#{p1.name} har stemt for"
 
           scorer.stub(:score_for).with(p1).and_return 81.2
@@ -130,7 +139,12 @@ module Hdo
           str.should == "#{p1.name} har stemt <strong>mot</strong>"
           str.should be_html_safe
 
-          scorer.stub(:score_for).with(p1).and_return 33
+          scorer.stub(:score_for).with(p1).and_return 33.33
+          str = scorer.text_for(p1, html: true)
+          str.should == "#{p1.name} har stemt <strong>mot</strong>"
+          str.should be_html_safe
+
+          scorer.stub(:score_for).with(p1).and_return 33.34
           str = scorer.text_for(p1, html: true)
           str.should == "#{p1.name} har stemt <strong>både for og mot</strong>"
           str.should be_html_safe
@@ -141,6 +155,11 @@ module Hdo
           str.should be_html_safe
 
           scorer.stub(:score_for).with(p1).and_return 66
+          str = scorer.text_for(p1, html: true)
+          str.should == "#{p1.name} har stemt <strong>både for og mot</strong>"
+          str.should be_html_safe
+
+          scorer.stub(:score_for).with(p1).and_return 66.66
           str = scorer.text_for(p1, html: true)
           str.should == "#{p1.name} har stemt <strong>for</strong>"
           str.should be_html_safe
@@ -166,8 +185,8 @@ module Hdo
         party = stub
 
         I18n.with_locale :nb do
-          scorer.stub(:score_for).with(party).and_return 33
-          scorer.text_score_for(party).should == '33.00%'
+          scorer.stub(:score_for).with(party).and_return 33.333
+          scorer.text_score_for(party).should == '33.33%'
 
           scorer.stub(:score_for).with(party).and_return nil
           scorer.text_score_for(party).should == 'Uvisst'
