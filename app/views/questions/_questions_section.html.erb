@@ -1,9 +1,4 @@
 <h4><%= title %></h4>
-<div class="row-fluid questions-index">
-  <h5><%= latest %>:</h5>
-  <%= render partial: 'questions_section_card', locals: { question: questions.shift, category: category } %>
-</div>
-<hr/>
 <div class="questions-index container-fluid">
   <% questions.each_slice(2) do |questions| %>
     <div class="question-row row-fluid">
