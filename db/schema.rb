@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130628113203) do
+ActiveRecord::Schema.define(:version => 20130628115237) do
 
   create_table "answers", :force => true do |t|
     t.text     "body",                                     :null => false
@@ -356,6 +356,7 @@ ActiveRecord::Schema.define(:version => 20130628113203) do
     t.datetime "created_at",                  :null => false
     t.datetime "updated_at",                  :null => false
     t.string   "title",       :default => ""
+    t.integer  "priority",    :default => 0
   end
 
   create_table "vote_connections", :force => true do |t|

@@ -58,6 +58,24 @@ module Hdo
         issue.reload.valence_issue_explanations.first.title.should eq 'hello lalala'
       end
 
+      it 'modifies priority' do
+        e = ValenceIssueExplanation.make! issue: issue
+
+        explanations = {
+          e.id => {
+            'id'          => e.id,
+            'explanation' => 'foo',
+            'issue_id'    => e.issue_id,
+            'parties'     => e.parties,
+            'title'       => 'hello lalala',
+            'priority'    => 100
+          }
+        }
+
+        IssueUpdater.new(issue, { valence_issue_explanations: explanations }, user).update!
+        issue.reload.valence_issue_explanations.first.priority.should eq 100
+      end
+
       it 'deletes explanations' do
         e = ValenceIssueExplanation.make! issue: issue
 

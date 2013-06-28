@@ -1,6 +1,11 @@
 <tr>
   <td>
-  <%= select_tag "valence_issue_explanations[#{explanation_id}][parties]", party_options(selected: explanation_parties), multiple: true, data: { placeholder: 'Velg partier' }, id: "explanation-#{explanation_id}-parties", class: 'explanation-parties'  %>
+    <h5><%= ValenceIssueExplanation.human_attribute_name :parties %></h5>
+    <%= select_tag "valence_issue_explanations[#{explanation_id}][parties]", party_options(selected: explanation_parties), multiple: true, data: { placeholder: 'Velg partier' }, id: "explanation-#{explanation_id}-parties", class: 'explanation-parties'  %>
+  <div class="row-fluid">
+    <h5><%= ValenceIssueExplanation.human_attribute_name :priority %></h5>
+    <%= text_field_tag "valence_issue_explanations[#{explanation_id}][priority]", explanation_priority %>
+  </div>
   </td>
   <td>
     <h5><%= ValenceIssueExplanation.human_attribute_name :title %></h5>
