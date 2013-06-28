@@ -15,14 +15,26 @@ namespace :import do
     end
 
     desc 'Import a (reduced) production dump to the development db'
-    task :dump => 'tmp/db.download.sql' do
+    task :dump => ['tmp/db.download.sql', :verify] do
       puts "Importing production dump"
       sh "psql hdo_development < tmp/db.download.sql"
     end
 
-    file 'tmp/db.download.sql' do |t|
-      puts "Downloading DB dump..."
-      sh "curl", "-s", "http://files.holderdeord.no/dev/data/db.dev.sql", "--create-dirs", "--output", t.name
+    REMOTE_DUMP = "http://files.holderdeord.no/dev/data/db.dev.sql"
+    LOCAL_DUMP  = 'tmp/db.download.sql'
+
+    file LOCAL_DUMP do |t|
+      puts "Downloading DB dump from #{REMOTE_DUMP}..."
+      sh "curl", REMOTE_DUMP, "--create-dirs", "--output", t.name
+    end
+
+    task :verify do
+      expected = `curl #{REMOTE_DUMP}.md5`.strip
+      actual   = `cat #{LOCAL_DUMP} | openssl md5`.strip
+
+      if expected != actual
+        raise "bad db dump checksum: #{expected} != #{actual}, remove #{LOCAL_DUMP} and try again"
+      end
     end
   end
 
