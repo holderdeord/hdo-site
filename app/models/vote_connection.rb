@@ -35,8 +35,6 @@ class VoteConnection < ActiveRecord::Base
       'noe viktig'
     when 1
       'viktig'
-    when 2
-      'svært viktig'
     else
       raise "unknown weight: #{weight}"
     end

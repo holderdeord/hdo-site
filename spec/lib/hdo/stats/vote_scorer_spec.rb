@@ -46,13 +46,13 @@ module Hdo
       end
 
       it 'calculates scores for two votes with different weights' do
-        # first vote matches the issue with weight=2
+        # first vote matches the issue with weight=0.5
         vote = Vote.make!(vote_results: [
           VoteResult.new(representative: rep1, result: 1),
           VoteResult.new(representative: rep2, result: -1)
         ])
 
-        issue.vote_connections.create! vote: vote, matches: true, weight: 2
+        issue.vote_connections.create! vote: vote, matches: true, weight: 0.5
 
         # second vote does not match the issue and has weight=1
         vote = Vote.make!(vote_results: [
@@ -63,10 +63,10 @@ module Hdo
         # the vote does not match the issue
         issue.vote_connections.create! vote: vote, matches: false, weight: 1
 
-        scorer.score_for(rep1.current_party).to_i.should == 66
+        scorer.score_for(rep1.current_party).to_i.should == 33
         scorer.score_for(rep2.current_party).to_i.should == 0
 
-        scorer.score_for(rep1).to_i.should == 66
+        scorer.score_for(rep1).to_i.should == 33
         scorer.score_for(rep2).to_i.should == 0
       end
 

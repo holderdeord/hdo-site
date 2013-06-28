@@ -339,14 +339,14 @@ describe Admin::IssuesController do
       issue.vote_connections = [connection]
 
       votes = votes_params(issue.vote_connections)
-      votes[connection.vote_id][:weight] = '2.0'
+      votes[connection.vote_id][:weight] = '0.5'
 
       put :update, votes: votes, id: issue
 
       issue = assigns(:issue)
 
       issue.vote_connections.size.should == 1
-      issue.vote_connections.first.weight.should == 2.0
+      issue.vote_connections.first.weight.should == 0.5
       issue.last_updated_by.should == user
     end
 
