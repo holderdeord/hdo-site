@@ -3,6 +3,11 @@
   <%= select_tag "valence_issue_explanations[#{explanation_id}][parties]", party_options(selected: explanation_parties), multiple: true, data: { placeholder: 'Velg partier' }, id: "explanation-#{explanation_id}-parties", class: 'explanation-parties'  %>
   </td>
   <td>
+    <h5><%= ValenceIssueExplanation.human_attribute_name :title %></h5>
+    <div class="row-fluid">
+      <%= text_field_tag "valence_issue_explanations[#{explanation_id}][title]", explanation_title %>
+    </div>
+    <h5><%= ValenceIssueExplanation.human_attribute_name :explanation %></h5>
     <div id="wmd-button-bar-<%= explanation_id %>"></div>
     <%= text_area_tag "valence_issue_explanations[#{explanation_id}][explanation]", explanation_body, class: 'span7', rows: '10', id: "wmd-input-#{explanation_id}" %>
     <strong>Preview</strong>

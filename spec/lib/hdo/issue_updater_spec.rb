@@ -12,10 +12,11 @@ module Hdo
 
         explanations = {
           'new1' => {
-            'id'       => '1',
-            'parties'  => [party.id],
-            'explanation'     => 'Offer one gazillion!',
-            'issue_id' => issue.id
+            'id'          => '1',
+            'parties'     => [party.id],
+            'title'       => 'foo',
+            'explanation' => 'Offer one gazillion!',
+            'issue_id'    => issue.id
           }
         }
 
@@ -38,6 +39,23 @@ module Hdo
 
         IssueUpdater.new(issue, { valence_issue_explanations: explanations }, user).update!
         issue.reload.valence_issue_explanations.first.explanation.should eq 'foo'
+      end
+
+      it 'modifies title' do
+        e = ValenceIssueExplanation.make! issue: issue
+
+        explanations = {
+          e.id => {
+            'id'          => e.id,
+            'explanation' => 'foo',
+            'issue_id'    => e.issue_id,
+            'parties'     => e.parties,
+            'title'       => 'hello lalala'
+          }
+        }
+
+        IssueUpdater.new(issue, { valence_issue_explanations: explanations }, user).update!
+        issue.reload.valence_issue_explanations.first.title.should eq 'hello lalala'
       end
 
       it 'deletes explanations' do

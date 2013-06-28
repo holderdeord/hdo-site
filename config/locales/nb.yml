@@ -279,6 +279,7 @@ nb:
       valence_issue_explanation:
         parties: Partier
         explanation: Forklaring
+        title: Tittel
   will_paginate:
     previous_label: "&#8592; Forrige"
     next_label: "Neste &#8594;"
