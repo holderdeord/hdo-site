@@ -17,7 +17,12 @@
     <% issues.each do |issue| %>
       <tr class="<%= issue.frontpage? ? 'info' : '' %>">
         <td>
-          <p><%= link_to issue.title, issue %></p>
+          <p>
+            <%= link_to issue.title, issue %>
+            <% if issue.valence_issue? %>
+              <span class='label label-info'><%= Issue.human_attribute_name :valence_issue %></span>
+            <% end %>
+          </p>
           <small class="muted">
             <%= issue.tags.map(&:name).sort.join(', ') %>
           </small>
