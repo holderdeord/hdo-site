@@ -22,14 +22,11 @@
 <% end %>
 <% cache @issue do %>
   <div class="page-header">
-
     <h1 class="issue-title"><%= @issue.title %></h1>
     <%= render partial: 'aside', locals: { issue: @issue } %>
   </div>
 
-  <% if AppConfig.valence_issues_enabled && @issue.valence_issue? %>
-    <%= render partial: 'valence_issue', locals: {issue: @issue } %>
-  <% else %>
+  <% unless AppConfig.valence_issues_enabled && @issue.valence_issue? %>
     <figure class="position">
       <div class="issue-graph">
         <div class="row-fluid">
@@ -69,19 +66,17 @@
   <p class="issue-description"><%= @issue.description %></p>
 
   <% if AppConfig.valence_issues_enabled && @issue.valence_issue? %>
-    <hr class="soften" />
-    <div class="muted">
-      <p><%= @issue.explanation %></p>
-    </div>
-    <%= render partial: 'valence_issue_votes', locals: { issue: @issue, issue_votes: @issue_votes } %>
-  <% else %>
-    <div>
-      <% @issue.party_groups.each do |party_group| %>
-        <% party_group.parties.each do |party| %>
-          <%= render partial: 'issue_party', locals: { issue: @issue, party: party, party_group: party_group } %>
-        <% end %>
-      <% end %>
-    </div>
+    <%= render partial: 'valence_issue', locals: {issue: @issue } %>
+    <hr>
   <% end %>
+
+
+  <div>
+    <% @issue.party_groups.each do |party_group| %>
+      <% party_group.parties.each do |party| %>
+        <%= render partial: 'issue_party', locals: { issue: @issue, party: party, party_group: party_group } %>
+      <% end %>
+    <% end %>
+  </div>
 
 <% end # cache %>

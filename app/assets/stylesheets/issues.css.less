@@ -30,11 +30,14 @@
   .issue-title {
     margin-bottom: 0;
   }
-  .issue-description {
-    font-size: 1.2em;
-    line-height: 1.5em;
-  }
 }
+
+.issue-description {
+  font-size: 1.3em;
+  line-height: 1.5em;
+  margin: 1em 0 2em 0;
+}
+
 
 figure.position {
   .canvas {
@@ -111,6 +114,40 @@ figure.position {
   }
 }
 
+figure.valence {
+  .position {
+    .span3 {
+      padding: 0.5em 0 1em 0;
+      .party-logo {
+        max-width: 64px;
+        height: auto;
+      }
+    }
+    h4 {
+      margin-bottom: 0.25em;
+      font-weight: normal;
+    }
+  }
+}
+
+@media (max-width: 767px) {
+  figure.valence .position .span3 {
+    padding: 0;
+    .party-logo {
+      max-width: 48px;
+    }
+  }
+}
+
+
+@media (max-width: 979px) and (min-width: 768px) {
+  figure.valence .position .span3 {
+    .party-logo {
+      max-width: 48px;
+    }
+  }
+}
+
 @media (max-width: 768px) {
   figure.position {
     .canvas {
@@ -174,8 +211,8 @@ figure.position {
       text-transform: lowercase;
     }
   }
-  > header .issue-party-logo {
-    margin-top: -5px;
+  > header .icon {
+    margin-top: -1.75em;
   }
   > section {
     margin-top: 15px;

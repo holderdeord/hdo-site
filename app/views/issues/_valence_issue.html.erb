@@ -1,19 +1,19 @@
-<figure class="position">
+<figure class="valence">
   <% @issue.valence_issue_explanations.each do |explanation| %>
-    <div class="row-fluid" style="margin-bottom: 20px;">
-      <div class="span4">
-        <div class="canvas parties_<%= explanation.parties.size %>">
+    <div class="row-fluid position">
+      <div class="span3">
+        <div class="parties_<%= explanation.parties.size %>">
           <% explanation.parties.sort_by(&:name).each do |party| %>
-            <a class="issue-graph-party" href="#<%= party.slug %>">
-              <%= image_tag party.logo.versions[:medium], alt: "#{party.name}s logo" %>
+            <a href="#<%= party.slug %>">
+              <%= image_tag party.logo.versions[:medium], alt: "#{party.name}s logo", class: "party-logo" %>
             </a>
           <% end %>
         </div>
       </div>
 
-      <div class="span8">
-        <h5><%= explanation.title %></h5>
-        <big><%= explanation.explanation %></big>
+      <div class="span7">
+        <h4><%= explanation.title %></h4>
+        <p><%= explanation.explanation %></p>
       </div>
     </div>
   <% end %>
