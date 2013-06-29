@@ -120,7 +120,7 @@ module Hdo
         # TODO: tests, html as option
         name = opts[:name] || party.name
 
-        I18n.t("app.promises.scores.#{key_for(party)}_html", name: party.name).html_safe
+        I18n.t("app.promises.scores.#{key_for(party)}_html", name: name).html_safe
       end
 
       def as_json(opts = nil)

@@ -27,8 +27,8 @@ module Hdo
         accountability.score_for(rep2.current_party).should == 0.0
 
         I18n.with_locale(:nb) do
-          accountability.text_for(rep1.current_party).should == "De har <strong>holdt ord</strong> i denne saken."
-          accountability.text_for(rep2.current_party).should == "De har <strong>ikke holdt ord</strong> i denne saken."
+          accountability.text_for(rep1.current_party, name: 'De').should == "De har <strong>holdt ord</strong> i denne saken."
+          accountability.text_for(rep2.current_party, name: 'De').should == "De har <strong>ikke holdt ord</strong> i denne saken."
         end
       end
 
