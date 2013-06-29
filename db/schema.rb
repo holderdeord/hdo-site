@@ -353,9 +353,9 @@ ActiveRecord::Schema.define(:version => 20130628155159) do
   create_table "valence_issue_explanations", :force => true do |t|
     t.text     "explanation"
     t.integer  "issue_id"
-    t.datetime "created_at",                  :null => false
-    t.datetime "updated_at",                  :null => false
-    t.string   "title",       :default => ""
+    t.datetime "created_at",                 :null => false
+    t.datetime "updated_at",                 :null => false
+    t.string   "title"
     t.integer  "priority",    :default => 0
   end
 
