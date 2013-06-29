@@ -116,8 +116,10 @@ module Hdo
         end
       end
 
-      def text_for(party)
+      def text_for(party, opts = {})
         # TODO: tests, html as option
+        name = opts[:name] || party.name
+
         I18n.t("app.promises.scores.#{key_for(party)}_html", name: party.name).html_safe
       end
 

@@ -107,6 +107,8 @@ class IssueDecorator < Draper::Decorator
     end
 
     def position_logo
+      return '' if issue.valence_issue?
+
       key = issue.stats.key_for(score) # FIXME: take the party, not the score
 
       if key.nil? || key == :not_participated
@@ -117,6 +119,8 @@ class IssueDecorator < Draper::Decorator
     end
 
     def position_caption
+      return '' if issue.valence_issue?
+
       key = issue.stats.key_for(score) # FIXME: take the party, not the score
 
       if key && key != :not_participated
@@ -129,10 +133,12 @@ class IssueDecorator < Draper::Decorator
     end
 
     def comment
-      issue.party_comments.where(:party_id => model.id).first
+      issue.party_comments.where(party_id: model.id).first
     end
 
     def promise_logo
+      return '' if issue.valence_issue?
+
       key = issue.accountability.key_for(model)
 
       # FIXME: missing icon for partially_kept
@@ -144,6 +150,8 @@ class IssueDecorator < Draper::Decorator
     end
 
     def promise_caption
+      return '' if issue.valence_issue?
+
       key = issue.accountability.key_for(model)
 
       h.t("app.promises.scores.caption.#{key}")
@@ -162,15 +170,27 @@ class IssueDecorator < Draper::Decorator
     end
 
     def position_text
+      return '' if issue.valence_issue?
+
       [
         issue.stats.text_for(model, html: true),
         h.t('app.lang.infinitive_particle'),
-        issue.downcased_title
+        "#{issue.downcased_title}."
       ].join(' ').html_safe
     end
 
     def accountability_text
-      issue.accountability.text_for(model)
+      acc = issue.accountability
+
+      if issue.valence_issue?
+        if acc.score_for(model)
+          acc.text_for(model, name: model.name)
+        else
+          ''
+        end
+      else
+        acc.text_for(model, name: 'De')
+      end
     end
 
     def votes
