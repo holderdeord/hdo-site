@@ -137,7 +137,7 @@ module Hdo
         scores_by_party = Hash.new { |hash, key| hash[key] = [] }
 
         promise_connections.each do |conn|
-          party_scores_for(vote_scores, conn).each do |party, score|
+          party_scores_for(vote_scores, conn, issue.valence_issue?).each do |party, score|
             scores_by_party[party] << score if score
           end
         end
@@ -149,15 +149,17 @@ module Hdo
         percentages
       end
 
-      def party_scores_for(vote_scores, promise_connection)
+      def party_scores_for(vote_scores, promise_connection, is_valence)
         scores = {}
 
         promise_connection.promise.parties.each do |party|
           party_score = vote_scores.score_for(party)
 
-          if promise_connection.overridden?
+          if is_valence && !promise_connection.overridden?
+            scores[party] = nil
+          elsif promise_connection.overridden? && !promise_connection.related?
             scores[party] = promise_connection.override
-          if party_score.nil?
+          elsif party_score.nil?
             scores[party] = nil
           elsif promise_connection.for?
             scores[party] = party_score

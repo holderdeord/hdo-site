@@ -144,6 +144,61 @@ module Hdo
       end
     end
 
+    describe 'promise connections' do
+      let(:issue) { Issue.make! }
+
+      it 'adds promise connections' do
+        promise = Promise.make!
+
+        promises = {
+          promise.id => {'status' => 'for'}
+        }.with_indifferent_access
+
+        expect {
+          IssueUpdater.new(issue, { promises: promises }, user).update!
+          issue.reload
+        }.to change(issue.promise_connections, :count).by(1)
+      end
+
+      it 'modifies a promise connection' do
+        promise = Promise.make!
+        promise_connection = PromiseConnection.make! promise: promise, issue: issue
+
+        promises = {
+          promise.id => {'status' => 'against', 'override' => '100'}
+        }.with_indifferent_access
+
+        IssueUpdater.new(issue, {promises: promises }, user).update!
+        issue.reload.promise_connections.first.override.should == 100
+      end
+
+      it 'can remove an override' do
+        promise = Promise.make!
+        promise_connection = PromiseConnection.make! promise: promise, issue: issue, override: 100
+
+        promises = {
+          promise.id => {'status' => 'against', 'override' => nil}
+        }.with_indifferent_access
+
+        IssueUpdater.new(issue, {promises: promises }, user).update!
+        issue.reload.promise_connections.first.override.should == nil
+      end
+
+      it 'deletes promise connections' do
+        promise = Promise.make!
+        promise_connection = PromiseConnection.make! promise: promise, issue: issue
+
+        promises = {
+          promise.id => {'status' => 'unrelated'}
+        }.with_indifferent_access
+
+        expect {
+          IssueUpdater.new(issue, { promises: promises }, user).update!
+          issue.reload
+        }.to change(issue.promise_connections, :count).by(-1)
+      end
+    end
+
     describe 'vote proposition types' do
       it "updates a single proposition_type" do
         issue = Issue.make! vote_connections: [VoteConnection.make!]

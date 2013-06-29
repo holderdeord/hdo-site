@@ -64,6 +64,27 @@ module Hdo
         end
       end
 
+      it 'uses override if present' do
+        issue = Issue.make!(valence_issue: true)
+        party = Party.make!
+
+        conn = issue.promise_connections.create!(promise: Promise.make!(parties: [party]), status: 'for', override: 100)
+        AccountabilityScorer.new(issue).score_for(party).should == 100
+
+        conn.update_attributes!(override: 0)
+        AccountabilityScorer.new(issue).score_for(party).should == 0
+      end
+
+      it 'does not attempt to score valence issues if no overrides are present' do
+        issue = Issue.make!(valence_issue: true)
+        party = Party.make!
+
+        issue.stub(:stats).and_return stub(score_for: 100)
+        issue.promise_connections.create!(promise: Promise.make!(parties: [party]), status: 'for')
+
+        AccountabilityScorer.new(issue).score_for(party).should be_nil
+      end
+
     end
   end
 end

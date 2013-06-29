@@ -4,7 +4,7 @@ class PromiseConnection < ActiveRecord::Base
   STATES          = %w[for against related]
   UNRELATED_STATE = 'unrelated'
 
-  attr_accessible :status, :promise_id, :promise, :issue
+  attr_accessible :status, :promise_id, :promise, :issue, :override
 
   belongs_to :promise
   belongs_to :issue
@@ -22,6 +22,10 @@ class PromiseConnection < ActiveRecord::Base
 
   def against?
     status.inquiry.against?
+  end
+
+  def related?
+    status.inquiry.related?
   end
 
   def status_text
