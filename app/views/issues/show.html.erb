@@ -27,7 +27,10 @@
     <%= render partial: 'aside', locals: { issue: @issue } %>
   </div>
 
-  <% unless AppConfig.valence_issues_enabled && @issue.valence_issue? %>
+  <% if @issue.valence_issue? %>
+    <%= render partial: 'valence_issue', locals: { issue: @issue } %>
+    <hr>
+  <% else %>
     <figure class="position">
       <div class="issue-graph">
         <div class="row-fluid">
@@ -56,21 +59,14 @@
         </div>
       </div>
 
-      <figcaption class="muted">
+      <figcaption class="vote-explanation muted">
         <%= render partial: 'shared/social_sharing' %>
         <p><%= @issue.explanation %></p>
       </figcaption>
-
     </figure>
+
+    <p class="issue-description"><%= @issue.description %></p>
   <% end %>
-
-  <p class="issue-description"><%= @issue.description %></p>
-
-  <% if AppConfig.valence_issues_enabled && @issue.valence_issue? %>
-    <%= render partial: 'valence_issue', locals: {issue: @issue } %>
-    <hr>
-  <% end %>
-
 
   <div>
     <% @issue.party_groups.each do |party_group| %>

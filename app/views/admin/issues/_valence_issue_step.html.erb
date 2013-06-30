@@ -1,47 +1,43 @@
-<% if AppConfig.valence_issues_enabled %>
-  <div class="well">
-    <ul class="unstyled">
-      <%= form.check_box :valence_issue, 'Dette er en enighetssak' %>
-    </ul>
-  </div>
+<div class="well">
+  <ul class="unstyled">
+    <%= form.check_box :valence_issue, 'Dette er en enighetssak' %>
+  </ul>
+</div>
 
-  <div class="well">
-    <h3><%= ValenceIssueExplanation.model_name.human(count: 2) %></h3>
+<div class="well">
+  <h3><%= ValenceIssueExplanation.model_name.human(count: 2) %></h3>
 
-    <table class="table" id="explanations-table">
-      <thead>
-      <tr>
-        <th></th>
-        <th></th>
-        <th></th>
-        <th></th>
-      </tr>
-      </thead>
+  <table class="table" id="explanations-table">
+    <thead>
+    <tr>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+    </thead>
 
-      <tbody>
-        <% @explanations.each do |explanation| %>
-          <%= render partial: "valence_explanation_row", locals: { explanation_id: explanation.id, explanation_body: explanation && explanation.explanation, explanation_parties: explanation.parties.map(&:id), issue_id: explanation.issue_id, explanation_title: explanation.title, explanation_priority: explanation.priority } %>
-        <% end %>
-      </tbody>
-    </table>
-    <button class="btn" id="new-explanation-button" type="submit">Ny</button>
-  </div>
+    <tbody>
+      <% @explanations.each do |explanation| %>
+        <%= render partial: "valence_explanation_row", locals: { explanation_id: explanation.id, explanation_body: explanation && explanation.explanation, explanation_parties: explanation.parties.map(&:id), issue_id: explanation.issue_id, explanation_title: explanation.title, explanation_priority: explanation.priority } %>
+      <% end %>
+    </tbody>
+  </table>
+  <button class="btn" id="new-explanation-button" type="submit">Ny</button>
+</div>
 
-  <% content_for :document_ready do %>
-    <script>
-      $(document).ready(function () {
-        var url = <%= vote_search_admin_issue_path(@issue).to_json.html_safe %>;
+<% content_for :document_ready do %>
+  <script>
+    $(document).ready(function () {
+      var url = <%= vote_search_admin_issue_path(@issue).to_json.html_safe %>;
 
-        var editor = HDO.valenceIssueExplanationsEditor.create(url);
-        var newRowHtml = '<%= render(partial: "valence_explanation_row", locals: { explanation_id: 'newExplanation', explanation_parties: [], explanation_body: '', issue_id: @issue.id, explanation_title: '', explanation_priority: 0 }).to_json.html_safe %>';
-        editor.init(newRowHtml);
-        editor.initializeMarkdownEditors(<%= @explanations.map &:id %>);
+      var editor = HDO.valenceIssueExplanationsEditor.create(url);
+      var newRowHtml = '<%= render(partial: "valence_explanation_row", locals: { explanation_id: 'newExplanation', explanation_parties: [], explanation_body: '', issue_id: @issue.id, explanation_title: '', explanation_priority: 0 }).to_json.html_safe %>';
+      editor.init(newRowHtml);
+      editor.initializeMarkdownEditors(<%= @explanations.map &:id %>);
 
-        $('.explanation-parties').chosen();
+      $('.explanation-parties').chosen();
 
-      });
-    </script>
-  <% end %>
-<% else %>
-  <p>Ikke tilgjengelig.</p>
+    });
+  </script>
 <% end %>

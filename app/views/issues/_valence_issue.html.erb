@@ -1,4 +1,12 @@
+<p class="issue-description"><%= @issue.description %></p>
+
 <figure class="valence">
+  <figcaption class="vote-explanation muted">
+    <%= render partial: 'shared/social_sharing' %>
+    <p><%= @issue.explanation %></p>
+  </figcaption>
+
+
   <% @issue.valence_issue_explanations.each do |explanation| %>
     <div class="row-fluid position">
       <div class="span3">
