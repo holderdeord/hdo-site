@@ -27,7 +27,6 @@ defaults: &defaults
   chat_notifications_enabled: false
   new_boundaries: true
   ignore_votes_against_alternate_budget: true
-  valence_issues_enabled: true
 
 development:
   <<: *defaults
@@ -56,4 +55,3 @@ production:
   frontpage_blog_enabled: true
   default_bcc_email: prodcopy@holderdeord.no
   chat_notifications_enabled: true
-  valence_issues_enabled: true

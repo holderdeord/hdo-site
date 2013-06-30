@@ -16,7 +16,7 @@ class IssuesController < ApplicationController
     if policy.show?
       fresh_when @issue, public: can_cache?
       @issue = IssueDecorator.decorate(@issue)
-      if AppConfig.valence_issues_enabled && @issue.valence_issue?
+      if @issue.valence_issue?
         fetch_issue_votes
         @all_parties = Party.order(:name)
       end
