@@ -67,7 +67,6 @@ figure.position {
   }
   .issue-graph {
     text-align: center;
-    border-bottom: 2px solid #eee;
     padding: 0.5em;
     padding: 3.5em 0 2em 0;
     .position {
@@ -110,27 +109,30 @@ figure.valence {
   }
 }
 
-figcaption.vote-explanation {
-  font-size: 0.85em;
-  border-bottom: 1px solid #f4f4f4;
-  padding: 3px 0;
-  margin-bottom: 1em;
-  p {
-    margin: 0;
-  }
-  .clearfix;
-  .social {
-    display: inline-block;
-    vertical-align: top;
-    margin: 2px 0 0 15px;
-    float: right;
-    height: 20px;
-  }
-  a {
-    color: #666;
+figure.position, figure.valence {
+  figcaption {
+    font-size: 0.85em;
+    border-bottom: 1px solid #f4f4f4;
+    border-top: 2px solid #eee;
+    border-top: 1px solid #f4f4f4;
+    padding: 3px 0;
+    margin-bottom: 1em;
+    p {
+      margin: 0;
+    }
+    .clearfix;
+    .social {
+      display: inline-block;
+      vertical-align: top;
+      margin: 2px 0 0 15px;
+      float: right;
+      height: 20px;
+    }
+    a {
+      color: #666;
+    }
   }
 }
-
 
 @media (max-width: 767px) {
   figure.valence .position .span3 {
