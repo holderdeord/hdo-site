@@ -375,8 +375,8 @@ nb:
     issues:
       title: 'Saker'
       explanation:
-        one: 'En oppsumering av <a href="%{url}">%{count} avstemning</a> på Stortinget fra oktober 2009 til dagens dato og løfter for perioden 2009–2013.'
-        other: 'En oppsumering av <a href="%{url}">%{count} avstemninger</a> på Stortinget fra oktober 2009 til dagens dato og løfter for perioden 2009–2013.'
+        one: 'En oppsummering av <a href="%{url}">%{count} avstemning</a> på Stortinget fra oktober 2009 til dagens dato og løfter for perioden 2009–2013.'
+        other: 'En oppsummering av <a href="%{url}">%{count} avstemninger</a> på Stortinget fra oktober 2009 til dagens dato og løfter for perioden 2009–2013.'
       back: Tilbake til saken
       not_published: Denne saken er ikke publisert.
       published: Denne saken er publisert.
