@@ -90,7 +90,9 @@ class WidgetsController < ApplicationController
   private
 
   def selected_issues
-    params[:issues] ? Issue.published.find(params[:issues].split(',')) : []
+    ids     = params[:issues] ? params[:issues].split(',').map(&:to_i) : []
+    issues  = Issue.find(ids)
+    ordered = ids.map { |id| issues.detect { |issue| issue.id == id } }
   end
 
   def issues_for(entity)
