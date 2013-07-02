@@ -205,10 +205,11 @@ describe Issue do
     i.last_updated_by_name.should == u.name
   end
 
-  it 'finds non-valence issues' do
+  it 'has scopes for valence and non-valence' do
     i1 = Issue.make!(valence_issue: true)
     i2 = Issue.make!(valence_issue: false)
 
+    Issue.valence.should == [i1]
     Issue.non_valence.should == [i2]
   end
 
