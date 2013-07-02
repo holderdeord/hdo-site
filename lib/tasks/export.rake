@@ -28,17 +28,16 @@ namespace :export do
     end
 
     puts "reducing issues"
-    # keep (max) 10 issues for each status
     all_issues = Issue.all
     to_keep    = []
 
     all_issues.group_by { |e| e.status }.each do |_, issues|
-      to_keep += issues.first(10)
+      to_keep += issues.first(5)
     end
 
-    (all_issues - to_keep).each(&:destroy)
+    to_keep += Issue.where(valence_issue: true).first(10)
 
-    # TODO: reduce questions
+    (all_issues - to_keep.uniq).each(&:destroy)
   end
 
   file 'tmp/db.dev.sql' => :reduce do |t|
