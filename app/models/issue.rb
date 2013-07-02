@@ -21,7 +21,7 @@ class Issue < ActiveRecord::Base
 
   update_index_on_change_of :categories, if: lambda { |i| i.published? }, has_many: true
 
-  after_save    { tire.update_index if published? } # TODO: what if an issue is retracted?
+  after_save    { update_search_index }
   after_destroy { tire.update_index }
 
   acts_as_taggable
@@ -191,5 +191,13 @@ class Issue < ActiveRecord::Base
 
   def fetch_stats
     Hdo::Stats::VoteScorer.new(self)
+  end
+
+  def update_search_index
+    if published?
+      tire.update_index
+    else
+      self.index.remove self
+    end
   end
 end

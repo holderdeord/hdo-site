@@ -69,4 +69,14 @@ describe Issue, :search do
     results.size.should == 1
     results.first.load.should == issue
   end
+
+  it 'removes issues from index on unpublishing' do
+    issue = issue_titled 'save world'
+    refresh_index
+
+    issue.update_attributes!(status: 'publishable')
+    refresh_index
+
+    results_for('world').count.should be_zero
+  end
 end
