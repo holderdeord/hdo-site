@@ -137,6 +137,10 @@ class Issue < ActiveRecord::Base
     vote_connections.where(:vote_id => vote.id).first
   end
 
+  def valence_explanation_for(party)
+    valence_issue_explanations.joins(:parties).where('parties.id' => [party]).first
+  end
+
   def downcased_title
     # TODO: move to decorators?
     @downcased_title ||= (

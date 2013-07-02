@@ -6,5 +6,4 @@ class ValenceIssueExplanation < ActiveRecord::Base
   validates :parties,     presence: true
   validates :explanation, presence: true
   validates :title,       presence: true
-
 end

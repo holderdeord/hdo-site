@@ -181,6 +181,21 @@ describe Issue do
     ]
   end
 
+  it 'finds the correct valence explanation for the given party' do
+    p1 = Party.make!
+    p2 = Party.make!
+    p3 = Party.make!
+
+    issue = Issue.make!(valence_issue: true)
+
+    x1 = issue.valence_issue_explanations.create!(parties: [p1], title: 'a', explanation: 'b')
+    x2 = issue.valence_issue_explanations.create!(parties: [p2], title: 'a', explanation: 'b')
+
+    issue.valence_explanation_for(p1).should == x1
+    issue.valence_explanation_for(p2).should == x2
+    issue.valence_explanation_for(p3).should be_nil
+  end
+
   it 'has a #status_text' do
     i = Issue.make!
     i.status_text.should be_kind_of(String)
