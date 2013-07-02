@@ -1,0 +1,19 @@
+<div>
+  <% @issue.valence_issue_explanations.each do |valence| %>
+    <!-- title -->
+    <h4><%= valence.title %></h4>
+
+    <!-- parties -->
+    <% valence.parties.each do |party| %>
+      <div>
+        <%= image_tag party.logo.versions[:small] %>
+        <%= party.name %>
+      </div>
+    <% end %>
+
+    <!-- explanation -->
+    <p>
+      <%= valence.explanation %>
+    </p>
+  <% end %>
+</div>

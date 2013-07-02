@@ -4,47 +4,27 @@
   </h1>
 
   <% if description_top? %>
-  <p><%= @issue.description %></p>
+    <p><%= @issue.description %></p>
   <% end %>
 </header>
 
 <article>
-
   <figure class="positions">
 
-    <div class="labels">
-      <% @issue.position_groups.each do |label, parties| %>
-        <div class="position">
-          <div class="position-wrapper">
-            <h3>
-              <%= image_tag label.icon, class: "icon" %>
-              <%= label.text %>
-            </h3>
-          </div>
-        </div>
-      <% end %>
-    </div>
+    <% if AppConfig.valence_widget && @issue.valence_issue? %>
+      <%= render partial: 'valence_issue' %>
+    <% else %>
+      <%= render partial: 'normal_issue' %>
+    <% end %>
 
-    <div class="icons">
-      <% @issue.position_groups.each do |label, parties| %>
-        <div class="position">
-          <div class="position-wrapper">
-            <% parties.each do |party| %>
-              <%= link_to issue_url(@issue, anchor: party.slug), class: 'issue-graph-party' do %>
-                <%= image_tag party.logo.versions[:medium], alt: "#{party.name}s logo" %>
-              <% end %>
-            <% end %>
-          </div>
-        </div>
-      <% end %>
-    </div>
-
-    <figcaption class="muted"><p><%= @issue.explanation %></p></figcaption>
+    <figcaption class="muted">
+      <p><%= @issue.explanation %></p>
+    </figcaption>
 
   </figure>
 
   <% if description_bottom? %>
-  <p><%= @issue.description %></p>
+    <p><%= @issue.description %></p>
   <% end %>
 
 </article>
