@@ -14,9 +14,14 @@
   <ul class="votes">
   <% @issues.each do |issue| %>
     <li class="vote">
-      <%= issue.stats.text_for(@party, name: '', html: true) %>
-      <%= t 'app.lang.infinitive_particle' %>
-      <%= link_to issue.downcased_title, issue %>
+      <% if AppConfig.valence_widget %>
+        <%= link_to issue.title, issue %>:
+        <%= issue.valence_issue? ? 'har ' + issue.valence_explanation_for(@party).try(:title).to_s.downcase : issue.stats.text_for(@party, name: '', html: true) %>
+      <% else %>
+        <%= issue.stats.text_for(@party, name: '', html: true) %>
+        <%= t 'app.lang.infinitive_particle' %>
+        <%= link_to issue.downcased_title, issue %>
+      <% end %>
     </li>
   <% end %>
   </ul>
