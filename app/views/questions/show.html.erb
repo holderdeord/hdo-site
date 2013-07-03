@@ -50,7 +50,7 @@
   </article>
 
   <% if AppConfig.show_question_issues && @question.issues.any? %>
-    <div class="row-fluid">
+    <article class="row-fluid issues">
       <div class="span2 hidden-phone">
         <%= link_to @party do %>
           <%= image_tag @party.logo.versions[:medium], alt: "#{@party.name}s logo" %>
@@ -73,7 +73,7 @@
         <% end %>
         </ul>
       </div>
-    </div>
+    </article>
   <% end %>
 
 </div>
