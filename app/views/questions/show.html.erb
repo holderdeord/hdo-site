@@ -49,7 +49,7 @@
 
   </article>
 
-  <% if AppConfig.show_question_issues %>
+  <% if AppConfig.show_question_issues && @question.issues.any? %>
     <div class="span8">
       <h4>Relaterte saker:</h4>
       <ul class="unstyled">
