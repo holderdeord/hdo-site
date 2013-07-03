@@ -51,21 +51,16 @@
 
   <% if AppConfig.show_question_issues && @question.issues.any? %>
     <div class="span8">
-      <h4>Relaterte saker:</h4>
+      <h4>Sjekk hvordan <%= @party.name.downcase %> har stemt i relaterte saker:</h4>
       <ul class="unstyled">
       <% @question.issues.each do |issue| %>
         <li>
           <% if issue.valence_issue? %>
-            <%= link_to @party.name, @party %>
+            <%= link_to issue.title, issue %>:
             har <%= issue.valence_explanation_for(@party).try(:title).to_s.downcase %>
-            (<%= link_to issue.downcased_title, issue %>).
           <% else %>
-            <%= link_to @representative.name, @representative %>
-            <%= issue.stats.text_for(@representative, name: '', html: true) %>
-            <%= link_to issue do %>
-              <%= t 'app.lang.infinitive_particle' %>
-              <%= "#{issue.downcased_title}." %>
-            <% end %>
+            <%= link_to issue.title, issue %>:
+            <%= issue.stats.text_for(@party, name: '', html: true) %>
           <% end %>
         </li>
       <% end %>
