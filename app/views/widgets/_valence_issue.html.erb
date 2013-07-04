@@ -1,19 +1,27 @@
-<div>
+<div class="valence">
   <% @issue.valence_issue_explanations.each do |valence| %>
-    <!-- title -->
-    <h4><%= valence.title %></h4>
 
-    <!-- parties -->
-    <% valence.parties.each do |party| %>
-      <div>
-        <%= image_tag party.logo.versions[:small] %>
-        <%= party.name %>
+    <div class="constellation">
+
+      <div class="icon-list">
+        <% valence.parties.each do |party| %>
+          <%= image_tag party.logo.versions[:medium] %>
+        <% end %>
       </div>
-    <% end %>
 
-    <!-- explanation -->
-    <p>
-      <%= valence.explanation %>
-    </p>
+      <h3><%= valence.title %></h3>
+      <p>
+        <%# DOUBLE LOOP? TWICE AS FUN %>
+        <% valence.parties.each do |party| %>
+          <span class="party"><%= party.name %></span>
+        <% end %>
+
+        <%# THIS SEEMS RATHER SILLY %>
+        <% valence.explanation[0] = valence.explanation[0].chr.downcase %>
+        <%= valence.explanation %>.
+      </p>
+
+    </div>
+
   <% end %>
 </div>

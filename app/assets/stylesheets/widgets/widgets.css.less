@@ -272,6 +272,43 @@ figcaption.muted {
 }
 
 
+/* Styling for valence issue lists */
+.valence {
+  position: relative;
+  img {
+    max-width: 24px;
+    height: auto;
+    display: inline-block;
+  }
+  .icon-list {
+    position: absolute;
+    left: 0;
+    margin-top: -4px;
+    width: 54px;
+    text-align: right;
+  }
+  .constellation {
+    padding-left: 65px;
+    padding-bottom: 15px;
+    .party {
+      &:after {
+        content: ",";
+      }
+      &:last-child:after {
+        content: "";
+      }
+    }
+  }
+  h3 {
+    margin-top: 1em;
+  }
+  p {
+    margin-top: 0;
+  }
+}
+
+
+
 /* Non-global styling */
 .widget {
   &.representative {
