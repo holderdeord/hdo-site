@@ -16,9 +16,7 @@
           <span class="party"><%= party.name %></span>
         <% end %>
 
-        <%# THIS SEEMS RATHER SILLY %>
-        <% valence.explanation[0] = valence.explanation[0].chr.downcase %>
-        <%= valence.explanation %>.
+        <%= valence.explanation.downcase %>.
       </p>
 
     </div>
