@@ -16,7 +16,7 @@
     <li class="vote">
       <% if AppConfig.valence_widget %>
         <%= link_to issue.title, issue %>:
-        <%= issue.valence_issue? ? 'har ' + issue.valence_explanation_for(@party).try(:title).to_s.downcase : issue.stats.text_for(@party, name: '', html: true) %>
+        <%= issue.valence_issue? ? 'har ' + issue.valence_explanation_for(@party).try(:downcased_title) : issue.stats.text_for(@party, name: '', html: true) %>
       <% else %>
         <%= issue.stats.text_for(@party, name: '', html: true) %>
         <%= t 'app.lang.infinitive_particle' %>

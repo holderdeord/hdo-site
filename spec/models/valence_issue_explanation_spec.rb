@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 require 'spec_helper'
 
 describe ValenceIssueExplanation do
@@ -16,5 +18,11 @@ describe ValenceIssueExplanation do
     e = ValenceIssueExplanation.make explanation: ''
 
     e.should_not be_valid
+  end
+
+  it 'can uncapitalize the title' do
+    e = ValenceIssueExplanation.make(title: 'Ærlig TALT')
+
+    e.downcased_title.should == 'ærlig TALT'
   end
 end

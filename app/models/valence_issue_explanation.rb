@@ -6,4 +6,11 @@ class ValenceIssueExplanation < ActiveRecord::Base
   validates :parties,     presence: true
   validates :explanation, presence: true
   validates :title,       presence: true
+
+  def downcased_title
+    @downcased_title ||= (
+      t = title.to_s.strip
+      "#{UnicodeUtils.downcase t[0]}#{t[1..-1]}"
+    )
+  end
 end
