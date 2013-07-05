@@ -288,6 +288,7 @@ figcaption.muted {
     text-align: right;
   }
   .constellation {
+    position: relative;
     padding-left: 65px;
     padding-bottom: 15px;
   }
@@ -441,7 +442,13 @@ figcaption.muted {
     .issue {
       margin-bottom: 20px;
       .clearfix;
-      p {
+      .valence {
+        padding: 0 20px;
+        .constellation {
+          max-width: 500px;
+        }
+      }
+      > p {
         float: left;
         width: 33%;
         line-height: 1.6em;
