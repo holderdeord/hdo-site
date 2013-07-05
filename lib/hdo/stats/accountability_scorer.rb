@@ -133,7 +133,7 @@ module Hdo
 
       def compute(issue)
         vote_scores         = issue.stats
-        promise_connections = issue.promise_connections.includes(:promise => :parties)
+        promise_connections = issue.promise_connections.includes(promise: :parties)
 
         percentages     = Hash.new
         scores_by_party = Hash.new { |hash, key| hash[key] = [] }
