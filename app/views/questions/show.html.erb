@@ -49,31 +49,26 @@
 
   </article>
 
-  <% if AppConfig.show_question_issues && @question.issues.any? %>
-    <article class="row-fluid issues">
-      <div class="span2 hidden-phone">
-        <%= link_to @party do %>
-          <%= image_tag @party.logo.versions[:medium], alt: "#{@party.name}s logo" %>
-        <% end %>
-      </div>
+  <article class="row-fluid issues">
+    <div class="span2 hidden-phone"/>
+    </div>
 
-      <div class="span8">
-        <h4>Sjekk hva <%= @party.name %> har stemt på Stortinget i relaterte saker:</h4>
-        <ul class="unstyled">
-        <% @question.issues.each do |issue| %>
-          <li>
-            <% if issue.valence_issue? %>
-              <%= link_to issue.title, issue %>:
-              har <%= issue.valence_explanation_for(@party).try(:title).to_s.downcase %>
-            <% else %>
-              <%= link_to issue.title, issue %>:
-              <%= issue.stats.text_for(@party, name: '', html: true) %>
-            <% end %>
-          </li>
-        <% end %>
-        </ul>
-      </div>
-    </article>
-  <% end %>
+    <div class="span8">
+      <h4>Sjekk hva <%= @party.name %> har stemt på Stortinget i relaterte saker:</h4>
+      <ul class="unstyled">
+      <% @question.issues.each do |issue| %>
+        <li>
+          <% if issue.valence_issue? %>
+            <%= link_to issue.title, issue %>:
+            har <%= issue.valence_explanation_for(@party).try(:title).to_s.downcase %>
+          <% else %>
+            <%= link_to issue.title, issue %>:
+            <%= issue.stats.text_for(@party, name: '', html: true) %>
+          <% end %>
+        </li>
+      <% end %>
+      </ul>
+    </div>
+  </article>
 
 </div>
