@@ -1,5 +1,5 @@
 <div class="labels">
-  <% @issue.position_groups.each do |label, parties| %>
+  <% issue.position_groups.each do |label, parties| %>
     <div class="position">
       <div class="position-wrapper">
         <h3>
@@ -12,11 +12,11 @@
 </div>
 
 <div class="icons">
-  <% @issue.position_groups.each do |label, parties| %>
+  <% issue.position_groups.each do |label, parties| %>
     <div class="position">
       <div class="position-wrapper">
         <% parties.each do |party| %>
-          <%= link_to issue_url(@issue, anchor: party.slug), class: 'issue-graph-party' do %>
+          <%= link_to issue_url(issue, anchor: party.slug), class: 'issue-graph-party' do %>
             <%= image_tag party.logo.versions[:medium], alt: "#{party.name}s logo" %>
           <% end %>
         <% end %>

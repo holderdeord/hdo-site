@@ -12,9 +12,9 @@
   <figure class="positions">
 
     <% if AppConfig.valence_widget && @issue.valence_issue? %>
-      <%= render partial: 'valence_issue' %>
+      <%= render partial: 'valence_issue', locals: { issue: @issue } %>
     <% else %>
-      <%= render partial: 'normal_issue' %>
+      <%= render partial: 'normal_issue', locals: { issue: @issue } %>
     <% end %>
 
     <figcaption class="muted">
