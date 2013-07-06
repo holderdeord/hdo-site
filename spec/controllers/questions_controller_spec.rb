@@ -47,6 +47,56 @@ describe QuestionsController do
       get :index
       assigns(:questions)[:unanswered].should eq [q]
     end
+
+    it 'assigns total question counts' do
+      2.times { Question.make! :approved }
+      3.times do
+        q = Question.make! :approved
+        Answer.make! question: q, status: 'approved'
+      end
+
+      get :index
+
+      assigns(:totals)[:answered].should eq 3
+      assigns(:totals)[:unanswered].should eq 2
+    end
+  end
+
+  describe 'GET all' do
+    it 'assigns answered questions when /answered' do
+      Question.make! :approved
+      q = Question.make! :approved
+      Answer.make! question: q, status: 'approved'
+
+      get :all, category: 'answered'
+
+      assigns(:questions).should eq [q]
+    end
+
+    it 'assigns unanswered questions when /unanswered' do
+      q1 = Question.make! :approved
+      q2 = Question.make! :approved
+      Answer.make! question: q1, status: 'approved'
+
+      get :all, category: 'unanswered'
+
+      assigns(:questions).should eq [q2]
+    end
+
+    it 'hides unanswered questions from @hdo' do
+      ours = Question.make!(from_email: 'test@holderdeord.no', status: 'approved')
+      not_ours = Question.make!(from_email: 'test@example.com', status: 'approved')
+
+      get :all, category: 'unanswered'
+
+      assigns(:questions).should eq [not_ours]
+    end
+
+    it 'shows 404 for unknown category' do
+      get :all, category: 'goo'
+
+      response.code.should eq '404'
+    end
   end
 
   describe "GET show" do

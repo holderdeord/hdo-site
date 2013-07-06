@@ -167,6 +167,7 @@ Hdo::Application.routes.draw do
       get 'conduct'
     end
   end
+  get 'questions/all/:category' => 'questions#all'
 
   #
   # norwegian aliases - don't overdo this without a proper solution

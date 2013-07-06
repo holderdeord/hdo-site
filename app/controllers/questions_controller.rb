@@ -20,9 +20,29 @@ class QuestionsController < ApplicationController
     end
 
     @questions = {
-      answered:   QuestionsDecorator.new(answered.order(:updated_at).paginate(page: params[:page_answered], per_page: DEFAULT_PER_PAGE)),
-      unanswered: QuestionsDecorator.new(unanswered.order(:updated_at).paginate(page: params[:page_unanswered], per_page: DEFAULT_PER_PAGE))
+      answered:   QuestionsDecorator.new(answered.order(:updated_at).first(4)),
+      unanswered: QuestionsDecorator.new(unanswered.order(:updated_at).first(4))
     }
+
+    @totals = {
+      answered:   answered.count,
+      unanswered: unanswered.count
+    }
+  end
+
+  def all
+    case params[:category]
+    when 'answered'
+      @questions = QuestionsDecorator.new(Question.approved.with_approved_answers.order(:updated_at).paginate(page: params[:page], per_page: params[:per_page] || DEFAULT_PER_PAGE))
+    when 'unanswered'
+      if AppConfig.ignore_our_questions
+        @questions = QuestionsDecorator.new(Question.approved.not_ours.without_approved_answers.paginate(page: params[:page], per_page: params[:per_page] || DEFAULT_PER_PAGE))
+      else
+        unanswered = QuestionsDecorator.new(Question.approved.without_approved_answers.paginate(page: params[:page], per_page: params[:per_page] || DEFAULT_PER_PAGE))
+      end
+    else
+      render_not_found
+    end
   end
 
   def show

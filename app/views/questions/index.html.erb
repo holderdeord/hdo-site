@@ -3,5 +3,5 @@
   <h1>Spør en stortingspolitiker</h1>
 </div>
 
-<%= render partial: 'questions_section', locals: { category: :unanswered, questions: @questions[:answered], title: 'Besvarte spørsmål', latest: 'Siste besvarte spørsmål' } %>
-<%= render partial: 'questions_section', locals: { category: :unanswered, questions: @questions[:unanswered], title: 'Venter på svar', latest: 'Siste spørsmål' } %>
+<%= render partial: 'questions_section', locals: { category: :answered, questions: @questions[:answered], total: @totals[:answered] } %>
+<%= render partial: 'questions_section', locals: { category: :unanswered, questions: @questions[:unanswered], total: @totals[:unanswered] } %>

@@ -1,4 +1,4 @@
-<h4><%= title %></h4>
+<h4><%= t("app.questions.#{category}") %></h4>
 <div class="questions-index container-fluid">
   <% questions.each_slice(2) do |questions| %>
     <div class="question-row row-fluid">
@@ -7,7 +7,5 @@
       <% end %>
     </div>
     <% end %>
+<p class="muted">Viser <%= questions.count %> av <%= total %>. <%= link_to 'Se alle', "/questions/all/#{category}" %>.</p>
 </div>
-
-<%= will_paginate questions, class: "pagination pagination-centered visible-desktop" %>
-<%= will_paginate questions, class: "pagination pagination-small pagination-centered visible-phone", page_links: false %>

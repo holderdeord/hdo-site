@@ -1,0 +1,18 @@
+<div class="page-header">
+  <%= link_to t('app.questions.new'), new_question_path, class: 'btn btn-primary pull-right' %>
+  <h1>Spør en stortingspolitiker</h1>
+  <h3><%= t("app.questions.#{params[:category]}") %></h3>
+</div>
+
+<div class="questions-index container-fluid">
+  <% @questions.each_slice(2) do |questions| %>
+    <div class="question-row row-fluid">
+      <% questions.each do |question| %>
+        <%= render partial: 'questions_section_card', locals: { question: question, category: '' } %>
+      <% end %>
+    </div>
+    <% end %>
+</div>
+
+<%= will_paginate @questions, class: "pagination pagination-centered visible-desktop" %>
+<%= will_paginate @questions, class: "pagination pagination-small pagination-centered visible-phone", page_links: false %>
