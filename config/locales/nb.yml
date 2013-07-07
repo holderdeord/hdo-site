@@ -525,7 +525,7 @@ nb:
       user: 'Brukeren ble oppdatert.'
       representative: 'Representanten ble oppdatert.'
     parties:
-      no_promises: Partiet har ingen løfter om denne saken.
+      no_promises: Partiet har ingen konkrete løfter om saken i sitt partiprogram.
       group:
         governing: 'Regjering'
         opposition: 'Opposisjon'
