@@ -12,7 +12,7 @@ class QuestionsController < ApplicationController
     questions = Question.approved
 
     answered = questions.with_approved_answers
-    
+
     if AppConfig.ignore_our_questions
       unanswered = questions.not_ours.without_approved_answers
     else
@@ -20,8 +20,8 @@ class QuestionsController < ApplicationController
     end
 
     @questions = {
-      answered:   QuestionsDecorator.new(answered.order(:updated_at).first(4)),
-      unanswered: QuestionsDecorator.new(unanswered.order(:updated_at).first(4))
+      answered:   QuestionsDecorator.new(answered.order(:updated_at).first(6)),
+      unanswered: QuestionsDecorator.new(unanswered.order(:updated_at).first(6))
     }
 
     @totals = {
