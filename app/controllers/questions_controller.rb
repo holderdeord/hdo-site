@@ -4,7 +4,7 @@ class QuestionsController < ApplicationController
   before_filter :require_edit, only: [:new, :create]
   skip_before_filter :verify_authenticity_token, only: :create
 
-  hdo_caches_page :index, :new
+  hdo_caches_page :index, :new, :all
 
   DEFAULT_PER_PAGE = 20
 
