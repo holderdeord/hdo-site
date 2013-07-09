@@ -3,9 +3,7 @@
     <%= @issue.title %>
   </h1>
 
-  <% if description_top? %>
-    <p><%= @issue.description %></p>
-  <% end %>
+  <p><%= @issue.description %></p>
 </header>
 
 <article>
@@ -22,9 +20,5 @@
     </figcaption>
 
   </figure>
-
-  <% if description_bottom? %>
-    <p><%= @issue.description %></p>
-  <% end %>
 
 </article>
