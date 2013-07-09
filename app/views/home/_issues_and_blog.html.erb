@@ -27,7 +27,7 @@
     </p>
 
     <article>
-      <h4><%= @latest_post.title %></h4>
+      <h4><%= link_to @latest_post.title, @latest_post.url %></h4>
       <p class="byline">av <%= @latest_post.author %></p>
       <div class="content">
         <% @latest_post.paragraphs.first(2).each do |pg| %>
