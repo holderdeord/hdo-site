@@ -7,7 +7,7 @@
         <% valence.parties.each do |party| %>
           <%= link_to issue_url(issue, anchor: party.slug) do %>
             <%= image_tag party.logo.versions[:medium] %>
-          <%= end %>
+          <% end %>
         <% end %>
       </div>
 

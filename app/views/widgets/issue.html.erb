@@ -3,7 +3,10 @@
     <%= @issue.title %>
   </h1>
 
-  <p><%= @issue.description %></p>
+  <p>
+    <%= @issue.description %>
+    <%= link_to "Les mer", @issue %>
+  </p>
 </header>
 
 <article>
