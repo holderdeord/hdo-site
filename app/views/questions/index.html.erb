@@ -1,6 +1,7 @@
 <div class="page-header">
   <%= link_to t('app.questions.new'), new_question_path, class: 'btn btn-primary pull-right' %>
   <h1>Spør en stortingspolitiker</h1>
+  <small class="muted">Vi gjør oppmerksom på at enkelte stortingspolitikere har reservert seg mot å bruke tjenesten.</small>
 </div>
 
 <%= render partial: 'questions_section', locals: { category: :answered, questions: @questions[:answered], total: @totals[:answered] } %>
