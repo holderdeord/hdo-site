@@ -9,9 +9,7 @@
     <% [:for, :for_and_against, :against].each do |key| %>
       <div class="span4">
 
-        <% if issue_groups[key].blank? %>
-          <p><%= t 'app.issues.none' %>.</p>
-        <% else %>
+        <% if issue_groups[key].present? %>
           <ul class="issue-list">
             <% issue_groups[key].each do |issue| %>
               <li>
