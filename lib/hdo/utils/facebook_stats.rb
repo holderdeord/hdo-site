@@ -20,22 +20,27 @@ module Hdo
         end
       end
 
-      def send_to_graphite
+      def stats
+        data = {}
+
         like_counts_for(issue_urls + question_urls).each do |entry|
           url      = entry['url']
           likes    = entry['total_count']
           type, id = url.match(%r[(issues|questions)/(\d+)]).captures
 
           if likes > 0
-            @graphite.add "facebook.likes.#{type}.#{id}", likes
+            data["facebook.likes.#{type}.#{id}"] = likes
           end
         end
 
-        hdo = org_info
+        data['facebook.likes.holderdeord']         = org_info['likes']
+        data['facebook.talking_about.holderdeord'] = org_info['talking_about_count']
 
-        @graphite.add 'facebook.likes.holderdeord', hdo['likes']
-        @graphite.add 'facebook.talking_about.holderdeord', hdo['talking_about_count']
+        data
+      end
 
+      def send_to_graphite
+        stats.each { |k, v| @graphite.add k, v }
         @graphite.submit
       end
 

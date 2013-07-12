@@ -13,6 +13,10 @@ module Hdo
       DEFAULT_HOST = 'ops1.holderdeord.no'
       DEFAULT_PORT = 2003
 
+      def self.instance
+        @instance ||= new
+      end
+
       def initialize(opts = {})
         @host  = opts[:host] || DEFAULT_HOST
         @port  = opts[:port] || DEFAULT_PORT
