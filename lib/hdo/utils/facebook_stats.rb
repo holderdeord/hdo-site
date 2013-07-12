@@ -3,18 +3,11 @@ require 'socket'
 module Hdo
   module Utils
     class FacebookStats
-
-      DEFAULT_HOST     = 'www.holderdeord.no'
-      DEFAULT_GRAPHITE = 'ops1.holderdeord.no:2003'
+      DEFAULT_HOST = 'www.holderdeord.no'
 
       def initialize(opts = {})
-        @host  = opts[:host] || DEFAULT_HOST
-        @debug = !!opts[:debug]
-
-        ghost, gport   = (opts[:graphite] || DEFAULT_GRAPHITE).split(":")
-
-        @graphite_host = ghost
-        @graphite_port = Integer(gport)
+        @host     = opts[:host] || DEFAULT_HOST
+        @graphite = opts[:graphite] || GraphiteReporter.new(debug: opts[:debug])
       end
 
       def display
@@ -28,43 +21,25 @@ module Hdo
       end
 
       def send_to_graphite
-        ts = Time.now.to_i
+        like_counts_for(issue_urls + question_urls).each do |entry|
+          url      = entry['url']
+          likes    = entry['total_count']
+          type, id = url.match(%r[(issues|questions)/(\d+)]).captures
 
-        with_graphite_io do |io|
-          record_likes(io, issue_urls, "issues", ts)
-          record_likes(io, question_urls, "questions", ts)
-
-          hdo = org_info
-
-          io.puts "facebook.likes.holderdeord #{hdo['likes']} #{ts}"
-          io.puts "facebook.talking_about.holderdeord #{hdo['talking_about_count']} #{ts}"
+          if likes > 0
+            @graphite.add "facebook.likes.#{type}.#{id}", likes
+          end
         end
+
+        hdo = org_info
+
+        @graphite.add 'facebook.likes.holderdeord', hdo['likes']
+        @graphite.add 'facebook.talking_about.holderdeord', hdo['talking_about_count']
+
+        @graphite.submit
       end
 
       private
-
-      def record_likes(io, urls, type, ts)
-        like_counts_for(urls).each do |entry|
-          url   = entry['url']
-          likes = entry['total_count']
-          id    = url[%r[#{type}/(\d+)], 1]
-
-          if likes > 0
-            io.puts "facebook.likes.#{type}.#{id} #{likes} #{ts}"
-          end
-        end
-      end
-
-      def with_graphite_io(&blk)
-        if @debug
-          yield STDOUT
-        else
-          Socket.tcp(@graphite_host, @graphite_port) do |io|
-            io.sync = true
-            yield io
-          end
-        end
-      end
 
       def helpers
         @helpers ||= Rails.application.routes.url_helpers
