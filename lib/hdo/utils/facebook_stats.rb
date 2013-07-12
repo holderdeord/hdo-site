@@ -71,7 +71,7 @@ module Hdo
       end
 
       def org_info
-        @hdo ||= fetch_path('/?ids=holderdeord').fetch('holderdeord')
+        @hdo ||= fetch_path('/holderdeord?fields=talking_about_count,likes')
       end
 
       def fetch_path(path)
