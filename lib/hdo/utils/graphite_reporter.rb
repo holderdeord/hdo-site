@@ -41,7 +41,7 @@ module Hdo
         if @debug
           lines.each { |l| @log.info l }
         else
-          io = TCPSocket.new(host, port)
+          io = TCPSocket.new(@host, @port.to_i)
 
           begin
             lines.each { |l| io.puts l}

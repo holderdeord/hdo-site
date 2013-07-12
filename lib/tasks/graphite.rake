@@ -1,5 +1,10 @@
 namespace :graphite do
-  task :facebook => :environment do
+  task :env => :environment do
+    require 'hdo/stats/accountability_scorer'
+  end
+
+
+  task :facebook => :env do
     g = Hdo::Utils::GraphiteReporter.instance
 
     Hdo::Utils::FacebookStats.new.stats.each do |key, value|
@@ -7,7 +12,7 @@ namespace :graphite do
     end
   end
 
-  task :stortinget => :environment do
+  task :stortinget => :env do
     g = Hdo::Utils::GraphiteReporter.instance
 
     g.add 'stortinget.count.votes',           Vote.count
@@ -16,7 +21,7 @@ namespace :graphite do
     g.add 'stortinget.count.representatives', Representative.count
   end
 
-  task :holderdeord => :environment do
+  task :holderdeord => :env do
     g = Hdo::Utils::GraphiteReporter.instance
 
     g.add 'hdo.count.issues.total',               Issue.count
