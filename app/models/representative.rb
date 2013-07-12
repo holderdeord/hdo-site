@@ -67,6 +67,7 @@ class Representative < ActiveRecord::Base
   scope :potentially_askable,    -> { attending.with_email }
   scope :askable,                -> { potentially_askable.where('opted_out IS NULL or opted_out IS FALSE') }
   scope :opted_out,              -> { potentially_askable.where('opted_out IS TRUE') }
+  scope :registered,             -> { where('confirmed_at IS NOT NULL')}
 
   friendly_id :external_id, use: :slugged
 

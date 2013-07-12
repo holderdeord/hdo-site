@@ -195,4 +195,12 @@ describe Representative do
     Representative.potentially_askable.should eq [c,d]
     Representative.opted_out.should eq [d]
   end
+
+  it 'finds registered representatives' do
+    confirmed = Representative.make!
+    confirmed.confirm!
+    standard = Representative.make!
+
+    Representative.registered.should == [confirmed]
+  end
 end
