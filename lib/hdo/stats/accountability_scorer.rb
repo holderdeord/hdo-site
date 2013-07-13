@@ -76,6 +76,14 @@ module Hdo
         @data = compute(issue)
       end
 
+      #
+      # Float = accountability score
+      # NaN   = party has relevant promises, but no votes
+      # Nil   = party has no relevant promises
+      #
+      # @return [Float, Nan, Nil]
+      #
+
       def score_for(party)
         @data[party]
       end
@@ -90,6 +98,10 @@ module Hdo
 
         if score.nil?
           return :no_promises
+        end
+
+        if score.nan?
+          return :unknown
         end
 
         if score < 0 || score > 100
@@ -135,11 +147,12 @@ module Hdo
         vote_scores         = issue.stats
         promise_connections = issue.promise_connections.includes(promise: :parties)
 
-        percentages     = Hash.new
-        scores_by_party = Hash.new { |hash, key| hash[key] = [] }
+        percentages     = {}
+        scores_by_party = {}
 
         promise_connections.each do |conn|
           party_scores_for(vote_scores, conn, issue.valence_issue?).each do |party, score|
+            scores_by_party[party] ||= []
             scores_by_party[party] << score if score
           end
         end

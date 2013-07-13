@@ -140,6 +140,9 @@ class IssueDecorator < Draper::Decorator
       return '' if issue.valence_issue?
 
       key = issue.accountability.key_for(model)
+      if key == :unknown
+        return ''
+      end
 
       # FIXME: missing icon for partially_kept
       if key == :partially_kept

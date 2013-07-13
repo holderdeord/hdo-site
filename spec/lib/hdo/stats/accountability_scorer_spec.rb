@@ -41,7 +41,14 @@ module Hdo
         issue.promise_connections.create!(promise: Promise.make!(parties: [party]), status: 'for')
         issue.promise_connections.create!(promise: Promise.make!(parties: [party]), status: 'for')
 
-        issue.accountability.score_for(party).should be_nil
+
+        score = issue.accountability.score_for(party)
+        key = issue.accountability.key_for(party)
+
+        score.should_not be_nil
+        score.should be_nan
+
+        key.should == :unknown
       end
 
       it 'generates CSV' do
@@ -82,7 +89,7 @@ module Hdo
         issue.stub(:stats).and_return stub(score_for: 100)
         issue.promise_connections.create!(promise: Promise.make!(parties: [party]), status: 'for')
 
-        AccountabilityScorer.new(issue).score_for(party).should be_nil
+        AccountabilityScorer.new(issue).key_for(party).should == :unknown
       end
 
     end
