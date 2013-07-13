@@ -26,6 +26,7 @@ namespace :graphite do
 
     g.add 'hdo.count.issues.total',               Issue.count
     g.add 'hdo.count.issues.published',           Issue.published.count
+    g.add 'hdo.count.issues.valence',             Issue.valence.count
 
     g.add 'hdo.count.questions.total',            Question.count
     g.add 'hdo.count.questions.user_total',       Question.not_ours.count
@@ -34,6 +35,10 @@ namespace :graphite do
     g.add 'hdo.count.questions.approved',         Question.approved.count
     g.add 'hdo.count.questions.pending',          Question.pending.count
     g.add 'hdo.count.questions.rejected',         Question.rejected.count
+
+    g.add 'hdo.count.promises.total',             Promise.count
+    g.add 'hdo.count.promises.connected',         PromiseConnection.includes(:issue).where("issues.status" => "published").select(:promise_id).count
+    g.add 'hdo.count.votes.connected',            VoteConnection.includes(:issue).where("issues.status" => "published").select(:vote_id).count
 
     g.add 'hdo.count.representatives.opted_out',  Representative.opted_out.count
     g.add 'hdo.count.representatives.registered', Representative.registered.count
