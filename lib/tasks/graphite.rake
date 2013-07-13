@@ -26,12 +26,15 @@ namespace :graphite do
 
     g.add 'hdo.count.issues.total',               Issue.count
     g.add 'hdo.count.issues.published',           Issue.published.count
+
     g.add 'hdo.count.questions.total',            Question.count
+    g.add 'hdo.count.questions.user_total',       Question.not_ours.count
     g.add 'hdo.count.questions.answered',         Question.answered.count
     g.add 'hdo.count.questions.unanswered',       Question.unanswered.count
     g.add 'hdo.count.questions.approved',         Question.approved.count
     g.add 'hdo.count.questions.pending',          Question.pending.count
     g.add 'hdo.count.questions.rejected',         Question.rejected.count
+
     g.add 'hdo.count.representatives.opted_out',  Representative.opted_out.count
     g.add 'hdo.count.representatives.registered', Representative.registered.count
 
