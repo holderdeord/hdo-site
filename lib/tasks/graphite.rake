@@ -49,4 +49,8 @@ namespace :graphite do
   task :submit => %w[facebook stortinget holderdeord] do
     Hdo::Utils::GraphiteReporter.instance.submit
   end
+
+  task :print => %w[facebook stortinget holderdeord] do
+    Hdo::Utils::GraphiteReporter.instance.print
+  end
 end

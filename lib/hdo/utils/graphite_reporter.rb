@@ -20,7 +20,6 @@ module Hdo
       def initialize(opts = {})
         @host  = opts[:host] || DEFAULT_HOST
         @port  = opts[:port] || DEFAULT_PORT
-        @debug = !!opts[:debug]
         @log   = Logger.new(STDOUT)
 
         reset
@@ -34,23 +33,27 @@ module Hdo
         @data = {}
       end
 
+      def print
+        lines.each { |l| @log.info l }
+      end
+
       def submit
-        ts    = Time.now.to_i
-        lines = @data.map { |k, v| "#{k} #{v} #{ts}" }
+        io = TCPSocket.new(@host, @port.to_i)
 
-        if @debug
-          lines.each { |l| @log.info l }
-        else
-          io = TCPSocket.new(@host, @port.to_i)
-
-          begin
-            lines.each { |l| io.puts l}
-          ensure
-            io.close unless io.closed?
-          end
+        begin
+          lines.each { |l| io.puts l }
+        ensure
+          io.close unless io.closed?
         end
 
         reset
+      end
+
+      private
+
+      def lines
+        ts = Time.now.to_i
+        @data.map { |k, v| "#{k} #{v} #{ts}" }
       end
 
     end
