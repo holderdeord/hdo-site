@@ -75,12 +75,24 @@ module Hdo
       end
 
       def fetch_path(path)
-        resp = Typhoeus.get "http://graph.facebook.com#{path}"
+        retries = 0
 
-        if resp.code == 200
-          JSON.parse(resp.body)
-        else
-          raise "bad graph API response for #{path.inspect}: #{resp.code} #{resp.body}"
+        begin
+          resp = Typhoeus.get "http://graph.facebook.com#{path}"
+
+          if resp.code == 200
+            JSON.parse(resp.body)
+          else
+            raise "bad graph API response for #{path.inspect}: #{resp.code} #{resp.body}"
+          end
+        rescue
+          if retires < 3
+            retries += 1
+            sleep 1
+            retry
+          else
+            raise
+          end
         end
       end
     end
