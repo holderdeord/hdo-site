@@ -86,7 +86,7 @@ module Hdo
             raise "bad graph API response for #{path.inspect}: #{resp.code} #{resp.body}"
           end
         rescue
-          if retires < 3
+          if retries < 3
             retries += 1
             sleep 1
             retry
