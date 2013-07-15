@@ -6,8 +6,7 @@ module Hdo
       DEFAULT_HOST = 'www.holderdeord.no'
 
       def initialize(opts = {})
-        @host     = opts[:host] || DEFAULT_HOST
-        @graphite = opts[:graphite] || GraphiteReporter.new(debug: opts[:debug])
+        @host = opts[:host] || DEFAULT_HOST
       end
 
       def display
@@ -37,11 +36,6 @@ module Hdo
         data['facebook.talking_about.holderdeord'] = org_info['talking_about_count']
 
         data
-      end
-
-      def send_to_graphite
-        stats.each { |k, v| @graphite.add k, v }
-        @graphite.submit
       end
 
       private
