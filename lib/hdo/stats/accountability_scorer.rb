@@ -170,7 +170,9 @@ module Hdo
         promise_connection.promise.parties.each do |party|
           party_score = vote_scores.score_for(party)
 
-          if is_valence && !promise_connection.overridden?
+          if promise_connection.related?
+            next
+          elsif is_valence && !promise_connection.overridden?
             scores[party] = nil
           elsif promise_connection.overridden? && !promise_connection.related?
             scores[party] = promise_connection.override

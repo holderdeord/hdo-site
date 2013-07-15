@@ -41,7 +41,6 @@ module Hdo
         issue.promise_connections.create!(promise: Promise.make!(parties: [party]), status: 'for')
         issue.promise_connections.create!(promise: Promise.make!(parties: [party]), status: 'for')
 
-
         score = issue.accountability.score_for(party)
         key = issue.accountability.key_for(party)
 
@@ -49,6 +48,20 @@ module Hdo
         score.should be_nan
 
         key.should == :unknown
+      end
+
+      it 'does not consider only related promises as unknown' do
+        issue = Issue.make
+        vote  = issue.vote_connections[0].vote
+        party = vote.vote_results[0].representative.party_at(vote.time)
+
+        issue.promise_connections.create!(promise: Promise.make!(parties: [party]), status: 'related')
+
+        score = issue.accountability.score_for(party)
+        key = issue.accountability.key_for(party)
+
+        score.should be_nil
+        key.should == :no_promises
       end
 
       it 'generates CSV' do
