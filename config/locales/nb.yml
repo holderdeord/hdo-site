@@ -91,6 +91,10 @@ nb:
           attributes:
             password:
               confirmation: 'må skrives likt to ganger'
+        question:
+          attributes:
+            representative:
+              must_be_askable: 'kan ikke motta spørsmål'
     models:
       representative:
         one: "representant"

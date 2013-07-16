@@ -1,6 +1,8 @@
 class Question < ActiveRecord::Base
   include Workflows::BaseQuestionAndAnswerWorkflow
 
+  MAX_LENGTH = 1000
+
   attr_accessible :body, :from_name, :from_email, :representative, :representative_id,
                   :issues, :show_sender, :internal_comment
 
@@ -9,7 +11,7 @@ class Question < ActiveRecord::Base
   has_and_belongs_to_many :issues, uniq: true, order: "updated_at DESC"
   has_many :email_events, as: :email_eventable, order: "created_at DESC"
 
-  validates :body,           presence: true
+  validates :body,           presence: true, length: { maximum: MAX_LENGTH, if: :new_record? }
   validates :from_name,      presence: true
   validates :from_email,     email: true
   validates :representative, presence: true

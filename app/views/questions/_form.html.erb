@@ -31,6 +31,8 @@
                                rows:  5,
                                placeholder: "Kjære representant! Hvordan kan det ha seg at..." %>
       </div>
+
+      <span id="remaining-characters" class="muted pull-right">1000</span>
     </div>
 
     <div class="row-fluid">
@@ -60,3 +62,21 @@
 </div>
 
 <%= render partial: 'conduct_modal' %>
+
+<%= content_for :document_ready do %>
+  <script>$(function () {
+    var remainingElement = $("#remaining-characters")
+
+    $("#question_body").on('keyup paste', function () {
+      var remaining = 1000 - $(this).val().length;
+      remainingElement.text('' + remaining);
+
+      if (remaining < 0) {
+        remainingElement.css('color', 'red');
+      } else {
+        remainingElement.removeAttr('style');
+      }
+    }).trigger('paste')
+  })
+</script>
+<% end %>

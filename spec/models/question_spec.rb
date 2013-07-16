@@ -24,6 +24,11 @@ describe Question do
     q.should_not be_valid
   end
 
+  it 'is invalid if the body is too long' do
+    q.body = 'a' * (Question::MAX_LENGTH + 1)
+    q.should_not be_valid
+  end
+
   it 'is invalid without name or email' do
     q.from_name = nil
     q.should_not be_valid
