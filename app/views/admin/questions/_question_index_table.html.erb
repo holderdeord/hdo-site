@@ -4,6 +4,7 @@
       <th><%= Question.human_attribute_name :representative %></th>
       <th><%= Question.human_attribute_name :body %></th>
       <th><%= Question.human_attribute_name :from_name %></th>
+      <th><%= Question.human_attribute_name :created_at %></th>
       <th><%= Question.human_attribute_name :updated_at %></th>
 
       <th></th>
@@ -29,6 +30,12 @@
         <td>
           <p><%= question.from_name %>
           <small class="muted"><%= question.from_email %></small></p>
+        </td>
+
+        <td>
+          <small class="muted">
+            <%= l question.created_at.localtime %>
+          </small>
         </td>
 
         <td>
