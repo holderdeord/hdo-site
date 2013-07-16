@@ -14,9 +14,11 @@ class ModerationMailer < ActionMailer::Base
   end
 
   def question_approved_representative_email(question)
-    @question = question
+    @question       = question
+    @representative = question.representative
+
     with_event mail(
-         to:       bracket_mail(question.representative.email, question.representative.name),
+         to:       bracket_mail(@representative.email, @representative.name),
          subject:  'Du har fått et nytt spørsmål',
          reply_to: reply_to_address(question))
   end

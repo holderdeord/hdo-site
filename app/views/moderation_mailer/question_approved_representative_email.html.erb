@@ -1,15 +1,24 @@
-<h2>Kjære <%= @question.representative.name %>,</h2>
+<h2>Kjære <%= @representative.name %>,</h2>
 
-<p>Du har fått et nytt spørsmål fra en velger!</p>
-<% if @question.representative.confirmed? %>
-  <p><%= link_to 'Logg inn her', new_representative_session_url %> for å lese spørsmålet og legge inn ditt svar.</p>
+<p>Du har fått et nytt spørsmål fra en velger! Spørsmålet fra <%= @question.from_display_name %> lyder:</p>
+
+<p><em><%= simple_format @question.body %></em></p>
+
+<% if @representative.confirmed? %>
+  <p>
+    <%= link_to 'Logg inn her', new_representative_session_url %> for å lese spørsmålet og legge inn ditt svar.
+  </p>
 <% else %>
-  <p><%= link_to 'Klikk her', confirmation_url(@question.representative, confirmation_token: @question.representative.confirmation_token, protocol: AppConfig.ssl_enabled ? 'https' : 'http') %> for å logge inn første gang på din personlige side på Holder de ord. Du blir bedt om å velge et passord som du bruker for å besvare spørsmål fra velgerne.</p>
+  <p>
+    <%= link_to 'Klikk her', confirmation_url(@representative, confirmation_token: @representative.confirmation_token, protocol: AppConfig.ssl_enabled ? 'https' : 'http') %>
+    for å logge inn første gang på din personlige side på Holder de ord. Du blir bedt om å velge et passord som du bruker for å besvare spørsmål fra velgerne.
+  </p>
 <% end %>
 
-<p>Spørsmålet er formidlet gjennom tjenesten <em>Spør en stortingspolitiker</em>, og har blitt moderert av Holder de ord.</p>
+<p>Spørsmålet er formidlet gjennom tjenesten <strong>Spør en stortingspolitiker</strong>, og har blitt moderert av Holder de ord.</p>
 
 <p>Ha en god dag!</p>
 
-<p style="color:#666">Vennlig hilsen,<br/>
+<p style="color:#666">Vennlig hilsen<br/>
   Holder de ord</p>
+

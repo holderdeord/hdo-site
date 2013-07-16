@@ -40,7 +40,7 @@
 
       <% if @answer %>
         <time class="muted"><%= l @answer.created_at.localtime, format: :text_time %></time>
-        <div><%= @answer.body %></div>
+        <div><%= simple_format @answer.body %></div>
       <% else %>
         <time></time>
         <div><strong>Spørsmålet venter på svar.</strong></div>
