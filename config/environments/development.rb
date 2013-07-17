@@ -41,7 +41,7 @@ Hdo::Application.configure do
   config.action_mailer.raise_delivery_errors = true
 
   config.after_initialize do
-    Bullet.enable = true
+    Bullet.enable = !!ENV['RAILS_BULLET']
     Bullet.bullet_logger = true
   end
 end
