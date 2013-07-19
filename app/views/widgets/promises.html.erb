@@ -6,7 +6,13 @@
 
 <article>
   <% @promise_groups.each do |parties, promises| %>
-    <h2 class="party <%= slug_for_parties(parties) %>">
+    <h2 class="party">
+      <% parties.each do |party| %>
+        <%= link_to party_url(party) do %>
+          <%= image_tag party.logo.versions[:medium] %>
+        <% end %>
+      <% end %>
+
       <%= links_for_parties(parties).html_safe %>
     </h2>
 
