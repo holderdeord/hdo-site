@@ -9,8 +9,9 @@
     <div class="row-fluid">
       <% districts.each do |district| %>
         <div class="span3">
-          <%= link_to district, class:"district" do %>
-            <img class='logo' src='<%= asset_path("district_logos/Troms.svg") %>'>
+          <%= link_to district, class: "district" do %>
+            <%= image_tag district.svg_path, class: 'logo' %>
+
             <div class="text">
               <div class="name"><%= district.name %></div>
               <div class="representatives"><%= district.representatives.count %> representanter</div>
