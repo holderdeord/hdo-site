@@ -82,6 +82,7 @@ module Hdo
       widgets/widgets.css
       widgets/frame.js
       widgets/widgets.js
+      .svg
     ]
 
     # allow cors from other subdomains
