@@ -4,49 +4,72 @@
 @headingsFontFamily: "Neo Sans", "Helvetica Neue", sans-serif;
 @hdoPrimaryColor: #019ea2;
 
-#districts {
-  .district {
-    display: block;
-    color: inherit;
-    padding: 10px 10px 5px 10px;
-    margin-bottom: 30px;
-    text-align: center;
+#districts .district,
+#district .representative {
+  display: block;
+  color: inherit;
+  padding: 10px 10px 5px 10px;
+  margin: 10px 0 30px 0;
+  text-align: center;
+  text-decoration: none;
+  border-radius: 3px;
+  display: block;
+  border: 1px solid transparent;
+  &:hover {
     text-decoration: none;
-    border-radius: 3px;
+    background-color: #f4f4f4;
+    border-color: #ddd;
+  }
+  &:active {
+    background-color: #eee;
+  }
+  .text {
+    border-radius: 5px;
+    padding: 10px;
+    .name {
+      line-height: 1.1em;
+      font-size: 1.25em;
+      font-weight: bold;
+      margin-bottom: 0.35em;
+    }
+    .representatives {
+      line-height: 1.25em;
+      font-size: 0.8em;
+      color: #999;
+    }
+  }
+  .logo {
+    width: 64px;
+    height: auto;
+    margin: 0 auto;
     display: block;
-    border: 1px solid transparent;
-    &:hover {
-      text-decoration: none;
-      background-color: #f4f4f4;
-      border-color: #ddd;
-    }
-    &:active {
-      background-color: #eee;
-    }
-    .text {
-      border-radius: 5px;
-      padding: 10px;
-      .name {
-        line-height: 1.1em;
-        font-size: 1.25em;
-        font-weight: bold;
-        margin-bottom: 0.35em;
-      }
-      .representatives {
-        line-height: 1.25em;
-        font-size: 0.8em;
-        color: #999;
-      }
-    }
-    .logo {
-      width: 64px;
-      height: auto;
-      margin: 0 auto;
-      display: block;
-    }
   }
 }
 
-.table td {
-  border-top-color: #f4f4f4;
+#district-logo {
+  width: 64px;
+  height: auto;
+  margin-top: -5px;
+}
+
+#district {
+  .representative {
+    .avatar-container {
+      position: relative;
+      display: inline-block;
+      .avatar {
+        box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.05s), 0 1px 2px rgba(0, 0, 0, 0.2s);
+        border-radius: 2px;
+        width: 128px;
+        height: auto;
+      }
+      .party-logo {
+        position: absolute;
+        width: 48px;
+        height: 48px;
+        right: -20px;
+        bottom: -15px;
+      }
+    }
+  }
 }

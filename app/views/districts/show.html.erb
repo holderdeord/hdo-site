@@ -1,7 +1,28 @@
 <% page_title "#{@district.name} - #{District.model_name.human(count: 2).capitalize} - #{t('app.title')}" %>
 <div class="page-header">
-  <h1><%= @district.name %> <small class="pull-right"><%= @district.external_id %></small></h1>
+  <h1><%= @district.name %> <small class="pull-right"><img id="district-logo" src='<%= asset_path("district_logos/Troms.svg") %>'></small></h1>
+
 </div>
 
-<%= render partial: "shared/representatives_table", locals: { representatives: @district.representatives, show_party: true } %>
+
+<div id="district">
+  <% @district.representatives.each_slice(3) do |representatives| %>
+    <div class="row-fluid">
+      <% representatives.each do |representative| %>
+        <div class="span4">
+          <%= link_to representative, class:"representative" do %>
+            <div class="avatar-container">
+              <img src="<%= path_to_image representative.image  %>" class="avatar" alt="<%= representative.name %>">
+              <%= image_tag representative.latest_party.logo, alt: representative.latest_party.name, class: "party-logo" %>
+            </div>
+            <div class="text">
+              <div class="name"><%= representative.name %></div>
+              <div class="muted"><%= representative.latest_party.name %></div>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+</div>
 
