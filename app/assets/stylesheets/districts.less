@@ -1,0 +1,52 @@
+@import "bootstrap/mixins";
+@import "mixins";
+
+@headingsFontFamily: "Neo Sans", "Helvetica Neue", sans-serif;
+@hdoPrimaryColor: #019ea2;
+
+#districts {
+  .district {
+    display: block;
+    color: inherit;
+    padding: 10px 10px 5px 10px;
+    margin-bottom: 30px;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 3px;
+    display: block;
+    border: 1px solid transparent;
+    &:hover {
+      text-decoration: none;
+      background-color: #f4f4f4;
+      border-color: #ddd;
+    }
+    &:active {
+      background-color: #eee;
+    }
+    .text {
+      border-radius: 5px;
+      padding: 10px;
+      .name {
+        line-height: 1.1em;
+        font-size: 1.25em;
+        font-weight: bold;
+        margin-bottom: 0.35em;
+      }
+      .representatives {
+        line-height: 1.25em;
+        font-size: 0.8em;
+        color: #999;
+      }
+    }
+    .logo {
+      width: 64px;
+      height: auto;
+      margin: 0 auto;
+      display: block;
+    }
+  }
+}
+
+.table td {
+  border-top-color: #f4f4f4;
+}

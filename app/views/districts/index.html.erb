@@ -1,26 +1,23 @@
 <% page_title "#{District.model_name.human(count: 2).capitalize} - #{t('app.title')}" %>
 <div class="page-header">
   <h1><%= District.model_name.human(count: 2).capitalize %></h1>
+  <aside class="muted"><%= t('app.counts.district', count: @districts.size).html_safe %></aside>
 </div>
 
-<p class="pull-right"><%= t('app.counts.district', count: @districts.size).html_safe %></p>
-
-<table class="table table-striped">
-  <thead>
-    <tr>
-      <th><%= District.human_attribute_name :name %></th>
-      <th><%= District.human_attribute_name :representatives %></th>
-      <th><%= District.human_attribute_name :percent_of_representatives %></th>
-    </tr>
-  </thead>
-
-  <tbody>
-      <% @districts.each do |dist| %>
-      <tr>
-        <td><%= link_to dist.name, dist %></td>
-        <td><%= dist.representatives.count %></td>
-        <td><%= dist.percent_of_representatives %>%</td>
-      </tr>
+<div id="districts">
+  <% @districts.each_slice(4) do |districts| %>
+    <div class="row-fluid">
+      <% districts.each do |district| %>
+        <div class="span3">
+          <%= link_to district, class:"district" do %>
+            <img class='logo' src='<%= asset_path("district_logos/Troms.svg") %>'>
+            <div class="text">
+              <div class="name"><%= district.name %></div>
+              <div class="representatives"><%= district.representatives.count %> representanter</div>
+            </div>
+          <% end %>
+        </div>
       <% end %>
-  </tbody>
-</table>
+    </div>
+  <% end %>
+</div>
