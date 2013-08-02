@@ -6,7 +6,7 @@
 
 
 <div id="district">
-  <% @district.representatives.each_slice(3) do |representatives| %>
+  <% @district.attending_representatives.each_slice(3) do |representatives| %>
     <div class="row-fluid">
       <% representatives.each do |representative| %>
         <div class="span4">
