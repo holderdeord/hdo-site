@@ -1,7 +1,6 @@
 <% page_title "#{District.model_name.human(count: 2).capitalize} - #{t('app.title')}" %>
 <div class="page-header">
   <h1><%= District.model_name.human(count: 2).capitalize %></h1>
-  <aside class="muted"><%= t('app.counts.district', count: @districts.size).html_safe %></aside>
 </div>
 
 <div id="districts">
@@ -13,8 +12,8 @@
             <%= image_tag district.svg_path, class: 'logo' %>
 
             <div class="text">
-              <div class="name"><%= district.name %></div>
-              <div class="representatives"><%= district.representatives.count %> representanter</div>
+              <h3 class="name"><%= district.name %></h3>
+              <aside><%= district.attending_representatives.count %> representanter</aside>
             </div>
           <% end %>
         </div>

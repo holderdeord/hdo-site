@@ -1,6 +1,6 @@
 <% page_title "#{@district.name} - #{District.model_name.human(count: 2).capitalize} - #{t('app.title')}" %>
 <div class="page-header">
-  <h1><%= @district.name %> <small class="pull-right"><img id="district-logo" src='<%= asset_path("district_logos/Troms.svg") %>'></small></h1>
+  <h1><%= @district.name %> <small class="pull-right"><img id="district-logo" src='<%= @district.svg_path %>'></small></h1>
 
 </div>
 
@@ -16,8 +16,8 @@
               <%= image_tag representative.latest_party.logo, alt: representative.latest_party.name, class: "party-logo" %>
             </div>
             <div class="text">
-              <div class="name"><%= representative.name %></div>
-              <div class="muted"><%= representative.latest_party.name %></div>
+              <h3 class="name"><%= representative.name %></h3>
+              <aside><%= representative.latest_party.name %></aside>
             </div>
           <% end %>
         </div>
