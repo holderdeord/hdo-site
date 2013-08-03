@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 class IssueDecorator < Draper::Decorator
   delegate :votes,
            :title,
