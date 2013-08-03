@@ -49,18 +49,12 @@ class IssueDecorator < Draper::Decorator
   end
 
   def promises_by_party
-    # {
-    #   'A'    => { 'Partiprogram' => promises, 'Regjeringserklæring' => promises },
-    #   'FrP'  => { 'Partiprogram' => promises },
-    # }
-
     @promises_by_party ||= (
-      result = {}
+      result = Hash.new { |hash, key| hash[key] = [] }
 
       model.promises.includes(:parties).each do |promise|
         promise.parties.each do |party|
-          data = result[party] ||= {}
-          (data[promise.source.downcase] ||= []) << promise
+          result[party] << promise
         end
       end
 
@@ -160,12 +154,20 @@ class IssueDecorator < Draper::Decorator
       h.t("app.promises.scores.caption.#{key}")
     end
 
-    def has_promises?
-      promise_groups && promise_groups.values.any?
-    end
-
     def promise_groups
-      @promise_groups ||= issue.promises_by_party[model]
+      @promise_groups ||= (
+        # TODO: clean this up
+
+        result = {}
+
+        promises_by_source = issue.promises_by_party[model].group_by { |promise| [promise.source.downcase, promise.parliament_period_name] }
+
+        result['partiprogram 2009-2013'] = promises_by_source[['partiprogram', '2009-2013']] || []
+        result['regjeringserklæring 2009-2013'] = promises_by_source[['regjeringserklæring', '2009-2013']] if promises_by_source[['regjeringserklæring', '2009-2013']]
+        result['partiprogram 2013-2017'] = promises_by_source[['partiprogram', '2013-2017']] if promises_by_source[['partiprogram', '2013-2017']]
+
+        result
+      )
     end
 
     def score

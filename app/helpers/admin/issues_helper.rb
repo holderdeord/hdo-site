@@ -116,7 +116,7 @@ module Admin::IssuesHelper
   end
 
   def with_promise_status(promises)
-    promises.map { |pr| [pr, promise_status_for(pr)] }.sort_by { |_, status| status }
+    promises.sort_by(&:parliament_period_name).map { |pr| [pr, promise_status_for(pr)] }.sort_by { |_, status| status }
   end
 
   def party_options(opts = {})
