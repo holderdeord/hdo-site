@@ -32,53 +32,6 @@
   }
 }
 
-.tagblock-caption {
-  margin-bottom: 0;
-  &:first-letter {
-    text-transform: capitalize;
-  }
-  a {
-    color: inherit;
-  }
-}
-
-.tagblock {
-  border-top: 1px solid #eee;
-  border-bottom: 1px solid #eee;
-  background: #fafafa;
-  margin-bottom: 20px;
-  padding: 10px;
-  article {
-    word-break: break-word;
-    padding: 0 10px;
-    margin-bottom: 10px;
-    &:hover {
-      background-color: desaturate( lighten(@hdoPrimaryColor, 60%), 55%);
-    }
-    &:active {
-      background-color: desaturate( lighten(@hdoPrimaryColor, 55%), 55%);
-    }
-    > a {
-      color: inherit;
-      text-decoration: none;
-    }
-    p {
-      color: #555;
-    }
-    h4 {
-      font-weight: inherit;
-      margin-bottom: 0.25em;
-    }
-    .read-more {
-      color: @hdoPrimaryColor;
-    }
-    &:hover .read-more {
-      text-decoration: underline;
-      color: darken(@hdoPrimaryColor, 5%);
-    }
-  }
-}
-
 .top-issues-caption {
   margin-bottom: 0;
   padding-left: 10px;
@@ -89,11 +42,18 @@
     word-break: break-word;
     padding: 0 10px;
     margin-bottom: 10px;
+    border-radius: 3px;
+    border: 1px solid transparent;
     &:hover {
-      background-color: desaturate( lighten(@hdoPrimaryColor, 60%), 55%);
+      text-decoration: none;
+      background-color: #f6f6f6;
+      border-color: #eee;
+      .read-more {
+        text-decoration: underline;
+      }
     }
     &:active {
-      background-color: desaturate( lighten(@hdoPrimaryColor, 55%), 55%);
+      background-color: #eee;
     }
     > a {
       color: inherit;
@@ -196,4 +156,22 @@ a:hover .avatar {
       text-overflow: ellipsis;
     }
   }
+}
+
+section {
+  margin-top: 40px;
+  h2, h3, h4 {
+    margin-bottom: 0;
+  }
+  h4 {
+    font-weight: normal;
+  }
+}
+
+.intro {
+  margin: 0 0 1.5em 0;
+}
+
+.read-more {
+  color: @hdoPrimaryColor;
 }

@@ -1,5 +1,14 @@
-<h3 class="top-issues-caption">Aktuelt</h3>
 <section class="top-issues">
+  <h4 class="top-issues-caption">Utvalgte saker</h4>
+  <article class="issue">
+    <%= link_to @issues.first do %>
+      <h2><%= @issues.first.title %></h2>
+      <p>
+        <%= @issues.first.description %>
+        <span class="read-more"><%= t('app.read_more') %></span>
+      </p>
+    <% end %>
+  </article>
   <% @issues.each_slice(3) do |issues| %>
     <div class="row-fluid">
       <% issues.each do |issue| %>
@@ -7,7 +16,7 @@
           <%= link_to issue do %>
             <h4><%= issue.title %></h4>
             <p>
-              <%= awesome_truncate issue.description, 250 %>
+              <%= awesome_truncate issue.description, 200 %>
               <span class="read-more"><%= t('app.read_more') %></span>
             </p>
           <% end %>
