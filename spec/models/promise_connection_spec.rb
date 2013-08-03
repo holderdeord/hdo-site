@@ -56,8 +56,15 @@ describe PromiseConnection do
     current_promise = Promise.make!(parliament_period: current_period)
     next_promise = Promise.make!(parliament_period: next_period)
 
-    PromiseConnection.make(promise: current_promise).should be_valid
-    PromiseConnection.make(promise: next_promise).should_not be_valid
+    PromiseConnection.make(status: 'for', promise: current_promise).should be_valid
+    PromiseConnection.make(status: 'for', promise: next_promise).should_not be_valid
+  end
+
+  it 'allows related promises from the next period' do
+    next_period    = ParliamentPeriod.make!(external_id: '2013-2017')
+    next_promise = Promise.make!(parliament_period: next_period)
+
+    PromiseConnection.make(promise: next_promise, status: 'related').should be_valid
   end
 
   it 'allows manual overrides' do
