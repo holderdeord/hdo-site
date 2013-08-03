@@ -83,6 +83,10 @@ module Admin::IssuesHelper
     [PromiseConnection::STATES, PromiseConnection::UNRELATED_STATE].flatten
   end
 
+  def disable_promise_state?(state, promise)
+    promise.parliament_period_name != '2009-2013' && %[for against].include?(state)
+  end
+
   def issues_for_promise(promise)
     pcs = promise.promise_connections.select { |pc| pc.issue.id != @issue.id }
 

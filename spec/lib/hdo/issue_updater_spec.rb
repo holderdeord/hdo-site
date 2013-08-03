@@ -160,6 +160,27 @@ module Hdo
         }.to change(issue.promise_connections, :count).by(1)
       end
 
+      it 'only allows "related" promises from 2013-2017' do
+        pp = ParliamentPeriod.make!(external_id: '2013-2017')
+        promise = Promise.make!(parliament_period: pp)
+
+        promises = {
+          promise.id => {'status' => 'for'}
+        }.with_indifferent_access
+
+        expect {
+          IssueUpdater.new(issue, {promises: promises}, user).update!
+        }.to raise_error
+
+        promises = {
+          promise.id => {'status' => 'related'}
+        }.with_indifferent_access
+
+        expect {
+          IssueUpdater.new(issue, {promises: promises}, user).update!
+        }.to change(issue.promise_connections, :count).by(1)
+      end
+
       it 'modifies a promise connection' do
         promise = Promise.make!
         promise_connection = PromiseConnection.make! promise: promise, issue: issue
@@ -363,5 +384,6 @@ module Hdo
         }.to raise_error(IssueUpdater::Unauthorized)
       end
     end
+
   end
 end

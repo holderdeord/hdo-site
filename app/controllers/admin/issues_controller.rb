@@ -122,11 +122,9 @@ class Admin::IssuesController < AdminController
   end
 
   def edit_promises
-    # FIXME: hardcoded restriction to 2009-2013 promises
-
     @promises_by_party = @issue.categories.includes(promises: [:promise_connections, :parties, :parliament_period]).
                                            map(&:promises).compact.flatten.uniq.
-                                           select { |e| e.parliament_period.external_id == '2009-2013' }.
+                                           sort_by { |e| e.parliament_period_name }.
                                            group_by { |e| e.short_party_names }.
                                            sort_by { |names, _| names }
   end

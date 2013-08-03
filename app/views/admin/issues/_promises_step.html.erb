@@ -13,18 +13,23 @@
         <div class="tab-pane <%= 'active' if idx == 0 %>" id="<%= party_names.gsub(/\W/, '-') %>-tab">
           <% with_promise_status(promises).each do |promise, status| %>
             <div class="row-fluid">
-              <div class="span1">
-                <%= promise.external_id %>
+              <div class="span2">
+                <p><%= promise.parliament_period_name %></p>
+                <p><%= promise.external_id %></p>
               </div>
 
-              <div class="span7">
+              <div class="span6">
                 <p><%= promise.body %></p>
               </div>
 
               <div class="span4">
                 <div class="pull-right">
                   <% promise_states.each do |current_status| %>
-                    <%= radio_button_tag "promises[#{promise.id}][status]", current_status, current_status == status %>
+                    <%= radio_button_tag "promises[#{promise.id}][status]",
+                          current_status,
+                          current_status == status,
+                          disabled: disable_promise_state?(current_status, promise) %>
+
                     <%= t("app.issues.edit.promise.#{current_status}") %>
                   <% end %>
                 </div>

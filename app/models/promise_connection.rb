@@ -14,7 +14,7 @@ class PromiseConnection < ActiveRecord::Base
   validates :status, presence: true, inclusion: { in: STATES }
   validates :override, inclusion: 0..100, allow_nil: true
 
-  validate :no_new_promises
+  validate :only_related_promises_for_next_period
 
   def for?
     status.inquiry.for?
@@ -51,9 +51,9 @@ class PromiseConnection < ActiveRecord::Base
   # hack to avoid bad promise connections - obviously needs to change
   #
 
-  def no_new_promises
-    if promise && promise.parliament_period.external_id != '2009-2013'
-      errors.add(:promise, "must be from 2009-2013 for issue connection")
+  def only_related_promises_for_next_period
+    if status != 'related' && promise && promise.parliament_period.external_id != '2009-2013'
+      errors.add(:promise, "must be from 2009-2013 or marked 'related' for issue connection")
     end
   end
 
