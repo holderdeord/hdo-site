@@ -6,10 +6,16 @@ class DistrictDecorator < Draper::Decorator
   end
 
   def attending_representatives
-    @attending_representatives ||= model.representatives.attending.to_a
+    @attending_representatives ||= sort_representatives(model.representatives.attending.to_a)
   end
 
   def representatives
-    @representatives ||= model.representatives.to_a
+    @representatives ||= sort_representatives(model.representatives.to_a)
+  end
+
+  private
+
+  def sort_representatives(reps)
+    reps.sort_by { |rep| [rep.latest_party.name, rep.last_name] }
   end
 end
