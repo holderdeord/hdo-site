@@ -1,14 +1,31 @@
 <section class="top-issues">
   <h4 class="top-issues-caption">Utvalgte saker</h4>
+
   <article class="issue">
-    <%= link_to @issues.first do %>
-      <h2><%= @issues.first.title %></h2>
+    <%= link_to @main_issue do %>
+      <h2><%= @main_issue.title %></h2>
+
+      <div class="row-fluid">
+        <% @main_issue.generic_positions.each do |title, parties| %>
+          <% next if parties.empty? %>
+          <div class="row-fluid">
+            <div class="span4"><%= title %></div>
+            <div class="span5">
+              <% parties.sort_by(&:name).each do |party| %>
+                <%= image_tag party.logo.versions[:medium], alt: "#{party.name}s logo", class: "party-logo", style: 'max-height: 48px;' %>
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+
       <p>
-        <%= @issues.first.description %>
+        <%= @main_issue.description %>
         <span class="read-more"><%= t('app.read_more') %></span>
       </p>
     <% end %>
   </article>
+
   <% @issues.each_slice(3) do |issues| %>
     <div class="row-fluid">
       <% issues.each do |issue| %>
