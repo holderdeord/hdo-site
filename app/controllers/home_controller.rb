@@ -30,6 +30,9 @@ class HomeController < ApplicationController
     if AppConfig.leaderboard_enabled
       @leaderboard = Hdo::Stats::Leaderboard.new(published)
     end
+
+    @answered_question   = Answer.order(:created_at).last.try(:question).try(:decorate)
+    @unanswered_question = Question.order(:created_at).approved.unanswered.last.try(:decorate)
   end
 
   def robots

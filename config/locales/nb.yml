@@ -467,6 +467,7 @@ nb:
     questions:
       new: Still et spørsmål
       title: Spør en stortingspolitiker
+      all: Se alle spørsmål
       answered: Besvarte spørsmål
       unanswered: Venter på svar
       edit:

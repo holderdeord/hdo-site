@@ -16,44 +16,23 @@
 <% if AppConfig.questions_enabled %>
 <section>
   <h2><%= t 'app.questions.title' %></h2>
+
   <p class="intro">
     Nå kan du stille spørsmål til en stortingspolitiker om saker som opptar deg. Prøv vår nye tjeneste!
     <br><br>
-    <%= link_to t('app.questions.new'), questions_path, class: 'btn btn-primary' %>
-    <a href="#" class="btn">Se alle spørsmål</a>
+    <%= link_to t('app.questions.new'), new_question_path, class: 'btn btn-primary' %>
+    <%= link_to t('app.questions.all'), questions_path, class: 'btn' %>
   <p>
 
   <div class="row-fluid">
     <div class="span6 questions-index">
       <h4>Sist besvarte spørsmål</h4>
-      <a href="/questions/211" class="question">
-        <div class="avatar-container">
-          <img src="/uploads/representative/image/karh/avatar_c30414a9c0c721b290ca4c5ac75dbc36.jpg" class="representative" alt="Kari Henriksen">
-          <img alt="Arbeiderpartiet" class="party-logo" src="/uploads/party/logo/a/59188f54e1a4771762cb915a3c0adcd3.png">
-        </div>
-        <p>Kjære representant. Arbeiderpartiet lovet 11 mnd studiestøtte, men dere som sitter i en flertalls...</p>
-        <aside class="muted">
-          <div>
-            Til Kari Henriksen fra <span class="party">Arbeiderpartiet</span> i <span class="district">Vest-Agder</span>
-          </div>
-        </aside>
-      </a>
+      <%= render partial: 'shared/question_card', locals: {question: @answered_question} %>
     </div>
 
     <div class="span6 questions-index">
       <h4>Siste ubesvarte spørsmål</h4>
-      <a href="/questions/211" class="question">
-        <div class="avatar-container">
-          <img src="/uploads/representative/image/karh/avatar_c30414a9c0c721b290ca4c5ac75dbc36.jpg" class="representative" alt="Kari Henriksen">
-          <img alt="Arbeiderpartiet" class="party-logo" src="/uploads/party/logo/a/59188f54e1a4771762cb915a3c0adcd3.png">
-        </div>
-        <p>Kjære representant. Arbeiderpartiet lovet 11 mnd studiestøtte, men dere som sitter i en flertalls...</p>
-        <aside class="muted">
-          <div>
-            Til Kari Henriksen fra <span class="party">Arbeiderpartiet</span> i <span class="district">Vest-Agder</span>
-          </div>
-        </aside>
-      </a>
+      <%= render partial: 'shared/question_card', locals: {question: @unanswered_question} %>
     </div>
   </div>
 </section>
