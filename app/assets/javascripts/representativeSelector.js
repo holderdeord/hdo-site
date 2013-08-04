@@ -21,7 +21,8 @@ var HDO = HDO || {};
         }
 
         $.each(selectedRepresentatives, function () {
-          representativeSelect.append($("<option />").val(this.slug).text(this.name));
+          var opt = $("<option />").val(this.slug).text(this.name).attr('disabled', this.opted_out);
+          representativeSelect.append(opt);
         });
 
         representativeSelect.trigger('liszt:updated'); // chosen

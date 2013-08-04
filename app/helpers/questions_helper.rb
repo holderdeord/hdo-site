@@ -1,7 +1,7 @@
 module QuestionsHelper
   def data_representatives
     @representatives.map do |rep|
-      { slug: rep.slug, name: rep.name_with_party, district: rep.district.slug }
+      { slug: rep.slug, name: rep.name_with_party, district: rep.district.slug, opted_out: rep.opted_out? }
     end
   end
 
