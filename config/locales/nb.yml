@@ -114,6 +114,11 @@ nb:
       parliament_issue:
         one: "stortingssak"
         other: "stortingssaker"
+      parliament_period:
+        one: stortingsperiode
+        other: stortingsperioder
+      parliament_session:
+        one: stortingssesjon
       vote:
         one: "avstemning"
         other: "avstemninger"
