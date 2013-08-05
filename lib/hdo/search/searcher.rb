@@ -11,7 +11,7 @@ module Hdo
       }
 
       def initialize(query, size = nil)
-        @query = query.blank? ? '*' : query
+        @query = query.blank? ? '*' : query.strip
         @size = size || 100
       end
 

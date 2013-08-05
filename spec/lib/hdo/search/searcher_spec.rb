@@ -86,6 +86,11 @@ module Hdo
           expect_query "LOL", {:expected_size => 25}
         end
 
+        it 'removes trailing spaces' do
+          # https://github.com/holderdeord/hdo-site/issues/614
+          expect_query 'sykkel ', expected_query: 'sykkel* sykkel'
+        end
+
       end
     end
   end
