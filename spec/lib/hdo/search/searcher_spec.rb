@@ -75,15 +75,15 @@ module Hdo
 
 
         it 'matches both wildcard and full string' do
-          expect_query "LOL", {:expected_query => "LOL* LOL"}
+          expect_query "LOL", expected_query: "LOL* LOL"
         end
 
         it 'only searches in issues and representative indeces' do
-          expect_query "LOL", {:expected_indeces => [Issue.index_name, Representative.index_name]}
+          expect_query "LOL", expected_indeces: [Issue.index_name, Representative.index_name]
         end
 
         it 'restricts response size to 25' do
-          expect_query "LOL", {:expected_size => 25}
+          expect_query "LOL", expected_size: 25
         end
 
         it 'removes trailing spaces' do
