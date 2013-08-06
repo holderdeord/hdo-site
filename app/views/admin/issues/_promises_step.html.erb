@@ -43,7 +43,7 @@
               </div>
 
               <div class="span4">
-                <% if @issue.valence_issue? %>
+                <% if @issue.valence_issue? && promise.parliament_period_name == '2009-2013' %>
                   <div class="pull-right">
                     <% promise_overrides.each do |value, label| %>
                       <%= radio_button_tag "promises[#{promise.id}][override]", value, promise_override_value_for(promise).to_s == value.to_s %>
