@@ -62,7 +62,7 @@ gem 'twitter_bootstrap_form_for', "~> 1.0.5"
 gem 'redcarpet'
 
 # authentication
-gem 'devise', "~> 2.2.3"
+gem 'devise', "~> 2.2.5"
 
 # authorization
 gem 'pundit'
