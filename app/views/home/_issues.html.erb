@@ -5,18 +5,20 @@
     <%= link_to @main_issue do %>
       <h2><%= @main_issue.title %></h2>
 
-      <div class="row-fluid">
-        <% @main_issue.generic_positions.each do |title, parties| %>
-          <% next if parties.empty? %>
-          <div class="row-fluid">
-            <div class="span4"><%= title %></div>
-            <div class="span5">
-              <% parties.sort_by(&:name).each do |party| %>
-                <%= image_tag party.logo.versions[:medium], alt: "#{party.name}s logo", class: "party-logo", style: 'max-height: 48px;' %>
-              <% end %>
+      <div class="facts">
+        <div class="row-fluid">
+          <% @main_issue.generic_positions.each do |title, parties| %>
+            <% next if parties.empty? %>
+            <div class="row-fluid">
+              <div class="span3">
+                <% parties.sort_by(&:name).each do |party| %>
+                  <%= image_tag party.logo.versions[:medium], alt: "#{party.name}s logo", class: "party-logo", style: 'max-height: 32px;' %>
+                <% end %>
+              </div>
+              <div class="span9"><%= title %></div>
             </div>
-          </div>
-        <% end %>
+          <% end %>
+        </div>
       </div>
 
       <p>
