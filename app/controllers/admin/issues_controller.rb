@@ -69,6 +69,7 @@ class Admin::IssuesController < AdminController
   end
 
   def update
+    logger.info "updating issue: #{params.inspect}"
     update_ok = Hdo::IssueUpdater.new(@issue, params, current_user).update
 
     if update_ok
