@@ -72,7 +72,7 @@
     <section class="issue-party-comment">
       <div class="content">
         <h5>Kommentar fra <%= party.name %></h5>
-        <p><%= party.comment.body %> <span class="muted">Publisert <%= l party.comment.created_at.localtime, format: :month_year %></span></p>
+        <p><%= markdown(party.comment.body).html_safe %> <span class="muted">Publisert <%= l party.comment.created_at.localtime, format: :month_year %></span></p>
       </div>
     </section>
   <% end %>
