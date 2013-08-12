@@ -9,8 +9,8 @@ describe VoteConnectionDecorator do
     non_matching = VoteConnectionDecorator.decorate(VoteConnection.make!(matches: false, issue: issue), context: issue)
 
     I18n.with_locale :nb do
-      matching.matches_text.should     == 'Avstemningen er <strong>i tråd med</strong> å øke ditt og datt.'
-      non_matching.matches_text.should == 'Avstemningen er <strong>ikke i tråd med</strong> å øke ditt og datt.'
+      matching.matches_text.should     == 'Å stemme for dette forslaget er <strong>i tråd med</strong> å øke ditt og datt.'
+      non_matching.matches_text.should == 'Å stemme for dette forslaget er <strong>ikke i tråd med</strong> å øke ditt og datt.'
     end
   end
 
