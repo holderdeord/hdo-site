@@ -37,6 +37,10 @@
   padding-left: 10px;
 }
 
+h2.top-issues-caption {
+  margin-top: 0;
+}
+
 .top-issues {
   article {
     word-break: break-word;
@@ -54,6 +58,10 @@
     }
     &:active {
       background-color: #eee;
+    }
+    img {
+      margin-top: 10px;
+      border-radius: 2px;
     }
     > a {
       color: inherit;
@@ -73,16 +81,6 @@
     &:hover .read-more {
       text-decoration: underline;
       color: darken(@hdoPrimaryColor, 5%);
-    }
-  }
-  .facts {
-    background-color: rgba(0,0,0, 0.03);
-    border: 1px solid rgba(0,0,0, 0.05);
-    margin: 10px 0;
-    padding: 0 20px;
-    border-radius: 3px;
-    .row-fluid {
-      margin: 15px;
     }
   }
 }

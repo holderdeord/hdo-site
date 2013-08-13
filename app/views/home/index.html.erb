@@ -19,22 +19,23 @@
 
   <p class="intro">
     Nå kan du stille spørsmål til en stortingspolitiker om saker som opptar deg. Prøv vår nye tjeneste!
-    <br><br>
-    <%= link_to t('app.questions.new'), new_question_path, class: 'btn btn-primary' %>
-    <%= link_to t('app.questions.all'), questions_path, class: 'btn' %>
   <p>
 
+  <h4>Sist besvarte spørsmål</h4>
   <div class="row-fluid">
     <div class="span6 questions-index">
-      <h4>Sist besvarte spørsmål</h4>
+      <%= render partial: 'shared/question_card', locals: {question: @answered_question} %>
       <%= render partial: 'shared/question_card', locals: {question: @answered_question} %>
     </div>
-
     <div class="span6 questions-index">
-      <h4>Siste ubesvarte spørsmål</h4>
+      <%= render partial: 'shared/question_card', locals: {question: @unanswered_question} %>
       <%= render partial: 'shared/question_card', locals: {question: @unanswered_question} %>
     </div>
   </div>
+  <p>
+    <%= link_to t('app.questions.new'), new_question_path, class: 'btn btn-primary' %>
+    <%= link_to t('app.questions.all'), questions_path, class: 'btn' %>
+  </p>
 </section>
 <% end %>
 
@@ -51,7 +52,7 @@
   <% end %>
 </section>
 
-<% if AppConfig.frontpage_blog_enabled && @latest_post %>
+<% if AppConfig.frontpage_blog_enabled && @latest_posts %>
   <%= render partial: 'blog_and_social' %>
 <% end %>
 

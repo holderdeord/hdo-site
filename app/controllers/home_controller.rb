@@ -21,7 +21,7 @@ class HomeController < ApplicationController
     @parties  = Party.order(:name)
 
     if AppConfig.frontpage_blog_enabled
-      @latest_post = Hdo::Utils::BlogFetcher.latest_post
+      @latest_posts = Hdo::Utils::BlogFetcher.latest_post(2)
       @issues = published.for_frontpage(@latest_post ? 7 : 10)
     else
       @issues = published.for_frontpage(10)

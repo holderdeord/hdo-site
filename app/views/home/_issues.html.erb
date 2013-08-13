@@ -1,26 +1,12 @@
 <section class="top-issues">
-  <h4 class="top-issues-caption">Utvalgte saker</h4>
+  <h4 class="top-issues-caption">Ukens tema</h4>
+  <h2 class="top-issues-caption">Samferdsel</h2>
 
   <article class="issue">
     <%= link_to @main_issue do %>
-      <h2><%= @main_issue.title %></h2>
-
-      <div class="facts">
-        <div class="row-fluid">
-          <% @main_issue.generic_positions.each do |title, parties| %>
-            <% next if parties.empty? %>
-            <div class="row-fluid">
-              <div class="span3">
-                <% parties.sort_by(&:name).each do |party| %>
-                  <%= image_tag party.logo.versions[:medium], alt: "#{party.name}s logo", class: "party-logo", style: 'max-height: 32px;' %>
-                <% end %>
-              </div>
-              <div class="span9"><%= title %></div>
-            </div>
-          <% end %>
-        </div>
-      </div>
-
+      <img src="" alt="Illustrasjonsbilde tema">
+      <h3><%= @main_issue.title %></h3>
+      <div class="muted">Basert på <%= @main_issue.votes.size %> avstemninger på Stortinget</div>
       <p>
         <%= @main_issue.description %>
         <span class="read-more"><%= t('app.read_more') %></span>
@@ -34,6 +20,7 @@
         <article class="issue span4">
           <%= link_to issue do %>
             <h4><%= issue.title %></h4>
+            <div class="muted">Basert på <%= issue.votes.size %> avstemninger på Stortinget</div>
             <p>
               <%= awesome_truncate issue.description, 200 %>
               <span class="read-more"><%= t('app.read_more') %></span>

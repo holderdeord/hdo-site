@@ -9,8 +9,8 @@ module Hdo
         @instance.posts
       end
 
-      def self.latest_post
-        @latest_post = Rails.cache.fetch('blog/latest', expires_in: 5.minutes) { posts.first }
+      def self.latest_post(count = 1)
+        @latest_post = Rails.cache.fetch("blog/latest/#{count}", expires_in: 5.minutes) { posts.first(count) }
       rescue => ex
         Rails.logger.error "#{self.class}: #{ex.message}"
         @latest_post # serve stale on exception
