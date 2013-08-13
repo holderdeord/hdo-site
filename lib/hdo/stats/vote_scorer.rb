@@ -16,7 +16,7 @@ module Hdo
         CSV.generate do |csv|
           csv << ['Tittel', 'Vektet tekst', 'Vektet %', 'Uvektet tekst', 'Uvektet %', 'Differanse']
 
-          Issue.published.each do |issue|
+          Issue.non_valence.published.each do |issue|
             weighted   = new(issue)
             unweighted = new(issue, weighted: false)
 
