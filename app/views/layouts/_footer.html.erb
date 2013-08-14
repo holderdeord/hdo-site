@@ -3,11 +3,8 @@
     <div class="row-fluid">
 
       <div class="span4">
-        <p>
-          <a href="https://twitter.com/holderdeord" class="twitter-follow-button" data-show-count="true" data-lang="no">Følg @holderdeord</a>
-          <div class="fb-like" data-href="https://www.facebook.com/holderdeord" data-send="false" data-layout="button_count" data-width="70" data-show-faces="false"></div>
-        </p>
-        <div id="fb-root"></div>
+        <%= link_to t('app.login'), new_user_session_path %>
+
         <p>
           <span class="muted"><%=t 'app.title' %> &copy; <%= Time.now.year %></span>
           <small><%= link_to 'Vilkår for bruk', home_terms_path %></small>
@@ -15,7 +12,6 @@
       </div>
 
       <div class="span4">
-        <%= link_to t('app.login'), new_user_session_path %>
       </div>
 
       <div class="span4">
