@@ -84,7 +84,7 @@ namespace :images do
 
   desc 'Fetch topic image'
   task :topic do
-    ok = system "curl", "-o", Rails.root.join('public/images/topic.jpg').to_s, "http://files.holderdeord.no/images/tema_samferdsel.jpg"
+    ok = system "curl", "-s", "-o", Rails.root.join('public/images/topic.jpg').to_s, "http://files.holderdeord.no/images/tema_samferdsel.jpg"
     ok or raise "topic download failed"
   end
 
