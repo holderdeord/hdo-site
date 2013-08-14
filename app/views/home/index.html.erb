@@ -24,12 +24,15 @@
   <h4>Sist besvarte spørsmål</h4>
   <div class="row-fluid">
     <div class="span6 questions-index">
-      <%= render partial: 'shared/question_card', locals: {question: @answered_question} %>
-      <%= render partial: 'shared/question_card', locals: {question: @answered_question} %>
+      <% @answered_questions.each do |q| %>
+        <%= render partial: 'shared/question_card', locals: {question: q} %>
+      <% end %>
     </div>
+
     <div class="span6 questions-index">
-      <%= render partial: 'shared/question_card', locals: {question: @unanswered_question} %>
-      <%= render partial: 'shared/question_card', locals: {question: @unanswered_question} %>
+      <% @unanswered_questions.each do |q| %>
+        <%= render partial: 'shared/question_card', locals: {question: q} %>
+      <% end %>
     </div>
   </div>
   <p>

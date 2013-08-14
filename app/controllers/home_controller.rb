@@ -21,7 +21,7 @@ class HomeController < ApplicationController
     @parties  = Party.order(:name)
 
     if AppConfig.frontpage_blog_enabled
-      @latest_posts = Hdo::Utils::BlogFetcher.latest_post(2)
+      @latest_posts = Hdo::Utils::BlogFetcher.last(2)
       @issues = published.for_frontpage(@latest_post ? 7 : 10)
     else
       @issues = published.for_frontpage(10)
@@ -33,8 +33,8 @@ class HomeController < ApplicationController
       @leaderboard = Hdo::Stats::Leaderboard.new(published)
     end
 
-    @answered_question   = Answer.order(:created_at).last.try(:question).try(:decorate)
-    @unanswered_question = Question.order(:created_at).approved.unanswered.last.try(:decorate)
+    @answered_questions   = Answer.order(:created_at).last(2).map { |e| e.question.decorate }
+    @unanswered_questions = Question.order(:created_at).approved.unanswered.last(2).map { |e| e.decorate }
   end
 
   def robots

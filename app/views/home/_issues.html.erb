@@ -1,10 +1,11 @@
 <section class="top-issues">
   <h4 class="top-issues-caption">Ukens tema</h4>
-  <h2 class="top-issues-caption">Samferdsel</h2>
+  <h2 class="top-issues-caption"><%= AppConfig.topic_of_the_week %></h2>
 
+  <% if @main_issue %>
   <article class="issue">
     <%= link_to @main_issue do %>
-      <img src="" alt="Illustrasjonsbilde tema">
+      <img src="/images/topic.jpg" alt="Illustrasjonsbilde tema">
       <h3><%= @main_issue.title %></h3>
       <div class="muted">Basert på <%= @main_issue.votes.size %> avstemninger på Stortinget</div>
       <p>
@@ -13,6 +14,7 @@
       </p>
     <% end %>
   </article>
+  <% end %>
 
   <% @issues.each_slice(3) do |issues| %>
     <div class="row-fluid">
