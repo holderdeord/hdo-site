@@ -19,7 +19,7 @@ class HomeController < ApplicationController
 
     @all_tags   = published.flat_map(&:tags).uniq.sort_by(&:name)
     @parties    = Party.order(:name)
-    @issues     = published.for_frontpage(10)
+    @issues     = published.for_frontpage(7)
     @main_issue = @issues.shift.try(:decorate)
     @questions  = Answer.order(:created_at).last(4).map { |e| e.question.decorate }
 
