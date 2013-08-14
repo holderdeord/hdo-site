@@ -82,8 +82,14 @@ namespace :images do
     end
   end
 
+  desc 'Fetch topic image'
+  task :topic do
+    ok = system "curl", "-o", Rails.root.join('public/images/topic.jpg').to_s, "http://files.holderdeord.no/images/tema_samferdsel.jpg"
+    ok or raise "topic download failed"
+  end
+
   desc 'Set up all images'
-  task :all => %w[images:representatives:fetch images:party_logos]
+  task :all => %w[images:representatives:fetch images:party_logos images:topic]
 
   desc 'Reset and set up all images'
   task :reset => %w[representatives:reset all]
