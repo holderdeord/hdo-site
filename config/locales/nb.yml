@@ -433,6 +433,9 @@ nb:
         unknown: 'Denne saken ble avgjort uten at avstemningsknappene ble brukt. Vi har derfor ikke oversikt over hva den enkelte representant har stemt.'
         inferred: 'Denne saken ble avgjort enstemmig uten at avstemningsknappene ble brukt. Oversikten er utledet fra tilstedeværelse ved andre avstemninger samme dag.'
         party_unknown: 'Denne avstemningen ble avgjort uten at avstemningsknappene ble brukt. Vi har derfor ikke oversikt over hva det enkelte parti har stemt.'
+      based_on:
+        one: 'Basert på %{count} avstemning på Stortinget'
+        other: 'Basert på %{count} avstemninger på Stortinget'
       scores:
         against: "%{name} har stemt mot"
         against_html: "%{name} har stemt <strong>mot</strong>"

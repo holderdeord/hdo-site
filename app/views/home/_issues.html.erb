@@ -7,7 +7,7 @@
     <%= link_to @main_issue do %>
       <img src="/images/topic.jpg" alt="Illustrasjonsbilde tema">
       <h3><%= @main_issue.title %></h3>
-      <div class="muted">Basert på <%= @main_issue.votes.size %> avstemninger på Stortinget</div>
+      <div class="muted"><%= @main_issue.short_explanation %></div>
       <p>
         <%= @main_issue.description %>
         <span class="read-more"><%= t('app.read_more') %></span>
@@ -22,7 +22,7 @@
         <article class="issue span4">
           <%= link_to issue do %>
             <h4><%= issue.title %></h4>
-            <div class="muted">Basert på <%= issue.votes.size %> avstemninger på Stortinget</div>
+            <div class="muted"><%= issue.short_explanation %></div>
             <p>
               <%= awesome_truncate issue.description, 200 %>
               <span class="read-more"><%= t('app.read_more') %></span>
