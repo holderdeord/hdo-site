@@ -5,50 +5,58 @@
   </p>
 <% end %>
 
-<% if AppConfig.questions_enabled %>
-  <div class="row-fluid promoboxes">
-    <div class="span6 promoted">
-      <img class="promoimage" src="<%= asset_path('promoarea/promo_question.png') %>" alt="Spørsmålsgrafikk">
-      <h4><%= t 'app.questions.title' %></h4>
-      <p>Nå kan du stille spørsmål til en stortingspolitiker om saker som opptar deg. Prøv vår nye tjeneste!</p>
-      <p>
-        <%= link_to t('app.questions.new'), questions_path, class: 'btn btn-primary' %>
-      </p>
-    </div>
-    <div class="span6">
-      <img class="promoimage" src="<%= asset_path('promoarea/promo_money.png') %>" alt="Pengegrafikk">
-      <h4>Støtt vårt arbeid</h4>
-      <p>
-        Send kodeord HOLDERDEORD til 2160 for å støtte oss med 150 kr. Vi tar også i mot større gaver og sponsorbidrag.
-        <span class="read-more"><%= link_to t('app.read_more'), home_support_path %></span>
-      </p>
-    </div>
-  </div>
-<% end %>
-
 <div class="row-fluid">
-  <div class="row-fluid">
-    <% if AppConfig.frontpage_blog_enabled && @latest_post %>
-      <%= render partial: 'issues_and_blog' %>
-    <% else %>
-      <%= render partial: 'issues' %>
-    <% end %>
-  </div>
+  <%= render partial: 'issues' %>
 </div>
 
 <% if AppConfig.leaderboard_enabled %>
   <%= render partial: 'leaderboard' %>
 <% end %>
 
-<h3 class="lead">Alle tema</h3>
-<% @all_tags.each_slice(4) do |tags| %>
+<% if AppConfig.questions_enabled %>
+<section>
+  <h2><%= t 'app.questions.title' %></h2>
+
+  <p class="intro">
+    Nå kan du stille spørsmål til en stortingspolitiker om saker som opptar deg. Prøv vår nye tjeneste!
+  <p>
+
+  <h4>Sist besvarte spørsmål</h4>
   <div class="row-fluid">
-  <% tags.each do |tag| %>
-    <div class="span3">
-      <%= link_to tag.name, issues_path(anchor: "tag-#{tag.slug}") %>
+    <div class="span6 questions-index">
+      <% @questions.first(2).each do |q| %>
+        <%= render partial: 'shared/question_card', locals: {question: q} %>
+      <% end %>
+    </div>
+
+    <div class="span6 questions-index">
+      <% @questions.last(2).each do |q| %>
+        <%= render partial: 'shared/question_card', locals: {question: q} %>
+      <% end %>
+    </div>
+  </div>
+  <p>
+    <%= link_to t('app.questions.new'), new_question_path, class: 'btn btn-primary' %>
+    <%= link_to t('app.questions.all'), questions_path, class: 'btn' %>
+  </p>
+</section>
+<% end %>
+
+<section>
+  <h2>Alle tema</h2>
+  <% @all_tags.each_slice(4) do |tags| %>
+    <div class="row-fluid">
+    <% tags.each do |tag| %>
+      <div class="span3">
+        <%= link_to tag.name, issues_path(anchor: "tag-#{tag.slug}") %>
+      </div>
+    <% end %>
     </div>
   <% end %>
-  </div>
+</section>
+
+<% if AppConfig.frontpage_blog_enabled && @latest_posts %>
+  <%= render partial: 'blog_and_social' %>
 <% end %>
 
 <% unless AppConfig.leaderboard_enabled %>

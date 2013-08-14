@@ -1,0 +1,59 @@
+<section class="blog">
+  <div class="row-fluid">
+    <article class="span12">
+      <h2>Apropos</h2>
+      <p class="intro">
+        Her skriver folk tilknyttet Holder de ord om små og store ting som opptar dem. Helt uhøytidelig og etter innfallsmetoden.
+      </p>
+      <div class="row-fluid">
+      <% @latest_posts.each do |latest_post| %>
+        <a href="<%= latest_post.url %>" class="span6">
+          <h4><%= latest_post.title %></h4>
+          <p class="byline">av <%= latest_post.author %></p>
+          <div class="content">
+            <% latest_post.paragraphs.first(2).each do |pg| %>
+              <p><%= pg.html_safe %></p>
+            <% end %>
+          </div>
+          <span class="read-more">Les hele innlegget</span>
+        </a>
+        <% end %>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section class="social-media">
+  <div class="row-fluid">
+    <div class="span12">
+      <h2>Følg oss i sosiale medier</h2>
+      <p class="intro">
+        Følg oss på Twitter og Facebook så holder vi deg oppdatert på norsk politikk!
+      </p>
+      <div class="row-fluid">
+        <div class="span6">
+          <div class="social-network">
+            <div class="fb-like" data-href="https://www.facebook.com/holderdeord" data-send="false" data-layout="button_count" data-width="100" data-show-faces="false"></div>
+          </div>
+        </div>
+        <div class="span6">
+          <div class="social-network">
+            <a href="https://twitter.com/holderdeord" class="twitter-follow-button" data-show-count="true" data-lang="no">Følg @holderdeord</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="row-fluid">
+    <div class="span6">
+      <h2>Støtt vårt arbeid</h2>
+      <p>
+        Send kodeord HOLDERDEORD til 2160 for å støtte oss med 150 kr. Vi tar også i mot større gaver og sponsorbidrag.
+        <span class="read-more"><%= link_to t('app.read_more'), home_support_path %></span>
+      </p>
+    </div>
+  </div>
+</section>

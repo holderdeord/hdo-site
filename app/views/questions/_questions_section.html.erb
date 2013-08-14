@@ -3,9 +3,12 @@
   <% questions.each_slice(2) do |questions| %>
     <div class="question-row row-fluid">
       <% questions.each do |question| %>
-        <%= render partial: 'questions_section_card', locals: { question: question, category: category } %>
+        <div class="span6 question-<%= category %>">
+          <%= render partial: 'shared/question_card', locals: { question: question } %>
+        </div>
       <% end %>
     </div>
     <% end %>
-<p class="muted">Viser <%= questions.count %> av <%= total %>. <%= link_to 'Se alle', "/questions/all/#{category}" %>.</p>
+
+    <p class="muted">Viser <%= questions.count %> av <%= total %>. <%= link_to 'Se alle', "/questions/all/#{category}" %>.</p>
 </div>

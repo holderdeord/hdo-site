@@ -21,15 +21,19 @@ class HomeController < ApplicationController
     @parties  = Party.order(:name)
 
     if AppConfig.frontpage_blog_enabled
-      @latest_post = Hdo::Utils::BlogFetcher.latest_post
-      @issues = published.for_frontpage(@latest_post ? 6 : 9)
+      @latest_posts = Hdo::Utils::BlogFetcher.last(2)
+      @issues = published.for_frontpage(@latest_post ? 7 : 10)
     else
-      @issues = published.for_frontpage(9)
+      @issues = published.for_frontpage(10)
     end
+
+    @main_issue = (params[:main] ? Issue.find(params[:main]) : @issues.shift).try(:decorate)
 
     if AppConfig.leaderboard_enabled
       @leaderboard = Hdo::Stats::Leaderboard.new(published)
     end
+
+    @questions = Answer.order(:created_at).last(4).map { |e| e.question.decorate }
   end
 
   def robots

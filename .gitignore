@@ -22,6 +22,7 @@
 
 # Ignore carrierwave uploads
 /public/uploads
+/public/images/topic.jpg
 
 # Ignore representative images
 /app/assets/images/representatives/*.jpg

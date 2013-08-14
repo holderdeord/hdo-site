@@ -9,11 +9,11 @@ module Hdo
         @instance.posts
       end
 
-      def self.latest_post
-        @latest_post = Rails.cache.fetch('blog/latest', expires_in: 5.minutes) { posts.first }
+      def self.last(count = 1)
+        @last_result = Rails.cache.fetch("blog/latest/#{count}", expires_in: 5.minutes) { posts.first(count) }
       rescue => ex
         Rails.logger.error "#{self.class}: #{ex.message}"
-        @latest_post # serve stale on exception
+        @last_result # serve stale on exception
       end
 
       def initialize
@@ -56,7 +56,10 @@ module Hdo
             paragraphs = ['']
 
             Nokogiri::HTML.parse(@html).css('body *').children.each do |node|
-              if node.name == 'br'
+              case node.name
+              when 'a'
+                paragraphs.last << node.text
+              when 'br'
                 paragraphs << ''
               else
                 paragraphs.last << node.to_s

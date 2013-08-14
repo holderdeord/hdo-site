@@ -91,4 +91,5 @@ end
 
 after  'hipchat:trigger_notification', 'hipchat:ensure'
 before 'deploy:assets:precompile', 'config:symlink'
+before 'deploy:create_symlink', 'images:topic'
 before 'deploy:create_symlink', 'cache:precompute' # important

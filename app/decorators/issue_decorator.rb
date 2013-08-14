@@ -50,6 +50,14 @@ class IssueDecorator < Draper::Decorator
     end
   end
 
+  def generic_positions
+    if model.valence_issue?
+      model.valence_issue_explanations.map { |expl| [expl.title, expl.parties.sort_by(&:name)] }
+    else
+      position_groups.map { |label, parties| [label.text, parties] }
+    end
+  end
+
   def promises_by_party
     @promises_by_party ||= (
       result = Hash.new { |hash, key| hash[key] = [] }
