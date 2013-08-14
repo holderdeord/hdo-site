@@ -22,19 +22,17 @@
   <p>
 
   <h4>Sist besvarte spørsmål</h4>
-  <div class="row-fluid">
-    <div class="span6 questions-index">
-      <% @questions.first(2).each do |q| %>
-        <%= render partial: 'shared/question_card', locals: {question: q} %>
-      <% end %>
-    </div>
 
-    <div class="span6 questions-index">
-      <% @questions.last(2).each do |q| %>
-        <%= render partial: 'shared/question_card', locals: {question: q} %>
+  <% @questions.in_groups_of(2) do |questions_row| %>
+    <div class="row-fluid">
+      <% questions_row.each do |q| %>
+        <div class="span6 questions-index">
+          <%= render partial: 'shared/question_card', locals: {question: q} %>
+        </div>
       <% end %>
     </div>
-  </div>
+  <% end %>
+
   <p>
     <%= link_to t('app.questions.new'), new_question_path, class: 'btn btn-primary' %>
     <%= link_to t('app.questions.all'), questions_path, class: 'btn' %>
