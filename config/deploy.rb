@@ -67,6 +67,11 @@ namespace :cache do
   task :images do
     run "cd #{latest_release} && RAILS_ENV=#{rails_env} #{rake} images:reset"
   end
+
+  # FIXME: temporary hack
+  task :topic do
+    run "cd #{latest_release} && RAILS_ENV=#{rails_env} #{rake} images:topic"
+  end
 end
 
 require "hipchat/capistrano"
@@ -91,5 +96,5 @@ end
 
 after  'hipchat:trigger_notification', 'hipchat:ensure'
 before 'deploy:assets:precompile', 'config:symlink'
-before 'deploy:create_symlink', 'images:topic'
+before 'deploy:create_symlink', 'cache:topic'
 before 'deploy:create_symlink', 'cache:precompute' # important
