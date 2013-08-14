@@ -17,23 +17,19 @@ class HomeController < ApplicationController
   def index
     published = Issue.published.includes(:tags)
 
-    @all_tags = published.flat_map(&:tags).uniq.sort_by(&:name)
-    @parties  = Party.order(:name)
+    @all_tags   = published.flat_map(&:tags).uniq.sort_by(&:name)
+    @parties    = Party.order(:name)
+    @issues     = published.for_frontpage(10)
+    @main_issue = @issues.shift.try(:decorate)
+    @questions  = Answer.order(:created_at).last(4).map { |e| e.question.decorate }
 
     if AppConfig.frontpage_blog_enabled
       @latest_posts = Hdo::Utils::BlogFetcher.last(2)
-      @issues = published.for_frontpage(@latest_post ? 7 : 10)
-    else
-      @issues = published.for_frontpage(10)
     end
-
-    @main_issue = (params[:main] ? Issue.find(params[:main]) : @issues.shift).try(:decorate)
 
     if AppConfig.leaderboard_enabled
       @leaderboard = Hdo::Stats::Leaderboard.new(published)
     end
-
-    @questions = Answer.order(:created_at).last(4).map { |e| e.question.decorate }
   end
 
   def robots
