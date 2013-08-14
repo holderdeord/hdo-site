@@ -33,8 +33,7 @@ class HomeController < ApplicationController
       @leaderboard = Hdo::Stats::Leaderboard.new(published)
     end
 
-    @answered_questions   = Answer.order(:created_at).last(2).map { |e| e.question.decorate }
-    @unanswered_questions = Question.order(:created_at).approved.unanswered.last(2).map { |e| e.decorate }
+    @questions = Answer.order(:created_at).last(4).map { |e| e.question.decorate }
   end
 
   def robots
