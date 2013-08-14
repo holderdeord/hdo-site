@@ -56,7 +56,10 @@ module Hdo
             paragraphs = ['']
 
             Nokogiri::HTML.parse(@html).css('body *').children.each do |node|
-              if node.name == 'br'
+              case node.name
+              when 'a'
+                paragraphs.last << node.text
+              when 'br'
                 paragraphs << ''
               else
                 paragraphs.last << node.to_s
