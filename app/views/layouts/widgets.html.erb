@@ -19,9 +19,10 @@
         <%= image_tag asset_path('widgets/hdo_logo_footer.png'), width: '100', height: '100', alt: "Holder de ord logo" %>
         <p>
           <% if nrk? || params[:partner] == 'nrk' %>
-            <span class="partner">Et samarbeid mellom Holder de ord og NRK.</span>
+            <span class="partner">Løpende oppdatert politisk innhold i samarbeid mellom Holder de ord og NRK.</span>
+          <% else %>
+            Løpende oppdatert politisk innhold fra holderdeord.no.
           <% end %>
-          Løpende oppdatert politisk innhold fra holderdeord.no.
         </p>
       <% end %>
     </footer>
