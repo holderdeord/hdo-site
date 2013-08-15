@@ -51,8 +51,8 @@ class Question < ActiveRecord::Base
     answer && answer.approved?
   end
 
-  def teaser
-    body.truncate(100)
+  def teaser(length = 100)
+    body.truncate(length)
   end
 
   def from_display_name

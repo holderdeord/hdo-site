@@ -29,6 +29,11 @@ describe Question do
     q.should_not be_valid
   end
 
+  it 'has a teaser' do
+    q.body = 'a' * 105
+    q.teaser.should == q.body.truncate(100)
+  end
+
   it 'is invalid without name or email' do
     q.from_name = nil
     q.should_not be_valid

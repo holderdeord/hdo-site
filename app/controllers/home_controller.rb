@@ -21,7 +21,7 @@ class HomeController < ApplicationController
     @parties     = Party.order(:name)
     @issues      = published.for_frontpage(7).map { |e| e.decorate }
     @main_issue  = @issues.shift
-    @questions   = Answer.order(:created_at).last(4).map { |e| e.question.decorate }
+    @questions   = Question.not_ours.answered.order("answers.created_at").last(2).map(&:decorate)
     @leaderboard = Hdo::Stats::Leaderboard.new(published)
 
     if AppConfig.frontpage_blog_enabled

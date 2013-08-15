@@ -37,16 +37,16 @@
     <div class="party-list row-fluid">
       <% @leaderboard.parties.each do |parties| %>
         <div class="span6">
-          <% parties.each do |party| %>
+          <% parties.each do |party, scores| %>
 
-            <%= link_to(party[0], class:"party") do %>
+            <%= link_to(party, class: "party") do %>
               <div class="logo">
-                <%= image_tag party[0].logo, alt: party[0].name, width: '64', height: '64' %>
+                <%= image_tag party.logo, alt: party.name, width: '64', height: '64' %>
               </div>
-              <span class="name"><%= party[0].name %></span>
+              <span class="name"><%= party.name %></span>
               <div class="counters">
-                <div class="kept"><%= party[1][:kept] %></div>
-                <div class="broken"><%= party[1][:broken] %></div>
+                <div class="kept"><%= scores[:kept] %></div>
+                <div class="broken"><%= scores[:broken] %></div>
               </div>
             <% end %>
           <% end %>

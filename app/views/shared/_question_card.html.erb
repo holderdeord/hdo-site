@@ -3,7 +3,7 @@
     <img src="<%= path_to_image question.representative_avatar %>" class="representative" alt="<%= question.representative_name %>">
     <%= image_tag question.party_logo, alt: question.party_name, class: "party-logo" %>
   </div>
-  <p><%= question.teaser %></p>
+  <p><%= question.teaser(local_assigns.fetch(:teaser_length, 100)) %></p>
   <aside class="muted">
     <div>
       Til <%= question.representative_name %>
@@ -11,9 +11,7 @@
       i <span class="district"><%= question.district_name %></span>
     </div>
     <!-- TODO: uncomment this when activity is high so it looks good.
-    <div>
-      <%= question.status_description %>
-    </div>
+    <div><%= question.status_description %></div>
     -->
   </aside>
 <% end %>

@@ -5,37 +5,36 @@
   </p>
 <% end %>
 
-<div class="row-fluid">
-  <%= render partial: 'issues' %>
-</div>
-
+<%= render partial: 'issues' %>
 <%= render partial: 'leaderboard' %>
+<hr class="soften">
 
 <% if AppConfig.questions_enabled %>
 <section>
   <h2><%= t 'app.questions.title' %></h2>
 
-  <p class="intro">
-    Nå kan du stille spørsmål til en stortingspolitiker om saker som opptar deg. Prøv vår nye tjeneste!
-  <p>
+  <!-- FIXME: inline style -->
+  <div class="row-fluid" style="margin: 20px 0;">
+    <%= link_to t('app.questions.new'), new_question_path, class: 'btn btn-primary' %>
+    <%= link_to t('app.questions.all'), questions_path, class: 'btn' %>
+  </div>
 
   <h4>Sist besvarte spørsmål</h4>
 
-  <% @questions.in_groups_of(2) do |questions_row| %>
-    <div class="row-fluid">
-      <% questions_row.each do |q| %>
-        <div class="span6 questions-index">
-          <%= render partial: 'shared/question_card', locals: {question: q} %>
-        </div>
-      <% end %>
-    </div>
-  <% end %>
-
-  <p>
-    <%= link_to t('app.questions.new'), new_question_path, class: 'btn btn-primary' %>
-    <%= link_to t('app.questions.all'), questions_path, class: 'btn' %>
-  </p>
+  <div class="row-fluid">
+    <% @questions.each do |q| %>
+      <div class="span6 questions-index">
+        <%= render partial: 'shared/question_card', locals: {question: q, teaser_length: 300} %>
+      </div>
+    <% end %>
+  </div>
 </section>
+<% end %>
+
+<hr class="soften">
+
+<% if AppConfig.frontpage_blog_enabled && @latest_posts %>
+  <%= render partial: 'blog_and_social' %>
 <% end %>
 
 <section>
@@ -50,7 +49,3 @@
     </div>
   <% end %>
 </section>
-
-<% if AppConfig.frontpage_blog_enabled && @latest_posts %>
-  <%= render partial: 'blog_and_social' %>
-<% end %>
