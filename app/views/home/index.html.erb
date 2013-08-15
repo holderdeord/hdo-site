@@ -9,9 +9,7 @@
   <%= render partial: 'issues' %>
 </div>
 
-<% if AppConfig.leaderboard_enabled %>
-  <%= render partial: 'leaderboard' %>
-<% end %>
+<%= render partial: 'leaderboard' %>
 
 <% if AppConfig.questions_enabled %>
 <section>
@@ -55,21 +53,4 @@
 
 <% if AppConfig.frontpage_blog_enabled && @latest_posts %>
   <%= render partial: 'blog_and_social' %>
-<% end %>
-
-<% unless AppConfig.leaderboard_enabled %>
-  <hr class="soften">
-  <h3 align="center">SJEKK DITT PARTI</h3>
-
-  <div class="row-fluid">
-    <div class="home-party-list">
-      <% @parties.each do |party| %>
-        <%= link_to party do %>
-        <div class="home-party-logo">
-          <%= image_tag party.logo, alt: party.name, width: '290', height: '290' %>
-        </div>
-        <% end %>
-      <% end %>
-    </div>
-  </div>
 <% end %>

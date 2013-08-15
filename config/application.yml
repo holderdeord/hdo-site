@@ -20,7 +20,6 @@ defaults: &defaults
   widgets_enabled: true
   weights_enabled: true
   representative_widget_enabled: true
-  leaderboard_enabled: true
   ignore_our_questions: true
   thermo_enabled: false
   frontpage_blog_enabled: true
@@ -53,7 +52,6 @@ production:
   representative_widget_enabled: false
   fastly_enabled: true
   ssl_enabled: true
-  leaderboard_enabled: true
   frontpage_blog_enabled: true
   default_bcc_email: prodcopy@holderdeord.no
   chat_notifications_enabled: true

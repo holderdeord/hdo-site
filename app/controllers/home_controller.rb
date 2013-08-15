@@ -17,18 +17,15 @@ class HomeController < ApplicationController
   def index
     published = Issue.published.includes(:tags)
 
-    @all_tags   = published.flat_map(&:tags).uniq.sort_by(&:name)
-    @parties    = Party.order(:name)
-    @issues     = published.for_frontpage(7).map { |e| e.decorate }
-    @main_issue = @issues.shift
-    @questions  = Answer.order(:created_at).last(4).map { |e| e.question.decorate }
+    @all_tags    = published.flat_map(&:tags).uniq.sort_by(&:name)
+    @parties     = Party.order(:name)
+    @issues      = published.for_frontpage(7).map { |e| e.decorate }
+    @main_issue  = @issues.shift
+    @questions   = Answer.order(:created_at).last(4).map { |e| e.question.decorate }
+    @leaderboard = Hdo::Stats::Leaderboard.new(published)
 
     if AppConfig.frontpage_blog_enabled
       @latest_posts = Hdo::Utils::BlogFetcher.last(2)
-    end
-
-    if AppConfig.leaderboard_enabled
-      @leaderboard = Hdo::Stats::Leaderboard.new(published)
     end
   end
 
