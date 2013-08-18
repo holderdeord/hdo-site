@@ -2,7 +2,8 @@
 
 class QuestionDecorator < Draper::Decorator
   delegate :teaser,
-           :has_approved_answer?
+           :has_approved_answer?,
+           :from_display_name
 
   def representative_avatar
     representative.image.versions[:avatar]
