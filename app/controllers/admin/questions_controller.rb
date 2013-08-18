@@ -43,8 +43,10 @@ class Admin::QuestionsController < AdminController
 
     @question.issues = Issue.find(issue_ids || [])
     @question.status = params[:question][:status]
-    @question.update_attributes(internal_comment: params[:question][:internal_comment])
-    @question.update_attributes(body: params[:question][:body])
+
+    question_attributes = params[:question].slice(:internal_comment, :body, :from_name, :show_sender)
+
+    @question.update_attributes(question_attributes)
 
     if @question && @question.answer
       @question.answer.update_attributes(params[:question][:answer]) if params[:question][:answer]

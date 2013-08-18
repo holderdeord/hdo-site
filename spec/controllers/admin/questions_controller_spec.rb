@@ -165,6 +165,19 @@ describe Admin::QuestionsController do
 
         question.reload.answer.body.should eq 'bar'
       end
+
+      it 'edits from_name' do
+        put :update, id: question, question: { from_name: 'lady gaga' }
+
+        question.reload.from_name.should eq 'lady gaga'
+      end
+
+      it 'sets show_sender' do
+        question = Question.make!(show_sender: false)
+        put :update, id: question, question: { show_sender: true }
+
+        question.reload.show_sender.should be_true
+      end
     end
 
     describe "emails" do

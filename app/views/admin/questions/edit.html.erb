@@ -18,13 +18,12 @@
       <dd><%= link_to @question.representative.name, @question.representative %></dd>
 
       <dt><%= Question.human_attribute_name :from_name %></dt>
-      <dd><%= @question.from_name %></dd>
+      <dd><%= f.text_field :from_name %></dd>
 
       <dt><%= Question.human_attribute_name :from_email %></dt>
       <dd><%= @question.from_email %></dd>
 
-      <dt><%= Question.human_attribute_name :show_sender %></dt>
-      <dd><%= @question.show_sender? ? t('app.yes') : t('app.no') %></dd>
+      <dt><%= Question.human_attribute_name :show_sender %> <%= f.check_box :show_sender %></dt>
 
       <dt><%= Question.human_attribute_name :body %></dt>
       <dd class="well">
