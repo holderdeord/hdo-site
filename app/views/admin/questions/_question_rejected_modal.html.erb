@@ -1,0 +1,36 @@
+<div id="reject-question-email-modal" class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="true">
+  <%= form_tag(question_rejected_email_user_admin_question_path(@question)) do %>
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+      <h3>Avvis spørsmål</h3>
+    </div>
+
+    <div class="modal-body">
+      <h2>Kjære <%= @question.from_name %></h2>
+
+      <p>Takk for ditt spørsmål!</p>
+
+      <p>Formålet med tjenesten spør en stortingspolitiker er å tilby velgere og folkevalgte en kanal for saklig meningsbryting om politikk. Tjenesten modereres av Holder de ord i henhold til våre retningslinjer. Der står det bl.a. følgende:</p>
+
+      <p><%= text_area_tag :reason,
+                        '"Du må oppgi fullt navn og gyldig epostadresse når du stiller spørsmål. Disse vil ikke bli videreformidlet til utenforstående. Du bestemmer selv i den publiserte saken om du ønsker å opptre med fullt navn eller kun med initialer."',
+                        style: 'width: 30em; height: 7em;' %></p>
+
+      <p>Holder de ord har vurdert det slik at ditt spørsmål i dets nåværende form ikke tilfredsstiller dette, og kan dessverre ikke godkjenne det.  Hvis du ønsker å omformulere og sende inn spørsmålet på nytt, tar vi gjerne imot det! Det er da bare å sende det som svar på denne mailen.</p>
+
+      <p>Ditt spørsmål: <br/><em><%= @question.body %></em></p>
+
+      <p>Ha en god dag!</p>
+
+      <p style="color:#666">Vennlig hilsen,<br/>
+        Holder de ord</p>
+
+      <p style="font-size: small; color: #666;">Hvis det ikke er du som har sendt inn dette spørsmålet, si gjerne fra ved å svare på denne mailen.</p>
+    </div>
+
+    <div class="modal-footer">
+       <button class="btn" data-dismiss="modal" aria-hidden="true">Avbryt</button>
+       <%= submit_tag 'Send', class: 'btn btn-primary', confirm: 'Er du sikker på at du vil sende e-post til brukeren?' %>
+     </div>
+  <% end %>
+</div>
