@@ -17,6 +17,7 @@ module Hdo
 
         parliament_issues.each do |pi|
           pi.categories.each do |cat|
+            cat = cat.main? ? cat : cat.parent
             category_votes[cat.human_name].concat pi.vote_ids
           end
         end
@@ -24,7 +25,7 @@ module Hdo
         result = {}
 
         category_votes.each do |category_name, vote_ids|
-          votes = Vote.with_results.find(vote_ids)
+          votes = Vote.with_results.find(vote_ids.uniq)
           result[category_name] = new(votes: votes).result
         end
 
@@ -33,17 +34,22 @@ module Hdo
 
       def self.csv
         all        = new.result
-        categories = by_category.sort_by { |name, result| name }
+        categories = by_category
 
+        category_names = categories.keys.sort
         combinations = all[:data].keys.sort
 
-        CSV.generate do |csv|
-          csv << [nil, *combinations]
-          csv << ["Alle kategorier", *combinations.map { |key| '%.1f' % ((all[:data][key] / all[:total].to_f) * 100) }]
+        table = []
 
-          categories.each do |name, result|
-            csv << [name, *combinations.map { |key| '%.1f' % ((result[:data][key] / result[:total].to_f) * 100) }]
-          end
+        table << [nil, *combinations]
+        table << ["Alle kategorier", *combinations.map { |key| '%.1f' % ((all[:data][key] / all[:total].to_f) * 100) }]
+
+        categories.each do |name, result|
+          table << [name, *combinations.map { |key| '%.1f' % ((result[:data][key] / result[:total].to_f) * 100) }]
+        end
+
+        CSV.generate do |csv|
+          table.transpose.each { |row| csv << row }
         end
       end
 
@@ -67,7 +73,6 @@ module Hdo
           count  = 0
 
           @votes.each do |vote|
-            next if ignored?(vote)
             stats = vote.stats
 
             case @unit
@@ -107,10 +112,6 @@ module Hdo
 
       def agree?(parties, stats)
         parties.map { |party| stats.text_for(party) }.uniq.size == 1
-      end
-
-      def ignored?(vote)
-        vote.non_personal? && vote.subject =~ /lovens overskrift og loven i sin helhet/i
       end
 
     end
