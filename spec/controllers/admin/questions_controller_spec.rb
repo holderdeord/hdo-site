@@ -212,6 +212,34 @@ describe Admin::QuestionsController do
         end
       end
 
+      describe 'rejecting questions' do
+        let(:question) { Question.make! :rejected, representative: representative }
+
+        it 'saves the rejection reason to the question' do
+          post :question_rejected_email_user, id: question, reason: "it's a stupid question."
+          question.reload.rejection_reason.should eq "it's a stupid question."
+        end
+
+        it 'sends the rejection email to the user' do
+          ModerationMailer.should_receive(:question_rejected_user_email).with(question).and_call_original
+
+          post :question_rejected_email_user, id: question, reason: "it's a stupid question."
+        end
+
+        it 'does not send e-mail without a rejection reason' do
+          ModerationMailer.should_not_receive(:question_rejected_user_email)
+
+          post :question_rejected_email_user, id: question, reason: ''
+        end
+
+        it 'does not send e-mail for an erroneous question' do
+          Question.any_instance.stub(:save).and_return false
+          ModerationMailer.should_not_receive(:question_rejected_user_email)
+
+          post :question_rejected_email_user, id: question, reason: 'some valid reason or other.'
+        end
+      end
+
       describe "approving answers" do
         it "can send the user an email" do
           question.create_answer!(representative: question.representative, body: 'foo', status: 'approved')

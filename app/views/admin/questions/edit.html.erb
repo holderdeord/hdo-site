@@ -82,7 +82,7 @@
 
   <h3>E-poster</h3>
   <div class="row-fluid">
-    <div class="span5<%= @question.approved? ? '' : ' muted' %>">
+    <div class="span4<%= @question.approved? ? '' : ' muted' %>">
       <h4>Ved godkjent spørsmål</h4>
       <% if @question.approved? %>
         <div class="row-fluid">
@@ -96,7 +96,17 @@
         <div class="row-fluid"><div class="btn disabled">Send e-post til representant</div></div>
       <% end %>
     </div>
-    <div class="span5<%= @question.answer && @question.answer.approved? ? '' : ' muted' %>">
+    <div class="span4<%= @question.rejected? ? '' : ' muted' %>">
+      <h4>Ved avvist spørsmål</h4>
+      <% if @question.rejected? %>
+        <div class="row-fluid">
+          <a href="#" data-toggle="modal" data-target="#reject-question-email-modal" class="btn">Send e-post til bruker</a>
+        </div>
+      <% else %>
+        <div class="row-fluid"><div class="btn disabled">Send e-post til bruker</div></div>
+      <% end %>
+    </div>
+    <div class="span4<%= @question.answer && @question.answer.approved? ? '' : ' muted' %>">
       <h4>Ved godkjent svar</h4>
       <% if @question.has_approved_answer? %>
         <div class="row-fluid">
@@ -136,6 +146,45 @@
     <%= link_to t('app.back'), admin_questions_path, class: 'btn' %>
   </div>
 <% end %>
+
+<div id="reject-question-email-modal" class="modal hide fade" tabindex="-1" role="dialog" aria-hidden="true">
+  <%= form_tag(question_rejected_email_user_admin_question_path(@question)) do %>
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+      <h3>Avvis spørsmål</h3>
+    </div>
+
+    <div class="modal-body">
+      <!-- <h5>Avvisningsgrunn</h5> -->
+      <h2>Kjære <%= @question.from_name %></h2>
+
+      <p>Takk for ditt spørsmål!</p>
+
+      <p>Formålet med tjenesten spør en stortingspolitiker er å tilby velgere og folkevalgte en kanal for saklig meningsbryting om politikk. Tjenesten modereres av Holder de ord i henhold til våre retningslinjer. Der står det bl.a. følgende:</p>
+
+      <p><%= text_area_tag :reason,
+                        '"Du må oppgi fullt navn og gyldig epostadresse når du stiller spørsmål. Disse vil ikke bli videreformidlet til utenforstående. Du bestemmer selv i den publiserte saken om du ønsker å opptre med fullt navn eller kun med initialer."',
+                        style: 'width: 30em; height: 7em;' %></p>
+
+      <p>Holder de ord har vurdert det slik at ditt spørsmål i dets nåværende form ikke tilfredsstiller dette, og kan dessverre ikke godkjenne det.  Hvis du ønsker å omformulere og sende inn spørsmålet på nytt, tar vi gjerne imot det! Det er da bare å sende det som svar på denne mailen.</p>
+
+      <p>Ditt spørsmål: <br/><em><%= @question.body %></em></p>
+
+      <p>Ha en god dag!</p>
+
+      <p style="color:#666">Vennlig hilsen,<br/>
+        Holder de ord</p>
+
+      <p style="font-size: small; color: #666;">Hvis det ikke er du som har sendt inn dette spørsmålet, si gjerne fra ved å svare på denne mailen.</p>
+    </div>
+
+    <div class="modal-footer">
+       <button class="btn" data-dismiss="modal" aria-hidden="true">Avbryt</button>
+       <%= submit_tag 'Send', class: 'btn btn-primary' %>
+       <%#= link_to 'Send', question_rejected_email_user_admin_question_path(@question), class: 'btn btn-primary', confirm: 'Er du sikker på at du vil sende e-post til brukeren?' %>
+     </div>
+  <% end %>
+</div>
 
 <% content_for :document_ready do %>
   <script type="text/javascript" charset="utf-8">

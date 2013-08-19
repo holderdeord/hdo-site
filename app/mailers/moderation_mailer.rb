@@ -13,6 +13,14 @@ class ModerationMailer < ActionMailer::Base
          reply_to: reply_to_address(question))
   end
 
+  def question_rejected_user_email(question)
+    @question = question
+    with_event mail(
+         to:        bracket_mail(question.from_email, question.from_name),
+         subject:  'Takk for ditt spørsmål',
+         reply_to: reply_to_address(question))
+  end
+
   def question_approved_representative_email(question)
     @question       = question
     @representative = question.representative

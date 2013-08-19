@@ -31,9 +31,10 @@ Hdo::Application.routes.draw do
         put 'approve'        => 'questions#approve'
         put 'reject'         => 'questions#reject'
 
-        get 'email/question/approved/rep'  => 'questions#question_approved_email_rep',  as: :question_approved_email_rep
-        get 'email/question/approved/user' => 'questions#question_approved_email_user', as: :question_approved_email_user
-        get 'email/answer/approved/user'   => 'questions#answer_approved_email_user',   as: :answer_approved_email_user
+        get  'email/question/approved/rep'  => 'questions#question_approved_email_rep',  as: :question_approved_email_rep
+        get  'email/question/approved/user' => 'questions#question_approved_email_user', as: :question_approved_email_user
+        post 'email/question/rejected/user' => 'questions#question_rejected_email_user', as: :question_rejected_email_user
+        get  'email/answer/approved/user'   => 'questions#answer_approved_email_user',   as: :answer_approved_email_user
       end
     end
 

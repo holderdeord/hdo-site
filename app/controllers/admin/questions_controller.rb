@@ -80,6 +80,24 @@ class Admin::QuestionsController < AdminController
     end
   end
 
+  def question_rejected_email_user
+    if @question.rejected?
+      if params[:reason].blank?
+        redirect_to edit_admin_question_path(@question), alert: t('app.questions.edit.no_reject_reason')
+      else
+        @question.update_attributes(rejection_reason: params[:reason])
+        if @question.save
+          ModerationMailer.question_rejected_user_email(@question).deliver
+          redirect_to edit_admin_question_path(@question), notice: t('app.questions.edit.email_sent', email: @question.from_email)
+        else
+          redirect_to edit_admin_question_path(@question), alert: @question.errors.full_messages.to_sentence 
+        end
+      end
+    else
+      redirect_to edit_admin_question_path(@question), alert: t('app.questions.edit.question_not_rejected')
+    end
+  end
+
   def answer_approved_email_user
     unless @question.has_approved_answer?
       redirect_to edit_admin_question_path(@question), alert: t('app.questions.edit.answer_not_approved')

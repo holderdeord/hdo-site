@@ -4,7 +4,7 @@ class Question < ActiveRecord::Base
   MAX_LENGTH = 1000
 
   attr_accessible :body, :from_name, :from_email, :representative, :representative_id,
-                  :issues, :show_sender, :internal_comment
+                  :issues, :show_sender, :internal_comment, :rejection_reason
 
   belongs_to :representative
   has_one    :answer, dependent: :destroy

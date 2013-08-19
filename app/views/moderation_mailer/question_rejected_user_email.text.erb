@@ -1,0 +1,19 @@
+Kjære <%= @question.from_name %>
+
+Takk for ditt spørsmål!
+
+Formålet med tjenesten spør en stortingspolitiker er å tilby velgere og folkevalgte en kanal for saklig meningsbryting om politikk. Tjenesten modereres av Holder de ord i henhold til våre retningslinjer. Der står det bl.a. følgende:
+
+<%= @question.rejection_reason %>
+
+Holder de ord har vurdert det slik at ditt spørsmål i dets nåværende form ikke tilfredsstiller dette, og kan dessverre ikke godkjenne det.  Hvis du ønsker å omformulere og sende inn spørsmålet på nytt, tar vi gjerne imot det! Det er da bare å sende det som svar på denne mailen.
+
+Ditt spørsmål:
+<%= @question.body %>
+
+Ha en god dag!
+
+Vennlig hilsen,
+Holder de ord
+
+Hvis det ikke er du som har sendt inn dette spørsmålet, si gjerne fra ved å svare på denne mailen.
