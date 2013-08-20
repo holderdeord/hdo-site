@@ -27,7 +27,7 @@ defaults: &defaults
   new_boundaries: true
   ignore_votes_against_alternate_budget: true
   valence_widget: true
-  topic_of_the_week: Samferdsel
+  topic_of_the_week: Utdanning
 
 development:
   <<: *defaults

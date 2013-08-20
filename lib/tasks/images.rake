@@ -82,9 +82,18 @@ namespace :images do
     end
   end
 
+  task :update_topic_issues => :environment do
+    topic_ids = [48,262,263,52,99,4,53,145,278,227,141,47,65,231]
+
+    Issue.published.each do |issue|
+      issue.frontpage = topic_ids.include?(issue.id)
+      issue.save!
+    end
+  end
+
   desc 'Fetch topic image'
-  task :topic do
-    ok = system "curl", "-s", "-o", Rails.root.join('public/images/topic.jpg').to_s, "http://files.holderdeord.no/images/tema_samferdsel.jpg"
+  task :topic => :update_topic_issues do
+    ok = system "curl", "-s", "-o", Rails.root.join('public/images/topic.jpg').to_s, "http://files.holderdeord.no/images/tema_utdanning.jpg"
     ok or raise "topic download failed"
   end
 
