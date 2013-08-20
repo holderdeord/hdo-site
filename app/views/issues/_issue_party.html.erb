@@ -53,18 +53,19 @@
     <% end %>
 
     <div class="content">
-      <% party.promise_groups.each do |source, promises| %>
-        <h5 class="issue-party-promise-title">Løfter fra <%= source %></h5>
-        <ul class="issue-party-promise-list">
-          <% if promises.any? %>
-            <% promises.each do |promise| %>
-              <li><%= link_to promise.body, promise_path(promise) %></li>
-            <% end %>
-          <% else %>
-            <li><%= t 'app.parties.no_promises' %></li>
+      <div class="row-fluid">
+        <div class="span6">
+          <% party.promise_groups['2009-2013'].each do |source, promises| %>
+            <%= render partial: 'promise_group', locals: {source: "#{source.downcase} 2009-2013", promises: promises} %>
           <% end %>
-        </ul>
-      <% end %>
+        </div>
+
+        <div class="span6">
+          <% party.promise_groups['2013-2017'].each do |source, promises| %>
+            <%= render partial: 'promise_group', locals: {source: "#{source.downcase} 2013-2017", promises: promises} %>
+          <% end %>
+        </div>
+      </div>
     </div>
   </section>
 

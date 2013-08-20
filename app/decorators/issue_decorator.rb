@@ -101,6 +101,7 @@ class IssueDecorator < Draper::Decorator
 
   class IssuePartyDecorator < Draper::Decorator
     alias_method :issue, :context
+
     delegate :external_id,
              :image_with_fallback,
              :name,
@@ -172,13 +173,15 @@ class IssueDecorator < Draper::Decorator
       @promise_groups ||= (
         # TODO: clean this up
 
-        result = {}
+        result = {
+          '2009-2013' => {'Partiprogram' => []},
+          '2013-2017' => {'Partiprogram' => []}
+        }
 
-        promises_by_source = issue.promises_by_party[model].group_by { |promise| [promise.source.downcase, promise.parliament_period_name] }
-
-        result['partiprogram 2009-2013'] = promises_by_source[['partiprogram', '2009-2013']] || []
-        result['regjeringserklæring 2009-2013'] = promises_by_source[['regjeringserklæring', '2009-2013']] if promises_by_source[['regjeringserklæring', '2009-2013']]
-        result['partiprogram 2013-2017'] = promises_by_source[['partiprogram', '2013-2017']] if promises_by_source[['partiprogram', '2013-2017']]
+        issue.promises_by_party[model].each do |promise|
+          list = result[promise.parliament_period_name][promise.source] ||= []
+          list << promise
+        end
 
         result
       )
