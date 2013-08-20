@@ -9,6 +9,7 @@ class Promise < ActiveRecord::Base
     mapping {
       indexes :body, type: :string, analyzer: TireSettings.default_analyzer
       indexes :party_names, type: :string
+      indexes :parliament_period_name, type: :string, index: :not_analyzed
     }
   }
   update_index_on_change_of :parties, has_many: true

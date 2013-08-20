@@ -1,7 +1,6 @@
 class SearchController < ApplicationController
   hdo_caches_page :all, :autocomplete
 
-
   TYPE_ORDER = %w[
     issue
     topic
@@ -53,6 +52,20 @@ class SearchController < ApplicationController
 
       respond_to do |format|
         format.json { render json: @results }
+      end
+    end
+  end
+
+  def promises
+    response = Hdo::Search::Searcher.new(params[:query], params[:size]).promises
+
+    respond_to do |format|
+      format.json do
+        if response.success?
+          render json: response.results
+        else
+          render json: {error: t('app.errors.search')}, status: 500
+        end
       end
     end
   end

@@ -27,6 +27,22 @@ module Hdo
         }
       end
 
+      def promises
+        response_from {
+          Tire.search(Promise.index_name) do |s|
+            s.size @size
+
+            s.query do |query|
+              query.string @query, default_operator: 'AND'
+            end
+
+            s.filter :term, parliament_period_name: '2013-2017'
+
+            s.sort { by :_score }
+          end
+        }
+      end
+
       def autocomplete
         response_from {
           Tire.search([Issue.index_name, Representative.index_name]) do |s|

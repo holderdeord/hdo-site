@@ -42,7 +42,7 @@
     <form class="form-search span6" id="promise-search">
       <div class="input-append">
         <input type="search" autofocus class="span2 search-query">
-        <button type="submit" class="btn">Search</button>
+        <button type="submit" class="btn">Søk</button>
       </div>
     </form>
 
@@ -103,13 +103,11 @@
         spinner.show();
 
         $.ajax({
-          url: '/search/all.json?size=500&query=' + encodeURIComponent(query + ' _type:promise parliament_period_name:2013-2017'),
+          url: '/search/promises.json?size=1000&query=' + encodeURIComponent(query),
           type: 'GET',
           dataType: 'json',
           complete: function(xhr, textStatus) { spinner.hide(); },
-          success: function(data, textStatus, xhr) {
-            var promises = data[0] && data[0][1];
-
+          success: function(promises, textStatus, xhr) {
             if (promises) {
               hits.html(promises.length + ' treff');
 

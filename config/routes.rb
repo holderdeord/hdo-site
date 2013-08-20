@@ -188,7 +188,8 @@ Hdo::Application.routes.draw do
   #
 
   get 'search/all' => 'search#all', as: :search_all
-  get 'search/autocomplete' => 'search#autocomplete', :as => :search_autocomplete
+  get 'search/autocomplete' => 'search#autocomplete', as: :search_autocomplete
+  get 'search/promises' => 'search#promises', as: :search_promises
 
   #
   # various
