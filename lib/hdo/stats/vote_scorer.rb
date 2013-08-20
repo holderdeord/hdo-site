@@ -138,24 +138,13 @@ module Hdo
           raise "score out of range: #{score.inspect}"
         end
 
-        if AppConfig.new_boundaries
-          if score <= 33.33
-            :against
-          elsif score < 66.66
-            :for_and_against
-          else
-            :for
-          end
+        # if you change the scoring, remember to change the 'about method' page as well.
+        if score <= 33.33
+          :against
+        elsif score < 66.66
+          :for_and_against
         else
-          # if you change the scoring, remember to change the 'about method' page as well.
-          case score
-          when 0...33
-            :against
-          when 33...66
-            :for_and_against
-          when 66..100
-            :for
-          end
+          :for
         end
       end
 

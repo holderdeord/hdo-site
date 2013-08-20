@@ -108,23 +108,12 @@ module Hdo
           raise "score out of range: #{score.inspect}"
         end
 
-        if AppConfig.new_boundaries
-          if score <= 33.33
-            :broken
-          elsif score < 66.66
-            :partially_kept
-          else
-            :kept
-          end
+        if score <= 33.33
+          :broken
+        elsif score < 66.66
+          :partially_kept
         else
-          case score
-          when 0...33
-            :broken
-          when 33...66
-            :partially_kept
-          when 66..100
-            :kept
-          end
+          :kept
         end
       end
 
