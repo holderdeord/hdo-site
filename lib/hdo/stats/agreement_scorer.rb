@@ -32,6 +32,44 @@ module Hdo
         result
       end
 
+      def self.csv_by_month(votes = Vote.all)
+        groups = votes.group_by { |e| e.time.strftime("%Y-%m") }
+
+        combos       = [%w[FrP H], %w[FrP H KrF V], %w[A Sp SV]].map { |e| e.sort }
+        party_combos = combos.map { |combo| combo.map { |e| Party.find_by_external_id(e) } }
+
+        result = Hash.new { |hash, key| hash[key] = {} }
+
+        groups.each do |time, votes|
+          data, total_count = new(votes: votes, combinations: party_combos).result.values_at(:data, :total)
+          data.each do |combo, vote_count|
+            result[time][combo] = {count: vote_count, total: total_count}
+          end
+        end
+
+        CSV.generate do |csv|
+          csv << ['month', 'unit_count', *combos.map { |e| e.join(',') }]
+
+          result.sort_by { |time, _| time.split('-').map(&:to_i) }.each do |time, data|
+            month_totals      = []
+            month_percentages = []
+
+            combos.each do |combo|
+              d = data.fetch(combo.join(','))
+
+              month_totals << d[:total]
+              month_percentages << (d[:count] / d[:total].to_f) * 100
+            end
+
+            if month_totals.uniq.size > 1
+              raise "total units varies by party combo for #{time.inspect}: #{month_totals.inspect}"
+            end
+
+            csv << [time, month_totals.first, *month_percentages]
+          end
+        end
+      end
+
       def self.csv
         all        = new.result
         categories = by_category
@@ -54,7 +92,8 @@ module Hdo
       end
 
       def initialize(opts = {})
-        @votes = opts[:votes] || Vote.with_results.includes(:propositions)
+        @votes        = opts[:votes] || Vote.with_results.includes(:propositions)
+        @combinations = opts[:combinations] || COMBINATIONS
 
         if opts[:unit]
           unless VALID_UNITS.include?(opts[:unit])
@@ -86,10 +125,13 @@ module Hdo
 
             count += unit_count
 
-            COMBINATIONS.each do |current_parties|
+            @combinations.each do |current_parties|
+              key = current_parties.map(&:external_id).sort.join(',')
+
               if agree?(current_parties, stats)
-                key = current_parties.map(&:external_id).sort.join(',')
                 result[key] += unit_count
+              else
+                result[key] += 0
               end
             end
           end
