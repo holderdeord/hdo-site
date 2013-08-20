@@ -1,5 +1,4 @@
 class Admin::QuestionsController < AdminController
-  before_filter { assert_feature(:questions) }
   before_filter :fetch_question, except: :index
   before_filter :assert_moderator, except: :index
   before_filter :require_edit, except: :index
@@ -90,7 +89,7 @@ class Admin::QuestionsController < AdminController
           ModerationMailer.question_rejected_user_email(@question).deliver
           redirect_to edit_admin_question_path(@question), notice: t('app.questions.edit.email_sent', email: @question.from_email)
         else
-          redirect_to edit_admin_question_path(@question), alert: @question.errors.full_messages.to_sentence 
+          redirect_to edit_admin_question_path(@question), alert: @question.errors.full_messages.to_sentence
         end
       end
     else

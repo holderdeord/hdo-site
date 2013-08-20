@@ -14,8 +14,6 @@ defaults: &defaults
   ssl_enabled: false
   ssl_host: ~
   analytics_enabled: false
-  questions_enabled: true
-  answers_enabled: true
   show_accountability: true
   widgets_enabled: true
   weights_enabled: true
@@ -46,8 +44,6 @@ staging:
 production:
   <<: *defaults
   analytics_enabled: true
-  questions_enabled: true
-  answers_enabled: true
   representative_widget_enabled: false
   fastly_enabled: true
   ssl_enabled: true

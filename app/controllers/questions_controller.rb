@@ -1,6 +1,4 @@
 class QuestionsController < ApplicationController
-  before_filter { assert_feature(:questions) }
-  before_filter :redirect_unless_answers_enabled, only: [:index, :show]
   before_filter :require_edit, only: [:new, :create]
   skip_before_filter :verify_authenticity_token, only: :create
 
@@ -86,9 +84,5 @@ class QuestionsController < ApplicationController
   def fetch_representatives_and_districts
     @representatives = Representative.potentially_askable.includes(:district, party_memberships: :party).order(:last_name).to_a
     @districts = District.order(:name).to_a
-  end
-
-  def redirect_unless_answers_enabled
-    redirect_to new_question_path unless AppConfig["answers_enabled"]
   end
 end

@@ -42,9 +42,7 @@
 
 
   <% if user_signed_in? %>
-    <% if AppConfig.questions_enabled %>
-      <%= link_to t('app.questions_and_answers.short'), admin_questions_path %>
-    <% end %>
+    <%= link_to t('app.questions_and_answers.short'), admin_questions_path %>
 
     <div class="dropdown <%= active_status_for 'admin/representatives', 'admin/users' %>">
       <a class="dropdown-toggle" data-toggle="dropdown" href="#users">

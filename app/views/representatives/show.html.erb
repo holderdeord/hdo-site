@@ -25,7 +25,7 @@
       <% end %>
     </dl>
 
-    <% if AppConfig.questions_enabled && @representative.askable? %>
+    <% if @representative.askable? %>
       <%= link_to t('app.questions.representative.ask', name: @representative.name),
                   new_question_path(representative: @representative.slug, district: @representative.district.slug),
                   class: 'btn btn-primary' %>
@@ -36,21 +36,19 @@
 <hr class="soften">
 
 <div class="row-fluid">
-  <% if AppConfig.answers_enabled %>
-    <div class="span6 <%= @representative.askable? ? '' : 'muted' %>">
-      <h3>Spørsmål fra velgerne</h3>
-      <% if @representative.askable? %>
-        <%= render partial: 'question_list', locals: { representative: @representative, questions: @questions } %>
-      <% elsif @representative.opted_out? %>
-        <p><%= @representative.name %> har reservert seg mot å svare på spørsmål.</p>
-      <% else %>
-        <p><%= @representative.name %> møter for tiden ikke på Stortinget. Du kan bare stille spørsmål til møtende representanter.</p>
-        <!-- TODO: <%= link_to 'Hva betyr dette?' '/home/faq#hvem-kan-jeg-sporre' %> -->
-      <% end %>
-    </div>
-  <% end %>
+  <div class="span6 <%= @representative.askable? ? '' : 'muted' %>">
+    <h3>Spørsmål fra velgerne</h3>
+    <% if @representative.askable? %>
+      <%= render partial: 'question_list', locals: { representative: @representative, questions: @questions } %>
+    <% elsif @representative.opted_out? %>
+      <p><%= @representative.name %> har reservert seg mot å svare på spørsmål.</p>
+    <% else %>
+      <p><%= @representative.name %> møter for tiden ikke på Stortinget. Du kan bare stille spørsmål til møtende representanter.</p>
+      <!-- TODO: <%= link_to 'Hva betyr dette?' '/home/faq#hvem-kan-jeg-sporre' %> -->
+    <% end %>
+  </div>
 
-  <div class="span<%= AppConfig.answers_enabled ? '6' : '12' %>">
+  <div class="span6">
     <% if @representative.has_twitter? %>
       <h3>
         Twitter <%= link_to "(@#{@representative.twitter_id})", @representative.twitter_url, class: 'muted' %>
