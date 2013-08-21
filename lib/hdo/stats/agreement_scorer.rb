@@ -32,6 +32,22 @@ module Hdo
         result
       end
 
+      def self.summary(opts = {})
+        data, total = new(opts).result.values_at(:data, :total)
+        data.map do |combo, count|
+          {combination: combo, percentage: (count * 100 / total.to_f).round(1), total: total, count: count }
+        end.sort_by { |e| e[:percentage]}
+      end
+
+      def self.csv_summary(opts = {})
+        CSV.generate do |csv|
+          csv << ["combination", "agreed_proposition_count", "total_proposition_count", "percentage"]
+          summary(opts).sort_by { |e| e[:percentage] }.each do |entry|
+            csv << entry.values_at(:combination, :count, :total, :percentage)
+          end
+        end
+      end
+
       def self.csv_by_month(votes = Vote.all)
         groups = votes.group_by { |e| e.time.strftime("%Y-%m") }
 
@@ -92,8 +108,9 @@ module Hdo
       end
 
       def initialize(opts = {})
-        @votes        = opts[:votes] || Vote.with_results.includes(:propositions)
-        @combinations = opts[:combinations] || COMBINATIONS
+        @votes            = opts[:votes] || Vote.with_results.includes(:propositions)
+        @combinations     = opts[:combinations] || COMBINATIONS
+        @ignore_unanimous = !!opts[:ignore_unanimous]
 
         if opts[:unit]
           unless VALID_UNITS.include?(opts[:unit])
@@ -112,6 +129,8 @@ module Hdo
           count  = 0
 
           @votes.each do |vote|
+            next if ignore?(vote)
+
             stats = vote.stats
 
             case @unit
@@ -154,6 +173,14 @@ module Hdo
 
       def agree?(parties, stats)
         parties.map { |party| stats.text_for(party) }.uniq.size == 1
+      end
+
+      def all_parties
+        @all_parties ||= Party.all.to_a
+      end
+
+      def ignore?(vote)
+        @ignore_unanimous && (vote.non_personal? || agree?(all_parties, vote.stats))
       end
 
     end

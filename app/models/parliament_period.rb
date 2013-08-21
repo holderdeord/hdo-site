@@ -15,10 +15,6 @@ class ParliamentPeriod < ActiveRecord::Base
     all.find { |e| e.name == name }
   end
 
-  def votes
-    Vote.where("time >= ? AND time <= ?", start_date, end_date)
-  end
-
   def name
     [start_date.year, end_date.year].join('-')
   end

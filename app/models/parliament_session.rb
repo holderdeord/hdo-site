@@ -12,4 +12,8 @@ class ParliamentSession < ActiveRecord::Base
   def name
     [start_date.year, end_date.year].join('-')
   end
+
+  def votes
+    Vote.where("time >= ? AND time <= ?", start_date, end_date)
+  end
 end
