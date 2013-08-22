@@ -1,7 +1,7 @@
 class Answer < ActiveRecord::Base
   include Workflows::BaseQuestionAndAnswerWorkflow
 
-  attr_accessible :body, :representative_id, :representative, :question, :question_id, :status
+  attr_accessible :body, :representative_id, :representative, :question, :question_id, :status, :created_at
 
   belongs_to :question, touch: true
   belongs_to :representative

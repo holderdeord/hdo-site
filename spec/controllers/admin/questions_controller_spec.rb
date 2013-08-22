@@ -178,6 +178,17 @@ describe Admin::QuestionsController do
 
         question.reload.show_sender.should be_true
       end
+
+      it 'can change answer created_at' do
+        question = Question.make!(status: 'approved')
+        answer = question.create_answer!(representative: question.representative, body: 'foo', status: 'pending', created_at: '2001-01-01')
+
+        put :update, id: question, question: { answer: {  'created_at(3i)' => 1,
+                                                          'created_at(2i)' => 2,
+                                                          'created_at(1i)' => 2003 } }
+
+        question.reload.answer.created_at.should eq '2003-2-1'
+      end
     end
 
     describe "emails" do

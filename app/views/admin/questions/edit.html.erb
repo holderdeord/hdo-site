@@ -61,14 +61,16 @@
         Ingen svar foreløπig.
       <% else %>
         <dl class="span6">
-          <dt><%= Answer.human_attribute_name :created_at %></dt>
-          <dd><%= l @answer.created_at.localtime %></dd>
+          <%= f.fields_for :answer do |b| %>
+            <dt><%= Answer.human_attribute_name :created_at %></dt>
+            <dd><%= b.date_select :created_at, { order: [:day, :month, :year], use_month_numbers: true }, { class: 'date-select' } %></dd>
 
-          <dt><%= Answer.human_attribute_name :body %></dt>
-          <dd class="well">
-            <%= f.text_area :answer_body, rows: 5, style: 'width: 100%;' %>
-            <small class="muted">Suπerforsiktig, superadmin...</small>
-          </dd>
+            <dt><%= Answer.human_attribute_name :body %></dt>
+            <dd class="well">
+              <%= f.text_area :answer_body, rows: 5, style: 'width: 100%;' %>
+              <small class="muted">Suπerforsiktig, superadmin...</small>
+            </dd>
+          <% end %>
         </dl>
 
         <dl class="span6">
