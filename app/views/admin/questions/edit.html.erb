@@ -63,7 +63,7 @@
         <dl class="span6">
           <%= f.fields_for :answer do |b| %>
             <dt><%= Answer.human_attribute_name :created_at %></dt>
-            <dd><%= b.date_select :created_at, { order: [:day, :month, :year], use_month_numbers: true }, { class: 'date-select' } %></dd>
+            <dd><%= b.date_select :created_at, { order: [:day, :month, :year], use_month_numbers: true, default: @answer.created_at }, { class: 'date-select' } %></dd>
 
             <dt><%= Answer.human_attribute_name :body %></dt>
             <dd class="well">
