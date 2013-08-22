@@ -273,6 +273,23 @@ describe Admin::QuestionsController do
         end
       end
     end
+
+    describe 'create_answer' do
+      let(:question) { question = Question.make!(status: 'approved') }
+
+      it 'can create an answer' do
+        get :create_answer, id: question
+
+        question.reload.answer.should_not be_nil
+      end
+
+      it 'sets the correct representative' do
+        get :create_answer, id: question
+
+        question.reload.answer.representative.should eq question.representative
+      end
+    end
+
   end
 
 end

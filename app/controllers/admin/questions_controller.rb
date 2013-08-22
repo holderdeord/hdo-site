@@ -59,6 +59,11 @@ class Admin::QuestionsController < AdminController
     end
   end
 
+  def create_answer
+    @question.create_answer!(representative: @question.representative, body: '-')
+    redirect_to edit_admin_question_path(@question), notice: 'Opprettet'
+  end
+
   def question_approved_email_rep
     if !@question.representative.confirmed? && @question.representative.confirmation_token.nil?
       redirect_to edit_admin_question_path(@question), alert: t('app.questions.edit.rep_not_invited')
