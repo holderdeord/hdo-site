@@ -13,7 +13,7 @@ class PartyUploader < CarrierWave::Uploader::Base
   end
 
   def default_url
-    asset_path "party-logos-stripped/unknown.png"
+    asset_path "party-logos-current/unknown.png"
   end
 
   version :medium do
