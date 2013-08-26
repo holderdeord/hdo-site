@@ -51,16 +51,36 @@ module Hdo
           @html       = entry.css('content[type=html]').text
         end
 
+        def teaser(max = 250)
+          size = 0
+
+          teaser_paragraphs = []
+
+          paragraphs.each do |pr|
+            teaser_paragraphs << pr
+            size += pr.size
+
+            break if size >= max
+          end
+
+          teaser_paragraphs.map { |e| "<p>#{e}</p>" }.join
+        end
+
         def paragraphs
           @paragraphs ||= (
             paragraphs = ['']
 
-            Nokogiri::HTML.parse(@html).css('body *').children.each do |node|
+            fragment = Nokogiri::HTML.fragment(@html)
+
+            fragment.children.each do |node|
               case node.name
               when 'a'
+                next if node['class'] =~ /hdo-.+-widget/
                 paragraphs.last << node.text
               when 'br'
                 paragraphs << ''
+              when 'script', 'img'
+                # do nothing
               else
                 paragraphs.last << node.to_s
               end
