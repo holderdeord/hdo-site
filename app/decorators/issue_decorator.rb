@@ -66,9 +66,9 @@ class IssueDecorator < Draper::Decorator
     @promises_by_party ||= (
       result = Hash.new { |hash, key| hash[key] = [] }
 
-      model.promises.includes(:parties).each do |promise|
-        promise.parties.each do |party|
-          result[party] << promise
+      model.promise_connections.includes(promise: :parties).each do |promise_connection|
+        promise_connection.promise.parties.each do |party|
+          result[party] << promise_connection
         end
       end
 
@@ -178,9 +178,11 @@ class IssueDecorator < Draper::Decorator
           '2013-2017' => {'Partiprogram' => []}
         }
 
-        issue.promises_by_party[model].each do |promise|
+        issue.promises_by_party[model].each do |promise_connection|
+          promise = promise_connection.promise
+
           list = result[promise.parliament_period_name][promise.source] ||= []
-          list << promise
+          list << promise_connection
         end
 
         result

@@ -1,10 +1,10 @@
-<h5 class="issue-party-promise-title">Løfter fra <%= source %></h5>
+<h5 class="issue-party-promise-title <%= 'muted' if promise_connections.all?(&:related?) %>">Løfter fra <%= source %></h5>
 <ul class="issue-party-promise-list">
-  <% if promises.any? %>
-    <% promises.each do |promise| %>
-      <li><%= link_to promise.body, promise_path(promise) %></li>
+  <% if promise_connections.any? %>
+    <% promise_connections.each do |pc| %>
+      <li class="<%= 'muted' if pc.related? %>"><%= link_to pc.promise.body, promise_path(pc.promise) %></li>
     <% end %>
   <% else %>
-    <li><%= t 'app.parties.no_promises' %></li>
+    <li class="muted"><%= t 'app.parties.no_promises' %></li>
   <% end %>
 </ul>

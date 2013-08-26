@@ -55,14 +55,14 @@
     <div class="content">
       <div class="row-fluid">
         <div class="span6">
-          <% party.promise_groups['2009-2013'].each do |source, promises| %>
-            <%= render partial: 'promise_group', locals: {source: "#{source.downcase} 2009-2013", promises: promises} %>
+          <% party.promise_groups['2009-2013'].each do |source, promise_connections| %>
+            <%= render partial: 'promise_group', locals: {source: "#{source.downcase} 2009-2013", promise_connections: promise_connections} %>
           <% end %>
         </div>
 
         <div class="span6">
-          <% party.promise_groups['2013-2017'].each do |source, promises| %>
-            <%= render partial: 'promise_group', locals: {source: "#{source.downcase} 2013-2017", promises: promises} %>
+          <% party.promise_groups['2013-2017'].each do |source, promise_connections| %>
+            <%= render partial: 'promise_group', locals: {source: "#{source.downcase} 2013-2017", promise_connections: promise_connections} %>
           <% end %>
         </div>
       </div>
