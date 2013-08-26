@@ -93,7 +93,7 @@ namespace :images do
 
   desc 'Fetch topic image'
   task :topic => :update_topic_issues do
-    ok = system "curl", "-s", "-o", Rails.root.join('public/images/topic.jpg').to_s, "http://files.holderdeord.no/images/tema_utdanning.jpg"
+    ok = system "curl", "-s", "-o", Rails.root.join('public/images/topic.jpg').to_s, "http://files.holderdeord.no/images/tema_klima.jpg"
     ok or raise "topic download failed"
   end
 
