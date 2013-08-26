@@ -1,5 +1,5 @@
 <% page_title "#{@party.name} - #{t('app.title')}" %>
-<% metadata[:image] = File.join(root_url, @party.logo.versions[:medium].url) %>
+<% metadata[:image] = File.join(root_url, @party.logo.url) %>
 
 <h2 class="party-title-name">
   <%= image_tag @party.logo, alt: "#{@party.name}s logo", width: '96', height: '96' %>
