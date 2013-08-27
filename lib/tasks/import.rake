@@ -33,7 +33,7 @@ namespace :import do
       actual   = `cat #{LOCAL_DUMP} | openssl md5`.strip
 
       if expected != actual
-        raise "bad db dump checksum: #{expected} != #{actual}, remove #{LOCAL_DUMP} and try again"
+        raise "bad db dump checksum: #{expected.inspect} != #{actual.inspect}, remove #{LOCAL_DUMP} and try again"
       end
     end
   end

@@ -124,6 +124,20 @@ describe Admin::QuestionsController do
         question.reload.issues.should be_empty
       end
 
+      it "lets you add tags" do
+        tags = "tag_one"
+        put :update, id: question.id, question: {tag_list: tags}
+
+        question.reload.tag_list.should == ["tag_one"]
+      end
+
+      it "removes tags" do
+        question = Question.make!(tag_list: ["tag_one"])
+
+        put :update, id: question.id, question: {tag_list: []}
+        question.reload.tag_list.should == []
+      end
+
       it 'sets question status' do
         question = Question.make!(status: 'pending')
 

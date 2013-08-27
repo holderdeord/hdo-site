@@ -43,7 +43,7 @@ class Admin::QuestionsController < AdminController
     @question.issues = Issue.find(issue_ids || [])
     @question.status = params[:question][:status]
 
-    question_attributes = params[:question].slice(:internal_comment, :body, :from_name, :show_sender)
+    question_attributes = params[:question].slice(:internal_comment, :body, :from_name, :show_sender, :tag_list)
 
     @question.update_attributes(question_attributes)
 

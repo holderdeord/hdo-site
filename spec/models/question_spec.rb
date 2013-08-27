@@ -152,4 +152,19 @@ describe Question do
     q.email_events.create!(email_address: 'yona@test.hdo', email_type: 'test email')
     q.should be_valid
   end
+
+  it "can add tags" do
+    q.tag_list << 'some-tag'
+    q.save
+
+    q.tags.first.name.should == 'some-tag'
+  end
+
+  it "won't add the same tag twice" do
+    q.tag_list << 'some-tag'
+    q.tag_list << 'some-tag'
+    q.save
+
+    q.tags.size.should == 1
+  end
 end
