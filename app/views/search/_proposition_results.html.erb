@@ -1,13 +1,14 @@
 <% results = results.reject { |r| r.description.empty? } %>
+
 <% if results.any? %>
   <h3><%= Proposition.model_name.human(count: 2).capitalize %></h3>
 
   <ul>
     <% results.each do |r| %>
       <% if r.votes.first %>
-        <li><%= link_to r.description, vote_path(r.votes.first.slug) %></li>
+        <li data-proposition-id="<%= r.id %>"><%= link_to r.description, vote_path(r.votes.first.slug) %></li>
       <% else %>
-        <li><%= r.description %></li>
+        <li data-proposition-id="<%= r.id %>"><%= r.description %></li>
       <% end %>
     <% end %>
   </ul>
