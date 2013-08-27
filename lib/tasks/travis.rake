@@ -27,6 +27,7 @@ task :travis => %w[
   db:migrate
   tmp:create
   spec
+  js:lint
   spec:coverage:ensure
 ]
 
