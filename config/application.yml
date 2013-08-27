@@ -24,7 +24,7 @@ defaults: &defaults
   chat_notifications_enabled: false
   ignore_votes_against_alternate_budget: true
   valence_widget: true
-  topic_of_the_week: Utdanning
+  topic_of_the_week: Klima og energi
 
 development:
   <<: *defaults

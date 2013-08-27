@@ -6,7 +6,7 @@
     <% if @main_issue %>
     <article class="issue">
       <%= link_to @main_issue do %>
-        <img src="/images/topic.jpg?t=<%= AppConfig.topic_of_the_week %>" alt="Illustrasjonsbilde tema">
+        <img src="/images/topic.jpg?t=<%= URI.escape AppConfig.topic_of_the_week %>" alt="Illustrasjonsbilde tema">
         <h3><%= @main_issue.title %></h3>
         <div class="muted"><%= @main_issue.short_explanation %></div>
         <p>

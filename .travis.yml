@@ -30,7 +30,7 @@ before_script:
   - dpkg -s elasticsearch | grep --color=never Version
   - mv config/database.yml.travis config/database.yml
   - sh -e /etc/init.d/xvfb start
-  - 'npm install -g buster sinon@1.6.0 autolint || (sleep 5 && npm install -g buster sinon@1.6.0 autolint)'
+  - ./script/travis/npm_bootstrap.sh
 after_script:
   - ./script/travis/bundle_cache.sh
 env:
