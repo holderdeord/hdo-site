@@ -69,6 +69,10 @@ namespace :cache do
   end
 
   # FIXME: temporary hack
+  task :update_topic_issues, :roles => :db, :only => { :primary => true } do
+    run "cd #{latest_release} && RAILS_ENV=#{rails_env} #{rake} images:update_topic_issues"
+  end
+
   task :topic do
     run "cd #{latest_release} && RAILS_ENV=#{rails_env} #{rake} images:topic"
   end
@@ -96,5 +100,6 @@ end
 
 after  'hipchat:trigger_notification', 'hipchat:ensure'
 before 'deploy:assets:precompile', 'config:symlink'
+before 'deploy:create_symlink', 'cache:update_topic_issues'
 before 'deploy:create_symlink', 'cache:topic'
 before 'deploy:create_symlink', 'cache:precompute' # important
