@@ -3,7 +3,7 @@ namespace :travis do
     require 'json'
     require 'faraday'
 
-    data = JSON.parse(Faraday.get("https://travis-ci.org/holderdeord/hdo-site.json").body)
+    data = JSON.parse(Faraday.get("https://api.travis-ci.org/repositories/holderdeord/hdo-site.json").body)
     time = data['last_build_finished_at'] || data['last_build_started_at']
 
     status = case data['last_build_status']
