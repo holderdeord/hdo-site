@@ -539,7 +539,8 @@ nb:
       user: 'Brukeren ble oppdatert.'
       representative: 'Representanten ble oppdatert.'
     parties:
-      no_promises: Partiet har ingen konkrete løfter om saken i sitt partiprogram.
+      no_promises: Ingen løfter om saken.
+      related_promise: "Løftet er ikke direkte knyttet til saken."
       group:
         governing: 'Regjering'
         opposition: 'Opposisjon'

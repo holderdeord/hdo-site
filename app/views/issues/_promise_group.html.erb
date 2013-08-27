@@ -2,7 +2,12 @@
 <ul class="issue-party-promise-list">
   <% if promise_connections.any? %>
     <% promise_connections.each do |pc| %>
-      <li class="<%= 'muted' if pc.related? %>"><%= link_to pc.promise.body, promise_path(pc.promise) %></li>
+      <li class="<%= 'muted' if pc.related? %>">
+        <%= link_to promise_path(pc.promise) do %>
+          <%= pc.promise.body %>
+          <%= "(#{t 'app.parties.related_promise'})" if pc.related? %>
+        <% end %>
+      </li>
     <% end %>
   <% else %>
     <li class="muted"><%= t 'app.parties.no_promises' %></li>
