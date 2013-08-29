@@ -58,7 +58,7 @@ class Promise < ActiveRecord::Base
 
   def future?
     # TODO: make this actually check the date when we handle multiple periods
-    parliament_period_name != '2009-2013'
+    parliament_period.external_id != '2009-2013'
   end
 
   def to_indexed_json
