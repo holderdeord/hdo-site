@@ -167,16 +167,16 @@
     $(document).ready(function() {
       $("#question_issues").chosen();
 
-      var tagList = $("#question-tag-list")
-        tagList.tagsManager({
-          prefilled: tagList.data('current-tags').split(","),
-          preventSubmitOnEnter: true,
-          typeahead: true,
-          typeaheadSource: tagList.data('all-tags').split(","),
-          hiddenTagListName: 'question[tag_list]'
-        });
 
-      var el = $("#")
+      var tagList = $("#question-tag-list");
+
+      tagList.tagsManager({
+        prefilled: tagList.data('current-tags').split(","),
+        preventSubmitOnEnter: true,
+        typeahead: true,
+        typeaheadSource: tagList.data('all-tags').split(","),
+        hiddenTagListName: 'question[tag_list]'
+      });
     });
   </script>
 <% end %>
