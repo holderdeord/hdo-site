@@ -56,6 +56,11 @@ class Promise < ActiveRecord::Base
     parliament_period.name
   end
 
+  def future?
+    # TODO: make this actually check the date when we handle multiple periods
+    parliament_period_name != '2009-2013'
+  end
+
   def to_indexed_json
     to_json methods: [:party_names, :parliament_period_name], only: :body
   end

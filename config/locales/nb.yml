@@ -540,7 +540,8 @@ nb:
       representative: 'Representanten ble oppdatert.'
     parties:
       no_promises: Ingen løfter om saken.
-      related_promise: "Løftet er ikke direkte knyttet til saken."
+      related_promise: Løftet er ikke direkte knyttet til saken.
+      future_promise: Løftet gjelder neste periode og er ikke vurdert i saken.
       group:
         governing: 'Regjering'
         opposition: 'Opposisjon'

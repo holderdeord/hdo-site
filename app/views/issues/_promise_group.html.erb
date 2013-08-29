@@ -5,7 +5,12 @@
       <li class="<%= 'muted' if pc.related? %>">
         <%= link_to promise_path(pc.promise) do %>
           <%= pc.promise.body %>
-          <%= "(#{t 'app.parties.related_promise'})" if pc.related? %>
+
+          <% if pc.future? %>
+            <%= "(#{t 'app.parties.future_promise'})" if pc.future? %>
+          <% elsif pc.related? %>
+            <%= "(#{t 'app.parties.related_promise'})" if pc.related? %>
+          <% end %>
         <% end %>
       </li>
     <% end %>

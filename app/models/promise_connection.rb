@@ -28,6 +28,10 @@ class PromiseConnection < ActiveRecord::Base
     status.inquiry.related?
   end
 
+  def future?
+    promise.future?
+  end
+
   def status_text
     case status
     when 'for'
@@ -52,7 +56,7 @@ class PromiseConnection < ActiveRecord::Base
   #
 
   def only_related_promises_for_next_period
-    if status != 'related' && promise && promise.parliament_period.external_id != '2009-2013'
+    if status != 'related' && promise && promise.future?
       errors.add(:promise, "must be from 2009-2013 or marked 'related' for issue connection")
     end
   end
