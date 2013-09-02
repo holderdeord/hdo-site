@@ -51,7 +51,7 @@
         <% @questions.each do |question| %>
           <tr class="<%= 'dimmed' if question.answer %>">
             <td>
-              <div><%= question.from_name %></div>
+              <div><%= question.from_display_name %></div>
               <div class="muted"><%= distance_of_time_in_words question.updated_at, Time.now %> siden</div>
             </td>
             <td><%= question.teaser %></td>
