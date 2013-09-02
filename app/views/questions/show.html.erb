@@ -19,7 +19,7 @@
 
     <div class="span8">
       <h4><%= @question.from_display_name %></h4>
-      <time class="muted"><%= l @question.created_at.localtime, format: :text_time %></time>
+      <time class="muted"><%= l @question.created_at.localtime, format: :text %></time>
       <div><%= simple_format @question.body %></div>
     </div>
 
@@ -39,7 +39,7 @@
       </h4>
 
       <% if @answer %>
-        <time class="muted"><%= l @answer.created_at.localtime, format: :text_time %></time>
+        <time class="muted"><%= l @answer.created_at.localtime, format: :text %></time>
         <div><%= simple_format @answer.body %></div>
       <% else %>
         <time></time>
