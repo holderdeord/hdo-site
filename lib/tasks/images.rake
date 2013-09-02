@@ -83,7 +83,7 @@ namespace :images do
   end
 
   task :update_topic_issues => :environment do
-    topic_ids = [270, 268, 186, 191, 57, 80, 236, 264, 8, 250, 195, 252, 266]
+    topic_ids = [143,197,280,169,18,146,123,246,198,145,175,303,237]
 
     Issue.published.each do |issue|
       issue.frontpage = topic_ids.include?(issue.id)
@@ -93,7 +93,7 @@ namespace :images do
 
   desc 'Fetch topic image'
   task :topic do
-    ok = system "curl", "-s", "-o", Rails.root.join('public/images/topic.jpg').to_s, "http://files.holderdeord.no/images/tema_klima.jpg"
+    ok = system "curl", "-s", "-o", Rails.root.join('public/images/topic.jpg').to_s, "http://files.holderdeord.no/images/tema_helse.jpg"
     ok or raise "topic download failed"
   end
 
