@@ -18,9 +18,9 @@ module Workflows
         end
       end
 
-      base.scope :approved, -> { base.where(status: 'approved').order('updated_at DESC') }
-      base.scope :pending,  -> { base.where(status: 'pending').order('created_at DESC') }
-      base.scope :rejected, -> { base.where(status: 'rejected').order('created_at DESC') }
+      base.scope :approved, -> { base.where(status: 'approved') }
+      base.scope :pending,  -> { base.where(status: 'pending') }
+      base.scope :rejected, -> { base.where(status: 'rejected') }
     end
   end
 end

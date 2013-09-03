@@ -18,7 +18,6 @@ defaults: &defaults
   widgets_enabled: true
   weights_enabled: true
   representative_widget_enabled: true
-  ignore_our_questions: true
   thermo_enabled: false
   frontpage_blog_enabled: true
   chat_notifications_enabled: false

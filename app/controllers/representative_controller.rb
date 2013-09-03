@@ -6,8 +6,8 @@ class RepresentativeController < ApplicationController
   before_filter :require_edit, only: :create_answer
 
   def index
-    questions = current_representative.questions.approved
-    answers   = current_representative.answers
+    questions = current_representative.questions.approved.order('created_at DESC') # TODO: use approved_at (also in the view)?
+    answers   = current_representative.answers.order('created_at DESC')
 
     @unanswered_questions = questions.unanswered
     @published_answers    = questions.answered.where('answers.status' => 'approved')

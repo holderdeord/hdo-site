@@ -9,17 +9,12 @@ class QuestionsController < ApplicationController
   def index
     questions = Question.approved
 
-    answered = questions.with_approved_answers
-
-    if AppConfig.ignore_our_questions
-      unanswered = questions.not_ours.without_approved_answers
-    else
-      unanswered = questions.without_approved_answers
-    end
+    answered = questions.with_approved_answers.order('answers.created_at DESC')
+    unanswered = questions.not_ours.without_approved_answers.order("updated_at DESC")
 
     @questions = {
-      answered:   QuestionsDecorator.new(answered.order(:updated_at).first(6)),
-      unanswered: QuestionsDecorator.new(unanswered.order(:updated_at).first(6))
+      answered:   QuestionsDecorator.new(answered.first(6)),
+      unanswered: QuestionsDecorator.new(unanswered.first(6))
     }
 
     @totals = {
@@ -31,13 +26,11 @@ class QuestionsController < ApplicationController
   def all
     case params[:category]
     when 'answered'
-      @questions = QuestionsDecorator.new(Question.approved.with_approved_answers.order(:updated_at).paginate(page: params[:page], per_page: params[:per_page] || DEFAULT_PER_PAGE))
+      questions = Question.approved.with_approved_answers.order(:updated_at).paginate(page: params[:page], per_page: params[:per_page] || DEFAULT_PER_PAGE)
+      @questions = QuestionsDecorator.new(questions)
     when 'unanswered'
-      if AppConfig.ignore_our_questions
-        @questions = QuestionsDecorator.new(Question.approved.not_ours.without_approved_answers.paginate(page: params[:page], per_page: params[:per_page] || DEFAULT_PER_PAGE))
-      else
-        unanswered = QuestionsDecorator.new(Question.approved.without_approved_answers.paginate(page: params[:page], per_page: params[:per_page] || DEFAULT_PER_PAGE))
-      end
+      questions = Question.approved.not_ours.without_approved_answers.paginate(page: params[:page], per_page: params[:per_page] || DEFAULT_PER_PAGE)
+      @questions = QuestionsDecorator.new(questions)
     else
       render_not_found
     end

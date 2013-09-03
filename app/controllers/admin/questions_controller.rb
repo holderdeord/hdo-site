@@ -14,12 +14,12 @@ class Admin::QuestionsController < AdminController
 
   def index
     @questions_by_status = {
-      pending:         Question.pending,
-      answer_pending:  Question.with_pending_answers,
-      approved:        Question.answered.where('answers.status = ?', 'approved'),
-      rejected:        Question.rejected,
-      answer_rejected: Question.answered.where('answers.status = ?', 'rejected'),
-      unanswered:      Question.not_ours.approved.unanswered
+      pending:         Question.pending.order(:created_at),
+      answer_pending:  Question.with_pending_answers.order('answers.created_at'),
+      approved:        Question.answered.where('answers.status = ?', 'approved').order('answers.created_at DESC'),
+      rejected:        Question.rejected.order('created_at DESC'),
+      answer_rejected: Question.answered.where('answers.status = ?', 'rejected').order('answers.created_at DESC'),
+      unanswered:      Question.not_ours.approved.order("created_at DESC").unanswered
     }
 
     @active_tab = if @questions_by_status[:answer_pending].any?
