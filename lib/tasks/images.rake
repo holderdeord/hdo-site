@@ -83,7 +83,7 @@ namespace :images do
   end
 
   task :update_topic_issues => :environment do
-    topic_ids = [143,197,280,169,18,146,123,246,198,145,175,303,237]
+    topic_ids = [143,197,169,18,146,123,246,198,145,175,303,237]
 
     Issue.published.each do |issue|
       issue.frontpage = topic_ids.include?(issue.id)
