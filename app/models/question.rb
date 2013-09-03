@@ -1,10 +1,11 @@
 class Question < ActiveRecord::Base
   include Workflows::BaseQuestionAndAnswerWorkflow
+  before_save :set_approved_timestamp
 
   MAX_LENGTH = 1000
 
   attr_accessible :body, :from_name, :from_email, :representative, :representative_id,
-                  :issues, :show_sender, :internal_comment, :rejection_reason, :tag_list
+                  :issues, :show_sender, :internal_comment, :rejection_reason, :tag_list, :approved_at
 
   acts_as_taggable
 
@@ -63,6 +64,14 @@ class Question < ActiveRecord::Base
 
   def status_text
     I18n.t "app.questions.status.#{status}"
+  end
+
+  def status_changed_to?(status)
+    status_changed? && changes['status'][1] == status.to_s
+  end
+
+  def set_approved_timestamp
+    self.approved_at = DateTime.now if status_changed_to?(:approved)
   end
 
   private

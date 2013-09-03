@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130819204557) do
+ActiveRecord::Schema.define(:version => 20130903183042) do
 
   create_table "answers", :force => true do |t|
     t.text     "body",                                     :null => false
@@ -272,6 +272,7 @@ ActiveRecord::Schema.define(:version => 20130819204557) do
     t.boolean  "show_sender",       :default => true
     t.string   "internal_comment"
     t.text     "rejection_reason"
+    t.datetime "approved_at"
   end
 
   create_table "representatives", :force => true do |t|

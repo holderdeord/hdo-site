@@ -167,4 +167,21 @@ describe Question do
 
     q.tags.size.should == 1
   end
+
+  it "knows if status is changed to approved" do
+    q = Question.make!(status: 'rejected')
+    q.status = 'approved'
+    q.status_changed_to?(:approved).should == true
+  end
+
+  it "sets a timestamp when status is changed to approved" do
+    q = Question.make!(status: 'pending')
+    q.save!
+    q.approved_at.should be_nil
+
+    q.status = 'approved'
+    q.save!
+
+    q.approved_at.should_not be_nil
+  end
 end

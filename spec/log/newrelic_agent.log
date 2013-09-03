@@ -1,0 +1,225 @@
+# Logfile created on 2013-08-27 18:48:58 +0200 by logger.rb/31641
+[08/27/13 18:48:58 +0200 kat.finn.no (1428)] INFO : Starting the New Relic agent in "test" environment.
+[08/27/13 18:48:58 +0200 kat.finn.no (1428)] INFO : To prevent agent startup add a NEWRELIC_ENABLE=false environment variable or modify the "test" section of your newrelic.yml.
+[08/27/13 18:48:58 +0200 kat.finn.no (1428)] INFO : Reading configuration from 
+[08/27/13 18:48:58 +0200 kat.finn.no (1428)] ERROR : Unable to read configuration file : can't convert nil into String
+[08/27/13 18:48:58 +0200 kat.finn.no (1428)] INFO : Environment: test
+[08/27/13 18:48:58 +0200 kat.finn.no (1428)] INFO : No known dispatcher detected.
+[08/27/13 18:48:58 +0200 kat.finn.no (1428)] INFO : Application: test
+[08/27/13 18:48:58 +0200 kat.finn.no (1428)] WARN : No license key found in newrelic.yml config. This often means your newrelic.yml is missing a section for the running environment 'test'
+[08/27/13 18:48:58 +0200 kat.finn.no (1428)] INFO : Installing ActiveRecord instrumentation
+[08/27/13 18:48:58 +0200 kat.finn.no (1428)] INFO : Installing Net instrumentation
+[08/27/13 18:48:58 +0200 kat.finn.no (1428)] INFO : Installing Rails 3 Controller instrumentation
+[08/27/13 18:48:58 +0200 kat.finn.no (1428)] INFO : Installing Rails 3.1/3.2 view instrumentation
+[08/27/13 18:48:58 +0200 kat.finn.no (1428)] INFO : Installing Rails3 Error instrumentation
+[08/27/13 18:48:58 +0200 kat.finn.no (1428)] INFO : Finished instrumentation
+[09/03/13 19:59:32 +0200 kat.finn.no (1130)] INFO : Starting the New Relic agent in "test" environment.
+[09/03/13 19:59:32 +0200 kat.finn.no (1130)] INFO : To prevent agent startup add a NEWRELIC_ENABLE=false environment variable or modify the "test" section of your newrelic.yml.
+[09/03/13 19:59:32 +0200 kat.finn.no (1130)] INFO : Reading configuration from 
+[09/03/13 19:59:32 +0200 kat.finn.no (1130)] ERROR : Unable to read configuration file : can't convert nil into String
+[09/03/13 19:59:32 +0200 kat.finn.no (1130)] INFO : Environment: test
+[09/03/13 19:59:32 +0200 kat.finn.no (1130)] INFO : No known dispatcher detected.
+[09/03/13 19:59:32 +0200 kat.finn.no (1130)] INFO : Application: test
+[09/03/13 19:59:32 +0200 kat.finn.no (1130)] WARN : No license key found in newrelic.yml config. This often means your newrelic.yml is missing a section for the running environment 'test'
+[09/03/13 19:59:32 +0200 kat.finn.no (1130)] INFO : Installing ActiveRecord instrumentation
+[09/03/13 19:59:32 +0200 kat.finn.no (1130)] INFO : Installing Net instrumentation
+[09/03/13 19:59:32 +0200 kat.finn.no (1130)] INFO : Installing Rails 3 Controller instrumentation
+[09/03/13 19:59:32 +0200 kat.finn.no (1130)] INFO : Installing Rails 3.1/3.2 view instrumentation
+[09/03/13 19:59:33 +0200 kat.finn.no (1130)] INFO : Installing Rails3 Error instrumentation
+[09/03/13 19:59:33 +0200 kat.finn.no (1130)] INFO : Finished instrumentation
+[09/03/13 20:01:28 +0200 kat.finn.no (1151)] INFO : Starting the New Relic agent in "test" environment.
+[09/03/13 20:01:28 +0200 kat.finn.no (1151)] INFO : To prevent agent startup add a NEWRELIC_ENABLE=false environment variable or modify the "test" section of your newrelic.yml.
+[09/03/13 20:01:28 +0200 kat.finn.no (1151)] INFO : Reading configuration from 
+[09/03/13 20:01:28 +0200 kat.finn.no (1151)] ERROR : Unable to read configuration file : can't convert nil into String
+[09/03/13 20:01:28 +0200 kat.finn.no (1151)] INFO : Environment: test
+[09/03/13 20:01:28 +0200 kat.finn.no (1151)] INFO : No known dispatcher detected.
+[09/03/13 20:01:28 +0200 kat.finn.no (1151)] INFO : Application: test
+[09/03/13 20:01:28 +0200 kat.finn.no (1151)] WARN : No license key found in newrelic.yml config. This often means your newrelic.yml is missing a section for the running environment 'test'
+[09/03/13 20:01:29 +0200 kat.finn.no (1151)] INFO : Installing ActiveRecord instrumentation
+[09/03/13 20:01:29 +0200 kat.finn.no (1151)] INFO : Installing Net instrumentation
+[09/03/13 20:01:29 +0200 kat.finn.no (1151)] INFO : Installing Rails 3 Controller instrumentation
+[09/03/13 20:01:29 +0200 kat.finn.no (1151)] INFO : Installing Rails 3.1/3.2 view instrumentation
+[09/03/13 20:01:29 +0200 kat.finn.no (1151)] INFO : Installing Rails3 Error instrumentation
+[09/03/13 20:01:29 +0200 kat.finn.no (1151)] INFO : Finished instrumentation
+[09/03/13 20:02:43 +0200 kat.finn.no (1169)] INFO : Starting the New Relic agent in "test" environment.
+[09/03/13 20:02:43 +0200 kat.finn.no (1169)] INFO : To prevent agent startup add a NEWRELIC_ENABLE=false environment variable or modify the "test" section of your newrelic.yml.
+[09/03/13 20:02:43 +0200 kat.finn.no (1169)] INFO : Reading configuration from 
+[09/03/13 20:02:43 +0200 kat.finn.no (1169)] ERROR : Unable to read configuration file : can't convert nil into String
+[09/03/13 20:02:43 +0200 kat.finn.no (1169)] INFO : Environment: test
+[09/03/13 20:02:43 +0200 kat.finn.no (1169)] INFO : No known dispatcher detected.
+[09/03/13 20:02:43 +0200 kat.finn.no (1169)] INFO : Application: test
+[09/03/13 20:02:43 +0200 kat.finn.no (1169)] WARN : No license key found in newrelic.yml config. This often means your newrelic.yml is missing a section for the running environment 'test'
+[09/03/13 20:02:43 +0200 kat.finn.no (1169)] INFO : Installing ActiveRecord instrumentation
+[09/03/13 20:02:43 +0200 kat.finn.no (1169)] INFO : Installing Net instrumentation
+[09/03/13 20:02:43 +0200 kat.finn.no (1169)] INFO : Installing Rails 3 Controller instrumentation
+[09/03/13 20:02:43 +0200 kat.finn.no (1169)] INFO : Installing Rails 3.1/3.2 view instrumentation
+[09/03/13 20:02:43 +0200 kat.finn.no (1169)] INFO : Installing Rails3 Error instrumentation
+[09/03/13 20:02:43 +0200 kat.finn.no (1169)] INFO : Finished instrumentation
+[09/03/13 20:04:24 +0200 kat.finn.no (1188)] INFO : Starting the New Relic agent in "test" environment.
+[09/03/13 20:04:24 +0200 kat.finn.no (1188)] INFO : To prevent agent startup add a NEWRELIC_ENABLE=false environment variable or modify the "test" section of your newrelic.yml.
+[09/03/13 20:04:24 +0200 kat.finn.no (1188)] INFO : Reading configuration from 
+[09/03/13 20:04:24 +0200 kat.finn.no (1188)] ERROR : Unable to read configuration file : can't convert nil into String
+[09/03/13 20:04:24 +0200 kat.finn.no (1188)] INFO : Environment: test
+[09/03/13 20:04:24 +0200 kat.finn.no (1188)] INFO : No known dispatcher detected.
+[09/03/13 20:04:24 +0200 kat.finn.no (1188)] INFO : Application: test
+[09/03/13 20:04:24 +0200 kat.finn.no (1188)] WARN : No license key found in newrelic.yml config. This often means your newrelic.yml is missing a section for the running environment 'test'
+[09/03/13 20:04:24 +0200 kat.finn.no (1188)] INFO : Installing ActiveRecord instrumentation
+[09/03/13 20:04:25 +0200 kat.finn.no (1188)] INFO : Installing Net instrumentation
+[09/03/13 20:04:25 +0200 kat.finn.no (1188)] INFO : Installing Rails 3 Controller instrumentation
+[09/03/13 20:04:25 +0200 kat.finn.no (1188)] INFO : Installing Rails 3.1/3.2 view instrumentation
+[09/03/13 20:04:25 +0200 kat.finn.no (1188)] INFO : Installing Rails3 Error instrumentation
+[09/03/13 20:04:25 +0200 kat.finn.no (1188)] INFO : Finished instrumentation
+[09/03/13 20:06:47 +0200 kat.finn.no (1212)] INFO : Starting the New Relic agent in "test" environment.
+[09/03/13 20:06:47 +0200 kat.finn.no (1212)] INFO : To prevent agent startup add a NEWRELIC_ENABLE=false environment variable or modify the "test" section of your newrelic.yml.
+[09/03/13 20:06:47 +0200 kat.finn.no (1212)] INFO : Reading configuration from 
+[09/03/13 20:06:47 +0200 kat.finn.no (1212)] ERROR : Unable to read configuration file : can't convert nil into String
+[09/03/13 20:06:47 +0200 kat.finn.no (1212)] INFO : Environment: test
+[09/03/13 20:06:47 +0200 kat.finn.no (1212)] INFO : No known dispatcher detected.
+[09/03/13 20:06:47 +0200 kat.finn.no (1212)] INFO : Application: test
+[09/03/13 20:06:47 +0200 kat.finn.no (1212)] WARN : No license key found in newrelic.yml config. This often means your newrelic.yml is missing a section for the running environment 'test'
+[09/03/13 20:06:48 +0200 kat.finn.no (1212)] INFO : Installing ActiveRecord instrumentation
+[09/03/13 20:06:48 +0200 kat.finn.no (1212)] INFO : Installing Net instrumentation
+[09/03/13 20:06:48 +0200 kat.finn.no (1212)] INFO : Installing Rails 3 Controller instrumentation
+[09/03/13 20:06:48 +0200 kat.finn.no (1212)] INFO : Installing Rails 3.1/3.2 view instrumentation
+[09/03/13 20:06:48 +0200 kat.finn.no (1212)] INFO : Installing Rails3 Error instrumentation
+[09/03/13 20:06:48 +0200 kat.finn.no (1212)] INFO : Finished instrumentation
+[09/03/13 20:21:59 +0200 kat.finn.no (1326)] INFO : Starting the New Relic agent in "test" environment.
+[09/03/13 20:21:59 +0200 kat.finn.no (1326)] INFO : To prevent agent startup add a NEWRELIC_ENABLE=false environment variable or modify the "test" section of your newrelic.yml.
+[09/03/13 20:21:59 +0200 kat.finn.no (1326)] INFO : Reading configuration from 
+[09/03/13 20:21:59 +0200 kat.finn.no (1326)] ERROR : Unable to read configuration file : can't convert nil into String
+[09/03/13 20:21:59 +0200 kat.finn.no (1326)] INFO : Environment: test
+[09/03/13 20:21:59 +0200 kat.finn.no (1326)] INFO : No known dispatcher detected.
+[09/03/13 20:21:59 +0200 kat.finn.no (1326)] INFO : Application: test
+[09/03/13 20:21:59 +0200 kat.finn.no (1326)] WARN : No license key found in newrelic.yml config. This often means your newrelic.yml is missing a section for the running environment 'test'
+[09/03/13 20:21:59 +0200 kat.finn.no (1326)] INFO : Installing ActiveRecord instrumentation
+[09/03/13 20:21:59 +0200 kat.finn.no (1326)] INFO : Installing Net instrumentation
+[09/03/13 20:21:59 +0200 kat.finn.no (1326)] INFO : Installing Rails 3 Controller instrumentation
+[09/03/13 20:21:59 +0200 kat.finn.no (1326)] INFO : Installing Rails 3.1/3.2 view instrumentation
+[09/03/13 20:21:59 +0200 kat.finn.no (1326)] INFO : Installing Rails3 Error instrumentation
+[09/03/13 20:21:59 +0200 kat.finn.no (1326)] INFO : Finished instrumentation
+[09/03/13 20:22:54 +0200 kat.finn.no (1342)] INFO : Starting the New Relic agent in "test" environment.
+[09/03/13 20:22:54 +0200 kat.finn.no (1342)] INFO : To prevent agent startup add a NEWRELIC_ENABLE=false environment variable or modify the "test" section of your newrelic.yml.
+[09/03/13 20:22:54 +0200 kat.finn.no (1342)] INFO : Reading configuration from 
+[09/03/13 20:22:54 +0200 kat.finn.no (1342)] ERROR : Unable to read configuration file : can't convert nil into String
+[09/03/13 20:22:54 +0200 kat.finn.no (1342)] INFO : Environment: test
+[09/03/13 20:22:54 +0200 kat.finn.no (1342)] INFO : No known dispatcher detected.
+[09/03/13 20:22:54 +0200 kat.finn.no (1342)] INFO : Application: test
+[09/03/13 20:22:54 +0200 kat.finn.no (1342)] WARN : No license key found in newrelic.yml config. This often means your newrelic.yml is missing a section for the running environment 'test'
+[09/03/13 20:22:54 +0200 kat.finn.no (1342)] INFO : Installing ActiveRecord instrumentation
+[09/03/13 20:22:54 +0200 kat.finn.no (1342)] INFO : Installing Net instrumentation
+[09/03/13 20:22:54 +0200 kat.finn.no (1342)] INFO : Installing Rails 3 Controller instrumentation
+[09/03/13 20:22:54 +0200 kat.finn.no (1342)] INFO : Installing Rails 3.1/3.2 view instrumentation
+[09/03/13 20:22:54 +0200 kat.finn.no (1342)] INFO : Installing Rails3 Error instrumentation
+[09/03/13 20:22:54 +0200 kat.finn.no (1342)] INFO : Finished instrumentation
+[09/03/13 20:23:37 +0200 kat.finn.no (1355)] INFO : Starting the New Relic agent in "test" environment.
+[09/03/13 20:23:37 +0200 kat.finn.no (1355)] INFO : To prevent agent startup add a NEWRELIC_ENABLE=false environment variable or modify the "test" section of your newrelic.yml.
+[09/03/13 20:23:37 +0200 kat.finn.no (1355)] INFO : Reading configuration from 
+[09/03/13 20:23:37 +0200 kat.finn.no (1355)] ERROR : Unable to read configuration file : can't convert nil into String
+[09/03/13 20:23:37 +0200 kat.finn.no (1355)] INFO : Environment: test
+[09/03/13 20:23:37 +0200 kat.finn.no (1355)] INFO : No known dispatcher detected.
+[09/03/13 20:23:37 +0200 kat.finn.no (1355)] INFO : Application: test
+[09/03/13 20:23:37 +0200 kat.finn.no (1355)] WARN : No license key found in newrelic.yml config. This often means your newrelic.yml is missing a section for the running environment 'test'
+[09/03/13 20:23:37 +0200 kat.finn.no (1355)] INFO : Installing ActiveRecord instrumentation
+[09/03/13 20:23:37 +0200 kat.finn.no (1355)] INFO : Installing Net instrumentation
+[09/03/13 20:23:37 +0200 kat.finn.no (1355)] INFO : Installing Rails 3 Controller instrumentation
+[09/03/13 20:23:37 +0200 kat.finn.no (1355)] INFO : Installing Rails 3.1/3.2 view instrumentation
+[09/03/13 20:23:37 +0200 kat.finn.no (1355)] INFO : Installing Rails3 Error instrumentation
+[09/03/13 20:23:37 +0200 kat.finn.no (1355)] INFO : Finished instrumentation
+[09/03/13 20:24:19 +0200 kat.finn.no (1369)] INFO : Starting the New Relic agent in "test" environment.
+[09/03/13 20:24:19 +0200 kat.finn.no (1369)] INFO : To prevent agent startup add a NEWRELIC_ENABLE=false environment variable or modify the "test" section of your newrelic.yml.
+[09/03/13 20:24:19 +0200 kat.finn.no (1369)] INFO : Reading configuration from 
+[09/03/13 20:24:19 +0200 kat.finn.no (1369)] ERROR : Unable to read configuration file : can't convert nil into String
+[09/03/13 20:24:19 +0200 kat.finn.no (1369)] INFO : Environment: test
+[09/03/13 20:24:19 +0200 kat.finn.no (1369)] INFO : No known dispatcher detected.
+[09/03/13 20:24:19 +0200 kat.finn.no (1369)] INFO : Application: test
+[09/03/13 20:24:19 +0200 kat.finn.no (1369)] WARN : No license key found in newrelic.yml config. This often means your newrelic.yml is missing a section for the running environment 'test'
+[09/03/13 20:24:19 +0200 kat.finn.no (1369)] INFO : Installing ActiveRecord instrumentation
+[09/03/13 20:24:19 +0200 kat.finn.no (1369)] INFO : Installing Net instrumentation
+[09/03/13 20:24:19 +0200 kat.finn.no (1369)] INFO : Installing Rails 3 Controller instrumentation
+[09/03/13 20:24:19 +0200 kat.finn.no (1369)] INFO : Installing Rails 3.1/3.2 view instrumentation
+[09/03/13 20:24:19 +0200 kat.finn.no (1369)] INFO : Installing Rails3 Error instrumentation
+[09/03/13 20:24:19 +0200 kat.finn.no (1369)] INFO : Finished instrumentation
+[09/03/13 20:38:13 +0200 kat.finn.no (9030)] INFO : Starting the New Relic agent in "test" environment.
+[09/03/13 20:38:13 +0200 kat.finn.no (9030)] INFO : To prevent agent startup add a NEWRELIC_ENABLE=false environment variable or modify the "test" section of your newrelic.yml.
+[09/03/13 20:38:13 +0200 kat.finn.no (9030)] INFO : Reading configuration from 
+[09/03/13 20:38:13 +0200 kat.finn.no (9030)] ERROR : Unable to read configuration file : can't convert nil into String
+[09/03/13 20:38:13 +0200 kat.finn.no (9030)] INFO : Environment: test
+[09/03/13 20:38:13 +0200 kat.finn.no (9030)] INFO : No known dispatcher detected.
+[09/03/13 20:38:13 +0200 kat.finn.no (9030)] INFO : Application: test
+[09/03/13 20:38:13 +0200 kat.finn.no (9030)] WARN : No license key found in newrelic.yml config. This often means your newrelic.yml is missing a section for the running environment 'test'
+[09/03/13 20:38:13 +0200 kat.finn.no (9030)] INFO : Installing ActiveRecord instrumentation
+[09/03/13 20:38:13 +0200 kat.finn.no (9030)] INFO : Installing Net instrumentation
+[09/03/13 20:38:13 +0200 kat.finn.no (9030)] INFO : Installing Rails 3 Controller instrumentation
+[09/03/13 20:38:13 +0200 kat.finn.no (9030)] INFO : Installing Rails 3.1/3.2 view instrumentation
+[09/03/13 20:38:13 +0200 kat.finn.no (9030)] INFO : Installing Rails3 Error instrumentation
+[09/03/13 20:38:13 +0200 kat.finn.no (9030)] INFO : Finished instrumentation
+[09/03/13 20:38:45 +0200 kat.finn.no (9052)] INFO : Starting the New Relic agent in "test" environment.
+[09/03/13 20:38:45 +0200 kat.finn.no (9052)] INFO : To prevent agent startup add a NEWRELIC_ENABLE=false environment variable or modify the "test" section of your newrelic.yml.
+[09/03/13 20:38:45 +0200 kat.finn.no (9052)] INFO : Reading configuration from 
+[09/03/13 20:38:45 +0200 kat.finn.no (9052)] ERROR : Unable to read configuration file : can't convert nil into String
+[09/03/13 20:38:45 +0200 kat.finn.no (9052)] INFO : Environment: test
+[09/03/13 20:38:45 +0200 kat.finn.no (9052)] INFO : No known dispatcher detected.
+[09/03/13 20:38:45 +0200 kat.finn.no (9052)] INFO : Application: test
+[09/03/13 20:38:45 +0200 kat.finn.no (9052)] WARN : No license key found in newrelic.yml config. This often means your newrelic.yml is missing a section for the running environment 'test'
+[09/03/13 20:38:45 +0200 kat.finn.no (9052)] INFO : Installing ActiveRecord instrumentation
+[09/03/13 20:38:45 +0200 kat.finn.no (9052)] INFO : Installing Net instrumentation
+[09/03/13 20:38:45 +0200 kat.finn.no (9052)] INFO : Installing Rails 3 Controller instrumentation
+[09/03/13 20:38:46 +0200 kat.finn.no (9052)] INFO : Installing Rails 3.1/3.2 view instrumentation
+[09/03/13 20:38:46 +0200 kat.finn.no (9052)] INFO : Installing Rails3 Error instrumentation
+[09/03/13 20:38:46 +0200 kat.finn.no (9052)] INFO : Finished instrumentation
+[09/03/13 20:39:26 +0200 kat.finn.no (9065)] INFO : Starting the New Relic agent in "test" environment.
+[09/03/13 20:39:26 +0200 kat.finn.no (9065)] INFO : To prevent agent startup add a NEWRELIC_ENABLE=false environment variable or modify the "test" section of your newrelic.yml.
+[09/03/13 20:39:26 +0200 kat.finn.no (9065)] INFO : Reading configuration from 
+[09/03/13 20:39:26 +0200 kat.finn.no (9065)] ERROR : Unable to read configuration file : can't convert nil into String
+[09/03/13 20:39:26 +0200 kat.finn.no (9065)] INFO : Environment: test
+[09/03/13 20:39:26 +0200 kat.finn.no (9065)] INFO : No known dispatcher detected.
+[09/03/13 20:39:26 +0200 kat.finn.no (9065)] INFO : Application: test
+[09/03/13 20:39:26 +0200 kat.finn.no (9065)] WARN : No license key found in newrelic.yml config. This often means your newrelic.yml is missing a section for the running environment 'test'
+[09/03/13 20:39:26 +0200 kat.finn.no (9065)] INFO : Installing ActiveRecord instrumentation
+[09/03/13 20:39:26 +0200 kat.finn.no (9065)] INFO : Installing Net instrumentation
+[09/03/13 20:39:26 +0200 kat.finn.no (9065)] INFO : Installing Rails 3 Controller instrumentation
+[09/03/13 20:39:27 +0200 kat.finn.no (9065)] INFO : Installing Rails 3.1/3.2 view instrumentation
+[09/03/13 20:39:27 +0200 kat.finn.no (9065)] INFO : Installing Rails3 Error instrumentation
+[09/03/13 20:39:27 +0200 kat.finn.no (9065)] INFO : Finished instrumentation
+[09/03/13 20:41:08 +0200 kat.finn.no (9087)] INFO : Starting the New Relic agent in "test" environment.
+[09/03/13 20:41:08 +0200 kat.finn.no (9087)] INFO : To prevent agent startup add a NEWRELIC_ENABLE=false environment variable or modify the "test" section of your newrelic.yml.
+[09/03/13 20:41:08 +0200 kat.finn.no (9087)] INFO : Reading configuration from 
+[09/03/13 20:41:08 +0200 kat.finn.no (9087)] ERROR : Unable to read configuration file : can't convert nil into String
+[09/03/13 20:41:08 +0200 kat.finn.no (9087)] INFO : Environment: test
+[09/03/13 20:41:08 +0200 kat.finn.no (9087)] INFO : No known dispatcher detected.
+[09/03/13 20:41:08 +0200 kat.finn.no (9087)] INFO : Application: test
+[09/03/13 20:41:08 +0200 kat.finn.no (9087)] WARN : No license key found in newrelic.yml config. This often means your newrelic.yml is missing a section for the running environment 'test'
+[09/03/13 20:41:08 +0200 kat.finn.no (9087)] INFO : Installing ActiveRecord instrumentation
+[09/03/13 20:41:08 +0200 kat.finn.no (9087)] INFO : Installing Net instrumentation
+[09/03/13 20:41:08 +0200 kat.finn.no (9087)] INFO : Installing Rails 3 Controller instrumentation
+[09/03/13 20:41:08 +0200 kat.finn.no (9087)] INFO : Installing Rails 3.1/3.2 view instrumentation
+[09/03/13 20:41:08 +0200 kat.finn.no (9087)] INFO : Installing Rails3 Error instrumentation
+[09/03/13 20:41:08 +0200 kat.finn.no (9087)] INFO : Finished instrumentation
+[09/03/13 20:46:02 +0200 kat.finn.no (9151)] INFO : Starting the New Relic agent in "test" environment.
+[09/03/13 20:46:02 +0200 kat.finn.no (9151)] INFO : To prevent agent startup add a NEWRELIC_ENABLE=false environment variable or modify the "test" section of your newrelic.yml.
+[09/03/13 20:46:02 +0200 kat.finn.no (9151)] INFO : Reading configuration from 
+[09/03/13 20:46:02 +0200 kat.finn.no (9151)] ERROR : Unable to read configuration file : can't convert nil into String
+[09/03/13 20:46:02 +0200 kat.finn.no (9151)] INFO : Environment: test
+[09/03/13 20:46:02 +0200 kat.finn.no (9151)] INFO : No known dispatcher detected.
+[09/03/13 20:46:02 +0200 kat.finn.no (9151)] INFO : Application: test
+[09/03/13 20:46:02 +0200 kat.finn.no (9151)] WARN : No license key found in newrelic.yml config. This often means your newrelic.yml is missing a section for the running environment 'test'
+[09/03/13 20:46:02 +0200 kat.finn.no (9151)] INFO : Installing ActiveRecord instrumentation
+[09/03/13 20:46:02 +0200 kat.finn.no (9151)] INFO : Installing Net instrumentation
+[09/03/13 20:46:02 +0200 kat.finn.no (9151)] INFO : Installing Rails 3 Controller instrumentation
+[09/03/13 20:46:02 +0200 kat.finn.no (9151)] INFO : Installing Rails 3.1/3.2 view instrumentation
+[09/03/13 20:46:02 +0200 kat.finn.no (9151)] INFO : Installing Rails3 Error instrumentation
+[09/03/13 20:46:02 +0200 kat.finn.no (9151)] INFO : Finished instrumentation
+[09/03/13 20:52:22 +0200 kat.finn.no (9266)] INFO : Starting the New Relic agent in "test" environment.
+[09/03/13 20:52:22 +0200 kat.finn.no (9266)] INFO : To prevent agent startup add a NEWRELIC_ENABLE=false environment variable or modify the "test" section of your newrelic.yml.
+[09/03/13 20:52:22 +0200 kat.finn.no (9266)] INFO : Reading configuration from 
+[09/03/13 20:52:22 +0200 kat.finn.no (9266)] ERROR : Unable to read configuration file : can't convert nil into String
+[09/03/13 20:52:22 +0200 kat.finn.no (9266)] INFO : Environment: test
+[09/03/13 20:52:22 +0200 kat.finn.no (9266)] INFO : No known dispatcher detected.
+[09/03/13 20:52:22 +0200 kat.finn.no (9266)] INFO : Application: test
+[09/03/13 20:52:22 +0200 kat.finn.no (9266)] WARN : No license key found in newrelic.yml config. This often means your newrelic.yml is missing a section for the running environment 'test'
+[09/03/13 20:52:23 +0200 kat.finn.no (9266)] INFO : Installing ActiveRecord instrumentation
+[09/03/13 20:52:23 +0200 kat.finn.no (9266)] INFO : Installing Net instrumentation
+[09/03/13 20:52:23 +0200 kat.finn.no (9266)] INFO : Installing Rails 3 Controller instrumentation
+[09/03/13 20:52:23 +0200 kat.finn.no (9266)] INFO : Installing Rails 3.1/3.2 view instrumentation
+[09/03/13 20:52:23 +0200 kat.finn.no (9266)] INFO : Installing Rails3 Error instrumentation
+[09/03/13 20:52:23 +0200 kat.finn.no (9266)] INFO : Finished instrumentation
