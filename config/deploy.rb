@@ -101,5 +101,5 @@ end
 after  'hipchat:trigger_notification', 'hipchat:ensure'
 before 'deploy:assets:precompile', 'config:symlink'
 # before 'deploy:create_symlink', 'cache:update_topic_issues'
-# before 'deploy:create_symlink', 'cache:topic'
+before 'deploy:create_symlink', 'cache:topic'
 before 'deploy:create_symlink', 'cache:precompute' # important
