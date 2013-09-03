@@ -14,7 +14,7 @@ module Hdo
 
         counts.sort_by { |e| e['total_count'] }.each do |e|
           if e['total_count'] > 0
-            puts [e['total_count'].to_s.ljust(3), e['url']].join
+            puts [e['total_count'].to_s.ljust(5), e['url']].join
           end
         end
       end
