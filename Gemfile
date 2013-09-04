@@ -80,7 +80,7 @@ gem 'draper'
 gem 'pg'
 gem 'acts_as_tree', '~> 1.1'
 gem 'yaml_db' # db dump / load
-gem 'acts-as-taggable-on', '~> 2.3.1'
+gem 'acts-as-taggable-on', '~> 2.4.1'
 
 # search
 gem 'tire'
