@@ -30,6 +30,8 @@ class QuestionDecorator < Draper::Decorator
       "Besvart for #{h.distance_of_time_in_words_to_now model.answer.created_at} siden"
     elsif model.approved?
       "Venter på svar, stilt for #{h.distance_of_time_in_words_to_now model.approved_at} siden"
+    else
+      model.status_text
     end
   end
 
