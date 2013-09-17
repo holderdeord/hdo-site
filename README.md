@@ -52,6 +52,8 @@ Follow the link to the latest stable release [here](http://www.elasticsearch.org
 
     $ sudo dpkg -i elasticsearch.deb
 
+By default, elasticsearch may cluster with other nodes on the same network, which may cause problems. To avoid this, use a unique name for the `cluster.name` setting in `/etc/elasticsearch/elasticsearch.yml`.
+
 ### Database
 
 To allow Rails to connect, edit /etc/postgresql/9.1/main/pg_hba.conf as root and change the line for Unix domain socket from "peer" to "trust":
