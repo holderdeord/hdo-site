@@ -83,7 +83,14 @@ namespace :images do
   end
 
   task :update_topic_issues => :environment do
-    topic_ids = [143,197,169,18,146,123,246,198,145,175,303,237]
+    topics = {
+      'Samferdsel'      => [251, 149, 212, 161, 257, 193, 200, 166, 259, 77, 6],
+      'Utdanning'       => [48, 262, 263, 52, 99, 4, 53, 145, 278, 227, 141, 47, 65, 231],
+      'Klima og energi' => [270, 268, 186, 191, 57, 80, 236, 264, 8, 250, 195, 252, 266],
+      'Helse og omsorg' => [143,197,169,18,146,123,246,198,145,175,303,237]
+    }
+
+    topic_ids = topics.fetch(AppConfig.topic_of_the_week)
 
     Issue.published.each do |issue|
       issue.frontpage = topic_ids.include?(issue.id)
@@ -93,7 +100,7 @@ namespace :images do
 
   desc 'Fetch topic image'
   task :topic do
-    ok = system "curl", "-s", "-o", Rails.root.join('public/images/topic.jpg').to_s, "http://files.holderdeord.no/images/tema_helse.jpg"
+    ok = system "curl", "-s", "-o", Rails.root.join('public/images/topic.jpg').to_s, "http://files.holderdeord.no/images/tema_samferdsel.jpg"
     ok or raise "topic download failed"
   end
 
