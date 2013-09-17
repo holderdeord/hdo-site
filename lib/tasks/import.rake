@@ -17,7 +17,7 @@ namespace :import do
     desc 'Import a (reduced) production dump to the development db'
     task :dump => ['tmp/db.download.sql', :verify] do
       puts "Importing production dump"
-      sh "psql hdo_development < tmp/db.download.sql"
+      sh "psql -U hdo hdo_development < tmp/db.download.sql"
     end
 
     REMOTE_DUMP = "http://files.holderdeord.no/dev/data/db.dev.sql"
@@ -30,7 +30,7 @@ namespace :import do
 
     task :verify do
       expected = `curl #{REMOTE_DUMP}.md5`.strip
-      actual   = `cat #{LOCAL_DUMP} | openssl md5`.strip
+      actual   = `cat #{LOCAL_DUMP} | openssl md5`.strip[/[a-z0-9]{32}/]
 
       if expected != actual
         raise "bad db dump checksum: #{expected.inspect} != #{actual.inspect}, remove #{LOCAL_DUMP} and try again"
