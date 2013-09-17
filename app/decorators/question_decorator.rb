@@ -28,8 +28,8 @@ class QuestionDecorator < Draper::Decorator
   def status_description
     if model.has_approved_answer?
       "Besvart for #{h.distance_of_time_in_words_to_now model.answer.created_at} siden"
-    else
-      "Venter på svar, stilt for #{h.distance_of_time_in_words_to_now model.created_at} siden"
+    elsif model.approved?
+      "Venter på svar, stilt for #{h.distance_of_time_in_words_to_now model.approved_at} siden"
     end
   end
 
