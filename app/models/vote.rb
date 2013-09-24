@@ -88,7 +88,15 @@ class Vote < ActiveRecord::Base
   end
 
   def minutes_url
-    I18n.t("app.external.urls.minutes") % [ParliamentSession.for_date(time).name, time.strftime("%y%m%d")]
+    I18n.t("app.external.urls.minutes") % [parliament_session.name, time.strftime("%y%m%d")]
+  end
+
+  def parliament_session
+    ParliamentSession.for_date time
+  end
+
+  def parliament_period
+    ParliamentPeriod.for_date time
   end
 
   def alternate_of?(other)

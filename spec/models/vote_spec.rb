@@ -141,6 +141,16 @@ describe Vote do
     v1.should_not be_alternate_of unrelated_by_enacted
   end
 
+  it 'has parliament period and session' do
+    ps = ParliamentSession.make!(start_date: 2.months.ago, end_date: 2.months.from_now)
+    pp = ParliamentPeriod.make!(start_date: 1.month.ago, end_date: 2.months.from_now)
+
+    vote = Vote.make(time: 15.days.ago)
+
+    vote.parliament_period.should == pp
+    vote.parliament_session.should == ps
+  end
+
   it 'finds votes since yesterday' do
     a = Vote.make!(created_at: 25.hours.ago)
     b = Vote.make!(created_at: 23.hours.ago)
