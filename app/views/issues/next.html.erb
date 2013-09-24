@@ -1,0 +1,23 @@
+<% page_title "#{@issue.title} - #{t('app.issues.title')} - #{t('app.title')}" %>
+<% metadata[:description] = @issue.description %>
+<% metadata[:type] = 'article' %>
+<% metadata[:url] = issue_url(@issue) %>
+
+<article class="issue-next">
+  <div class="row-fluid">
+    <div class="span4">
+      <h2>Partier</h3>
+    </div>
+
+    <div class="span8 vote-list">
+      <h2>Avstemninger</h3>
+
+      <% @votes.each do |vote| %>
+        <div class="row-fluid vote">
+          <h3><%= vote.title %></h3>
+          <p><%= l vote.vote.time, format: :text %></p>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</article>

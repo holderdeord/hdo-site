@@ -68,6 +68,7 @@ Hdo::Application.routes.draw do
       get 'votes'      => 'issues#votes'
       get 'widget'     => 'widgets#issue'
       get 'admin_info' => 'issues#admin_info', as: :admin_info
+      get 'next'       => 'issues#next'
     end
   end
 

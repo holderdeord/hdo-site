@@ -1,7 +1,7 @@
 # encoding: UTF-8
 
 class IssuesController < ApplicationController
-  before_filter :fetch_issue, except: [:index, :admin_info, :ids]
+  before_filter :fetch_issue, except: [:index, :admin_info]
 
   hdo_caches_page :index, :show, :votes
 
@@ -11,15 +11,22 @@ class IssuesController < ApplicationController
   end
 
   def show
-    policy = policy(@issue)
-
-    if policy.show?
+    if policy(@issue).show?
       fresh_when @issue, public: can_cache?
       @issue = IssueDecorator.decorate(@issue)
       if @issue.valence_issue?
         fetch_issue_votes
         @all_parties = Party.order(:name)
       end
+    else
+      redirect_to new_user_session_path
+    end
+  end
+
+  def next
+    if policy(@issue).show?
+      @issue = IssueDecorator.decorate(@issue)
+      @votes = @issue.vote_connections.includes(:vote).order("votes.time").reverse_order
     else
       redirect_to new_user_session_path
     end
