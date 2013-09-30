@@ -4,20 +4,80 @@
 <% metadata[:url] = issue_url(@issue) %>
 
 <article class="issue-next">
+  <div class="page-header">
+    <h1 class="issue-title"><%= @issue.title %></h1>
+    <%= render partial: 'aside', locals: { issue: @issue } %>
+  </div>
+
+  <p class="issue-description"><%= @issue.description %></p>
+
   <div class="row-fluid">
-    <div class="span4">
-      <h2>Partier</h3>
+    <div class="span4 party-list">
+      <% @issue.parties.each do |party| %>
+        <div class="row-fluid party">
+          <div class="row-fluid">
+            <h4 class="span8"><%= party.name %></h4>
+            <%= image_tag party.medium_logo, style: 'max-width: 50px', class: 'span6' %>
+          </div>
+
+          <p><%= party.position_title %></p>
+          <p><a><%= party.promises.size %> relaterte løfter</a> og <%= party.accountability_text %></p>
+        </div>
+      <% end %>
     </div>
 
     <div class="span8 vote-list">
-      <h2>Avstemninger</h3>
+      <p class="explanation"><%= @issue.explanation %></p>
 
       <% @votes.each do |vote| %>
         <div class="row-fluid vote">
-          <h3><%= vote.title %></h3>
-          <p><%= l vote.vote.time, format: :text %></p>
+          <span class="span4 time"><%= vote.time %></span>
+          <span class="span8"><%= vote.title %></span>
+
+<!--           <div class="row-fluid">
+            <div class="span6">
+              <strong>For</strong>
+              <% vote.logos_for.each do |logo| %>
+                <%= image_tag logo %>
+              <% end %>
+            </div>
+
+
+            <div class="span6">
+              <strong>Mot</strong>
+              <% vote.logos_against.each do |logo| %>
+                <%= image_tag logo %>
+              <% end %>
+            </div>
+          </div>
+
+ -->
         </div>
       <% end %>
     </div>
   </div>
 </article>
+
+<% content_for :document_ready do %>
+<script>
+$(document).ready(function () {
+  $(".party").on('mouseenter', function (e) {
+    $(".vote").each(function () {
+      if (Math.random() > 0.5) {
+        $(this).css('opacity', 0.3);
+      } else {
+        $(this).css('opacity', 1);
+      }
+    })
+  })
+
+  $(".party").on('mouseleave', function (e) {
+    $(".vote").each(function () {
+      $(this).css('opacity', 1);
+    })
+  })
+});
+</script>
+
+
+<% end %>

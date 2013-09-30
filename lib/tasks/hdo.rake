@@ -28,4 +28,24 @@ namespace :hdo do
       end
     end
   end
+
+  namespace :fake do
+    task :dump => :environment do
+      issue = Issue.find(161)
+      decorator = issue.decorate
+
+      data = issue.as_json(
+        include: [
+           { :tags => {methods: :slug}},
+           { :vote_connections    => {:include => {:vote => {methods: :stats}}}},
+           { :promise_connections => {:include => {:promise => {:include => :parties}}}},
+           { :valence_issue_explanations => {:include => :parties}}
+        ]
+      )
+
+      Rails.root.join('lib/hdo/fake_issue.json').open('w') do |io|
+        io << JSON.pretty_generate(data.to_h)
+      end
+    end
+  end
 end

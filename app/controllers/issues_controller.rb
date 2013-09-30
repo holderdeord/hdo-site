@@ -25,8 +25,8 @@ class IssuesController < ApplicationController
 
   def next
     if policy(@issue).show?
-      @issue = IssueDecorator.decorate(@issue)
-      @votes = @issue.vote_connections.includes(:vote).order("votes.time").reverse_order
+      @issue = Hdo::NewIssue.from_issue(@issue)
+      @votes = @issue.vote_connections
     else
       redirect_to new_user_session_path
     end
