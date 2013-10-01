@@ -1,7 +1,7 @@
 require 'forwardable'
 
 module Hdo
-	class NewIssue
+  class NewIssue
     extend Forwardable
 
     def_delegators :@data, :title,
