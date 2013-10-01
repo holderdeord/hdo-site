@@ -417,7 +417,7 @@ module Hdo
         correct_id = REP_ID_BUGS[representative.external_id]
 
         if correct_id
-          log.warn "correcting #{representative.external_id} => #{correct_id}"
+          @log.warn "correcting #{representative.external_id} => #{correct_id}"
           representative.class.from_hash(representative.to_hash.merge('externalId' => correct_id))
         else
           representative
