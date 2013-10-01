@@ -5,8 +5,8 @@ module Hdo
     describe CLI do
       it 'has a default session and period' do
         CLI.new(['api']).options.should include(
-          session: '2012-2013',
-          period:  '2009-2013'
+          session: '2013-2014',
+          period:  '2013-2017'
         )
       end
 
