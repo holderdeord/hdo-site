@@ -36,7 +36,7 @@ namespace :js do
     end
 
     begin
-      sh "buster", "test"
+      sh "buster-test"
     ensure
       drivers.each { |d| d.quit }
       server.stop
