@@ -42,9 +42,10 @@
       <%= render partial: 'question_list', locals: { representative: @representative, questions: @questions } %>
     <% elsif @representative.opted_out? %>
       <p><%= @representative.name %> har reservert seg mot å svare på spørsmål.</p>
+    <% elsif @representative.email.nil? %>
+      <p>Vi mangler epostaddressen til <%= @representative.name %>.</p><p>Dette skal helst ikke skje, så gi oss gjerne beskjed <%= mail_to AppConfig.question_answer_email, 'her!', encode: 'hex', subject: "Mangler epost for #{@representative.name} (#{@representative.external_id})" %>.</p>
     <% else %>
       <p><%= @representative.name %> møter for tiden ikke på Stortinget. Du kan bare stille spørsmål til møtende representanter.</p>
-      <!-- TODO: <%= link_to 'Hva betyr dette?' '/home/faq#hvem-kan-jeg-sporre' %> -->
     <% end %>
   </div>
 
