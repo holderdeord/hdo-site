@@ -13,6 +13,13 @@
 
   <div class="row-fluid">
     <div class="span4 party-list">
+      <div class="tabbable">
+        <ul class="nav nav-tabs">
+          <li class="span6 active"><a data-toggle="tab">2009-2013</a></li>
+          <li class="span6"><a data-toggle="tab">2013-2017</a></li>
+        </ul>
+      </div>
+
       <% @issue.parties.each do |party| %>
         <div class="row-fluid party">
           <div class="row-fluid">
