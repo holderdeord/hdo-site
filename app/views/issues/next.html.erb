@@ -31,28 +31,46 @@
 
       <% @votes.each do |vote| %>
         <div class="row-fluid vote">
-          <span class="span4 time"><%= vote.time %></span>
-          <span class="span8"><%= vote.title %></span>
-
-<!--           <div class="row-fluid">
-            <div class="span6">
-              <strong>For</strong>
-              <% vote.logos_for.each do |logo| %>
-                <%= image_tag logo %>
-              <% end %>
-            </div>
-
-
-            <div class="span6">
-              <strong>Mot</strong>
-              <% vote.logos_against.each do |logo| %>
-                <%= image_tag logo %>
-              <% end %>
-            </div>
+          <div class="row-fluid">
+            <span class="span4 time"><%= vote.time %></span>
+            <span class="span8"><%= vote.title %></span>
           </div>
 
- -->
+          <span class="collapse-closed">&#x25B8;</span>
+          <!-- <span class="collapse-open">&#x25BE;</span> -->
+
+          <div class="row-fluid details">
+            <div class="span6">
+              <%= markdown(vote.comment).html_safe %>
+            </div>
+
+            <div class="span6">
+              <p>
+                <% if vote.enacted? %>
+                  Forslaget ble <strong>vedtatt</strong>.
+                <% else %>
+                  Forslaget ble ikke <strong>vedtatt</strong>.
+                <% end %>
+              </p>
+
+              <strong>Stemte for:</strong>
+              <ul>
+                <% vote.parties_for.each do |name| %>
+                  <li><%= name %></li>
+                <% end %>
+              </ul>
+
+              <strong>Stemte mot:</strong>
+              <ul>
+                <% vote.parties_against.each do |name| %>
+                  <li><%= name %></li>
+                <% end %>
+              </ul>
+            </div>
+          </div>
         </div>
+
+
       <% end %>
     </div>
   </div>
@@ -69,6 +87,11 @@ $(document).ready(function () {
         $(this).css('opacity', 1);
       }
     })
+  })
+
+  $(".vote").click(function (e) {
+    if (e.target.tagName == 'A') return;
+    $(this).find('.details').slideToggle('fast');
   })
 
   $(".party").on('mouseleave', function (e) {

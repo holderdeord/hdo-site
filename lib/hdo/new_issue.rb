@@ -35,7 +35,7 @@ module Hdo
       start_date = vcs.last.time
       end_date = vcs.first.time
 
-      "Viser #{count} avstemninger på Stortinget mellom #{start_date} og #{end_date}"
+      "#{count} avstemninger på Stortinget mellom #{start_date} og #{end_date}"
     end
 
     def vote_connections
@@ -83,20 +83,20 @@ module Hdo
         @conn.title
       end
 
-      def logos_for
-        names = @conn.vote.stats.as_json[:parties].select { |name, e| e['for'].to_i > e['against'].to_i }.map(&:first)
-        logos(names)
+      def enacted?
+        @conn.vote.enacted
       end
 
-      def logos_against
-        names = @conn.vote.stats.as_json[:parties].select { |name, e| e['for'].to_i < e['against'].to_i }.map(&:first)
-        logos(names)
+      def comment
+        @conn.comment
       end
 
-      private
+      def parties_for
+        @conn.vote.stats.as_json[:parties].select { |name, e| e[:for].to_i > e[:against].to_i }.map(&:first)
+      end
 
-      def logos(names)
-        names.map { |e| Party.find_by_name!(e).logo.versions[:small] }
+      def parties_against
+        @conn.vote.stats.as_json[:parties].select { |name, e| e[:for].to_i < e[:against].to_i }.map(&:first)
       end
     end
 
