@@ -92,11 +92,11 @@ module Hdo
       end
 
       def parties_for
-        @conn.vote.stats.as_json[:parties].select { |name, e| e[:for].to_i > e[:against].to_i }.map(&:first)
+        @conn.vote.stats.as_json[:parties].select { |name, e| e[:for].to_i > e[:against].to_i }.map(&:first).sort
       end
 
       def parties_against
-        @conn.vote.stats.as_json[:parties].select { |name, e| e[:for].to_i < e[:against].to_i }.map(&:first)
+        @conn.vote.stats.as_json[:parties].select { |name, e| e[:for].to_i < e[:against].to_i }.map(&:first).sort
       end
     end
 
