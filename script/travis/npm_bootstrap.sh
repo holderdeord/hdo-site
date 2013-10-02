@@ -3,7 +3,7 @@
 set -e
 
 function setup () {
-  npm install -g npm && npm install -g buster sinon autolint
+  npm install -g autolint
 }
 
 setup || (sleep 5 && setup)
