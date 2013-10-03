@@ -1,4 +1,4 @@
-describe("widgets", function() {
+describe("HDO.widgets", function() {
   var element;
 
   beforeEach(function() {

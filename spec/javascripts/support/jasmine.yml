@@ -14,6 +14,7 @@ src_files:
   - app/assets/javascripts/lib/**/*.js
   - app/assets/javascripts/widgets/widgets.js
   - app/assets/javascripts/widgets/*.js
+  - app/assets/javascripts/*.js
 
 # stylesheets
 #
