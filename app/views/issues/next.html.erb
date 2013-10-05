@@ -12,7 +12,7 @@
   <p class="issue-description"><%= @issue.description %></p>
 
   <div class="row-fluid">
-    <div class="span4 party-list">
+    <div class="span5 party-list">
       <div class="tabbable">
         <ul class="nav nav-tabs">
           <li class="span6 active"><a data-toggle="tab">2009-2013</a></li>
@@ -20,20 +20,25 @@
         </ul>
       </div>
 
-      <% @issue.parties.each do |party| %>
-        <div class="row-fluid party">
-          <div class="row-fluid">
-            <h4 class="span8"><%= party.name %></h4>
-            <%= image_tag party.medium_logo, style: 'max-width: 50px', class: 'span6' %>
-          </div>
+      <% @issue.positions.each do |position| %>
+        <div class="row-fluid position">
+          <h4><%= position.title %></h4>
+          <p><%= position.explanation %></p>
 
-          <p><%= party.position_title %></p>
-          <p><a><%= party.promises.size %> relaterte løfter</a> og <%= party.accountability_text %></p>
+          <% position.parties.each do |party| %>
+            <div class="row-fluid party">
+              <%= image_tag party.medium_logo, style: 'max-width: 50px', class: 'span4' %>
+              <strong class="span8"><%= party.name %></strong>
+              <p><a><%= party.promises.size %> relaterte løfter</a> og <%= party.accountability_text %></p>
+
+            </div>
+          <% end %>
         </div>
       <% end %>
+
     </div>
 
-    <div class="span8 vote-list">
+    <div class="span7 vote-list">
       <p class="explanation"><%= @issue.explanation %></p>
 
       <% @votes.each do |vote| %>
@@ -86,16 +91,6 @@
 <% content_for :document_ready do %>
 <script>
 $(document).ready(function () {
-  $(".party").on('mouseenter', function (e) {
-    $(".vote").each(function () {
-      if (Math.random() > 0.5) {
-        $(this).css('opacity', 0.3);
-      } else {
-        $(this).css('opacity', 1);
-      }
-    })
-  })
-
   $(".vote").click(function (e) {
     if (e.target.tagName == 'A') return;
     $(this).find('.details').slideToggle('fast');

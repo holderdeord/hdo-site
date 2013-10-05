@@ -42,6 +42,29 @@ module Hdo
       data.vote_connections.sort_by { |e| e.vote.time }.reverse.map { |vc| FakeVote.new(vc) }
     end
 
+    def positions
+      @positions ||= (
+        data.valence_issue_explanations.map do |vie|
+          DeepStruct.new(
+            'title' => vie.title,
+            'explanation' => vie.explanation,
+            'parties' => vie.parties.map do |p|
+              party = party_named(p.name)
+              DeepStruct.new(
+                'name'                => p.name,
+                'accountability_text' => issue.accountability.text_for(party, name: ''),
+                'position_text'       => vie.explanation,
+                'position_title'      => vie.title,
+                'promises'            => data.promise_connections.select { |pc| pc.promise.parties.any? { |e| e.name == p.name } }.map(&:promise),
+                'small_logo'          => party.logo.versions[:small],
+                'medium_logo'         => party.logo.versions[:medium],
+              )
+            end
+          )
+        end
+      )
+    end
+
     def parties
       @parties ||= (
         party_names = data.vote_connections.flat_map { |e| e.vote.stats.as_json[:parties].keys }.uniq.map(&:to_s)
