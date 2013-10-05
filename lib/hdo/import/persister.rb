@@ -265,8 +265,6 @@ module Hdo
 
       def import_representative(representative)
         log_import representative
-
-        representative = fix_api_bugs(representative)
         representative.validate!
 
         district = District.find_by_name!(representative.district)
@@ -404,24 +402,6 @@ module Hdo
 
       def find_or_import_representative(xrep)
         Representative.find_by_external_id(xrep.external_id) || import_representative(xrep)
-      end
-
-      REP_ID_BUGS = {
-        'ROP' => 'KJR',
-        'LIL' => 'UIL'
-      }
-
-      def fix_api_bugs(representative)
-        # workaround API bug for 2013-2017
-
-        correct_id = REP_ID_BUGS[representative.external_id]
-
-        if correct_id
-          @log.warn "correcting #{representative.external_id} => #{correct_id}"
-          representative.class.from_hash(representative.to_hash.merge('externalId' => correct_id))
-        else
-          representative
-        end
       end
 
       def infer(imported_votes)
