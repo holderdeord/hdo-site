@@ -40,20 +40,20 @@ namespace :db do
         issue.valence_issue = true
 
         positions.each do |position, parties|
-          title, pri = case position
-                       when :for
-                         ["Stemt for", 1]
-                       when :for_and_against
-                         ["Stemt både for og mot", 2]
-                       when :against
-                         ["Stemt mot", 3]
-                       when :not_participated
-                         ["Ikke deltatt i nok avstemninger", 4]
-                       else
-                         raise "unknown position: #{position.inspect}"
-                       end
+          update = case position
+                   when :for
+                     {title: "Stemt for", priority: 1}
+                   when :for_and_against
+                     {title: "Stemt både for og mot", priority: 2}
+                   when :against
+                     {title: "Stemt mot", priority: 3}
+                   when :not_participated
+                     {title: "Ikke deltatt i nok avstemninger", priority: 4}
+                   else
+                     raise "unknown position: #{position.inspect}"
+                   end
 
-          issue.valence_issue_explanations.create!(parties: parties, title: title)
+          issue.valence_issue_explanations.create!(update.merge(parties: parties))
         end
 
         issue.promise_connections.each do |pc|
