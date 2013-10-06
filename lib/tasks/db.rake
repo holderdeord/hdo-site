@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 namespace :db do
   namespace :clear do
     desc 'Remove all votes.'
