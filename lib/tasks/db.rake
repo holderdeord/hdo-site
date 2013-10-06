@@ -42,13 +42,13 @@ namespace :db do
         positions.each do |position, parties|
           update = case position
                    when :for
-                     {title: "Stemt for", priority: 1}
+                     {title: "Stemt for", priority: 0}
                    when :for_and_against
-                     {title: "Stemt både for og mot", priority: 2}
+                     {title: "Stemt både for og mot", priority: 1}
                    when :against
-                     {title: "Stemt mot", priority: 3}
+                     {title: "Stemt mot", priority: 2}
                    when :not_participated
-                     {title: "Ikke deltatt i nok avstemninger", priority: 4}
+                     {title: "Ikke deltatt i nok avstemninger", priority: 3}
                    else
                      raise "unknown position: #{position.inspect}"
                    end
