@@ -4,7 +4,6 @@ class ValenceIssueExplanation < ActiveRecord::Base
   attr_accessible :explanation, :issue_id, :parties, :title, :priority
 
   validates :parties,     presence: true
-  validates :explanation, presence: true
   validates :title,       presence: true
 
   def downcased_title

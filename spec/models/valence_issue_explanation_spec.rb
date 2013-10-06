@@ -14,12 +14,6 @@ describe ValenceIssueExplanation do
     e.should_not be_valid
   end
 
-  it 'is invalid without an explanation' do
-    e = ValenceIssueExplanation.make explanation: ''
-
-    e.should_not be_valid
-  end
-
   it 'can uncapitalize the title' do
     e = ValenceIssueExplanation.make(title: 'Ærlig TALT')
 
