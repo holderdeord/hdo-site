@@ -1,7 +1,29 @@
 <div class="row-fluid">
   <div class="muted"><%= t('app.counts.propositions', count: @propositions.size).html_safe %></div>
-  
-  <% @propositions.each do |prop| %>
-    <%= prop.body.html_safe %>
+
+  <% if @layout %>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Id</th>
+          <th><%= Proposition.human_attribute_name :body %></th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% @propositions.each do |prop| %>
+          <tr>
+            <td><%= prop.id %></td>
+            <td><%= prop.body.html_safe %></td>
+          </tr>
+        <% end %>
+      </tbody>
+
+    </table>
+  <% else %>
+    <%# admin search view %>
+    <% @propositions.each do |prop| %>
+      <%= prop.body.html_safe %>
+    <% end %>
   <% end %>
 </div>

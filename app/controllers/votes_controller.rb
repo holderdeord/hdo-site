@@ -22,9 +22,10 @@ class VotesController < ApplicationController
 
   def propositions
     vote = Vote.find(params[:id])
-    @propositions = vote ? vote.propositions : []
+    @propositions = vote ? vote.propositions.order(:id) : []
+    @layout = !request.xhr?
 
-    render layout: !request.xhr?
+    render layout: @layout
   end
 
 end
