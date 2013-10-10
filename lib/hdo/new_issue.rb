@@ -8,12 +8,15 @@ module Hdo
 
     def_delegators :@issue, :title,
                            :description,
-                           :updated_at,
                            :tags
 
 
     def initialize(issue)
       @issue = issue
+    end
+
+    def updated_at
+      I18n.l @issue.updated_at, format: :text
     end
 
     def explanation

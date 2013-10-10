@@ -1,5 +1,5 @@
 <aside class="muted">
-  <%= Issue.human_attribute_name(:updated_at) %> <%= l issue.updated_at, format: :text %>.
+  <%= Issue.human_attribute_name(:updated_at) %> <%= issue.updated_at %>.
 
   <span class="issue-tags">
     <% issue.tags.each do |tag| %>

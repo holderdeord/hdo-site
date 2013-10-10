@@ -25,7 +25,7 @@ class IssuesController < ApplicationController
 
   def next
     if policy(@issue).show?
-      @issue = Hdo::NewIssue.from_issue(@issue)
+      @issue = Hdo::NewIssue.new(@issue)
     else
       redirect_to new_user_session_path
     end
