@@ -28,10 +28,6 @@ module Hdo
           group.map { |party| [party, @by_party[party]] }
         end
       end
-
-      def thermo
-        @thermo ||= 100 * @by_key[:kept].values.sum.to_f / (@by_key[:kept].values.sum + @by_key[:broken].values.sum)
-      end
     end
   end
 end
