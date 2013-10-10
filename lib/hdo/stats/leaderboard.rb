@@ -25,7 +25,13 @@ module Hdo
 
       def parties
         [@government, @opposition].map do |group|
-          group.map { |party| [party, @by_party[party]] }
+          group.map { |party|
+            scores = @by_party[party]
+
+            if scores[:kept] + scores[:broken] > 0
+              [party, scores]
+            end
+          }.compact
         end
       end
     end
