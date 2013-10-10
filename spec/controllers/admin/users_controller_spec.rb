@@ -12,7 +12,7 @@ describe Admin::UsersController do
     it 'can show index' do
       get :index
 
-      assigns(:users).should be_kind_of(Array)
+      assigns(:users).should == User.order(:name)
     end
 
     it 'can show a user' do
