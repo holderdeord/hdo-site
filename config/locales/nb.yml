@@ -19,6 +19,11 @@ nb:
      abbr_day_names: [Søn, Man, Tir, Ons, Tor, Fre, Lør]
       # Don't forget the nil at the beginning; there's no such thing as a 0th month
      month_names: [~, januar, februar, mars, april, mai, juni, juli, august, september, oktober, november, desember]
+     formats:
+       default: "%Y-%m-%d"
+       short: "%Y-%m-%d"
+       text: "%e. %B %Y"
+       month_year: "%B %Y"
   datetime:
     distance_in_words:
       half_a_minute: "et halvt minutt"

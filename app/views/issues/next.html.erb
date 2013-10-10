@@ -3,7 +3,7 @@
 <% metadata[:type] = 'article' %>
 <% metadata[:url] = issue_url(@issue) %>
 
-<article class="issue-next">
+<article class="issue-timeline">
   <div class="page-header">
     <h1 class="issue-title"><%= @issue.title %></h1>
     <%= render partial: 'aside', locals: { issue: @issue } %>
@@ -11,98 +11,48 @@
 
   <p class="issue-description"><%= @issue.description %></p>
 
-  <div class="row-fluid">
-    <div class="span5 party-list">
-      <div class="tabbable">
-        <ul class="nav nav-tabs">
-          <li class="span6 active"><a data-toggle="tab">2009-2013</a></li>
-          <li class="span6"><a data-toggle="tab">2013-2017</a></li>
-        </ul>
+  <% @issue.periods.each do |period| %>
+    <div class="row-fluid">
+
+      <div class="span6">
+        <div class="row-fluid">
+          <h4>Posisjoner <%= period.name %></h4>
+        </div>
+
+        <% period.positions.each do |position| %>
+          <div class="row-fluid">
+            <div class="span2">
+              <% position.parties.each do |party| %>
+                <img src="<%= party.logo.versions[:medium] %>" style="max-width: 50px" class="pull-right">
+              <% end %>
+            </div>
+
+            <div class="span10">
+              <small class="lead"><%= position.title %></small>
+              <p><%= position.description %></p>
+            </div>
+          </div>
+        <% end %>
       </div>
 
-      <% @issue.positions.each do |position| %>
-        <div class="row-fluid position">
-          <h4><%= position.title %></h4>
-          <p><%= position.explanation %></p>
-
-          <% position.parties.each do |party| %>
-            <div class="row-fluid party">
-              <%= image_tag party.medium_logo, style: 'max-width: 50px', class: 'span4' %>
-              <strong class="span8"><%= party.name %></strong>
-              <p><a><%= party.promises.size %> relaterte løfter</a> og <%= party.accountability_text %></p>
-
-            </div>
-          <% end %>
+      <div class="span6">
+        <div class="row-fluid">
+          <h4>Avstemninger <%= period.name %></h4>
         </div>
-      <% end %>
 
-    </div>
-
-    <div class="span7 vote-list">
-      <p class="explanation"><%= @issue.explanation %></p>
-
-      <% @votes.each do |vote| %>
-        <div class="row-fluid vote">
+        <% period.days.each do |day| %>
           <div class="row-fluid">
-            <span class="span4 time"><%= vote.time %></span>
-            <span class="span8"><%= vote.title %></span>
+            <div class="muted"><%= day.date %></div>
+
+            <% day.votes.each do |vote| %>
+              <div class="row-fluid" style="background-color: #ececec; padding: 10px; margin: 10px">
+                <p class="lead"><%= vote.title %></p>
+                <p><%= markdown(vote.comment).html_safe %></p>
+              </div>
+            <% end %>
           </div>
-
-          <span class="collapse-closed">&#x25B8;</span>
-          <!-- <span class="collapse-open">&#x25BE;</span> -->
-
-          <div class="row-fluid details">
-            <div class="span6">
-              <%= markdown(vote.comment).html_safe %>
-            </div>
-
-            <div class="span6">
-              <p>
-                <% if vote.enacted? %>
-                  Forslaget ble <strong>vedtatt</strong>.
-                <% else %>
-                  Forslaget ble ikke <strong>vedtatt</strong>.
-                <% end %>
-              </p>
-
-              <strong>Stemte for:</strong>
-              <ul>
-                <% vote.parties_for.each do |name| %>
-                  <li><%= name %></li>
-                <% end %>
-              </ul>
-
-              <strong>Stemte mot:</strong>
-              <ul>
-                <% vote.parties_against.each do |name| %>
-                  <li><%= name %></li>
-                <% end %>
-              </ul>
-            </div>
-          </div>
-        </div>
-
-
-      <% end %>
+        <% end %>
+      </div>
     </div>
-  </div>
+  <% end %>
 </article>
-
-<% content_for :document_ready do %>
-<script>
-$(document).ready(function () {
-  $(".vote").click(function (e) {
-    if (e.target.tagName == 'A') return;
-    $(this).find('.details').slideToggle('fast');
-  })
-
-  $(".party").on('mouseleave', function (e) {
-    $(".vote").each(function () {
-      $(this).css('opacity', 1);
-    })
-  })
-});
-</script>
-
-
-<% end %>
