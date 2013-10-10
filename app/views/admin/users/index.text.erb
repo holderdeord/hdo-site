@@ -1,0 +1,20 @@
+<% @users.group_by(&:role).each do |role, users| %>
+<%= role %>
+<%= '-' * role.size %>
+<% users.each do |user| %>
+<%= user.email %>
+<% end %>
+
+<% end %>
+
+active
+------
+<% @active.each do |user| %>
+<%= user.email %>
+<% end %>
+
+all
+---
+<% @users.each do |user| %>
+<%= user.email %>
+<% end %>

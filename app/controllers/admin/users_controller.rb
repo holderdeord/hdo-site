@@ -3,7 +3,13 @@ class Admin::UsersController < AdminController
   before_filter :require_edit, except: [:index, :show]
 
   def index
-    @users = User.order(:name).all
+    @users = User.order(:name)
+    @active = @users.where(active: true)
+
+    respond_to do |format|
+      format.html
+      format.text
+    end
   end
 
   def show

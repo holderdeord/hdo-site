@@ -3,6 +3,7 @@
 <% if UserPolicy.new(current_user, nil).edit? %>
   <p class="pull-right">
     <%= link_to User.human_attribute_name(:new), new_admin_user_path, class: 'btn btn-primary' %>
+    <%= link_to 'Adresseliste', admin_users_path(format: :txt), class: 'btn' %>
   </p>
 <% end %>
 
