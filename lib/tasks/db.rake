@@ -62,15 +62,22 @@ namespace :db do
           promise_parties = pc.promise.parties
           party_scores = promise_parties.map { |party| stats.score_for(party) }.compact
 
-          if party_scores.nil?
+          if party_scores.empty?
             pc.status = 'related'
           else
-            vote_score = party_scores.sum / promise_parties.size
+            score = party_scores.sum / promise_parties.size.to_f
+            override = if score <= 33.33
+                         0
+                       elsif score < 66.66
+                         50
+                       else
+                         100
+                       end
 
             if pc.for?
-              pc.override = vote_score
+              pc.override = override
             elsif pc.against?
-              pc.override = (100 - vote_score)
+              pc.override = (100 - override)
             end
           end
 
