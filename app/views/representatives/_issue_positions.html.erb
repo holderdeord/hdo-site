@@ -1,31 +1,3 @@
-<h4 class="lead">
-  På Stortinget har <%= representative.name %> siden 2009 stemt
-</h4>
-
-<div class="row-fluid">
-  <% if issue_groups.empty? %>
-    <p><%= t 'app.issues.none' %>.</p>
-  <% else %>
-    <% [:for, :for_and_against, :against].each do |key| %>
-      <div class="span4">
-
-        <% if issue_groups[key].present? %>
-          <ul class="issue-list">
-            <% issue_groups[key].each do |issue| %>
-              <li>
-                <%= link_to issue do %>
-                  <span class="issue-<%= key %>"><%= t "app.#{key}" %></span>
-                  <span class="issue-list-text">
-                    <%= t 'app.lang.infinitive_particle' %>
-                    <%= issue.downcased_title %>.
-                  </span>
-                <% end %>
-              </li>
-            <% end %>
-          </ul>
-        <% end %>
-
-      </div>
-    <% end %>
-  <% end %>
-</div>
+<p class="lead">
+  Her kommer snart en oversikt over representantens stemmegivning på Stortinget.
+</p>
