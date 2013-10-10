@@ -12,10 +12,6 @@ module Hdo
                            :tags
 
 
-    def self.from_issue(issue)
-      new(issue)
-    end
-
     def initialize(issue)
       @issue = issue
     end
