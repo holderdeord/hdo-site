@@ -12,32 +12,46 @@
   <p class="issue-description"><%= @issue.description %></p>
 
   <% @issue.periods.each do |period| %>
-    <div class="period">
-      <div class="row-fluid">
+    <div class="row-fluid">
 
-        <div class="span6">
-          <!-- TODO: partial? -->
+      <div class="span6">
+        <div class="row-fluid">
+          <h4>Posisjoner <%= period.name %></h4>
+        </div>
 
+        <% period.positions.each do |position| %>
           <div class="row-fluid">
-            <strong><%= period.name %></strong>
-          </div>
+            <div class="span2">
+              <% position.parties.each do |party| %>
+                <img src="<%= party.logo.versions[:medium] %>" style="max-width: 50px" class="pull-right">
+              <% end %>
+            </div>
 
-          <% period.positions.each do |position| %>
-            <div class="row-fluid">
-              <h3><%= position.title %></h3>
+            <div class="span10">
+              <small class="lead"><%= position.title %></small>
               <p><%= position.description %></p>
             </div>
-          <% end %>
+          </div>
+        <% end %>
+      </div>
+
+      <div class="span6">
+        <div class="row-fluid">
+          <h4>Avstemninger <%= period.name %></h4>
         </div>
 
-        <div class="span6">
-          <!-- TODO: partial? -->
-          <% period.events.each do |event| %>
-            <div class="row-fluid timeline-event">
-              <%= event.name %>
-            </div>
-          <% end %>
-        </div>
+        <% period.days.each do |day| %>
+          <div class="row-fluid">
+            <div class="muted"><%= day.date %></div>
+
+            <% day.votes.each do |vote| %>
+              <div class="row-fluid" style="background-color: #ececec; padding: 10px; margin: 10px">
+                <p class="lead"><%= vote.title %></p>
+                <p><%= markdown(vote.comment).html_safe %></p>
+              </div>
+            <% end %>
+          </div>
+        <% end %>
       </div>
     </div>
   <% end %>

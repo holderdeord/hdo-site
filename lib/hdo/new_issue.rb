@@ -35,19 +35,60 @@ module Hdo
     end
 
     def periods
-      periods = @issue.vote_connections.map { |e| e.vote.parliament_period }.uniq
+      periods = [ParliamentPeriod.named('2013-2017'), ParliamentPeriod.named('2009-2013')]
 
       periods.map do |period|
-        OpenStruct.new(name: period.name, events: [
-          OpenStruct.new(name: "Event 1"),
-          OpenStruct.new(name: "Event 2"),
-          OpenStruct.new(name: "Event 3"),
-        ], positions: [
-          OpenStruct.new(title: "Bygge flere"),
-          OpenStruct.new(title: "Bygge færre")
-        ])
+        OpenStruct.new(name: period.name, days: days_for(period), positions: positions_for(period))
       end
     end
 
+    private
+
+    def days_for(period)
+      @issue.vote_connections.group_by { |e| e.vote.time.to_date }.
+             map { |date, connections| Day.new(date, connections) }.
+             sort_by(&:raw_date).reverse
+    end
+
+    def positions_for(period)
+      @issue.valence_issue_explanations.order(:priority).map { |e| Position.new(e) }
+    end
+
+    class Position # replaces ValenceIssueExplanation
+      def initialize(vie)
+        @vie = vie
+      end
+
+      def parties
+        @vie.parties.order(:name)
+      end
+
+      def description
+        @vie.explanation
+      end
+
+      def title
+        @vie.title
+      end
+    end
+
+    class Day
+      def initialize(date, connections)
+        @date = date
+        @connections = connections
+      end
+
+      def date
+        I18n.l @date, format: :text
+      end
+
+      def raw_date
+        @date
+      end
+
+      def votes
+        @connections.sort_by { |e| e.vote.time }.reverse
+      end
+    end
   end
 end
