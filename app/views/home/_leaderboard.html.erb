@@ -1,29 +1,26 @@
-  <section class="home-leaderboard">
+<section class="home-leaderboard">
+  <h2>Ordholding i <%= @leaderboard.issue_count %> saker fra 2009-2013</h2>
+  <p class="intro">
+    Oversikten under viser i hvor mange av Holder de ords saker partiene har holdt ord og ikke, basert på stemmegivning på Stortinget.
+    Listen er ikke et komplett bilde av alle avstemninger, men oppdateres fortløpende etter hvert som vi publiserer nye analyser.
+  </p>
 
-    <h2>Ordholding i <%= @leaderboard.issue_count %> saker fra 2009-2013</h2>
-    <p class="intro">
-      Oversikten under viser i hvor mange av Holder de ords saker partiene har holdt ord og ikke, basert på stemmegivning på Stortinget.
-      Listen er ikke et komplett bilde av alle avstemninger, men oppdateres fortløpende etter hvert som vi publiserer nye analyser.
-    </p>
-
-    <div class="party-list row-fluid">
-      <% @leaderboard.parties.each do |parties| %>
-        <div class="span6">
-          <% parties.each do |party, scores| %>
-          <%= link_to(party, class: "party") do %>
-              <div class="logo">
-                <%= image_tag party.logo, alt: party.name, width: '64', height: '64' %>
-              </div>
-              <span class="name"><%= party.name %></span>
-              <div class="counters">
-                <div class="kept"><%= scores[:kept] %></div>
-                <div class="broken"><%= scores[:broken] %></div>
-              </div>
-            <% end %>
+  <div class="party-list row-fluid">
+    <% @leaderboard.parties.each do |parties| %>
+      <div class="span6">
+        <% parties.each do |party, scores| %>
+        <%= link_to(party, class: "party") do %>
+            <div class="logo">
+              <%= image_tag party.logo, alt: party.name, width: '64', height: '64' %>
+            </div>
+            <span class="name"><%= party.name %></span>
+            <div class="counters">
+              <div class="kept"><%= scores[:kept] %></div>
+              <div class="broken"><%= scores[:broken] %></div>
+            </div>
           <% end %>
-        </div>
-      <% end %>
-
-    </div>
-
-  </section>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+</section>
