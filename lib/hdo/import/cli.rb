@@ -138,24 +138,25 @@ module Hdo
         persister.import_promises promises
       end
 
-      SCRAPED_EMAIL_URL = "https://api.scraperwiki.com/api/1.0/datastore/sqlite?format=json&name=hdo-representative-emails&query=#{URI.escape 'select * from swdata'}"
-
       def import_representative_emails
-        data = JSON.parse(RestClient.get(SCRAPED_EMAIL_URL))
+        html = open("http://stortinget.no/no/Stottemeny/Kontakt/Partier-og-representanter/Representantenes-e-postadresser/").read
+        text = Nokogiri::HTML.parse(html).text
+        data = text.scan(/\b(.+?), (.+?),\s*.+?:[.\s]+?\b(.+?@stortinget\.no)/)
 
         missing_emails = []
-        data.each do |e|
-          rep = Representative.where('first_name like ? and last_name = ?', "#{e['first_name'].strip}%", e['last_name'].strip).first
+
+        data.each do |last_name, first_name, email|
+          rep = Representative.where('first_name like ? and last_name = ?', "#{first_name.strip}%", last_name.strip).first
 
           if rep
-            rep.email ||= e['email']
+            rep.email ||= email
             rep.save!
           else
-            missing_emails << e
+            missing_emails << [first_name, last_name, email]
           end
         end
 
-        missing_reps = Representative.where(:email => nil).map(&:full_name)
+        missing_reps = Representative.attending.where(:email => nil).map(&:full_name)
 
         log.warn "representatives missing emails: #{missing_reps.to_json} "
         log.warn "emails missing representatives: #{missing_emails.to_json}"
