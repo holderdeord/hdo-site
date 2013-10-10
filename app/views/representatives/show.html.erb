@@ -44,7 +44,7 @@
       <p><%= @representative.name %> har reservert seg mot å svare på spørsmål.</p>
     <% elsif @representative.attending? && @representative.email.nil? %>
       <p><%= @representative.name %> møter for tiden på Stortinget, men vi mangler epostadressen.</p>
-      <p>Dette skal helst ikke skje, så gi oss gjerne beskjed <%= mail_to AppConfig.question_answer_email, 'her!', encode: 'hex', subject: "Mangler epost for #{@representative.name} (#{@representative.external_id})" %>.</p>
+      <p>Dette skal helst ikke skje, så gi oss gjerne beskjed <%= mail_to AppConfig.question_answer_email, 'her!', encode: 'hex', subject: "Mangler epost for #{@representative.name} (#{@representative.external_id})" %></p>
     <% else %>
       <p><%= @representative.name %> møter for tiden ikke på Stortinget. Du kan bare stille spørsmål til møtende representanter.</p>
     <% end %>
