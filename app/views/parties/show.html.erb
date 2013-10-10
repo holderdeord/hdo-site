@@ -52,5 +52,5 @@
 <% end %>
 
 <div class="row-fluid">
-  <%= render partial: 'positions' %>
+  <%= render partial: 'positions' unless @party.external_id == 'MDG' %>
 </div>
