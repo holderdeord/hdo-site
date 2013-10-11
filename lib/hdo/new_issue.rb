@@ -35,22 +35,32 @@ module Hdo
 
     def periods
       periods = [ParliamentPeriod.named('2013-2017'), ParliamentPeriod.named('2009-2013')]
-
-      periods.map do |period|
-        OpenStruct.new(name: period.name, days: days_for(period), positions: positions_for(period))
-      end
+      periods.map { |pp| Period.new(pp, @issue) }
     end
 
     private
 
-    def days_for(period)
-      @issue.vote_connections.group_by { |e| e.vote.time.to_date }.
-             map { |date, connections| Day.new(date, connections) }.
-             sort_by(&:raw_date).reverse
-    end
+    class Period
+      def initialize(parliament_period, issue)
+        @parliament_period = parliament_period
+        @issue             = issue
+      end
 
-    def positions_for(period)
-      @issue.valence_issue_explanations.order(:priority).map { |e| Position.new(e) }
+      def name
+        @parliament_period.name
+      end
+
+      def days
+        # TODO: make this actually check period
+        @issue.vote_connections.group_by { |e| e.vote.time.to_date }.
+               map { |date, connections| Day.new(date, connections) }.
+               sort_by(&:raw_date).reverse
+      end
+
+      def positions
+        # TODO: make this actually check period
+        @issue.valence_issue_explanations.order(:priority).map { |e| Position.new(e) }
+      end
     end
 
     class Position # replaces ValenceIssueExplanation
