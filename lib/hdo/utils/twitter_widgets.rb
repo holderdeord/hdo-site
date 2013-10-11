@@ -7,6 +7,13 @@ module Hdo
 
     module TwitterWidgets
 
+      #
+      # These widgets are created with the following accounts:
+      #
+      # * @holderdeord
+      # * @hdotimelines
+      #
+
       TWITTER_WIDGET_IDS = {
         "abidraja"        => "316893415021363200",
         "abwerp"          => "316893905289355264",
@@ -106,6 +113,7 @@ module Hdo
         "petersgitmark"   => "316869336302227456",
         "PMBorgli"        => "316868931644166144",
         "pwamundsen_frp"  => "316868756544569344",
+        "rasmusjmh"       => "388750238430674944",
         "RigmorAEide"     => "316869175773634560",
         "rigmorap"        => "316868737720520705",
         "Sigvald0"        => "316869519782055936",
