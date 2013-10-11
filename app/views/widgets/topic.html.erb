@@ -2,31 +2,32 @@
 
   <h1>Partienes løfter 2013-2017</h1>
   <p>Hentet fra partienes stortingsvalgprogrammer</p>
-    <% @promise_groups.each do |title, promises| %>
-      <h2><%= title %></h2>
 
-      <ul class="promises">
-        <% promises.each do |promise| %>
-          <%= link_to promise_path(promise) do %>
-            <li class="promise <%= slug_for_parties(promise.parties) %>">
-              <header>
-                <% promise.parties.each do |party| %>
-                  <%= image_tag party.logo, alt: "#{party.name}s logo", width: '32', height: '32' %>
-                  <%= party.name %>
-                <% end %>
-              </header>
-              <p>
-                <%= promise.body %>
-              </p>
-            </li>
-          <% end %>
+  <% @promise_groups.each do |title, promises| %>
+    <h2><%= title %></h2>
+
+    <ul class="promises">
+      <% promises.each do |promise| %>
+        <%= link_to promise_path(promise) do %>
+          <li class="promise <%= slug_for_parties(promise.parties) %>">
+            <header>
+              <% promise.parties.each do |party| %>
+                <%= image_tag party.logo, alt: "#{party.name}s logo", width: '32', height: '32' %>
+                <%= party.name %>
+              <% end %>
+            </header>
+            <p>
+              <%= promise.body %>
+            </p>
+          </li>
         <% end %>
-      </ul>
-
-    <% end %>
+      <% end %>
+    </ul>
+  <% end %>
 
   <h1>Stemmegivning 2009-2013</h1>
   <p>Oversiktsbilde over alle avstemninger om saken på Stortinget siste fire år.</p>
+
   <% @issues.each do |issue| %>
     <div class="issue">
       <h2><%= issue.title %></h2>
@@ -36,13 +37,7 @@
       </p>
 
       <figure class="positions">
-
-        <% if AppConfig.valence_widget && issue.valence_issue? %>
-          <%= render partial: 'valence_issue', locals: { issue: issue } %>
-        <% else %>
-          <%= render partial: 'normal_issue', locals: { issue: issue } %>
-        <% end %>
-
+        <%= render partial: 'issue_details', locals: { issue: issue } %>
       </figure>
     </div>
   <% end %>

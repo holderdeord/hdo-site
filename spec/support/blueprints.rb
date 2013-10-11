@@ -194,7 +194,7 @@ end
 
 ValenceIssueExplanation.blueprint do
   parties { [Party.make!] }
-  issue { Issue.make! valence_issue: true }
+  issue { Issue.make! }
   explanation { 'the reason i am here in paris is...'}
   title { 'parties chose to...' }
 end

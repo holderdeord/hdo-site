@@ -133,14 +133,12 @@ module Hdo
       private
 
       def compute(issue)
-        vote_scores         = issue.stats
         promise_connections = issue.promise_connections.includes(promise: :parties)
-
-        percentages     = {}
-        scores_by_party = {}
+        percentages         = {}
+        scores_by_party     = {}
 
         promise_connections.each do |conn|
-          party_scores_for(vote_scores, conn, issue.valence_issue?).each do |party, score|
+          party_scores_for(conn).each do |party, score|
             scores_by_party[party] ||= []
             scores_by_party[party] << score if score
           end
@@ -153,24 +151,16 @@ module Hdo
         percentages
       end
 
-      def party_scores_for(vote_scores, promise_connection, is_valence)
+      def party_scores_for(promise_connection)
         scores = {}
 
         promise_connection.promise.parties.each do |party|
-          party_score = vote_scores.score_for(party)
-
           if promise_connection.related?
             next
-          elsif is_valence && !promise_connection.overridden?
-            scores[party] = nil
-          elsif promise_connection.overridden? && !promise_connection.related?
+          elsif promise_connection.overridden?
             scores[party] = promise_connection.override
-          elsif party_score.nil?
+          else
             scores[party] = nil
-          elsif promise_connection.for?
-            scores[party] = party_score
-          elsif promise_connection.against?
-            scores[party] = (100 - party_score)
           end
         end
 

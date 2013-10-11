@@ -18,7 +18,6 @@ class Admin::IssuesController < AdminController
   def show
     xhr_only {
       @parties             = Party.order(:name)
-      @stats               = @issue.stats
       @accountability      = @issue.accountability
       @promise_connections = @issue.promise_connections.includes(promise: :parties)
 

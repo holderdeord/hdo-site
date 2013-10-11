@@ -38,22 +38,13 @@ describe WidgetsController do
     end
 
     it 'assigns the requested issues' do
-      Issue.any_instance.stub(stats: mock(score_for: 100.0))
+      published_issue.valence_issue_explanations.create!(title: "foo", parties: [party])
 
       get :party, id: party, issues: published_issue.id
       response.should be_ok
 
       assigns(:party).should be_kind_of(Party)
       assigns(:issues).should == [published_issue]
-    end
-  end
-
-  describe 'GET #representative' do
-    it 'assigns the requested representative' do
-      get :representative, id: representative.slug
-      response.should be_ok
-
-      assigns(:representative).should be_kind_of(Representative)
     end
   end
 

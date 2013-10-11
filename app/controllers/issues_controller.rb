@@ -14,10 +14,8 @@ class IssuesController < ApplicationController
     if policy(@issue).show?
       fresh_when @issue, public: can_cache?
       @issue = IssueDecorator.decorate(@issue)
-      if @issue.valence_issue?
-        fetch_issue_votes
-        @all_parties = Party.order(:name)
-      end
+      fetch_issue_votes
+      @all_parties = Party.order(:name)
     else
       redirect_to new_user_session_path
     end

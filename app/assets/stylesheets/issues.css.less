@@ -38,60 +38,6 @@
 }
 
 
-figure.position {
-  .canvas {
-    .issue-graph-party {
-      display: inline-block;
-      width: 64px;
-      img {
-        width: 100%;
-      }
-    }
-    br {
-      display: none;
-    }
-    &.parties_3,
-    &.parties_4,
-    &.parties_5 {
-      br:nth-child(4n) {
-        display: inline-block;
-      }
-    }
-    &.parties_6,
-    &.parties_7 {
-      br:nth-child(6n) {
-        display: inline-block;
-      }
-    }
-  }
-  .issue-graph {
-    text-align: center;
-    padding: 0.5em;
-    padding: 3.5em 0 2em 0;
-    .position {
-      .clearfix;
-      .axis {
-        display: none;
-      }
-      .canvas {
-        float: none;
-        width: 100%;
-      }
-    }
-    .issue-graph-label {
-      font-weight: normal;
-      font-size: 1.25em;
-      margin-top: 1em;
-    }
-  }
-  .issue-graph-axis {
-    .icon,
-    .text {
-      display: inline-block;
-    }
-  }
-}
-
 figure.valence {
   .position {
     .span3 {
@@ -108,7 +54,7 @@ figure.valence {
   }
 }
 
-figure.position, figure.valence {
+figure.valence {
   figcaption {
     font-size: 0.85em;
     border-bottom: 1px solid #f4f4f4;
@@ -147,37 +93,6 @@ figure.position, figure.valence {
   figure.valence .position .span3 {
     .party-logo {
       max-width: 48px;
-    }
-  }
-}
-
-@media (max-width: 768px) {
-  figure.position {
-    .canvas {
-      br {
-        /* !important is needed because of dynamic classes */
-        display: none !important;
-      }
-      .issue-graph-party {
-        float: left;
-        max-width: 44px;
-      }
-    }
-    .issue-graph {
-      .position {
-        .canvas {
-          float: right;
-          width: 100% / (@parties_num + 1) * @parties_num;
-        }
-        .axis {
-          float: left;
-          width: 100% / (@parties_num + 1);
-          display: block;
-        }
-      }
-    }
-    .issue-graph-axis {
-      display: none;
     }
   }
 }

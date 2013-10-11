@@ -15,6 +15,7 @@ class PromiseConnection < ActiveRecord::Base
   validates :override, inclusion: 0..100, allow_nil: true
 
   validate :only_related_promises_for_next_period
+  validate :has_override_unless_related
 
   def for?
     status.inquiry.for?
@@ -56,8 +57,14 @@ class PromiseConnection < ActiveRecord::Base
   #
 
   def only_related_promises_for_next_period
-    if status != 'related' && promise && promise.future?
+    if !related? && promise && promise.future?
       errors.add(:promise, "must be from 2009-2013 or marked 'related' for issue connection")
+    end
+  end
+
+  def has_override_unless_related
+    if !related? && override.nil?
+      errors.add(:override, 'must be present')
     end
   end
 

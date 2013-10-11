@@ -12,6 +12,5 @@ class Admin::DashboardController < AdminController
 
     @issue_vote_percentage       = published.flat_map(&:vote_ids).uniq.size * 100 / (vote_count.zero? ? 1 : vote_count)
     @issue_promise_percentage    = published.flat_map(&:promise_ids).uniq.size * 100 / (promise_count.zero? ? 1 : promise_count)
-    @issue_valence_percentage    = published.select { |e| e.valence_issue? }.size * 100 / (published.size.zero? ? 1 : published.size)
   end
 end

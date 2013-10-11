@@ -17,11 +17,9 @@ defaults: &defaults
   show_accountability: true
   widgets_enabled: true
   weights_enabled: true
-  representative_widget_enabled: true
   frontpage_blog_enabled: true
   chat_notifications_enabled: false
   ignore_votes_against_alternate_budget: true
-  valence_widget: true
   topic_of_the_week: Klima og energi
 
 development:
@@ -42,7 +40,6 @@ staging:
 production:
   <<: *defaults
   analytics_enabled: true
-  representative_widget_enabled: false
   fastly_enabled: true
   ssl_enabled: true
   frontpage_blog_enabled: true

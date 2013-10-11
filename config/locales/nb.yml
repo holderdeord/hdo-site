@@ -259,7 +259,6 @@ nb:
         promises: "Løfter"
         votes: "Avstemninger"
         party_comments: "Partikommentarer"
-        valence_issue: "Enighetssak"
         last_updated_by: Sist redigert av
         editor: Redaktør
         published_at: Publisert

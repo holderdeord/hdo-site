@@ -58,10 +58,6 @@ describe Issue do
     blank_issue.published_at.should be_nil
   end
 
-  it 'is not a valence issue by default' do
-    blank_issue.valence_issue.should be_false
-  end
-
   it "won't add the same category twice" do
     cat = Category.make!
 
@@ -135,17 +131,6 @@ describe Issue do
     Issue.make(:title => 'a').should_not be_valid
   end
 
-  it "has a stats object" do
-    valid_issue.stats.should be_kind_of(Hdo::Stats::VoteScorer)
-  end
-
-  it 'caches the stats object' do
-    Hdo::Stats::VoteScorer.should_receive(:new).once
-
-    Issue.find(valid_issue.id).stats # 1 - not cached
-    Issue.find(valid_issue.id).stats # 2 - cached
-  end
-
   it 'correctly downcases a title with non-ASCII characters' do
     Issue.make(:title => "Øke ditt og datt").downcased_title.should == "øke ditt og datt"
   end
@@ -186,7 +171,7 @@ describe Issue do
     p2 = Party.make!
     p3 = Party.make!
 
-    issue = Issue.make!(valence_issue: true)
+    issue = Issue.make!
 
     x1 = issue.valence_issue_explanations.create!(parties: [p1], title: 'a', explanation: 'b')
     x2 = issue.valence_issue_explanations.create!(parties: [p2], title: 'a', explanation: 'b')
@@ -218,14 +203,6 @@ describe Issue do
     i.last_updated_by_name.should be_kind_of(String)
     i.last_updated_by = u
     i.last_updated_by_name.should == u.name
-  end
-
-  it 'has scopes for valence and non-valence' do
-    i1 = Issue.make!(valence_issue: true)
-    i2 = Issue.make!(valence_issue: false)
-
-    Issue.valence.should == [i1]
-    Issue.non_valence.should == [i2]
   end
 
   describe 'next and previous' do

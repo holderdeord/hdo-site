@@ -1,7 +1,6 @@
 class Issue < ActiveRecord::Base
   extend FriendlyId
 
-  include Hdo::Model::HasStatsCache
   include Tire::Model::Search
   extend Hdo::Search::Index
 
@@ -27,7 +26,7 @@ class Issue < ActiveRecord::Base
   acts_as_taggable
 
   attr_accessible :description, :title, :category_ids, :promise_ids, :status,
-                  :lock_version, :editor_id, :tag_list, :frontpage, :valence_issue
+                  :lock_version, :editor_id, :tag_list, :frontpage
 
   validates :title, presence: true, uniqueness: true
   validate :only_published_issues_on_frontpage
@@ -51,7 +50,6 @@ class Issue < ActiveRecord::Base
   has_many :promise_connections, dependent: :destroy
   has_many :valence_issue_explanations, dependent: :destroy, order: :priority
 
-
   has_many :votes,    through: :vote_connections,    order: :time
   has_many :promises, through: :promise_connections
 
@@ -61,8 +59,6 @@ class Issue < ActiveRecord::Base
   scope :published,    -> { where(status: 'published') }
   scope :latest,       ->(limit) { order(:updated_at).reverse_order.limit(limit) }
   scope :random,       -> { order("random()") }
-  scope :non_valence,  -> { where(valence_issue: false) }
-  scope :valence,      -> { where(valence_issue: true) }
 
   def self.for_frontpage(limit)
     frontpage = where(frontpage: true).random.limit(limit)
@@ -188,10 +184,6 @@ class Issue < ActiveRecord::Base
   end
 
   private
-
-  def fetch_stats
-    Hdo::Stats::VoteScorer.new(self)
-  end
 
   def update_search_index
     if published?

@@ -15,7 +15,7 @@ module Hdo
       Widget.new(
         'Parti',
         'siste 5 saker etter voteringstidspunkt',
-        "<a class='hdo-party-widget' href='#{root_url}' data-party-id='#{party.try(:id)}'>Laster innhold fra Holder de ord</a>",
+        "<a class='hdo-party-widget' href='#{root_url}' data-party-id='#{party.try(:slug)}'>Laster innhold fra Holder de ord</a>",
         "<iframe src='#{widget_party_url(party)}'>"
       )
     end
@@ -24,7 +24,7 @@ module Hdo
       Widget.new(
         'Parti',
         "siste N=#{n} saker etter voteringstidspunkt",
-        "<a class='hdo-party-widget' href='#{root_url}' data-count='#{n}' data-party-id='#{party.try(:id)}'>Laster innhold fra Holder de ord</a>",
+        "<a class='hdo-party-widget' href='#{root_url}' data-count='#{n}' data-party-id='#{party.try(:slug)}'>Laster innhold fra Holder de ord</a>",
         "<iframe src='#{widget_party_url(party, count: n)}'>"
       )
     end
@@ -35,7 +35,7 @@ module Hdo
       Widget.new(
         'Parti',
         'utvalgte saker',
-        "<a class='hdo-party-widget' href='#{root_url}' data-issue-ids='#{ids}' data-party-id='#{party.try(:id)}'>Laster innhold fra Holder de ord</a>",
+        "<a class='hdo-party-widget' href='#{root_url}' data-issue-ids='#{ids}' data-party-id='#{party.try(:slug)}'>Laster innhold fra Holder de ord</a>",
         "<iframe src='#{widget_party_url(party, issues: ids)}'>"
       )
     end

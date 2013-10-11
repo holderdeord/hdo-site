@@ -11,7 +11,6 @@ class IssueDecorator < Draper::Decorator
            :cache_key,
            :party_comments,
            :tags,
-           :valence_issue?,
            :valence_issue_explanations,
 
            # move to decorator?
@@ -41,25 +40,8 @@ class IssueDecorator < Draper::Decorator
     h.distance_of_time_in_words_to_now model.updated_at.localtime
   end
 
-  def position_groups
-    grouped = Party.order(:name).group_by do |p|
-      model.stats.key_for(model.stats.score_for(p))
-    end
-
-    [:for, :for_and_against, :against].map do |key|
-      label = OpenStruct.new(icon: "taxonomy-icons/issue_#{key}.png", text: h.t("app.#{key}"), key: key)
-
-      parties = grouped[key] || []
-      [label, parties]
-    end
-  end
-
   def generic_positions
-    if model.valence_issue?
-      model.valence_issue_explanations.map { |expl| [expl.title, expl.parties.sort_by(&:name)] }
-    else
-      position_groups.map { |label, parties| [label.text, parties] }
-    end
+    model.valence_issue_explanations.map { |expl| [expl.title, expl.parties.sort_by(&:name)] }
   end
 
   def promises_by_party
@@ -115,28 +97,6 @@ class IssueDecorator < Draper::Decorator
       h.image_tag model.logo.versions[:medium], opts.merge(alt: "#{model.name}s logo", width: '96', height: '96')
     end
 
-    def position_logo
-      return '' if issue.valence_issue?
-
-      key = issue.stats.key_for(score) # FIXME: take the party, not the score
-
-      if key.nil? || key == :not_participated
-        # could add taxonomy-icons/issue_not_participated.png
-      else
-        h.image_tag "taxonomy-icons/issue_#{key}.png", alt: position_caption
-      end
-    end
-
-    def position_caption
-      return '' if issue.valence_issue?
-
-      key = issue.stats.key_for(score) # FIXME: take the party, not the score
-
-      if key && key != :not_participated
-        h.t("app.#{key}")
-      end
-    end
-
     def has_comment?
       !!comment
     end
@@ -146,8 +106,6 @@ class IssueDecorator < Draper::Decorator
     end
 
     def promise_logo
-      return '' if issue.valence_issue?
-
       key = issue.accountability.key_for(model)
       if key == :unknown
         return ''
@@ -162,8 +120,6 @@ class IssueDecorator < Draper::Decorator
     end
 
     def promise_caption
-      return '' if issue.valence_issue?
-
       key = issue.accountability.key_for(model)
 
       h.t("app.promises.scores.caption.#{key}")
@@ -189,31 +145,13 @@ class IssueDecorator < Draper::Decorator
       )
     end
 
-    def score
-      issue.stats.score_for(model)
-    end
-
-    def position_text
-      return '' if issue.valence_issue?
-
-      [
-        issue.stats.text_for(model, html: true),
-        h.t('app.lang.infinitive_particle'),
-        "#{issue.downcased_title}."
-      ].join(' ').html_safe
-    end
-
     def accountability_text
       acc = issue.accountability
 
-      if issue.valence_issue?
-        if acc.score_for(model)
-          acc.text_for(model, name: model.name)
-        else
-          ''
-        end
+      if acc.score_for(model)
+        acc.text_for(model, name: model.name)
       else
-        acc.text_for(model, name: 'De')
+        ''
       end
     end
 
