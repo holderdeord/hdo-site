@@ -12,7 +12,12 @@
       </div>
 
       <h3><%= valence.title %></h3>
-      <p><%= valence.explanation %></p>
+
+      <% if valence.explanation.blank? %>
+        <p><br><br></p>
+      <% else %>
+        <p><%= valence.explanation %></p>
+      <% end %>
 
     </div>
 
