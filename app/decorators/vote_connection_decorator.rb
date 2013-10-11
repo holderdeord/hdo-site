@@ -5,8 +5,7 @@ class VoteConnectionDecorator < Draper::Decorator
 
   delegate :vote,
            :title,
-           :comment,
-           :weight_text
+           :comment
 
   def proposition_type_text
     model.proposition_type.blank? ? '' : I18n.t("app.votes.proposition_types.#{model.proposition_type}")

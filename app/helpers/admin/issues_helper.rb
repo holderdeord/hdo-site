@@ -23,18 +23,6 @@ module Admin::IssuesHelper
     )
   end
 
-  def weight_options_for(connection)
-    weight_options = {}
-
-    VoteConnection::WEIGHTS.each do |weight|
-      weight_options["%g" % weight] = weight
-    end
-
-    selected = (connection && connection.weight) || VoteConnection::DEFAULT_WEIGHT
-
-    options_for_select weight_options, selected
-  end
-
   def editor_options_for(issue)
     users = User.order(:name)
 

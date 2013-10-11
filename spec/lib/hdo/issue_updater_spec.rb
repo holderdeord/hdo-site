@@ -227,7 +227,6 @@ module Hdo
         votes = {
           issue.votes[0].id => {
             direction: 'for',
-            weight: 1.0,
             title: 'title!!!!!!!!',
             proposition_type: VoteConnection::PROPOSITION_TYPES.first
           }
@@ -251,13 +250,11 @@ module Hdo
         votes = {
           issue.votes[0].id => {
             direction: 'for',
-            weight: 1.0,
             title: 'title!!!!!!!!',
             proposition_type: expected_type
           },
           issue.votes[1].id => {
             direction: 'for',
-            weight: 1.0,
             title: 'title!!!!!!!!',
             proposition_type: ""
           }
@@ -279,13 +276,11 @@ module Hdo
         votes = {
           issue.votes[0].id => {
             direction: 'for',
-            weight: 1.0,
             title: 'title!!!!!!!!',
             proposition_type: first
           },
           issue.votes[1].id => {
             direction: 'for',
-            weight: 1.0,
             title: 'title!!!!!!!!',
             proposition_type: last
           }
@@ -309,7 +304,6 @@ module Hdo
         votes = {
           vote.id => {
             direction: 'for',
-            weight: vote_connection.weight,
             title: vote_connection.title,
             proposition_type: '' # input is an empty string
           }

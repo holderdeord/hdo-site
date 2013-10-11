@@ -15,7 +15,6 @@ describe Admin::IssuesController do
     connections.each do |connection|
       params[connection.vote_id] = {
         :direction   => connection.matches? ? 'for' : 'against',
-        :weight      => connection.weight,
         :comment     => connection.comment,
         :title       => connection.title
       }
@@ -289,7 +288,7 @@ describe Admin::IssuesController do
     end
 
     it 'sets last_updated_by when vote connections are removed' do
-      connection = VoteConnection.create(:vote => Vote.make!, matches: true, weight: 1, comment: 'hello', title: 'world')
+      connection = VoteConnection.create(:vote => Vote.make!, matches: true, comment: 'hello', title: 'world')
       issue.vote_connections = [connection]
 
       votes = votes_params(issue.vote_connections)
@@ -309,7 +308,6 @@ describe Admin::IssuesController do
       votes = {
         vote.id => {
           direction: "unrelated",
-          weight: "1.0",
           title: "",
           comment: ""
         }
@@ -326,7 +324,7 @@ describe Admin::IssuesController do
       vote = Vote.make!
       issue.vote_connections = []
 
-      votes_param = {vote.id => {direction: 'for', weight: '1.0', comment: 'hello', title: 'world'}}
+      votes_param = {vote.id => {direction: 'for', comment: 'hello', title: 'world'}}
       put :update, votes: votes_param, id: issue
 
       issue = assigns(:issue)
@@ -335,18 +333,17 @@ describe Admin::IssuesController do
     end
 
     it 'sets last_updated_by when vote connections are updated' do
-      connection = VoteConnection.create(:vote => Vote.make!, matches: true, weight: 1, comment: 'hello', title: 'world')
+      connection = VoteConnection.create(:vote => Vote.make!, matches: true, comment: 'hello', title: 'world')
       issue.vote_connections = [connection]
 
       votes = votes_params(issue.vote_connections)
-      votes[connection.vote_id][:weight] = '0.5'
+      votes[connection.vote_id][:comment] = 'goodbye'
 
       put :update, votes: votes, id: issue
 
       issue = assigns(:issue)
 
       issue.vote_connections.size.should == 1
-      issue.vote_connections.first.weight.should == 0.5
       issue.last_updated_by.should == user
     end
 
@@ -364,7 +361,7 @@ describe Admin::IssuesController do
       issue.last_updated_by = other_user = User.make!
       issue.save!
 
-      vote_connection = VoteConnection.create(matches: true, weight: 1, comment: 'foo', title: 'bar', vote: Vote.make!)
+      vote_connection = VoteConnection.create(matches: true, comment: 'foo', title: 'bar', vote: Vote.make!)
       issue.vote_connections = [vote_connection]
 
       put :update, votes: votes_params(issue.vote_connections), id: issue

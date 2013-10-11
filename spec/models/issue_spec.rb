@@ -263,7 +263,6 @@ describe Issue do
       votes = {
         Vote.make!.id => {
           direction: 'for',
-          weight: 1.0,
           title: 'more cowbell'
         }
       }
@@ -283,7 +282,7 @@ describe Issue do
     end
 
     it 'is locked when changing proposition type of an existing vote' do
-      @issue.vote_connections.create! :vote => Vote.make!, :matches => true, :title => 'hello', :weight => 1.0
+      @issue.vote_connections.create! vote: Vote.make!, matches: true, title: 'hello'
       vote = @issue.votes.first
 
       @issue.save
@@ -292,7 +291,6 @@ describe Issue do
       votes = {
         vote.id => {
           direction: 'for',
-          weight: 1.0,
           title: 'hello',
           proposition_type: VoteConnection::PROPOSITION_TYPES.first
         }
