@@ -81,7 +81,7 @@ module Hdo
           persister.import_votes votes, infer: false
         end
 
-        persister.infer_all_votes
+        persister.infer_current_session
         notify_new_votes if Rails.env.production?
         notify_missing_emails if Rails.env.production?
       rescue Hdo::StortingImporter::DataSource::ServerError

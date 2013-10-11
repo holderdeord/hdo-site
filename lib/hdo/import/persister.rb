@@ -390,6 +390,10 @@ module Hdo
         infer Vote.non_personal
       end
 
+      def infer_current_session
+        infer ParliamentSession.current.votes
+      end
+
       private
 
       def log_import(obj)
