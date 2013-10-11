@@ -71,7 +71,9 @@
   <div>
     <% @issue.party_groups.each do |party_group| %>
       <% party_group.parties.each do |party| %>
-        <%= render partial: 'issue_party', locals: { issue: @issue, party: party, party_group: party_group } %>
+        <% unless party.external_id == 'MDG' %>
+          <%= render partial: 'issue_party', locals: { issue: @issue, party: party, party_group: party_group } %>
+        <% end %>
       <% end %>
     <% end %>
   </div>
