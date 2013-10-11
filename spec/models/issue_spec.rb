@@ -275,7 +275,7 @@ describe Issue do
       promise = Promise.make!
 
       attributes = {
-        promise.id => {status: 'for'}
+        promise.id => {status: 'related'}
       }
 
       update_attributes_on @issue, {promises: attributes}

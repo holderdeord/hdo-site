@@ -151,11 +151,11 @@ module Hdo
         promise = Promise.make!
 
         promises = {
-          promise.id => {'status' => 'for'}
+          promise.id => {'status' => 'related'}
         }.with_indifferent_access
 
         expect {
-          IssueUpdater.new(issue, { promises: promises }, user).update!
+          IssueUpdater.new(issue, { promises: promises}, user).update!
           issue.reload
         }.to change(issue.promise_connections, :count).by(1)
       end
@@ -198,10 +198,10 @@ module Hdo
         promise_connection = PromiseConnection.make! promise: promise, issue: issue, override: 100
 
         promises = {
-          promise.id => {'status' => 'against', 'override' => nil}
+          promise.id => {'status' => 'related', 'override' => nil}
         }.with_indifferent_access
 
-        IssueUpdater.new(issue, {promises: promises }, user).update!
+        IssueUpdater.new(issue, {promises: promises}, user).update!
         issue.reload.promise_connections.first.override.should == nil
       end
 

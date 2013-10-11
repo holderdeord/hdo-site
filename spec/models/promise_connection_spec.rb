@@ -16,7 +16,7 @@ describe PromiseConnection do
   end
 
   it 'validates the status values' do
-    pc = PromiseConnection.make
+    pc = PromiseConnection.make(override: 100)
 
     pc.status = 'for'
     pc.should be_valid
@@ -56,8 +56,8 @@ describe PromiseConnection do
     current_promise = Promise.make!(parliament_period: current_period)
     next_promise = Promise.make!(parliament_period: next_period)
 
-    PromiseConnection.make(status: 'for', promise: current_promise).should be_valid
-    PromiseConnection.make(status: 'for', promise: next_promise).should_not be_valid
+    PromiseConnection.make(status: 'for', promise: current_promise, override: 100).should be_valid
+    PromiseConnection.make(status: 'for', promise: next_promise, override: 100).should_not be_valid
   end
 
   it 'allows related promises from the next period' do
