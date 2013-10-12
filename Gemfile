@@ -47,6 +47,7 @@ group :development do
   gem "rails-erd"
   gem 'quiet_assets'
   gem 'bullet'
+  gem 'meta_request'
 end
 
 # deployment
