@@ -24,7 +24,7 @@ class IssueDecorator < Draper::Decorator
     h.t('app.issues.explanation', count: votes.size, url: h.votes_issue_path(model)).html_safe
   end
 
-  def short_position
+  def short_explanation
     h.t 'app.votes.based_on', count: votes.size
   end
 
