@@ -13,10 +13,8 @@
 
       $('#new-position-button').click(function (e) {
         e.preventDefault();
-        console.log(newRowHtml)
 
         var newId = 'new' + count++;
-
         $('#positions-table tr:last').after(newRowHtml.replace(/newPosition/g, newId));
         self.initializeMarkdownEditors([newId]);
 
