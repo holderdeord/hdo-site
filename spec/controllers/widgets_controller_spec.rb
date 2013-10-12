@@ -38,7 +38,7 @@ describe WidgetsController do
     end
 
     it 'assigns the requested issues' do
-      published_issue.valence_issue_explanations.create!(title: "foo", parties: [party])
+      published_issue.positions.create!(title: "foo", parties: [party])
 
       get :party, id: party, issues: published_issue.id
       response.should be_ok

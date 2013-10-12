@@ -26,7 +26,6 @@ namespace :graphite do
 
     g.add 'hdo.count.issues.total',               Issue.count
     g.add 'hdo.count.issues.published',           Issue.published.count
-    g.add 'hdo.count.issues.valence',             Issue.valence.count
 
     g.add 'hdo.count.questions.total',            Question.count
     g.add 'hdo.count.questions.user_total',       Question.not_ours.count

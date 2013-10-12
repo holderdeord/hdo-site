@@ -151,9 +151,9 @@ nb:
       party_comment:
         one: "Partikommentar"
         other: "Partikommentarer"
-      valence_issue_explanation:
-        one: 'Posisjon i enighetssak'
-        other: 'Posisjoner i enighetssak'
+      position:
+        one: 'Posisjon'
+        other: 'Posisjoner'
     attributes:
       representative:
         name: "Navn"
@@ -259,6 +259,7 @@ nb:
         promises: "Løfter"
         votes: "Avstemninger"
         party_comments: "Partikommentarer"
+        positions: Posisjoner
         last_updated_by: Sist redigert av
         editor: Redaktør
         published_at: Publisert
@@ -289,9 +290,9 @@ nb:
       party_comment:
         party: Parti
         body: Kommentar
-      valence_issue_explanation:
+      position:
         parties: Partier
-        explanation: Forklaring
+        description: Beskrivelse
         title: Tittel
         priority: Prioritet
   will_paginate:

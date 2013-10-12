@@ -36,9 +36,6 @@ namespace :export do
       to_keep += issues.first(5)
     end
 
-    to_keep += published.valence.first(5)
-    to_keep += published.non_valence.first(5)
-
     (all_issues - to_keep.uniq).each(&:destroy)
   end
 

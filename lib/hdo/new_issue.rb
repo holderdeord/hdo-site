@@ -59,11 +59,11 @@ module Hdo
 
       def positions
         # TODO: make this actually check period
-        @issue.valence_issue_explanations.order(:priority).map { |e| Position.new(e) }
+        @issue.positions.order(:priority).map { |e| Position.new(e) }
       end
     end
 
-    class Position # replaces ValenceIssueExplanation
+    class Position
       def initialize(vie)
         @vie = vie
       end
@@ -73,7 +73,7 @@ module Hdo
       end
 
       def description
-        @vie.explanation
+        @vie.description
       end
 
       def title

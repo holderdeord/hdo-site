@@ -132,8 +132,8 @@ class Admin::IssuesController < AdminController
     @party_comments = PartyComment.find_all_by_issue_id(@issue)
   end
 
-  def edit_valence_issue
-    @explanations = ValenceIssueExplanation.order(:priority).find_all_by_issue_id(@issue)
+  def edit_positions
+    @positions = Position.order(:priority).find_all_by_issue_id(@issue)
   end
 
   def edit_votes

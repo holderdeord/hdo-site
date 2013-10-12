@@ -11,7 +11,7 @@ class IssueDecorator < Draper::Decorator
            :cache_key,
            :party_comments,
            :tags,
-           :valence_issue_explanations,
+           :positions,
 
            # move to decorator?
            :status_text,
@@ -24,7 +24,7 @@ class IssueDecorator < Draper::Decorator
     h.t('app.issues.explanation', count: votes.size, url: h.votes_issue_path(model)).html_safe
   end
 
-  def short_explanation
+  def short_position
     h.t 'app.votes.based_on', count: votes.size
   end
 
@@ -41,7 +41,7 @@ class IssueDecorator < Draper::Decorator
   end
 
   def generic_positions
-    model.valence_issue_explanations.map { |expl| [expl.title, expl.parties.sort_by(&:name)] }
+    model.positions.map { |expl| [expl.title, expl.parties.sort_by(&:name)] }
   end
 
   def promises_by_party

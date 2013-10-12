@@ -1,7 +1,7 @@
-class ValenceIssueExplanation < ActiveRecord::Base
+class Position < ActiveRecord::Base
   has_and_belongs_to_many :parties
   belongs_to :issue
-  attr_accessible :explanation, :issue_id, :parties, :title, :priority
+  attr_accessible :description, :issue_id, :parties, :title, :priority
 
   validates :parties,     presence: true
   validates :title,       presence: true

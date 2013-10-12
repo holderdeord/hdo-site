@@ -15,7 +15,7 @@
   <% @issues.each do |issue| %>
     <li class="vote">
       <%= link_to issue.title, issue %>:
-      <%= 'har ' + issue.valence_explanation_for(@party).try(:downcased_title)%>
+      <%= 'har ' + issue.position_for(@party).try(:downcased_title)%>
     </li>
   <% end %>
   </ul>

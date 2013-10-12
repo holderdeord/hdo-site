@@ -4,67 +4,67 @@ module Hdo
   describe IssueUpdater do
     let(:user) { User.make! }
 
-    describe 'valence issue explanations' do
+    describe 'positions' do
       let(:issue) { Issue.make! }
 
-      it 'adds explanations' do
+      it 'adds positions' do
         party = Party.make!
 
-        explanations = {
+        positions = {
           'new1' => {
             'id'          => '1',
             'parties'     => [party.id],
             'title'       => 'foo',
-            'explanation' => 'Offer one gazillion!',
+            'description' => 'Offer one gazillion!',
             'issue_id'    => issue.id
           }
         }
 
         expect {
-          IssueUpdater.new(issue, {valence_issue_explanations: explanations}, user).update!
-        }.to change(issue.valence_issue_explanations, :count).by(1)
+          IssueUpdater.new(issue, {positions: positions}, user).update!
+        }.to change(issue.positions, :count).by(1)
       end
 
-      it 'modifies explanations' do
-        e = ValenceIssueExplanation.make! issue: issue
+      it 'modifies positions' do
+        e = Position.make! issue: issue
 
-        explanations = {
+        positions = {
           e.id => {
             'id'          => e.id,
-            'explanation' => 'foo',
+            'description' => 'foo',
             'issue_id'    => e.issue_id,
             'parties'     => e.parties
           }
         }
 
-        IssueUpdater.new(issue, { valence_issue_explanations: explanations }, user).update!
-        issue.reload.valence_issue_explanations.first.explanation.should eq 'foo'
+        IssueUpdater.new(issue, { positions: positions }, user).update!
+        issue.reload.positions.first.description.should eq 'foo'
       end
 
       it 'modifies title' do
-        e = ValenceIssueExplanation.make! issue: issue
+        e = Position.make! issue: issue
 
-        explanations = {
+        positions = {
           e.id => {
             'id'          => e.id,
-            'explanation' => 'foo',
+            'description' => 'foo',
             'issue_id'    => e.issue_id,
             'parties'     => e.parties,
             'title'       => 'hello lalala'
           }
         }
 
-        IssueUpdater.new(issue, { valence_issue_explanations: explanations }, user).update!
-        issue.reload.valence_issue_explanations.first.title.should eq 'hello lalala'
+        IssueUpdater.new(issue, { positions: positions }, user).update!
+        issue.reload.positions.first.title.should eq 'hello lalala'
       end
 
       it 'modifies priority' do
-        e = ValenceIssueExplanation.make! issue: issue
+        e = Position.make! issue: issue
 
-        explanations = {
+        positions = {
           e.id => {
             'id'          => e.id,
-            'explanation' => 'foo',
+            'description' => 'foo',
             'issue_id'    => e.issue_id,
             'parties'     => e.parties,
             'title'       => 'hello lalala',
@@ -72,22 +72,22 @@ module Hdo
           }
         }
 
-        IssueUpdater.new(issue, { valence_issue_explanations: explanations }, user).update!
-        issue.reload.valence_issue_explanations.first.priority.should eq 100
+        IssueUpdater.new(issue, { positions: positions }, user).update!
+        issue.reload.positions.first.priority.should eq 100
       end
 
-      it 'deletes explanations' do
-        e = ValenceIssueExplanation.make! issue: issue
+      it 'deletes positions' do
+        e = Position.make! issue: issue
 
-        explanations = {
+        positions = {
           e.id => {
             'deleted' => 'true'
           }
         }
 
         expect {
-          IssueUpdater.new(issue, { valence_issue_explanations: explanations }, user).update!
-        }.to change(issue.valence_issue_explanations, :count).by(-1)
+          IssueUpdater.new(issue, { positions: positions }, user).update!
+        }.to change(issue.positions, :count).by(-1)
       end
     end
 

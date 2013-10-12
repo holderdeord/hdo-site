@@ -1,0 +1,35 @@
+<tr>
+  <td>
+    <h5><%= Position.human_attribute_name :parties %></h5>
+    <%= select_tag "positions[#{position.id}][parties]",
+                   party_options(selected: position.parties.map(&:id)),
+                   multiple: true, data: { placeholder: 'Velg partier' },
+                   id: "position-#{position.id}-parties",
+                   class: 'position-parties' %>
+
+    <div class="row-fluid">
+      <h5><%= Position.human_attribute_name :priority %></h5>
+      <%= text_field_tag "positions[#{position.id}][priority]", position.priority %>
+    </div>
+  </td>
+
+  <td>
+    <h5><%= Position.human_attribute_name :title %></h5>
+    <div class="row-fluid">
+      <%= text_field_tag "positions[#{position.id}][title]", position.title %>
+    </div>
+
+    <h5><%= Position.human_attribute_name :description %></h5>
+    <div id="wmd-button-bar-<%= position.id %>"></div>
+    <%= text_area_tag "positions[#{position.id}][description]", position.description, class: 'span7', rows: '10', id: "wmd-input-#{position.id}" %>
+
+    <strong>Preview</strong>
+    <div id="wmd-preview-<%= position.id %>" class="well"></div></td></td>
+  </td>
+
+  <td>
+    <button class="btn btn-danger destroy-position" id="destroy-<%= position.id %>"><%= t('app.destroy') %></button>
+    <%= hidden_field_tag "positions[#{position.id}[id]", position.id  %>
+    <%= hidden_field_tag "positions[#{position.id}[issue_id]", position.issue_id  %>
+  </td>
+</tr>

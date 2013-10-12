@@ -166,19 +166,19 @@ describe Issue do
     ]
   end
 
-  it 'finds the correct valence explanation for the given party' do
+  it 'finds the correct position for the given party' do
     p1 = Party.make!
     p2 = Party.make!
     p3 = Party.make!
 
     issue = Issue.make!
 
-    x1 = issue.valence_issue_explanations.create!(parties: [p1], title: 'a', explanation: 'b')
-    x2 = issue.valence_issue_explanations.create!(parties: [p2], title: 'a', explanation: 'b')
+    x1 = issue.positions.create!(parties: [p1], title: 'a', description: 'b')
+    x2 = issue.positions.create!(parties: [p2], title: 'a', description: 'b')
 
-    issue.valence_explanation_for(p1).should == x1
-    issue.valence_explanation_for(p2).should == x2
-    issue.valence_explanation_for(p3).should be_nil
+    issue.position_for(p1).should == x1
+    issue.position_for(p2).should == x2
+    issue.position_for(p3).should be_nil
   end
 
   it 'has a #status_text' do

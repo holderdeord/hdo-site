@@ -39,7 +39,7 @@ namespace :hdo do
            { :tags => {methods: :slug}},
            { :vote_connections    => {:include => {:vote => {methods: :stats}}}},
            { :promise_connections => {:include => {:promise => {:include => :parties}}}},
-           { :valence_issue_explanations => {:include => :parties}}
+           { :positions => {:include => :parties}}
         ]
       )
 

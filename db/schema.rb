@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131011231850) do
+ActiveRecord::Schema.define(:version => 20131011233816) do
 
   create_table "answers", :force => true do |t|
     t.text     "body",                                     :null => false
@@ -187,17 +187,19 @@ ActiveRecord::Schema.define(:version => 20131011231850) do
   add_index "parties", ["name"], :name => "index_parties_on_name"
   add_index "parties", ["slug"], :name => "index_parties_on_slug", :unique => true
 
+  create_table "parties_positions", :id => false, :force => true do |t|
+    t.integer "position_id"
+    t.integer "party_id"
+  end
+
+  add_index "parties_positions", ["party_id", "position_id"], :name => "index_parties_positions_on_party_id_and_position_id"
+
   create_table "parties_promises", :id => false, :force => true do |t|
     t.integer "party_id"
     t.integer "promise_id"
   end
 
   add_index "parties_promises", ["party_id", "promise_id"], :name => "index_parties_promises_on_party_id_and_promise_id"
-
-  create_table "parties_valence_issue_explanations", :id => false, :force => true do |t|
-    t.integer "valence_issue_explanation_id"
-    t.integer "party_id"
-  end
 
   create_table "party_comments", :force => true do |t|
     t.text     "body"
@@ -220,6 +222,15 @@ ActiveRecord::Schema.define(:version => 20131011231850) do
   end
 
   add_index "party_memberships", ["representative_id", "party_id", "start_date", "end_date"], :name => "index_party_memberships_on_all"
+
+  create_table "positions", :force => true do |t|
+    t.text     "description"
+    t.integer  "issue_id"
+    t.datetime "created_at",                 :null => false
+    t.datetime "updated_at",                 :null => false
+    t.string   "title"
+    t.integer  "priority",    :default => 0
+  end
 
   create_table "promise_connections", :force => true do |t|
     t.string   "status"
@@ -351,15 +362,6 @@ ActiveRecord::Schema.define(:version => 20131011231850) do
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
   add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
-
-  create_table "valence_issue_explanations", :force => true do |t|
-    t.text     "explanation"
-    t.integer  "issue_id"
-    t.datetime "created_at",                 :null => false
-    t.datetime "updated_at",                 :null => false
-    t.string   "title"
-    t.integer  "priority",    :default => 0
-  end
 
   create_table "vote_connections", :force => true do |t|
     t.boolean  "matches"

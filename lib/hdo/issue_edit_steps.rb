@@ -1,6 +1,6 @@
 module Hdo
   class IssueEditSteps
-    STEPS = %w[categories votes promises party_comments valence_issue]
+    STEPS = %w[categories votes promises party_comments positions]
 
     def initialize(params, session)
       @params  = params

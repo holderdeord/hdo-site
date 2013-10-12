@@ -48,7 +48,7 @@ class Issue < ActiveRecord::Base
   has_many :party_comments, dependent: :destroy
   has_many :vote_connections, dependent: :destroy
   has_many :promise_connections, dependent: :destroy
-  has_many :valence_issue_explanations, dependent: :destroy, order: :priority
+  has_many :positions, dependent: :destroy, order: :priority
 
   has_many :votes,    through: :vote_connections,    order: :time
   has_many :promises, through: :promise_connections
@@ -133,8 +133,8 @@ class Issue < ActiveRecord::Base
     vote_connections.where(:vote_id => vote.id).first
   end
 
-  def valence_explanation_for(party)
-    valence_issue_explanations.joins(:parties).where('parties.id' => [party]).first
+  def position_for(party)
+    positions.joins(:parties).where('parties.id' => [party]).first
   end
 
   def downcased_title

@@ -95,7 +95,7 @@ class WidgetsController < ApplicationController
                Issue.published.vote_ordered
              end
 
-    issues = issues.reject { |i| i.valence_explanation_for(entity).nil? }
+    issues = issues.reject { |i| i.position_for(entity).nil? }
 
     if params[:issues]
       issues

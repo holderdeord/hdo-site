@@ -192,9 +192,9 @@ PartyComment.blueprint do
   issue
 end
 
-ValenceIssueExplanation.blueprint do
+Position.blueprint do
   parties { [Party.make!] }
   issue { Issue.make! }
-  explanation { 'the reason i am here in paris is...'}
+  description { 'the reason i am here in paris is...'}
   title { 'parties chose to...' }
 end

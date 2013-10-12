@@ -35,11 +35,11 @@
       <p><%= @issue.explanation %></p>
     </figcaption>
 
-    <% @issue.valence_issue_explanations.each do |explanation| %>
+    <% @issue.positions.each do |position| %>
       <div class="row-fluid position">
         <div class="span3">
-          <div class="parties_<%= explanation.parties.size %>">
-            <% explanation.parties.sort_by(&:name).each do |party| %>
+          <div class="parties_<%= position.parties.size %>">
+            <% position.parties.sort_by(&:name).each do |party| %>
               <a href="#<%= party.slug %>">
                 <%= image_tag party.logo.versions[:medium], alt: "#{party.name}s logo", class: "party-logo" %>
               </a>
@@ -48,8 +48,8 @@
         </div>
 
         <div class="span7">
-          <h4><%= explanation.title %></h4>
-          <p><%= explanation.explanation %></p>
+          <h4><%= position.title %></h4>
+          <p><%= position.description %></p>
         </div>
       </div>
     <% end %>

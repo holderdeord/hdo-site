@@ -1,13 +1,13 @@
 <figure class="position">
   <div>
-    <table class="table" id="explanations-table">
+    <table class="table" id="positions-table">
       <tbody>
-        <% @issue.valence_issue_explanations.each do |explanation| %>
+        <% @issue.positions.each do |position| %>
         <tr>
           <td>
             party logos
           </td>
-          <td><%= explanation.explanation %></td>
+          <td><%= position.description %></td>
         </tr>
         <% end %>
       </tbody>

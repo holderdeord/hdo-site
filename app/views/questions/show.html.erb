@@ -60,7 +60,7 @@
         <% @question.issues.each do |issue| %>
           <li>
             <%= link_to issue.title, issue %>:
-            har <%= issue.valence_explanation_for(@party).try(:title).to_s.downcase %>
+            har <%= issue.position_for(@party).try(:title).to_s.downcase %>
           </li>
         <% end %>
         </ul>
