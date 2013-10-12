@@ -9,7 +9,6 @@ namespace :cache do
       puts "precomputing stats cache for issues"
 
       Issue.published.each do |e|
-        e.stats
         e.accountability
         puts e.slug
       end
