@@ -27,7 +27,7 @@ module Hdo
 
         # https://github.com/holderdeord/hdo-site/issues/138
         it 'imports a proposition with external_id -1' do
-          prop = StortingImporter::Proposition.example('externalId' => '-1')
+          prop = StortingImporter::Proposition.example('external_id' => '-1')
           setup_proposition(prop)
 
           persister.import_propositions [prop]
@@ -39,7 +39,7 @@ module Hdo
 
         it 'ignores propositions with external_id=-1, body="" and description=""' do
           prop = Hdo::StortingImporter::Proposition.example(
-            'externalId'  => '-1',
+            'external_id'  => '-1',
             'body'        => '',
             'description' => ''
           )

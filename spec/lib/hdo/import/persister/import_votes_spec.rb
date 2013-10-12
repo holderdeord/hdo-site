@@ -25,7 +25,7 @@ module Hdo
 
         let :non_personal_vote do
           vote_as_hash = StortingImporter::Vote.example('personal' => false, 'representatives' => []).to_hash
-          vote_as_hash['propositions'][0]['deliveredBy'] = nil # less stubbing.
+          vote_as_hash['propositions'][0]['delivered_by'] = nil # less stubbing.
           vote_as_hash['counts'] = {'for' => 0, 'against' => 0, 'absent' => 0}
 
           vote = StortingImporter::Vote.from_hash vote_as_hash
@@ -94,10 +94,10 @@ module Hdo
 
           update = StortingImporter::Vote.example.to_hash
           update['representatives'] << StortingImporter::Representative.example(
-            'externalId' => 'JD',
-            'firstName'  => 'John',
-            'lastName'   => 'Doe',
-            'voteResult' => 'for'
+            'external_id' => 'JD',
+            'first_name'  => 'John',
+            'last_name'   => 'Doe',
+            'vote_result' => 'for'
           ).to_hash
 
           update['counts']['for'] += 1
@@ -124,7 +124,7 @@ module Hdo
           Vote.count.should == 1
 
           new_xid = (example.external_id.to_i + 1).to_s
-          update = StortingImporter::Vote.example('externalId' => new_xid)
+          update = StortingImporter::Vote.example('external_id' => new_xid)
 
           persister.import_vote update
 
@@ -136,19 +136,19 @@ module Hdo
           subject = 'Alternativ votering'
 
           v1 = StortingImporter::Vote.example(
-            'externalId' => '1',
-            'counts'     => {'for' => 1, 'against' => 168, 'absent' => 0},
-            'time'       => time,
-            'subject'    => subject,
-            'enacted'    => false
+            'external_id' => '1',
+            'counts'      => {'for' => 1, 'against' => 168, 'absent' => 0},
+            'time'        => time,
+            'subject'     => subject,
+            'enacted'     => false
           )
 
           v2 = StortingImporter::Vote.example(
-            'externalId' => '2',
-            'counts'     => {'for' => 168, 'against' => 1, 'absent' => 0},
-            'time'       => time,
-            'subject'    => subject,
-            'enacted'    => true
+            'external_id' => '2',
+            'counts'      => {'for' => 168, 'against' => 1, 'absent' => 0},
+            'time'        => time,
+            'subject'     => subject,
+            'enacted'     => true
           )
 
           setup_vote v1
@@ -158,11 +158,11 @@ module Hdo
           Vote.count.should == 2
 
           v3 = StortingImporter::Vote.example(
-            'externalId' => '3',
-            'counts'     => {'for' => 168, 'against' => 1, 'absent' => 0},
-            'time'       => time,
-            'subject'    => subject,
-            'enacted'    => true
+            'external_id' => '3',
+            'counts'      => {'for' => 168, 'against' => 1, 'absent' => 0},
+            'time'        => time,
+            'subject'     => subject,
+            'enacted'     => true
           )
 
           persister.import_vote v3

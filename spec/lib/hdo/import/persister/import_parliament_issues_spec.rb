@@ -22,7 +22,7 @@ module Hdo
 
         it 'imports multiple parliament issues' do
           first  = StortingImporter::ParliamentIssue.example
-          second = StortingImporter::ParliamentIssue.example('externalId' => '1234', 'status' => 'behandlet')
+          second = StortingImporter::ParliamentIssue.example('external_id' => '1234', 'status' => 'behandlet')
 
           setup_parliament_issue(first)
           setup_parliament_issue(second)

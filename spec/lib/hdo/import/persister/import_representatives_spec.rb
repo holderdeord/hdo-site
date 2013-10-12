@@ -42,7 +42,7 @@ module Hdo
 
           Representative.count.should == 1
 
-          update = StortingImporter::Representative.example('firstName' => 'changed-name')
+          update = StortingImporter::Representative.example('first_name' => 'changed-name')
           persister.import_representative update
 
           Representative.count.should == 1
@@ -62,10 +62,10 @@ module Hdo
             hashes = memberships.map do |e|
               raise ArgumentError, "expected 3 elements, got #{e.inspect}" unless e.size == 3
               {
-                'kind'       => 'hdo#committeeMembership',
-                'externalId' => e[0],
-                'startDate'  => e[1],
-                'endDate'    => e[2]
+                'kind'        => 'hdo#committee_membership',
+                'external_id' => e[0],
+                'start_date'  => e[1],
+                'end_date'    => e[2]
               }
             end
 
@@ -182,10 +182,10 @@ module Hdo
             hashes = memberships.map do |e|
               raise ArgumentError, "expected 3 elements, got #{e.inspect}" unless e.size == 3
               {
-                'kind'       => 'hdo#partyMembership',
-                'externalId' => e[0],
-                'startDate'  => e[1],
-                'endDate'    => e[2]
+                'kind'       => 'hdo#party_membership',
+                'external_id' => e[0],
+                'start_date'  => e[1],
+                'end_date'    => e[2]
               }
             end
 

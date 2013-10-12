@@ -23,8 +23,8 @@ module Hdo
         end
 
         it 'imports multiple' do
-          a = described_import_class.example('externalId' => '2009-2013')
-          b = described_import_class.example('externalId' => '2005-2009')
+          a = described_import_class.example('external_id' => '2009-2013')
+          b = described_import_class.example('external_id' => '2005-2009')
 
           import [a, b]
 
@@ -32,7 +32,7 @@ module Hdo
         end
 
         it 'fails if the input is invalid' do
-          invalid = described_import_class.example('endDate' => nil)
+          invalid = described_import_class.example('end_date' => nil)
 
           expect {
             import invalid
@@ -45,7 +45,7 @@ module Hdo
           import xpp
           described_class.count.should == 1
 
-          update = described_import_class.example('endDate' => '2016-09-13')
+          update = described_import_class.example('end_date' => '2016-09-13')
           import update
 
           described_class.count.should == 1
