@@ -21,7 +21,7 @@ group :assets do
 end
 
 group :test do
-  gem "selenium-webdriver", "~> 2.0"
+  gem "selenium-webdriver", "~> 2.35.1"
   gem "machinist", "~> 2.0"
   gem "database_cleaner", "~> 0.9.1"
   gem "loadable_component", ">= 0.1.1"
@@ -39,6 +39,7 @@ end
 
 group :test, :development do
   gem "rspec-rails", "~> 2.13"
+  gem 'jasmine'
 end
 
 group :development do
