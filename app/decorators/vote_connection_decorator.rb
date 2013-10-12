@@ -5,8 +5,7 @@ class VoteConnectionDecorator < Draper::Decorator
 
   delegate :vote,
            :title,
-           :comment,
-           :weight_text
+           :comment
 
   def proposition_type_text
     model.proposition_type.blank? ? '' : I18n.t("app.votes.proposition_types.#{model.proposition_type}")
@@ -33,14 +32,6 @@ class VoteConnectionDecorator < Draper::Decorator
       I18n.t 'app.votes.non_personal.inferred'
     elsif vote.non_personal?
       I18n.t 'app.votes.non_personal.unknown'
-    end
-  end
-
-  def matches_text
-    if matches?
-      I18n.t('app.votes.matches_issue.yes', issue_title: issue.downcased_title)
-    else
-      I18n.t('app.votes.matches_issue.no', issue_title: issue.downcased_title)
     end
   end
 
@@ -91,10 +82,6 @@ class VoteConnectionDecorator < Draper::Decorator
 
   def enacted?
     vote.enacted?
-  end
-
-  def matches?
-    model.matches?
   end
 
   def all_parties

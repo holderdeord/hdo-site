@@ -26,13 +26,6 @@ class WidgetsController < ApplicationController
     @issues = issues_for(@party)
   end
 
-  def representative
-    assert_feature :representative_widget
-
-    @representative = Representative.find(params[:id])
-    @issues = issues_for(@representative)
-  end
-
   def topic
     issues  = selected_issues
     @issues = IssueDecorator.decorate_collection(issues) if issues.any?
@@ -62,7 +55,7 @@ class WidgetsController < ApplicationController
 
     if user
       issues           = Issue.published
-      example_party    = Party.first
+      example_party    = Party.order('random()').first
       example_promises = []
       period           = ParliamentPeriod.order(:start_date).last
       example_promises = period.promises.order('random()').first(5) if period
@@ -102,7 +95,7 @@ class WidgetsController < ApplicationController
                Issue.published.vote_ordered
              end
 
-    issues = issues.reject { |i| i.stats.score_for(entity).nil? }
+    issues = issues.reject { |i| i.position_for(entity).nil? }
 
     if params[:issues]
       issues

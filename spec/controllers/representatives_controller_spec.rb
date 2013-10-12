@@ -21,18 +21,6 @@ describe RepresentativesController do
       response.should have_rendered(:show)
     end
 
-    it 'assigns published issues to @issues' do
-      Issue.any_instance.stub(:stats).and_return(mock(score_for: 100, key_for: :for))
-
-      shown     = Issue.make!(status: 'published')
-      not_shown = Issue.make!(status: 'in_progress')
-
-      get :show, id: rep
-
-      assigns(:issue_groups).should == {"for" => [shown]}
-      response.should have_rendered(:show)
-    end
-
     it 'assigns approved questions to @questions' do
       approved  = Question.make!(representative: rep, status: 'approved')
       pending   = Question.make!(representative: rep, status: 'pending')

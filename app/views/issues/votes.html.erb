@@ -22,10 +22,8 @@
           <div class="vote-fact-box">
             <dl>
               <dt>Type:</dt><dd><%= issue_vote.proposition_type_text %></dd>
-              <dt>Vekt:</dt><dd><%= link_to issue_vote.weight_text, home_method_path(anchor: 'vekting-av-avstemninger') %></dd>
               <dt>Vedtatt:</dt><dd><%= issue_vote.enacted_text.html_safe %></dd>
             </dl>
-            <p><%= issue_vote.matches_text.html_safe %> </p>
           </div>
         </div>
       </div>

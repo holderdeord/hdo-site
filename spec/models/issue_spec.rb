@@ -58,10 +58,6 @@ describe Issue do
     blank_issue.published_at.should be_nil
   end
 
-  it 'is not a valence issue by default' do
-    blank_issue.valence_issue.should be_false
-  end
-
   it "won't add the same category twice" do
     cat = Category.make!
 
@@ -116,7 +112,7 @@ describe Issue do
     vote = Vote.make!
     issue = Issue.make!(vote_connections: [])
 
-    issue.vote_connections.create!(vote: vote, matches: true)
+    issue.vote_connections.create!(vote: vote)
     issue.votes.should == [vote]
 
     issue.connection_for(vote).should_not be_nil
@@ -133,17 +129,6 @@ describe Issue do
   it "has a unique title" do
     Issue.make!(:title => 'a')
     Issue.make(:title => 'a').should_not be_valid
-  end
-
-  it "has a stats object" do
-    valid_issue.stats.should be_kind_of(Hdo::Stats::VoteScorer)
-  end
-
-  it 'caches the stats object' do
-    Hdo::Stats::VoteScorer.should_receive(:new).once
-
-    Issue.find(valid_issue.id).stats # 1 - not cached
-    Issue.find(valid_issue.id).stats # 2 - cached
   end
 
   it 'correctly downcases a title with non-ASCII characters' do
@@ -181,19 +166,19 @@ describe Issue do
     ]
   end
 
-  it 'finds the correct valence explanation for the given party' do
+  it 'finds the correct position for the given party' do
     p1 = Party.make!
     p2 = Party.make!
     p3 = Party.make!
 
-    issue = Issue.make!(valence_issue: true)
+    issue = Issue.make!
 
-    x1 = issue.valence_issue_explanations.create!(parties: [p1], title: 'a', explanation: 'b')
-    x2 = issue.valence_issue_explanations.create!(parties: [p2], title: 'a', explanation: 'b')
+    x1 = issue.positions.create!(parties: [p1], title: 'a', description: 'b')
+    x2 = issue.positions.create!(parties: [p2], title: 'a', description: 'b')
 
-    issue.valence_explanation_for(p1).should == x1
-    issue.valence_explanation_for(p2).should == x2
-    issue.valence_explanation_for(p3).should be_nil
+    issue.position_for(p1).should == x1
+    issue.position_for(p2).should == x2
+    issue.position_for(p3).should be_nil
   end
 
   it 'has a #status_text' do
@@ -218,14 +203,6 @@ describe Issue do
     i.last_updated_by_name.should be_kind_of(String)
     i.last_updated_by = u
     i.last_updated_by_name.should == u.name
-  end
-
-  it 'has scopes for valence and non-valence' do
-    i1 = Issue.make!(valence_issue: true)
-    i2 = Issue.make!(valence_issue: false)
-
-    Issue.valence.should == [i1]
-    Issue.non_valence.should == [i2]
   end
 
   describe 'next and previous' do
@@ -285,8 +262,7 @@ describe Issue do
     it 'is locked when adding a vote connection' do
       votes = {
         Vote.make!.id => {
-          direction: 'for',
-          weight: 1.0,
+          connected: 'true',
           title: 'more cowbell'
         }
       }
@@ -298,7 +274,7 @@ describe Issue do
       promise = Promise.make!
 
       attributes = {
-        promise.id => {status: 'for'}
+        promise.id => {status: 'related'}
       }
 
       update_attributes_on @issue, {promises: attributes}
@@ -306,7 +282,7 @@ describe Issue do
     end
 
     it 'is locked when changing proposition type of an existing vote' do
-      @issue.vote_connections.create! :vote => Vote.make!, :matches => true, :title => 'hello', :weight => 1.0
+      @issue.vote_connections.create! vote: Vote.make!, title: 'hello'
       vote = @issue.votes.first
 
       @issue.save
@@ -314,8 +290,7 @@ describe Issue do
 
       votes = {
         vote.id => {
-          direction: 'for',
-          weight: 1.0,
+          connected: 'true',
           title: 'hello',
           proposition_type: VoteConnection::PROPOSITION_TYPES.first
         }

@@ -2,39 +2,6 @@
 
 module Admin::IssuesHelper
 
-  #
-  # TODO: this is too large; move stuff to decorators where it makes sense.
-  #
-
-  def vote_options_for(vote, connection)
-    if connection
-      selected = connection.matches? ? 'for' : 'against'
-    else
-      selected = 'unrelated'
-    end
-
-    options_for_select(
-      {
-        t('app.for') => 'for',
-        t('app.against') => 'against',
-        t('app.unrelated') => 'unrelated'
-      },
-      selected
-    )
-  end
-
-  def weight_options_for(connection)
-    weight_options = {}
-
-    VoteConnection::WEIGHTS.each do |weight|
-      weight_options["%g" % weight] = weight
-    end
-
-    selected = (connection && connection.weight) || VoteConnection::DEFAULT_WEIGHT
-
-    options_for_select weight_options, selected
-  end
-
   def editor_options_for(issue)
     users = User.order(:name)
 
@@ -65,18 +32,10 @@ module Admin::IssuesHelper
     conn ? conn.status : 'unrelated'
   end
 
-  def promise_override_value_for(promise)
-    conn = promise.promise_connections.find { |pc| pc.issue_id == @issue.id }
-    conn && conn.override
-  end
+  def parliament_period_options_for(position)
+    data = ParliamentPeriod.order(:start_date).reverse_order.map { |e| [e.name, e.id] }
 
-  def promise_overrides
-    [
-      [100, 'Holdt'],
-      [50, 'Delvis holdt'],
-      [0, 'Ikke holdt'],
-      ['', 'Auto']
-    ]
+    options_for_select data, selected: position.parliament_period.try(:id)
   end
 
   def promise_states
@@ -84,7 +43,7 @@ module Admin::IssuesHelper
   end
 
   def disable_promise_state?(state, promise)
-    promise.parliament_period_name != '2009-2013' && %[for against].include?(state)
+    promise.parliament_period_name != '2009-2013' && %[kept partially_kept broken].include?(state)
   end
 
   def issues_for_promise(promise)

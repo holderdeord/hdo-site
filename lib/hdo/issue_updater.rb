@@ -10,7 +10,7 @@ module Hdo
       @votes          = params[:votes]
       @promises       = params[:promises]
       @party_comments = params[:party_comments]
-      @explanations   = params[:valence_issue_explanations]
+      @positions      = params[:positions]
       @user           = user
     end
 
@@ -38,7 +38,7 @@ module Hdo
         update_votes
         update_promises
         update_party_comments
-        update_valence_issue_explanations
+        update_positions
         update_meta
         save!
       }
@@ -64,9 +64,9 @@ module Hdo
       end
     end
 
-    def update_valence_issue_explanations
-      Array(@explanations).each do |explanation_id, data|
-        update_or_create_or_destroy_valence_issue_explanation(explanation_id, data)
+    def update_positions
+      Array(@positions).each do |position_id, data|
+        update_or_create_or_destroy_position(position_id, data)
       end
     end
 
@@ -104,13 +104,6 @@ module Hdo
       existing = PromiseConnection.where('promise_id = ? and issue_id = ?', promise_id, @issue.id).first
       status   = data.fetch(:status)
 
-      override = data[:override]
-      override = if override.blank?
-                   nil
-                 else
-                   Integer(override)
-                 end
-
       if status == 'unrelated'
         if existing
           @issue.promise_connections.delete existing
@@ -119,13 +112,11 @@ module Hdo
       else
         if existing
           existing.status = status
-          existing.override = override
-
           @changed ||= existing.changed?
 
           existing.save!
         else
-          @issue.promise_connections.create!(status: status, promise_id: promise_id, override: override)
+          @issue.promise_connections.create!(status: status, promise_id: promise_id)
           @changed = true
         end
       end
@@ -134,13 +125,8 @@ module Hdo
     def update_or_create_vote_connection(vote_id, data)
       existing = VoteConnection.where('vote_id = ? and issue_id = ?', vote_id, @issue.id).first
 
-      if data[:direction] == 'unrelated'
-        if existing
-          @issue.vote_connections.delete existing
-          @changed = true
-        end
-      else
-        attrs = data.except(:direction).merge(matches: data[:direction] == 'for', vote_id: vote_id)
+      if data[:connected]
+        attrs = data.except(:connected).merge(vote_id: vote_id)
 
         # normalize '' vs nil
         attrs[:proposition_type] = nil if attrs[:proposition_type].blank?
@@ -152,6 +138,11 @@ module Hdo
           existing.save!
         else
           new_connection = @issue.vote_connections.create!(attrs)
+          @changed = true
+        end
+      else
+        if existing
+          @issue.vote_connections.delete existing
           @changed = true
         end
       end
@@ -176,8 +167,8 @@ module Hdo
       end
     end
 
-    def update_or_create_or_destroy_valence_issue_explanation(id, data)
-      existing = ValenceIssueExplanation.find_by_issue_id_and_id(@issue.id, id)
+    def update_or_create_or_destroy_position(id, data)
+      existing = Position.find_by_issue_id_and_id(@issue.id, id)
       if data["deleted"]
         @changed = true
         existing.destroy
@@ -191,8 +182,10 @@ module Hdo
 
         existing.save!
       else
-        new_explanation = @issue.valence_issue_explanations.create(data.except('id', 'parties'))
-        new_explanation.parties = Party.find(data['parties'])
+        new_position = @issue.positions.create(data.except('id', 'parties'))
+        new_position.parties = Party.find(data['parties'])
+
+        new_position.save!
         @changed = true
       end
     end

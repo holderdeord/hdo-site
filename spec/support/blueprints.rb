@@ -19,7 +19,6 @@ end
 VoteConnection.blueprint do
   issue
   vote
-  matches { true }
 end
 
 PromiseConnection.blueprint do
@@ -192,9 +191,9 @@ PartyComment.blueprint do
   issue
 end
 
-ValenceIssueExplanation.blueprint do
+Position.blueprint do
   parties { [Party.make!] }
-  issue { Issue.make! valence_issue: true }
-  explanation { 'the reason i am here in paris is...'}
+  issue { Issue.make! }
+  description { 'the reason i am here in paris is...'}
   title { 'parties chose to...' }
 end

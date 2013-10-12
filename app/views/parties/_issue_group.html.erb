@@ -1,15 +1,10 @@
 <% issues.each do |issue| %>
   <%= link_to issue, class: "issue" do %>
   <div class="title"><%= issue.title %></div>
-    <% vote_key = issue.stats.key_for(issue.stats.score_for(@party)) %>
 
     <div class="muted">
-      <% if issue.valence_issue? %>
-        <%= @party.name %> har
-        <%= issue.valence_explanation_for(@party).try(:downcased_title) %>
-      <% else %>
-        <%= issue.stats.text_for(@party) %>
-      <% end %>
+      <%= @party.name %> har
+      <%= issue.position_for(@party).try(:downcased_title) %>
     </div>
   <% end %>
 <% end %>

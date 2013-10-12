@@ -4,67 +4,67 @@ module Hdo
   describe IssueUpdater do
     let(:user) { User.make! }
 
-    describe 'valence issue explanations' do
+    describe 'positions' do
       let(:issue) { Issue.make! }
 
-      it 'adds explanations' do
+      it 'adds positions' do
         party = Party.make!
 
-        explanations = {
+        positions = {
           'new1' => {
-            'id'          => '1',
-            'parties'     => [party.id],
-            'title'       => 'foo',
-            'explanation' => 'Offer one gazillion!',
-            'issue_id'    => issue.id
+            'id'                   => '1',
+            'parties'              => [party.id],
+            'title'                => 'foo',
+            'description'          => 'Offer one gazillion!',
+            'issue_id'             => issue.id,
           }
         }
 
         expect {
-          IssueUpdater.new(issue, {valence_issue_explanations: explanations}, user).update!
-        }.to change(issue.valence_issue_explanations, :count).by(1)
+          IssueUpdater.new(issue, {positions: positions}, user).update!
+        }.to change(issue.positions, :count).by(1)
       end
 
-      it 'modifies explanations' do
-        e = ValenceIssueExplanation.make! issue: issue
+      it 'modifies positions' do
+        e = Position.make! issue: issue
 
-        explanations = {
+        positions = {
           e.id => {
             'id'          => e.id,
-            'explanation' => 'foo',
+            'description' => 'foo',
             'issue_id'    => e.issue_id,
             'parties'     => e.parties
           }
         }
 
-        IssueUpdater.new(issue, { valence_issue_explanations: explanations }, user).update!
-        issue.reload.valence_issue_explanations.first.explanation.should eq 'foo'
+        IssueUpdater.new(issue, { positions: positions }, user).update!
+        issue.reload.positions.first.description.should eq 'foo'
       end
 
       it 'modifies title' do
-        e = ValenceIssueExplanation.make! issue: issue
+        e = Position.make! issue: issue
 
-        explanations = {
+        positions = {
           e.id => {
             'id'          => e.id,
-            'explanation' => 'foo',
+            'description' => 'foo',
             'issue_id'    => e.issue_id,
             'parties'     => e.parties,
             'title'       => 'hello lalala'
           }
         }
 
-        IssueUpdater.new(issue, { valence_issue_explanations: explanations }, user).update!
-        issue.reload.valence_issue_explanations.first.title.should eq 'hello lalala'
+        IssueUpdater.new(issue, { positions: positions }, user).update!
+        issue.reload.positions.first.title.should eq 'hello lalala'
       end
 
       it 'modifies priority' do
-        e = ValenceIssueExplanation.make! issue: issue
+        e = Position.make! issue: issue
 
-        explanations = {
+        positions = {
           e.id => {
             'id'          => e.id,
-            'explanation' => 'foo',
+            'description' => 'foo',
             'issue_id'    => e.issue_id,
             'parties'     => e.parties,
             'title'       => 'hello lalala',
@@ -72,22 +72,42 @@ module Hdo
           }
         }
 
-        IssueUpdater.new(issue, { valence_issue_explanations: explanations }, user).update!
-        issue.reload.valence_issue_explanations.first.priority.should eq 100
+        IssueUpdater.new(issue, { positions: positions }, user).update!
+        issue.reload.positions.first.priority.should eq 100
       end
 
-      it 'deletes explanations' do
-        e = ValenceIssueExplanation.make! issue: issue
+      it 'modifies parliament period' do
+        p = ParliamentPeriod.make!
+        e = Position.make! issue: issue
 
-        explanations = {
+        positions = {
+          e.id => {
+            'id'                   => e.id,
+            'description'          => 'foo',
+            'issue_id'             => e.issue_id,
+            'parties'              => e.parties,
+            'title'                => 'hello lalala',
+            'priority'             => 100,
+            'parliament_period_id' => p.id
+          }
+        }
+
+        IssueUpdater.new(issue, { positions: positions }, user).update!
+        issue.reload.positions.first.parliament_period.should == p
+      end
+
+      it 'deletes positions' do
+        e = Position.make! issue: issue
+
+        positions = {
           e.id => {
             'deleted' => 'true'
           }
         }
 
         expect {
-          IssueUpdater.new(issue, { valence_issue_explanations: explanations }, user).update!
-        }.to change(issue.valence_issue_explanations, :count).by(-1)
+          IssueUpdater.new(issue, { positions: positions }, user).update!
+        }.to change(issue.positions, :count).by(-1)
       end
     end
 
@@ -151,11 +171,11 @@ module Hdo
         promise = Promise.make!
 
         promises = {
-          promise.id => {'status' => 'for'}
+          promise.id => {'status' => 'related'}
         }.with_indifferent_access
 
         expect {
-          IssueUpdater.new(issue, { promises: promises }, user).update!
+          IssueUpdater.new(issue, { promises: promises}, user).update!
           issue.reload
         }.to change(issue.promise_connections, :count).by(1)
       end
@@ -186,23 +206,11 @@ module Hdo
         promise_connection = PromiseConnection.make! promise: promise, issue: issue
 
         promises = {
-          promise.id => {'status' => 'against', 'override' => '100'}
+          promise.id => {'status' => 'kept'}
         }.with_indifferent_access
 
         IssueUpdater.new(issue, {promises: promises }, user).update!
-        issue.reload.promise_connections.first.override.should == 100
-      end
-
-      it 'can remove an override' do
-        promise = Promise.make!
-        promise_connection = PromiseConnection.make! promise: promise, issue: issue, override: 100
-
-        promises = {
-          promise.id => {'status' => 'against', 'override' => nil}
-        }.with_indifferent_access
-
-        IssueUpdater.new(issue, {promises: promises }, user).update!
-        issue.reload.promise_connections.first.override.should == nil
+        issue.reload.promise_connections.first.should be_kept
       end
 
       it 'deletes promise connections' do
@@ -226,8 +234,7 @@ module Hdo
 
         votes = {
           issue.votes[0].id => {
-            direction: 'for',
-            weight: 1.0,
+            connected: 'true',
             title: 'title!!!!!!!!',
             proposition_type: VoteConnection::PROPOSITION_TYPES.first
           }
@@ -250,14 +257,12 @@ module Hdo
 
         votes = {
           issue.votes[0].id => {
-            direction: 'for',
-            weight: 1.0,
+            connected: 'true',
             title: 'title!!!!!!!!',
             proposition_type: expected_type
           },
           issue.votes[1].id => {
-            direction: 'for',
-            weight: 1.0,
+            connected: 'true',
             title: 'title!!!!!!!!',
             proposition_type: ""
           }
@@ -278,14 +283,12 @@ module Hdo
 
         votes = {
           issue.votes[0].id => {
-            direction: 'for',
-            weight: 1.0,
+            connected: 'true',
             title: 'title!!!!!!!!',
             proposition_type: first
           },
           issue.votes[1].id => {
-            direction: 'for',
-            weight: 1.0,
+            connected: 'true',
             title: 'title!!!!!!!!',
             proposition_type: last
           }
@@ -299,7 +302,7 @@ module Hdo
       end
 
       it 'does not touch the issue if proposition type is already nil or empty' do
-        vote_connection = VoteConnection.make!(matches: true)
+        vote_connection = VoteConnection.make!
         vote            = vote_connection.vote
         issue           = Issue.make! vote_connections: [vote_connection]
 
@@ -308,8 +311,7 @@ module Hdo
 
         votes = {
           vote.id => {
-            direction: 'for',
-            weight: vote_connection.weight,
+            connected: 'true',
             title: vote_connection.title,
             proposition_type: '' # input is an empty string
           }

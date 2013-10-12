@@ -151,9 +151,9 @@ nb:
       party_comment:
         one: "Partikommentar"
         other: "Partikommentarer"
-      valence_issue_explanation:
-        one: 'Posisjon i enighetssak'
-        other: 'Posisjoner i enighetssak'
+      position:
+        one: 'Posisjon'
+        other: 'Posisjoner'
     attributes:
       representative:
         name: "Navn"
@@ -259,7 +259,7 @@ nb:
         promises: "Løfter"
         votes: "Avstemninger"
         party_comments: "Partikommentarer"
-        valence_issue: "Enighetssak"
+        positions: Posisjoner
         last_updated_by: Sist redigert av
         editor: Redaktør
         published_at: Publisert
@@ -290,11 +290,12 @@ nb:
       party_comment:
         party: Parti
         body: Kommentar
-      valence_issue_explanation:
+      position:
         parties: Partier
-        explanation: Forklaring
+        description: Beskrivelse
         title: Tittel
         priority: Prioritet
+        parliament_period: Stortingsperiode
   will_paginate:
     previous_label: "&#8592; Forrige"
     next_label: "Neste &#8594;"
@@ -420,8 +421,9 @@ nb:
         promise:
           unrelated: Urelatert
           related: Relatert
-          for: For
-          against: Mot
+          kept: Holdt
+          partially_kept: Delvis holdt
+          broken: Brutt
       view_vote: 'Se hva de stemte'
       view_votes:
         one: 'Se avstemningen'
@@ -431,9 +433,6 @@ nb:
       enacted: Forslaget ble <strong>vedtatt</strong>.
       not_enacted: Forslaget ble <strong>ikke vedtatt</strong>.
       rebel: utbryterstemme
-      matches_issue:
-        'yes': 'Å stemme for dette forslaget er <strong>i tråd med</strong> å %{issue_title}.'
-        'no': 'Å stemme for dette forslaget er <strong>ikke i tråd med</strong> å %{issue_title}.'
       non_personal:
         unknown: 'Denne saken ble avgjort uten at avstemningsknappene ble brukt. Vi har derfor ikke oversikt over hva den enkelte representant har stemt.'
         inferred: 'Denne saken ble avgjort enstemmig uten at avstemningsknappene ble brukt. Oversikten er utledet fra tilstedeværelse ved andre avstemninger samme dag.'

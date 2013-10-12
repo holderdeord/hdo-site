@@ -1,22 +1,22 @@
 <div class="valence">
-  <% issue.valence_issue_explanations.order(:priority).each do |valence| %>
+  <% issue.positions.order(:priority).each do |position| %>
 
     <div class="constellation">
 
       <div class="icon-list">
-        <% valence.parties.each do |party| %>
+        <% position.parties.each do |party| %>
           <%= link_to issue_url(issue, anchor: party.slug) do %>
             <%= image_tag party.logo.versions[:medium] %>
           <% end %>
         <% end %>
       </div>
 
-      <h3><%= valence.title %></h3>
+      <h3><%= position.title %></h3>
 
-      <% if valence.explanation.blank? %>
+      <% if position.description.blank? %>
         <p><br><br></p>
       <% else %>
-        <p><%= valence.explanation %></p>
+        <p><%= position.description %></p>
       <% end %>
 
     </div>

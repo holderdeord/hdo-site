@@ -16,18 +16,12 @@
       </h3>
 
       <p class="issue-party-summary">
-        <%= party.position_text %>
         <%= party.accountability_text if AppConfig.show_accountability %>
       </p>
     </div>
   </header>
 
   <section class="issue-party-votes">
-    <div class="icon muted">
-      <div><%= party.position_logo %></div>
-      <div><%= party.position_caption %></div>
-    </div>
-
     <div class="content">
       <h5 class="issue-party-vote-title"><%= Vote.model_name.human(count: 2).capitalize %></h2>
       <ul class="vote-list">

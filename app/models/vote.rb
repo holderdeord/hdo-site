@@ -1,7 +1,6 @@
 class Vote < ActiveRecord::Base
   extend FriendlyId
 
-  include Hdo::Model::HasStatsCache
   include Tire::Model::Search
   include Tire::Model::Callbacks
   extend Hdo::Search::Index
@@ -128,10 +127,20 @@ class Vote < ActiveRecord::Base
     data.to_json
   end
 
-  private
-
-  def fetch_stats
-    Hdo::Stats::VoteCounts.new self
+  def stats
+    @stats ||= Rails.cache.fetch(stats_cache_key) { Hdo::Stats::VoteCounts.new self }
   end
 
+  private
+
+  def clear_stats_cache(obj)
+    Rails.cache.delete stats_cache_key
+  end
+
+  def stats_cache_key
+    # TODO: if we switch to a cache store that persists between
+    # deploys (like memcached), consider using ActiveSupport::Caching.expand_cache_key
+
+    "#{cache_key}/stats"
+  end
 end # Vote

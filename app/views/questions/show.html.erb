@@ -59,13 +59,8 @@
         <ul class="unstyled">
         <% @question.issues.each do |issue| %>
           <li>
-            <% if issue.valence_issue? %>
-              <%= link_to issue.title, issue %>:
-              har <%= issue.valence_explanation_for(@party).try(:title).to_s.downcase %>
-            <% else %>
-              <%= link_to issue.title, issue %>:
-              <%= issue.stats.text_for(@party, name: '', html: true) %>
-            <% end %>
+            <%= link_to issue.title, issue %>:
+            har <%= issue.position_for(@party).try(:title).to_s.downcase %>
           </li>
         <% end %>
         </ul>

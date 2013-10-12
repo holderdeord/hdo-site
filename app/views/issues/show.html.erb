@@ -27,46 +27,35 @@
     <%= render partial: 'aside', locals: { issue: @issue } %>
   </div>
 
-  <% if @issue.valence_issue? %>
-    <%= render partial: 'valence_issue', locals: { issue: @issue } %>
-    <hr>
-  <% else %>
-    <figure class="position">
-      <div class="issue-graph">
-        <div class="row-fluid">
-          <% @issue.position_groups.each do |label, parties| %>
-            <div class="position span4">
-              <div class="canvas parties_<%= parties.count %>">
-                <% parties.each do |party| %>
-                  <a class="issue-graph-party" href="#<%= party.slug %>">
-                    <%= image_tag party.logo.versions[:medium], alt: "#{party.name}s logo" %>
-                  </a>
-                  <br />
-                <% end %>
-              </div>
-              <div class="axis">
-                <%= image_tag label.icon, class: "icon" %>
-              </div>
-            </div>
-          <% end %>
+  <p class="issue-description"><%= @issue.description %></p>
+
+  <figure class="valence">
+    <figcaption class="muted">
+      <%= render partial: 'shared/social_sharing' %>
+      <p><%= @issue.explanation %></p>
+    </figcaption>
+
+    <% @issue.positions.each do |position| %>
+      <div class="row-fluid position">
+        <div class="span3">
+          <div class="parties_<%= position.parties.size %>">
+            <% position.parties.sort_by(&:name).each do |party| %>
+              <a href="#<%= party.slug %>">
+                <%= image_tag party.logo.versions[:medium], alt: "#{party.name}s logo", class: "party-logo" %>
+              </a>
+            <% end %>
+          </div>
         </div>
-        <div class="issue-graph-axis row-fluid">
-          <% @issue.position_groups.each do |label, parties| %>
-            <div class="span4">
-              <h4 class="issue-graph-label text"><%= label.text %></h4>
-            </div>
-          <% end %>
+
+        <div class="span7">
+          <h4><%= position.title %></h4>
+          <p><%= position.description %></p>
         </div>
       </div>
+    <% end %>
+  </figure>
 
-      <figcaption class="muted">
-        <%= render partial: 'shared/social_sharing' %>
-        <p><%= @issue.explanation %></p>
-      </figcaption>
-    </figure>
-
-    <p class="issue-description"><%= @issue.description %></p>
-  <% end %>
+  <hr>
 
   <div>
     <% @issue.party_groups.each do |party_group| %>
