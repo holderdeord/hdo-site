@@ -38,15 +38,25 @@ module Hdo
         end
       end
 
-      it 'calculates score based on override' do
+      it 'calculates score based on status' do
         issue = Issue.make!
         party = Party.make!
 
-        conn = issue.promise_connections.create!(promise: Promise.make!(parties: [party]), status: 'for', override: 100)
+        conn = issue.promise_connections.create!(promise: Promise.make!(parties: [party]), status: 'kept')
         AccountabilityScorer.new(issue).score_for(party).should == 100
 
-        conn.update_attributes!(override: 0)
+        conn.update_attributes!(status: 'broken')
         AccountabilityScorer.new(issue).score_for(party).should == 0
+
+        conn.update_attributes!(status: 'partially_kept')
+        AccountabilityScorer.new(issue).score_for(party).should == 50
+
+        conn.update_attributes!(status: 'kept')
+        issue.promise_connections.create!(promise: Promise.make!(parties: [party]), status: 'broken')
+        AccountabilityScorer.new(issue).score_for(party).should == 50
+
+        issue.promise_connections.create!(promise: Promise.make!(parties: [party]), status: 'kept')
+        AccountabilityScorer.new(issue).score_for(party).to_i.should == 66
       end
 
     end

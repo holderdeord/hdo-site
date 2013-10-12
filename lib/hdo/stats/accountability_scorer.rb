@@ -157,8 +157,12 @@ module Hdo
         promise_connection.promise.parties.each do |party|
           if promise_connection.related?
             next
-          elsif promise_connection.overridden?
-            scores[party] = promise_connection.override
+          elsif promise_connection.kept?
+            scores[party] = 100
+          elsif promise_connection.partially_kept?
+            scores[party] = 50
+          elsif promise_connection.broken?
+            scores[party] = 0
           else
             scores[party] = nil
           end

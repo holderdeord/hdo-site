@@ -24,32 +24,28 @@
 
               <div class="span4">
                 <div class="pull-right">
-                  <% promise_states.each do |current_status| %>
-                    <%= radio_button_tag "promises[#{promise.id}][status]",
-                          current_status,
-                          current_status == status,
-                          disabled: disable_promise_state?(current_status, promise) %>
+                  <ul class="unstyled">
+                    <% promise_states.each do |current_status| %>
+                      <li>
+                        <%= radio_button_tag "promises[#{promise.id}][status]",
+                            current_status,
+                            current_status == status,
+                            disabled: disable_promise_state?(current_status, promise) %>
 
-                    <%= t("app.issues.edit.promise.#{current_status}") %>
-                  <% end %>
+                        <%= t("app.issues.edit.promise.#{current_status}") %>
+                      </li>
+                    <% end %>
+                  </ul>
                 </div>
               </div>
             </div>
 
             <div class="row-fluid">
-              <div class="span1"></div>
-              <div class="span7">
+              <div class="span2"></div>
+              <div class="span6">
                 <small><%= issues_for_promise promise %></small>
               </div>
-
-              <div class="span4">
-                <div class="pull-right">
-                  <% promise_overrides.each do |value, label| %>
-                    <%= radio_button_tag "promises[#{promise.id}][override]", value, promise_override_value_for(promise).to_s == value.to_s %>
-                    <%= label %>
-                  <% end %>
-                </div>
-              </div>
+              <div lcass="span4"></div>
             </div>
 
             <hr>

@@ -420,8 +420,9 @@ nb:
         promise:
           unrelated: Urelatert
           related: Relatert
-          for: For
-          against: Mot
+          kept: Holdt
+          partially_kept: Delvis holdt
+          broken: Brutt
       view_vote: 'Se hva de stemte'
       view_votes:
         one: 'Se avstemningen'

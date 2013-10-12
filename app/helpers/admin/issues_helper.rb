@@ -32,26 +32,12 @@ module Admin::IssuesHelper
     conn ? conn.status : 'unrelated'
   end
 
-  def promise_override_value_for(promise)
-    conn = promise.promise_connections.find { |pc| pc.issue_id == @issue.id }
-    conn && conn.override
-  end
-
-  def promise_overrides
-    [
-      [100, 'Holdt'],
-      [50, 'Delvis holdt'],
-      [0, 'Ikke holdt'],
-      ['', 'Auto']
-    ]
-  end
-
   def promise_states
     [PromiseConnection::STATES, PromiseConnection::UNRELATED_STATE].flatten
   end
 
   def disable_promise_state?(state, promise)
-    promise.parliament_period_name != '2009-2013' && %[for against].include?(state)
+    promise.parliament_period_name != '2009-2013' && %[kept partially_kept broken].include?(state)
   end
 
   def issues_for_promise(promise)

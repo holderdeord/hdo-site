@@ -16,12 +16,15 @@ describe PromiseConnection do
   end
 
   it 'validates the status values' do
-    pc = PromiseConnection.make(override: 100)
+    pc = PromiseConnection.make
 
-    pc.status = 'for'
+    pc.status = 'kept'
     pc.should be_valid
 
-    pc.status = 'against'
+    pc.status = 'partially_kept'
+    pc.should be_valid
+
+    pc.status = 'broken'
     pc.should be_valid
 
     pc.status = 'related'
@@ -35,14 +38,14 @@ describe PromiseConnection do
     pc = PromiseConnection.make
 
     I18n.with_locale :nb do
-      pc.status = 'for'
-      pc.status_text.should == 'støtter saken'
+      pc.status = 'kept'
+      pc.status_text.should == 'holdt'
 
-      pc.status = 'against'
-      pc.status_text.should == 'støtter ikke saken'
+      pc.status = 'partially_kept'
+      pc.status_text.should == 'delvis holdt'
 
       pc.status = 'related'
-      pc.status_text.should == 'relatert til saken'
+      pc.status_text.should == 'relatert'
 
       pc.status = 'unrelated'
       expect { pc.status_text }.to raise_error
@@ -56,8 +59,8 @@ describe PromiseConnection do
     current_promise = Promise.make!(parliament_period: current_period)
     next_promise = Promise.make!(parliament_period: next_period)
 
-    PromiseConnection.make(status: 'for', promise: current_promise, override: 100).should be_valid
-    PromiseConnection.make(status: 'for', promise: next_promise, override: 100).should_not be_valid
+    PromiseConnection.make(status: 'kept', promise: current_promise).should be_valid
+    PromiseConnection.make(status: 'broken', promise: next_promise).should_not be_valid
   end
 
   it 'allows related promises from the next period' do
@@ -65,31 +68,6 @@ describe PromiseConnection do
     next_promise = Promise.make!(parliament_period: next_period)
 
     PromiseConnection.make(promise: next_promise, status: 'related').should be_valid
-  end
-
-  it 'allows manual overrides' do
-    pc = PromiseConnection.make
-    pc.should_not be_overridden
-
-    pc.override = -1
-    pc.should be_overridden
-    pc.should_not be_valid
-
-    pc.override = 0
-    pc.should be_overridden
-    pc.should be_valid
-
-    pc.override = 1
-    pc.should be_overridden
-    pc.should be_valid
-
-    pc.override = 100
-    pc.should be_overridden
-    pc.should be_valid
-
-    pc.override = 101
-    pc.should be_overridden
-    pc.should_not be_valid
   end
 
 end

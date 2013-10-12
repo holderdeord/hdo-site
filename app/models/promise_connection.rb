@@ -1,10 +1,10 @@
 # encoding: utf-8
 
 class PromiseConnection < ActiveRecord::Base
-  STATES          = %w[for against related]
+  STATES          = %w[kept partially_kept broken related]
   UNRELATED_STATE = 'unrelated'
 
-  attr_accessible :status, :promise_id, :promise, :issue, :override
+  attr_accessible :status, :promise_id, :promise, :issue
 
   belongs_to :promise
   belongs_to :issue
@@ -12,21 +12,23 @@ class PromiseConnection < ActiveRecord::Base
   validates :promise_id, presence: true, uniqueness: { scope: :issue_id }
   validates :issue_id, presence: true
   validates :status, presence: true, inclusion: { in: STATES }
-  validates :override, inclusion: 0..100, allow_nil: true
 
   validate :only_related_promises_for_next_period
-  validate :has_override_unless_related
 
-  def for?
-    status.inquiry.for?
+  def kept?
+    status.inquiry.kept?
   end
 
-  def against?
-    status.inquiry.against?
+  def partially_kept?
+    status.inquiry.partially_kept?
   end
 
   def related?
     status.inquiry.related?
+  end
+
+  def broken?
+    status.inquiry.broken?
   end
 
   def future?
@@ -35,19 +37,17 @@ class PromiseConnection < ActiveRecord::Base
 
   def status_text
     case status
-    when 'for'
-      'støtter saken'
-    when 'against'
-      'støtter ikke saken'
+    when 'kept'
+      'holdt'
+    when 'partially_kept'
+      'delvis holdt'
+    when 'broken'
+      'brutt'
     when 'related'
-      'relatert til saken'
+      'relatert'
     else
       raise "unknown status: #{status.inspect}"
     end
-  end
-
-  def overridden?
-    override != nil
   end
 
   private
@@ -61,11 +61,4 @@ class PromiseConnection < ActiveRecord::Base
       errors.add(:promise, "must be from 2009-2013 or marked 'related' for issue connection")
     end
   end
-
-  def has_override_unless_related
-    if !related? && override.nil?
-      errors.add(:override, 'must be present')
-    end
-  end
-
 end

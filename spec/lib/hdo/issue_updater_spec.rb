@@ -186,23 +186,11 @@ module Hdo
         promise_connection = PromiseConnection.make! promise: promise, issue: issue
 
         promises = {
-          promise.id => {'status' => 'against', 'override' => '100'}
+          promise.id => {'status' => 'kept'}
         }.with_indifferent_access
 
         IssueUpdater.new(issue, {promises: promises }, user).update!
-        issue.reload.promise_connections.first.override.should == 100
-      end
-
-      it 'can remove an override' do
-        promise = Promise.make!
-        promise_connection = PromiseConnection.make! promise: promise, issue: issue, override: 100
-
-        promises = {
-          promise.id => {'status' => 'related', 'override' => nil}
-        }.with_indifferent_access
-
-        IssueUpdater.new(issue, {promises: promises}, user).update!
-        issue.reload.promise_connections.first.override.should == nil
+        issue.reload.promise_connections.first.should be_kept
       end
 
       it 'deletes promise connections' do

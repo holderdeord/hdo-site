@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131012115933) do
+ActiveRecord::Schema.define(:version => 20131012160826) do
 
   create_table "answers", :force => true do |t|
     t.text     "body",                                     :null => false
@@ -238,7 +238,6 @@ ActiveRecord::Schema.define(:version => 20131012115933) do
     t.integer  "issue_id"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
-    t.integer  "override"
   end
 
   add_index "promise_connections", ["promise_id", "issue_id"], :name => "index_promise_connections_on_promise_id_and_issue_id"

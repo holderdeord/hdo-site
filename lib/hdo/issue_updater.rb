@@ -104,13 +104,6 @@ module Hdo
       existing = PromiseConnection.where('promise_id = ? and issue_id = ?', promise_id, @issue.id).first
       status   = data.fetch(:status)
 
-      override = data[:override]
-      override = if override.blank?
-                   nil
-                 else
-                   Integer(override)
-                 end
-
       if status == 'unrelated'
         if existing
           @issue.promise_connections.delete existing
@@ -119,13 +112,11 @@ module Hdo
       else
         if existing
           existing.status = status
-          existing.override = override
-
           @changed ||= existing.changed?
 
           existing.save!
         else
-          @issue.promise_connections.create!(status: status, promise_id: promise_id, override: override)
+          @issue.promise_connections.create!(status: status, promise_id: promise_id)
           @changed = true
         end
       end
