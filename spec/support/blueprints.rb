@@ -19,7 +19,6 @@ end
 VoteConnection.blueprint do
   issue
   vote
-  matches { true }
 end
 
 PromiseConnection.blueprint do

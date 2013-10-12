@@ -19,23 +19,26 @@
 
     <div class="span4">
       <label>
+        <strong>Koblet til saken?</strong>
+        <%= check_box_tag "votes[#{vote.id}][connected]", 'true', !!connection %>
+      </label>
+
+
+      <label>
         <strong><%= VoteConnection.human_attribute_name :proposition_type %></strong>
         <p><%= select_tag "votes[#{vote.id}][proposition_type]", proposition_type_options_for(connection) %></p>
       </label>
 
-      <label>
-         <strong><%= VoteConnection.human_attribute_name :matches %></strong>
-         <p><%= select_tag "votes[#{vote.id}][direction]", vote_options_for(vote, connection), class: 'input-medium' %></p>
-       </label>
-
-      <% if (connected_issues = connected_issues_for(vote)) && connected_issues.any? %>
-        Avstemningen brukes også i
-          <ul>
-            <% connected_issues.each do |issue| %>
-              <li><%= link_to issue.title, issue %>
-            <% end %>
-          </ul>
-      <% end %>
+      <p>
+        <% if (connected_issues = connected_issues_for(vote)) && connected_issues.any? %>
+          Avstemningen brukes også i
+            <ul>
+              <% connected_issues.each do |issue| %>
+                <li><%= link_to issue.title, issue %>
+              <% end %>
+            </ul>
+        <% end %>
+      </p>
     </div>
   </div>
 

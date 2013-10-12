@@ -35,14 +35,6 @@ class VoteConnectionDecorator < Draper::Decorator
     end
   end
 
-  def matches_text
-    if matches?
-      I18n.t('app.votes.matches_issue.yes', issue_title: issue.downcased_title)
-    else
-      I18n.t('app.votes.matches_issue.no', issue_title: issue.downcased_title)
-    end
-  end
-
   def enacted_text
     if enacted?
       I18n.t('app.votes.enacted')
@@ -90,10 +82,6 @@ class VoteConnectionDecorator < Draper::Decorator
 
   def enacted?
     vote.enacted?
-  end
-
-  def matches?
-    model.matches?
   end
 
   def all_parties

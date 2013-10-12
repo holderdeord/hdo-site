@@ -226,7 +226,7 @@ module Hdo
 
         votes = {
           issue.votes[0].id => {
-            direction: 'for',
+            connected: 'true',
             title: 'title!!!!!!!!',
             proposition_type: VoteConnection::PROPOSITION_TYPES.first
           }
@@ -249,12 +249,12 @@ module Hdo
 
         votes = {
           issue.votes[0].id => {
-            direction: 'for',
+            connected: 'true',
             title: 'title!!!!!!!!',
             proposition_type: expected_type
           },
           issue.votes[1].id => {
-            direction: 'for',
+            connected: 'true',
             title: 'title!!!!!!!!',
             proposition_type: ""
           }
@@ -275,12 +275,12 @@ module Hdo
 
         votes = {
           issue.votes[0].id => {
-            direction: 'for',
+            connected: 'true',
             title: 'title!!!!!!!!',
             proposition_type: first
           },
           issue.votes[1].id => {
-            direction: 'for',
+            connected: 'true',
             title: 'title!!!!!!!!',
             proposition_type: last
           }
@@ -294,7 +294,7 @@ module Hdo
       end
 
       it 'does not touch the issue if proposition type is already nil or empty' do
-        vote_connection = VoteConnection.make!(matches: true)
+        vote_connection = VoteConnection.make!
         vote            = vote_connection.vote
         issue           = Issue.make! vote_connections: [vote_connection]
 
@@ -303,7 +303,7 @@ module Hdo
 
         votes = {
           vote.id => {
-            direction: 'for',
+            connected: 'true',
             title: vote_connection.title,
             proposition_type: '' # input is an empty string
           }

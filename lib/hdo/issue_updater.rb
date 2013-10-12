@@ -134,13 +134,8 @@ module Hdo
     def update_or_create_vote_connection(vote_id, data)
       existing = VoteConnection.where('vote_id = ? and issue_id = ?', vote_id, @issue.id).first
 
-      if data[:direction] == 'unrelated'
-        if existing
-          @issue.vote_connections.delete existing
-          @changed = true
-        end
-      else
-        attrs = data.except(:direction).merge(matches: data[:direction] == 'for', vote_id: vote_id)
+      if data[:connected]
+        attrs = data.except(:connected).merge(vote_id: vote_id)
 
         # normalize '' vs nil
         attrs[:proposition_type] = nil if attrs[:proposition_type].blank?
@@ -152,6 +147,11 @@ module Hdo
           existing.save!
         else
           new_connection = @issue.vote_connections.create!(attrs)
+          @changed = true
+        end
+      else
+        if existing
+          @issue.vote_connections.delete existing
           @changed = true
         end
       end

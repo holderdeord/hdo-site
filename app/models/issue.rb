@@ -121,14 +121,6 @@ class Issue < ActiveRecord::Base
     [prev_issue, next_issue]
   end
 
-  def vote_for?(vote_id)
-    vote_connections.any? { |vd| vd.matches? && vd.vote_id == vote_id  }
-  end
-
-  def vote_against?(vote_id)
-    vote_connections.any? { |vd| !vd.matches? && vd.vote_id == vote_id }
-  end
-
   def connection_for(vote)
     vote_connections.where(:vote_id => vote.id).first
   end

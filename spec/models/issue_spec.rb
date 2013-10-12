@@ -112,7 +112,7 @@ describe Issue do
     vote = Vote.make!
     issue = Issue.make!(vote_connections: [])
 
-    issue.vote_connections.create!(vote: vote, matches: true)
+    issue.vote_connections.create!(vote: vote)
     issue.votes.should == [vote]
 
     issue.connection_for(vote).should_not be_nil
@@ -262,7 +262,7 @@ describe Issue do
     it 'is locked when adding a vote connection' do
       votes = {
         Vote.make!.id => {
-          direction: 'for',
+          connected: 'true',
           title: 'more cowbell'
         }
       }
@@ -282,7 +282,7 @@ describe Issue do
     end
 
     it 'is locked when changing proposition type of an existing vote' do
-      @issue.vote_connections.create! vote: Vote.make!, matches: true, title: 'hello'
+      @issue.vote_connections.create! vote: Vote.make!, title: 'hello'
       vote = @issue.votes.first
 
       @issue.save
@@ -290,7 +290,7 @@ describe Issue do
 
       votes = {
         vote.id => {
-          direction: 'for',
+          connected: 'true',
           title: 'hello',
           proposition_type: VoteConnection::PROPOSITION_TYPES.first
         }

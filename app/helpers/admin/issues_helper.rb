@@ -2,27 +2,6 @@
 
 module Admin::IssuesHelper
 
-  #
-  # TODO: this is too large; move stuff to decorators where it makes sense.
-  #
-
-  def vote_options_for(vote, connection)
-    if connection
-      selected = connection.matches? ? 'for' : 'against'
-    else
-      selected = 'unrelated'
-    end
-
-    options_for_select(
-      {
-        t('app.for') => 'for',
-        t('app.against') => 'against',
-        t('app.unrelated') => 'unrelated'
-      },
-      selected
-    )
-  end
-
   def editor_options_for(issue)
     users = User.order(:name)
 

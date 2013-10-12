@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131011233816) do
+ActiveRecord::Schema.define(:version => 20131012115933) do
 
   create_table "answers", :force => true do |t|
     t.text     "body",                                     :null => false
@@ -364,7 +364,6 @@ ActiveRecord::Schema.define(:version => 20131011233816) do
   add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
 
   create_table "vote_connections", :force => true do |t|
-    t.boolean  "matches"
     t.integer  "vote_id"
     t.integer  "issue_id"
     t.datetime "created_at",       :null => false
