@@ -1,6 +1,7 @@
 #!/bin/bash
 
 set -e
+set -x
 
 if [[ -n "${HDO_DEPLOY_AUTH}" ]]; then
   echo "Checking bundle cache..."
