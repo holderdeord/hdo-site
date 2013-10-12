@@ -295,6 +295,7 @@ nb:
         description: Beskrivelse
         title: Tittel
         priority: Prioritet
+        parliament_period: Stortingsperiode
   will_paginate:
     previous_label: "&#8592; Forrige"
     next_label: "Neste &#8594;"

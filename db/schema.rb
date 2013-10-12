@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131012160826) do
+ActiveRecord::Schema.define(:version => 20131012172456) do
 
   create_table "answers", :force => true do |t|
     t.text     "body",                                     :null => false
@@ -226,10 +226,11 @@ ActiveRecord::Schema.define(:version => 20131012160826) do
   create_table "positions", :force => true do |t|
     t.text     "description"
     t.integer  "issue_id"
-    t.datetime "created_at",                 :null => false
-    t.datetime "updated_at",                 :null => false
+    t.datetime "created_at",                          :null => false
+    t.datetime "updated_at",                          :null => false
     t.string   "title"
-    t.integer  "priority",    :default => 0
+    t.integer  "priority",             :default => 0
+    t.integer  "parliament_period_id"
   end
 
   create_table "promise_connections", :force => true do |t|

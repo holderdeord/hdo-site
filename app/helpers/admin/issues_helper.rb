@@ -32,6 +32,12 @@ module Admin::IssuesHelper
     conn ? conn.status : 'unrelated'
   end
 
+  def parliament_period_options_for(position)
+    data = ParliamentPeriod.order(:start_date).reverse_order.map { |e| [e.name, e.id] }
+
+    options_for_select data, selected: position.parliament_period.try(:id)
+  end
+
   def promise_states
     [PromiseConnection::STATES, PromiseConnection::UNRELATED_STATE].flatten
   end

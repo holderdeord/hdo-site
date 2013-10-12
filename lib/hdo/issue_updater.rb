@@ -184,6 +184,8 @@ module Hdo
       else
         new_position = @issue.positions.create(data.except('id', 'parties'))
         new_position.parties = Party.find(data['parties'])
+
+        new_position.save!
         @changed = true
       end
     end

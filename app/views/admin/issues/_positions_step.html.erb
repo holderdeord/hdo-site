@@ -1,22 +1,12 @@
-<div class="well">
+<div>
   <h3><%= Position.model_name.human(count: 2) %></h3>
 
-  <table class="table" id="positions-table">
-    <thead>
-    <tr>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-    </tr>
-    </thead>
+  <% @positions.each do |position| %>
+    <div class="row-fluid well">
+      <%= render partial: "position_row", locals: { position: position } %>
+    </div>
+  <% end %>
 
-    <tbody>
-      <% @positions.each do |position| %>
-        <%= render partial: "position_row", locals: { position: position } %>
-      <% end %>
-    </tbody>
-  </table>
   <button class="btn" id="new-position-button" type="submit">Ny</button>
 </div>
 

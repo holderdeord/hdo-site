@@ -1,10 +1,12 @@
 class Position < ActiveRecord::Base
   has_and_belongs_to_many :parties
   belongs_to :issue
-  attr_accessible :description, :issue_id, :parties, :title, :priority
+  belongs_to :parliament_period
 
-  validates :parties,     presence: true
-  validates :title,       presence: true
+  attr_accessible :description, :issue_id, :parties, :title, :priority, :parliament_period_id
+
+  validates :parties, presence: true
+  validates :title,   presence: true
 
   def downcased_title
     @downcased_title ||= (

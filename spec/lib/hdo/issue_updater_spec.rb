@@ -12,11 +12,11 @@ module Hdo
 
         positions = {
           'new1' => {
-            'id'          => '1',
-            'parties'     => [party.id],
-            'title'       => 'foo',
-            'description' => 'Offer one gazillion!',
-            'issue_id'    => issue.id
+            'id'                   => '1',
+            'parties'              => [party.id],
+            'title'                => 'foo',
+            'description'          => 'Offer one gazillion!',
+            'issue_id'             => issue.id,
           }
         }
 
@@ -74,6 +74,26 @@ module Hdo
 
         IssueUpdater.new(issue, { positions: positions }, user).update!
         issue.reload.positions.first.priority.should eq 100
+      end
+
+      it 'modifies parliament period' do
+        p = ParliamentPeriod.make!
+        e = Position.make! issue: issue
+
+        positions = {
+          e.id => {
+            'id'                   => e.id,
+            'description'          => 'foo',
+            'issue_id'             => e.issue_id,
+            'parties'              => e.parties,
+            'title'                => 'hello lalala',
+            'priority'             => 100,
+            'parliament_period_id' => p.id
+          }
+        }
+
+        IssueUpdater.new(issue, { positions: positions }, user).update!
+        issue.reload.positions.first.parliament_period.should == p
       end
 
       it 'deletes positions' do

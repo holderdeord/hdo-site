@@ -1,35 +1,54 @@
-<tr>
-  <td>
+<div class="row-fluid">
+  <div class="span4">
     <h5><%= Position.human_attribute_name :parties %></h5>
     <%= select_tag "positions[#{position.id}][parties]",
                    party_options(selected: position.parties.map(&:id)),
                    multiple: true, data: { placeholder: 'Velg partier' },
                    id: "position-#{position.id}-parties",
                    class: 'position-parties' %>
+  </div>
 
-    <div class="row-fluid">
-      <h5><%= Position.human_attribute_name :priority %></h5>
-      <%= text_field_tag "positions[#{position.id}][priority]", position.priority %>
-    </div>
-  </td>
-
-  <td>
+  <div class="span4">
     <h5><%= Position.human_attribute_name :title %></h5>
     <div class="row-fluid">
       <%= text_field_tag "positions[#{position.id}][title]", position.title %>
     </div>
 
-    <h5><%= Position.human_attribute_name :description %></h5>
-    <div id="wmd-button-bar-<%= position.id %>"></div>
-    <%= text_area_tag "positions[#{position.id}][description]", position.description, class: 'span7', rows: '10', id: "wmd-input-#{position.id}" %>
+    <h5><%= Position.human_attribute_name :priority %></h5>
+    <%= text_field_tag "positions[#{position.id}][priority]", position.priority %>
+  </div>
 
-    <strong>Preview</strong>
-    <div id="wmd-preview-<%= position.id %>" class="well"></div></td></td>
-  </td>
+  <div class="span4">
+    <h5><%= Position.human_attribute_name :parliament_period %></h5>
+    <%= select_tag "positions[#{position.id}][parliament_period_id]", parliament_period_options_for(position), include_blank: true %>
+  </div>
+</div>
 
-  <td>
-    <button class="btn btn-danger destroy-position" id="destroy-<%= position.id %>"><%= t('app.destroy') %></button>
-    <%= hidden_field_tag "positions[#{position.id}[id]", position.id  %>
-    <%= hidden_field_tag "positions[#{position.id}[issue_id]", position.issue_id  %>
-  </td>
-</tr>
+<div class="row-fluid">
+  <div class="row-fluid">
+    <div class="span7">
+      <h5><%= Position.human_attribute_name :description %></h5>
+      <div id="wmd-button-bar-<%= position.id %>"></div>
+    </div>
+
+    <div class="span5">
+      <h5>Forhåndsvisning</h5>
+    </div>
+  </div>
+
+  <div class="row-fluid">
+    <div class="span7">
+      <%= text_area_tag "positions[#{position.id}][description]",
+                       position.description,
+                       rows: '10',
+                       id: "wmd-input-#{position.id}", class: 'span10' %>
+
+    </div>
+
+    <div class="span5 well">
+      <div id="wmd-preview-<%= position.id %>"></div>
+    </div>
+  </div>
+</div>
+
+<hr class="soften">
