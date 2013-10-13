@@ -1,7 +1,6 @@
 #!/bin/bash
 
 set -e
-set -x
 
 if [[ -n "${HDO_DEPLOY_AUTH}" ]]; then
   echo "Checking bundle cache..."
@@ -23,7 +22,7 @@ echo
 
 if [[ "$LOCAL_SHA" = "$REMOTE_SHA" ]]; then
   echo "No changes to Gemfile.lock"
-else if [[ "$TRAVIS_BRANCH" != "master" ]]; then
+elif [[ "$TRAVIS_BRANCH" != "master" ]]; then
   echo "Gemfile.lock changed, but ignoring since ${TRAVIS_BRANCH} != master"
 else
   echo "Gemfile.lock changed, uploading bundle"
