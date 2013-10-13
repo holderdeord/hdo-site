@@ -59,25 +59,26 @@ module Hdo
 
       def positions
         # TODO: make this actually check period
-        @issue.positions.order(:priority).map { |e| Position.new(e) }
+        @issue.positions.order(:priority).map { |pos| Position.new(@issue, pos) }
       end
     end
 
     class Position
-      def initialize(vie)
-        @vie = vie
+      extend Forwardable
+      def_delegators :@position, :title, :description, :parties
+
+      def initialize(issue, pos)
+        @issue = issue
+        @position = pos
       end
 
-      def parties
-        @vie.parties.order(:name)
+      def promises
+        # TODO: optimize
+        @issue.promises.joins(:parties).where('parties.id' => @position.parties)
       end
 
-      def description
-        @vie.description
-      end
-
-      def title
-        @vie.title
+      def accountability
+        @position.parties.map { |e| @issue.accountability.text_for(e) }
       end
     end
 

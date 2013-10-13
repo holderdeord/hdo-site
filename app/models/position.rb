@@ -1,5 +1,5 @@
 class Position < ActiveRecord::Base
-  has_and_belongs_to_many :parties
+  has_and_belongs_to_many :parties, order: :name
   belongs_to :issue
   belongs_to :parliament_period
 
