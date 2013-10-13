@@ -29,11 +29,10 @@ namespace :export do
 
     puts "reducing issues"
     all_issues = Issue.all
-    published  = Issue.published
     to_keep    = []
 
     all_issues.group_by { |e| e.status }.each do |_, issues|
-      to_keep += issues.first(5)
+      to_keep += issues.first(7)
     end
 
     (all_issues - to_keep.uniq).each(&:destroy)
