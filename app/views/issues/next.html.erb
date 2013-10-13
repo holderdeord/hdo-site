@@ -50,8 +50,8 @@
               <strong>Løfter</strong>
 
               <ul>
-                <% position.promises.each do |promise| %>
-                  <li><%= promise.body %></li>
+                <% position.promises.each do |p| %>
+                  <li class="<%= 'muted' if p.related? %>"><%= p.promise.body %></li>
                 <% end %>
               </ul>
             </div>
