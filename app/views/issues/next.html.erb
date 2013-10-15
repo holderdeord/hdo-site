@@ -59,19 +59,21 @@
         <% end %>
       </div>
 
-      <div class="span6">
-        <div class="row-fluid">
+      <div class="span6 timeline">
+        <div class="row-fluid timeline-indicator">
           <h4>Avstemninger <%= period.name %></h4>
         </div>
 
         <% period.days.each do |day| %>
-          <div class="row-fluid">
+          <div class="row-fluid timeline-entry">
             <div class="muted"><%= day.date %></div>
 
             <% day.votes.each do |vote| %>
-              <div class="row-fluid" style="background-color: #ececec; padding: 10px; margin: 10px">
-                <p class="lead"><%= vote.title %></p>
-                <p><%= markdown(vote.comment).html_safe %></p>
+              <!--<div class="row-fluid" style="background-color: #ececec; padding: 10px; margin: 10px">-->
+              <div class="row-fluid vote">
+                <p class="vote-title"><%= vote.title %></p>
+                <!-- AUTOMATICALLY WRAPPED IN P? -->
+                <%= markdown(vote.comment).html_safe %>
               </div>
             <% end %>
           </div>

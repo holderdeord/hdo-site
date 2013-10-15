@@ -178,4 +178,42 @@ figure.valence {
 .proposition-body { display: none; }
 
 .issue-timeline {
+  .timeline {
+    border-left: 2px solid black;
+    padding-left: 40px;
+    .timeline-indicator {
+      position: relative;
+      padding-bottom: 50px;
+      &:after {
+        position: absolute;
+        left: -59px;
+        top: 0;
+        height: 0;
+        width: 35px;
+        border: 1px solid black;
+      }
+    }
+    .timeline-entry {
+      position: relative;
+      padding-bottom: 50px;
+      &:before {
+        position: absolute;
+        left: -50px;
+        height: 16px;
+        width: 16px;
+        border-radius: 50%;
+        border: 2px solid black;
+        background-color: white;
+        box-shadow: 0 0 0 20px rgba(0,0,0, 0.1);
+      }
+      .vote {
+        padding-bottom: 20px;
+        .vote-title {
+          font-size: 1.25em;
+          font-weight: 200px;
+          margin-bottom: 0;
+        }
+      }
+    }
+  }
 }
