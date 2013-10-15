@@ -3,6 +3,8 @@
 <% metadata[:type] = 'article' %>
 <% metadata[:url] = issue_url(@issue) %>
 
+<%= render partial: 'temp_toggles' %>
+
 <article class="issue-timeline">
   <div class="page-header">
     <h1 class="issue-title"><%= @issue.title %></h1>
@@ -29,11 +31,11 @@
 
             <div class="span10">
               <small class="lead"><%= position.title %></small>
-              <p><%= position.description %></p>
+              <p class="position-description"><%= position.description %></p>
             </div>
           </div>
 
-          <div class="row-fluid">
+          <div class="row-fluid accountability">
             <div class="offset2 span10">
               <strong>Ordholding</strong>
 
@@ -45,13 +47,13 @@
             </div>
           </div>
 
-          <div class="row-fluid">
+          <div class="row-fluid promises">
             <div class="offset2 span10">
               <strong>Løfter</strong>
 
               <ul>
                 <% position.promises.each do |p| %>
-                  <li class="<%= 'muted' if p.related? %>"><%= p.promise.body %></li>
+                  <li class="<%= 'muted' if p.related? %>"><%= p.promise.body %> status: <%= p.status %></li>
                 <% end %>
               </ul>
             </div>
@@ -69,11 +71,9 @@
             <div class="muted"><%= day.date %></div>
 
             <% day.votes.each do |vote| %>
-              <!--<div class="row-fluid" style="background-color: #ececec; padding: 10px; margin: 10px">-->
               <div class="row-fluid vote">
                 <p class="vote-title"><%= vote.title %></p>
-                <!-- AUTOMATICALLY WRAPPED IN P? -->
-                <%= markdown(vote.comment).html_safe %>
+                <div class="vote-detail"><%= markdown(vote.comment).html_safe %></div>
               </div>
             <% end %>
           </div>
