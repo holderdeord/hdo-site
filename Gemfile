@@ -104,7 +104,7 @@ gem 'valid_email'
 # serialization / parsing
 gem 'multi_json'
 gem 'yajl-ruby'
-gem 'nokogiri', '~> 1.5.0'
+gem 'nokogiri'
 gem 'unicode_utils'
 
 # debugging
