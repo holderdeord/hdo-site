@@ -1,28 +1,3 @@
-<section class="blog">
-  <div class="row-fluid">
-    <article class="span12">
-      <h2>Apropos</h2>
-      <p class="intro">
-        Her skriver folk tilknyttet Holder de ord om små og store ting som opptar dem. Helt uhøytidelig og etter innfallsmetoden.
-      </p>
-      <div class="row-fluid">
-      <% @latest_posts.each do |latest_post| %>
-        <a href="<%= latest_post.url %>" class="span6">
-          <h4><%= latest_post.title %></h4>
-          <p class="byline">av <%= latest_post.author %></p>
-          <div class="content">
-            <%= latest_post.teaser.html_safe %>
-          </div>
-          <span class="read-more">Les hele innlegget</span>
-        </a>
-        <% end %>
-      </div>
-    </article>
-  </div>
-</section>
-
-<hr class="soften">
-
 <section class="row-fluid social-media">
   <div class="span6">
     <h2>Følg oss i sosiale medier</h2>
@@ -52,4 +27,3 @@
   </div>
 
 </section>
-

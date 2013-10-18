@@ -23,10 +23,7 @@ class HomeController < ApplicationController
     @main_issue  = @issues.shift
     @questions   = Question.not_ours.with_approved_answers.order("answers.created_at").last(2).map(&:decorate)
     @leaderboard = Hdo::Stats::Leaderboard.new(published)
-
-    if AppConfig.frontpage_blog_enabled
-      @latest_posts = Hdo::Utils::BlogFetcher.last(2)
-    end
+    @latest_posts = Hdo::Utils::BlogFetcher.last(2)
   end
 
   def robots

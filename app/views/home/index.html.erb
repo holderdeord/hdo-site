@@ -31,9 +31,9 @@
 
 <hr class="soften">
 
-<% if AppConfig.frontpage_blog_enabled && @latest_posts %>
-  <%= render partial: 'blog_and_social' %>
-<% end %>
+<%= render partial: 'blog' %>
+<hr class="soften">
+<%= render partial: 'social' %>
 
 <section>
   <h2>Alle tema</h2>
