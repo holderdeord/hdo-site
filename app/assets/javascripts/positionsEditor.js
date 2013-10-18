@@ -15,7 +15,7 @@
         e.preventDefault();
 
         var newId = 'new' + count++;
-        $('#positions-table tr:last').after(newRowHtml.replace(/newPosition/g, newId));
+        $(this).after(newRowHtml.replace(/newPosition/g, newId));
         self.initializeMarkdownEditors([newId]);
 
         $('#position-' + newId + '-parties').chosen();

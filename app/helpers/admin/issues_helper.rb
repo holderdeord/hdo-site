@@ -64,10 +64,10 @@ module Admin::IssuesHelper
 
     counts = Hash.new(0).with_indifferent_access
     counts[:total] = pcs.size
-    counts[:used]  = 0
+    counts[:used] = 0
 
     pcs.each do |pc|
-      counts[:used] += 1 if pc.status != 'related'
+      counts[:used] += 1
       counts[pc.status.to_sym] += 1
     end
 

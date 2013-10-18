@@ -1,27 +1,17 @@
 <div class="modal-header">
   <div class="row-fluid">
-    <div class="span6"><h4>Stemmegivning</h4></div>
-    <div class="span6">
-      <button type="button" class="close pull-right" data-dismiss="modal" aria-hidden="true">×</button>
-      <h4>Holder de ord?</h4>
-    </div>
+    <button type="button" class="close pull-right" data-dismiss="modal" aria-hidden="true">×</button>
+    <h4>Holder de ord?</h4>
   </div>
 </div>
 
 <div class="modal-body">
   <% @parties.each do |party| %>
     <div class="row-fluid">
-      <div class="span6">
-        <strong><%= party.name %></strong> <%= @stats.text_for(party, name: '', html: true) %>
-        <p><small>støtter saken <%= @stats.text_score_for(party) %></small></p>
-      </div>
-
-      <div class="span6">
-          <% counts = promise_counts_for(party) %>
-          <%= image_tag party.logo, width: '28', height: '28' %>
-          <strong><%= @accountability.text_score_for(party) %></strong> <%= t('app.promises.based_on', count: counts[:used]) %>
-          <p><small><%= counts[:for] %> støtter saken, <%= counts[:against] %> støtter ikke saken + <%= counts[:related] %> relatert</small></p>
-      </div>
+        <% counts = promise_counts_for(party) %>
+        <%= image_tag party.logo, width: '28', height: '28' %>
+        <strong><%= @accountability.text_score_for(party) %></strong> <%= t('app.promises.based_on', count: counts[:total]) %>
+        <p><small><%= counts[:kept] %> holdt, <%= counts[:partially_kept] %> delvis holdt, <%= counts[:broken] %> brutt, <%= counts[:related] %> relatert</small></p>
     </div>
   <% end %>
 </div>
