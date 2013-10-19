@@ -282,7 +282,7 @@ module Hdo
         message = mail.parts.last.body.raw_source
 
         client = hipchat_client || return
-        client['Analyse'].send('Stortinget', message.to_param, notify: true)
+        client['Holder de ord'].send('Stortinget', message.to_param, notify: true)
       rescue => ex
         log.error [ex.message, ex.backtrace].join("\n")
       end
