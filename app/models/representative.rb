@@ -26,6 +26,7 @@ class Representative < ActiveRecord::Base
       indexes :full_name, index: :not_analyzed
       indexes :last_name, index: :not_analyzed
       indexes :first_name, index: :not_analyzed
+      indexes :twitter_id, index: :not_analyzed
       indexes :slug
     end
   }
@@ -203,7 +204,7 @@ class Representative < ActiveRecord::Base
   def to_indexed_json
     to_json include: [:district],
             methods: [:latest_party, :full_name],
-            only: [:slug, :last_name, :first_name]
+            only: [:slug, :last_name, :first_name, :twitter_id]
   end
 
   private
