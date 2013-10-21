@@ -13,7 +13,7 @@ module Hdo
         @last_result = Rails.cache.fetch("blog/latest/#{count}", expires_in: 5.minutes) { posts.first(count) }
       rescue => ex
         Rails.logger.error "#{self.class}: #{ex.message}"
-        @last_result # serve stale on exception
+        @last_result || [] # serve stale on exception
       end
 
       def initialize
