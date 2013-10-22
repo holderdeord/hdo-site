@@ -60,30 +60,6 @@ describe Admin::UsersController do
     let(:user)    { User.make! }
     before(:each) { sign_in User.make!(role: 'superadmin') }
 
-    it "redirects from new if read_only" do
-      AppConfig.any_instance.stub(:read_only).and_return(true)
-      get :new
-      response.code.should eq '307'
-    end
-
-    it "redirects from edit if read_only" do
-      AppConfig.any_instance.stub(:read_only).and_return(true)
-      post :edit, id: user
-      response.code.should eq '307'
-    end
-
-    it "redirects from update if read_only" do
-      AppConfig.any_instance.stub(:read_only).and_return(true)
-      put :update, id: user
-      response.code.should eq '307'
-    end
-
-    it "redirects from destroy if read_only" do
-      AppConfig.any_instance.stub(:read_only).and_return(true)
-      delete :destroy, id: user
-      response.code.should eq '307'
-    end
-
     it 'can create a new user' do
       get :new
 
@@ -117,6 +93,30 @@ describe Admin::UsersController do
 
       response.should redirect_to admin_users_path
       flash.alert.should be_blank
+    end
+
+    it "redirects from new if read_only" do
+      AppConfig.any_instance.stub(:read_only).and_return(true)
+      get :new
+      response.code.should eq '307'
+    end
+
+    it "redirects from edit if read_only" do
+      AppConfig.any_instance.stub(:read_only).and_return(true)
+      post :edit, id: user
+      response.code.should eq '307'
+    end
+
+    it "redirects from update if read_only" do
+      AppConfig.any_instance.stub(:read_only).and_return(true)
+      put :update, id: user
+      response.code.should eq '307'
+    end
+
+    it "redirects from destroy if read_only" do
+      AppConfig.any_instance.stub(:read_only).and_return(true)
+      delete :destroy, id: user
+      response.code.should eq '307'
     end
   end
 end

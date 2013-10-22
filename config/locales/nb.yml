@@ -534,14 +534,16 @@ nb:
     time:
       years: "år"
     created:
-      promise: 'Løftet ble lagret.'
-      issue: 'Saken er lagret.'
-      user: 'Brukeren ble lagret.'
+      promise: Løftet ble lagret.
+      issue: Saken er lagret.
+      user: Brukeren ble lagret.
+      government: Regjeringen ble lagret.
     updated:
-      promise: 'Løftet ble oppdatert.'
-      issue: 'Saken ble oppdatert.'
-      user: 'Brukeren ble oppdatert.'
-      representative: 'Representanten ble oppdatert.'
+      promise: Løftet ble oppdatert.
+      issue: Saken ble oppdatert.
+      user: Brukeren ble oppdatert.
+      representative: Representanten ble oppdatert.
+      government: Regjeringen ble oppdatert
     parties:
       no_promises: Ingen løfter om saken.
       related_promise: Løftet er ikke direkte knyttet til saken.
