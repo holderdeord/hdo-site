@@ -19,8 +19,9 @@ class Question < ActiveRecord::Base
   validates :from_email,     email: true
   validates :representative, presence: true
   validates :answer,         associated: true
+
   validate :answer_comes_from_asked_representative
-  validate :representative_is_askable
+  validate :representative_is_askable_for_new_question
 
   scope :answered,                 -> { joins(:answer) }
   scope :unanswered,               -> { where('(select count(*) FROM answers WHERE question_id = questions.id) = 0') }
@@ -39,7 +40,7 @@ class Question < ActiveRecord::Base
   end
 
   def self.statuses
-    workflow_spec.state_names.map &:to_s
+    workflow_spec.state_names.map(&:to_s)
   end
 
   def answer_body
@@ -86,8 +87,8 @@ class Question < ActiveRecord::Base
     end
   end
 
-  def representative_is_askable
-    unless representative && representative.askable?
+  def representative_is_askable_for_new_question
+    unless (representative && representative.askable?) || persisted?
       errors.add(:representative, :must_be_askable)
     end
   end

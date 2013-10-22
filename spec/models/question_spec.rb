@@ -12,11 +12,35 @@ describe Question do
     q.should_not be_valid
   end
 
-  it 'is invalid with an opted out representative' do
+  it 'is invalid if the representative has opted out' do
     representative = Representative.make! opted_out: true
     q = Question.make representative: representative
 
     q.should_not be_valid
+  end
+
+  it 'is invalid if the representative does not have an email' do
+    representative = Representative.make! email: nil
+    q = Question.make representative: representative
+
+    q.should_not be_valid
+  end
+
+  it 'is invalid if the representative is not attending' do
+    representative = Representative.make! attending: false
+    q = Question.make representative: representative
+
+    q.should_not be_valid
+  end
+
+  it 'allows changing an existing question to non-attending representative' do
+    representative = Representative.make! :attending
+    q = Question.make! representative: representative
+    q.should be_valid
+
+    representative.update_attributes!(attending: false)
+
+    q.reload.should be_valid
   end
 
   it 'is invalid without a body' do
@@ -68,6 +92,7 @@ describe Question do
 
     Question.approved.should == [approved]
     Question.pending.should == [pending]
+    Question.rejected.should == [rejected]
   end
 
   it 'has a status text' do
@@ -132,7 +157,7 @@ describe Question do
     Question.unanswered.should == [q2]
   end
 
-  it 'doesnt allow answers from other representatives' do
+  it "doesn't allow answers from other representatives" do
     q = Question.make! status: 'approved'
     r = Representative.make! :confirmed
     a = Answer.make! representative: r
