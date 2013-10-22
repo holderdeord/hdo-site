@@ -1,0 +1,16 @@
+<div class="row-fluid">
+  <%= twitter_bootstrap_form_for [:admin, @government] do |gov| %>
+    <%= gov.inputs @government.name do %>
+      <%= gov.text_field :name, class: 'required' %>
+      <%= gov.date_select :start_date, {}, {start_year: 2000}, class: 'input input-small' %>
+      <%= gov.date_select :end_date,   {}, {start_year: 2000}, class: 'input input-small' %>
+    <% end %>
+
+    <br>
+
+    <div class="actions">
+      <%= gov.submit class: 'btn btn-primary'  %>
+      <%= link_to t('app.back'), admin_governments_path, :class => 'btn' %>
+    </div>
+  <% end %>
+</div>

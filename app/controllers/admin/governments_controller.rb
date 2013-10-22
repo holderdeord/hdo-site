@@ -48,8 +48,6 @@ class Admin::GovernmentsController < AdminController
     else
       redirect_to admin_governments_path, alert: t('app.errors.unauthorized')
     end
-
-    binding.pry
   end
 
   def destroy

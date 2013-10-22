@@ -15,15 +15,16 @@ nb:
       email:
         invalid: 'Ugyldig epostaddresse.'
   date:
-     day_names: [Søndag, Mandag, Tirsdag, Onsdag, Torsdag, Fredag, Lørdag]
-     abbr_day_names: [Søn, Man, Tir, Ons, Tor, Fre, Lør]
-      # Don't forget the nil at the beginning; there's no such thing as a 0th month
-     month_names: [~, januar, februar, mars, april, mai, juni, juli, august, september, oktober, november, desember]
-     formats:
-       default: "%Y-%m-%d"
-       short: "%Y-%m-%d"
-       text: "%e. %B %Y"
-       month_year: "%B %Y"
+    day_names: [Søndag, Mandag, Tirsdag, Onsdag, Torsdag, Fredag, Lørdag]
+    abbr_day_names: [Søn, Man, Tir, Ons, Tor, Fre, Lør]
+     # Don't forget the nil at the beginning; there's no such thing as a 0th month
+    month_names: [~, januar, februar, mars, april, mai, juni, juli, august, september, oktober, november, desember]
+    formats:
+      default: "%Y-%m-%d"
+      short: "%Y-%m-%d"
+      text: "%e. %B %Y"
+      month_year: "%B %Y"
+    order: [ !ruby/symbol day, !ruby/symbol month, !ruby/symbol year ]
   datetime:
     distance_in_words:
       half_a_minute: "et halvt minutt"
@@ -154,6 +155,9 @@ nb:
       position:
         one: 'Posisjon'
         other: 'Posisjoner'
+      government:
+        one: Regjering
+        other: Regjeringer
     attributes:
       representative:
         name: "Navn"
@@ -296,6 +300,10 @@ nb:
         title: Tittel
         priority: Prioritet
         parliament_period: Stortingsperiode
+      government:
+        name: Navn
+        start_date: Startdato
+        end_date: Sluttdato
   will_paginate:
     previous_label: "&#8592; Forrige"
     next_label: "Neste &#8594;"
