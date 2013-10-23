@@ -2,7 +2,7 @@
 
 <% if GovernmentPolicy.new(current_user, nil).edit? %>
   <p class="pull-right">
-    <%= link_to Government.human_attribute_name(:new), new_admin_government_path, class: 'btn btn-primary' %>
+    <%= link_to 'Ny regjering', new_admin_government_path, class: 'btn btn-primary' %>
   </p>
 <% end %>
 
@@ -20,8 +20,8 @@
     <% @governments.each do |government| %>
       <tr class="<%= 'current' if government.current? %>" >
         <td><%= government.name %></td>
-        <td><%= l government.start_date, format: :text %></td>
-        <td><%= l government.end_date, format: :text %></td>
+        <td><%= l(government.start_date, format: :text) %></td>
+        <td><%= l(government.end_date, format: :text) if government.end_date %></td>
         <td>
           <% if policy(government).edit? %>
             <p class="pull-right">

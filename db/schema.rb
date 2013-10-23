@@ -97,16 +97,6 @@ ActiveRecord::Schema.define(:version => 20131022170700) do
 
   add_index "email_events", ["id", "email_eventable_type", "email_eventable_id"], :name => "email_event_index", :unique => true
 
-  create_table "governing_periods", :force => true do |t|
-    t.date     "start_date"
-    t.date     "end_date"
-    t.integer  "party_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-  end
-
-  add_index "governing_periods", ["party_id"], :name => "index_governing_periods_on_party_id"
-
   create_table "governments", :force => true do |t|
     t.string   "name"
     t.date     "start_date"
