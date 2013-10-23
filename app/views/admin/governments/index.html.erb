@@ -12,6 +12,7 @@
       <th><%= Government.human_attribute_name :name %></th>
       <th><%= Government.human_attribute_name :start_date %></th>
       <th><%= Government.human_attribute_name :end_date %></th>
+      <th><%= Government.human_attribute_name :parties %></th>
       <th></th>
     </tr>
   </thead>
@@ -22,6 +23,8 @@
         <td><%= government.name %></td>
         <td><%= l(government.start_date, format: :text) %></td>
         <td><%= l(government.end_date, format: :text) if government.end_date %></td>
+        <td><%= government.parties.map(&:external_id).to_sentence %></td>
+
         <td>
           <% if policy(government).edit? %>
             <p class="pull-right">

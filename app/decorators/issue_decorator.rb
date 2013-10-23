@@ -59,7 +59,8 @@ class IssueDecorator < Draper::Decorator
   end
 
   def party_groups
-    government = Party.in_government.order(:name).to_a
+    # TODO: hardcoded period / gov
+    government = Government.for_date(Date.new(2009, 10, 1)).first.parties.order(:name).to_a
     opposition = Party.order(:name).to_a - government
 
     gov = IssuePartyDecorator.decorate_collection government, context: self

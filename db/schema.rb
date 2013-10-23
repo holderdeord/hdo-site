@@ -105,6 +105,13 @@ ActiveRecord::Schema.define(:version => 20131022170700) do
     t.datetime "updated_at", :null => false
   end
 
+  create_table "governments_parties", :id => false, :force => true do |t|
+    t.integer "party_id"
+    t.integer "government_id"
+  end
+
+  add_index "governments_parties", ["party_id", "government_id"], :name => "index_governments_parties_on_party_id_and_government_id"
+
   create_table "issues", :force => true do |t|
     t.string   "title"
     t.text     "description"

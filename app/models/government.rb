@@ -1,7 +1,9 @@
 class Government < ActiveRecord::Base
   include Hdo::Model::HasDateRange
 
-  attr_accessible :name, :start_date, :end_date
+  has_and_belongs_to_many :parties, order: :name
+
+  attr_accessible :name, :start_date, :end_date, :party_ids
 
   validates :name, presence: true, uniqueness: true
   validate :does_not_intersect

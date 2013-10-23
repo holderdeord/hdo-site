@@ -45,6 +45,8 @@ describe IssuesController do
     render_views
 
     it "should render :show" do
+      Government.make!(start_date: Date.new(2009, 10, 1), end_date: Date.new(2013, 10, 1))
+
       get :show, id: Issue.make!(status: 'published', published_at: Time.now)
       response.should have_rendered(:show)
     end

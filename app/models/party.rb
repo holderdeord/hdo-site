@@ -13,11 +13,11 @@ class Party < ActiveRecord::Base
     }
   }
 
-  has_many :governing_periods,  dependent: :destroy, order: :start_date
   has_many :party_memberships,  dependent: :destroy
   has_many :representatives,    through:   :party_memberships
 
   has_and_belongs_to_many :promises, uniq: true
+  has_and_belongs_to_many :governments
 
   validates :name,        presence: true, uniqueness: true
   validates :external_id, presence: true, uniqueness: true
@@ -27,14 +27,13 @@ class Party < ActiveRecord::Base
   attr_accessible :name
 
   def self.in_government
-    today = Date.today
-
-    joins(:governing_periods).
-      where("start_date <= ? AND (end_date >= ? or end_date IS NULL)", today, today)
+    gov = Government.current.first
+    gov ? gov.parties : []
   end
 
   def in_government?(date = Date.today)
-    governing_periods.for_date(date).any?
+    gov = Government.for_date(date).first
+    gov && gov.parties.include?(self)
   end
 
   def current_representatives

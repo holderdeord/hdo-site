@@ -154,14 +154,6 @@ end
 Government.blueprint :full do
 end
 
-GoverningPeriod.blueprint do
-  party { Party.make! }
-  start_date { Date.today }
-end
-
-GoverningPeriod.blueprint :full do
-end
-
 Committee.blueprint do
   external_id { sn.to_s }
   name { "committee-#{sn}" }

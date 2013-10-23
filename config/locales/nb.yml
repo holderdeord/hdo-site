@@ -304,6 +304,7 @@ nb:
         name: Navn
         start_date: Startdato
         end_date: Sluttdato
+        parties: Partier
   will_paginate:
     previous_label: "&#8592; Forrige"
     next_label: "Neste &#8594;"

@@ -4,9 +4,8 @@
       <%= gov.text_field :name, class: 'required' %>
       <%= gov.date_select :start_date, {}, {start_year: 2000}, class: 'input input-small' %>
       <%= gov.date_select :end_date,   {}, {start_year: 2000, include_blank: true}, class: 'input input-small' %>
+      <%= gov.collection_select :party_ids, 'Partier', Party.order(:name), :id, :name, {}, multiple: true, data: {placeholder: 'Velg partier'} %>
     <% end %>
-
-    <br>
 
     <div class="actions">
       <%= gov.submit class: 'btn btn-primary'  %>

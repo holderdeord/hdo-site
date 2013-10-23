@@ -105,17 +105,6 @@ module Hdo
         record.name = party.name
         record.save!
 
-        if party.governing_periods
-          to_keep = Array(party.governing_periods).map do |gp|
-            attrs = {start_date: gp.start_date, end_date: gp.end_date }
-            record.governing_periods.where(attrs).first || record.governing_periods.create!(attrs)
-          end
-
-          (record.governing_periods - to_keep).each { |e| e.destroy }
-
-          record.save!
-        end
-
         record
       end
 
