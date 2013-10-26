@@ -15,6 +15,7 @@ set :scm,             :git
 set :repository,      'git://github.com/holderdeord/hdo-site'
 set :branch,          ENV['BRANCH'] || 'master'
 set :deploy_to,       "/webapps/#{application}"
+set :default_shell,   '/bin/bash -l'
 set :use_sudo,        false
 set :deploy_via,      :remote_cache
 set :shared_children, shared_children + %w[public/uploads tmp/downloads]
