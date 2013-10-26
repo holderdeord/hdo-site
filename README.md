@@ -11,7 +11,7 @@ Questions? Join us on [#holderdeord on irc.freenode.net](irc://irc.freenode.net/
 
 ## ... on Debian/Ubuntu
 
-Install package dependencies and set up Ruby 1.9.3 with RVM.
+Install package dependencies and set up Ruby 2.0.0 with RVM.
 
 
     $ sudo apt-get install \
@@ -42,7 +42,7 @@ Install package dependencies and set up Ruby 1.9.3 with RVM.
 
     $ curl -L get.rvm.io | bash -s stable --ruby
     $ ruby -v
-    ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
+    ruby 2.0.0p247 (2013-06-27 revision 41674) [x86_64-linux]
 
 PS. For RVM to work properly with gnome-terminal, you have to tick the "Run command as login shell" checkbox on the "Title and Command" tab inside of gnome-terminal's Settings page.
 
@@ -70,7 +70,7 @@ Then restart the database:
 
 You'll need [XCode](https://developer.apple.com/xcode/) installed—including the Command Line Tools.
 
-Install Ruby 1.9.3 through [RVM](http://rvm.io/):
+Since 10.9, the default Ruby on OS X is 2.0. If you're using an earlier version, install Ruby 2.0.0 through [RVM](http://rvm.io/):
 
     $ curl -L https://get.rvm.io | bash -s stable --ruby
 
