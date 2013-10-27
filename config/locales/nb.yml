@@ -19,6 +19,7 @@ nb:
     abbr_day_names: [Søn, Man, Tir, Ons, Tor, Fre, Lør]
      # Don't forget the nil at the beginning; there's no such thing as a 0th month
     month_names: [~, januar, februar, mars, april, mai, juni, juli, august, september, oktober, november, desember]
+    abbr_month_names: [~, jan, feb, mar, apr, mai, jun, jul, aug, sep, okt, nov, des]
     formats:
       default: "%Y-%m-%d"
       short: "%Y-%m-%d"

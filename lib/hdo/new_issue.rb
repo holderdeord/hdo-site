@@ -88,8 +88,12 @@ module Hdo
         @connections = connections
       end
 
-      def date
-        I18n.l @date, format: :text
+      def day
+        @date.day
+      end
+
+      def month
+        I18n.l @date, format: '%b'
       end
 
       def raw_date

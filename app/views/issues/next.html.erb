@@ -70,10 +70,8 @@
         <% period.days.each do |day| %>
           <div class="row-fluid timeline-entry">
             <div class="date">
-              <div class="day">18</div>
-              <div class="month">des</div>
-              <!-- 3 LETTERS ONLY, USE <time> AS DESIRED -->
-              <%# day.date %>
+              <div class="day"><%= day.day %></div>
+              <div class="month"><%= day.month %></div>
             </div>
 
             <% day.votes.each do |vote| %>
