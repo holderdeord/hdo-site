@@ -146,12 +146,12 @@ Proposition.blueprint do
   description { "proposition-description-#{sn}" }
 end
 
-GoverningPeriod.blueprint do
-  party { Party.make! }
+Government.blueprint do
+  name { "government-#{sn}" }
   start_date { Date.today }
 end
 
-GoverningPeriod.blueprint :full do
+Government.blueprint :full do
 end
 
 Committee.blueprint do

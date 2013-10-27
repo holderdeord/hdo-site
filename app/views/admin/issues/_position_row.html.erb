@@ -2,7 +2,7 @@
   <div class="span4">
     <h5><%= Position.human_attribute_name :parties %></h5>
     <%= select_tag "positions[#{position.id}][parties]",
-                   party_options(selected: position.parties.map(&:id)),
+                   party_options(selected: position.party_ids),
                    multiple: true, data: { placeholder: 'Velg partier' },
                    id: "position-#{position.id}-parties",
                    class: 'position-parties' %>

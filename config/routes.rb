@@ -19,6 +19,7 @@ Hdo::Application.routes.draw do
     end
 
     resources :users
+    resources :governments, except: :show
 
     resources :representatives, only: [:index, :edit, :update] do
       get 'activate'       => 'representatives#activate',       as: :activate

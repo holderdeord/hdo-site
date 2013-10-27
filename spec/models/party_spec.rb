@@ -16,22 +16,10 @@ describe Party do
 
   it "knows if it is in government" do
     p = Party.make!
-    p.governing_periods.make! start_date: Date.yesterday, party: p
+    Government.make!(:parties => [p])
 
     p.should be_in_government
   end
-
-  it 'destroys dependent governing periods when emptied' do
-    p = Party.make!
-    gp = p.governing_periods.make! start_date: Date.yesterday, party: p
-
-    p.governing_periods = []
-
-    expect {
-      gp.reload
-    }.to raise_error(ActiveRecord::RecordNotFound)
-  end
-
 
   it 'is invalid without an external_id' do
     Party.make(external_id: nil).should be_invalid

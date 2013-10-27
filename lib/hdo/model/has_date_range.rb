@@ -19,12 +19,17 @@ module Hdo
       end
 
       def intersects?(other)
-        if start_date == other.start_date
+        this_start_date  = start_date.to_date
+        this_end_date    = end_date.try :to_date
+        other_start_date = other.start_date.to_date
+        other_end_date   = other.end_date.try :to_date
+
+        if this_start_date == other_start_date
           true
-        elsif start_date > other.start_date
-          other.end_date.nil? || start_date <= other.end_date
+        elsif this_start_date > other_start_date
+          other_end_date.nil? || this_start_date <= other_end_date
         else
-          end_date.nil? || other.start_date <= end_date
+          this_end_date.nil? || other_start_date <= this_end_date
         end
       end
 

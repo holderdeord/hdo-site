@@ -27,11 +27,6 @@ module Hdo
 
           party.external_id.should == xparty.external_id
           party.name.should == xparty.name
-
-          gp = party.governing_periods.last
-          gp.should be_kind_of(GoverningPeriod)
-          gp.start_date.should == xparty.governing_periods.last.start_date
-          gp.end_date.should == xparty.governing_periods.last.end_date
         end
 
         it 'fails if the party is invalid' do
@@ -55,12 +50,6 @@ module Hdo
           cat.name.should == 'changed-name'
         end
 
-        it 'overwrites existing governing periods' do
-          persister.import_party StortingImporter::Party.example
-          persister.import_party StortingImporter::Party.example('governing_periods' => [])
-
-          GoverningPeriod.count.should == 0
-        end
       end
     end
   end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131012172456) do
+ActiveRecord::Schema.define(:version => 20131022170700) do
 
   create_table "answers", :force => true do |t|
     t.text     "body",                                     :null => false
@@ -97,15 +97,20 @@ ActiveRecord::Schema.define(:version => 20131012172456) do
 
   add_index "email_events", ["id", "email_eventable_type", "email_eventable_id"], :name => "email_event_index", :unique => true
 
-  create_table "governing_periods", :force => true do |t|
+  create_table "governments", :force => true do |t|
+    t.string   "name"
     t.date     "start_date"
     t.date     "end_date"
-    t.integer  "party_id"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
 
-  add_index "governing_periods", ["party_id"], :name => "index_governing_periods_on_party_id"
+  create_table "governments_parties", :id => false, :force => true do |t|
+    t.integer "party_id"
+    t.integer "government_id"
+  end
+
+  add_index "governments_parties", ["party_id", "government_id"], :name => "index_governments_parties_on_party_id_and_government_id"
 
   create_table "issues", :force => true do |t|
     t.string   "title"
