@@ -1,19 +1,44 @@
-<%= twitter_bootstrap_form_for [:admin, @user] do |user| %>
-  <%= user.inputs @user.name, class: 'sign_up' do %>
+<%= form_for [:admin, @user] do |user| %>
+  <fieldset>
+    <legend><%= @user.name %></legend>
+
+    <%= user.label :name %>
     <%= user.text_field :name, class: 'required' %>
+
+    <%= user.label :email %>
     <%= user.email_field :email, placeholder: 'user@holderdeord.no' %>
+
+    <%= user.label :password %>
     <%= user.password_field :password %>
+
+    <%= user.label :password_confirmation %>
     <%= user.password_field :password_confirmation %>
+
+    <%= user.label :title %>
     <%= user.text_field :title %>
+
+    <%= user.label :description %>
     <%= user.text_area :description, {rows: 5} %>
 
     <ul class="unstyled">
-      <li><%= user.check_box :active, User.human_attribute_name(:active) %></li>
-      <li><%= user.check_box :board, User.human_attribute_name(:board) %></li>
+      <li>
+        <label>
+          <%= user.check_box :active %>
+          <%= User.human_attribute_name :active %>
+        </label>
+      </li>
+
+      <li>
+        <label>
+          <%= user.check_box :board %>
+          <%= User.human_attribute_name :board  %>
+        </label>
+      </li>
     </ul>
 
-    <%= user.select :role, {}, User::ROLES %>
-  <% end %>
+    <%= user.label :role %>
+    <%= user.select :role, User::ROLES %>
+  </fieldset>
 
   <br>
 

@@ -324,9 +324,6 @@ GEM
     treetop (1.4.15)
       polyglot
       polyglot (>= 0.3.1)
-    twitter_bootstrap_form_for (1.0.5)
-      actionpack (~> 3)
-      railties (~> 3)
     typhoeus (0.6.5)
       ethon (~> 0.6.1)
     tzinfo (0.3.38)
@@ -404,7 +401,6 @@ DEPENDENCIES
   therubyracer
   thin
   tire
-  twitter_bootstrap_form_for (~> 1.0.5)
   typhoeus
   uglifier (>= 1.0.3)
   unicode_utils

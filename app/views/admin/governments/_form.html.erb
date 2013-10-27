@@ -1,15 +1,23 @@
 <div class="row-fluid">
-  <%= twitter_bootstrap_form_for [:admin, @government] do |gov| %>
-    <%= gov.inputs @government.name do %>
+  <%= form_for [:admin, @government] do |gov| %>
+    <fieldset>
+      <legend><%= @government.name %></legend>
+      <%= gov.label :name %>
       <%= gov.text_field :name, class: 'required' %>
-      <%= gov.date_select :start_date, {}, {start_year: 2000}, class: 'input input-small' %>
-      <%= gov.date_select :end_date,   {}, {start_year: 2000, include_blank: true}, class: 'input input-small' %>
-      <%= gov.collection_select :party_ids, 'Partier', Party.order(:name), :id, :name, {}, multiple: true, data: {placeholder: 'Velg partier'} %>
-    <% end %>
+
+      <%= gov.label :start_date %>
+      <%= gov.date_select :start_date, {start_year: 2000}, class: 'input input-small' %>
+
+      <%= gov.label :end_date %>
+      <%= gov.date_select :end_date,   {start_year: 2000, include_blank: true}, class: 'input input-small' %>
+
+      <%= gov.label :parties %>
+      <%= gov.collection_select :party_ids, Party.order(:name), :id, :name, {}, multiple: true, data: {placeholder: 'Velg partier'} %>
+    </fieldset>
 
     <div class="actions">
       <%= gov.submit class: 'btn btn-primary'  %>
-      <%= link_to t('app.back'), admin_governments_path, :class => 'btn' %>
+      <%= link_to t('app.back'), admin_governments_path, class: 'btn' %>
     </div>
   <% end %>
 </div>

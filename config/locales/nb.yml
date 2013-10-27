@@ -270,6 +270,7 @@ nb:
         published_at: Publisert
         updated_at: Oppdatert
         tag_list: Tags
+        frontpage: Forsidesak
       vote_connection:
         matches: "Støtter saken?"
         comment: "Kommentar"

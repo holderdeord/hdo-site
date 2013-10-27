@@ -1,4 +1,4 @@
-<%= form.inputs do %>
+<fieldset>
   <%= hidden_field_tag 'issue[category_ids][]' %>
 
   <div class="well">
@@ -12,18 +12,27 @@
       </div>
 
       <div class="span3">
-        Status
+        <strong>Status</strong>
         <ul class="unstyled">
           <% Issue::STATUSES.each do |status| %>
-            <%= form.radio_button :status, t("app.issues.status.#{status}"), status,
-                                  checked: @issue.status == status %>
+            <li>
+              <label>
+                <%= form.radio_button :status, status, checked: @issue.status == status %>
+                <span><%= t("app.issues.status.#{status}") %></span>
+              </label>
+            </li>
           <% end %>
         </ul>
       </div>
 
       <div class="span3">
         <ul class="unstyled">
-          <%= form.check_box :frontpage, "Forsidesak" %>
+          <li>
+            <label>
+              <%= form.check_box :frontpage %>
+              <%= Issue.human_attribute_name :frontpage %>
+            </label>
+          </li>
         </ul>
       </div>
     </div>
@@ -47,7 +56,7 @@
       </div>
     </div>
   </div>
-<% end %>
+</fieldset>
 
 <h1><%= Category.model_name.human(count: 2).capitalize %></h1>
 <div class="row">

@@ -60,7 +60,6 @@ gem 'hipchat'
 gem 'jquery-rails', '>= 3.0.4'
 gem 'highcharts-rails', "~> 2.2"
 gem 'jquery-tablesorter', ">= 1.5.0"
-gem 'twitter_bootstrap_form_for', "~> 1.0.5"
 gem 'redcarpet'
 
 # authentication
