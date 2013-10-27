@@ -74,7 +74,7 @@ module Hdo
 
       def promises
         # TODO: optimize
-        @issue.promise_connections.joins(:promise => :parties).where('parties.id' => @position.parties)
+        @issue.promise_connections.joins(:promise).where('promises.promisor_id' => @position.parties)
       end
 
       def accountability
