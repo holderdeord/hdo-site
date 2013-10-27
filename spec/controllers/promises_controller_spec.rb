@@ -72,7 +72,7 @@ describe PromisesController do
       promise_in_cat_and_party       = Promise.make!(categories: [category], promisor: party)
       promise_in_cat_and_other_party = Promise.make!(categories: [category], promisor: Party.make!)
 
-      get :index, { category_id: category.id, promisor_id: party.id, promisor_type: party.class.name }
+      get :index, { category_id: category.id, promisor: [party.id, party.class.name].join(':') }
       assigns(:promises).should == [promise_in_cat_and_party]
     end
 
@@ -82,7 +82,7 @@ describe PromisesController do
       party_promise     = Promise.make!(promisor: party)
       non_party_promise = Promise.make!(promisor: Party.make!)
 
-      get :index, { promisor_id: party.id, promisor_type: party.class.name }
+      get :index, { promisor: [party.id, party.class.name].join(':') }
       assigns(:promises).should == [party_promise]
     end
 
@@ -94,7 +94,7 @@ describe PromisesController do
       government_promise = Promise.make!(promisor: gov)
       party_promise      = Promise.make!(promisor: party)
 
-      get :index, { promisor_id: gov.id, promisor_type: gov.class.name }
+      get :index, { promisor: [gov.id, gov.class.name].join(':') }
       assigns(:promises).should == [government_promise]
     end
 

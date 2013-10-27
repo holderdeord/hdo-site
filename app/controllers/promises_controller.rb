@@ -8,7 +8,7 @@ class PromisesController < ApplicationController
 
     @category    = @categories.find(params[:category_id]) if params[:category_id].present?
     @subcategory = Category.find(params[:subcategory_id]) if params[:subcategory_id].present?
-    @promisor    = find_promisor if params[:promisor_id].present? && params[:promisor_type].present?
+    @promisor    = find_promisor if params[:promisor].present?
     @period      = params[:period].present? ? ParliamentPeriod.find_by_external_id(params[:period]) : @parliament_periods.last
 
     if @period
@@ -66,9 +66,9 @@ class PromisesController < ApplicationController
   end
 
   def find_promisor
-    id = params[:promisor_id]
+    id, type = params[:promisor].split(':', 2)
 
-    case params[:promisor_type]
+    case type
     when 'Government'
       @governments.find id
     when 'Party'

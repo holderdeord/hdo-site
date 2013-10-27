@@ -1,15 +1,17 @@
 <!-- VISIBLE IN DESKTOP -->
-<div class="row-fluid" id="period-choices">
-  <% if @parliament_periods.size > 1 %>
-  <strong>Velg periode: </strong>
-    <% @parliament_periods.each do |pp| %>
-      <% if pp.external_id == @period.external_id %>
-        <%= link_to pp.external_id, period_filter_path_for(pp), class: "period active-period" %>
-      <% else %>
-        <%= link_to pp.external_id, period_filter_path_for(pp), class: "period" %>
+<div class="row-fluid">
+  <div class="hidden-phone">
+    <% if @parliament_periods.size > 1 %>
+      <strong>Velg periode: </strong>
+      <% @parliament_periods.each do |pp| %>
+        <% if pp.external_id == @period.external_id %>
+          <%= link_to pp.external_id, period_filter_path_for(pp), class: "period active-period" %>
+        <% else %>
+          <%= link_to pp.external_id, period_filter_path_for(pp), class: "period" %>
+        <% end %>
       <% end %>
     <% end %>
-  <% end %>
+  </div>
 
   <div class="pull-right">
     Les mer om <%= link_to 'vår løftedatabase', home_about_path(anchor: 'valglfter-fra-partiprogrammene')  %>.
@@ -67,16 +69,26 @@
 
 <div class="visible-phone">
   <%= form_tag promises_path, :id => 'MobileSearch', method: 'GET' do %>
+    <%= label_tag 'period', 'Perioder' %>
+    <%= select_tag 'period',
+                   options_for_select(@parliament_periods.map { |e| e.external_id }, selected: @period.try(:external_id)) %>
+
     <%= label_tag 'category_id', 'Kategorier' %>
-    <%= select_tag 'category_id', options_for_select(categories.map { |category| [category.human_name, category.id] }, selected: @category.try(:id)), prompt: 'Alle kategoriene' %>
+    <%= select_tag 'category_id',
+                   options_for_select(categories.map { |category| [category.human_name, category.id] }, selected: @category.try(:id)),
+                   prompt: 'Alle kategoriene' %>
 
     <% if category_with_children? %>
     <%= label_tag 'subcategory_id', 'Underkategorier' %>
-      <%= select_tag 'subcategory_id', options_for_select(@category.children.map { |subcategory| [subcategory.human_name, subcategory.id] }, selected: @subcategory.try(:id)),  prompt: "Alle underkategoriene" %>
+      <%= select_tag 'subcategory_id',
+                     options_for_select(@category.children.map { |subcategory| [subcategory.human_name, subcategory.id] }, selected: @subcategory.try(:id)),
+                     prompt: "Alle underkategoriene" %>
     <% end %>
 
-    <%= label_tag 'party_slug', 'Partier' %>
-    <%= select_tag 'party_slug', options_for_select(parties.map { |party| [party.name, party.slug] }, selected: @party.try(:slug)), prompt: "Alle partiene" %>
+    <%= label_tag 'promisor', 'Partier og regjeringer' %>
+    <%= select_tag 'promisor',
+                    options_for_select(@promisors.map { |promisor| [promisor.name, "#{promisor.id}:#{promisor.class.name}"] }, selected: (@promisor && "#{@promisor.id}:#{@promisor.class.name}")),
+                    prompt: "Alle partier" %>
 
   <% end %>
 </div>

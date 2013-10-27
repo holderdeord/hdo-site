@@ -10,13 +10,10 @@ module PromisesHelper
   def period_filter_path_for(period)
     opts = default_url_options
 
-    opts[:period] = period.external_id
-    opts[:category_id] = @category.id if @category
+    opts[:period]         = period.external_id
+    opts[:category_id]    = @category.id if @category
     opts[:subcategory_id] = @subcategory.id if @subcategory
-    if @promisor
-      opts[:promisor_id] = @promisor.id
-      opts[:promisor_type] = @promisor.class.name
-    end
+    opts[:promisor]       = [@promisor.id, @promisor.class.name].join(':') if @promisor
 
     promises_path opts
   end
@@ -25,10 +22,7 @@ module PromisesHelper
     opts = default_url_options
 
     opts[:category_id] = category.id
-    if @promisor
-      opts[:promisor_id] = @promisor.id
-      opts[:promisor_type] = @promisor.class.name
-    end
+    opts[:promisor]    = [@promisor.id, @promisor.class.name].join(':') if @promisor
 
     promises_path opts
   end
@@ -37,14 +31,9 @@ module PromisesHelper
     if @category
       opts = default_url_options
 
-
-      opts[:category_id] = @category.id
+      opts[:category_id]    = @category.id
       opts[:subcategory_id] = subcategory.id
-
-      if @promisor
-        opts[:promisor_id] = @promisor.id
-        opts[:promisor_type] = @promisor.class.name
-      end
+      opts[:promisor]       = [@promisor.id, @promisor.class.name].join(':') if @promisor
     end
 
     promises_path opts
@@ -53,9 +42,8 @@ module PromisesHelper
   def promisor_path_for(promisor)
     opts = default_url_options
 
-    opts[:promisor_id] = promisor.id
-    opts[:promisor_type] = promisor.class.name
-    opts[:category_id] = @category.id if @category
+    opts[:promisor]       = [promisor.id, promisor.class.name].join(':')
+    opts[:category_id]    = @category.id if @category
     opts[:subcategory_id] = @subcategory.id if @subcategory
 
     promises_path opts
@@ -64,10 +52,7 @@ module PromisesHelper
   def show_all_except_category
     opts = default_url_options
 
-    if @promisor
-      opts[:promisor_id] = @promisor.id
-      opts[:promisor_type] = @promisor.class.name
-    end
+    opts[:promisor] = [@promisor.id, @promisor.class.name].join(':') if @promisor
 
     promises_path opts
   end
@@ -75,7 +60,7 @@ module PromisesHelper
   def show_all_except_promisor
     opts = default_url_options
 
-    opts[:category_id] = @category.id if @category
+    opts[:category_id]    = @category.id if @category
     opts[:subcategory_id] = @subcategory.id if @subcategory
 
     promises_path opts
@@ -85,20 +70,15 @@ module PromisesHelper
     opts = default_url_options
 
     opts[:category_id] = @category.id if @category
-    if @promisor
-      opts[:promisor_id] = @promisor.id
-      opts[:promisor_type] = @promisor.class.name
-    end
+    opts[:promisor]    = [@promisor.id, @promisor.class.name].join(':') if @promisor
 
     promises_path opts
   end
 
   def show_all_promises_path
     opts = default_url_options
-    if @promisor
-      opts[:promisor_id] = @promisor.id
-      opts[:promisor_type] = @promisor.class.name
-    end
+
+    opts[:promisor] = [@promisor.id, @promisor.class.name].join(':') if @promisor
 
     promises_path opts
   end
