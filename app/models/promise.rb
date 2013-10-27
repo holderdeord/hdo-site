@@ -14,26 +14,37 @@ class Promise < ActiveRecord::Base
   }
   update_index_on_change_of :parties, has_many: true
 
-  attr_accessible :parties, :general, :categories, :source, :body, :page, :parliament_period
+  attr_accessible :promisor, :general, :categories, :source, :body, :page, :parliament_period
 
-  validates :body,        presence: true, uniqueness: {scope: :parliament_period_id}
-  validates :external_id, presence: true, uniqueness: true
-  validates :source,      presence: true
+  validates :body,              presence: true, uniqueness: {scope: :parliament_period_id}
+  validates :external_id,       presence: true, uniqueness: true
+  validates :source,            presence: true
+  validates :parliament_period, presence: true
+  validates :promisor,          presence: true
 
-  has_and_belongs_to_many :parties,    uniq: true, order: :name
   has_and_belongs_to_many :categories, uniq: true, order: :name
 
   has_many :promise_connections, dependent: :destroy
   has_many :issues, through: :promise_connections
 
   belongs_to :parliament_period
+  belongs_to :promisor, polymorphic: true
 
   validates_length_of :categories, minimum: 1
-  validates_length_of :parties,    minimum: 1
-  validates_presence_of :parliament_period
 
   def self.parliament_periods
     ParliamentPeriod.joins(:promises).uniq.order(:start_date)
+  end
+
+  def parties
+    case promisor_type
+    when 'Party'
+      [promisor]
+    when 'Government'
+      promisor.parties
+    else
+      raise "invalid promisor_type: #{promisor_type.inspect}"
+    end
   end
 
   def main_category

@@ -11,28 +11,35 @@ describe PromisesController do
     end
 
     it 'contains all promises in a period by default' do
-      promises = [promise]
+      promise_a = Promise.make!(parliament_period: ParliamentPeriod.make!(start_date: '2009-10-01'))
+      promise_b = Promise.make!(parliament_period: ParliamentPeriod.make!(start_date: '2013-10-01'))
 
-      get :index, { period: promise.parliament_period.external_id }
-      assigns(:promises).should == promises
+      get :index, { period: promise_a.parliament_period.external_id }
+      assigns(:promises).should == [promise_a]
+
+      get :index, { period: promise_b.parliament_period.external_id }
+      assigns(:promises).should == [promise_b]
     end
 
-    it 'contains all promises if period is nil' do
-      promises = [promise]
+    it 'selects the latest period if period is nil' do
+      promise_a = Promise.make!(parliament_period: ParliamentPeriod.make!(start_date: '2009-10-01'))
+      promise_b = Promise.make!(parliament_period: ParliamentPeriod.make!(start_date: '2013-10-01'))
 
       get :index, { period: nil }
-      assigns(:promises).should == promises
+      assigns(:promises).should == [promise_b]
     end
 
     it 'can filter promises by category' do
       category = Category.make!(main: true)
-      promise_with_category = Promise.make!(categories: [category])
 
-      get :index, { category_id: category.id, period: promise_with_category.parliament_period.external_id }
-      assigns(:promises).should == [promise_with_category]
+      expected_promise = Promise.make!(categories: [category])
+      other_promise = Promise.make!(categories: [Category.make!])
+
+      get :index, { category_id: category.id }
+      assigns(:promises).should == [expected_promise]
     end
 
-    it 'filters by category and includes promises in subcategories' do
+    it 'filters by category and subcategories' do
       period = ParliamentPeriod.make!
 
       category               = Category.make!(main: true)
@@ -47,29 +54,48 @@ describe PromisesController do
     end
 
     it 'can filter promises by subcategory' do
-      category = Category.make!(main: true)
-      subcategory = Category.make!(parent: category)
-      promise_in_subcategory = Promise.make!(categories: [subcategory])
+      category          = Category.make!(main: true)
+      subcategory       = Category.make!(parent: category)
+      other_subcategory = Category.make!(parent: category)
 
-      get :index, { category_id: category.id, subcategory_id: subcategory.id, period: promise_in_subcategory.parliament_period.external_id }
+      promise_in_subcategory       = Promise.make!(categories: [subcategory])
+      promise_in_other_subcategory = Promise.make!(categories: [other_subcategory])
+
+      get :index, { category_id: category.id, subcategory_id: subcategory.id }
       assigns(:promises).should == [promise_in_subcategory]
     end
 
-    it 'can filter promises by category and party' do
-      party = Party.make!
+    it 'can filter promises by category and party promisor' do
+      party    = Party.make!
       category = Category.make!(main: true)
-      promise_in_cat_and_party = Promise.make!(categories: [category], parties: [party])
 
-      get :index, { category_id: category.id, party_id: party.id, period: promise_in_cat_and_party.parliament_period.external_id }
+      promise_in_cat_and_party       = Promise.make!(categories: [category], promisor: party)
+      promise_in_cat_and_other_party = Promise.make!(categories: [category], promisor: Party.make!)
+
+      get :index, { category_id: category.id, promisor_id: party.id, promisor_type: party.class.name }
       assigns(:promises).should == [promise_in_cat_and_party]
     end
 
-    it 'can filter promises by party' do
+    it 'can filter promises by party promisor' do
       party = Party.make!
-      promise_in_party = Promise.make!(parties: [party])
 
-      get :index, { party_id: party.id, period: promise_in_party.parliament_period.external_id }
-      assigns(:promises).should == [promise_in_party]
+      party_promise     = Promise.make!(promisor: party)
+      non_party_promise = Promise.make!(promisor: Party.make!)
+
+      get :index, { promisor_id: party.id, promisor_type: party.class.name }
+      assigns(:promises).should == [party_promise]
+    end
+
+    it 'can filter promises by government promisor' do
+      party = Party.make!
+
+      gov = Government.make!(:parties => [party])
+
+      government_promise = Promise.make!(promisor: gov)
+      party_promise      = Promise.make!(promisor: party)
+
+      get :index, { promisor_id: gov.id, promisor_type: gov.class.name }
+      assigns(:promises).should == [government_promise]
     end
 
     it 'can filter promises by category and parliament period' do

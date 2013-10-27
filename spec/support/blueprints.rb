@@ -45,7 +45,7 @@ end
 
 Promise.blueprint do
   external_id { sn.to_s }
-  parties { [Party.make!] }
+  promisor { Party.make! }
   source { "PP:10" }
   body { "Løftetekst-#{sn}" }
   categories { [Category.make!] }

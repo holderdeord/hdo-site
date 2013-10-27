@@ -13,7 +13,10 @@ module PromisesHelper
     opts[:period] = period.external_id
     opts[:category_id] = @category.id if @category
     opts[:subcategory_id] = @subcategory.id if @subcategory
-    opts[:party_slug] = @party.slug if @party
+    if @promisor
+      opts[:promisor_id] = @promisor.id
+      opts[:promisor_type] = @promisor.class.name
+    end
 
     promises_path opts
   end
@@ -22,7 +25,10 @@ module PromisesHelper
     opts = default_url_options
 
     opts[:category_id] = category.id
-    opts[:party_slug] = @party.slug if @party
+    if @promisor
+      opts[:promisor_id] = @promisor.id
+      opts[:promisor_type] = @promisor.class.name
+    end
 
     promises_path opts
   end
@@ -34,16 +40,21 @@ module PromisesHelper
 
       opts[:category_id] = @category.id
       opts[:subcategory_id] = subcategory.id
-      opts[:party_slug] = @party.slug if @party
+
+      if @promisor
+        opts[:promisor_id] = @promisor.id
+        opts[:promisor_type] = @promisor.class.name
+      end
     end
 
     promises_path opts
   end
 
-  def party_path_for(party)
+  def promisor_path_for(promisor)
     opts = default_url_options
 
-    opts[:party_slug] = party.slug
+    opts[:promisor_id] = promisor.id
+    opts[:promisor_type] = promisor.class.name
     opts[:category_id] = @category.id if @category
     opts[:subcategory_id] = @subcategory.id if @subcategory
 
@@ -53,12 +64,15 @@ module PromisesHelper
   def show_all_except_category
     opts = default_url_options
 
-    opts[:party_slug] = @party.slug if @party
+    if @promisor
+      opts[:promisor_id] = @promisor.id
+      opts[:promisor_type] = @promisor.class.name
+    end
 
     promises_path opts
   end
 
-  def show_all_except_party
+  def show_all_except_promisor
     opts = default_url_options
 
     opts[:category_id] = @category.id if @category
@@ -71,14 +85,20 @@ module PromisesHelper
     opts = default_url_options
 
     opts[:category_id] = @category.id if @category
-    opts[:party_slug] = @party.slug if @party
+    if @promisor
+      opts[:promisor_id] = @promisor.id
+      opts[:promisor_type] = @promisor.class.name
+    end
 
     promises_path opts
   end
 
   def show_all_promises_path
     opts = default_url_options
-    opts[:party_slug] = @party.slug if @party
+    if @promisor
+      opts[:promisor_id] = @promisor.id
+      opts[:promisor_type] = @promisor.class.name
+    end
 
     promises_path opts
   end
@@ -103,10 +123,10 @@ module PromisesHelper
     css_class
   end
 
-  def show_party_as_selected(party)
+  def show_promisor_as_selected(promisor)
     css_class = ''
-    if @party
-      css_class = party.slug == @party.slug ? 'active' : ''
+    if @promisor
+      css_class = promisor.name == @promisor.name ? 'active' : ''
     end
 
     css_class

@@ -34,13 +34,13 @@ class WidgetsController < ApplicationController
 
     if params[:promises]
       params[:promises].each do |title, ids|
-        @promise_groups << [title, Promise.includes(:parties).find(ids.split(',')).sort_by { |p| p.parties.first.name }]
+        @promise_groups << [title, Promise.includes(:promisor).find(ids.split(',')).sort_by { |p| p.parties.first.name }]
       end
     end
   end
 
   def promises
-    promises = params[:promises] ? Promise.includes(:parties).find(params[:promises].split(',')) : []
+    promises = params[:promises] ? Promise.includes(:promisor).find(params[:promises].split(',')) : []
     periods = promises.map { |e| e.parliament_period }.uniq.sort_by { |e| e.start_date }
 
     @parliament_period_name = periods.map { |e| e.external_id }.join(', ')
@@ -85,7 +85,8 @@ class WidgetsController < ApplicationController
   def selected_issues
     ids     = params[:issues] ? params[:issues].split(',').map(&:to_i) : []
     issues  = Issue.find(ids)
-    ordered = ids.map { |id| issues.detect { |issue| issue.id == id } }
+
+    ids.map { |id| issues.detect { |issue| issue.id == id } }
   end
 
   def issues_for(entity)

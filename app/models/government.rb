@@ -1,7 +1,8 @@
 class Government < ActiveRecord::Base
   include Hdo::Model::HasDateRange
 
-  has_and_belongs_to_many :parties, order: :name
+  has_and_belongs_to_many :parties,  order: :name
+  has_many                :promises, as:    :promisor
 
   attr_accessible :name, :start_date, :end_date, :party_ids
 

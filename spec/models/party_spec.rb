@@ -33,7 +33,7 @@ describe Party do
   it 'will not add the same promise twice' do
     party = Party.make!
 
-    promise = Promise.make!(parties: [party])
+    promise = Promise.make!(promisor: party)
     party.promises.count.should == 1
 
     party.promises << promise

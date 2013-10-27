@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131022170700) do
+ActiveRecord::Schema.define(:version => 20131027111947) do
 
   create_table "answers", :force => true do |t|
     t.text     "body",                                     :null => false
@@ -199,13 +199,6 @@ ActiveRecord::Schema.define(:version => 20131022170700) do
 
   add_index "parties_positions", ["party_id", "position_id"], :name => "index_parties_positions_on_party_id_and_position_id"
 
-  create_table "parties_promises", :id => false, :force => true do |t|
-    t.integer "party_id"
-    t.integer "promise_id"
-  end
-
-  add_index "parties_promises", ["party_id", "promise_id"], :name => "index_parties_promises_on_party_id_and_promise_id"
-
   create_table "party_comments", :force => true do |t|
     t.text     "body"
     t.integer  "party_id"
@@ -257,7 +250,11 @@ ActiveRecord::Schema.define(:version => 20131022170700) do
     t.string   "external_id"
     t.integer  "page"
     t.integer  "parliament_period_id"
+    t.integer  "promisor_id"
+    t.string   "promisor_type"
   end
+
+  add_index "promises", ["promisor_id", "promisor_type"], :name => "index_promises_on_promisor_id_and_promisor_type"
 
   create_table "propositions", :force => true do |t|
     t.string   "external_id"

@@ -65,7 +65,7 @@ describe WidgetsController do
 
   describe 'GET #promises' do
     let(:parties) { [Party.make!] }
-    let(:promises) { [Promise.make!(parties: parties), Promise.make!(parties: parties)] }
+    let(:promises) { [Promise.make!(promisor: parties.first), Promise.make!(promisor: parties.first)] }
 
     it 'assigns the requested promises' do
       get :promises, promises: promises.map(&:id).join(',')

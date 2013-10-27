@@ -6,7 +6,7 @@ describe Promise, :search do
   context 'refresh on association update' do
     it 'updates the index when associated parties change' do
       party = Party.make!
-      Promise.make!(parties: [party])
+      Promise.make!(promisor: party)
       refresh_index
 
       Promise.search('*').results.first.party_names.should == party.name

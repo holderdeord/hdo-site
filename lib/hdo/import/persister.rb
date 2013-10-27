@@ -335,9 +335,9 @@ module Hdo
           return
         end
 
-        parties = promise.parties.map { |e| Party.find_by_external_id(e) }
-        if parties.compact.empty?
-          @log.error "promise #{promise.external_id}: unknown party: #{promise.parties}"
+        promisor = Party.find_by_external_id(promise.promisor) || Government.find_by_name(promise.promisor)
+        if promisor.nil?
+          @log.error "promise #{promise.external_id}: unknown party/government: #{promise.promisor}"
           return
         end
 
@@ -358,7 +358,7 @@ module Hdo
         end
 
         pr.update_attributes(
-          parties: parties,
+          promisor: promisor,
           general: promise.general?,
           categories: categories,
           source: promise.source,

@@ -9,7 +9,7 @@ module Hdo
         vote  = issue.vote_connections[0].vote
         party = vote.vote_results[0].representative.party_at(vote.time)
 
-        issue.promise_connections.create!(promise: Promise.make!(parties: [party]), status: 'related')
+        issue.promise_connections.create!(promise: Promise.make!(promisor: party), status: 'related')
 
         score = issue.accountability.score_for(party)
         key = issue.accountability.key_for(party)
@@ -42,7 +42,7 @@ module Hdo
         issue = Issue.make!
         party = Party.make!
 
-        conn = issue.promise_connections.create!(promise: Promise.make!(parties: [party]), status: 'kept')
+        conn = issue.promise_connections.create!(promise: Promise.make!(promisor: party), status: 'kept')
         AccountabilityScorer.new(issue).score_for(party).should == 100
 
         conn.update_attributes!(status: 'broken')
@@ -52,10 +52,10 @@ module Hdo
         AccountabilityScorer.new(issue).score_for(party).should == 50
 
         conn.update_attributes!(status: 'kept')
-        issue.promise_connections.create!(promise: Promise.make!(parties: [party]), status: 'broken')
+        issue.promise_connections.create!(promise: Promise.make!(promisor: party), status: 'broken')
         AccountabilityScorer.new(issue).score_for(party).should == 50
 
-        issue.promise_connections.create!(promise: Promise.make!(parties: [party]), status: 'kept')
+        issue.promise_connections.create!(promise: Promise.make!(promisor: party), status: 'kept')
         AccountabilityScorer.new(issue).score_for(party).to_i.should == 66
       end
 

@@ -48,7 +48,7 @@ class IssueDecorator < Draper::Decorator
     @promises_by_party ||= (
       result = Hash.new { |hash, key| hash[key] = [] }
 
-      model.promise_connections.includes(promise: :parties).each do |promise_connection|
+      model.promise_connections.includes(promise: :promisor).each do |promise_connection|
         promise_connection.promise.parties.each do |party|
           result[party] << promise_connection
         end

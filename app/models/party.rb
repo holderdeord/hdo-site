@@ -15,8 +15,8 @@ class Party < ActiveRecord::Base
 
   has_many :party_memberships,  dependent: :destroy
   has_many :representatives,    through:   :party_memberships
+  has_many :promises,           as:        :promisor
 
-  has_and_belongs_to_many :promises, uniq: true
   has_and_belongs_to_many :governments
 
   validates :name,        presence: true, uniqueness: true

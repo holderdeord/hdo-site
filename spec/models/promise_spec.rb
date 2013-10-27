@@ -61,29 +61,17 @@ describe Promise do
 
   it 'has party names' do
     parties = [Party.make!(name: 'A'), Party.make!(name: 'B')]
-    promise = Promise.make!(parties: parties)
+    promise = Promise.make!(promisor: Government.make!(parties: parties))
+
+    promise.parties.should == parties
 
     I18n.with_locale do
       promise.party_names.should == 'A og B'
     end
   end
 
-  it 'can add parties' do
-    pr = promise_without_parties
-
-    pr.parties << Party.make!
-    pr.parties.size.should == 1
-  end
-
-  it "won't add the same party twice" do
-    party = Party.make!
-    pr = promise_without_parties
-
-    pr.parties << party
-    pr.parties << party
-
-    pr.parties.size.should == 1
-  end
+  it 'can set a promisor party'
+  it 'can set a promisor government'
 
   it 'can add categories' do
     pr = promise_without_categories

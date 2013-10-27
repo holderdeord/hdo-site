@@ -3,7 +3,7 @@ module Hdo
 
     shared_context :persister do
       let :log do
-        Logger.new File::NULL
+        Rails.logger
       end
 
       let :persister do

@@ -9,11 +9,9 @@ module Hdo
 
         it 'should import a promise' do
           example = Hdo::StortingImporter::Promise.example
-          example.categories.each do |cat|
-            Category.make!(:name => cat)
-          end
+          example.categories.each { |c| Category.make!(name: c) }
           ParliamentPeriod.make!(external_id: '2009-2013')
-          Party.make! external_id: example.parties.first
+          Party.make! external_id: example.promisor.first
 
           persister.import_promises [example]
 
@@ -21,7 +19,7 @@ module Hdo
           promise = Promise.first
 
           promise.external_id.should == example.external_id
-          promise.parties.map(&:external_id).should == example.parties
+          promise.promisor.external_id.should == example.promisor
           promise.body.should == example.body
           promise.categories.map(&:name).should == example.categories
           promise.source.should == example.source
@@ -30,8 +28,21 @@ module Hdo
           promise.parliament_period.name.should == '2009-2013'
         end
 
-        it 'fails if the promise has no parties' do
-          promise = Hdo::StortingImporter::Promise.example('parties' => [])
+        it 'imports a government promise' do
+          ParliamentPeriod.make!(external_id: '2009-2013')
+          Government.make!(name: 'Stoltenberg II', parties: [Party.make!])
+
+          example = Hdo::StortingImporter::Promise.example('promisor' => 'Stoltenberg II')
+          example.categories.each { |c| Category.make!(name: c) }
+
+          persister.import_promises [example]
+
+          Promise.count.should == 1
+          Promise.first.promisor.should == Government.first
+        end
+
+        it 'fails if the promise has no promisor' do
+          promise = Hdo::StortingImporter::Promise.example('promisor' => nil)
 
           expect {
             persister.import_promises [promise]

@@ -133,7 +133,7 @@ module Hdo
       private
 
       def compute(issue)
-        promise_connections = issue.promise_connections.includes(promise: :parties)
+        promise_connections = issue.promise_connections.includes(promise: :promisor)
         percentages         = {}
         scores_by_party     = {}
 
