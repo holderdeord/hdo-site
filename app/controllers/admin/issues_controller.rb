@@ -122,7 +122,7 @@ class Admin::IssuesController < AdminController
   end
 
   def edit_promises
-    @promises_by_party = @issue.categories.includes(promises: [:promise_connections, :parties, :parliament_period]).
+    @promises_by_party = @issue.categories.includes(promises: [:promise_connections, :promisor, :parliament_period]).
                                            map(&:promises).compact.flatten.uniq.
                                            group_by { |e| e.short_party_names }.
                                            sort_by { |names, _| names }
