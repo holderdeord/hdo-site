@@ -19,7 +19,7 @@ class Admin::IssuesController < AdminController
     xhr_only {
       @parties             = Party.order(:name)
       @accountability      = @issue.accountability
-      @promise_connections = @issue.promise_connections.includes(promise: :parties)
+      @promise_connections = @issue.promise_connections.includes(promise: :promisor)
 
       render layout: false
     }
