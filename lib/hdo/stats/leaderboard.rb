@@ -8,7 +8,7 @@ module Hdo
 
         parties = Party.order(:name)
 
-        @government = parties.in_government
+        @government = Government.for_date(Date.new(2009, 10, 1)).first.parties
         @opposition = parties.to_a - @government
 
         @by_party = Hash.new { |hash, key| hash[key] = Hash.new(0) }
