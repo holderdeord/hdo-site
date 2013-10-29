@@ -36,13 +36,11 @@ module Hdo
     private
 
     class Period
+      delegate :name, to: :@parliament_period
+
       def initialize(parliament_period, issue)
         @parliament_period = parliament_period
         @issue             = issue
-      end
-
-      def name
-        @parliament_period.name
       end
 
       def days
@@ -54,31 +52,31 @@ module Hdo
 
       def positions
         # TODO: make this actually check period
-        @issue.positions.order(:priority).map { |pos| Position.new(@issue, pos) }
+        @issue.positions.order(:priority).map { |pos| Position.new(@issue, @parliament_period, pos) }
       end
     end
 
     class Position
       delegate :title, :description, to: :@position
 
-      def initialize(issue, pos)
-        @issue = issue
-        @position = pos
+      def initialize(issue, period, position)
+        @issue    = issue
+        @period   = period
+        @position = position
       end
 
       def parties
-        @position.parties.map { |party| PartyPosition.new(party, promises_for(party), accountability_for(party)) }
+        @position.parties.map { |party| PartyInfo.new(party, promises_for(party), accountability_for(party)) }
       end
 
       private
 
       def promises_for(party)
-        promises = @issue.promise_connections.joins(:promise).
-                      where('promises.promisor_id' => party.id).
-                      where('promises.promisor_type' => Party.name)
-
-
-        promises.sort_by { |e| e.status }
+        # TODO: make this actually check period
+        @issue.promise_connections.joins(:promise).
+                where('promises.promisor_id' => party).
+                where('promises.promisor_type' => Party.name).
+                sort_by(&:status)
       end
 
       def accountability_for(party)
@@ -86,8 +84,8 @@ module Hdo
       end
     end
 
-    class PartyPosition < Struct.new(:party, :promises, :accountability)
-      delegate :logo, :slug, to: :party
+    class PartyInfo < Struct.new(:party, :promises, :accountability)
+      delegate :logo, :slug, :name, to: :party
     end
 
     class Day

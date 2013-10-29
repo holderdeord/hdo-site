@@ -20,7 +20,7 @@
       <div class="row-fluid">
         <div class="span2">
           <% position.parties.each do |party| %>
-            <img src="<%= party.logo.versions[:medium] %>" style="max-width: 50px" class="pull-right">
+            <%= image_tag party.logo.versions[:medium], style: 'max-width: 50px', class: 'pull-right', alt: "#{party.name}s logo" %>
           <% end %>
         </div>
 
@@ -32,25 +32,29 @@
 
       <div class="row-fluid accountability">
         <div class="offset2 span10">
+
           <ul class="unstyled">
             <% position.parties.each do |party| %>
               <li>
                 <%= party.accountability %>
 
-                <a data-toggle="collapse" data-target="#<%= party.slug %>-promises" onclick="return false;" href="#" >
-                  Se løftene
-                </a>
+                <% if party.promises.any? %>
+                  <a data-toggle="collapse" data-target="#<%= [party.slug, period.name, 'promises'].join('-') %>" onclick="return false;" href="#" >
+                    Se løftene
+                  </a>
 
-                <div class="collapse promises" id="<%= party.slug %>-promises">
-                  <ul>
-                    <% party.promises.each do |p| %>
-                      <li class="promise-<%= p.status %> <%= 'muted' if p.related? %>"><%= p.promise.body %></li>
-                    <% end %>
-                  </ul>
-                </div>
+                  <div class="collapse promises" id="<%= [party.slug, period.name, 'promises'].join('-') %>">
+                    <ul>
+                      <% party.promises.each do |p| %>
+                        <li class="promise-<%= p.status %> <%= 'muted' if p.related? %>"><%= p.promise.body %></li>
+                      <% end %>
+                    </ul>
+                  </div>
+                <% end %>
               </li>
             <% end %>
           </ul>
+
         </div>
       </div>
     <% end %>
