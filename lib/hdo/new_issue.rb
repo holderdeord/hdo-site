@@ -4,12 +4,7 @@ require 'forwardable'
 
 module Hdo
   class NewIssue
-    extend Forwardable
-
-    def_delegators :@issue, :title,
-                           :description,
-                           :tags
-
+    delegate :title, :description, :tags, to: :@issue
 
     def initialize(issue)
       @issue = issue
@@ -64,22 +59,35 @@ module Hdo
     end
 
     class Position
-      extend Forwardable
-      def_delegators :@position, :title, :description, :parties
+      delegate :title, :description, to: :@position
 
       def initialize(issue, pos)
         @issue = issue
         @position = pos
       end
 
-      def promises
-        # TODO: optimize
-        @issue.promise_connections.joins(:promise).where('promises.promisor_id' => @position.parties)
+      def parties
+        @position.parties.map { |party| PartyPosition.new(party, promises_for(party), accountability_for(party)) }
       end
 
-      def accountability
-        @position.parties.map { |e| @issue.accountability.text_for(e) }
+      private
+
+      def promises_for(party)
+        promises = @issue.promise_connections.joins(:promise).
+                      where('promises.promisor_id' => party.id).
+                      where('promises.promisor_type' => Party.name)
+
+
+        promises.sort_by { |e| e.status }
       end
+
+      def accountability_for(party)
+        @issue.accountability.text_for(party)
+      end
+    end
+
+    class PartyPosition < Struct.new(:party, :promises, :accountability)
+      delegate :logo, :slug, to: :party
     end
 
     class Day
