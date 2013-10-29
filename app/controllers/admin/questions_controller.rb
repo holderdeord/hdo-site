@@ -9,17 +9,19 @@ class Admin::QuestionsController < AdminController
     :approved,
     :rejected,
     :answer_rejected,
-    :unanswered
+    :unanswered,
+    :finally_rejected
   ].freeze
 
   def index
     @questions_by_status = {
-      pending:         Question.pending.order(:created_at),
-      answer_pending:  Question.with_pending_answers.order('answers.created_at'),
-      approved:        Question.answered.where('answers.status = ?', 'approved').order('answers.created_at DESC'),
-      rejected:        Question.rejected.order('created_at DESC'),
-      answer_rejected: Question.answered.where('answers.status = ?', 'rejected').order('answers.created_at DESC'),
-      unanswered:      Question.not_ours.approved.order("created_at DESC").unanswered
+      pending:          Question.pending.order(:created_at),
+      answer_pending:   Question.with_pending_answers.order('answers.created_at'),
+      approved:         Question.answered.where('answers.status = ?', 'approved').order('answers.created_at DESC'),
+      rejected:         Question.rejected.order('created_at DESC'),
+      answer_rejected:  Question.answered.where('answers.status = ?', 'rejected').order('answers.created_at DESC'),
+      unanswered:       Question.not_ours.approved.order("created_at DESC").unanswered,
+      finally_rejected: Question.finally_rejected.order(:updated_at)
     }
 
     @active_tab = if @questions_by_status[:answer_pending].any?

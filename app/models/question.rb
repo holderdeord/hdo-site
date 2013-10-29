@@ -1,6 +1,33 @@
 class Question < ActiveRecord::Base
-  include Workflows::BaseQuestionAndAnswerWorkflow
+  include Workflow
   before_save :set_approved_timestamp
+
+  workflow_column :status
+  workflow do
+    state :pending do
+      event :approve, transitions_to: :approved
+      event :reject,  transitions_to: :rejected
+    end
+
+    state :approved do
+      event :reject, transitions_to: :rejected
+    end
+
+    state :rejected do
+      event :approve, transitions_to: :approved
+      event :finally_reject, transitions_to: :finally_rejected
+    end
+
+    state :finally_rejected do
+      event :approve, transitions_to: :approved
+    end
+
+  end
+
+  scope :approved, -> { where(status: 'approved') }
+  scope :pending,  -> { where(status: 'pending') }
+  scope :rejected, -> { where(status: 'rejected') }
+  scope :finally_rejected, -> { where(status: 'finally_rejected') }
 
   MAX_LENGTH = 1000
 

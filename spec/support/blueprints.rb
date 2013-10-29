@@ -179,6 +179,10 @@ Question.blueprint :rejected do
   status { "rejected" }
 end
 
+Question.blueprint :finally_rejected do
+  status { "finally_rejected" }
+end
+
 Answer.blueprint do
   body { "answer body" }
   representative { Representative.make! }

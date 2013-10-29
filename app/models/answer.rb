@@ -1,5 +1,25 @@
 class Answer < ActiveRecord::Base
-  include Workflows::BaseQuestionAndAnswerWorkflow
+  include Workflow
+
+  workflow_column :status
+  workflow do
+    state :pending do
+      event :approve, transitions_to: :approved
+      event :reject,  transitions_to: :rejected
+    end
+
+    state :approved do
+      event :reject, transitions_to: :rejected
+    end
+
+    state :rejected do
+      event :approve, transitions_to: :approved
+    end
+  end
+
+  scope :approved, -> { where(status: 'approved') }
+  scope :pending,  -> { where(status: 'pending') }
+  scope :rejected, -> { where(status: 'rejected') }
 
   attr_accessible :body, :representative_id, :representative, :question, :question_id, :status, :created_at
 

@@ -507,6 +507,7 @@ nb:
         answer_pending: Svar avventer kontroll
         answer_rejected: Svar avvist
         unanswered: Venter svar
+        finally_rejected: Endelig avvist
       scope:
         answered: 'Besvarte'
         unanswered: 'Ubesvarte'

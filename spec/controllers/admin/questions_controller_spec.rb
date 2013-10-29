@@ -85,6 +85,14 @@ describe Admin::QuestionsController do
 
         assigns(:questions_by_status)[:unanswered].should eq [q]
       end
+
+      it "assigns finally rejected questions" do
+        q = Question.make! :finally_rejected
+
+        get :index
+
+        assigns(:questions_by_status)[:finally_rejected].should eq [q]
+      end
     end
 
     describe "PUT edit" do

@@ -89,10 +89,12 @@ describe Question do
     pending = Question.make!(status: 'pending')
     approved = Question.make!(status: 'approved')
     rejected = Question.make!(status: 'rejected')
+    finally_rejected = Question.make!(status: 'finally_rejected')
 
     Question.approved.should == [approved]
     Question.pending.should == [pending]
     Question.rejected.should == [rejected]
+    Question.finally_rejected.should == [finally_rejected]
   end
 
   it 'has a status text' do
