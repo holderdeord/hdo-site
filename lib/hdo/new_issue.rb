@@ -1,7 +1,5 @@
 # encoding: utf-8
 
-require 'forwardable'
-
 module Hdo
   class NewIssue
     delegate :title, :description, :tags, to: :@issue
