@@ -33,8 +33,6 @@
 
       <div class="row-fluid accountability">
         <div class="offset2 span10">
-          <strong>Ordholding</strong>
-
           <ul class="unstyled">
             <% position.accountability.each do |acc| %>
               <li><%= acc %></li>
@@ -57,32 +55,33 @@
     <% end %>
   </div>
 
+<!--
+  <div class="row-fluid timeline-indicator">
+    <h3>Avstemninger <%= period.name %></h3>
+  </div>
+  -->
 
-    <div class="row-fluid">
-
-      <div class="span6"></div>
-
-      <div class="span6 timeline">
-        <div class="row-fluid timeline-indicator">
-          <h3>Avstemninger <%= period.name %></h3>
+  <div class="timeline">
+    <% period.days.each do |day| %>
+      <div class="row-fluid timeline-entry">
+        <div class="span6"></div>
+        <div class="date span6">
+          <div class="day"><%= day.day %></div>
+          <div class="month"><%= day.month %></div>
         </div>
+      </div>
 
-        <% period.days.each do |day| %>
-          <div class="row-fluid timeline-entry">
-            <div class="date">
-              <div class="day"><%= day.day %></div>
-              <div class="month"><%= day.month %></div>
-            </div>
-
-            <% day.votes.each do |vote| %>
-              <div class="row-fluid vote">
-                <p class="vote-title"><%= vote.title %></p>
-                <div class="vote-detail"><%= markdown(vote.comment).html_safe %></div>
-              </div>
-            <% end %>
-          </div>
+      <% day.votes.in_groups_of(2, false).each do |votes| %>
+      <div class="row-fluid votes">
+      <% votes.each do |vote| %>
+        <div class="span6 vote">
+          <p class="vote-title"><%= vote.title %></p>
+          <div class="vote-detail"><%= markdown(vote.comment).html_safe %></div>
+        </div>
         <% end %>
       </div>
-    </div>
+      <% end %>
+    <% end %>
+  </div>
   <% end %>
 </article>

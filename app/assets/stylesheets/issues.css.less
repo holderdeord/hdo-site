@@ -179,19 +179,9 @@ figure.valence {
 
 .issue-timeline {
   .timeline {
-    border-left: 3px solid lightgray;
-    padding-left: 40px;
     .timeline-indicator {
       position: relative;
       padding-bottom: 50px;
-      &:xafter {
-        position: absolute;
-        left: -59px;
-        top: 0;
-        height: 0;
-        width: 35px;
-        border: 1px solid lightgray;
-      }
     }
     .timeline-entry {
       position: relative;
@@ -201,9 +191,10 @@ figure.valence {
         color: white;
         text-align: center;
         line-height: 1;
-        left: -74px;
+        left: 50%;
         height: 64px;
         width: 64px;
+        margin-left: -21px;
         box-sizing: border-box;
         -moz-box-sizing: border-box;
         padding: 8px 10px 0 10px;
@@ -212,6 +203,7 @@ figure.valence {
         content: "18 des.";
         border: 5px solid white;
         font-weight: bold;
+        z-index: 100;
         background-color: gray;
         box-shadow: 0 0 0 2px lightgray, 0 0 0 20px rgba(0,0,0, 0.03);
         .day {
@@ -222,13 +214,37 @@ figure.valence {
           text-transform: uppercase;
         }
       }
+      &:after {
+       content: "";
+       display: block;
+       position: absolute;
+       top: 0;
+       left: 50%;
+       bottom: 0;
+       margin-left: -1px;
+       width: 3px;
+       background-color: lightgray;
+      }
+    }
+    .votes {
+      position: relative;
       .vote {
-        padding-bottom: 20px;
         .vote-title {
           font-size: 1.25em;
           font-weight: 200px;
           margin-bottom: 0;
         }
+      }
+      &:after {
+       content: "";
+       display: block;
+       position: absolute;
+       top: 0;
+       left: 50%;
+       bottom: 0;
+       margin-left: -1px;
+       width: 3px;
+       background-color: lightgray;
       }
     }
   }
@@ -245,7 +261,7 @@ figure.valence {
       top: 0;
       bottom: 0;
       left: 50%;
-      margin-left: 10px;
+      margin-left: 0px;
       background-color: lighten(lightgray, 10);
       z-index: -1;
     }
