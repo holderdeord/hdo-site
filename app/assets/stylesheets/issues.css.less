@@ -268,3 +268,26 @@ figure.valence {
     }
   }
 }
+
+@media (max-width: 767px) {
+  .issue-timeline {
+    .timeline {
+      .timeline-entry {
+        display: none;
+      }
+      .votes {
+        padding: 20px 0;
+        .vote {
+          padding-left: 0;
+          padding-right: 0;
+        }
+        &:before {
+          display: none;
+        }
+      }
+    }
+    .positions:after {
+      display: none;
+    }
+  }
+}
