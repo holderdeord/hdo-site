@@ -41,6 +41,9 @@ GEM
       rspec-expectations (>= 2.7.0)
     atomic (1.1.14)
     bcrypt-ruby (3.1.1)
+    better_errors (1.0.1)
+      coderay (>= 1.0.0)
+      erubis (>= 2.6.6)
     builder (3.0.4)
     bullet (4.5.0)
       uniform_notifier
@@ -349,6 +352,7 @@ PLATFORMS
 DEPENDENCIES
   acts-as-taggable-on (~> 2.4.1)
   acts_as_tree (~> 1.1)
+  better_errors
   bullet
   cache_digests
   capistrano (~> 2.13)

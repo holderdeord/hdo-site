@@ -48,6 +48,7 @@ group :development do
   gem 'quiet_assets'
   gem 'bullet'
   gem 'meta_request'
+  gem 'better_errors'
 end
 
 # deployment
