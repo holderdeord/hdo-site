@@ -179,13 +179,9 @@ figure.valence {
 
 .issue-timeline {
   .timeline {
-    .timeline-indicator {
-      position: relative;
-      padding-bottom: 50px;
-    }
     .timeline-entry {
       position: relative;
-      padding-bottom: 50px;
+      padding-top: 40px;
       .date {
         position: absolute;
         color: white;
@@ -194,11 +190,10 @@ figure.valence {
         left: 50%;
         height: 64px;
         width: 64px;
-        margin-left: -21px;
         box-sizing: border-box;
         -moz-box-sizing: border-box;
         padding: 8px 10px 0 10px;
-        margin-top: -20px;
+        margin: 10px 0 0 -30px;
         border-radius: 50%;
         content: "18 des.";
         border: 5px solid white;
@@ -214,7 +209,7 @@ figure.valence {
           text-transform: uppercase;
         }
       }
-      &:after {
+      &:before {
        content: "";
        display: block;
        position: absolute;
@@ -229,13 +224,14 @@ figure.valence {
     .votes {
       position: relative;
       .vote {
+        padding: 0 50px 10px 50px;
         .vote-title {
           font-size: 1.25em;
           font-weight: 200px;
           margin-bottom: 0;
         }
       }
-      &:after {
+      &:before {
        content: "";
        display: block;
        position: absolute;
@@ -252,7 +248,7 @@ figure.valence {
     position: relative;
     border: 0 solid #eee;
     border-width: 1px 0;
-    background-color: rgba(0,0,0,0.02);
+    background-color: #fcfcfc;
     &:after {
       content: "";
       display: block;
@@ -261,9 +257,8 @@ figure.valence {
       top: 0;
       bottom: 0;
       left: 50%;
-      margin-left: 0px;
-      background-color: lighten(lightgray, 10);
-      z-index: -1;
+      margin-left: -1px;
+      background-color: rgba(0,0,0,0.05);
     }
     .position {
       h4 {
