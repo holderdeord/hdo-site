@@ -26,29 +26,13 @@ module Hdo
         end
 
         # https://github.com/holderdeord/hdo-site/issues/138
-        it 'imports a proposition with external_id -1' do
+        it 'ignores propositions with external_id -1' do
           prop = StortingImporter::Proposition.example('external_id' => '-1')
           setup_proposition(prop)
 
           persister.import_propositions [prop]
-          Proposition.count.should == 1
-
-          imported = Proposition.first
-          imported.external_id.should be_nil
-        end
-
-        it 'ignores propositions with external_id=-1, body="" and description=""' do
-          prop = Hdo::StortingImporter::Proposition.example(
-            'external_id'  => '-1',
-            'body'        => '',
-            'description' => ''
-          )
-
-          persister.import_propositions [prop]
-
           Proposition.count.should == 0
         end
-
       end
     end
   end

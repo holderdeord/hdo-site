@@ -285,17 +285,9 @@ module Hdo
         log_import xprop
         xprop.validate!
 
-        if xprop.external_id == "-1" && xprop.description.strip.empty? && xprop.body.strip.empty?
-          # https://github.com/holderdeord/hdo-site/issues/138
-          return
-        end
+        return if xprop.external_id == "-1" # https://github.com/holderdeord/hdo-site/issues/138
 
-        prop = if xprop.external_id == "-1"
-                 Proposition.new
-               else
-                 Proposition.find_or_create_by_external_id(xprop.external_id)
-               end
-
+        prop = Proposition.find_or_create_by_external_id(xprop.external_id)
 
         attributes = {
           description: xprop.description,
