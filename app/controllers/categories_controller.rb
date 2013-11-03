@@ -8,7 +8,7 @@ class CategoriesController < ApplicationController
   def show
     @category = Category.includes(
       :parliament_issues,
-      promises: [:parliament_period, :parties, :categories]
+      promises: [:parliament_period, :promisor, :categories]
     ).find(params[:id])
 
     fresh_when @category, public: can_cache?

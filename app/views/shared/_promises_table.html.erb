@@ -17,6 +17,10 @@
           <% promise.parties.each do |party| %>
             <%= link_to party.name, party %>
           <% end %>
+
+          <% if promise.promisor.kind_of? Government %>
+            (<%= promise.promisor.name %>)
+          <% end %>
         </td>
         <td><%= promise.body %></td>
         <td><%= promise.source %></td>
