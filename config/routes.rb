@@ -161,7 +161,6 @@ Hdo::Application.routes.draw do
   get 'home/method'     => 'home#about'
   get 'home/about'      => 'home#about',    as: :home_about
   get 'home/terms'      => 'home#terms',    as: :home_terms
-  get 'home/services'   => 'home#services', as: :home_services
 
   #
   # Q & A

@@ -11,7 +11,6 @@ class HomeController < ApplicationController
                   :robots,
                   :faq,
                   :friends,
-                  :services,
                   :terms
 
   def index
