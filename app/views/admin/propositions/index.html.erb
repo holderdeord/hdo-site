@@ -1,0 +1,29 @@
+<table class="table">
+  <thead>
+    <tr>
+      <th class="wide-table-header">Dato</th>
+      <th>Status</th>
+      <th>Forslagstittel</th>
+      <th>Forslagstekst</th>
+      <th>På vegne av</th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @propositions.each do |prop| %>
+      <tr>
+        <td><%= l prop.votes.first.time, format: :text_time %></td>
+        <td>Ikke publisert</td>
+        <td>
+          <%= prop.description %>
+        </td>
+        <td>
+          <%= prop.short_body %>
+        </td>
+        <td></td>
+        <td><a class="btn btn-small">Rediger</a></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
