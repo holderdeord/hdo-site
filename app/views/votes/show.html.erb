@@ -45,9 +45,11 @@
   </div>
 </div>
 
+<h2><%= Proposition.model_name.human(count: @vote.propositions.size).capitalize %></h2>
 <% if @vote.propositions.any? %>
-  <h2><%= Proposition.model_name.human(count: @vote.propositions.size).capitalize %></h2>
   <%= render partial: "shared/propositions_table", locals: { vote: @vote } %>
+<% else %>
+  <p>Hmm, denne avstemningen har ingen forslag koblet til seg.</p>
 <% end %>
 
 <h2>stortinget.no</h2>
