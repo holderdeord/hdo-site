@@ -41,11 +41,12 @@ module Hdo
         @issue             = issue
       end
 
-      def days
+      def years
         # TODO: make this actually check period
         @issue.vote_connections.group_by { |e| e.vote.time.to_date }.
                map { |date, connections| Day.new(date, connections) }.
-               sort_by(&:raw_date).reverse
+               sort_by(&:raw_date).reverse.group_by { |e| e.year }.
+               map { |year, days| OpenStruct.new(:year => year, :days => days) }
       end
 
       def positions
@@ -94,6 +95,10 @@ module Hdo
 
       def day
         @date.day
+      end
+
+      def year
+        @date.year
       end
 
       def month

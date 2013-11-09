@@ -47,24 +47,28 @@
   </div>
 
   <div class="timeline">
-    <% period.days.each do |day| %>
-      <div class="row-fluid timeline-entry">
-        <div class="span6"></div>
-        <div class="date span6">
-          <div class="day"><%= day.day %></div>
-          <div class="month"><%= day.month %></div>
-        </div>
-      </div>
+    <% period.years.each do |year| %>
+      <h3 class="year" style="color: red"><%= year.year %></h3>
 
-      <% day.votes.in_groups_of(2, false).each do |votes| %>
-      <div class="row-fluid votes">
-      <% votes.each do |vote| %>
-        <div class="span6 vote">
-          <p class="vote-title"><%= vote.title %></p>
-          <div class="vote-detail"><%= markdown(vote.comment).html_safe %></div>
+      <% year.days.each do |day| %>
+        <div class="row-fluid timeline-entry">
+          <div class="span6"></div>
+          <div class="date span6">
+            <div class="day"><%= day.day %></div>
+            <div class="month"><%= day.month %></div>
+          </div>
         </div>
+
+        <% day.votes.in_groups_of(2, false).each do |votes| %>
+          <div class="row-fluid votes">
+          <% votes.each do |vote| %>
+            <div class="span6 vote">
+              <p class="vote-title"><%= vote.title %></p>
+              <div class="vote-detail"><%= markdown(vote.comment).html_safe %></div>
+            </div>
+            <% end %>
+          </div>
         <% end %>
-      </div>
       <% end %>
     <% end %>
   </div>
