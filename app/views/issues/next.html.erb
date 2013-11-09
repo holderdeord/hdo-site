@@ -17,32 +17,38 @@
   <div class="positions">
     <h3>Oppsummering av <%= period.name %></h3>
     <% period.positions.each do |position| %>
-      <div class="row-fluid">
+
         <h4><%= position.title %></h4>
         <p class="position-description"><%= position.description %></p>
-      </div>
 
-      <div class="row-fluid">
         <% position.parties.each do |party| %>
-          <%= image_tag party.logo.versions[:medium], style: 'max-width: 50px', alt: "#{party.name}s logo" %>
+          <div class="row-fluid">
 
-          <%= party.accountability %>
+          <div class="span1">
+            <%= image_tag party.logo.versions[:medium], style: 'max-width: 50px', alt: "#{party.name}s logo" %>
+          </div>
 
-          <% if party.promises.any? %>
-            <a data-toggle="collapse" data-target="#<%= [party.slug, period.name, 'promises'].join('-') %>" onclick="return false;" href="#" >
-              Se løftene
-            </a>
+          <div class="span10">
+            <%= party.accountability %>
 
-            <div class="collapse promises" id="<%= [party.slug, period.name, 'promises'].join('-') %>">
-              <ul>
-                <% party.promises.each do |p| %>
-                  <li class="promise-<%= p.status %> <%= 'muted' if p.related? %>"><%= p.promise.body %></li>
-                <% end %>
-              </ul>
-            </div>
-          <% end %>
-        <% end %>
-      </div>
+            <% if party.promises.any? %>
+              <a data-toggle="collapse" data-target="#<%= [party.slug, period.name, 'promises'].join('-') %>" onclick="return false;" href="#" >
+                Se løftene
+              </a>
+
+              <div class="collapse promises" id="<%= [party.slug, period.name, 'promises'].join('-') %>">
+                <ul>
+                  <% party.promises.each do |p| %>
+                    <li class="promise-<%= p.status %> <%= 'muted' if p.related? %>"><%= p.promise.body %></li>
+                  <% end %>
+                </ul>
+              </div>
+            <% end %>
+          </div>
+
+        </div>
+      <% end %>
+
     <% end %>
   </div>
 
