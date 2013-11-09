@@ -48,7 +48,7 @@
 
   <div class="timeline">
     <% period.years.each do |year| %>
-      <h3 class="year" style="color: red"><%= year.year %></h3>
+      <div class="yearmarker"><%= year.year %></div>
 
       <% year.days.each do |day| %>
         <div class="row-fluid timeline-entry">
