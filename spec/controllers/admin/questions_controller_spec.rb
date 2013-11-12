@@ -207,9 +207,11 @@ describe Admin::QuestionsController do
 
         put :update, id: question, question: { answer: {  'created_at(3i)' => 1,
                                                           'created_at(2i)' => 2,
-                                                          'created_at(1i)' => 2003 } }
+                                                          'created_at(1i)' => 2003,
+                                                          'created_at(4i)' => 18,
+                                                          'created_at(5i)' => 00 } }
 
-        question.reload.answer.created_at.should eq '2003-2-1'
+        question.reload.answer.created_at.should eq '2003-2-1 18:00'
       end
     end
 

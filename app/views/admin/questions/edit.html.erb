@@ -67,14 +67,11 @@
     </h3>
 
     <div class="row-fluid">
-      <% if @answer.nil? %>
-        Ingen svar foreløπig.
-        <div class="row-fluid"><%= link_to 'Opprett et svar, da.', create_answer_admin_question_path(@question), class: 'btn btn-primary' %></div>
-      <% else %>
+      <% if @answer %>
         <dl class="span6">
           <%= f.fields_for :answer do |b| %>
             <dt><%= Answer.human_attribute_name :created_at %></dt>
-            <dd><%= b.date_select :created_at, { order: [:day, :month, :year], use_month_numbers: true, default: @answer.created_at }, { class: 'date-select' } %></dd>
+            <dd><%= b.datetime_select :created_at, { order: [:day, :month, :year], use_month_numbers: true, default: @answer.created_at }, { class: 'date-select' } %></dd>
 
             <dt><%= Answer.human_attribute_name :body %></dt>
             <dd class="well">
@@ -88,6 +85,9 @@
           <dt><%= Question.human_attribute_name :status %></dt>
           <dd><%= select_tag 'question[answer][status]', answer_status_options %></dd>
         </dl>
+      <% else %>
+        Ingen svar foreløπig.
+        <div class="row-fluid"><%= link_to 'Opprett et svar, da.', create_answer_admin_question_path(@question), class: 'btn btn-primary' %></div>
       <% end %>
     </div>
 
