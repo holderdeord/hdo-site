@@ -15,20 +15,28 @@
 
   <% @issue.periods.each do |period| %>
   <div class="positions">
-    <h3>Det store bildet <%= period.name %></h3>
+    <div class="row-fluid">
+      <div class="span8 offset2">
+        <h3>Det store bildet <%= period.name %></h3>
+        </div>
+      </div>
     <% period.positions.each do |position| %>
 
-        <h4><%= position.title %></h4>
-        <p class="position-description"><%= position.description %></p>
+        <div class="row-fluid">
+          <div class="span9 offset2">
+            <h4><%= position.title %></h4>
+            <p class="position-description"><%= position.description %>.</p>
+          </div>
+        </div>
 
         <% position.parties.each do |party| %>
           <div class="row-fluid">
 
-          <div class="span1">
-            <%= image_tag party.logo.versions[:medium], style: 'max-width: 50px', alt: "#{party.name}s logo" %>
+          <div class="span1 offset1">
+            <%= image_tag party.logo.versions[:medium], alt: "#{party.name}s logo" %>
           </div>
 
-          <div class="span10">
+          <div class="span9">
             <%= party.accountability %>
 
             <% if party.promises.any? %>
