@@ -6,8 +6,8 @@ module Hdo
 
       it 'does not consider only related promises as unknown' do
         issue = Issue.make
-        vote  = issue.vote_connections[0].vote
-        party = vote.vote_results[0].representative.party_at(vote.time)
+        vote  = issue.proposition_connections.first.vote
+        party = vote.vote_results.first.representative.party_at(vote.time)
 
         issue.promise_connections.create!(promise: Promise.make!(promisor: party), status: 'related')
 
