@@ -46,16 +46,16 @@ class Issue < ActiveRecord::Base
   belongs_to :editor, class_name: 'User'
 
   has_many :party_comments, dependent: :destroy
-  has_many :vote_connections, dependent: :destroy
+  has_many :proposition_connections, dependent: :destroy
   has_many :promise_connections, dependent: :destroy
   has_many :positions, dependent: :destroy, order: :priority
 
-  has_many :votes,    through: :vote_connections,    order: :time
+  has_many :votes,    through: :promise_connections, order: :time
   has_many :promises, through: :promise_connections
+  has_many :propositions, through: :proposition_connections, order: :updated_at
 
   friendly_id :title, use: :slugged
 
-  scope :vote_ordered, -> { includes(:votes).order('votes.time DESC') }
   scope :published,    -> { where(status: 'published') }
   scope :latest,       ->(limit) { order(:updated_at).reverse_order.limit(limit) }
   scope :random,       -> { order("random()") }
@@ -119,10 +119,6 @@ class Issue < ActiveRecord::Base
     next_issue = issues[current_index + 1] if current_index < issues.size
 
     [prev_issue, next_issue]
-  end
-
-  def connection_for(vote)
-    vote_connections.where(:vote_id => vote.id).first
   end
 
   def position_for(party)

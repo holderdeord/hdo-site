@@ -288,7 +288,7 @@ describe Admin::IssuesController do
     end
 
     it 'sets last_updated_by when vote connections are removed' do
-      connection = VoteConnection.create(:vote => Vote.make!, comment: 'hello', title: 'world')
+      connection = PropositionConnection.create(:vote => Vote.make!, comment: 'hello', title: 'world')
       issue.vote_connections = [connection]
 
       votes = votes_params(issue.vote_connections)
@@ -333,7 +333,7 @@ describe Admin::IssuesController do
     end
 
     it 'sets last_updated_by when vote connections are updated' do
-      connection = VoteConnection.create(:vote => Vote.make!, comment: 'hello', title: 'world')
+      connection = PropositionConnection.create(:vote => Vote.make!, comment: 'hello', title: 'world')
       issue.vote_connections = [connection]
 
       votes = votes_params(issue.vote_connections)
@@ -361,7 +361,7 @@ describe Admin::IssuesController do
       issue.last_updated_by = other_user = User.make!
       issue.save!
 
-      vote_connection = VoteConnection.create(comment: 'foo', title: 'bar', vote: Vote.make!)
+      vote_connection = PropositionConnection.create(comment: 'foo', title: 'bar', vote: Vote.make!)
       issue.vote_connections = [vote_connection]
 
       put :update, votes: votes_params(issue.vote_connections), id: issue

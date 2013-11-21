@@ -37,7 +37,7 @@ namespace :graphite do
 
     g.add 'hdo.count.promises.total',             Promise.count
     g.add 'hdo.count.promises.connected',         PromiseConnection.includes(:issue).where("issues.status" => "published").select(:promise_id).count
-    g.add 'hdo.count.votes.connected',            VoteConnection.includes(:issue).where("issues.status" => "published").select(:vote_id).count
+    g.add 'hdo.count.votes.connected',            PropositionConnection.includes(:issue).where("issues.status" => "published").select(:vote_id).count
 
     g.add 'hdo.count.representatives.opted_out',  Representative.opted_out.count
     g.add 'hdo.count.representatives.registered', Representative.registered.count

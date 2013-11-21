@@ -12,7 +12,7 @@
 
     <div class="span4">
       <label>
-        <strong><%= VoteConnection.human_attribute_name :title %></strong>
+        <strong><%= PropositionConnection.human_attribute_name :title %></strong>
         <%= text_area_tag "votes[#{vote.id}][title]", connection && connection.title, class: 'span12' %>
       </label>
     </div>
@@ -25,7 +25,7 @@
 
 
       <label>
-        <strong><%= VoteConnection.human_attribute_name :proposition_type %></strong>
+        <strong><%= PropositionConnection.human_attribute_name :proposition_type %></strong>
         <p><%= select_tag "votes[#{vote.id}][proposition_type]", proposition_type_options_for(connection) %></p>
       </label>
 
@@ -45,7 +45,7 @@
   <div class="row-fluid">
     <div data-wmd-editor="<%= vote.id %>">
       <div class="span6">
-        <strong><%= VoteConnection.human_attribute_name :comment %></strong>
+        <strong><%= PropositionConnection.human_attribute_name :comment %></strong>
         <div id="wmd-button-bar-<%= vote.id %>"></div>
         <%= text_area_tag "votes[#{vote.id}][comment]", connection && connection.comment, class: 'span12', rows: '10', id: "wmd-input-#{vote.id}" %>
       </div>

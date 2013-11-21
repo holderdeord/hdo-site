@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131027111947) do
+ActiveRecord::Schema.define(:version => 20131102154346) do
 
   create_table "answers", :force => true do |t|
     t.text     "body",                                     :null => false
@@ -256,6 +256,20 @@ ActiveRecord::Schema.define(:version => 20131027111947) do
 
   add_index "promises", ["promisor_id", "promisor_type"], :name => "index_promises_on_promisor_id_and_promisor_type"
 
+  create_table "proposition_connections", :force => true do |t|
+    t.integer  "vote_id"
+    t.integer  "issue_id"
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
+    t.text     "comment"
+    t.text     "title"
+    t.string   "proposition_type"
+    t.integer  "proposition_id"
+  end
+
+  add_index "proposition_connections", ["proposition_id"], :name => "index_proposition_connections_on_proposition_id"
+  add_index "proposition_connections", ["vote_id", "issue_id"], :name => "index_proposition_connections_on_vote_id_and_issue_id"
+
   create_table "propositions", :force => true do |t|
     t.string   "external_id"
     t.string   "representative_id"
@@ -364,18 +378,6 @@ ActiveRecord::Schema.define(:version => 20131027111947) do
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
   add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
-
-  create_table "vote_connections", :force => true do |t|
-    t.integer  "vote_id"
-    t.integer  "issue_id"
-    t.datetime "created_at",       :null => false
-    t.datetime "updated_at",       :null => false
-    t.text     "comment"
-    t.text     "title"
-    t.string   "proposition_type"
-  end
-
-  add_index "vote_connections", ["vote_id", "issue_id"], :name => "index_vote_connections_on_vote_id_and_issue_id"
 
   create_table "vote_results", :force => true do |t|
     t.integer  "representative_id"
