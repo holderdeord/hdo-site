@@ -46,9 +46,7 @@
 <% @other.each_slice(4) do |persons| %>
   <div class="row-fluid">
   <% persons.each do |person| %>
-    <div class="span3 muted">
-      <%= person.name %>
-    </div>
+    <div class="span3 muted"><%= person %></div>
   <% end %>
   </div>
 <% end %>
