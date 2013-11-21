@@ -19,6 +19,8 @@ class Proposition < ActiveRecord::Base
   attr_accessible :description, :on_behalf_of, :body, :representative_id
 
   has_and_belongs_to_many :votes, uniq: true
+  has_many :proposition_connections, dependent: :destroy
+  has_many :issues, through: :proposition_connections
   belongs_to :representative
 
   alias_method :delivered_by, :representative

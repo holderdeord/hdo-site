@@ -229,10 +229,8 @@ nn:
         published_at: Publisert
         updated_at: Oppdatert
         tag_list: Tags
-      vote_connection:
-        matches: "Støttar saka?"
+      proposition_connection:
         comment: "Kommentar"
-        weight: "Vekting"
         title: "Tittel"
       question:
         title: Tittel
@@ -354,7 +352,7 @@ nn:
         edit: "Rediger sak"
         destroy: "Slett sak"
         confirm_destroy: "Er du sikker på at du vil slette '%{title}'?"
-        connected_votes: Kobla avstemmingar
+        connected_propositions: Kobla forslag
         find_votes: Finn avstemmingar
         keyword: Nøkkelord
         filter: Filter

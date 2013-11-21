@@ -203,7 +203,7 @@ module Hdo
 
       it 'modifies a promise connection' do
         promise = Promise.make!
-        promise_connection = PromiseConnection.make! promise: promise, issue: issue
+        PromiseConnection.make! promise: promise, issue: issue
 
         promises = {
           promise.id => {'status' => 'kept'}
@@ -215,7 +215,7 @@ module Hdo
 
       it 'deletes promise connections' do
         promise = Promise.make!
-        promise_connection = PromiseConnection.make! promise: promise, issue: issue
+        PromiseConnection.make! promise: promise, issue: issue
 
         promises = {
           promise.id => {'status' => 'unrelated'}
@@ -228,96 +228,96 @@ module Hdo
       end
     end
 
-    describe 'vote proposition types' do
+    describe 'proposition types' do
       it "updates a single proposition_type" do
-        issue = Issue.make! vote_connections: [VoteConnection.make!]
+        issue = Issue.make! proposition_connections: [PropositionConnection.make!]
 
-        votes = {
-          issue.votes[0].id => {
+        propositions = {
+          issue.propositions[0].id => {
             connected: 'true',
             title: 'title!!!!!!!!',
-            proposition_type: VoteConnection::PROPOSITION_TYPES.first
+            proposition_type: PropositionConnection::PROPOSITION_TYPES.first
           }
         }
 
-        IssueUpdater.new(issue, {votes: votes}, user).update!
+        IssueUpdater.new(issue, {propositions: propositions}, user).update!
 
         issue.reload
 
-        issue.vote_connections.each do |vc|
-          vc.proposition_type.should == VoteConnection::PROPOSITION_TYPES.first
+        issue.proposition_connections.each do |pc|
+          pc.proposition_type.should == PropositionConnection::PROPOSITION_TYPES.first
         end
       end
 
       it "updates one of many proposition_types" do
-        issue = Issue.make! vote_connections: [VoteConnection.make!, VoteConnection.make!]
-        issue.vote_connections.each { |v| v.proposition_type.should be_blank }
+        issue = Issue.make! proposition_connections: [PropositionConnection.make!, PropositionConnection.make!]
+        issue.proposition_connections.each { |v| v.proposition_type.should be_blank }
 
-        expected_type = VoteConnection::PROPOSITION_TYPES.first
+        expected_type = PropositionConnection::PROPOSITION_TYPES.first
 
-        votes = {
-          issue.votes[0].id => {
+        propositions = {
+          issue.propositions[0].id => {
             connected: 'true',
             title: 'title!!!!!!!!',
             proposition_type: expected_type
           },
-          issue.votes[1].id => {
+          issue.propositions[1].id => {
             connected: 'true',
             title: 'title!!!!!!!!',
             proposition_type: ""
           }
         }
 
-        IssueUpdater.new(issue, {votes: votes}, user).update!
+        IssueUpdater.new(issue, {propositions: propositions}, user).update!
         issue.reload
 
-        issue.vote_connections.map(&:proposition_type).compact.should == [expected_type]
+        issue.proposition_connections.map(&:proposition_type).compact.should == [expected_type]
       end
 
       it "updates multiple proposition_types simultaneously" do
-        issue = Issue.make! vote_connections: [VoteConnection.make!, VoteConnection.make!]
-        issue.vote_connections.each { |v| v.proposition_type.should be_blank }
+        issue = Issue.make! proposition_connections: [PropositionConnection.make!, PropositionConnection.make!]
+        issue.proposition_connections.each { |v| v.proposition_type.should be_blank }
 
-        first = VoteConnection::PROPOSITION_TYPES.first
-        last  = VoteConnection::PROPOSITION_TYPES.last
+        first = PropositionConnection::PROPOSITION_TYPES.first
+        last  = PropositionConnection::PROPOSITION_TYPES.last
 
-        votes = {
-          issue.votes[0].id => {
+        propositions = {
+          issue.propositions[0].id => {
             connected: 'true',
             title: 'title!!!!!!!!',
             proposition_type: first
           },
-          issue.votes[1].id => {
+          issue.propositions[1].id => {
             connected: 'true',
             title: 'title!!!!!!!!',
             proposition_type: last
           }
         }
 
-        IssueUpdater.new(issue, {votes: votes}, user).update!
+        IssueUpdater.new(issue, {propositions: propositions}, user).update!
         issue.reload
 
-        actual = issue.vote_connections.map(&:proposition_type).sort
+        actual = issue.proposition_connections.map(&:proposition_type).sort
         actual.should == [first, last].sort
       end
 
       it 'does not touch the issue if proposition type is already nil or empty' do
-        vote_connection = VoteConnection.make!
-        vote            = vote_connection.vote
-        issue           = Issue.make! vote_connections: [vote_connection]
+        proposition_connection = PropositionConnection.make!
+        proposition            = proposition_connection.proposition
+        issue                  = Issue.make! proposition_connections: [proposition_connection]
 
-        vote_connection.proposition_type.should be_nil
+        proposition_connection.proposition_type.should be_nil
         issue.last_updated_by.should be_nil
 
-        votes = {
-          vote.id => {
+        propositions = {
+          proposition.id => {
             connected: 'true',
-            title: vote_connection.title,
+            title: proposition_connection.title,
             proposition_type: '' # input is an empty string
           }
         }
 
-        IssueUpdater.new(issue, {votes: votes}, user).update!
+        IssueUpdater.new(issue, {propositions: propositions}, user).update!
         issue.last_updated_by.should be_nil
       end
     end

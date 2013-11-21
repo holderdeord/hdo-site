@@ -21,6 +21,20 @@
   </div>
 
   <div class="control-group">
+    <p class="control-label">Maks</p>
+    <div class="controls">
+      <label>
+        <select name="limit">
+          <option value="20">20</option>
+          <option value="50">50</option>
+          <option value="100">100</option>
+          <option value="500">500</option>
+        </select>
+      </label>
+    </div>
+  </div>
+
+  <div class="control-group">
     <div class="controls">
       <button id="reset" type="submit" class="btn"><%= t('app.issues.edit.reset') %></button>
       <button id="fetch-votes" type="submit" class="btn btn-primary"><%= t('app.issues.edit.fetch_votes') %></button>

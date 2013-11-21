@@ -108,22 +108,20 @@ describe Issue do
     valid_issue.tags.size.should == 1
   end
 
-  it "can add votes with a vote connection" do
-    vote = Vote.make!
-    issue = Issue.make!(vote_connections: [])
+  it "can add propositions with a proposition connection" do
+    prop = Proposition.make!
+    issue = Issue.make!(proposition_connections: [])
 
-    issue.vote_connections.create!(vote: vote)
-    issue.votes.should == [vote]
-
-    issue.connection_for(vote).should_not be_nil
+    issue.proposition_connections.create!(proposition: prop)
+    issue.propositions.should == [prop]
   end
 
-  it 'destroys vote connections when destroyed' do
+  it 'destroys proposition connections when destroyed' do
     issue = Issue.make!
-    issue.vote_connections.size.should == VoteConnection.count
+    issue.proposition_connections.size.should == PropositionConnection.count
 
     issue.destroy
-    VoteConnection.count.should == 0
+    PropositionConnection.count.should == 0
   end
 
   it "has a unique title" do
@@ -137,18 +135,6 @@ describe Issue do
 
   it 'correctly downcases a title with trailing whitespace' do
     Issue.make(:title => " Øke ditt og datt").downcased_title.should == "øke ditt og datt"
-  end
-
-  it 'finds the latest issues based on vote time' do
-    i1 = Issue.make!
-    i2 = Issue.make!
-    i3 = Issue.make!
-
-    i1.vote_connections.map { |e| e.vote.update_attributes!(:time => 3.days.ago) }
-    i2.vote_connections.map { |e| e.vote.update_attributes!(:time => 2.days.ago) }
-    i3.vote_connections.map { |e| e.vote.update_attributes!(:time => 1.day.ago) }
-
-    Issue.vote_ordered.should == [i3, i2, i1]
   end
 
   it 'finds frontpage issues' do
@@ -259,14 +245,14 @@ describe Issue do
       expect_stale_object_error_when_updating @same_issue
     end
 
-    it 'is locked when adding a vote connection' do
-      votes = {
-        Vote.make!.id => {
+    it 'is locked when adding a proposition connection' do
+      propositions = {
+        Proposition.make!.id => {
           connected: 'true',
           title: 'more cowbell'
         }
       }
-      update_attributes_on @issue, {votes: votes}
+      update_attributes_on @issue, {propositions: propositions}
       expect_stale_object_error_when_updating @same_issue
     end
 
@@ -281,21 +267,21 @@ describe Issue do
       expect_stale_object_error_when_updating @same_issue
     end
 
-    it 'is locked when changing proposition type of an existing vote' do
-      @issue.vote_connections.create! vote: Vote.make!, title: 'hello'
-      vote = @issue.votes.first
+    it 'is locked when changing proposition type of an existing proposition' do
+      @issue.proposition_connections.create! proposition: Proposition.make!, title: 'hello'
+      prop = @issue.propositions.first
 
       @issue.save
       @same_issue.reload
 
-      votes = {
-        vote.id => {
+      propositions = {
+        prop.id => {
           connected: 'true',
           title: 'hello',
-          proposition_type: VoteConnection::PROPOSITION_TYPES.first
+          proposition_type: PropositionConnection::PROPOSITION_TYPES.first
         }
       }
-      update_attributes_on @issue, {votes: votes}
+      update_attributes_on @issue, {propositions: propositions}
       expect_stale_object_error_when_updating @same_issue
     end
 

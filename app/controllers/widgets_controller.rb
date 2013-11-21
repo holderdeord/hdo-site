@@ -93,7 +93,7 @@ class WidgetsController < ApplicationController
     issues = if params[:issues]
                Issue.published.find(params[:issues].split(','))
              else
-               Issue.published.vote_ordered
+               Issue.published.order(:updated_at).reverse_order
              end
 
     issues = issues.reject { |i| i.position_for(entity).nil? }

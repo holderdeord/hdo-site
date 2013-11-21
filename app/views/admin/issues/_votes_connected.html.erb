@@ -1,8 +1,0 @@
-<h3>
-  <%= t('app.issues.edit.connected_votes') %>
-  <small class="pull-right"><%= t('app.counts.vote', count: @votes_and_connections.size).html_safe %></small>
-</h3>
-
-<div class="vote-container">
-  <%= render partial: 'votes_list', locals: { votes_and_connections: @votes_and_connections} %>
-</div>

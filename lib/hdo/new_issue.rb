@@ -13,17 +13,17 @@ module Hdo
     end
 
     def explanation
-      vcs = vote_connections
+      pcs = proposition_connections.map(&:vote).uniq
 
-      count = vcs.size
-      start_date = vcs.last.time
-      end_date = vcs.first.time
+      count = pcs.size
+      start_date = pcs.last.time
+      end_date = pcs.first.time
 
       "#{count} avstemninger på Stortinget mellom #{start_date} og #{end_date}"
     end
 
-    def vote_connections
-      @issue.vote_connections.sort_by { |e| e.vote.time }.reverse
+    def proposition_connections
+      @issue.proposition_connections.sort_by { |e| e.vote.time }.reverse
     end
 
     def periods
@@ -43,7 +43,7 @@ module Hdo
 
       def days
         # TODO: make this actually check period
-        @issue.vote_connections.group_by { |e| e.vote.time.to_date }.
+        @issue.proposition_connections.group_by { |e| e.vote.time.to_date }.
                map { |date, connections| Day.new(date, connections) }.
                sort_by(&:raw_date).reverse
       end

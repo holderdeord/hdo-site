@@ -1,21 +1,21 @@
-<% if votes_by_issue_type.values.empty? %>
-<p><%= t('app.search.no_hits') %>!</p>
+<% if propositions_by_issue_type.values.empty? %>
+  <p><%= t('app.search.no_hits') %>!</p>
 <% end %>
 
 <div class="row-fluid">
   <div class="tabbable">
     <ul class="nav nav-tabs">
-      <% votes_by_issue_type.each_with_index do |(issue_type, votes), idx| %>
+      <% propositions_by_issue_type.each_with_index do |(issue_type, propositions), idx| %>
         <li class="span4 <%= 'active' if idx == 0 %>">
-          <a href="#<%= issue_type %>-tab" data-toggle="tab"><%= issue_type.capitalize %> (<%= votes.size %>)</a>
+          <a href="#<%= issue_type %>-tab" data-toggle="tab"><%= issue_type.capitalize %> (<%= propositions.size %>)</a>
         </li>
       <% end %>
     </ul>
 
     <div class="tab-content">
-      <% votes_by_issue_type.each_with_index do |(issue_type, votes), idx| %>
+      <% propositions_by_issue_type.each_with_index do |(issue_type, propositions), idx| %>
       <div class="tab-pane <%= 'active' if idx == 0 %>" id="<%= issue_type %>-tab">
-          <%= render partial: "votes_list", locals: { votes_and_connections: votes.map { |e| [e, nil] } } %>
+          <%= render partial: "propositions_list", locals: { propositions_and_connections: propositions.map { |e| [e, nil] } } %>
       </div>
       <% end %>
     </div>
