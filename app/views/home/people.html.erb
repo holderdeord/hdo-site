@@ -1,7 +1,10 @@
 <% page_title "#{t('app.people')} - #{t('app.about')} - #{t('app.title')}" %>
 
-<h1><%= t('app.people') %></h1>
+<h1><%= t("app.join") %>!</h1>
+Holder de ord lages på frivillig basis av folk som ønsker å gjøre den politiske debatten mer tilgjengelig og inkluderende. Vi vil gjerne ha flere med på laget. Har du lyst til å være med? Send en epost til <a href="mailto:kontakt@holderdeord.no?Subject=kontakt%20oss">kontakt@holderdeord.no</a>!
+
 <hr class="soften">
+<h2><%= t('app.people') %></h2>
 
 <% @all_members.each_slice(3) do |persons| %>
   <div class="row-fluid">

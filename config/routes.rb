@@ -152,7 +152,6 @@ Hdo::Application.routes.draw do
 
   get 'home/index'
   get 'home/contact'
-  get 'home/join'
   get 'home/support'
   get 'home/member'
   get 'home/people'
@@ -177,8 +176,6 @@ Hdo::Application.routes.draw do
   #
   # norwegian aliases - don't overdo this without a proper solution
   #
-
-  get "bli-med" => "home#join"
 
   #
   # docs

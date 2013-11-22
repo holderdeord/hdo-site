@@ -3,7 +3,6 @@
 class HomeController < ApplicationController
   hdo_caches_page :index,
                   :contact,
-                  :join,
                   :support,
                   :people,
                   :about,
@@ -42,9 +41,6 @@ class HomeController < ApplicationController
   end
 
   def contact
-  end
-
-  def join
   end
 
   def support
