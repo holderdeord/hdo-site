@@ -39,6 +39,3 @@ env:
     - DISPLAY=:99.0
     - COVERAGE_THRESHOLD=83
     - RUBY_GC_MALLOC_LIMIT=50000000
-branches:
-  except:
-    - votes-to-propositions
