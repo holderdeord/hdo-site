@@ -6,17 +6,17 @@
       </li>
 
       <li class="span6">
-        <a data-toggle="tab" href="#connected-tab"><%= t 'app.issues.edit.connected_votes' %> (<%= @propositions_and_connections.size %>)</a>
+        <a data-toggle="tab" href="#connected-tab"><%= t 'app.issues.edit.connected_propositions' %> (<%= @propositions_and_connections.size %>)</a>
       </li>
     </ul>
 
     <div class="tab-content">
       <div class="tab-pane active" id="search-tab">
-        <%= render 'votes_search' %>
+        <%= render 'propositions_search' %>
       </div>
 
       <div class="tab-pane" id="connected-tab">
-        <%= render 'votes_connected' %>
+        <%= render 'propositions_connected' %>
       </div>
     </div>
   </div>

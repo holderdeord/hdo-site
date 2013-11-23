@@ -1,7 +1,12 @@
 <% propositions_and_connections.each do |proposition, connection| %>
-<div class="row-fluid">
+  <div class="row-fluid well">
+
+    <h4><%= proposition.description %></h4>
+    <div class="span10"><%= proposition.short_body %></div>
+  </div>
+
+  <div class="row-fluid">
     <div class="span4">
-      <h4><%= proposition.description %></h4>
 
       <% proposition.votes.each do |vote| %>
         <div class="row-fluid">
@@ -52,7 +57,7 @@
       <div class="span6">
         <strong><%= PropositionConnection.human_attribute_name :comment %></strong>
         <div id="wmd-button-bar-<%= proposition.id %>"></div>
-        <%= text_area_tag "votes[#{proposition.id}][comment]", connection && connection.comment, class: 'span12', rows: '10', id: "wmd-input-#{proposition.id}" %>
+        <%= text_area_tag "propositions[#{proposition.id}][comment]", connection && connection.comment, class: 'span12', rows: '10', id: "wmd-input-#{proposition.id}" %>
       </div>
 
       <div class="span6">
@@ -67,9 +72,6 @@
     <div class="pull-right muted">id: <%= proposition.id %>, ekstern id: <%= proposition.external_id %></div>
   </div>
 
-  <div class="row-fluid proposition-body">
-    <%= proposition.short_body %>
-  </div>
   <hr>
 <% end %>
 

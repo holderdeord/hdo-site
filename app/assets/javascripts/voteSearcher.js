@@ -29,7 +29,8 @@
       $('#fetch-votes').click(function () {
         var params = {
           keyword: $('#keyword').val(),
-          filter: $('input[name=filter]:checked').val()
+          filter: $('input[name=filter]:checked').val(),
+          limit: $('select[name=limit]').val()
         };
 
         $("#result").html('');

@@ -262,7 +262,7 @@ nb:
         description: "Beskrivelse"
         categories: "Kategorier"
         promises: "Løfter"
-        votes: "Avstemninger"
+        propositions: "Forslag/avstemninger"
         party_comments: "Partikommentarer"
         positions: Posisjoner
         last_updated_by: Sist redigert av
@@ -420,7 +420,7 @@ nb:
         edit: "Rediger sak"
         destroy: "Slett sak"
         confirm_destroy: "Er du sikker på at du vil slette '%{title}'?"
-        connected_votes: Koblede avstemninger
+        connected_propositions: Koblede forslag
         find_votes: Finn avstemninger
         keyword: Nøkkelord
         filter: Filter

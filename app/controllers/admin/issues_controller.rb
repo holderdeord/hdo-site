@@ -98,21 +98,23 @@ class Admin::IssuesController < AdminController
     votes = Vote.admin_search(
       params[:filter],
       params[:keyword],
-      @issue.categories
+      @issue.categories,
+      params[:limit].to_i
     )
 
-    # remove already connected votes
-    votes -= @issue.vote_connections.map { |e| e.vote }
-
     # TODO: cleanup
+    already_connected = @issue.propositions
     by_issue_type = Hash.new { |hash, issue_type| hash[issue_type] = Set.new }
+
     votes.each do |vote|
       vote.parliament_issues.each do |issue|
-        by_issue_type[issue.issue_type] << vote
+        vote.propositions.each do |prop|
+          by_issue_type[issue.issue_type] << prop unless already_connected.include?(prop)
+        end
       end
     end
 
-    render partial: 'votes_search_result', locals: { votes_by_issue_type: by_issue_type }
+    render partial: 'votes_search_result', locals: { propositions_by_issue_type: by_issue_type }
   end
 
   private

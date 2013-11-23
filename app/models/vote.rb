@@ -36,17 +36,17 @@ class Vote < ActiveRecord::Base
   scope :with_results,    -> { includes(:parliament_issues, vote_results: {representative: {party_memberships: :party}}) }
   scope :since_yesterday, -> { where("created_at >= ?", 1.day.ago) }
 
-  def self.admin_search(filter, query, selected_categories = [])
+  def self.admin_search(filter, query, selected_categories = [], limit = 100)
     query = '*' if query.blank?
 
     opts = {
       load: {
-        include: [ :parliament_issues, :issues, :vote_connections ]
+        include: [ :parliament_issues, :propositions ]
       }
     }
 
     response = search(opts) do |s|
-      s.size 1000
+      s.size limit
 
       s.query do |q|
         q.filtered do |f|

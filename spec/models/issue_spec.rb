@@ -247,7 +247,7 @@ describe Issue do
 
     it 'is locked when adding a proposition connection' do
       propositions = {
-        Vote.make!.id => {
+        Proposition.make!.id => {
           connected: 'true',
           title: 'more cowbell'
         }
