@@ -1,10 +1,10 @@
 require 'spec_helper'
 
 describe PropositionConnection do
-  let(:vote_connection) { PropositionConnection.make! }
+  let(:proposition_connection) { PropositionConnection.make! }
 
   it 'should have a valid blueprint' do
-    vote_connection.should be_valid
+    proposition_connection.should be_valid
   end
 
   it 'should be invalid without a proposition' do

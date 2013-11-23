@@ -229,10 +229,8 @@ nn:
         published_at: Publisert
         updated_at: Oppdatert
         tag_list: Tags
-      vote_connection:
-        matches: "Støttar saka?"
+      proposition_connection:
         comment: "Kommentar"
-        weight: "Vekting"
         title: "Tittel"
       question:
         title: Tittel

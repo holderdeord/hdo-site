@@ -271,10 +271,8 @@ nb:
         updated_at: Oppdatert
         tag_list: Tags
         frontpage: Forsidesak
-      vote_connection:
-        matches: "Støtter saken?"
+      proposition_connection:
         comment: "Kommentar"
-        weight: "Vekting"
         title: "Tittel"
         proposition_type: "Forslagstype"
       question:
