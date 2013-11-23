@@ -52,7 +52,7 @@ class Issue < ActiveRecord::Base
 
   has_many :votes,    through: :promise_connections, order: :time
   has_many :promises, through: :promise_connections
-  has_many :propositions, through: :proposition_connections, order: :updated_at
+  has_many :propositions, through: :proposition_connections
 
   friendly_id :title, use: :slugged
 

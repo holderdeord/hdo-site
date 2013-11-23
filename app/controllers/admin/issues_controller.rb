@@ -136,8 +136,8 @@ class Admin::IssuesController < AdminController
     @positions = Position.order(:priority).find_all_by_issue_id(@issue)
   end
 
-  def edit_votes
-    @votes_and_connections = @issue.vote_connections.map { |e| [e.vote, e] }
+  def edit_propositions
+    @propositions_and_connections = @issue.proposition_connections.map { |e| [e.proposition, e] }
   end
 
   def edit_steps

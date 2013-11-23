@@ -29,10 +29,10 @@ describe PartiesController do
       t3 = Issue.make! status: 'in_progress', title: 'c'
       t4 = Issue.make! status: 'in_review',   title: 'd'
 
-      t1.vote_connections.map { |e| e.vote.update_attributes!(time: 4.days.ago) }
-      t2.vote_connections.map { |e| e.vote.update_attributes!(time: 3.days.ago) }
-      t3.vote_connections.map { |e| e.vote.update_attributes!(time: 2.days.ago) }
-      t3.vote_connections.map { |e| e.vote.update_attributes!(time: 1.day.ago) }
+      t1.proposition_connections.map { |e| e.vote.update_attributes!(time: 4.days.ago) }
+      t2.proposition_connections.map { |e| e.vote.update_attributes!(time: 3.days.ago) }
+      t3.proposition_connections.map { |e| e.vote.update_attributes!(time: 2.days.ago) }
+      t3.proposition_connections.map { |e| e.vote.update_attributes!(time: 1.day.ago) }
 
       stats = mock(score_for: 100, key_for: :for)
       Issue.any_instance.stub(stats: stats)

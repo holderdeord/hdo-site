@@ -6,11 +6,11 @@ class Admin::DashboardController < AdminController
     @pending_questions           = Question.pending
     @questions_answer_pending    = Question.with_pending_answers
 
-    published     = Issue.published
-    vote_count    = Vote.count
-    promise_count = Promise.count
+    published         = Issue.published
+    proposition_count = Proposition.count
+    promise_count     = Promise.count
 
-    @issue_vote_percentage       = published.flat_map(&:vote_ids).uniq.size * 100 / (vote_count.zero? ? 1 : vote_count)
-    @issue_promise_percentage    = published.flat_map(&:promise_ids).uniq.size * 100 / (promise_count.zero? ? 1 : promise_count)
+    @issue_proposition_percentage = published.flat_map(&:proposition_ids).uniq.size * 100 / (proposition_count.zero? ? 1 : proposition_count)
+    @issue_promise_percentage     = published.flat_map(&:promise_ids).uniq.size * 100 / (promise_count.zero? ? 1 : promise_count)
   end
 end

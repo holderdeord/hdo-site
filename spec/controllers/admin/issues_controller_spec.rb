@@ -9,11 +9,11 @@ describe Admin::IssuesController do
     issue.as_json except: [:created_at, :id, :last_updated_by_id, :slug, :updated_at, :published_at]
   end
 
-  def votes_params(connections)
+  def proposition_params(connections)
     params = {}
 
     connections.each do |connection|
-      params[connection.vote_id] = {
+      params[connection.proposition_id] = {
         :connected   => true,
         :comment     => connection.comment,
         :title       => connection.title
@@ -82,11 +82,11 @@ describe Admin::IssuesController do
     response.should redirect_to(edit_step_admin_issue_path(issue.id, step: 'categories'))
   end
 
-  it 'edits the vote step if specified' do
-    get :edit, id: issue, step: 'votes'
+  it 'edits the proposition step if specified' do
+    get :edit, id: issue, step: 'propositions'
 
     response.should have_rendered(:edit)
-    assigns(:votes_and_connections).should_not be_nil
+    assigns(:propositions_and_connections).should_not be_nil
   end
 
   it 'edits the promises step if specified' do
@@ -136,14 +136,14 @@ describe Admin::IssuesController do
   end
 
   context "next" do
-    it "should show the votes step when hit next from create" do
+    it "should show the proposition step when hit next from create" do
       post :create, issue: { title: "Less Cowbell!" }
 
       issue = assigns(:issue)
       issue.should be_kind_of(Issue)
       issue.last_updated_by.should == user
 
-      expected_url = edit_step_admin_issue_path(id: issue.id, step: 'votes')
+      expected_url = edit_step_admin_issue_path(id: issue.id, step: 'propositions')
       response.should redirect_to(expected_url)
     end
 
@@ -182,8 +182,8 @@ describe Admin::IssuesController do
   end
 
   context "previous" do
-    it "should show promises when hit next from votes" do
-      session[:issue_step] = 'votes'
+    it "should show promises when hit next from propositions" do
+      session[:issue_step] = 'propositions'
 
       put :update, issue: issue_params(issue), id: issue
 
@@ -192,8 +192,8 @@ describe Admin::IssuesController do
       response.should redirect_to edit_step_admin_issue_url(issue.id, step: 'promises')
     end
 
-    it "should show the categories step when hit previous from votes" do
-      session[:issue_step] = 'votes'
+    it "should show the categories step when hit previous from propositions" do
+      session[:issue_step] = 'propositions'
 
       put :update, previous: true, issue: issue_params(issue), id: issue
 
@@ -222,7 +222,7 @@ describe Admin::IssuesController do
     end
 
     it "should save and redirect to issue when hit finish from edit step" do
-      session[:issue_step] = 'votes'
+      session[:issue_step] = 'propositions'
 
       put :update, finish: true, issue: issue_params(issue), id: issue
 
@@ -287,63 +287,63 @@ describe Admin::IssuesController do
       issue.last_updated_by.should == user
     end
 
-    it 'sets last_updated_by when vote connections are removed' do
-      connection = PropositionConnection.create(:vote => Vote.make!, comment: 'hello', title: 'world')
-      issue.vote_connections = [connection]
+    it 'sets last_updated_by when proposition connections are removed' do
+      connection = PropositionConnection.create(:proposition => Proposition.make!, comment: 'hello', title: 'world')
+      issue.proposition_connections = [connection]
 
-      votes = votes_params(issue.vote_connections)
-      votes[connection.vote_id][:connected] = nil
+      propositions = proposition_params(issue.proposition_connections)
+      propositions[connection.proposition_id][:connected] = nil
 
-      put :update, votes: votes, id: issue
+      put :update, propositions: propositions, id: issue
 
       issue = assigns(:issue)
-      issue.vote_connections.should be_empty
+      issue.proposition_connections.should be_empty
       issue.last_updated_by.should == user
     end
 
-    it 'ignores non-connected votes' do
-      issue.vote_connections = []
+    it 'ignores non-connected propositions' do
+      issue.proposition_connections = []
 
-      vote = Vote.make!
-      votes = {
-        vote.id => {
+      prop = Proposition.make!(:votes => [Vote.make!])
+      propositions = {
+        prop.id => {
           connected: nil,
           title: "",
           comment: ""
         }
-       }
+      }
 
-      put :update, votes: votes, id: issue
+      put :update, propositions: propositions, id: issue
 
       issue = assigns(:issue)
-      issue.vote_connections.should be_empty
+      issue.proposition_connections.should be_empty
       issue.last_updated_by.should be_nil
     end
 
-    it 'sets last_updated_by when vote connections are added' do
-      vote = Vote.make!
-      issue.vote_connections = []
+    it 'sets last_updated_by when proposition connections are added' do
+      prop = Proposition.make!
+      issue.proposition_connections = []
 
-      votes_param = {vote.id => {connected: 'true', comment: 'hello', title: 'world'}}
-      put :update, votes: votes_param, id: issue
+      proposition_params = {prop.id => {connected: 'true', comment: 'hello', title: 'world'}}
+      put :update, propositions: proposition_params, id: issue
 
       issue = assigns(:issue)
-      issue.vote_connections.size.should == 1
+      issue.proposition_connections.size.should == 1
       issue.last_updated_by.should == user
     end
 
-    it 'sets last_updated_by when vote connections are updated' do
-      connection = PropositionConnection.create(:vote => Vote.make!, comment: 'hello', title: 'world')
-      issue.vote_connections = [connection]
+    it 'sets last_updated_by when proposition connections are updated' do
+      connection = PropositionConnection.create(:proposition => Proposition.make!, comment: 'hello', title: 'world')
+      issue.proposition_connections = [connection]
 
-      votes = votes_params(issue.vote_connections)
-      votes[connection.vote_id][:comment] = 'goodbye'
+      propositions = proposition_params(issue.proposition_connections)
+      propositions[connection.proposition_id][:comment] = 'goodbye'
 
-      put :update, votes: votes, id: issue
+      put :update, propositions: propositions, id: issue
 
       issue = assigns(:issue)
 
-      issue.vote_connections.size.should == 1
+      issue.proposition_connections.size.should == 1
       issue.last_updated_by.should == user
     end
 
@@ -357,14 +357,14 @@ describe Admin::IssuesController do
       issue.last_updated_by.should == other_user
     end
 
-    it 'does not set last_updated_by when update is called with no change to vote connections' do
+    it 'does not set last_updated_by when update is called with no change to proposition connections' do
       issue.last_updated_by = other_user = User.make!
       issue.save!
 
-      vote_connection = PropositionConnection.create(comment: 'foo', title: 'bar', vote: Vote.make!)
-      issue.vote_connections = [vote_connection]
+      proposition_connection = PropositionConnection.create(comment: 'foo', title: 'bar', proposition: Proposition.make!)
+      issue.proposition_connections = [proposition_connection]
 
-      put :update, votes: votes_params(issue.vote_connections), id: issue
+      put :update, propositions: proposition_params(issue.proposition_connections), id: issue
 
       issue = assigns(:issue)
       issue.last_updated_by.should == other_user

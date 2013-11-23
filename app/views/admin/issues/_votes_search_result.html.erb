@@ -15,7 +15,7 @@
     <div class="tab-content">
       <% votes_by_issue_type.each_with_index do |(issue_type, votes), idx| %>
       <div class="tab-pane <%= 'active' if idx == 0 %>" id="<%= issue_type %>-tab">
-          <%= render partial: "votes_list", locals: { votes_and_connections: votes.map { |e| [e, nil] } } %>
+          <%= render partial: "propositions_list", locals: { propositions_and_connections: votes.map { |e| [e, nil] } } %>
       </div>
       <% end %>
     </div>

@@ -63,7 +63,7 @@ class IssuesController < ApplicationController
   end
 
   def fetch_issue_votes
-    connections = @issue.vote_connections.includes(:vote).order("votes.time DESC")
+    connections = @issue.proposition_connections.includes(:proposition => :votes).sort_by { |e| e.vote.time }.reverse
     views       = PropositionConnectionDecorator.decorate_collection(connections, context: @issue)
 
     # within each day, we want to order by time *ascending*
