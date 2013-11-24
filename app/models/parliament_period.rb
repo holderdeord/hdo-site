@@ -15,6 +15,10 @@ class ParliamentPeriod < ActiveRecord::Base
     all.find { |e| e.name == name }
   end
 
+  def include?(date)
+    date >= start_date && date <= end_date
+  end
+
   def name
     [start_date.year, end_date.year].join('-')
   end

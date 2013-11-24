@@ -2,7 +2,7 @@
 
 module Hdo
   class NewIssue
-    delegate :title, :description, :tags, to: :@issue
+    delegate :title, :description, :tags, :to_param, to: :@issue
 
     def initialize(issue)
       @issue = issue
@@ -28,7 +28,7 @@ module Hdo
 
     def periods
       periods = [ParliamentPeriod.named('2013-2017'), ParliamentPeriod.named('2009-2013')]
-      periods.map { |pp| Period.new(pp, @issue) }
+      periods.map { |pp| Period.new(pp, @issue) }.select { |e| e.years.any? && e.positions.any? }
     end
 
     private
@@ -42,26 +42,25 @@ module Hdo
       end
 
       def years
-        # TODO: make this actually check period
-        @issue.vote_connections.group_by { |e| e.vote.time.to_date }.
+        @years ||= @issue.vote_connections.select { |e| @parliament_period.include?(e.vote.time) }.
+               group_by { |e| e.vote.time.to_date }.
                map { |date, connections| Day.new(date, connections) }.
                sort_by(&:raw_date).reverse.group_by { |e| e.year }.
                map { |year, days| OpenStruct.new(:year => year, :days => days) }
       end
 
       def positions
-        # TODO: make this actually check period
-        @issue.positions.order(:priority).map { |pos| Position.new(@issue, @parliament_period, pos) }
+        @positions ||= @issue.positions.where(parliament_period_id: @parliament_period).order(:priority).map { |pos| Position.new(@issue, pos) }
       end
     end
 
     class Position
       delegate :title, :description, to: :@position
 
-      def initialize(issue, period, position)
+      def initialize(issue, position)
         @issue    = issue
-        @period   = period
         @position = position
+        @period   = position.parliament_period
       end
 
       def parties
@@ -71,10 +70,10 @@ module Hdo
       private
 
       def promises_for(party)
-        # TODO: make this actually check period
         @issue.promise_connections.joins(:promise).
                 where('promises.promisor_id' => party).
                 where('promises.promisor_type' => Party.name).
+                where('promises.parliament_period_id' => @period).
                 sort_by(&:status)
       end
 
