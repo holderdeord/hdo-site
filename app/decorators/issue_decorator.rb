@@ -1,11 +1,11 @@
 # encoding: utf-8
 
 class IssueDecorator < Draper::Decorator
-  delegate :votes,
+  delegate :propositions,
            :title,
            :to_json,
            :description,
-           :vote_connections,
+           :proposition_connections,
            :accountability,
            :published?,
            :cache_key,
@@ -42,6 +42,10 @@ class IssueDecorator < Draper::Decorator
 
   def generic_positions
     model.positions.map { |expl| [expl.title, expl.parties.sort_by(&:name)] }
+  end
+
+  def votes
+    @votes ||= proposition_connections.map(&:vote)
   end
 
   def promises_by_party
@@ -157,19 +161,18 @@ class IssueDecorator < Draper::Decorator
     end
 
     def votes
-      votes = issue.vote_connections.includes(:vote).sort_by { |e| e.vote.time }.reverse
-      votes.map { |vc| PartyVote.new(model, vc) }.reject(&:ignored?)
+      votes = issue.proposition_connections.includes(:proposition => :votes).sort_by { |e| e.vote.time }.reverse
+      votes.map { |pc| PartyVote.new(model, pc) }.reject(&:ignored?)
     end
   end
 
-  class PartyVote < Struct.new(:party, :vote_connection)
+  class PartyVote < Struct.new(:party, :proposition_connection)
     def ignored?
       !participated? || against_alternate_budget?
     end
 
     def against_alternate_budget?
-      vote_connection.proposition_type == 'alternate_national_budget' &&
-        direction == 'against'
+      proposition_connection.proposition_type == 'alternate_national_budget' && direction == 'against'
     end
 
     def participated?
@@ -182,25 +185,25 @@ class IssueDecorator < Draper::Decorator
 
     def title
       @title ||= (
-        if vote_connection.title.blank?
+        if proposition_connection.title.blank?
           ''
         else
-          title = vote_connection.title
+          title = proposition_connection.title
           "#{I18n.t('app.lang.infinitive_particle')} #{UnicodeUtils.downcase title[0]}#{title[1..-1]}".strip
         end
       )
     end
 
     def time
-      I18n.l vote_connection.vote.time, format: :short
+      I18n.l proposition_connection.vote.time, format: :short
     end
 
     def month_and_year
-      I18n.l(vote_connection.vote.time, format: :month_year).capitalize
+      I18n.l(proposition_connection.vote.time, format: :month_year).capitalize
     end
 
     def anchor
-      "vote-#{vote_connection.to_param}"
+      "vote-#{proposition_connection.to_param}"
     end
 
     def label
@@ -208,7 +211,7 @@ class IssueDecorator < Draper::Decorator
     end
 
     def stats
-      @stats ||= vote_connection.vote.stats
+      @stats ||= proposition_connection.vote.stats
     end
   end
 end

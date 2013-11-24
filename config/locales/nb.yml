@@ -262,7 +262,7 @@ nb:
         description: "Beskrivelse"
         categories: "Kategorier"
         promises: "Løfter"
-        votes: "Avstemninger"
+        propositions: "Forslag/avstemninger"
         party_comments: "Partikommentarer"
         positions: Posisjoner
         last_updated_by: Sist redigert av
@@ -271,10 +271,8 @@ nb:
         updated_at: Oppdatert
         tag_list: Tags
         frontpage: Forsidesak
-      vote_connection:
-        matches: "Støtter saken?"
+      proposition_connection:
         comment: "Kommentar"
-        weight: "Vekting"
         title: "Tittel"
         proposition_type: "Forslagstype"
       question:
@@ -335,6 +333,8 @@ nb:
       issues:
         unable_to_save: "Kunne ikke lagre, saken er blitt endret i mellomtiden."
         must_be_published: "Status må være 'publisert' før den kan komme på forsiden. Endringene ble ikke lagret."
+      proposition_connections:
+        must_override_vote: "Forslaget er koblet til mer enn én avstemning, men du har ikke spesifisert hvilken som skal brukes."
     admin:
       latest_from_parliament: Siste fra Stortinget
     published: Publisert
@@ -417,7 +417,7 @@ nb:
         edit: "Rediger sak"
         destroy: "Slett sak"
         confirm_destroy: "Er du sikker på at du vil slette '%{title}'?"
-        connected_votes: Koblede avstemninger
+        connected_propositions: Koblede forslag
         find_votes: Finn avstemninger
         keyword: Nøkkelord
         filter: Filter

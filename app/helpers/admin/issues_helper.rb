@@ -23,8 +23,8 @@ module Admin::IssuesHelper
     ActsAsTaggableOn::Tag.select(:name).all.map(&:name)
   end
 
-  def connected_issues_for(vote)
-    (vote.issues - [@issue]).first(3)
+  def connected_issues_for(proposition)
+    (proposition.issues - [@issue])
   end
 
   def promise_status_for(promise)

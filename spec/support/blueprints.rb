@@ -16,9 +16,9 @@ Vote.blueprint do
   subject { "vote-subject-#{sn}" }
 end
 
-VoteConnection.blueprint do
+PropositionConnection.blueprint do
   issue
-  vote
+  proposition { Proposition.make!(:votes => [Vote.make!])}
 end
 
 PromiseConnection.blueprint do
@@ -130,8 +130,8 @@ end
 Issue.blueprint do
   title { "issue-title-#{sn}" }
   description { "issue-description-#{sn}" }
-  vote_connections {
-    Array.new(2) { VoteConnection.make!(issue: object) }
+  proposition_connections {
+    Array.new(2) { PropositionConnection.make!(issue: object) }
   }
   frontpage { false }
 end

@@ -1,6 +1,6 @@
 # encoding: utf-8
 
-class VoteConnectionDecorator < Draper::Decorator
+class PropositionConnectionDecorator < Draper::Decorator
   alias_method :issue, :context
 
   delegate :vote,

@@ -7,7 +7,7 @@ module Hdo
     def initialize(issue, params, user)
       @issue          = issue
       @attributes     = params[:issue]
-      @votes          = params[:votes]
+      @propositions   = params[:propositions]
       @promises       = params[:promises]
       @party_comments = params[:party_comments]
       @positions      = params[:positions]
@@ -35,7 +35,7 @@ module Hdo
 
       @user.transaction {
         update_attributes
-        update_votes
+        update_propositions
         update_promises
         update_party_comments
         update_positions
@@ -46,9 +46,9 @@ module Hdo
 
     private
 
-    def update_votes
-      Array(@votes).each do |vote_id, data|
-        update_or_create_vote_connection(vote_id, data)
+    def update_propositions
+      Array(@propositions).each do |proposition_id, data|
+        update_or_create_proposition_connection(proposition_id, data)
       end
     end
 
@@ -122,11 +122,11 @@ module Hdo
       end
     end
 
-    def update_or_create_vote_connection(vote_id, data)
-      existing = VoteConnection.where('vote_id = ? and issue_id = ?', vote_id, @issue.id).first
+    def update_or_create_proposition_connection(proposition_id, data)
+      existing = PropositionConnection.where('proposition_id = ? and issue_id = ?', proposition_id, @issue.id).first
 
       if data[:connected]
-        attrs = data.except(:connected).merge(vote_id: vote_id)
+        attrs = data.except(:connected).merge(proposition_id: proposition_id)
 
         # normalize '' vs nil
         attrs[:proposition_type] = nil if attrs[:proposition_type].blank?
@@ -137,12 +137,12 @@ module Hdo
 
           existing.save!
         else
-          new_connection = @issue.vote_connections.create!(attrs)
+          new_connection = @issue.proposition_connections.create!(attrs)
           @changed = true
         end
       else
         if existing
-          @issue.vote_connections.delete existing
+          @issue.proposition_connections.delete existing
           @changed = true
         end
       end

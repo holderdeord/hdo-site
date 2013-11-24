@@ -17,6 +17,7 @@ class VotesController < ApplicationController
       @parliament_issues = @vote.parliament_issues
       @stats             = @vote.stats
       @vote_results      = @vote.vote_results.includes(representative: {party_memberships: :party})
+      @issues            = @vote.propositions.flat_map { |e| e.proposition_connections.map(&:issue) }.select(&:published?)
     end
   end
 
