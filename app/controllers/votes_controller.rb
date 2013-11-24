@@ -17,7 +17,12 @@ class VotesController < ApplicationController
       @parliament_issues = @vote.parliament_issues
       @stats             = @vote.stats
       @vote_results      = @vote.vote_results.includes(representative: {party_memberships: :party})
-      @issues            = @vote.propositions.flat_map { |e| e.proposition_connections.map(&:issue) }.select(&:published?)
+      @issues            = @vote.propositions.flat_map { |e| e.proposition_connections.map(&:issue) }.select(&:published?).uniq
+
+      @results_by_party  = Party.order(:name).each_with_object({}) { |party, obj| obj[party] = {:for => [], :against => [], :absent => []} }
+      @vote.vote_results.each do |result|
+        @results_by_party[result.representative.party_at(@vote.time)][result.state] << result
+      end
     end
   end
 

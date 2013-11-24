@@ -36,9 +36,7 @@
 <% content_for :document_ready do %>
   <script>
     $(document).ready(function () {
-      HDO.voteRowToggler.create({
-        columns: $('.state-column') }
-      ).init();
+      HDO.voteRowToggler.create({ columns: $('.state-column') }).init();
     });
   </script>
 <% end %>
