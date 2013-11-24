@@ -59,7 +59,6 @@ gem 'hipchat'
 
 # frontend stuff
 gem 'jquery-rails', '>= 3.0.4'
-gem 'highcharts-rails', "~> 2.2"
 gem 'jquery-tablesorter', ">= 1.5.0"
 gem 'redcarpet'
 

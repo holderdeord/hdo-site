@@ -8,7 +8,7 @@ module.exports = {
     maxlen: 120,
     indent: 2,
     plusplus: true,
-    predef: ["HDO", "jQuery", "$", "_", "Highcharts", "Markdown"] // globals
+    predef: ["HDO", "jQuery", "$", "_", "Markdown"] // globals
   },
   excludes: ["../app/assets/javascripts/lib/*.js"]
 };
