@@ -139,7 +139,7 @@ class Admin::IssuesController < AdminController
   end
 
   def edit_propositions
-    @propositions_and_connections = @issue.proposition_connections.map { |e| [e.proposition, e] }
+    @propositions_and_connections = @issue.proposition_connections.sort_by { |e| e.vote.time }.reverse.map { |e| [e.proposition, e] }
   end
 
   def edit_steps
