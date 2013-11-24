@@ -71,7 +71,6 @@ class HomeController < ApplicationController
 
     @other = [
       "Alex Asensi",
-      "Arne Hassel",
       "Bjørn Dyresen",
       "Eli Foss",
       "Kristofer Rees",
