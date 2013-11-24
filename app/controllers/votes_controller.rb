@@ -23,6 +23,8 @@ class VotesController < ApplicationController
       @vote.vote_results.each do |result|
         @results_by_party[result.representative.party_at(@vote.time)][result.state] << result
       end
+      
+      @results_by_party.delete_if { |party, data| data.values.all?(&:empty?) }
     end
   end
 
