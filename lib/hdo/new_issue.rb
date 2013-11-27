@@ -22,10 +22,6 @@ module Hdo
       "#{count} avstemninger på Stortinget mellom #{start_date} og #{end_date}"
     end
 
-    def vote_connections
-      @issue.vote_connections.sort_by { |e| e.vote.time }.reverse
-    end
-
     def periods
       periods = [ParliamentPeriod.named('2013-2017'), ParliamentPeriod.named('2009-2013')]
       periods.map { |pp| Period.new(pp, @issue) }.select { |e| e.years.any? && e.positions.any? }
