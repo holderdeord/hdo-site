@@ -60,7 +60,7 @@ module Hdo
       end
 
       def parties
-        @position.parties.map { |party| PartyInfo.new(party, promises_for(party), accountability_for(party)) }
+        @position.parties.map { |party| PartyInfo.new(party, comment_for(party), promises_for(party), accountability_for(party)) }
       end
 
       private
@@ -76,9 +76,15 @@ module Hdo
       def accountability_for(party)
         @issue.accountability.text_for(party)
       end
+
+      def comment_for(party)
+        @issue.party_comments.
+               where(:party_id => party).
+               where(:parliament_period_id => @period).first
+      end
     end
 
-    class PartyInfo < Struct.new(:party, :promises, :accountability)
+    class PartyInfo < Struct.new(:party, :comment, :promises, :accountability)
       delegate :logo, :slug, :name, to: :party
     end
 

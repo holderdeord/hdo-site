@@ -294,6 +294,7 @@ nb:
       party_comment:
         party: Parti
         body: Kommentar
+        parliament_period: Stortingsperiode
       position:
         parties: Partier
         description: Beskrivelse

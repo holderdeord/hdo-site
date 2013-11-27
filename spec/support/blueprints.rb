@@ -193,6 +193,7 @@ PartyComment.blueprint do
   body  { 'This is my body' }
   party
   issue
+  parliament_period
 end
 
 Position.blueprint do

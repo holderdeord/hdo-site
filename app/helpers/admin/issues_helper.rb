@@ -81,4 +81,8 @@ module Admin::IssuesHelper
   def party_options(opts = {})
     options_for_select(Party.order(:name).map { |p| [p.name, p.id] }, opts[:selected])
   end
+
+  def parliament_period_options(opts = {})
+    options_for_select(ParliamentPeriod.order(:start_date).reverse_order.map { |p| [p.name, p.id] }, opts[:selected])
+  end
 end

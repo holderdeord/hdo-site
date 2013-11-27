@@ -4,7 +4,7 @@
   <table class="table" id="party-comments-table">
     <thead>
     <tr>
-      <th><%= PartyComment.human_attribute_name :party %></th>
+      <th><%= PartyComment.human_attribute_name :party %> / <%= PartyComment.human_attribute_name :parliament_period %></th>
       <th><%= PartyComment.human_attribute_name :body %></th>
       <th></th>
       <th></th>
@@ -13,7 +13,15 @@
 
     <tbody>
       <% @party_comments.each do |party_comment| %>
-        <%= render partial: "comment_row", locals: { party_comment_id: party_comment.id, party_comment_body: party_comment && party_comment.body, party_comment_party: party_comment.party.id, party_comment_id: party_comment.id, issue_id: party_comment.issue_id } %>
+        <%= render partial: "comment_row", locals: {
+              party_comment_id: party_comment.id,
+              party_comment_body: party_comment.body,
+              party_comment_party: party_comment.party.id,
+              party_comment_id: party_comment.id,
+              issue_id: party_comment.issue_id,
+              parliament_period_id: party_comment.parliament_period_id
+            }
+        %>
       <% end %>
     </tbody>
   </table>
@@ -26,7 +34,7 @@
       var url = <%= vote_search_admin_issue_path(@issue).to_json.html_safe %>;
 
       var editor = HDO.partyCommentsEditor.create(url);
-      var newRowHtml = '<%= render(partial: "comment_row", locals: { party_comment_id: 'newPartyComment', party_comment_party: '', party_comment_body: '', party_comment_id: 'newPartyComment', issue_id: @issue.id }).to_json.html_safe %>';
+      var newRowHtml = '<%= render(partial: "comment_row", locals: { party_comment_id: 'newPartyComment', party_comment_party: '', party_comment_body: '', party_comment_id: 'newPartyComment', issue_id: @issue.id, parliament_period_id: ParliamentPeriod.current }).to_json.html_safe %>';
       editor.init(newRowHtml);
       editor.initializeMarkdownEditors(<%= @party_comments.map &:id %>);
 

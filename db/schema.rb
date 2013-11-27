@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131102154346) do
+ActiveRecord::Schema.define(:version => 20131130140627) do
 
   create_table "answers", :force => true do |t|
     t.text     "body",                                     :null => false
@@ -203,8 +203,9 @@ ActiveRecord::Schema.define(:version => 20131102154346) do
     t.text     "body"
     t.integer  "party_id"
     t.integer  "issue_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",           :null => false
+    t.datetime "updated_at",           :null => false
+    t.integer  "parliament_period_id"
   end
 
   add_index "party_comments", ["issue_id"], :name => "index_party_comments_on_issue_id"

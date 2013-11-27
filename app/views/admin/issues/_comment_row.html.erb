@@ -1,5 +1,8 @@
 <tr>
-  <td><%= select_tag "party_comments[#{party_comment_id}][party_id]", party_options(selected: party_comment_party) %></td>
+  <td>
+    <%= select_tag "party_comments[#{party_comment_id}][party_id]", party_options(selected: party_comment_party) %>
+    <%= select_tag "party_comments[#{party_comment_id}][parliament_period_id]", parliament_period_options(selected: parliament_period_id) %>
+  </td>
   <td>
     <div id="wmd-button-bar-<%= party_comment_id %>"></div>
     <%= text_area_tag "party_comments[#{party_comment_id}][body]", party_comment_body, class: 'span7', rows: '10', id: "wmd-input-#{party_comment_id}" %>
