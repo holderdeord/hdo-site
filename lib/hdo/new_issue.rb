@@ -24,7 +24,7 @@ module Hdo
 
     def periods
       periods = [ParliamentPeriod.named('2013-2017'), ParliamentPeriod.named('2009-2013')]
-      periods.map { |pp| Period.new(pp, @issue) }.select { |e| e.years.any? && e.positions.any? }
+      periods.map { |pp| Period.new(pp, @issue) }.select { |e| e.years.any? }
     end
 
     private

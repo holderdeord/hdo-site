@@ -38,70 +38,72 @@
   <p class="issue-description"><%= @issue.description %></p>
 
   <% @issue.periods.each do |period| %>
-    <div class="positions">
-      <div class="row-fluid">
-        <div class="span8 offset2">
-          <h3>Det store bildet <%= period.name %></h3>
-        </div>
-      </div>
-
-      <% period.positions.each do |position| %>
+    <% if period.positions.any? %>
+      <div class="positions">
         <div class="row-fluid">
-          <div class="span9 offset2">
-            <h4><%= position.title %></h4>
-            <p class="position-description"><%= position.description %></p>
+          <div class="span8 offset2">
+            <h3>Det store bildet <%= period.name %></h3>
           </div>
         </div>
 
-        <% position.parties.each do |party| %>
+        <% period.positions.each do |position| %>
           <div class="row-fluid">
-
-            <div class="span1 offset1">
-              <%= image_tag party.logo.versions[:medium], alt: "#{party.name}s logo" %>
-            </div>
-
-            <div class="span9">
-              <%= party.accountability %>
-
-              <% if party.promises.any? %>
-                <a data-toggle="collapse" data-target="#<%= [party.slug, period.name, 'promises'].join('-') %>" onclick="return false;" href="#" >
-                  <% if party.promises.all?(&:related?) %>
-                    Se relaterte løfter
-                  <% else %>
-                    Se løftene
-                  <% end %>
-                </a>
-              <% end %>
-
-              <% if party.comment.present? %>
-                <a data-toggle="collapse" data-target="#<%= [party.slug, period.name, 'comments'].join('-') %>" onclick="return false;" href="#">
-                  Se <%= party.name %>s kommentar
-                </a>
-              <% end %>
-
-              <% if party.promises.any? %>
-                <div class="collapse promises" id="<%= [party.slug, period.name, 'promises'].join('-') %>">
-                  <ul>
-                    <% party.promises.each do |p| %>
-                      <li class="promise-<%= p.status %> <%= 'muted' if p.related? %>">
-                        <%= link_to p.promise.body, p.promise %>
-                      </li>
-                    <% end %>
-                  </ul>
-                </div>
-              <% end %>
-
-              <% if party.comment.present? %>
-                <div class="collapse party-comments" id="<%= [party.slug, period.name, 'comments'].join('-') %>">
-                  <p><%= markdown(party.comment.body).html_safe %></p>
-                </div>
-              <% end %>
-
+            <div class="span9 offset2">
+              <h4><%= position.title %></h4>
+              <p class="position-description"><%= position.description %></p>
             </div>
           </div>
+
+          <% position.parties.each do |party| %>
+            <div class="row-fluid">
+
+              <div class="span1 offset1">
+                <%= image_tag party.logo.versions[:medium], alt: "#{party.name}s logo" %>
+              </div>
+
+              <div class="span9">
+                <%= party.accountability %>
+
+                <% if party.promises.any? %>
+                  <a data-toggle="collapse" data-target="#<%= [party.slug, period.name, 'promises'].join('-') %>" onclick="return false;" href="#" >
+                    <% if party.promises.all?(&:related?) %>
+                      Se relaterte løfter
+                    <% else %>
+                      Se løftene
+                    <% end %>
+                  </a>
+                <% end %>
+
+                <% if party.comment.present? %>
+                  <a data-toggle="collapse" data-target="#<%= [party.slug, period.name, 'comments'].join('-') %>" onclick="return false;" href="#">
+                    Se <%= party.name %>s kommentar
+                  </a>
+                <% end %>
+
+                <% if party.promises.any? %>
+                  <div class="collapse promises" id="<%= [party.slug, period.name, 'promises'].join('-') %>">
+                    <ul>
+                      <% party.promises.each do |p| %>
+                        <li class="promise-<%= p.status %> <%= 'muted' if p.related? %>">
+                          <%= link_to p.promise.body, p.promise %>
+                        </li>
+                      <% end %>
+                    </ul>
+                  </div>
+                <% end %>
+
+                <% if party.comment.present? %>
+                  <div class="collapse party-comments" id="<%= [party.slug, period.name, 'comments'].join('-') %>">
+                    <p><%= markdown(party.comment.body).html_safe %></p>
+                  </div>
+                <% end %>
+
+              </div>
+            </div>
+          <% end %>
         <% end %>
-      <% end %>
-    </div>
+      </div>
+    <% end %>
 
     <div class="timeline">
       <% period.years.each do |year| %>
