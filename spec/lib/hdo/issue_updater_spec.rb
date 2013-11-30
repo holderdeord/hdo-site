@@ -114,14 +114,16 @@ module Hdo
     describe 'party comments' do
       let(:issue) { Issue.make! }
       let(:party) { Party.make! }
+      let(:parliament_period) { ParliamentPeriod.make! }
 
       it "adds party comments" do
         party_comments = {
           "new1" => {
-            "id"       => "1",
-            "issue_id" => issue.id,
-            "party_id" => party.id,
-            "body"     => "we disagree with the analysis!"
+            "id"                   => "1",
+            "issue_id"             => issue.id,
+            "party_id"             => party.id,
+            "parliament_period_id" => parliament_period.id,
+            "body"                 => "we disagree with the analysis!"
           }
         }
 
