@@ -14,6 +14,8 @@ if defined?(Bundler)
   # Bundler.require(:default, :assets, Rails.env)
 end
 
+I18n.enforce_available_locales = true
+
 module Hdo
   class Application < Rails::Application
     config.before_configuration do
