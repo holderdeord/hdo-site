@@ -82,15 +82,15 @@ namespace :images do
     end
   end
 
-  task :update_topic_issues => :environment do
-    topics = {
-      'Samferdsel'      => [251, 149, 212, 161, 257, 193, 200, 166, 259, 77, 6],
-      'Utdanning'       => [48, 262, 263, 52, 99, 4, 53, 145, 278, 227, 141, 47, 65, 231],
-      'Klima og energi' => [270, 268, 186, 191, 57, 80, 236, 264, 8, 250, 195, 252, 266],
-      'Helse og omsorg' => [143,197,169,18,146,123,246,198,145,175,303,237]
-    }
+  TOPICS = {
+    'Samferdsel'      => {ids: [251, 149, 212, 161, 257, 193, 200, 166, 259, 77, 6], image: "tema_samferdsel.jpg"},
+    'Utdanning'       => {ids: [48, 262, 263, 52, 99, 4, 53, 145, 278, 227, 141, 47, 65, 231], image: "tema_utdanning.jpg"},
+    'Klima og energi' => {ids: [270, 268, 186, 191, 57, 80, 236, 264, 8, 250, 195, 252, 266], image: "tema_klima.jpg"},
+    'Helse og omsorg' => {ids: [143,197,169,18,146,123,246,198,145,175,303,237], image: "tema_helse.jpg"}
+  }
 
-    topic_ids = topics.fetch(AppConfig.topic_of_the_week)
+  task :update_topic_issues => :environment do
+    topic_ids = TOPICS.fetch(AppConfig.topic_of_the_week).fetch(:ids)
 
     Issue.published.each do |issue|
       issue.frontpage = topic_ids.include?(issue.id)
@@ -99,8 +99,10 @@ namespace :images do
   end
 
   desc 'Fetch topic image'
-  task :topic do
-    ok = system "curl", "-s", "-o", Rails.root.join('public/images/topic.jpg').to_s, "http://files.holderdeord.no/images/tema_utdanning.jpg"
+  task :topic => :environment do
+    image = TOPICS.fetch(AppConfig.topic_of_the_week).fetch(:image)
+
+    ok = system "curl", "-s", "-o", Rails.root.join('public/images/topic.jpg').to_s, "http://files.holderdeord.no/images/#{image}"
     ok or raise "topic download failed"
   end
 
