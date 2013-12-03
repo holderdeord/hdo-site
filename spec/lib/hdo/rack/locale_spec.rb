@@ -39,7 +39,7 @@ module Hdo
 
       it 'resets locale on exceptions' do
         app.should_receive(:call).with do |env|
-          I18n.locale = :foo
+          I18n.locale = :en
         end.and_raise("foo")
 
         expect {

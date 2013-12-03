@@ -88,7 +88,7 @@ module Hdo
     ]
 
     # allow cors from other subdomains
-    config.middleware.use Rack::Cors do
+    config.middleware.use ::Rack::Cors do
       allow do
         origins(/holderdeord\.no$/)
         resource '*', :headers => :any, :methods => [:get, :options]
