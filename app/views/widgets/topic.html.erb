@@ -37,7 +37,7 @@
       </p>
 
       <figure class="positions">
-        <%= render partial: 'issue_details', locals: { issue: issue } %>
+        <%= render partial: 'issue_details', locals: { issue: issue, period: issue.period_named('2009-2013') } %>
       </figure>
     </div>
   <% end %>

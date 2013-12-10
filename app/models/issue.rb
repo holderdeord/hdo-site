@@ -50,7 +50,6 @@ class Issue < ActiveRecord::Base
   has_many :promise_connections, dependent: :destroy
   has_many :positions, dependent: :destroy, order: :priority
 
-  has_many :votes,    through: :promise_connections, order: :time
   has_many :promises, through: :promise_connections
   has_many :propositions, through: :proposition_connections
 

@@ -1,217 +1,136 @@
 # encoding: utf-8
 
 class IssueDecorator < Draper::Decorator
-  delegate :propositions,
-           :title,
-           :to_json,
+  delegate :title,
            :description,
-           :proposition_connections,
-           :accountability,
-           :published?,
-           :cache_key,
-           :party_comments,
            :tags,
-           :positions,
-
-           # move to decorator?
+           :to_param,
            :status_text,
            :editor_name,
            :last_updated_by_name,
-           :stats,
-           :downcased_title
-
-  def explanation
-    h.t('app.issues.explanation', count: votes.size, url: h.votes_issue_path(model)).html_safe
-  end
-
-  def short_explanation
-    h.t 'app.votes.based_on', count: votes.size
-  end
-
-  def published_at
-    h.l model.published_at.localtime, format: :text
-  end
+           :published?
 
   def updated_at
-    h.l model.updated_at.localtime, format: :text
+    I18n.l model.updated_at, format: :text
   end
 
   def time_since_updated
     h.distance_of_time_in_words_to_now model.updated_at.localtime
   end
 
-  def generic_positions
-    model.positions.map { |expl| [expl.title, expl.parties.sort_by(&:name)] }
+  def periods
+    periods = [ParliamentPeriod.named('2013-2017'), ParliamentPeriod.named('2009-2013')].compact
+    periods.map { |pp| Period.new(pp, model) }.select { |e| e.years.any? }
   end
 
-  def votes
-    @votes ||= proposition_connections.map(&:vote)
+  def period_named(name)
+    periods.find { |e| e.name == name }
   end
 
-  def promises_by_party
-    @promises_by_party ||= (
-      result = Hash.new { |hash, key| hash[key] = [] }
-
-      model.promise_connections.includes(promise: :promisor).each do |promise_connection|
-        promise_connection.promise.parties.each do |party|
-          result[party] << promise_connection
-        end
-      end
-
-      result
-    )
+  def short_explanation
+    h.t 'app.votes.based_on', count: model.proposition_connections.size
   end
 
-  def party_groups
-    # TODO: hardcoded period / gov
-    government = Government.for_date(Date.new(2009, 10, 1)).first.parties.order(:name).to_a
-    opposition = Party.order(:name).to_a - government
+  private
 
-    gov = IssuePartyDecorator.decorate_collection government, context: self
-    opp = IssuePartyDecorator.decorate_collection opposition, context: self
+  class Period
+    delegate :name, to: :@parliament_period
 
-    groups = []
-
-    if government.any?
-      groups << PartyGroup.new(h.t('app.parties.group.governing'), gov)
-      groups << PartyGroup.new(h.t('app.parties.group.opposition'), opp)
-    else
-      # if no-one's in government, we only need a single group with no name.
-      groups << PartyGroup.new('', opp)
+    def initialize(parliament_period, issue)
+      @parliament_period = parliament_period
+      @issue             = issue
     end
 
-    groups
+    def years
+      @years ||= proposition_connections.group_by { |e| e.vote.time.to_date }.
+             map { |date, connections| Day.new(date, connections) }.
+             sort_by(&:raw_date).reverse.group_by { |e| e.year }.
+             map { |year, days| OpenStruct.new(:year => year, :days => days) }
+    end
+
+    def positions
+      @positions ||= @issue.positions.where(parliament_period_id: @parliament_period).order(:priority).map { |pos| Position.new(@issue, pos) }
+    end
+
+    def explanation
+      votes = proposition_connections.map(&:vote).uniq
+
+      count      = votes.size
+      start_date = votes.first.time
+      end_date   = votes.last.time
+
+      "Basert på #{count} avstemning#{count == 1 ? '' : 'er'} på Stortinget mellom #{I18n.l start_date, format: :month_year} og #{I18n.l end_date, format: :month_year}"
+    end
+
+    private
+
+    def proposition_connections
+      @proposition_connections ||= @issue.proposition_connections.select { |e| @parliament_period.include?(e.vote.time) }.sort_by { |e| e.vote.time }
+    end
   end
 
-  class PartyGroup < Struct.new(:name, :parties)
+  class Position
+    delegate :title, :description, :priority, to: :@position
+
+    def initialize(issue, position)
+      @issue    = issue
+      @position = position
+      @period   = position.parliament_period
+    end
+
+    def parties
+      @position.parties.map { |party| PartyInfo.new(party, comment_for(party), promises_for(party), accountability_for(party)) }
+    end
+
+    private
+
+    def promises_for(party)
+      @issue.promise_connections.joins(:promise).
+              where('promises.promisor_id' => party).
+              where('promises.promisor_type' => Party.name).
+              where('promises.parliament_period_id' => @period).
+              sort_by(&:status)
+    end
+
+    def accountability_for(party)
+      @issue.accountability.text_for(party)
+    end
+
+    def comment_for(party)
+      @issue.party_comments.
+             where(:party_id => party).
+             where(:parliament_period_id => @period).first
+    end
   end
 
-  class IssuePartyDecorator < Draper::Decorator
-    alias_method :issue, :context
+  class PartyInfo < Struct.new(:party, :comment, :promises, :accountability)
+    delegate :logo, :slug, :name, to: :party
+  end
 
-    delegate :external_id,
-             :image_with_fallback,
-             :name,
-             :slug
-
-    def link(opts = {}, &blk)
-      h.link_to h.party_path(model), opts, &blk
+  class Day
+    def initialize(date, connections)
+      @date = date
+      @connections = connections
     end
 
-    def logo(opts = {})
-      h.image_tag model.logo.versions[:medium], opts.merge(alt: "#{model.name}s logo", width: '96', height: '96')
+    def day
+      @date.day
     end
 
-    def has_comment?
-      !!comment
+    def year
+      @date.year
     end
 
-    def comment
-      issue.party_comments.where(party_id: model.id).first
+    def month
+      I18n.l @date, format: '%b'
     end
 
-    def promise_logo
-      key = issue.accountability.key_for(model)
-      if key == :unknown
-        return ''
-      end
-
-      # FIXME: missing icon for partially_kept
-      if key == :partially_kept
-        key = :kept
-      end
-
-      h.image_tag "taxonomy-icons/promise_#{key}.png", alt: promise_caption
-    end
-
-    def promise_caption
-      key = issue.accountability.key_for(model)
-
-      h.t("app.promises.scores.caption.#{key}")
-    end
-
-    def promise_groups
-      @promise_groups ||= (
-        # TODO: clean this up
-
-        result = {
-          '2009-2013' => {'Partiprogram' => []},
-          '2013-2017' => {'Partiprogram' => []}
-        }
-
-        issue.promises_by_party[model].each do |promise_connection|
-          promise = promise_connection.promise
-
-          list = result[promise.parliament_period_name][promise.source] ||= []
-          list << promise_connection
-        end
-
-        result
-      )
-    end
-
-    def accountability_text
-      acc = issue.accountability
-
-      if acc.score_for(model)
-        acc.text_for(model, name: model.name)
-      else
-        ''
-      end
+    def raw_date
+      @date
     end
 
     def votes
-      votes = issue.proposition_connections.includes(:proposition => :votes).sort_by { |e| e.vote.time }.reverse
-      votes.map { |pc| PartyVote.new(model, pc) }.reject(&:ignored?)
-    end
-  end
-
-  class PartyVote < Struct.new(:party, :proposition_connection)
-    def ignored?
-      !participated? || against_alternate_budget?
-    end
-
-    def against_alternate_budget?
-      proposition_connection.proposition_type == 'alternate_national_budget' && direction == 'against'
-    end
-
-    def participated?
-      stats.party_participated? party
-    end
-
-    def direction
-      @direction ||= stats.party_for?(party) ? 'for' : 'against'
-    end
-
-    def title
-      @title ||= (
-        if proposition_connection.title.blank?
-          ''
-        else
-          title = proposition_connection.title
-          "#{I18n.t('app.lang.infinitive_particle')} #{UnicodeUtils.downcase title[0]}#{title[1..-1]}".strip
-        end
-      )
-    end
-
-    def time
-      I18n.l proposition_connection.vote.time, format: :short
-    end
-
-    def month_and_year
-      I18n.l(proposition_connection.vote.time, format: :month_year).capitalize
-    end
-
-    def anchor
-      "vote-#{proposition_connection.to_param}"
-    end
-
-    def label
-      direction == 'for' ? 'For' : 'Mot'
-    end
-
-    def stats
-      @stats ||= proposition_connection.vote.stats
+      @connections.sort_by { |e| e.vote.time }.reverse
     end
   end
 end

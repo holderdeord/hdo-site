@@ -15,7 +15,8 @@ class WidgetsController < ApplicationController
       redirect_to url_for(id: issue.to_param), status: :moved_permanently
     else
       if stale?(issue, public: can_cache?)
-        @issue = issue.decorate
+        @issue   = issue.decorate
+        @period  = period_for(@issue)
         @parties = Party.order(:name)
       end
     end
@@ -57,7 +58,7 @@ class WidgetsController < ApplicationController
       issues           = Issue.published
       example_party    = Party.order('random()').first
       example_promises = []
-      period           = ParliamentPeriod.order(:start_date).last
+      period           = ParliamentPeriod.named('2009-2013')
       example_promises = period.promises.order('random()').first(5) if period
 
       @examples = []
@@ -65,7 +66,7 @@ class WidgetsController < ApplicationController
       if issues.any?
         docs = Hdo::WidgetDocs.new
 
-        @examples << docs.specific_issue(issues.first)
+        @examples << docs.specific_issue(issues.first, period)
         @examples << docs.party_default(example_party)
         @examples << docs.party_count(example_party, 10)
         @examples << docs.party_issues(example_party, issues.order('random()').first(5))
@@ -102,6 +103,16 @@ class WidgetsController < ApplicationController
       issues
     else
       issues.first((params[:count] || 5).to_i)
+    end
+  end
+
+  def period_for(issue)
+    period = params[:period] ? issue.periods.find { |e| e.name == params[:period] } : issue.periods.last
+
+    if period.nil?
+      raise ActiveRecord::RecordNotFound
+    else
+      period
     end
   end
 end

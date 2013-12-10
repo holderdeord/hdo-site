@@ -12,15 +12,6 @@
   }
 }
 
-.votes-header {
-  .lead {
-    margin-bottom: 0;
-  }
-  .votes-title {
-    color: inherit;
-  }
-}
-
 .page-header {
   aside {
     line-height: 1em;
@@ -36,146 +27,6 @@
   line-height: 1.5em;
   margin: 1em 0 2em 0;
 }
-
-
-figure.valence {
-  .position {
-    .span3 {
-      padding: 0.5em 0 1em 0;
-      .party-logo {
-        max-width: 64px;
-        height: auto;
-      }
-    }
-    h4 {
-      margin-bottom: 0.25em;
-      font-weight: normal;
-    }
-  }
-}
-
-figure.valence {
-  figcaption {
-    font-size: 0.85em;
-    border-bottom: 1px solid #f4f4f4;
-    border-top: 2px solid #eee;
-    border-top: 1px solid #f4f4f4;
-    padding: 3px 0;
-    margin-bottom: 1em;
-    p {
-      margin: 0;
-    }
-    .clearfix;
-    .social {
-      display: inline-block;
-      vertical-align: top;
-      margin: 2px 0 0 15px;
-      float: right;
-      height: 20px;
-    }
-    a {
-      color: #666;
-    }
-  }
-}
-
-@media (max-width: 767px) {
-  figure.valence .position .span3 {
-    padding: 0;
-    .party-logo {
-      max-width: 48px;
-    }
-  }
-}
-
-
-@media (max-width: 979px) and (min-width: 768px) {
-  figure.valence .position .span3 {
-    .party-logo {
-      max-width: 48px;
-    }
-  }
-}
-
-.issue-party {
-  @space-left: 100% / (@parties_num + 1 );
-  margin-bottom: 4em;
-  margin-top: 1em;
-  h3 {
-    line-height: 1em;
-    margin-bottom: 5px;
-    .muted {
-      font-size: 0.7em;
-    }
-  }
-  .issue-party-summary {
-    font-size: 1.15em;
-    line-height: 1.5em;
-    margin-bottom: 0;
-  }
-  > header,
-  > section {
-    .clearfix;
-    .content {
-      padding-left: @space-left;
-    }
-    .icon {
-      float: left;
-      text-align: center;
-      width: @space-left;
-      font-size: 0.75em;
-      line-height: 1em;
-      margin-top: 0.5em;
-      text-transform: lowercase;
-    }
-  }
-  > header .icon {
-    margin-top: -1.75em;
-  }
-  > section {
-    margin-top: 15px;
-    img {
-      opacity: 0.25;
-    }
-  }
-  .issue-party-promise-list {
-    a {
-      color: inherit;
-    }
-  }
-}
-
-@media (max-width: 768px) {
-  @space-left: 110px;
-  .issue-party {
-    > header,
-    > section {
-      .content {
-        padding-left: @space-left;
-      }
-      .icon {
-        width: @space-left;
-      }
-    }
-  }
-}
-
-@media (max-width: 480px) {
-  @space-left: 48px;
-  .issue-party {
-    > header,
-    > section {
-      .content {
-        padding-left: @space-left + 10px;
-      }
-      .icon {
-        width: @space-left;
-      }
-    }
-  }
-}
-
-.proposition-body { display: none; }
 
 .issue-timeline {
   .promises {
@@ -243,6 +94,7 @@ figure.valence {
       .vote {
         padding: 0 50px 10px 50px;
         .vote-title {
+          color: black;
           font-size: 1.25em;
           font-weight: 200px;
           margin-bottom: 0;

@@ -2,12 +2,12 @@
 
 module Hdo
   class WidgetDocs
-    def specific_issue(issue)
+    def specific_issue(issue, period)
       Widget.new(
         'Sak',
         'utvalgt sak',
-        "<a class='hdo-issue-widget' href='#{root_url}' data-issue-id='#{issue.try(:id)}'>Laster innhold fra Holder de ord</a>",
-        "<iframe src='#{widget_issue_url(issue)}'>"
+        "<a class='hdo-issue-widget' href='#{root_url}' data-issue-id='#{issue.try(:id)}' data-period='#{period.name}'>Laster innhold fra Holder de ord</a>",
+        "<iframe src='#{widget_issue_url(issue, period: period.name)}'>"
       )
     end
 

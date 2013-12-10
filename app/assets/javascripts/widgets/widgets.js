@@ -111,10 +111,12 @@ var HDO = HDO || {};
     },
 
     widgetOptionsFor: function (el) {
-      var url, target, partner, count;
+      var url, target, partner, count, period;
 
       if (this.type === "issue") {
         url = H.widgets.baseUrl + "issues/" + el.getAttribute('data-issue-id') + '/widget';
+        period = el.getAttribute('data-period');
+        url = (period && period.length) ? this.addParam(url, 'period', period) : url;
       } else if (this.type === "representative") {
         url = H.widgets.baseUrl + "representatives/" + el.getAttribute('data-representative-id') + '/widget';
         url = this.addIssueParams(el, url);

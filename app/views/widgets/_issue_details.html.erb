@@ -1,5 +1,5 @@
 <div class="valence">
-  <% issue.positions.order(:priority).each do |position| %>
+  <% period.positions.sort_by(&:priority).each do |position| %>
 
     <div class="constellation">
 

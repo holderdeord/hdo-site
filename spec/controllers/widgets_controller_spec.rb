@@ -6,6 +6,10 @@ describe WidgetsController do
   let(:party) { Party.make! }
   let(:representative) { Representative.make! }
 
+  before do
+    ParliamentPeriod.make!(:current) unless ParliamentPeriod.current
+  end
+
   describe 'GET #issue' do
     it 'assigns the requested issue' do
       get :issue, id: published_issue
@@ -94,6 +98,7 @@ describe WidgetsController do
     end
 
     it 'assigns published issues' do
+      ParliamentPeriod.make!(external_id: '2009-2013') unless ParliamentPeriod.named('2009-2013')
       published, issue = Issue.make!(:published), Issue.make!
 
       request.env['HTTP_AUTHORIZATION'] = auth

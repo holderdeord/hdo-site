@@ -11,10 +11,10 @@
 
 <article>
   <figure class="positions">
-    <%= render partial: 'issue_details', locals: { issue: @issue } %>
+    <%= render partial: 'issue_details', locals: { period: @period, issue: @issue } %>
 
     <figcaption class="muted">
-      <p><%= @issue.explanation %></p>
+      <p><%= @period.explanation %></p>
     </figcaption>
 
   </figure>

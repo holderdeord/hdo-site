@@ -1,7 +1,7 @@
 # encoding: UTF-8
 
 class IssuesController < ApplicationController
-  before_filter :fetch_issue, except: [:index, :admin_info]
+  before_filter :fetch_issue, except: [:index, :admin_info, :votes]
 
   hdo_caches_page :index, :show, :votes
 
@@ -14,38 +14,19 @@ class IssuesController < ApplicationController
     if policy(@issue).show?
       fresh_when @issue, public: can_cache?
       @issue = IssueDecorator.decorate(@issue)
-      fetch_issue_votes
-      @all_parties = Party.order(:name)
-    else
-      redirect_to new_user_session_path
-    end
-  end
-
-  def next
-    if policy(@issue).show?
-      @issue = Hdo::NewIssue.new(@issue)
     else
       redirect_to new_user_session_path
     end
   end
 
   def votes
-    return unless stale?(@issue, public: can_cache?)
-
-    if policy(@issue).show?
-      fetch_issue_votes
-      @all_parties = Party.order(:name)
-      @issue       = IssueDecorator.decorate(@issue)
-    else
-      redirect_to new_user_session_path
-    end
+    redirect_to action: 'show', status: :moved_permanently
   end
 
   def admin_info
     if user_signed_in?
       fetch_issue
-      @issue = @issue.decorate
-
+      @issue = IssueDecorator.decorate(@issue)
       render partial: 'admin_info'
     else
       head :ok
@@ -62,14 +43,4 @@ class IssuesController < ApplicationController
     end
   end
 
-  def fetch_issue_votes
-    connections = @issue.proposition_connections.includes(:proposition => :votes).sort_by { |e| e.vote.time }.reverse
-    views       = PropositionConnectionDecorator.decorate_collection(connections, context: @issue)
-
-    # within each day, we want to order by time *ascending*
-    grouped = views.group_by { |e| e.time.to_date }.values
-    sorted  = grouped.flat_map { |vcs| vcs.sort_by { |e| e.time } }
-
-    @issue_votes = sorted
-  end
 end

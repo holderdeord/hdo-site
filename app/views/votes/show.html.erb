@@ -20,7 +20,7 @@
       </ul>
     <% end %>
   </div>
-  
+
   <div class="span6">
     <h4>Behandling</h4>
     <p><%= l @vote.time.localtime, format: :text_time %></p>
@@ -28,6 +28,7 @@
       <%= @vote.enacted? ? 'Vedtatt' : 'Ikke vedtatt' %>
       <small class="muted"><%= @vote.for_count %> for, <%= @vote.against_count %> mot, <%= @vote.absent_count %> ikke tilstede</small>
     </p>
+
   </div>
 </div>
 
@@ -50,7 +51,7 @@
   </div>
 
   <% @results_by_party.each do |party, results_by_status| %>
-    <div class="row-fluid" data-toggle="collapse" data-target='#vote-results-<%= party.slug %>'>
+    <div class="vote-result-row row-fluid" data-toggle="collapse" data-target='#vote-results-<%= party.slug %>'>
       <% results_by_status.each do |status, results| %>
         <div class="span4">
           <% if results.any? %>

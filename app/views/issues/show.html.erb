@@ -3,50 +3,142 @@
 <% metadata[:type] = 'article' %>
 <% metadata[:url] = issue_url(@issue) %>
 
-<% cache @issue do %>
+<div id="admin-info"></div>
+<%= content_for :document_ready do %>
+  <script>
+  $(document).ready(function() {
+    if (HDO.ssl && 'https:' != document.location.protocol) {
+      return;
+    }
+
+    $.ajax({
+      url: '<%= admin_info_issue_path(@issue) %>',
+      type: 'GET',
+      dataType: 'html',
+      success: function(data, textStatus, xhr) { $("#admin-info").html(data); }
+    });
+  });
+  </script>
+<% end %>
+
+<article class="issue-timeline">
   <div class="page-header">
     <h1 class="issue-title"><%= @issue.title %></h1>
-    <%= render partial: 'aside', locals: { issue: @issue } %>
+    <div class="row-fluid">
+      <div class="span6">
+        <%= render partial: 'aside', locals: { issue: @issue } %>
+      </div>
+
+      <div class="pull-right">
+        <%= render partial: 'shared/social_sharing' %>
+      </div>
+    </div>
   </div>
 
   <p class="issue-description"><%= @issue.description %></p>
 
-  <figure class="valence">
-    <figcaption class="muted">
-      <%= render partial: 'shared/social_sharing' %>
-      <p><%= @issue.explanation %></p>
-    </figcaption>
-
-    <% @issue.positions.each do |position| %>
-      <div class="row-fluid position">
-        <div class="span3">
-          <div class="parties_<%= position.parties.size %>">
-            <% position.parties.sort_by(&:name).each do |party| %>
-              <a href="#<%= party.slug %>">
-                <%= image_tag party.logo.versions[:medium], alt: "#{party.name}s logo", class: "party-logo" %>
-              </a>
-            <% end %>
+  <% @issue.periods.each do |period| %>
+    <% if period.positions.any? %>
+      <div class="positions">
+        <div class="row-fluid">
+          <div class="span8 offset2">
+            <h3>Det store bildet <%= period.name %></h3>
+            <small class="muted"><%= period.explanation %></small>
           </div>
         </div>
 
-        <div class="span7">
-          <h4><%= position.title %></h4>
-          <p><%= position.description %></p>
-        </div>
+        <% period.positions.each do |position| %>
+          <div class="row-fluid">
+            <div class="span9 offset2">
+              <h4><%= position.title %></h4>
+              <p class="position-description"><%= position.description %></p>
+            </div>
+          </div>
+
+          <% position.parties.each do |party| %>
+            <div class="row-fluid">
+
+              <div class="span1 offset1">
+                <%= image_tag party.logo.versions[:medium], alt: "#{party.name}s logo" %>
+              </div>
+
+              <div class="span9">
+                <%= party.accountability %>
+
+                <% if party.promises.any? %>
+                  <a data-toggle="collapse" data-target="#<%= [party.slug, period.name, 'promises'].join('-') %>" href="#" >
+                    <% if party.promises.all?(&:related?) %>
+                      Se relaterte løfter
+                    <% else %>
+                      Se løftene
+                    <% end %>
+                  </a>
+                <% end %>
+
+                <% if party.comment.present? %>
+                  &nbsp;
+                  <a data-toggle="collapse" data-target="#<%= [party.slug, period.name, 'comments'].join('-') %>" href="#">
+                    <%= party.name %>s kommentar
+                  </a>
+                <% end %>
+
+                <% if party.promises.any? %>
+                  <div class="collapse promises" id="<%= [party.slug, period.name, 'promises'].join('-') %>">
+                    <ul>
+                      <% party.promises.each do |p| %>
+                        <li class="promise-<%= p.status %> <%= 'muted' if p.related? %>">
+                          <%= link_to p.promise.body, p.promise %>
+                        </li>
+                      <% end %>
+                    </ul>
+                  </div>
+                <% end %>
+
+                <% if party.comment.present? %>
+                  <div class="collapse party-comments" id="<%= [party.slug, period.name, 'comments'].join('-') %>">
+                    <small class="muted">Kommentar fra <%= party.name %>, <%= l party.comment.created_at, format: :text %></small>
+                    <blockquote><%= markdown(party.comment.body).html_safe %></blockquote>
+                  </div>
+                <% end %>
+
+              </div>
+            </div>
+          <% end %>
+        <% end %>
       </div>
     <% end %>
-  </figure>
 
-  <hr>
+    <div class="timeline">
+      <% period.years.each do |year| %>
+        <div class="yearmarker"><%= year.year %></div>
 
-  <div>
-    <% @issue.party_groups.each do |party_group| %>
-      <% party_group.parties.each do |party| %>
-        <% unless party.external_id == 'MDG' %>
-          <%= render partial: 'issue_party', locals: { issue: @issue, party: party, party_group: party_group } %>
+        <% year.days.each do |day| %>
+          <div class="row-fluid timeline-entry">
+            <div class="span6"></div>
+            <div class="date span6">
+              <div class="day"><%= day.day %></div>
+              <div class="month"><%= day.month %></div>
+            </div>
+          </div>
+
+          <% day.votes.in_groups_of(2, false).each do |votes| %>
+            <div class="row-fluid votes">
+            <% votes.each do |vote| %>
+              <div class="span6 vote">
+                <%= link_to vote.title, vote.vote, class: 'vote-title' %>
+                <div class="vote-detail"><%= markdown(vote.comment).html_safe %></div>
+              </div>
+              <% end %>
+            </div>
+          <% end %>
         <% end %>
       <% end %>
-    <% end %>
-  </div>
+    </div>
+  <% end %>
+</article>
 
-<% end # cache %>
+<% content_for :document_ready do %>
+  <script type="text/javascript" charset="utf-8">
+    $("a[data-toggle]").on('click', function(e) { $(this).toggleClass('expanded'); e.preventDefault(); });
+  </script>
+<% end %>

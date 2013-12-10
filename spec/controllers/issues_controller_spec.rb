@@ -12,22 +12,8 @@ describe IssuesController do
     assigns(:issue).should be_decorated_with(IssueDecorator)
   end
 
-  it 'should get :votes if the issue is published' do
-    issue.update_attributes! status: 'published'
-
-    get :votes, id: issue
-
-    response.should have_rendered(:votes)
-    assigns(:issue_votes).should be_kind_of(Enumerable)
-  end
-
   it 'should redirect :show to the front page if the issue is not published' do
     get :show, id: issue
-    response.should redirect_to(new_user_session_path)
-  end
-
-  it 'should redirect :votes to the front page if the issue is not published' do
-    get :votes, id: issue
     response.should redirect_to(new_user_session_path)
   end
 
@@ -35,10 +21,11 @@ describe IssuesController do
     get :show, id: issue.slug
     response.should redirect_to(issue_url(issue))
     response.status.should == 301
+  end
 
-    get :votes, id: issue.slug
-    response.should redirect_to(votes_issue_url(issue))
-    response.status.should == 301
+  it 'redirects :votes to :show' do
+    get :votes, id: issue
+    response.should redirect_to(issue_url(issue))
   end
 
   context "with rendered views" do

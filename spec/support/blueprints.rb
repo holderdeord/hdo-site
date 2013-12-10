@@ -96,6 +96,12 @@ ParliamentPeriod.blueprint do
   end_date { Date.new(2013, 9, 30) }
 end
 
+ParliamentPeriod.blueprint(:current) do
+  external_id { "2013-2017" }
+  start_date { Date.new(2013, 10, 1) }
+  end_date { Date.new(2017, 9, 30) }
+end
+
 Representative.blueprint do
   external_id { sn.to_s }
   first_name { "first-name-#{sn}" }
