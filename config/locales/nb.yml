@@ -566,7 +566,7 @@ nb:
       none: 'Intet parti'
     promises:
       scores:
-        no_promises_html: "%{name} har ingen løfter i partiprogrammet som direkte angår saken."
+        no_promises_html: "%{name} har ingen løfter som direkte angår saken."
         broken_html: "%{name} har <strong>ikke holdt ord</strong> i denne saken."
         kept_html: "%{name} har <strong>holdt ord</strong> i denne saken."
         partially_kept_html: "%{name} har <strong>delvis holdt ord</strong> i denne saken."

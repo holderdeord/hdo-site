@@ -85,11 +85,24 @@ class IssueDecorator < Draper::Decorator
     private
 
     def promises_for(party)
-      @issue.promise_connections.joins(:promise).
-              where('promises.promisor_id' => party).
-              where('promises.promisor_type' => Party.name).
-              where('promises.parliament_period_id' => @period).
-              sort_by(&:status)
+      promises = @issue.promise_connections.joins(:promise).
+                    where('promises.promisor_id' => party).
+                    where('promises.promisor_type' => Party.name).
+                    where('promises.parliament_period_id' => @period)
+
+      #
+      # The following may need change if there are several governments per period.
+      #
+
+      gov = Government.for_date(@period.start_date + 2.months).first
+      if gov && gov.parties.include?(party)
+        promises += @issue.promise_connections.joins(:promise).
+                      where('promises.promisor_id' => gov).
+                      where('promises.promisor_type' => Government.name).
+                      where('promises.parliament_period_id' => @period)
+      end
+
+      promises.sort_by(&:status)
     end
 
     def accountability_for(party)
