@@ -2,30 +2,34 @@ Kjære <%= @resource.name %>
 
 Holder de ord er en partipolitisk uavhengig organisasjon som ønsker å gjøre det lettere å følge med på hva som skjer i norsk politikk.
 
-Vi vil nå gjerne invitere deg sammen med alle andre stortingsrepresentanter til vår nye tjeneste «Spør en stortingspolitiker». Her kan velgere enkelt stille spørsmål til representanter om politiske saker, med utgangspunkt i avstemninger og valgløfter på Holder de ord. Alle godkjente spørsmål og svar publiseres på representantens profilside på www.holderdeord.no, og dere trenger derfor kun å svare på samme spørsmål én gang.
+Vi i Holder de ord gratulerer med et vel gjennomført valg, og ønsker alle nye og gjenvalgte stortingsrepresentanter velkommen til vår tjeneste «Spør en stortingspolitiker».
 
-Formålet med denne tjenesten er å skape en attraktiv kanal for dialog om politiske saker mellom velgere og stortingsrepresentanter. For å sikre dette modererer vi alle spørsmål og svar basert på våre retningslinjer.
+Vi lanserte tjenesten før valget og mottok på kort tid 160 spørsmål fra velgerne, der 45 er besvart dere stortingsrepresentanter. Formålet med tjenesten er å skape en attraktiv kanal for dialog om politiske saker mellom velgere og stortingsrepresentanter. For å sikre dette modererer vi alle spørsmål og svar i henhold til våre retningslinjer.
+
+Tjenesten legger opp til at velgerne enkelt kan stille spørsmål til representanter om politiske saker, med utgangspunkt i avstemninger og valgløfter på Holder de ord. Alle godkjente spørsmål og svar publiseres på representantenes profilside på holderdeord.no, samt i sosiale medier. Dermed trenger dere kun svare på samme spørsmål én gang.
 
 Hvordan komme i gang
 --------------------
 
-1. Følg <%= confirmation_url(@resource,
-                              confirmation_token: @resource.confirmation_token, protocol: AppConfig.ssl_enabled ? 'https' : 'http')%> for å logge inn første gang på din personlige side på Holder de ord. Du blir bedt om å velge et passord som du bruker for å besvare spørsmål fra velgerne.
+1. Følg <%= confirmation_url(@resource, confirmation_token: @resource.confirmation_token, protocol: AppConfig.ssl_enabled ? 'https' : 'http') %> for å logge inn første gang på din personlige side på Holder de ord. Du blir bedt om å velge et passord som du bruker for å besvare spørsmål fra velgerne.
+
 2. Når du har valgt et passord, kommer du inn på din personlige side. Her vil spørsmålene fra velgerne som er godkjent komme opp, og du kan også se tidligere spørsmål og status for de enkelte spørsmål.
+
 3. Trykk på «svar» for å svare på et spørsmål. Du får da opp et skjema hvor du skriver inn ditt svar. Når du trykker «send inn» blir svaret ditt sendt til Holder de ord for godkjenning.
+
 4. Når svaret er godkjent, blir det publisert sammen med spørsmålet på din personlige side. Du kan enkelt dele både din profilside og et enkelt spørsmål med dine velgere via Facebook og Twitter.
 
-Hvordan får jeg spørsmålene
----------------------------
+Hvordan får jeg spørsmålene?
+----------------------------
 
-Med en gang et spørsmål er godkjent, blir det publisert på din offentlige profilside. Vi sender deg en epost når du får et spørsmål. Dersom du får mange spørsmål, vil vi begrense epostutsendelsene til én gang per uke.
+Etter et spørsmål er godkjent, blir det publisert på din offentlige profilside. Vi sender deg en e-post når du får et spørsmål. Dersom du mottar mange spørsmål, vil vi begrense e-postutsendelsene til én gang per uke.
 
-Våre søsterorganisasjoner i andre land har hatt stor suksess med liknende tjenester, ikke minst i Tyskland hvor dette har gjort mye for å styrke kontakten mellom velgere og representanter. Vi håper det samme blir tilfelle i Norge. Hvis du har noen spørsmål eller innspill til hvordan vi kan gjøre tjenesten bedre, vil vi gjerne at du tar kontakt.
+Våre søsterorganisasjoner i andre land har hatt stor suksess med liknende tjenester, hvor dette har gjort mye for å styrke kontakten mellom velgere og representanter. Vi håper det samme blir tilfellet i Norge. Hvis du har noen spørsmål eller innspill til hvordan vi kan gjøre tjenesten bedre, vil vi gjerne at du tar kontakt.
 
 Om Holder de ord
-----------------
+-----------------
 
-Holder de ord er en partipolitisk uavhengig organisasjon som ble grunnlagt på slutten av 2010 med et ønske om å gjøre det lettere å følge med på hva som skjer i norsk politikk. Hos oss finner du informasjon om hvordan partier og stortingsrepresentanter stemmer i konkrete politiske saker og hvordan dette henger sammen med partiprogram. Vi samler løfter og avstemninger under politiske saker slik vi kjenner de fra samfunnsdebatten, og gjør det enkelt for folk å få oversikt over norsk politikk.
+Holder de ord ble grunnlagt i slutten av 2010. Hos oss finner du informasjon om hvordan partier og stortingsrepresentanter stemmer i konkrete politiske saker og hvordan dette henger sammen med partiprogram. Vi samler løfter og avstemninger under politiske saker slik vi kjenner de fra samfunnsdebatten, og gjør det enkelt for folk å få oversikt over norsk politikk. I forbindelse med den nye stortingsperioden gjør vi en rekke endringer på vår nettside. Noen endringer er allerede implementert, mens andre vil komme i løpet av de neste månedene. Vi setter som alltid stor pris på innspill på nettsiden fra våre brukere. Bare ta kontakt dersom du har noen kommentarer.
 
 Ha en god dag!
 
