@@ -6,7 +6,7 @@
     create: function (params) {
       var instance = Object.create(this);
       instance.server = params.server;
-      instance.throttler = HDO.throttler.create(300);
+      instance.throttler = HDO.throttler.create(150);
       instance.nameMap = {};
       return instance;
     },
