@@ -42,4 +42,20 @@ describe Proposition do
     prop.short_body.should == prop.body
   end
 
+  it 'has a default pending status' do
+    prop = Proposition.new
+    prop.status.should == 'pending'
+    prop.should be_pending
+  end
+
+  it 'can have "published" status' do
+    prop = Proposition.make(status: 'published')
+    prop.status.should == 'published'
+    prop.should be_published
+  end
+
+  it 'validates status' do
+    Proposition.make(status: 'foo').should_not be_valid
+  end
+
 end

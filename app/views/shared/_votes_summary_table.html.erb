@@ -18,7 +18,7 @@
       <% votes.each do |vote| %>
       <tr>
         <td><%= vote.external_id %></td>
-        <td><%= vote.time_text %></td>
+        <td><%= l vote.time.localtime, format: :short_text %></td>
         <% if show_issues %>
           <td>
             <ul>

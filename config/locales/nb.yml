@@ -8,6 +8,7 @@ nb:
       default: "%Y-%m-%d %H:%M:%S"
       short: "%Y-%m-%d"
       text: "%e. %B %Y"
+      short_text: "%e. %b %Y"
       month_year: "%B %Y"
       text_time: "%e. %B %Y %H:%M"
   valid_email:
@@ -536,26 +537,6 @@ nb:
         title: Svar på spørsmål
         your_answer: Ditt svar
         before_publishing_info: 'Før publisering blir svaret moderert i henhold til <a href="#" data-toggle="modal" data-target="#code-of-conduct">retningslinjene</a>.'
-    external:
-      urls:
-        parliament_issue: "http://stortinget.no/no/Saker-og-publikasjoner/Saker/Sak/?p=%s"
-        minutes: "http://stortinget.no/no/Saker-og-publikasjoner/Publikasjoner/Referater/Stortinget/%s/%s"
-    parliament_issue:
-      states:
-        processed: "behandlet"
-    time:
-      years: "år"
-    created:
-      promise: Løftet ble lagret.
-      issue: Saken er lagret.
-      user: Brukeren ble lagret.
-      government: Regjeringen ble lagret.
-    updated:
-      promise: Løftet ble oppdatert.
-      issue: Saken ble oppdatert.
-      user: Brukeren ble oppdatert.
-      representative: Representanten ble oppdatert.
-      government: Regjeringen ble oppdatert
     parties:
       no_promises: Ingen løfter om saken.
       related_promise: Løftet er ikke direkte knyttet til saken.
@@ -580,6 +561,34 @@ nb:
       based_on:
         one: "basert på 1 løfte"
         other: "basert på %{count} løfter"
+    propositions:
+      status:
+        pending:
+          one: Ny
+          other: Nye
+        published:
+          one: Publisert
+          other: Publiserte
+    external:
+      urls:
+        parliament_issue: "http://stortinget.no/no/Saker-og-publikasjoner/Saker/Sak/?p=%s"
+        minutes: "http://stortinget.no/no/Saker-og-publikasjoner/Publikasjoner/Referater/Stortinget/%s/%s"
+    parliament_issue:
+      states:
+        processed: "behandlet"
+    time:
+      years: "år"
+    created:
+      promise: Løftet ble lagret.
+      issue: Saken er lagret.
+      user: Brukeren ble lagret.
+      government: Regjeringen ble lagret.
+    updated:
+      promise: Løftet ble oppdatert.
+      issue: Saken ble oppdatert.
+      user: Brukeren ble oppdatert.
+      representative: Representanten ble oppdatert.
+      government: Regjeringen ble oppdatert
     counts:
       representative:
         one: "Viser <strong>1</strong> representant."

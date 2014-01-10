@@ -64,10 +64,6 @@ class Vote < ActiveRecord::Base
     response.results
   end
 
-  def time_text
-    I18n.l time, format: :short
-  end
-
   def has_results?
     vote_results.size > 0
   end

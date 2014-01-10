@@ -26,6 +26,8 @@ class Proposition < ActiveRecord::Base
   alias_method :delivered_by, :representative
 
   validates :body, presence: true
+  validates :status, presence: true, inclusion: {in: %w[pending published]}
+
   validates_uniqueness_of :external_id, allow_nil: true # https://github.com/holderdeord/hdo-site/issues/138
 
   def plain_body
@@ -34,6 +36,22 @@ class Proposition < ActiveRecord::Base
 
   def short_body
     plain_body.truncate(200)
+  end
+
+  def pending?
+    status == 'pending'
+  end
+
+  def published?
+    status == 'published'
+  end
+
+  def status_text(count = 1)
+    I18n.t("app.propositions.status.#{status}", count: count)
+  end
+
+  def on_behalf_of_guess
+    Hdo::Utils::PropositionSourceGuesser.parties_for(on_behalf_of + ' ' + description)
   end
 
   def to_indexed_json

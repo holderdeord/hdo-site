@@ -33,7 +33,7 @@ class ParliamentIssue < ActiveRecord::Base
   end
 
   def last_update_text
-    I18n.l last_update, format: :short
+    I18n.l last_update, format: :short_text
   end
 
   def url

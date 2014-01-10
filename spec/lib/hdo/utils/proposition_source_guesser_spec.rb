@@ -22,6 +22,10 @@ module Hdo
         g.parties_for('sosialistisk venstreparti').should_not include("V")
       end
 
+      it 'ignores "bokstav" and "romertall"' do
+        g.parties_for('Komiteens tilråding bokstav A. rammeområde 1, romertall V.').should be_empty
+      end
+
     end
   end
 end
