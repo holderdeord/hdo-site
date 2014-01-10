@@ -2,7 +2,7 @@ module Hdo
   module Utils
     class PropositionSourceGuesser
 
-      def parties_for(str)
+      def self.parties_for(str)
         result = []
 
         PARTY_MAP.each do |exp, external_id|
@@ -19,7 +19,7 @@ module Hdo
         /\b(kristel(i|e)g folkeparti|krf)\b/i            => 'KrF',
         /\b(senterpartiet|sp)\b/i                        => 'Sp',
         /\b(sosialistisk venstreparti|sv)\b/i            => 'SV',
-        /\b(venstre|v)\b/                                => 'V',
+        /\b(venstre|v)\b/i                               => 'V',
       }
 
     end

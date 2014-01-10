@@ -3,11 +3,12 @@ require './lib/hdo/utils/proposition_source_guesser'
 module Hdo
   module Utils
     describe PropositionSourceGuesser do
-      let(:g) { PropositionSourceGuesser.new }
+      let(:g) { PropositionSourceGuesser }
 
       it 'finds parties regardless of case' do
         g.parties_for('arbeiderpartiet').should == ['A']
         g.parties_for('ArbeiderpartieT').should == ['A']
+        g.parties_for('Venstre').should == ['V']
       end
 
       it 'finds shorthand parties' do
