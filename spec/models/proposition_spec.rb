@@ -31,17 +31,6 @@ describe Proposition do
     plain.should == 'foo'
   end
 
-  it '#short_body limits body to 100 characters' do
-    prop = Proposition.make(body: "foo")
-    prop.short_body.should == "foo"
-
-    prop.body = "a"*300
-    prop.short_body.should == "#{('a'*197)}..."
-
-    prop.body = 'a'*200
-    prop.short_body.should == prop.body
-  end
-
   it 'has a default pending status' do
     prop = Proposition.new
     prop.status.should == 'pending'

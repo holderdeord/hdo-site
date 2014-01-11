@@ -7,6 +7,8 @@ class Proposition < ActiveRecord::Base
     mapping {
       indexes :description, type: :string, analyzer: TireSettings.default_analyzer
       indexes :plain_body, type: :string, analyzer: TireSettings.default_analyzer
+      indexes :simple_description, type: :string, analyzer: TireSettings.default_analyzer
+      indexes :simple_body, type: :string, analyzer: TireSettings.default_analyzer
       indexes :on_behalf_of, type: :string
 
       indexes :vote do
@@ -34,10 +36,6 @@ class Proposition < ActiveRecord::Base
     Nokogiri::HTML.parse(body).xpath('//text()').map { |e| e.text.strip }.join(' ')
   end
 
-  def short_body
-    plain_body.truncate(200)
-  end
-
   def pending?
     status == 'pending'
   end
@@ -52,14 +50,6 @@ class Proposition < ActiveRecord::Base
 
   def on_behalf_of_guess
     Hdo::Utils::PropositionSourceGuesser.parties_for(on_behalf_of + ' ' + description)
-  end
-
-  def simple_description
-    ''
-  end
-
-  def simple_body
-    ''
   end
 
   def to_indexed_json

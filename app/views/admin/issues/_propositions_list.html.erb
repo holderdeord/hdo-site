@@ -2,7 +2,7 @@
   <div class="row-fluid well">
 
     <h4><%= proposition.description %></h4>
-    <div class="span10"><%= proposition.short_body %></div>
+    <div class="span10"><%= proposition.body.truncate(200) %></div>
   </div>
 
   <div class="row-fluid">

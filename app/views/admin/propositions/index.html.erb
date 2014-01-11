@@ -56,8 +56,24 @@
             <td><%= l prop.created_at, format: :short_text %></td>
             <td><%= prop.status_text %></td>
             <td><%= prop.on_behalf_of_guess.join(',') %></td>
-            <td><%= prop.description %></td>
-            <td><%= prop.short_body %></td>
+
+            <% if prop.simple_description.present? %>
+              <td>
+                <%= prop.simple_description %>
+                <p class="muted"><%= prop.description %></p>
+              </td>
+            <% else %>
+              <td><%= prop.description %></td>
+            <% end %>
+
+            <% if prop.simple_body.present? %>
+              <td><%= simple_format prop.simple_body.truncate(200) %>
+                <p class="muted"><%= prop.plain_body.truncate(200) %></p>
+              </td>
+            <% else %>
+              <td><%= prop.plain_body.truncate(200) %></td>
+            <% end %>
+
             <td><%= link_to 'Rediger', edit_admin_proposition_path(prop), class: 'btn btn-small' %></td>
           </tr>
         <% end %>
