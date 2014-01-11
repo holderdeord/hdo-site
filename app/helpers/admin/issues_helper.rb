@@ -2,6 +2,12 @@
 
 module Admin::IssuesHelper
 
+  def issue_options_for(model)
+    # TODO(jari): this can be done with .pluck([:title, :id]) in rails 4
+    opts = Issue.published.select([:title, :id]).map { |e| [e.title, e.id] }
+    options_for_select opts, selected: model.issues.map(&:id)
+  end
+
   def editor_options_for(issue)
     users = User.order(:name)
 

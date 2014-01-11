@@ -1,11 +1,12 @@
-<h2>Forslagsvask</h2>
+<div class="page-header">
+  <a href="#" class="pull-right">Hjelp?</a>
+  <h1>Forslagsvask</h1>
 
-<div class="progress">
-  <div class="bar bar-success" style="width: <%= @stats.published_percentage %>%;"><%= @stats.published %> publiserte</div>
-  <div class="bar bar-warning" style="width: <%= @stats.pending_percentage %>%;"><%= @stats.pending %> nye</div>
+  <div class="progress">
+    <div class="bar bar-success" style="width: <%= @stats.published_percentage %>%;"><%= @stats.published %> publiserte</div>
+    <div class="bar" style="width: <%= @stats.pending_percentage %>%;"><%= @stats.pending %> nye</div>
+  </div>
 </div>
-
-<hr>
 
 <section class="proposition-index">
   <div class="row-fluid">

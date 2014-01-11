@@ -12,7 +12,13 @@ class Admin::PropositionsController < AdminController
   end
 
   def edit
+    @parliament_issues = @proposition.votes.includes(:parliament_issues).flat_map(&:parliament_issues)
+  end
 
+  def update
+    raise NotImplementedError
+
+    # remember: issue updates *must* go through IssueUpdater
   end
 
   private

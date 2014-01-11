@@ -54,6 +54,14 @@ class Proposition < ActiveRecord::Base
     Hdo::Utils::PropositionSourceGuesser.parties_for(on_behalf_of + ' ' + description)
   end
 
+  def simple_description
+    ''
+  end
+
+  def simple_body
+    ''
+  end
+
   def to_indexed_json
     to_json methods: [:plain_body],
             include: {votes: {only: [:slug]} },

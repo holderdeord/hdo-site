@@ -4,6 +4,11 @@ module Hdo
     class Unauthorized < StandardError
     end
 
+    def self.for_proposition(proposition, issue)
+      attrs = proposition.attributes.merge(connected: true)
+      Hdo::IssueUpdater.new(issue, {propositions: {proposition.id => attrs}})
+    end
+
     def initialize(issue, params, user)
       @issue          = issue
       @attributes     = params[:issue]

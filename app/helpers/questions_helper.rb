@@ -5,11 +5,6 @@ module QuestionsHelper
     end
   end
 
-  def question_issue_options
-    opts = Issue.search("*", per_page: 1000).map { |e| [e.title, e.id] }
-    options_for_select opts, selected: @question.issues.map(&:id)
-  end
-
   def question_status_options
     opts = Question.statuses.map { |status| [t("app.questions.status.#{status}"), status] }
     options_for_select opts, selected: @question.status

@@ -53,6 +53,7 @@ namespace :config do
 end
 
 namespace :search do
+  desc 'Reindex'
   task :reindex, :roles => :db, :only => { :primary => true } do
     run "cd #{current_path} && RAILS_ENV=#{rails_env} #{rake} search:reindex"
   end

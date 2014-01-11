@@ -40,7 +40,7 @@
       <dd><%= f.select :status, question_status_options %></dd>
 
       <dt><%= Question.human_attribute_name :issues %></dt>
-      <dd><%= f.select :issues, question_issue_options, {}, multiple: true, data: {placeholder: 'Velg saker'} %></dd>
+      <dd><%= f.select :issues, issue_options_for(@question), {}, multiple: true, data: {placeholder: 'Velg saker'} %></dd>
 
       <div class="span6">
         <dt><%= Question.human_attribute_name :tags %></dt>

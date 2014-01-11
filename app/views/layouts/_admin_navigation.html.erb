@@ -9,32 +9,32 @@
     <ul class="dropdown-menu">
       <li>
         <%= link_to representatives_path do %>
-          <i class="icon-user"></i> <%= Representative.model_name.human(count: 2).capitalize %>
+          <%= Representative.model_name.human(count: 2).capitalize %>
         <% end %>
       </li>
       <li>
         <%= link_to parliament_issues_path do %>
-          <i class="icon-tags"></i> <%= ParliamentIssue.model_name.human(count: 2).capitalize %>
+          <%= ParliamentIssue.model_name.human(count: 2).capitalize %>
         <% end %>
       </li>
       <li>
         <%= link_to votes_path do %>
-          <i class="icon-envelope"></i> <%= Vote.model_name.human(count: 2).capitalize %>
+          <%= Vote.model_name.human(count: 2).capitalize %>
         <% end %>
       </li>
       <li>
         <%= link_to categories_path do %>
-          <i class="icon-folder-close"></i> <%= Category.model_name.human(count: 2).capitalize %>
+          <%= Category.model_name.human(count: 2).capitalize %>
         <% end %>
       </li>
       <li>
         <%= link_to districts_path do %>
-          <i class="icon-home"></i> <%= District.model_name.human(count: 2).capitalize %>
+          <%= District.model_name.human(count: 2).capitalize %>
         <% end %>
       </li>
       <li>
         <%= link_to committees_path do %>
-          <i class="icon-inbox"></i> <%= Committee.model_name.human(count: 2).capitalize %>
+          <%= Committee.model_name.human(count: 2).capitalize %>
         <% end %>
       </li>
     </ul>
@@ -65,6 +65,7 @@
         <li><%= link_to t('app.issues.edit.new'), new_admin_issue_path %></li>
         <li><%= link_to t('app.admin.latest_from_parliament'), admin_root_path %></li>
         <li><%= link_to Issue.model_name.human(count: 2).capitalize, admin_issues_path %></li>
+        <li><%= link_to Proposition.model_name.human(count: 2).capitalize, admin_propositions_path %></li>
         <li><%= link_to Government.model_name.human(count: 2).capitalize, admin_governments_path %></li>
         <li><%= link_to t('app.documentation.method'), docs_analysis_path %></li>
       </ul>

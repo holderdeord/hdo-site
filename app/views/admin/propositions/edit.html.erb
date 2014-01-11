@@ -1,0 +1,85 @@
+<div class="page-header">
+  <a href="#" class="pull-right">Hjelp?</a>
+  <h1>Rediger forslag</h1>
+</div>
+
+<%= form_for [:admin, @proposition] do |f| %>
+  <div class="row-fluid">
+    <h4 class="span4 offset2">Stortinget</h4>
+    <h4 class="span6">Holder de ord</h4>
+  </div>
+
+  <div class="row-fluid">
+    <div class="span2" style="text-align: right;"><strong>Dato</strong></div>
+    <div class="span4"><%= l @proposition.votes.first.time.localtime, format: :text_time %></div>
+  </div>
+
+  <div class="row-fluid">
+    <div class="span2" style="text-align: right;"><strong>Forslagstittel</strong></div>
+    <div class="span4"><%= @proposition.description %></div>
+    <div class="span6"><%= f.text_field :simple_description %></div>
+  </div>
+
+  <div class="row-fluid">
+    <div class="span2" style="text-align: right;"><strong>Forslagstekst</strong></div>
+    <div class="span4"><%= @proposition.body.html_safe %></div>
+    <div class="span6"><%= f.text_area :simple_body, class: 'input-xlarge', cols: 20, rows: 10 %></div>
+  </div>
+
+  <div class="row-fluid">
+    <div class="span2" style="text-align: right;"><strong>Stortingssak/HDO-saker</strong></div>
+    <div class="span4">
+      <ul>
+        <% @parliament_issues.each do |pissue| %>
+          <li><%= link_to pissue.summary, pissue, target: '_blank' %></li>
+        <% end %>
+      </ul>
+    </div>
+
+    <div class="span6">
+      <%= f.select :issues, issue_options_for(@proposition), {}, multiple: true, data: {placeholder: 'Velg saker'} %>
+      <p>TODO: Mulighet til å opprette ny sak herfra.</p>
+    </div>
+  </div>
+
+  <div class="row-fluid">
+    <div class="span2" style="text-align: right;"><strong>Lenke til innstilling</strong></div>
+    <div class="span4">Kommer...?</div>
+    <div class="span6">Kommer...?</div>
+  </div>
+
+  <div class="row-fluid">
+    <div class="span2" style="text-align: right;"><strong>Lenke til referat</strong></div>
+    <div class="span4">Kommer...?</div>
+    <div class="span6">Kommer...?</div>
+  </div>
+
+  <div class="row-fluid">
+    <div class="span2" style="text-align: right;"><strong>Sakstype</strong></div>
+    <div class="span4">Kommer...?</div>
+    <div class="span6">Kommer...?</div>
+  </div>
+
+  <hr>
+
+  <div class="row-fluid">
+    <div class="span6">
+      <div class="alert alert-<%= @proposition.status == 'published' ? 'success' : 'warning' %> ">
+        <%= @proposition.status_text %>
+      </div>
+    </div>
+    <div class="span6">
+      <%= f.submit 'Lagre', class: 'btn' %>
+      <%= f.submit 'Lagre og publiser', class: 'btn' %>
+      <%= f.submit 'Lagre, publiser, gå til neste', class: 'btn btn-primary' %>
+    </div>
+  </div>
+
+
+<% end %>
+
+<%= content_for :document_ready do %>
+<script>
+  $(function () { $("#proposition_issues").chosen(); })
+</script>
+<% end %>
