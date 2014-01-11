@@ -80,3 +80,31 @@ figure {
     width: 24px;
   }
 }
+
+.tablesorter-headerDesc {
+  .tablesorter-header-inner:after {
+    content: "";
+    display: inline-block;
+    width: 0;
+    height: 0;
+    margin-left: 5px;
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
+    border-bottom: 4px solid @hdoPrimaryColor;
+    transform: rotate(360deg);
+  }
+}
+
+.tablesorter-headerAsc {
+  .tablesorter-header-inner:after {
+    content: "";
+    display: inline-block;
+    width: 0;
+    height: 0;
+    margin-left: 5px;
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
+    border-top: 4px solid @hdoPrimaryColor;
+    transform: rotate(360deg);
+  }
+}
