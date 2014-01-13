@@ -10,8 +10,11 @@ class Proposition < ActiveRecord::Base
       indexes :simple_description, type: :string, analyzer: TireSettings.default_analyzer
       indexes :simple_body, type: :string, analyzer: TireSettings.default_analyzer
       indexes :on_behalf_of, type: :string
+      indexes :vote_time, type: :date
+      indexes :status, type: :string, index: :not_analyzed
+      indexes :parliament_session_name, type: :string, index: :not_analyzed
 
-      indexes :vote do
+      indexes :votes do
         indexes :slug, index: :not_analyzed
       end
     }
@@ -36,6 +39,18 @@ class Proposition < ActiveRecord::Base
     Nokogiri::HTML.parse(body).xpath('//text()').map { |e| e.text.strip }.join(' ')
   end
 
+  def vote_time
+    @vote_time ||= votes.first.try(:time)
+  end
+
+  def parliament_session
+    @parliament_session ||= ParliamentSession.for_date(vote_time)
+  end
+
+  def parliament_session_name
+    parliament_session.try(:name)
+  end
+
   def pending?
     status == 'pending'
   end
@@ -44,17 +59,16 @@ class Proposition < ActiveRecord::Base
     status == 'published'
   end
 
-  def status_text(count = 1)
-    I18n.t("app.propositions.status.#{status}", count: count)
-  end
-
   def on_behalf_of_guess
     Hdo::Utils::PropositionSourceGuesser.parties_for(on_behalf_of + ' ' + description)
   end
 
   def to_indexed_json
-    to_json methods: [:plain_body],
+    methods = [:plain_body]
+    methods += [:parliament_session_name, :vote_time] if votes.any?
+
+    to_json methods: methods,
             include: {votes: {only: [:slug]} },
-            only:    [:description, :on_behalf_of]
+            only:    [:description, :on_behalf_of, :status, :id, :simple_description, :simple_body]
   end
 end

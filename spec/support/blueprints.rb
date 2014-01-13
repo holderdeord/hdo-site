@@ -152,6 +152,10 @@ Proposition.blueprint do
   description { "proposition-description-#{sn}" }
 end
 
+Proposition.blueprint :with_vote do
+  votes { [Vote.make!] }
+end
+
 Government.blueprint do
   name { "government-#{sn}" }
   start_date { Date.today }

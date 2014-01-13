@@ -56,6 +56,27 @@ module Hdo
         }
       end
 
+      def propositions(params = {})
+        Proposition.search(page: params[:page] || 1, per_page: params[:per_page] || @size) do |s|
+          if @query != '*'
+            s.sort { by :_score }
+          else
+            s.sort { by :vote_time, 'desc' }
+          end
+
+          s.query do |q|
+            q.filtered do |fq|
+              fq.query { |qq| qq.string @query }
+              fq.filter :term, parliament_session_name: params[:parliament_session_name]
+            end
+          end
+
+          s.filter :term, status: params[:status] if params[:status].present?
+
+          s.facet(:status) { |f| f.terms :status }
+        end
+      end
+
       private
 
       def response_from(&blk)

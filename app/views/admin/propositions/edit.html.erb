@@ -1,3 +1,5 @@
+<small><%= link_to '&larr; Tilbake'.html_safe, admin_propositions_path %></small>
+
 <div class="page-header">
   <a href="#" class="pull-right">Hjelp?</a>
   <h1>Rediger forslag</h1>
@@ -11,7 +13,11 @@
 
   <div class="row-fluid">
     <div class="span2" style="text-align: right;"><strong>Dato</strong></div>
-    <div class="span4"><%= l @proposition.votes.first.time.localtime, format: :text_time %></div>
+    <div class="span4">
+      <%= l @proposition.vote_time.localtime, format: :text_time %>
+      <div class="muted">Importert <%= l @proposition.created_at.localtime, format: :text_time %></div>
+      <div class="muted">Oppdatert <%= l @proposition.updated_at.localtime, format: :text_time %></div>
+    </div>
   </div>
 
   <div class="row-fluid">
@@ -27,7 +33,7 @@
   </div>
 
   <div class="row-fluid">
-    <div class="span2" style="text-align: right;"><strong>Stortingssak/HDO-saker</strong></div>
+    <div class="span2" style="text-align: right;"><strong>Saker</strong></div>
     <div class="span4">
       <ul>
         <% @parliament_issues.each do |pissue| %>
@@ -38,7 +44,7 @@
 
     <div class="span6">
       <%= f.select :issues, issue_options_for(@proposition), {}, multiple: true, data: {placeholder: 'Velg saker'} %>
-      <p>TODO: Mulighet til å opprette ny sak herfra.</p>
+      <p>Kommer: Mulighet til å opprette ny sak herfra.</p>
     </div>
   </div>
 
@@ -65,7 +71,7 @@
   <div class="row-fluid">
     <div class="span6">
       <div class="alert alert-<%= @proposition.status == 'published' ? 'success' : 'warning' %> ">
-        <%= @proposition.status_text %>
+        <%= t("app.propositions.status.#{@proposition.status}", count: 1) %>
       </div>
     </div>
     <div class="span6">

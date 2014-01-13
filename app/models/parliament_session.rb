@@ -9,6 +9,10 @@ class ParliamentSession < ActiveRecord::Base
     for_date Date.current
   end
 
+  def self.named(name)
+    all.find { |e| e.name == name }
+  end
+
   def name
     [start_date.year, end_date.year].join('-')
   end

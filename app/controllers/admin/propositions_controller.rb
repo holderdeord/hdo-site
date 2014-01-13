@@ -4,11 +4,11 @@ class Admin::PropositionsController < AdminController
   DEFAULT_PER_PAGE = 20
 
   def index
-    @propositions = Proposition.order(:created_at).reverse_order
-    @propositions = @propositions.where(status: params[:status]) if params[:status]
-    @propositions = @propositions.paginate(page: params[:page], per_page: params[:per_page] || DEFAULT_PER_PAGE)
+    params[:parliament_session_name] ||= ParliamentSession.current.name
+    @search_params = params.slice(:parliament_session_name, :q, :status)
 
-    @stats = PropositionStats.new
+    @propositions = Hdo::Search::Searcher.new(params[:q], DEFAULT_PER_PAGE).propositions(params)
+    @stats = PropositionStats.new @propositions
   end
 
   def edit
@@ -17,7 +17,6 @@ class Admin::PropositionsController < AdminController
 
   def update
     raise NotImplementedError
-
     # remember: issue updates *must* go through IssueUpdater
   end
 
@@ -28,19 +27,17 @@ class Admin::PropositionsController < AdminController
   end
 
   class PropositionStats
-    attr_reader :published, :pending
+    def initialize(result)
+      @data = Hash.new(0)
 
-    def initialize
-      @published, @pending = 0, 0
+      status_facet = result.facets['status']
+      @data[:total] = status_facet['total']
 
-      propositions.select("count(*) as c, status").group(:status).each do |e|
-        case e.status
-        when 'published'
-          @published += e.c.to_i
-        when 'pending'
-          @pending += e.c.to_i
-        end
+      status_facet['terms'].each do |term|
+        @data[term['term'].to_sym] = term['count']
       end
+
+      p result.facets
     end
 
     def published_percentage
@@ -51,14 +48,16 @@ class Admin::PropositionsController < AdminController
       (pending / total.to_f) * 100
     end
 
-    def total
-      propositions.size
+    def published
+      @data[:published]
     end
 
-    private
+    def pending
+      @data[:pending]
+    end
 
-    def propositions
-      @propositions ||= Proposition.where('created_at > ?', ParliamentPeriod.current.try(:start_date) || 6.months.ago)
+    def total
+      @data[:total]
     end
   end
 
