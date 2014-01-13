@@ -22,6 +22,7 @@ class Proposition < ActiveRecord::Base
   update_index_on_change_of :votes, has_many: true
 
   attr_accessible :description, :on_behalf_of, :body, :representative_id, :simple_description, :simple_body, :status
+  attr_accessible :source_slugs # TODO: convert to polymorphic Proposition#proposers
 
   has_and_belongs_to_many :votes, uniq: true
   has_many :proposition_connections, dependent: :destroy
@@ -59,12 +60,16 @@ class Proposition < ActiveRecord::Base
     status == 'published'
   end
 
+  def previous
+    self.class.where('id > ?', id).order(:id).reverse_order.first
+  end
+
   def next
     self.class.where('id < ?', id).order(:id).reverse_order.first
   end
 
-  def on_behalf_of_guess
-    Hdo::Utils::PropositionSourceGuesser.parties_for(on_behalf_of + ' ' + description)
+  def source_guess
+    @source_guess ||= Hdo::Utils::PropositionSourceGuesser.parties_for(on_behalf_of + ' ' + description)
   end
 
   def to_indexed_json

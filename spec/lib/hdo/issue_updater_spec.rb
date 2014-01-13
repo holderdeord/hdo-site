@@ -314,7 +314,6 @@ module Hdo
         propositions = {
           proposition.id => {
             connected: 'true',
-            title: proposition_connection.title,
             proposition_type: '' # input is an empty string
           }
         }

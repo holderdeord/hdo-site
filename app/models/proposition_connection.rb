@@ -13,18 +13,20 @@ class PropositionConnection < ActiveRecord::Base
 
 
   validates_presence_of :issue, :proposition
+  validates_uniqueness_of :proposition_id, scope: :issue_id
+
   validate :overrides_vote_if_proposition_has_several_votes
 
   def proposition_type_text
     I18n.t("app.votes.proposition_types.#{proposition_type}")
   end
 
-  def title
-    super || proposition.simple_description || proposition.description
+  def title_with_fallback
+    title || proposition.simple_description || proposition.description
   end
 
-  def comment
-    super || proposition.simple_body || proposition.plain_body.truncate(200)
+  def comment_with_fallback
+    comment || proposition.simple_body || proposition.plain_body.truncate(200)
   end
 
   def vote

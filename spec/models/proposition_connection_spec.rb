@@ -37,4 +37,11 @@ describe PropositionConnection do
     pc = PropositionConnection.make!(vote: vote)
     pc.vote.should == vote
   end
+
+  it 'has unique proposition and issue' do
+    valid = PropositionConnection.make!
+    invalid = PropositionConnection.make(proposition: valid.proposition, issue: valid.issue)
+
+    invalid.should_not be_valid
+  end
 end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140111160208) do
+ActiveRecord::Schema.define(:version => 20140113202012) do
 
   create_table "answers", :force => true do |t|
     t.text     "body",                                     :null => false
@@ -282,6 +282,7 @@ ActiveRecord::Schema.define(:version => 20140111160208) do
     t.string   "status",             :default => "pending"
     t.string   "simple_description"
     t.text     "simple_body"
+    t.string   "source_slugs"
   end
 
   add_index "propositions", ["status"], :name => "index_propositions_on_status"
