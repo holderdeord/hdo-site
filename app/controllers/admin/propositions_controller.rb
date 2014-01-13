@@ -5,14 +5,15 @@ class Admin::PropositionsController < AdminController
 
   def index
     params[:parliament_session_name] ||= ParliamentSession.current.name
-    @search_params = params.slice(:parliament_session_name, :q, :status)
 
-    @propositions = Hdo::Search::Searcher.new(params[:q], DEFAULT_PER_PAGE).propositions(params)
-    @stats = PropositionStats.new @propositions
+    @search_params = params.slice(:parliament_session_name, :q, :status)
+    @propositions  = Hdo::Search::Searcher.new(params[:q], DEFAULT_PER_PAGE).propositions(params)
+    @stats         = PropositionStats.new @propositions.facets
   end
 
   def edit
     @parliament_issues = @proposition.votes.includes(:parliament_issues).flat_map(&:parliament_issues).uniq
+    @stats             = PropositionStats.from_session(@proposition.parliament_session_name)
   end
 
   def update
@@ -60,17 +61,31 @@ class Admin::PropositionsController < AdminController
   end
 
   class PropositionStats
-    def initialize(result)
+    def self.from_session(session_name)
+      Proposition.index.refresh
+      search = Proposition.search(search_type: 'count') {
+        query {
+          filtered {
+            query { string '*' }
+            filter :term, parliament_session_name: session_name
+          }
+        }
+
+        facet(:status) { terms :status }
+      }
+
+      new search.facets
+    end
+
+    def initialize(facets)
       @data = Hash.new(0)
 
-      status_facet = result.facets['status']
+      status_facet = facets['status']
       @data[:total] = status_facet['total']
 
       status_facet['terms'].each do |term|
         @data[term['term'].to_sym] = term['count']
       end
-
-      p result.facets
     end
 
     def published_percentage

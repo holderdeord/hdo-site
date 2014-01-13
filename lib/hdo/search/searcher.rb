@@ -72,7 +72,6 @@ module Hdo
           end
 
           s.filter :term, status: params[:status] if params[:status].present?
-
           s.facet(:status) { |f| f.terms :status }
         end
       end
