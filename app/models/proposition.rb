@@ -13,6 +13,7 @@ class Proposition < ActiveRecord::Base
       indexes :vote_time, type: :date
       indexes :status, type: :string, index: :not_analyzed
       indexes :parliament_session_name, type: :string, index: :not_analyzed
+      indexes :id, type: :integer, index: :not_analyzed
 
       indexes :votes do
         indexes :slug, index: :not_analyzed

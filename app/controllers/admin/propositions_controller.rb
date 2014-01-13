@@ -8,12 +8,12 @@ class Admin::PropositionsController < AdminController
 
     @search_params = params.slice(:parliament_session_name, :q, :status)
     @propositions  = Hdo::Search::Searcher.new(params[:q], DEFAULT_PER_PAGE).propositions(params)
-    @stats         = PropositionStats.new @propositions.facets
+    @stats         = Hdo::Stats::PropositionCounts.new @propositions.facets
   end
 
   def edit
     @parliament_issues = @proposition.votes.includes(:parliament_issues).flat_map(&:parliament_issues).uniq
-    @stats             = PropositionStats.from_session(@proposition.parliament_session_name)
+    @stats             = Hdo::Stats::PropositionCounts.from_session(@proposition.parliament_session_name)
   end
 
   def update
@@ -59,54 +59,4 @@ class Admin::PropositionsController < AdminController
 
     true
   end
-
-  class PropositionStats
-    def self.from_session(session_name)
-      Proposition.index.refresh
-      search = Proposition.search(search_type: 'count') {
-        query {
-          filtered {
-            query { string '*' }
-            filter :term, parliament_session_name: session_name
-          }
-        }
-
-        facet(:status) { terms :status }
-      }
-
-      new search.facets
-    end
-
-    def initialize(facets)
-      @data = Hash.new(0)
-
-      status_facet = facets['status']
-      @data[:total] = status_facet['total']
-
-      status_facet['terms'].each do |term|
-        @data[term['term'].to_sym] = term['count']
-      end
-    end
-
-    def published_percentage
-      (published / total.to_f) * 100
-    end
-
-    def pending_percentage
-      (pending / total.to_f) * 100
-    end
-
-    def published
-      @data[:published]
-    end
-
-    def pending
-      @data[:pending]
-    end
-
-    def total
-      @data[:total]
-    end
-  end
-
 end

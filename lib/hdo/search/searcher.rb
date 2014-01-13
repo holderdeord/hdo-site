@@ -61,7 +61,10 @@ module Hdo
           if @query != '*'
             s.sort { by :_score }
           else
-            s.sort { by :vote_time, 'desc' }
+            s.sort do
+              by :id, 'desc'
+              by :vote_time, 'desc'
+            end
           end
 
           s.query do |q|
