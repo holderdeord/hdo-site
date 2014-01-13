@@ -28,7 +28,14 @@
 
   <div class="row-fluid">
     <div class="span2" style="text-align: right;"><strong>Forslagstekst</strong></div>
-    <div class="span4 "><%= @proposition.body.html_safe %></div>
+    <div class="span4">
+      <% if @proposition.plain_body.size < 600 %>
+        <%= @proposition.body.html_safe %>
+      <% else %>
+        <%= @proposition.plain_body.truncate(100) %>
+        <a href="#" data-toggle="modal" data-target="#proposition-body">Se hele</a>
+      <% end %>
+    </div>
     <div class="span6"><%= f.text_area :simple_body, class: 'input-xlarge' %></div>
   </div>
 
@@ -80,9 +87,22 @@
       <%= f.submit 'Lagre, publiser, gå til neste', class: 'btn btn-primary' %>
     </div>
   </div>
-
-
 <% end %>
+
+<div id="proposition-body" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="proposition-body" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3><%= @proposition.description %></h3>
+  </div>
+
+  <div class="modal-body">
+    <%= @proposition.body.html_safe %>
+  </div>
+
+  <div class="modal-footer">
+     <button class="btn" data-dismiss="modal" aria-hidden="true">Lukk</button>
+   </div>
+</div>
 
 <%= content_for :document_ready do %>
 <script>
