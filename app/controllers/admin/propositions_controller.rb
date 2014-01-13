@@ -24,6 +24,8 @@ class Admin::PropositionsController < AdminController
     end
 
     if @proposition.update_attributes(normalize_blanks(params[:proposition]))
+      Proposition.index.refresh
+
       if params[:save_publish]
         redirect_to admin_propositions_path(status: 'published'), notice: t('app.updated.proposition')
       elsif params[:save_publish_next]

@@ -2,7 +2,6 @@ module Hdo
   module Stats
     class PropositionCounts
       def self.from_session(session_name)
-        Proposition.index.refresh
         search = Proposition.search(search_type: 'count') {
           query {
             filtered {
