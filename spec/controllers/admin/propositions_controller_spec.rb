@@ -2,17 +2,16 @@ require 'spec_helper'
 
 describe Admin::PropositionsController do
   before { sign_in User.make! }
+  before { ParliamentSession.make!(start_date: 1.month.ago, end_date: 1.month.from_now) }
 
   it 'should get :index' do
-    ParliamentSession.stub(current: double(:name => '2013-2017'))
-
     get :index
     response.should be_ok
     response.should have_rendered :index
   end
 
   it 'should get :edit' do
-    prop = Proposition.make!
+    prop = Proposition.make!(:with_vote)
 
     get :edit, id: prop
     response.should be_ok
@@ -21,7 +20,7 @@ describe Admin::PropositionsController do
 
 
   it 'should post :update' do
-    prop = Proposition.make!
+    prop = Proposition.make!(:with_vote)
     prop.simple_description.should be_nil
     prop.simple_body.should be_nil
 
@@ -35,7 +34,7 @@ describe Admin::PropositionsController do
   end
 
   it 'should treats empty string as nil' do
-    prop = Proposition.make!
+    prop = Proposition.make!(:with_vote)
     prop.simple_description.should be_nil
     prop.simple_body.should be_nil
 
@@ -51,7 +50,7 @@ describe Admin::PropositionsController do
   end
 
   it 'should post :update and publish' do
-    prop = Proposition.make!
+    prop = Proposition.make!(:with_vote)
     prop.should be_pending
 
     post :update, id: prop, save_publish: '', proposition: {}
@@ -61,7 +60,7 @@ describe Admin::PropositionsController do
   end
 
   it 'should post :update and publish and redirect to the next proposition' do
-    props = [Proposition.make!, Proposition.make!]
+    props = [Proposition.make!, Proposition.make!(:with_vote)]
     props.last.should be_pending
 
     post :update, id: props.last, save_publish_next: '', proposition: {}
@@ -72,7 +71,7 @@ describe Admin::PropositionsController do
 
   it 'should update issues' do
     issue = Issue.make!(proposition_connections: [])
-    prop = Proposition.make!
+    prop = Proposition.make!(:with_vote)
 
     issue.proposition_connections.should be_empty
 
