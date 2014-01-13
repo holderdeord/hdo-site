@@ -21,7 +21,7 @@ class Proposition < ActiveRecord::Base
   }
   update_index_on_change_of :votes, has_many: true
 
-  attr_accessible :description, :on_behalf_of, :body, :representative_id
+  attr_accessible :description, :on_behalf_of, :body, :representative_id, :simple_description, :simple_body, :status
 
   has_and_belongs_to_many :votes, uniq: true
   has_many :proposition_connections, dependent: :destroy
@@ -57,6 +57,10 @@ class Proposition < ActiveRecord::Base
 
   def published?
     status == 'published'
+  end
+
+  def next
+    self.class.where('id < ?', id).order(:id).reverse_order.first
   end
 
   def on_behalf_of_guess

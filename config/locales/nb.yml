@@ -588,7 +588,8 @@ nb:
       issue: Saken ble oppdatert.
       user: Brukeren ble oppdatert.
       representative: Representanten ble oppdatert.
-      government: Regjeringen ble oppdatert
+      government: Regjeringen ble oppdatert.
+      proposition: Forslaget ble oppdatert.
     counts:
       representative:
         one: "Viser <strong>1</strong> representant."

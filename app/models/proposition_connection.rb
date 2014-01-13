@@ -19,6 +19,14 @@ class PropositionConnection < ActiveRecord::Base
     I18n.t("app.votes.proposition_types.#{proposition_type}")
   end
 
+  def title
+    super || proposition.simple_description || proposition.description
+  end
+
+  def comment
+    super || proposition.simple_body || proposition.plain_body.truncate(200)
+  end
+
   def vote
     super || proposition.votes.first
   end

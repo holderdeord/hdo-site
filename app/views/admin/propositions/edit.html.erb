@@ -1,7 +1,13 @@
+<div class="row-fluid">
 <small><%= link_to '&larr; Tilbake'.html_safe, admin_propositions_path %></small>
+<small><a href="#" class="pull-right">Hjelp?</a></small>
+</div>
+
 
 <div class="page-header">
-  <a href="#" class="pull-right">Hjelp?</a>
+  <div class="alert <%= @proposition.status == 'published' ? 'alert-success' : 'alert-info' %> pull-right">
+    <%= t("app.propositions.status.#{@proposition.status}", count: 1) %>
+  </div>
   <h1>Rediger forslag</h1>
 </div>
 
@@ -50,7 +56,11 @@
     </div>
 
     <div class="span6">
-      <%= f.select :issues, issue_options_for(@proposition), {}, multiple: true, data: {placeholder: 'Velg saker'} %>
+      <% if @proposition.votes.size > 1 %>
+        <div class="alert alert-error">Forslaget brukes i flere avstemninger, og må derfor kobles via vanlig saksredigering.</div>
+      <% else %>
+        <%= f.select :issues, issue_options_for(@proposition), {}, multiple: true, data: {placeholder: 'Velg saker'} %>
+      <% end %>
       <p>Kommer: Mulighet til å opprette ny sak herfra.</p>
     </div>
   </div>
@@ -76,15 +86,10 @@
   <hr>
 
   <div class="row-fluid">
-    <div class="span6">
-      <div class="alert alert-<%= @proposition.status == 'published' ? 'success' : 'warning' %> ">
-        <%= t("app.propositions.status.#{@proposition.status}", count: 1) %>
-      </div>
-    </div>
-    <div class="span6">
-      <%= f.submit 'Lagre', class: 'btn' %>
-      <%= f.submit 'Lagre og publiser', class: 'btn' %>
-      <%= f.submit 'Lagre, publiser, gå til neste', class: 'btn btn-primary' %>
+    <div class="span6 offset6">
+      <%= f.submit 'Lagre', name: 'save', class: 'btn' %>
+      <%= f.submit 'Lagre og publiser', name: 'save_publish', class: 'btn' %>
+      <%= f.submit 'Lagre, publiser, gå til neste', name: 'save_publish_next', class: 'btn btn-primary' %>
     </div>
   </div>
 <% end %>

@@ -4,9 +4,8 @@ module Hdo
     class Unauthorized < StandardError
     end
 
-    def self.for_proposition(proposition, issue)
-      attrs = proposition.attributes.merge(connected: true)
-      Hdo::IssueUpdater.new(issue, {propositions: {proposition.id => attrs}})
+    def self.for_proposition(proposition, issue, user)
+      Hdo::IssueUpdater.new(issue, {propositions: {proposition.id => {connected: true}}}, user)
     end
 
     def initialize(issue, params, user)
