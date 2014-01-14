@@ -62,11 +62,11 @@ class Proposition < ActiveRecord::Base
   end
 
   def previous
-    self.class.where('id > ?', id).order(:id).reverse_order.first
+    vote_time && self.class.includes(:votes).where("votes.time < ?", vote_time).order('votes.time DESC').first
   end
 
   def next
-    self.class.where('id < ?', id).order(:id).reverse_order.first
+    vote_time && self.class.includes(:votes).where("votes.time > ?", vote_time).order('votes.time').first
   end
 
   def source_guess

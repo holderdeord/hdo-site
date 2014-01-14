@@ -62,8 +62,8 @@ module Hdo
             s.sort { by :_score }
           else
             s.sort do
-              by :id, 'desc'
-              by :vote_time, 'desc'
+              by :id, 'asc'
+              by :vote_time, 'asc'
             end
           end
 
