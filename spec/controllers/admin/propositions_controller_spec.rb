@@ -60,13 +60,13 @@ describe Admin::PropositionsController do
   end
 
   it 'should post :update and publish and redirect to the next proposition' do
-    props = [Proposition.make!, Proposition.make!(:with_vote)]
-    props.last.should be_pending
+    props = [Proposition.make!(:with_vote), Proposition.make!(:with_vote)]
+    props.first.should be_pending
 
-    post :update, id: props.last, save_publish_next: '', proposition: {}
-    response.should redirect_to(edit_admin_proposition_path(props.first))
+    post :update, id: props.first, save_publish_next: '', proposition: {}
+    response.should redirect_to(edit_admin_proposition_path(props.last))
 
-    props.last.reload.should be_published
+    props.first.reload.should be_published
   end
 
   it 'should update issues' do
