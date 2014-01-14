@@ -70,7 +70,7 @@ class Proposition < ActiveRecord::Base
   end
 
   def source_guess
-    @source_guess ||= Hdo::Utils::PropositionSourceGuesser.parties_for(on_behalf_of + ' ' + description)
+    @source_guess ||= Hdo::Utils::PropositionSourceGuesser.parties_for("#{on_behalf_of} #{description}")
   end
 
   def to_indexed_json
