@@ -5,9 +5,9 @@
   <body>
     <header class="<%= header_class %>" style="<%= header_style %>">
       <div class="container">
-        <a class="logo" href="/">
-          <%= image_tag"logo.png", alt:"Holder de ord" %>
-        </a>
+        <%= link_to root_path, class: 'logo', alt: 'Holder de ord' do %>
+          <%= image_tag "logo.png", alt:"Holder de ord" %>
+        <% end %>
 
         <%= render 'shared/global_search' if AppConfig.front_page_search_enabled %>
         <%= render 'layouts/navigation' %>
