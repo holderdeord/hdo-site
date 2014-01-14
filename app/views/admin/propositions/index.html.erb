@@ -8,7 +8,7 @@
     <div class="span8">
         <ul class="nav nav-tabs">
           <li class="<%= 'active' if params[:status].blank? %>">
-            <%= link_to "Alle forslag (#{@stats.total})", admin_propositions_path %>
+            <%= link_to "Alle forslag (#{@stats.total})", admin_propositions_path(@search_params.except(:status)) %>
           </li>
 
           <li class="<%= 'active' if params[:status] == 'published' %>">
