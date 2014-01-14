@@ -37,6 +37,9 @@ class Proposition < ActiveRecord::Base
 
   validates_uniqueness_of :external_id, allow_nil: true # https://github.com/holderdeord/hdo-site/issues/138
 
+  scope :published, -> { where(status: 'published') }
+  scope :vote_ordered, -> { includes(:votes).order('votes.time DESC') }
+
   def plain_body
     Nokogiri::HTML.parse(body).xpath('//text()').map { |e| e.text.strip }.join(' ')
   end

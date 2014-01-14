@@ -8,7 +8,6 @@ describe Proposition do
     @parliament_session = ParliamentSession.make!(start_date: @start, end_date: @finish)
   end
 
-
   it 'has a valid blueprint' do
     Proposition.make.should be_valid
   end
@@ -61,4 +60,10 @@ describe Proposition do
     prop.parliament_session_name.should == "#{@start.year}-#{@finish.year}"
   end
 
+  it 'has a published scope' do
+    published = Proposition.make!(status: 'published')
+    pending   = Proposition.make!(status: 'pending')
+
+    Proposition.published.should == [published]
+  end
 end
