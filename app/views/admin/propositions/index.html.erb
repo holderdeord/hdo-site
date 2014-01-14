@@ -62,7 +62,7 @@
       <tbody>
         <% @propositions.each do |prop| %>
           <tr class="<%= prop.status == 'published' ? 'success' : 'warning' %>">
-            <td><%= l prop.vote_time.to_time, format: :short_text %>, <%= prop.id %></td>
+            <td><%= l prop.vote_time.to_time, format: :short_text %></td>
             <td><%= t("app.propositions.status.#{prop.status}", count: 1) %></td>
 
             <% if prop.simple_description.present? %>
