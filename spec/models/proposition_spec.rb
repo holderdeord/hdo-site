@@ -44,9 +44,17 @@ describe Proposition do
   end
 
   it 'can have "published" status' do
-    prop = Proposition.make(status: 'published')
+    prop = Proposition.make(status: 'published', simple_description: 'foo')
     prop.status.should == 'published'
     prop.should be_published
+  end
+
+  it 'can not have "published" status without a simple description' do
+    prop = Proposition.make(status: 'published')
+    prop.should_not be_valid
+
+    prop.simple_description = 'foo'
+    prop.should be_valid
   end
 
   it 'validates status' do
@@ -61,9 +69,14 @@ describe Proposition do
   end
 
   it 'has a published scope' do
-    published = Proposition.make!(status: 'published')
-    pending   = Proposition.make!(status: 'pending')
+    published = Proposition.make!(status: 'published', simple_description: 'foo')
+    _         = Proposition.make!(status: 'pending')
 
     Proposition.published.should == [published]
+  end
+
+  it 'can not have an empty simple description or body' do
+    Proposition.make(simple_description: '').should_not be_valid
+    Proposition.make(simple_body: '').should_not be_valid
   end
 end

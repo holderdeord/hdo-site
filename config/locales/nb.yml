@@ -240,6 +240,8 @@ nb:
         on_behalf_of: "På vegne av"
         delivered_by: "Levert av"
         body: "Tekst"
+        simple_description: HDO-tittel
+        simple_body: HDO-beskrivelse
       user:
         name: "Navn"
         email: "E-post"
@@ -337,6 +339,8 @@ nb:
         must_be_published: "Status må være 'publisert' før den kan komme på forsiden. Endringene ble ikke lagret."
       proposition_connections:
         must_override_vote: "Forslaget er koblet til mer enn én avstemning, men du har ikke spesifisert hvilken som skal brukes."
+      propositions:
+
     admin:
       latest_from_parliament: Siste fra Stortinget
     published: Publisert

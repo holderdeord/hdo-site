@@ -34,6 +34,9 @@ class Proposition < ActiveRecord::Base
 
   validates :body, presence: true
   validates :status, presence: true, inclusion: {in: %w[pending published]}
+  validates :simple_description, presence: true, if: :published?
+  validates :simple_description, length: {minimum: 1}, allow_nil: true
+  validates :simple_body, length: {minimum: 1}, allow_nil: true
 
   validates_uniqueness_of :external_id, allow_nil: true # https://github.com/holderdeord/hdo-site/issues/138
 
