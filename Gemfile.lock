@@ -125,7 +125,7 @@ GEM
       guard
       spin
     hashr (0.0.22)
-    hdo-storting-importer (0.5.2)
+    hdo-storting-importer (0.5.3)
       aruba
       builder
       faraday
@@ -367,7 +367,7 @@ DEPENDENCIES
   guard
   guard-rspec
   guard-spin
-  hdo-storting-importer (~> 0.5.2)
+  hdo-storting-importer (~> 0.5.3)
   hipchat
   jasmine
   jquery-rails (>= 3.0.4)

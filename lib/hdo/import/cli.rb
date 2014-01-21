@@ -129,6 +129,9 @@ module Hdo
         Representative.all.each do |rep|
           rep.update_attributes!(attending: attending_xids.include?(rep.external_id))
         end
+
+        missing_reps = Representative.attending.where(:email => nil).map(&:full_name)
+        log.warn "representatives missing emails: #{missing_reps.to_json}" if missing_reps.any?
       end
 
       def import_promises
@@ -136,30 +139,6 @@ module Hdo
 
         promises = Hdo::StortingImporter::Promise.from_xlsx(spreadsheet)
         persister.import_promises promises
-      end
-
-      def import_representative_emails
-        html = open("http://stortinget.no/no/Stottemeny/Kontakt/Partier-og-representanter/Representantenes-e-postadresser/").read
-        text = Nokogiri::HTML.parse(html).text
-        data = text.scan(/\b(.+?), (.+?),\s*.+?:[.\s]+?\b(.+?@stortinget\.no)/)
-
-        missing_emails = []
-
-        data.each do |last_name, first_name, email|
-          rep = Representative.where('first_name like ? and last_name = ?', "#{first_name.strip}%", last_name.strip).first
-
-          if rep
-            rep.email ||= email
-            rep.save!
-          else
-            missing_emails << [first_name, last_name, email]
-          end
-        end
-
-        missing_reps = Representative.attending.where(:email => nil).map(&:full_name)
-
-        log.warn "representatives missing emails: #{missing_reps.to_json} "
-        log.warn "emails missing representatives: #{missing_emails.to_json}"
       end
 
       def each_vote_for(data_source, parliament_issues, limit = nil)

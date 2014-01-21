@@ -30,6 +30,7 @@ module Hdo
           rep = Representative.first
           rep.first_name.should == example.first_name
           rep.last_name.should == example.last_name
+          rep.email.should == example.email
           rep.current_party.external_id.should == example.parties.first.external_id
           rep.committees.map { |e| e.external_id }.should == example.committees.map { |e| e.external_id }
         end

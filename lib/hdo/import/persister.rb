@@ -267,13 +267,17 @@ module Hdo
         end
 
         rec = Representative.find_or_create_by_external_id representative.external_id
-        rec.update_attributes!(
+        attrs = {
           :first_name    => representative.first_name,
           :last_name     => representative.last_name,
           :district      => district,
           :date_of_birth => dob,
           :date_of_death => dod
-        )
+        }
+
+        attrs[:email] = representative.email
+        rec.update_attributes!(attrs)
+
 
         PartyMembershipUpdater.new(rec, representative.parties).update
         CommitteeMembershipUpdater.new(rec, representative.committees).update
