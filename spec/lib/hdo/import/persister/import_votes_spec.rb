@@ -97,6 +97,7 @@ module Hdo
             'external_id' => 'JD',
             'first_name'  => 'John',
             'last_name'   => 'Doe',
+            'email'       => 'john.doe@stortinget.no',
             'vote_result' => 'for'
           ).to_hash
 
