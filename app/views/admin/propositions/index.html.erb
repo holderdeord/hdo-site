@@ -7,15 +7,15 @@
   <div class="row-fluid">
     <div class="span8">
         <ul class="nav nav-tabs">
-          <li class="<%= 'active' if params[:status].blank? %>">
-            <%= link_to "Alle forslag (#{@stats.total})", admin_propositions_path(@search_params.except(:status)) %>
+          <li class="<%= 'active' if @search_params[:status].blank? %>">
+            <%= link_to "Alle forslag (#{@stats.total})", admin_propositions_path(@search_params.merge(status: nil)) %>
           </li>
 
-          <li class="<%= 'active' if params[:status] == 'published' %>">
+          <li class="<%= 'active' if @search_params[:status] == 'published' %>">
             <%= link_to "Publiserte (#{@stats.published})", admin_propositions_path(@search_params.merge(status: 'published')) %>
           </li>
 
-          <li class="<%= 'active' if params[:status] == 'pending' %>">
+          <li class="<%= 'active' if @search_params[:status] == 'pending' %>">
             <%= link_to "Nye (#{@stats.pending})", admin_propositions_path(@search_params.merge(status: 'pending')) %>
           </li>
         </ul>
@@ -26,7 +26,7 @@
         <%= select_tag 'parliament_session_name',
                        options_from_collection_for_select(
                          ParliamentSession.order(:start_date).reverse_order, :name, :name,
-                         params[:parliament_session_name],
+                         @search_params[:parliament_session_name],
                        ),
                        class: 'span9' %>
 

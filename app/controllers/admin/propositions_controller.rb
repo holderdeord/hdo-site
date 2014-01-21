@@ -4,10 +4,8 @@ class Admin::PropositionsController < AdminController
   DEFAULT_PER_PAGE = 20
 
   def index
-    params[:parliament_session_name] ||= ParliamentSession.current.name
-
-    @search_params = params.slice(:parliament_session_name, :q, :status)
-    @propositions  = Hdo::Search::Searcher.new(params[:q], DEFAULT_PER_PAGE).propositions(params)
+    @search_params = fetch_search_params
+    @propositions  = Hdo::Search::Searcher.new(@search_params[:q], DEFAULT_PER_PAGE).propositions(@search_params)
     @stats         = Hdo::Stats::PropositionCounts.new @propositions.facets
   end
 
@@ -29,8 +27,7 @@ class Admin::PropositionsController < AdminController
       if params[:save_publish]
         redirect_to admin_propositions_path(status: 'published'), notice: t('app.updated.proposition')
       elsif params[:save_publish_next]
-        next_prop = @proposition.next
-        path      = next_prop ? edit_admin_proposition_path(next_prop) : admin_propositions_path
+        path      = next_proposition ? edit_admin_proposition_path(next_proposition) : admin_propositions_path
         redirect_to path, notice: t('app.updated.proposition')
       elsif params[:save]
         edit && render(action: 'edit')
@@ -44,6 +41,19 @@ class Admin::PropositionsController < AdminController
 
   def fetch_proposition
     @proposition = Proposition.find(params[:id])
+  end
+
+  def fetch_search_params
+    filter = session[:admin_proposition_filter] || {}.with_indifferent_access
+
+    # Can't use Hash#merge since it will ignore cleared/nil values
+    filter[:parliament_session_name] = params[:parliament_session_name] || ParliamentSession.current.name
+    filter[:q]                       = params[:q]
+    filter[:status]                  = params[:status]
+
+    session[:admin_proposition_filter] = filter
+
+    filter
   end
 
   def update_issues
@@ -60,5 +70,15 @@ class Admin::PropositionsController < AdminController
     end
 
     true
+  end
+
+  helper_method :next_proposition, :previous_proposition
+
+  def next_proposition
+    @next_proposition ||= @proposition.next(session[:admin_proposition_filter])
+  end
+
+  def previous_proposition
+    @previous_proposition ||= @proposition.previous(session[:admin_proposition_filter])
   end
 end

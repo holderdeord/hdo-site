@@ -67,12 +67,21 @@ class Proposition < ActiveRecord::Base
     status == 'published'
   end
 
-  def previous
-    vote_time && self.class.includes(:votes).where("votes.time < ?", vote_time).order('votes.time DESC').first
+  def previous(params = {})
+    return unless vote_time
+
+    relation = self.class.includes(:votes).where("votes.time < ?", vote_time).order('votes.time DESC')
+    relation = relation.where(status: params[:status]) if params[:status]
+    relation.first
   end
 
-  def next
-    vote_time && self.class.includes(:votes).where("votes.time > ?", vote_time).order('votes.time').first
+  def next(params = {})
+    return unless vote_time
+
+    relation = self.class.includes(:votes).where("votes.time > ?", vote_time).order('votes.time')
+    relation = relation.where(status: params[:status]) if params[:status]
+
+    relation.first
   end
 
   def source_guess
