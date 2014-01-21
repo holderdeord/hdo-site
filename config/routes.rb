@@ -152,8 +152,6 @@ Hdo::Application.routes.draw do
 
   get 'home/index'
   get 'home/contact'
-  get 'home/support'
-  get 'home/member'
   get 'home/people'
   get 'home/faq'        => 'home#faq', as: :home_faq
   get 'home/friends'
@@ -161,6 +159,11 @@ Hdo::Application.routes.draw do
   get 'home/method'     => 'home#about'
   get 'home/about'      => 'home#about',    as: :home_about
   get 'home/terms'      => 'home#terms',    as: :home_terms
+
+  # deprecated
+  get 'home/support', to: redirect('/')
+  get 'home/member',  to: redirect('/')
+
 
   #
   # Q & A
