@@ -75,10 +75,10 @@ class Admin::PropositionsController < AdminController
   helper_method :next_proposition, :previous_proposition
 
   def next_proposition
-    @next_proposition ||= @proposition.next(session[:admin_proposition_filter])
+    @next_proposition ||= @proposition.next(session[:admin_proposition_filter] || {})
   end
 
   def previous_proposition
-    @previous_proposition ||= @proposition.previous(session[:admin_proposition_filter])
+    @previous_proposition ||= @proposition.previous(session[:admin_proposition_filter] || {})
   end
 end
