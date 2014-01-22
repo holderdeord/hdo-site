@@ -30,10 +30,11 @@ class Admin::PropositionsController < AdminController
         path      = next_proposition ? edit_admin_proposition_path(next_proposition) : admin_propositions_path
         redirect_to path, notice: t('app.updated.proposition')
       elsif params[:save]
-        edit && render(action: 'edit')
+        redirect_to edit_admin_proposition_path(@proposition), notice: t('app.updated.proposition')
       end
     else
-      edit && render(action: 'edit')
+      flash.alert = @proposition.errors.full_messages.to_sentence
+      redirect_to edit_admin_proposition_path(@proposition)
     end
   end
 
@@ -64,7 +65,7 @@ class Admin::PropositionsController < AdminController
       issue = Issue.find(issue_id)
       unless Hdo::IssueUpdater.for_proposition(@proposition, issue, current_user).update
         flash.alert = issue.errors.full_messages.to_sentence
-        edit && render(action: 'edit')
+        redirect_to(action: 'edit')
         return false
       end
     end

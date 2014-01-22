@@ -27,8 +27,7 @@ describe Admin::PropositionsController do
     attrs = {simple_description: "foo", simple_body: "bar", issues: []}
 
     post :update, id: prop, save: '', proposition: attrs
-    response.should be_ok
-    response.should have_rendered :edit
+    response.should redirect_to(edit_admin_proposition_path(prop))
 
     prop.reload.simple_description.should == "foo"
   end
@@ -41,7 +40,7 @@ describe Admin::PropositionsController do
     attrs = {simple_description: "", simple_body: "", issues: []}
 
     post :update, id: prop, save: '', proposition: attrs
-    response.should be_ok
+    response.should redirect_to(edit_admin_proposition_path(prop))
 
     prop.reload
 
@@ -76,7 +75,7 @@ describe Admin::PropositionsController do
     issue.proposition_connections.should be_empty
 
     post :update, id: prop, save: '', proposition: {issues: ["", issue.id]}
-    response.should be_ok
+    response.should redirect_to(edit_admin_proposition_path(prop))
 
     pc = issue.reload.proposition_connections.first
     pc.should_not be_nil
