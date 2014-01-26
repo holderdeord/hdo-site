@@ -17,7 +17,7 @@ describe('HDO.searchAutocomplete', function () {
     return {
       full_name: "Test Name-" + id,
       url: "/test-url-" + id,
-      latest_party: { name: "Party Hard" },
+      party_name: "Party Hard",
       img_src: "test-img-" + id
     };
   }
