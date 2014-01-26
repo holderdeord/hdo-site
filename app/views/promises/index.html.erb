@@ -21,6 +21,8 @@
     <%= render partial: 'promise_item', locals: { promise: promise, highlight: false } %>
   <% end %>
 
-  <%= will_paginate @promises, class: "pagination pagination-centered visible-desktop" %>
-  <%= will_paginate @promises, class: "pagination pagination-small pagination-centered visible-phone", page_links: false %>
+  <%# paginate @promises, class: "pagination pagination-centered visible-desktop" %>
+  <%# paginate @promises, class: "pagination pagination-small pagination-centered visible-phone", page_links: false %>
+
+  <%= paginate @promises %>
 </ul>

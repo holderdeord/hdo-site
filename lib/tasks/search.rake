@@ -21,7 +21,7 @@ namespace :search do
         took  = response['took']
 
         indexed_count += count
-        puts "\t#{count} (#{indexed_count}/#{total}) in #{took}ms"
+        puts "\t#{count.to_s.ljust(4)} (#{indexed_count}/#{total} in #{took}ms)"
       }
     end
   end

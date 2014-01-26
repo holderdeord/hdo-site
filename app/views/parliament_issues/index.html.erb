@@ -5,5 +5,5 @@
 <p class="pull-right"><%= page_entries_info @parliament_issues %></p>
 
 <%= render partial: "shared/parliament_issue_table", locals: { parliament_issues: @parliament_issues } %>
-<%= will_paginate @parliament_issues %>
+<%= paginate @parliament_issues %>
 

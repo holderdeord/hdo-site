@@ -69,7 +69,7 @@ gem 'devise', "~> 2.2.5"
 gem 'pundit'
 
 # pagination
-gem 'will_paginate', "~> 3.0.3"
+gem 'kaminari'
 
 # url slugs
 gem 'friendly_id', "~> 4.0"

@@ -62,7 +62,7 @@ class PromisesController < ApplicationController
     @promises = @promises.order(:promisor_type, :promisor_id, :body).uniq
     @promises = @promises.where(:promisor_id => @promisor, :promisor_type => @promisor.class.name) if @promisor
 
-    @promises = @promises.paginate(page: params[:page], per_page: DEFAULT_PER_PAGE)
+    @promises = @promises.page(params[:page]).per(DEFAULT_PER_PAGE)
   end
 
   def find_promisor

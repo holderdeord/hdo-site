@@ -177,6 +177,9 @@ GEM
     jschematic (0.1.0)
       addressable
     json (1.8.1)
+    kaminari (0.15.1)
+      actionpack (>= 3.0.0)
+      activesupport (>= 3.0.0)
     less (2.3.1)
       commonjs (~> 0.2.6)
     less-rails (2.3.2)
@@ -348,7 +351,6 @@ GEM
     warden (1.2.3)
       rack (>= 1.0)
     websocket (1.0.7)
-    will_paginate (3.0.5)
     workflow (1.0.0)
     yajl-ruby (1.2.0)
     yaml_db (0.2.3)
@@ -383,6 +385,7 @@ DEPENDENCIES
   jasmine
   jquery-rails (>= 3.0.4)
   jquery-tablesorter (>= 1.5.0)
+  kaminari
   less-rails
   loadable_component (>= 0.1.1)
   lograge
@@ -416,7 +419,6 @@ DEPENDENCIES
   uglifier (>= 1.0.3)
   unicode_utils
   valid_email
-  will_paginate (~> 3.0.3)
   workflow
   yajl-ruby
   yaml_db

@@ -5,7 +5,10 @@ class Admin::PropositionsController < AdminController
 
   def index
     @search_params = fetch_search_params
+
     @propositions  = Hdo::Search::Searcher.new(@search_params[:q], DEFAULT_PER_PAGE).propositions(@search_params)
+    @propositions  = @propositions.page(params[:page]).per(DEFAULT_PER_PAGE)
+
     @stats         = Hdo::Stats::PropositionCounts.new @propositions.response['facets']
   end
 

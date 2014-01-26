@@ -3,6 +3,14 @@ nb:
     submit:
       create: "Lag %{model}"
       update: "Lagre %{model}"
+    page_entries_info:
+      one_page:
+        display_entries:
+          zero: "Ingen %{entry_name} funnet"
+          one: "Viser <b>1</b> %{entry_name}"
+          other: "Viser <b>alle %{count}</b> %{entry_name}"
+      more_pages:
+        display_entries: "Viser <b>%{first}&nbsp;-&nbsp;%{last}</b> av totalt <b>%{total}</b>"
   time:
     formats:
       default: "%Y-%m-%d %H:%M:%S"
@@ -27,6 +35,13 @@ nb:
       text: "%e. %B %Y"
       month_year: "%B %Y"
     order: [ !ruby/symbol day, !ruby/symbol month, !ruby/symbol year ]
+  views:
+    pagination:
+      first: "&laquo; Første"
+      last: "Siste &raquo;"
+      previous: "&lsaquo; Forrige"
+      next: "Neste &rsaquo;"
+      truncate: "&hellip;"
   datetime:
     distance_in_words:
       half_a_minute: "et halvt minutt"
@@ -309,21 +324,6 @@ nb:
         start_date: Startdato
         end_date: Sluttdato
         parties: Partier
-  will_paginate:
-    previous_label: "&#8592; Forrige"
-    next_label: "Neste &#8594;"
-    page_gap: "&hellip;"
-    page_entries_info:
-      single_page:
-        zero:  "Ingen %{model} funnet."
-        one:   "Viser 1 %{model}"
-        other: "Viser alle %{count} %{model}"
-      single_page_html:
-        zero:  "Ingen %{model} funnet"
-        one:   "Viser <strong>1</strong> %{model}"
-        other: "Viser <strong>alle&nbsp;%{count}</strong> %{model}"
-      multi_page: "Viser %{from} - %{to} av totalt %{count} %{model}"
-      multi_page_html: "Viser <strong>%{from}&nbsp;-&nbsp;%{to}</strong> av totalt <strong>%{count}</strong> %{model}"
   support:
     array:
       words_connector: ', '

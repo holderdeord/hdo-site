@@ -248,7 +248,7 @@ nn:
       party_comment:
         party: Parti
         body: Kommentar
-  will_paginate:
+  paginate:
     previous_label: "&#8592; Førre"
     next_label: "Neste &#8594;"
     page_gap: "&hellip;"
