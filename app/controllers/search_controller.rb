@@ -62,12 +62,11 @@ class SearchController < ApplicationController
     respond_to do |format|
       format.json do
         if response.success?
-          render json: response.results
+          render json: response.results.map { |pr| pr._source.as_json.merge(id: pr._id)}
         else
           render json: {error: t('app.errors.search')}, status: 500
         end
       end
     end
   end
-
 end

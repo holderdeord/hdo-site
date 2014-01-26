@@ -85,7 +85,7 @@ gem 'acts-as-taggable-on', '~> 2.4.1'
 
 # search
 gem 'elasticsearch-model', '~> 0.1.0.rc1'
-gem 'elasticsearch-rails', '~> 0.1.0.rc1'
+gem 'elasticsearch-rails', github: 'jarib/elasticsearch-rails', branch: 'fix-search-request-options'
 
 # caching
 gem 'cache_digests'

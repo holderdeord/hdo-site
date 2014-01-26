@@ -1,13 +1,15 @@
 module Hdo
   module Search
     class Searcher
-      INDECES = {
-        Issue.index_name           => { boost: 5   },
-        Party.index_name           => { boost: 3.5 },
-        Representative.index_name  => { boost: 2   },
-        Promise.index_name         => { boost: 1   },
-        Proposition.index_name     => { boost: 1   },
-        ParliamentIssue.index_name => { boost: 1   }
+      SEARCHABLE_MODELS = [Issue, Party, Representative, Promise, Proposition, ParliamentIssue]
+
+      BOOST = {
+        Issue.index_name           => 5,
+        Party.index_name           => 3.5,
+        Representative.index_name  => 2,
+        Promise.index_name         => 1,
+        Proposition.index_name     => 1,
+        ParliamentIssue.index_name => 1
       }
 
       def initialize(query, size = nil)
@@ -17,27 +19,37 @@ module Hdo
       end
 
       def all
-        response_from do
-          Issue.search({
-            query: { query_string: {query: @query, default_operator: 'AND'}}
-          }, index: INDECES.keys.join(','), size: @size, sort: ['_score'])
-        end
+        q = {
+          query: {
+            query_string: {query: @query, default_operator: 'AND'}
+          },
+          indices_boost: BOOST
+        }
+
+        opts = {
+          index: SEARCHABLE_MODELS.map(&:index_name),
+          type: nil,
+          size: @size,
+          sort: ['_score']
+        }
+
+        response_from { Issue.search(q, opts) }
       end
 
       def promises
-        response_from {
-          Tire.search(Promise.index_name) do |s|
-            s.size @size
-
-            s.query do |query|
-              query.string @query, default_operator: 'AND'
-            end
-
-            s.filter :term, parliament_period_name: '2013-2017'
-
-            s.sort { by :_score }
-          end
+        q = {
+          query: {
+            query_string: {query: @query, default_operator: 'AND'}
+          },
+          filter: {term: {parliament_period_name: '2013-2017' } }
         }
+
+        opts = {
+          size: @size,
+          sort: ['_score']
+        }
+
+        response_from { Promise.search(q, opts) }
       end
 
       def autocomplete
