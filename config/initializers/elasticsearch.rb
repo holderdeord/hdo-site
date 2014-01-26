@@ -1,9 +1,14 @@
 # TODO: typhoeus or net_http_persistent transport
 
+file = Rails.root.join("log/elasticsearch_#{Rails.env}.log").open('a')
+file.binmode
+
+logger = ActiveSupport::BufferedLogger.new(file)
+
 options = {
   hosts: AppConfig.elasticsearch_url.split(','),
   log: true,
-  logger: Logger.new(Rails.root.join("log/elasticsearch_#{Rails.env}.log")),
+  logger: logger,
   retry_on_failure: 2
 }
 

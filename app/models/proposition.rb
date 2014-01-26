@@ -87,11 +87,11 @@ class Proposition < ActiveRecord::Base
     @source_guess ||= Hdo::Utils::PropositionSourceGuesser.parties_for("#{on_behalf_of} #{description}")
   end
 
-  def to_indexed_json
+  def as_indexed_json(options = nil)
     methods = [:plain_body]
     methods += [:parliament_session_name, :vote_time] if votes.any?
 
-    to_json methods: methods,
+    as_json methods: methods,
             include: {votes: {only: [:slug]} },
             only:    [:description, :on_behalf_of, :status, :id, :simple_description, :simple_body]
   end

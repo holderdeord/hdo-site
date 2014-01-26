@@ -1,8 +1,6 @@
 module Hdo
   module Search
     class Searcher
-      SEARCHABLE_MODELS = [Issue, Party, Representative, Promise, Proposition, ParliamentIssue]
-
       BOOST = {
         Issue.index_name           => 5,
         Party.index_name           => 3.5,
@@ -27,7 +25,7 @@ module Hdo
         }
 
         opts = {
-          index: SEARCHABLE_MODELS.map(&:index_name),
+          index: SearchSettings.models.map(&:index_name),
           type: nil,
           size: @size,
           sort: ['_score']
@@ -70,26 +68,37 @@ module Hdo
       end
 
       def propositions(params = {})
-        Proposition.search(page: params[:page] || 1, per_page: params[:per_page] || @size) do |s|
-          if @query != '*'
-            s.sort { by :_score }
-          else
-            s.sort do
-              by :id, 'asc'
-              by :vote_time, 'asc'
-            end
-          end
+        opts = {
+          from: ((params[:page] || 1) - 1) * (params[:per_page] || @size),
+          size: params[:per_page] || @size
+        }
 
-          s.query do |q|
-            q.filtered do |fq|
-              fq.query { |qq| qq.string @query }
-              fq.filter :term, parliament_session_name: params[:parliament_session_name]
-            end
-          end
+        q = {}
 
-          s.filter :term, status: params[:status] if params[:status].present?
-          s.facet(:status) { |f| f.terms :status }
+        if @query == '*'
+          q[:sort] = [{id: 'asc'}, {vote_time: 'asc'}]
+        else
+          q[:sort] = ['_score']
         end
+
+        q[:query] = {
+          filtered: {
+            query:   {query_string: {query: @query}},
+            filter: {
+              and: [term: {parliament_session_name: params[:parliament_session_name] }]
+            }
+          }
+        }
+
+        q[:facets] = {
+          status: {terms: {field: "status", size: 10, all_terms: false}}
+        }
+
+        if params[:status].present?
+          q[:filter] = {term: {status: params[:status]}}
+        end
+
+        Proposition.search(q, opts)
       end
 
       private

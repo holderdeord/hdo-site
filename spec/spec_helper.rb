@@ -46,10 +46,12 @@ RSpec.configure do |config|
   config.before :suite do
     DatabaseCleaner.strategy = :transaction
     DatabaseCleaner.clean_with :truncation
+
+    SearchSettings.models.each { |m| m.__elasticsearch__.create_index! force: true }
   end
 
   config.after :suite do
-    SearchSettings.models.each { |m| m.index.delete }
+    SearchSettings.models.each { |m| m.__elasticsearch__.delete_index! force: true }
   end
 
   config.before :each do

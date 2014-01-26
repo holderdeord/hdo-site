@@ -1,19 +1,23 @@
 require 'spec_helper'
 
 describe Admin::PropositionsController do
+  before(:suite) { Proposition.create_index! }
   before { sign_in User.make! }
   before { ParliamentSession.make!(start_date: 1.month.ago, end_date: 1.month.from_now) }
 
   it 'should get :index' do
     get :index
+
     response.should be_ok
     response.should have_rendered :index
   end
 
   it 'should get :edit' do
     prop = Proposition.make!(:with_vote)
+    prop.run_callbacks(:commit) # for indexing
 
     get :edit, id: prop
+
     response.should be_ok
     response.should have_rendered :edit
   end

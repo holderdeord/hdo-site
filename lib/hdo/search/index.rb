@@ -20,7 +20,11 @@ module Hdo
 
           updater = ->(model) do
             if opts[:if].nil? || opts[:if].call(model)
-              model.tire.update_index
+              if model.destroyed?
+                model.__elasticsearch__.delete_document
+              else
+                model.__elasticsearch__.index_document
+              end
             end
           end
 

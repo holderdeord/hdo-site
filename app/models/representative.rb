@@ -200,8 +200,8 @@ class Representative < ActiveRecord::Base
     Hdo::Stats::RepresentativeCounts.new self
   end
 
-  def to_indexed_json
-    to_json include: [:district],
+  def as_indexed_json(options = nil)
+    as_json include: [:district],
             methods: [:latest_party, :full_name],
             only: [:slug, :last_name, :first_name, :twitter_id]
   end

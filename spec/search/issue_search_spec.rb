@@ -15,7 +15,7 @@ describe Issue, :search do
     results = results_for 'skatt'
 
     results.should_not be_empty
-    results.first.load.should == issue
+    results.first._id.to_i.should == issue.id
   end
 
   it 'does synonym mappings' do
@@ -67,7 +67,8 @@ describe Issue, :search do
 
     results = results_for('bar')
     results.size.should == 1
-    results.first.load.should == issue
+
+    results.first._id.to_i.should == issue.id
   end
 
   it 'removes issues from index on unpublishing' do

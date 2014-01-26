@@ -71,7 +71,7 @@ class Promise < ActiveRecord::Base
     parliament_period.external_id != '2009-2013'
   end
 
-  def to_indexed_json
-    to_json methods: [:party_names, :parliament_period_name], only: :body
+  def as_indexed_json(options = nil)
+    as_json methods: [:party_names, :parliament_period_name], only: :body
   end
 end

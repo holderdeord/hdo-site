@@ -7,6 +7,8 @@ describe Representative, :search do
     rep = Representative.make!
     PartyMembership.make!(:party => Party.make!(:name => "foobar"), :representative => rep)
     rep.save!
+
+    fake_commit rep
     refresh_index
 
     found = Representative.search(rep.latest_party.name).results.first
@@ -18,6 +20,8 @@ describe Representative, :search do
 
   it 'finds the representative when searching by district' do
     rep = Representative.make!(:district => District.make!(:name => "Akershus"))
+
+    fake_commit rep
     refresh_index
 
     found = Representative.search("akershus").results.first
@@ -27,7 +31,9 @@ describe Representative, :search do
   context 'refresh on association update' do
     it 'updates the index when associated district changes' do
       district = District.make!
-      Representative.make!(district: district)
+      rep = Representative.make!(district: district)
+
+      fake_commit rep
       refresh_index
 
       Representative.search('*').results.first.district.name.should == district.name
@@ -43,11 +49,15 @@ describe Representative, :search do
       rep = Representative.make!
       rep.party_memberships.create(:party => party, :start_date => 2.months.ago)
       rep.save!
+
+      fake_commit rep
       refresh_index
 
       Representative.search('*').results.first.latest_party.name.should == party.name
 
       party.update_attributes!(name: 'bachelors party')
+
+      fake_commit party
       refresh_index
 
       Representative.search('*').results.first.latest_party.name.should == party.name
@@ -59,11 +69,16 @@ describe Representative, :search do
       rep          = Representative.make!
 
       rep.party_memberships.create!(party: party_before, start_date: 2.months.ago)
+
+      fake_commit rep
       refresh_index
 
       Representative.search('*').results.first.latest_party.name.should == party_before.name
 
-      rep.party_memberships.first.update_attributes!(party: party_after)
+      party_membership = rep.party_memberships.first
+      party_membership.update_attributes!(party: party_after)
+
+      fake_commit party_membership
       refresh_index
 
       Representative.search('*').results.first.latest_party.name.should == party_after.name

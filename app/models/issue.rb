@@ -17,10 +17,10 @@ class Issue < ActiveRecord::Base
     }
   }
 
-  update_index_on_change_of :categories, if: lambda { |i| i.published? }, has_many: true
-
   after_save    { update_search_index }
-  after_destroy { tire.update_index }
+  after_destroy { update_search_index }
+
+  update_index_on_change_of :categories, if: lambda { |i| i.published? }, has_many: true
 
   acts_as_taggable
 
@@ -151,8 +151,8 @@ class Issue < ActiveRecord::Base
     editor ? editor.name : I18n.t('app.nobody')
   end
 
-  def to_indexed_json
-    as_json(include: [:categories]).merge(:tag_list => tag_list).to_json
+  def as_indexed_json(options = nil)
+    as_json(include: [:categories], methods: :tag_list)
   end
 
   def to_json_with_stats
@@ -173,9 +173,9 @@ class Issue < ActiveRecord::Base
 
   def update_search_index
     if published?
-      tire.update_index
+      __elasticsearch__.index_document
     else
-      self.index.remove self
+      __elasticsearch__.delete_document ignore: 404
     end
   end
 end

@@ -6,7 +6,7 @@ class Admin::PropositionsController < AdminController
   def index
     @search_params = fetch_search_params
     @propositions  = Hdo::Search::Searcher.new(@search_params[:q], DEFAULT_PER_PAGE).propositions(@search_params)
-    @stats         = Hdo::Stats::PropositionCounts.new @propositions.facets
+    @stats         = Hdo::Stats::PropositionCounts.new @propositions.response['facets']
   end
 
   def edit
@@ -22,7 +22,7 @@ class Admin::PropositionsController < AdminController
     end
 
     if @proposition.update_attributes(normalize_blanks(params[:proposition]))
-      Proposition.index.refresh
+      Proposition.__elasticsearch__.refresh_index!
 
       if params[:save_publish]
         redirect_to admin_propositions_path(status: 'published'), notice: t('app.updated.proposition')
