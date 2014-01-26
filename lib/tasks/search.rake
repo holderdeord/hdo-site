@@ -5,26 +5,23 @@ namespace :search do
       next if ENV['CLASS'] && ENV['CLASS'] != klass.to_s
       puts "\n#{klass}"
 
-      total = klass.count
-      index = klass.index
+      elasticsearch = klass.__elasticsearch__
 
-      index.delete
-      ok = index.create :mappings => klass.tire.mapping_to_hash, :settings => klass.settings
+      elasticsearch.delete_index!
+      ok = elasticsearch.create_index!['ok']
       ok or raise "unable to create #{index.name}, #{index.response && index.response.body}"
 
+      klass = klass.published if klass == Issue
+
       indexed_count = 0
+      total = klass.count
 
-      klass.import { |docs|
-        if klass == Issue
-          # don't index unpublished issues.
-          docs = docs.select { |e| e.published? }
-        end
+      klass.import { |response|
+        count = response['items'].size
+        took  = response['took']
 
-        count = docs.to_a.size
         indexed_count += count
-        puts "\t#{count} (#{indexed_count}/#{total})"
-
-        docs
+        puts "\t#{count} (#{indexed_count}/#{total}) in #{took}ms"
       }
     end
   end
