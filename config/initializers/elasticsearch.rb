@@ -6,7 +6,7 @@ file.binmode
 logger = ActiveSupport::BufferedLogger.new(file)
 
 options = {
-  hosts: AppConfig.elasticsearch_url.split(','),
+  hosts: Array(AppConfig.elasticsearch_url),
   log: true,
   logger: logger,
   retry_on_failure: 2
