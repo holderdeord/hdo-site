@@ -53,16 +53,20 @@ module Hdo
       end
 
       def autocomplete
-        response_from {
-          Tire.search([Issue.index_name, Representative.index_name]) do |s|
-            s.size 25
-
-            s.query do |query|
-              query.string "#{@query}* #{@query}", default_operator: 'OR'
-            end
-            s.sort { by :_score }
-          end
+        q = {
+          query: {
+            query_string: {query: "#{@query}* #{@query}", default_operator: 'OR'}
+          }
         }
+
+        opts = {
+          index: [Issue, Representative].map(&:index_name),
+          type: nil,
+          size: 25,
+          sort: ['_score']
+        }
+
+        response_from { Issue.search(q, opts) }
       end
 
       def propositions(params = {})

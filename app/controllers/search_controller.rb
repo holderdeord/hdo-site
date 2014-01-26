@@ -38,17 +38,24 @@ class SearchController < ApplicationController
 
     if response.success?
       @results = response.results.map do |r|
-        case r.type
+        case r._type
         when 'representative'
-          img = representative_icon
-          url = representative_url(id: r.slug || r.id)
+          {
+            type: r._type,
+            img_src: representative_icon,
+            url: representative_url(id: r.slug || r._id),
+            full_name: r.full_name,
+            party_name: r.latest_party.name
+          }
         when 'issue'
-          img = issue_icon
-          url = issue_url(id: "#{r.id}-#{r.slug}")
+          {
+            type: r._type,
+            img_src: issue_icon,
+            url: issue_url(id: "#{r._id}-#{r.slug}"),
+            title: r.title
+          }
         end
-
-        r.as_json.merge(url: url, img_src: img)
-      end.group_by { |e| e["_type"] }
+      end.group_by { |e| e[:type] }
 
       respond_to do |format|
         format.json { render json: @results }
