@@ -14,8 +14,7 @@ describe Hdo::Application do
     menu = front_page.get.menu
     menu.search_for('skatt')
 
-    wait(10).until { menu.autocomplete_results.any? }
-
-    menu.autocomplete_results.first.title.should == "Fjerne formueskatten"
+    result = wait(10).until { menu.autocomplete_results.first }
+    result.title.should == "Fjerne formueskatten"
   end
 end
