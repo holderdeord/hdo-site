@@ -3,11 +3,11 @@ class Party < ActiveRecord::Base
 
   extend FriendlyId
 
-  include Tire::Model::Search
-  include Tire::Model::Callbacks
+  include Hdo::Search::Index
+  include Elasticsearch::Model::Callbacks
 
-  tire.settings(TireSettings.default) {
-    mapping {
+  settings(SearchSettings.default) {
+    mappings {
       indexes :name, type: :string, boost: 20
       indexes :slug, type: :string, boost: 20
     }

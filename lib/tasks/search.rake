@@ -9,7 +9,7 @@ namespace :search do
       index = klass.index
 
       index.delete
-      ok = index.create :mappings => klass.tire.mapping_to_hash, :settings => klass.tire.settings
+      ok = index.create :mappings => klass.tire.mapping_to_hash, :settings => klass.settings
       ok or raise "unable to create #{index.name}, #{index.response && index.response.body}"
 
       indexed_count = 0

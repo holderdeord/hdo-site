@@ -1,30 +1,38 @@
 module Hdo
   module Search
     module Index
+      extend ActiveSupport::Concern
 
-      def update_index_on_change_of(*classes)
-        if classes.last.kind_of?(Hash)
-          opts = classes.pop
-        else
-          opts = {}
-        end
+      included do
+        include Elasticsearch::Model
+        index_name "hdo_#{Rails.env}_#{index_name}"
+      end
 
-        classes.map! { |a| a.to_s.classify.constantize }
-
-        updater = ->(model) do
-          if opts[:if].nil? || opts[:if].call(model)
-            model.tire.update_index
+      module ClassMethods
+        def update_index_on_change_of(*classes)
+          if classes.last.kind_of?(Hash)
+            opts = classes.pop
+          else
+            opts = {}
           end
-        end
 
-        singular = self.to_s.underscore
-        plural   = singular.pluralize
+          classes.map! { |a| a.to_s.classify.constantize }
 
-        fetch_association = opts[:has_many] ? ->(obj) { obj.__send__(plural)       }
-                                            : ->(obj) { [ obj.__send__(singular) ] }
+          updater = ->(model) do
+            if opts[:if].nil? || opts[:if].call(model)
+              model.tire.update_index
+            end
+          end
 
-        classes.each do |clazz|
-          clazz.after_save { fetch_association.call(self).each(&updater) }
+          singular = self.to_s.underscore
+          plural   = singular.pluralize
+
+          fetch_association = opts[:has_many] ? ->(obj) { obj.__send__(plural)       }
+                                              : ->(obj) { [ obj.__send__(singular) ] }
+
+          classes.each do |clazz|
+            clazz.after_save { fetch_association.call(self).each(&updater) }
+          end
         end
       end
 

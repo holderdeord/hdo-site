@@ -1,13 +1,12 @@
 # encoding: UTF-8
 
 class Promise < ActiveRecord::Base
-  include Tire::Model::Search
-  include Tire::Model::Callbacks
-  extend Hdo::Search::Index
+  include Hdo::Search::Index
+  include Elasticsearch::Model::Callbacks
 
-  tire.settings(TireSettings.default) {
-    mapping {
-      indexes :body, type: :string, analyzer: TireSettings.default_analyzer
+  settings(SearchSettings.default) {
+    mappings {
+      indexes :body, type: :string, analyzer: SearchSettings.default_analyzer
       indexes :party_names, type: :string
       indexes :parliament_period_name, type: :string, index: :not_analyzed
     }

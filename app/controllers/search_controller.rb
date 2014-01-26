@@ -17,7 +17,7 @@ class SearchController < ApplicationController
 
     if response.success?
       @results = response.results.
-                          group_by { |e| e.type }.
+                          group_by { |e| e._type }.
                           sort_by { |t, _| TYPE_ORDER.index(t) || 10 }
 
       respond_to do |format|

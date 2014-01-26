@@ -1,14 +1,13 @@
 class Proposition < ActiveRecord::Base
-  include Tire::Model::Search
-  include Tire::Model::Callbacks
-  extend Hdo::Search::Index
+  include Hdo::Search::Index
+  include Elasticsearch::Model::Callbacks
 
-  tire.settings(TireSettings.default) {
-    mapping {
-      indexes :description, type: :string, analyzer: TireSettings.default_analyzer
-      indexes :plain_body, type: :string, analyzer: TireSettings.default_analyzer
-      indexes :simple_description, type: :string, analyzer: TireSettings.default_analyzer
-      indexes :simple_body, type: :string, analyzer: TireSettings.default_analyzer
+  settings(SearchSettings.default) {
+    mappings {
+      indexes :description, type: :string, analyzer: SearchSettings.default_analyzer
+      indexes :plain_body, type: :string, analyzer: SearchSettings.default_analyzer
+      indexes :simple_description, type: :string, analyzer: SearchSettings.default_analyzer
+      indexes :simple_body, type: :string, analyzer: SearchSettings.default_analyzer
       indexes :on_behalf_of, type: :string
       indexes :vote_time, type: :date
       indexes :status, type: :string, index: :not_analyzed

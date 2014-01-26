@@ -1,12 +1,13 @@
 class Vote < ActiveRecord::Base
   extend FriendlyId
 
-  include Tire::Model::Search
-  include Tire::Model::Callbacks
-  extend Hdo::Search::Index
+  include Hdo::Search::Index
+  include Elasticsearch::Model::Callbacks
 
-  tire.settings(TireSettings.default) {
-    indexes :category_names, index: :not_analyzed
+  settings(SearchSettings.default) {
+    mappings {
+      indexes :category_names, index: :not_analyzed
+    }
   }
   update_index_on_change_of :propositions, :parliament_issues, has_many: true
 

@@ -8,12 +8,11 @@ class Representative < ActiveRecord::Base
 
   extend FriendlyId
 
-  include Tire::Model::Search
-  include Tire::Model::Callbacks
-  extend Hdo::Search::Index
+  include Hdo::Search::Index
+  include Elasticsearch::Model::Callbacks
 
-  tire.settings(TireSettings.default) {
-    mapping do
+  settings(SearchSettings.default) {
+    mappings do
       indexes :district do
         indexes :name, type: :string
       end

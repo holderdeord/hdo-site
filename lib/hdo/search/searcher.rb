@@ -11,20 +11,17 @@ module Hdo
       }
 
       def initialize(query, size = nil)
-        @query = query.blank? ? '*' : query.strip
-        @size = size || 100
+        @query  = query.blank? ? '*' : query.strip
+        @size   = size || 100
+        @client = Elasticsearch::Model.client
       end
 
       def all
-        response_from {
-          Tire.search(INDECES) do |s|
-            s.size @size
-            s.query do |query|
-              query.string @query, default_operator: 'AND'
-            end
-            s.sort { by :_score }
-          end
-        }
+        response_from do
+          Issue.search({
+            query: { query_string: {query: @query, default_operator: 'AND'}}
+          }, index: INDECES.keys.join(','), size: @size, sort: ['_score'])
+        end
       end
 
       def promises
@@ -81,10 +78,15 @@ module Hdo
 
       private
 
+      SEARCH_ERRORS = [
+        Elasticsearch::Transport::Transport::Errors::InternalServerError,
+        Errno::ECONNREFUSED
+      ]
+
       def response_from(&blk)
         search = yield
         Response.new(search.results)
-      rescue Tire::Search::SearchRequestFailed, Errno::ECONNREFUSED => ex
+      rescue *SEARCH_ERRORS => ex
         Rails.logger.error "search failed, #{ex.class} #{ex.message}"
         Response.new(nil, ex)
       end

@@ -12,7 +12,7 @@ module SearchSpecHelper
 
     opts = {
       mappings: described_class.tire.mapping_to_hash,
-      settings: described_class.tire.settings
+      settings: described_class.settings
     }
 
     ok = index.create(opts)

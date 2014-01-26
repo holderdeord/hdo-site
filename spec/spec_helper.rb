@@ -49,7 +49,7 @@ RSpec.configure do |config|
   end
 
   config.after :suite do
-    TireSettings.models.each { |m| m.index.delete }
+    SearchSettings.models.each { |m| m.index.delete }
   end
 
   config.before :each do

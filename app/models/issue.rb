@@ -1,19 +1,18 @@
 class Issue < ActiveRecord::Base
   extend FriendlyId
 
-  include Tire::Model::Search
-  extend Hdo::Search::Index
+  include Hdo::Search::Index
 
-  tire.settings(TireSettings.default) {
-    mapping {
-      indexes :description, type: :string, analyzer: TireSettings.default_analyzer
-      indexes :title,       type: :string, analyzer: TireSettings.default_analyzer, boost: 100
+  settings(SearchSettings.default) {
+    mappings {
+      indexes :description, type: :string, analyzer: SearchSettings.default_analyzer
+      indexes :title,       type: :string, analyzer: SearchSettings.default_analyzer, boost: 100
       indexes :status,      type: :string, index: :not_analyzed
       indexes :slug,        type: :string, index: :not_analyzed
       indexes :tag_list,    type: :string, analyzer: 'keyword'
 
       indexes :categories do
-        indexes :name, type: :string, analyzer: TireSettings.default_analyzer
+        indexes :name, type: :string, analyzer: SearchSettings.default_analyzer
       end
     }
   }
