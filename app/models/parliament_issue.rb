@@ -8,8 +8,9 @@ class ParliamentIssue < ActiveRecord::Base
     mapping {
       indexes :summary, type: :string, analyzer: TireSettings.default_analyzer
       indexes :description, type: :string, analyzer: TireSettings.default_analyzer
-      indexes :status, type: :string
+      indexes :status, type: :string, index: :not_analyzed
       indexes :last_update, type: :date, include_in_all: false
+      indexes :created_at, type: :date, include_in_all: false
       indexes :slug, type: :string, index: :not_analyzed
     }
   }

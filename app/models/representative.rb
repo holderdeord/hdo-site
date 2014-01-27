@@ -16,17 +16,19 @@ class Representative < ActiveRecord::Base
     mapping do
       indexes :district do
         indexes :name, type: :string
+        indexes :slug, type: :string, index: :not_analyzed
       end
 
       indexes :latest_party do
         indexes :name, type: :string
-        indexes :slug, type: :string
+        indexes :slug, type: :string, index: :not_analyzed
       end
 
       indexes :full_name, index: :not_analyzed
       indexes :last_name, index: :not_analyzed
       indexes :first_name, index: :not_analyzed
       indexes :twitter_id, index: :not_analyzed
+      indexes :attending, index: :not_analyzed
       indexes :slug
     end
   }
@@ -204,7 +206,7 @@ class Representative < ActiveRecord::Base
   def to_indexed_json
     to_json include: [:district],
             methods: [:latest_party, :full_name],
-            only: [:slug, :last_name, :first_name, :twitter_id]
+            only: [:slug, :last_name, :first_name, :twitter_id, :attending]
   end
 
   private
