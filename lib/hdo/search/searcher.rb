@@ -24,8 +24,10 @@ module Hdo
           indices_boost: BOOST
         }
 
+        indices = (SearchSettings.models - [Vote]).map(&:index_name)
+
         opts = {
-          index: SearchSettings.models.map(&:index_name),
+          index: indices,
           type: nil,
           size: @size,
           sort: ['_score']
