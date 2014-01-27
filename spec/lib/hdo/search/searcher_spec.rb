@@ -8,11 +8,9 @@ module Hdo
         let(:searcher) { Searcher.new(query) }
 
         it 'searches all indices for the given query' do
-          search = mock("search")
-
           Issue.should_receive(:search).with(
             hash_including(:query, :indices_boost),
-            hash_including({size: 100, :index => SearchSettings.models.map(&:index_name)})
+            hash_including({size: 100, :index => ["hdo_test_issues", "hdo_test_parliament_issues", "hdo_test_parties", "hdo_test_promises", "hdo_test_propositions", "hdo_test_representatives"]})
           ).and_return(double(results: []))
 
           response = searcher.all
@@ -44,8 +42,6 @@ module Hdo
 
       context 'autocomplete' do
         def expect_query(input, opts = {})
-          search = mock("search")
-
           expected_query = opts[:expected_query] || anything
           expected_indices = opts[:expected_indices] || anything
           expected_size = opts[:expected_size] || anything
