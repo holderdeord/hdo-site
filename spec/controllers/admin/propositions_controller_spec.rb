@@ -14,7 +14,6 @@ describe Admin::PropositionsController do
 
   it 'should get :edit' do
     prop = Proposition.make!(:with_vote)
-    prop.run_callbacks(:commit) # for indexing
 
     get :edit, id: prop
 

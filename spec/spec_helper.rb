@@ -44,7 +44,7 @@ RSpec.configure do |config|
   config.include SearchSpecHelper, :search
 
   config.before :suite do
-    DatabaseCleaner.strategy = :transaction
+    DatabaseCleaner.strategy = :deletion
     DatabaseCleaner.clean_with :truncation
 
     SearchSettings.models.each { |m| m.__elasticsearch__.create_index! force: true }
@@ -63,12 +63,7 @@ RSpec.configure do |config|
     DatabaseCleaner.clean
   end
 
-  config.before :each, type: :request do
-    DatabaseCleaner.strategy = :truncation
-  end
-
   config.before :all, type: :request do
-    DatabaseCleaner.strategy = :truncation
     BrowserSpecHelper.start
   end
 

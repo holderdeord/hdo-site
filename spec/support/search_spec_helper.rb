@@ -7,10 +7,6 @@ module SearchSpecHelper
     elasticsearch.refresh_index!
   end
 
-  def fake_commit(*models)
-    models.each { |e| e.run_callbacks(:commit) }
-  end
-
   def recreate_index
     elasticsearch.delete_index! force: true
 

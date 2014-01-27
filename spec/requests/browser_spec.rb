@@ -8,7 +8,6 @@ describe Hdo::Application do
 
   it 'autocompletes a search for issues' do
     issue = Issue.create!(status: "published", title: "Fjerne formueskatten")
-    issue.run_callbacks(:commit)
     Issue.__elasticsearch__.refresh_index!
 
     menu = front_page.get.menu

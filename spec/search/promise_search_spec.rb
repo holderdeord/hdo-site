@@ -8,7 +8,6 @@ describe Promise, :search do
       party = Party.make!
       promise = Promise.make!(promisor: party)
 
-      fake_commit promise
       refresh_index
 
       Promise.search('*').results.first.party_names.should == party.name

@@ -14,7 +14,6 @@ describe Vote, :search do
       v2 = Vote.make!(parliament_issues: [processed_issue])
       v3 = Vote.make!(parliament_issues: [non_processed_issue])
 
-      fake_commit v1, v2, v3
       refresh_index
 
       es_search(nil, '').should == [v2]
@@ -26,7 +25,6 @@ describe Vote, :search do
       match = Vote.make!(parliament_issues: [ParliamentIssue.make!(description: 'skatt')])
       miss  = Vote.make!(parliament_issues: [ParliamentIssue.make!(description: 'klima')])
 
-      fake_commit match, miss
       refresh_index
 
       es_search(nil, 'skatt').should == [match]
@@ -36,7 +34,6 @@ describe Vote, :search do
       match = Vote.make!(propositions: [Proposition.make!(:body => "<h1>skatt</h1>")])
       miss  = Vote.make!(propositions: [Proposition.make!(:body => "<h1>klima</h1>")])
 
-      fake_commit match, miss
       refresh_index
 
       es_search(nil, 'skatt').should == [match]
@@ -45,7 +42,6 @@ describe Vote, :search do
     it 'finds votes where the parliament issue external id matches the query' do
       match = Vote.make!(:parliament_issues => [ParliamentIssue.make!(:external_id => "541232")])
 
-      fake_commit match
       refresh_index
 
       es_search(nil, '541232').should == [match]
@@ -63,7 +59,6 @@ describe Vote, :search do
       match = Vote.make!(parliament_issues: [parliament_issue_match])
       miss  = Vote.make!(parliament_issues: [parliament_issue_miss])
 
-      fake_commit match, miss
       refresh_index
 
       results = es_search('selected-categories', nil, [first_category])
@@ -77,7 +72,6 @@ describe Vote, :search do
       prop = Proposition.make!
       vote = Vote.make!(propositions: [prop])
 
-      fake_commit vote
       refresh_index
 
       result = Vote.search('*').results.first
@@ -85,7 +79,6 @@ describe Vote, :search do
 
       prop.update_attributes!(body: 'changed body')
 
-      fake_commit prop
       refresh_index
 
       result = Vote.search('*').results.first
@@ -97,7 +90,6 @@ describe Vote, :search do
       issue = ParliamentIssue.make!
       vote = Vote.make!(parliament_issues: [issue])
 
-      fake_commit vote
       refresh_index
 
       result = Vote.search('*').results.first
@@ -105,7 +97,6 @@ describe Vote, :search do
 
       issue.update_attributes!(description: 'this is a re-indexing issue')
 
-      fake_commit issue
       refresh_index
 
       result = Vote.search('*').results.first
@@ -117,7 +108,6 @@ describe Vote, :search do
       issue    = ParliamentIssue.make!(categories: [category])
       vote     = Vote.make!(parliament_issues: [issue])
 
-      fake_commit vote
       refresh_index
 
       result = Vote.search('*').results.first
@@ -127,7 +117,6 @@ describe Vote, :search do
       issue.categories = [category]
       issue.save!
 
-      fake_commit issue
       refresh_index
 
       result = Vote.search('*').results.first

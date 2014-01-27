@@ -8,14 +8,12 @@ describe Proposition, :search do
       vote = Vote.make!
       prop = Proposition.make!(votes: [vote])
 
-      fake_commit prop
       refresh_index
 
       Proposition.search('*').results.first.votes.first.slug.should == vote.slug
 
       vote.update_attributes!(time: Time.now + 1.day)
 
-      fake_commit vote
       refresh_index
 
       Proposition.search('*').results.first.votes.first.slug.should == vote.slug
