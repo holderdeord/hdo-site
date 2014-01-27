@@ -1,7 +1,7 @@
 GIT
-  remote: git://github.com/jarib/elasticsearch-rails.git
-  revision: 45cad5161f35d49b2cb953dc113a42b5f2da2fae
-  branch: fix-search-request-options
+  remote: git://github.com/elasticsearch/elasticsearch-rails.git
+  revision: 884de11b77ea991f07e24e5c49c6e22b826f4c4e
+  ref: 884de11b77ea991f07e24e5c49c6e22b826f4c4e
   specs:
     elasticsearch-model (0.1.0.rc1)
       elasticsearch (~> 0.4)
