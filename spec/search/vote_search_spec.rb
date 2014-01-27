@@ -41,6 +41,7 @@ describe Vote, :search do
 
     it 'finds votes where the parliament issue external id matches the query' do
       match = Vote.make!(:parliament_issues => [ParliamentIssue.make!(:external_id => "541232")])
+
       refresh_index
 
       es_search(nil, '541232').should == [match]
@@ -69,7 +70,7 @@ describe Vote, :search do
   context 'refresh on association update' do
     it 'updates the index when associated propositions change' do
       prop = Proposition.make!
-      Vote.make!(propositions: [prop])
+      vote = Vote.make!(propositions: [prop])
 
       refresh_index
 
@@ -77,6 +78,7 @@ describe Vote, :search do
       result.propositions.first.plain_body.should == prop.plain_body
 
       prop.update_attributes!(body: 'changed body')
+
       refresh_index
 
       result = Vote.search('*').results.first
@@ -86,13 +88,15 @@ describe Vote, :search do
 
     it 'updates the index when associated parliament issues change' do
       issue = ParliamentIssue.make!
-      Vote.make!(parliament_issues: [issue])
+      vote = Vote.make!(parliament_issues: [issue])
+
       refresh_index
 
       result = Vote.search('*').results.first
       result.parliament_issues.first.description.should == issue.description
 
       issue.update_attributes!(description: 'this is a re-indexing issue')
+
       refresh_index
 
       result = Vote.search('*').results.first
@@ -102,7 +106,8 @@ describe Vote, :search do
     it 'updates the index when associated categories change (through parliament issues)' do
       category = Category.make!
       issue    = ParliamentIssue.make!(categories: [category])
-      Vote.make!(parliament_issues: [issue])
+      vote     = Vote.make!(parliament_issues: [issue])
+
       refresh_index
 
       result = Vote.search('*').results.first
@@ -111,6 +116,7 @@ describe Vote, :search do
       category = Category.make!
       issue.categories = [category]
       issue.save!
+
       refresh_index
 
       result = Vote.search('*').results.first

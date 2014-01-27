@@ -1,21 +1,16 @@
 module SearchSpecHelper
-  def index
-    described_class.index
+  def elasticsearch
+    described_class.__elasticsearch__
   end
 
   def refresh_index
-    index.refresh
+    elasticsearch.refresh_index!
   end
 
   def recreate_index
-    index.delete
+    elasticsearch.delete_index! force: true
 
-    opts = {
-      mappings: described_class.tire.mapping_to_hash,
-      settings: described_class.tire.settings
-    }
-
-    ok = index.create(opts)
+    ok = elasticsearch.create_index!['ok']
     ok or raise "unable to create index for #{described_class}: #{index.response && index.response.body}"
   end
 

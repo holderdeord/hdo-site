@@ -1,14 +1,14 @@
 class ParliamentIssue < ActiveRecord::Base
   extend FriendlyId
 
-  include Tire::Model::Search
-  include Tire::Model::Callbacks
+  include Hdo::Search::Index
+  include Elasticsearch::Model::Callbacks
 
-  tire.settings(TireSettings.default) {
-    mapping {
-      indexes :summary, type: :string, analyzer: TireSettings.default_analyzer
-      indexes :description, type: :string, analyzer: TireSettings.default_analyzer
-      indexes :status, type: :string, index: :not_analyzed
+  settings(SearchSettings.default) {
+    mappings {
+      indexes :summary, type: :string, analyzer: SearchSettings.default_analyzer
+      indexes :description, type: :string, analyzer: SearchSettings.default_analyzer
+      indexes :status, type: :string
       indexes :last_update, type: :date, include_in_all: false
       indexes :created_at, type: :date, include_in_all: false
       indexes :slug, type: :string, index: :not_analyzed

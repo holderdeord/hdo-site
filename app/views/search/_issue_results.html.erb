@@ -2,6 +2,6 @@
 
 <ul>
   <% results.each do |r| %>
-    <li><%= link_to r.title, issue_path("#{r.id}-#{r.slug}") %></li>
+    <li><%= link_to r.title, issue_path("#{r._id}-#{r.slug}") %></li>
   <% end %>
 </ul>

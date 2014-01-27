@@ -8,12 +8,11 @@ class Representative < ActiveRecord::Base
 
   extend FriendlyId
 
-  include Tire::Model::Search
-  include Tire::Model::Callbacks
-  extend Hdo::Search::Index
+  include Hdo::Search::Index
+  include Elasticsearch::Model::Callbacks
 
-  tire.settings(TireSettings.default) {
-    mapping do
+  settings(SearchSettings.default) {
+    mappings do
       indexes :district do
         indexes :name, type: :string
         indexes :slug, type: :string, index: :not_analyzed
@@ -203,8 +202,8 @@ class Representative < ActiveRecord::Base
     Hdo::Stats::RepresentativeCounts.new self
   end
 
-  def to_indexed_json
-    to_json include: [:district],
+  def as_indexed_json(options = nil)
+    as_json include: [:district],
             methods: [:latest_party, :full_name],
             only: [:slug, :last_name, :first_name, :twitter_id, :attending]
   end

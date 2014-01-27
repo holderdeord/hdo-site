@@ -7,7 +7,7 @@ class VotesController < ApplicationController
     @votes = Vote.with_results.includes(:parliament_issues).order(:time).reverse_order
 
     per_page = params[:per_page].to_i > 0 ? params[:per_page] : DEFAULT_PER_PAGE
-    @votes = @votes.paginate(:page => params[:page], :per_page => per_page)
+    @votes = @votes.page(params[:page]).per(per_page)
   end
 
   def show
@@ -23,7 +23,7 @@ class VotesController < ApplicationController
       @vote.vote_results.each do |result|
         @results_by_party[result.representative.party_at(@vote.time)][result.state] << result
       end
-      
+
       @results_by_party.delete_if { |party, data| data.values.all?(&:empty?) }
     end
   end

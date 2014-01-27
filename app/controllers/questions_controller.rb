@@ -26,10 +26,10 @@ class QuestionsController < ApplicationController
   def all
     case params[:category]
     when 'answered'
-      questions = Question.approved.with_approved_answers.order(:updated_at).paginate(page: params[:page], per_page: params[:per_page] || DEFAULT_PER_PAGE)
+      questions = Question.approved.with_approved_answers.order(:updated_at).page(params[:page]).per(params[:per_page] || DEFAULT_PER_PAGE)
       @questions = QuestionsDecorator.new(questions)
     when 'unanswered'
-      questions = Question.approved.not_ours.without_approved_answers.paginate(page: params[:page], per_page: params[:per_page] || DEFAULT_PER_PAGE)
+      questions = Question.approved.not_ours.without_approved_answers.page(params[:page]).per(params[:per_page] || DEFAULT_PER_PAGE)
       @questions = QuestionsDecorator.new(questions)
     else
       render_not_found

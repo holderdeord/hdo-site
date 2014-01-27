@@ -1,90 +1,119 @@
 module Hdo
   module Search
     class Searcher
-      INDECES = {
-        Issue.index_name           => { boost: 5   },
-        Party.index_name           => { boost: 3.5 },
-        Representative.index_name  => { boost: 2   },
-        Promise.index_name         => { boost: 1   },
-        Proposition.index_name     => { boost: 1   },
-        ParliamentIssue.index_name => { boost: 1   }
+      BOOST = {
+        Issue.index_name           => 5,
+        Party.index_name           => 3.5,
+        Representative.index_name  => 2,
+        Promise.index_name         => 1,
+        Proposition.index_name     => 1,
+        ParliamentIssue.index_name => 1
       }
 
       def initialize(query, size = nil)
-        @query = query.blank? ? '*' : query.strip
-        @size = size || 100
+        @query  = query.blank? ? '*' : query.strip
+        @size   = size || 100
+        @client = Elasticsearch::Model.client
       end
 
       def all
-        response_from {
-          Tire.search(INDECES) do |s|
-            s.size @size
-            s.query do |query|
-              query.string @query, default_operator: 'AND'
-            end
-            s.sort { by :_score }
-          end
+        q = {
+          query: {
+            query_string: {query: @query, default_operator: 'AND'}
+          },
+          indices_boost: BOOST
         }
+
+        indices = (SearchSettings.models - [Vote]).map(&:index_name)
+
+        opts = {
+          index: indices,
+          type: nil,
+          size: @size,
+          sort: ['_score']
+        }
+
+        response_from { Issue.search(q, opts) }
       end
 
       def promises
-        response_from {
-          Tire.search(Promise.index_name) do |s|
-            s.size @size
-
-            s.query do |query|
-              query.string @query, default_operator: 'AND'
-            end
-
-            s.filter :term, parliament_period_name: '2013-2017'
-
-            s.sort { by :_score }
-          end
+        q = {
+          query: {
+            query_string: {query: @query, default_operator: 'AND'}
+          },
+          filter: {term: {parliament_period_name: '2013-2017' } }
         }
+
+        opts = {
+          size: @size,
+          sort: ['_score']
+        }
+
+        response_from { Promise.search(q, opts) }
       end
 
       def autocomplete
-        response_from {
-          Tire.search([Issue.index_name, Representative.index_name]) do |s|
-            s.size 25
-
-            s.query do |query|
-              query.string "#{@query}* #{@query}", default_operator: 'OR'
-            end
-            s.sort { by :_score }
-          end
+        q = {
+          query: {
+            query_string: {query: "#{@query}* #{@query}", default_operator: 'OR'}
+          }
         }
+
+        opts = {
+          index: [Issue, Representative].map(&:index_name),
+          type: nil,
+          size: 25,
+          sort: ['_score']
+        }
+
+        response_from { Issue.search(q, opts) }
       end
 
       def propositions(params = {})
-        Proposition.search(page: params[:page] || 1, per_page: params[:per_page] || @size) do |s|
-          if @query != '*'
-            s.sort { by :_score }
-          else
-            s.sort do
-              by :id, 'asc'
-              by :vote_time, 'asc'
-            end
-          end
+        opts = {
+          from: ((params[:page] || 1) - 1) * (params[:per_page] || @size),
+          size: params[:per_page] || @size
+        }
 
-          s.query do |q|
-            q.filtered do |fq|
-              fq.query { |qq| qq.string @query }
-              fq.filter :term, parliament_session_name: params[:parliament_session_name]
-            end
-          end
+        q = {}
 
-          s.filter :term, status: params[:status] if params[:status].present?
-          s.facet(:status) { |f| f.terms :status }
+        if @query == '*'
+          q[:sort] = [{id: 'asc'}, {vote_time: 'asc'}]
+        else
+          q[:sort] = ['_score']
         end
+
+        q[:query] = {
+          filtered: {
+            query:   {query_string: {query: @query}},
+            filter: {
+              and: [term: {parliament_session_name: params[:parliament_session_name] }]
+            }
+          }
+        }
+
+        q[:facets] = {
+          status: {terms: {field: "status", size: 10, all_terms: false}}
+        }
+
+        if params[:status].present?
+          q[:filter] = {term: {status: params[:status]}}
+        end
+
+        Proposition.search(q, opts)
       end
 
       private
 
+      SEARCH_ERRORS = [
+        Elasticsearch::Transport::Transport::Errors::InternalServerError,
+        Errno::ECONNREFUSED
+      ]
+
       def response_from(&blk)
         search = yield
         Response.new(search.results)
-      rescue Tire::Search::SearchRequestFailed, Errno::ECONNREFUSED => ex
+      rescue *SEARCH_ERRORS => ex
         Rails.logger.error "search failed, #{ex.class} #{ex.message}"
         Response.new(nil, ex)
       end

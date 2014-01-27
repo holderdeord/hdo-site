@@ -82,12 +82,13 @@
               <td><%= prop.plain_body.truncate(200) %></td>
             <% end %>
 
-            <td><%= link_to 'Rediger', edit_admin_proposition_path(prop), class: 'btn btn-small' %></td>
+            <td><%= link_to 'Rediger', edit_admin_proposition_path(prop._id), class: 'btn btn-small' %></td>
           </tr>
         <% end %>
       </tbody>
     </table>
   </div>
 
-  <%= will_paginate @propositions, class: "pagination pagination-centered" %>
+  <%# paginate @propositions, class: "pagination pagination-centered" %>
+  <%= paginate @propositions %>
 </section>

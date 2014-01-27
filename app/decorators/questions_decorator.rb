@@ -1,3 +1,3 @@
 class QuestionsDecorator < Draper::CollectionDecorator
-  delegate :current_page, :per_page, :offset, :total_entries, :total_pages
+  delegate :current_page, :current_page, :offset_value, :total_count, :total_pages, :limit_value, :last_page?, :model_name
 end

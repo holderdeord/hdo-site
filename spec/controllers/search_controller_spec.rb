@@ -3,7 +3,7 @@ require 'spec_helper'
 describe SearchController do
   let(:searcher) { mock(Hdo::Search::Searcher) }
   let(:search_response) { mock(Hdo::Search::Searcher::Response, :success? => true, results: []) }
-  let(:issue_result) { mock(type: 'issue')  }
+  let(:issue_result) { mock(_type: 'issue')  }
 
   it 'can search for #all' do
     Hdo::Search::Searcher.should_receive(:new).with("skatt", nil).and_return(searcher)

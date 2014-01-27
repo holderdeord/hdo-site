@@ -4,7 +4,7 @@
 <% results.group_by { |e| e.party_names }.each do |party_names, promises| %>
   <% promises.each do |promise| %>
     <li>
-      <%= link_to promise.body, promise_path(promise), class: 'promise-link' %>
+      <%= link_to promise.body, promise_path(promise._id), class: 'promise-link' %>
       <span class="muted">(<%= promise.parliament_period_name %>)</span>
     </li>
   <% end %>

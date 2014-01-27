@@ -69,7 +69,7 @@ gem 'devise', "~> 2.2.5"
 gem 'pundit'
 
 # pagination
-gem 'will_paginate', "~> 3.0.3"
+gem 'kaminari'
 
 # url slugs
 gem 'friendly_id', "~> 4.0"
@@ -84,7 +84,8 @@ gem 'yaml_db' # db dump / load
 gem 'acts-as-taggable-on', '~> 2.4.1'
 
 # search
-gem 'tire'
+gem 'elasticsearch-model', '~> 0.1.0.rc1'
+gem 'elasticsearch-rails', github: 'elasticsearch/elasticsearch-rails', ref: '884de11b77ea991f07e24e5c49c6e22b826f4c4e'
 
 # caching
 gem 'cache_digests'

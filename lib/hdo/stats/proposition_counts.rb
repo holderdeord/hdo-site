@@ -2,18 +2,22 @@ module Hdo
   module Stats
     class PropositionCounts
       def self.from_session(session_name)
-        search = Proposition.search(search_type: 'count') {
-          query {
-            filtered {
-              query { string '*' }
-              filter :term, parliament_session_name: session_name
-            }
-          }
-
-          facet(:status) { terms :status }
+        q = {
+          query: {
+            filtered: {
+              query: {query_string: {query: '*'}},
+              filter: {
+                and: [
+                  {term: {parliament_session_name: session_name }}
+                ]
+              }
+            },
+          },
+          facets: {status: {terms: {field: "status", size: 10, all_terms: false}}}
         }
 
-        new search.facets
+        search = Proposition.search(q, search_type: 'count')
+        new search.response['facets']
       end
 
       def initialize(facets)

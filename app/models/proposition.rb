@@ -1,14 +1,13 @@
 class Proposition < ActiveRecord::Base
-  include Tire::Model::Search
-  include Tire::Model::Callbacks
-  extend Hdo::Search::Index
+  include Hdo::Search::Index
+  include Elasticsearch::Model::Callbacks
 
-  tire.settings(TireSettings.default) {
-    mapping {
-      indexes :description, type: :string, analyzer: TireSettings.default_analyzer
-      indexes :plain_body, type: :string, analyzer: TireSettings.default_analyzer
-      indexes :simple_description, type: :string, analyzer: TireSettings.default_analyzer
-      indexes :simple_body, type: :string, analyzer: TireSettings.default_analyzer
+  settings(SearchSettings.default) {
+    mappings {
+      indexes :description, type: :string, analyzer: SearchSettings.default_analyzer
+      indexes :plain_body, type: :string, analyzer: SearchSettings.default_analyzer
+      indexes :simple_description, type: :string, analyzer: SearchSettings.default_analyzer
+      indexes :simple_body, type: :string, analyzer: SearchSettings.default_analyzer
       indexes :on_behalf_of, type: :string
       indexes :vote_time, type: :date
       indexes :status, type: :string, index: :not_analyzed
@@ -88,11 +87,11 @@ class Proposition < ActiveRecord::Base
     @source_guess ||= Hdo::Utils::PropositionSourceGuesser.parties_for("#{on_behalf_of} #{description}")
   end
 
-  def to_indexed_json
+  def as_indexed_json(options = nil)
     methods = [:plain_body]
     methods += [:parliament_session_name, :vote_time] if votes.any?
 
-    to_json methods: methods,
+    as_json methods: methods,
             include: {votes: {only: [:slug]} },
             only:    [:description, :on_behalf_of, :status, :id, :simple_description, :simple_body]
   end

@@ -1,12 +1,13 @@
 class Vote < ActiveRecord::Base
   extend FriendlyId
 
-  include Tire::Model::Search
-  include Tire::Model::Callbacks
-  extend Hdo::Search::Index
+  include Hdo::Search::Index
+  include Elasticsearch::Model::Callbacks
 
-  tire.settings(TireSettings.default) {
-    indexes :category_names, index: :not_analyzed
+  settings(SearchSettings.default) {
+    mappings {
+      indexes :category_names, index: :not_analyzed
+    }
   }
   update_index_on_change_of :propositions, :parliament_issues, has_many: true
 
@@ -39,29 +40,24 @@ class Vote < ActiveRecord::Base
   def self.admin_search(filter, query, selected_categories = [], limit = 100)
     query = '*' if query.blank?
 
-    opts = {
-      load: {
-        include: [ :parliament_issues, :propositions ]
+    q = {
+      query: {
+        filtered: {
+          query: {query_string: {query: query, default_operator: 'AND'}},
+          filter: {
+            and: [
+              {term: {processed: true}}
+            ]
+          }
+        }
       }
     }
 
-    response = search(opts) do |s|
-      s.size limit
-
-      s.query do |q|
-        q.filtered do |f|
-          f.query { |qr| qr.string query, default_operator: 'AND' }
-
-          f.filter :term, processed: true
-
-          if filter == 'selected-categories'
-            f.filter :terms, category_names: selected_categories.map { |e| e.name }
-          end
-        end
-      end
+    if filter == 'selected-categories'
+      q[:query][:filtered][:filter][:and] << {terms: {category_names: selected_categories.map(&:name) }}
     end
 
-    response.results
+    search(q, size: limit).records.to_a
   end
 
   def has_results?
@@ -104,7 +100,7 @@ class Vote < ActiveRecord::Base
     "#{time.to_i}#{enacted ? 'e' : 'ne'}"
   end
 
-  def to_indexed_json
+  def as_indexed_json(options = nil)
     data = as_json(include: {
       propositions:      { only: :description, methods: :plain_body },
       parliament_issues: { only: [:description, :external_id] }
@@ -118,7 +114,7 @@ class Vote < ActiveRecord::Base
       data[:category_names] += pi.categories.map { |e| e.name }
     end
 
-    data.to_json
+    data
   end
 
   def stats
