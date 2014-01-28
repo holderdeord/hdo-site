@@ -26,6 +26,7 @@ module Hdo
         if ids.exclude?(id) && params[:flip]
           params[:page] = params[:flip].to_i
           @response = @response.page(params[:page])
+          ids = response_ids_from(@response)
         end
 
         params.delete :flip
