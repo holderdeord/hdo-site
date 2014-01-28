@@ -7,16 +7,16 @@
   <div class="row-fluid">
     <div class="span8">
         <ul class="nav nav-tabs">
-          <li class="<%= 'active' if @search_params[:status].blank? %>">
-            <%= link_to "Alle forslag (#{@stats.total})", admin_propositions_path(@search_params.merge(status: nil)) %>
+          <li class="<%= 'active' if @search.params[:status].blank? %>">
+            <%= link_to "Alle forslag (#{@stats.total})", admin_propositions_path(@search.params.merge(status: nil, page: nil)) %>
           </li>
 
-          <li class="<%= 'active' if @search_params[:status] == 'published' %>">
-            <%= link_to "Publiserte (#{@stats.published})", admin_propositions_path(@search_params.merge(status: 'published')) %>
+          <li class="<%= 'active' if @search.params[:status] == 'published' %>">
+            <%= link_to "Publiserte (#{@stats.published})", admin_propositions_path(@search.params.merge(status: 'published', page: nil)) %>
           </li>
 
-          <li class="<%= 'active' if @search_params[:status] == 'pending' %>">
-            <%= link_to "Nye (#{@stats.pending})", admin_propositions_path(@search_params.merge(status: 'pending')) %>
+          <li class="<%= 'active' if @search.params[:status] == 'pending' %>">
+            <%= link_to "Nye (#{@stats.pending})", admin_propositions_path(@search.params.merge(status: 'pending', page: nil)) %>
           </li>
         </ul>
     </div>
@@ -26,7 +26,7 @@
         <%= select_tag 'parliament_session_name',
                        options_from_collection_for_select(
                          ParliamentSession.order(:start_date).reverse_order, :name, :name,
-                         @search_params[:parliament_session_name],
+                         @search.params[:parliament_session_name],
                        ),
                        class: 'span9' %>
 
@@ -61,7 +61,7 @@
 
       <tbody>
         <% @propositions.each do |prop| %>
-          <tr class="<%= prop.status == 'published' ? 'success' : 'warning' %>">
+          <tr class="<%= prop.status == 'published' ? 'success' : 'warning' %>" data-id="<%= prop._id %>">
             <td><%= l prop.vote_time.to_time.localtime, format: :short_text %></td>
             <td><%= t("app.propositions.status.#{prop.status}", count: 1) %></td>
 

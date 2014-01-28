@@ -65,7 +65,7 @@ describe Admin::PropositionsController do
     props = [Proposition.make!(:with_vote), Proposition.make!(:with_vote)]
     props.first.should be_pending
 
-    post :update, id: props.first, save_publish_next: '', proposition: {simple_description: 'foo'}
+    post :update, id: props.first, save_publish_next: '', proposition: {simple_description: 'foo'}, next: props.last
     response.should redirect_to(edit_admin_proposition_path(props.last))
 
     props.first.reload.should be_published

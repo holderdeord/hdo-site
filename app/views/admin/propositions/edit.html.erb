@@ -1,23 +1,28 @@
 <%= render 'progress_bar' %>
 
 <div class="row-fluid">
-  <small>
-    <%= link_to '&larr; Forrige'.html_safe, edit_admin_proposition_path(previous_proposition) if previous_proposition %>
-    <%= link_to '&rarr; Neste'.html_safe, edit_admin_proposition_path(next_proposition), class: 'pull-right' if next_proposition %>
-  </small>
+  <small class="span3"><%= link_to '&larr; Tilbake til forslagslista'.html_safe, admin_propositions_path(@search.params) %></small>
 </div>
 
-<div class="page-header">
-  <div class="alert <%= @proposition.status == 'published' ? 'alert-success' : 'alert-info' %> pull-right">
-    <%= t("app.propositions.status.#{@proposition.status}", count: 1) %>
-  </div>
-  <h1>Rediger forslag</h1>
+<div class="row-fluid">
+  <small>
+    <%= link_to '&larr; Forrige'.html_safe, edit_admin_proposition_path(@search.previous) if @search.previous %>
+    <%= link_to '&rarr; Neste'.html_safe, edit_admin_proposition_path(@search.next), class: 'pull-right' if @search.next %>
+  </small>
 </div>
 
 <%= form_for [:admin, @proposition] do |f| %>
   <div class="row-fluid">
     <h4 class="span4 offset2">Stortinget</h4>
     <h4 class="span6">Holder de ord</h4>
+  </div>
+
+  <div class="row-fluid">
+    <div class="span2" style="text-align: right"><strong>Status</strong></div>
+    <div class="alert alert-small <%= @proposition.status == 'published' ? 'alert-success' : 'alert-info' %> span4">
+      <%= t("app.propositions.status.#{@proposition.status}", count: 1) %>
+    </div>
+
   </div>
 
   <div class="row-fluid">
@@ -97,14 +102,14 @@
   <hr>
 
   <div class="row-fluid">
-    <div class="span6">
-      <%= link_to 'Avbryt', admin_propositions_path, class: 'btn btn-warning' %></small>
-    </div>
-
-    <div class="span6">
+    <div class="span6 offset6">
       <%= f.submit 'Lagre', name: 'save', class: 'btn' %>
       <%= f.submit 'Lagre og publiser', name: 'save_publish', class: 'btn' %>
-      <%= f.submit 'Lagre, publiser, gå til neste', name: 'save_publish_next', class: 'btn btn-primary' %>
+
+      <% if @search.next %>
+        <input type="hidden" name="next" value="<%= @search.next %>">
+        <%= f.submit 'Lagre, publiser, gå til neste', name: 'save_publish_next', class: 'btn btn-primary' %>
+      <% end %>
     </div>
   </div>
 <% end %>

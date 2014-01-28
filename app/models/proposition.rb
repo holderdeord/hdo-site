@@ -1,4 +1,6 @@
 class Proposition < ActiveRecord::Base
+  paginates_per 20
+
   include Hdo::Search::Index
   include Elasticsearch::Model::Callbacks
 
@@ -66,20 +68,17 @@ class Proposition < ActiveRecord::Base
     status == 'published'
   end
 
-  def previous(params = {})
+  def previous
     return unless vote_time
 
     relation = self.class.includes(:votes).where("votes.time < ?", vote_time).order('votes.time DESC')
-    relation = relation.where(status: params[:status]) if params[:status]
     relation.first
   end
 
-  def next(params = {})
+  def next
     return unless vote_time
 
     relation = self.class.includes(:votes).where("votes.time > ?", vote_time).order('votes.time')
-    relation = relation.where(status: params[:status]) if params[:status]
-
     relation.first
   end
 

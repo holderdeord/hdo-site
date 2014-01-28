@@ -1,20 +1,20 @@
 class Admin::PropositionsController < AdminController
   before_filter :fetch_proposition, except: [:index]
 
-  DEFAULT_PER_PAGE = 20
+  SEARCH_PARAMS = [:status, :parliament_session_name, :q, :page]
 
   def index
-    @search_params = fetch_search_params
+    session[:admin_proposition_search] = params.reverse_merge(parliament_session_name: ParliamentSession.current.name).slice(*SEARCH_PARAMS)
 
-    @propositions  = Hdo::Search::Searcher.new(@search_params[:q], DEFAULT_PER_PAGE).propositions(@search_params)
-    @propositions  = @propositions.page(params[:page]).per(DEFAULT_PER_PAGE)
-
-    @stats         = Hdo::Stats::PropositionCounts.new @propositions.response['facets']
+    @search       = Hdo::Search::AdminPropositionSearch.new(search_session)
+    @stats        = @search.stats
+    @propositions = @search.results
   end
 
   def edit
+    @search            = Hdo::Search::AdminPropositionSearch.new(search_session, @proposition.id)
+    @stats             = @search.stats
     @parliament_issues = @proposition.votes.includes(:parliament_issues).flat_map(&:parliament_issues).uniq
-    @stats             = Hdo::Stats::PropositionCounts.from_session(@proposition.parliament_session_name)
   end
 
   def update
@@ -30,7 +30,7 @@ class Admin::PropositionsController < AdminController
       if params[:save_publish]
         redirect_to admin_propositions_path(status: 'published'), notice: t('app.updated.proposition')
       elsif params[:save_publish_next]
-        path      = next_proposition ? edit_admin_proposition_path(next_proposition) : admin_propositions_path
+        path      = params[:next] ? edit_admin_proposition_path(params[:next]) : admin_propositions_path
         redirect_to path, notice: t('app.updated.proposition')
       elsif params[:save]
         redirect_to edit_admin_proposition_path(@proposition), notice: t('app.updated.proposition')
@@ -45,19 +45,6 @@ class Admin::PropositionsController < AdminController
 
   def fetch_proposition
     @proposition = Proposition.find(params[:id])
-  end
-
-  def fetch_search_params
-    filter = session[:admin_proposition_filter] || {}.with_indifferent_access
-
-    # Can't use Hash#merge since it will ignore cleared/nil values
-    filter[:parliament_session_name] = params[:parliament_session_name] || ParliamentSession.current.name
-    filter[:q]                       = params[:q]
-    filter[:status]                  = params[:status]
-
-    session[:admin_proposition_filter] = filter
-
-    filter
   end
 
   def update_issues
@@ -76,13 +63,7 @@ class Admin::PropositionsController < AdminController
     true
   end
 
-  helper_method :next_proposition, :previous_proposition
-
-  def next_proposition
-    @next_proposition ||= @proposition.next(session[:admin_proposition_filter] || {})
-  end
-
-  def previous_proposition
-    @previous_proposition ||= @proposition.previous(session[:admin_proposition_filter] || {})
+  def search_session
+    session[:admin_proposition_search] || {parliament_session_name: ParliamentSession.current.name}
   end
 end
