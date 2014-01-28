@@ -54,8 +54,7 @@ module Hdo
       def search
         q = {}
 
-        query_string = params[:q]
-        query_string ||= '*'
+        query_string = params[:q].present? ? params[:q] : '*'
 
         if query_string == '*'
           q[:sort] = [{id: 'asc'}, {vote_time: 'asc'}]
