@@ -73,6 +73,8 @@ GEM
     carrierwave (0.8.0)
       activemodel (>= 3.2.0)
       activesupport (>= 3.2.0)
+    chart-js-rails (0.0.6)
+      railties (> 3.1)
     childprocess (0.4.0)
       ffi (~> 1.0, >= 1.0.11)
     choice (0.1.6)
@@ -368,6 +370,7 @@ DEPENDENCIES
   capistrano-ext
   capistrano-maintenance
   carrierwave (~> 0.8)
+  chart-js-rails
   coveralls
   database_cleaner (~> 0.9.1)
   devise (~> 2.2.5)

@@ -1,8 +1,5 @@
 class Admin::DashboardController < AdminController
   def index
-    @votes_by_date               = Vote.includes(:parliament_issues).latest(30).group_by { |v| v.time.to_date }
-    @parliament_issues_by_status = ParliamentIssue.latest(10).group_by(&:status_text)
-    @issues_by_status            = Issue.latest(10).group_by(&:status_text)
     @pending_questions           = Question.pending
     @questions_answer_pending    = Question.with_pending_answers
 
@@ -12,5 +9,50 @@ class Admin::DashboardController < AdminController
 
     @issue_proposition_percentage = published.flat_map(&:proposition_ids).uniq.size * 100 / (proposition_count.zero? ? 1 : proposition_count)
     @issue_promise_percentage     = published.flat_map(&:promise_ids).uniq.size * 100 / (promise_count.zero? ? 1 : promise_count)
+    @issue_user_percentage        = current_user.percentage_of_issues
+
+    @proposition_counts = fetch_proposition_counts
+  end
+
+  private
+
+  def fetch_proposition_counts
+    labels = []
+    data   = []
+
+    result = {labels: labels, data: data}
+
+    begin
+      response = Hdo::Search::Searcher.new('*').proposition_histogram
+
+      if response.success?
+        entries = response.facets['counts']['entries']
+        weeks = Hash.new(0)
+
+        entries.each do |e|
+          time  = Time.at(e['time'] / 1000).localtime
+          week  = time.strftime("%W").to_i
+          count = e['count']
+
+          weeks[week] = count
+        end
+
+        this_week = Time.now.strftime("%W").to_i
+        current_week = weeks.keys.first
+
+        until current_week == (this_week + 1)
+          labels << current_week
+          data << weeks[current_week]
+
+          current_week += 1
+          current_week = 1 if current_week == 53
+        end
+      end
+
+      result
+    rescue => ex
+      logger.error ex.message
+      result
+    end
   end
 end

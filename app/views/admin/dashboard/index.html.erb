@@ -1,15 +1,47 @@
 <div class="container-fluid">
-  <h2>Hei <%= current_user.first_name  %></h2>
+  <h2>Hei <%= current_user.first_name  %>!</h2>
+
+  <div class="row-fluid">
+    <div class="span4">
+      <p>Du er redaktør for <strong><%= current_user.percentage_of_issues %>%</strong> av HDOs saker!</p>
+    </div>
+
+    <div class="span4">
+      <p><strong><%= @issue_proposition_percentage %>%</strong> av alle forslag er koblet til en publisert sak.</p>
+    </div>
+
+    <div class="span4">
+      <p><strong><%= @issue_promise_percentage %>%</strong> av alle løfter er koblet til en publisert sak.</p>
+    </div>
+  </div>
+
+  <div class="row-fluid">
+    <div class="span4">
+      <canvas class="percentage-chart" data-json='<%= percentage_chart_json_for(@issue_user_percentage).html_safe %>'></canvas>
+    </div>
+
+    <div class="span4">
+      <canvas class="percentage-chart" data-json='<%= percentage_chart_json_for(@issue_proposition_percentage).html_safe %>'></canvas>
+    </div>
+
+    <div class="span4">
+      <canvas class="percentage-chart" data-json='<%= percentage_chart_json_for(@issue_promise_percentage).html_safe %>'></canvas>
+    </div>
+  </div>
+
+  <div class="row-fluid">
+    <h3>Innkommende forslag</h3>
+
+    <div class="span12">
+      <canvas class="line-chart" data-json='<%= @proposition_counts.to_json.html_safe %>'></canvas>
+    </div>
+  </div>
+
+  <hr class="soften">
 
   <div class="row-fluid">
     <div class="span6">
-      <p>Du er redaktør for <strong><%= current_user.percentage_of_issues %>%</strong> av Holder de ords saker!</p>
-      <p><strong><%= @issue_proposition_percentage %>%</strong> av alle forslag er koblet til en publisert sak.</p>
-      <p><strong><%= @issue_promise_percentage %>%</strong> av alle løfter er koblet til en publisert sak.</p>
-    </div>
-
-    <div class="span6">
-      <h3>Dine saker</h3>
+      <h4>Dine saker</h3>
       <ul>
         <% current_user.issues.each do |issue| %>
           <li>
@@ -22,42 +54,81 @@
         <% end %>
       </ul>
     </div>
-  </div>
-
-  <hr class="soften">
-
-  <div class="row-fluid">
-    <div class="span6">
-      <h3><%= @pending_questions.count %> <%= Question.model_name.human(count: 2) %> <%= link_to t('app.questions.status.pending').downcase, admin_questions_path %></h3>
-      <ul>
-        <% @pending_questions.each do |q| %>
-          <li><%= q.teaser %></li>
-        <% end %>
-      </ul>
-    </div>
 
     <div class="span6">
-      <h3><%= @questions_answer_pending.count %> <%= Answer.model_name.human(count: 2) %> <%= link_to t('app.questions.status.pending').downcase, "#{admin_questions_path}#pending-answers" %></h3>
-      <ul>
-        <% @questions_answer_pending.each do |q| %>
-          <li><%= q.teaser %></li>
-        <% end %>
-      </ul>
-    </div>
-  </div>
+      <h4>
+        <%= link_to "#{@pending_questions.count} #{Question.model_name.human(count: 2)}", admin_questions_path %>
+        og
+        <%= link_to "#{@questions_answer_pending.count} #{Answer.model_name.human(count: 2)}", "#{admin_questions_path}#pending-answers" %>
 
-  <hr class="soften">
+        <%= t('app.questions.status.pending').downcase %>
+      </h3>
 
-  <div class="row-fluid">
-    <div class="span6">
-      <h3>Siste <%= Vote.model_name.human(count: 2) %></h3>
-      <%= render 'votes_by_date' %>
-    </div>
+      <% if @pending_questions.any? %>
+        <strong>Spørsmål</strong>
+        <ul>
+          <% @pending_questions.each do |q| %>
+            <li><%= q.teaser %></li>
+          <% end %>
+        </ul>
+      <% end %>
 
-    <div class="span6">
-      <h3>Siste <%= ParliamentIssue.model_name.human(count: 2) %></h3>
-      <%= render 'parliament_issues_by_status' %>
+      <% if @questions_answer_pending.any? %>
+        <strong>Svar</strong>
+        <ul>
+          <% @questions_answer_pending.each do |q| %>
+            <li><%= q.teaser %></li>
+          <% end %>
+        </ul>
+      <% end %>
     </div>
   </div>
+
+  <hr>
 
 </div>
+
+<%= content_for :document_ready do %>
+<script>
+$(function () {
+  $(".percentage-chart").each(function () {
+    var el      = $(this);
+    var dataset = el.data('json');
+    var ctx     = el.get(0).getContext('2d');
+
+    el.attr('width', el.parent().width()).attr('height', 150);
+
+    new Chart(ctx).Doughnut(dataset);
+  })
+
+  function drawLineChart() {
+    $(".line-chart").each(function () {
+      var el      = $(this);
+      var dataset = el.data('json');
+      var ctx     = el.get(0).getContext('2d');
+
+      el.attr('width', el.parent().width()).attr('height', 200);
+
+      var params = {
+        labels: dataset.labels,
+        datasets: [
+          {
+            fillColor : "rgba(151,187,205,0.5)",
+            strokeColor : "rgba(151,187,205,1)",
+            pointColor : "rgba(151,187,205,1)",
+            pointStrokeColor : "#fff",
+            data: dataset.data
+          }
+        ]
+      }
+
+      new Chart(ctx).Line(params)
+    })
+  }
+
+  $(window).resize(drawLineChart);
+  drawLineChart();
+})
+</script>
+<% end %>
+

@@ -342,7 +342,7 @@ nb:
       propositions:
 
     admin:
-      latest_from_parliament: Siste fra Stortinget
+      dashboard: Dashboard
     published: Publisert
     next: "Neste"
     previous: "Forrige"

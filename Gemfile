@@ -18,6 +18,8 @@ group :assets do
 
   gem 'therubyracer', platform: :ruby
   gem 'uglifier', '>= 1.0.3'
+
+  gem 'chart-js-rails'
 end
 
 group :test do

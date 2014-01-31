@@ -276,7 +276,7 @@ nn:
       issues:
         unable_to_save: "Kunne ikkje lagra, saka er blitt endra i mellomtida."
     admin:
-      latest_from_parliament: Siste frå Stortinget
+      dashboard: Dashboard
     published: Publisert
     next: "Neste"
     previous: "Førre"

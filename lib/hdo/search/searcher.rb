@@ -68,6 +68,43 @@ module Hdo
         response_from { Issue.search(q, opts) }
       end
 
+      def proposition_histogram(opts = {})
+        start_time = opts[:start] || 6.months.ago
+
+        q = {
+          facets: {
+            counts: {
+              date_histogram: { field: 'vote_time', interval: '1w' },
+              global: true,
+              facet_filter: {
+                fquery: {
+                  query: {
+                    filtered: {
+                      query: {query_string: {query: @query }}
+                    },
+                    filter: {
+                      bool: {
+                        must: [
+                          {match_all: {}},
+                          {terms: {_type: ['proposition']}},
+                          {
+                            range: {
+                              vote_time: { from: (start_time.to_f * 1000).to_i }
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+
+        response_from { Proposition.search(q, size: 0) }
+      end
+
       private
 
       SEARCH_ERRORS = [
@@ -76,8 +113,7 @@ module Hdo
       ]
 
       def response_from(&blk)
-        search = yield
-        Response.new(search.results)
+        Response.new(yield)
       rescue *SEARCH_ERRORS => ex
         Rails.logger.error "search failed, #{ex.class} #{ex.message}"
         Response.new(nil, ex)
@@ -86,9 +122,17 @@ module Hdo
       class Response
         attr_reader :results, :exception
 
-        def initialize(results, exception = nil)
-          @results   = results
+        def initialize(response, exception = nil)
+          @response = response
           @exception = exception
+        end
+
+        def facets
+          Hashie::Mash.new @response.response['facets']
+        end
+
+        def results
+          @response.results
         end
 
         def success?
