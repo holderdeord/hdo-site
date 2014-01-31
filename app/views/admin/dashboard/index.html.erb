@@ -1,5 +1,5 @@
 <div class="container-fluid">
-  <h2>Hei <%= current_user.first_name  %>!</h2>
+  <h2>Hei <%= current_user.first_name %>!</h2>
 
   <div class="row-fluid">
     <div class="span4">
@@ -28,8 +28,6 @@
       <canvas class="percentage-chart" data-json='<%= percentage_chart_json_for(@issue_promise_percentage).html_safe %>'></canvas>
     </div>
   </div>
-
-  <hr class="soften">
 
   <h3><%= link_to 'Innkommende forslag', admin_propositions_path %></h3>
 
@@ -98,7 +96,6 @@
   </div>
 
   <hr>
-
 </div>
 
 <%= content_for :document_ready do %>
@@ -110,7 +107,7 @@ $(function () {
       var dataset = el.data('json');
       var ctx     = el.get(0).getContext('2d');
 
-      el.attr('width', el.parent().width()).attr('height', 150);
+      el.attr('width', el.parent().width()).attr('height', 120);
 
       new Chart(ctx).Doughnut(dataset);
     })
