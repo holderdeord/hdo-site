@@ -299,13 +299,13 @@ module Hdo
           body: xprop.body
         }
 
-        if xprop.delivered_by
-          rep = find_or_import_representative(xprop.delivered_by)
-          attributes[:representative_id] = rep.id
-        end
-
         prop.update_attributes attributes
         prop.save!
+
+        if xprop.delivered_by
+          rep = find_or_import_representative(xprop.delivered_by)
+          prop.add_proposer(rep) unless prop.proposers.include?(rep)
+        end
 
         prop
       end

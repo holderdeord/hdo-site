@@ -45,7 +45,6 @@ class Representative < ActiveRecord::Base
 
   has_many :vote_results, dependent: :destroy
   has_many :votes,        through:   :vote_results
-  has_many :propositions
 
   has_many :party_memberships, dependent: :destroy
   has_many :parties,           through: :party_memberships
@@ -55,6 +54,9 @@ class Representative < ActiveRecord::Base
 
   has_many :questions
   has_many :answers
+
+  has_many :proposition_endorsements, as: :proposer
+  has_many :propositions, through: :proposition_endorsements
 
   validates_uniqueness_of :first_name, scope: :last_name # TODO: scope: :period ?!
 

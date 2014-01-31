@@ -8,6 +8,15 @@ module Admin::IssuesHelper
     options_for_select opts, selected: model.issues.map(&:id)
   end
 
+  def proposer_options_for(model)
+    reps = Representative.all.map { |e| ["#{e.full_name} (#{e.external_id})", "#{e.class}-#{e.id}"]  }
+    party = Party.all.map { |e| ["#{e.name} (#{e.external_id})", "#{e.class}-#{e.id}"] }
+
+    selected  = model.proposers.map { |e| "#{e.class}-#{e.id}" }
+
+    options_for_select (party + reps), selected: selected
+  end
+
   def editor_options_for(issue)
     users = User.order(:name)
 

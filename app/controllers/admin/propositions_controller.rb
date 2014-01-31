@@ -25,6 +25,7 @@ class Admin::PropositionsController < AdminController
     end
 
     if @proposition.update_attributes(normalize_blanks(params[:proposition]))
+      update_proposers
       Proposition.__elasticsearch__.refresh_index!
 
       if params[:save_publish]
@@ -61,6 +62,18 @@ class Admin::PropositionsController < AdminController
     end
 
     true
+  end
+
+  def update_proposers
+    strings = Array(params.delete(:proposers))
+    current_proposers = @proposition.proposers
+
+    strings.each do |str|
+      klass, id = str.split('-')
+      proposer = klass.constantize.find(id.to_i)
+
+      @proposition.add_proposer(proposer) unless current_proposers.include?(proposer)
+    end
   end
 
   def search_session

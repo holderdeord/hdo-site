@@ -253,7 +253,7 @@ nb:
       proposition:
         description: "Beskrivelse"
         on_behalf_of: "På vegne av"
-        delivered_by: "Levert av"
+        proposers: Forslagsstillere
         body: "Tekst"
         simple_description: HDO-tittel
         simple_body: HDO-beskrivelse

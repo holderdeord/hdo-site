@@ -84,4 +84,18 @@ describe Admin::PropositionsController do
     pc.should_not be_nil
     pc.proposition.should == prop
   end
+
+  it 'should update proposers' do
+    rep   = Representative.make!
+    party = Party.make!
+    prop  = Proposition.make!(:with_vote)
+
+    prop.proposers.should be_empty
+    proposer_strings = ["#{rep.class}-#{rep.id}", "#{party.class}-#{party.id}"]
+
+    post :update, id: prop, save: '', proposers: proposer_strings, proposition: {}
+    response.should redirect_to(edit_admin_proposition_path(prop))
+
+    prop.reload.proposers.should == [rep, party]
+  end
 end

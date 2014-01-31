@@ -24,14 +24,12 @@ class Proposition < ActiveRecord::Base
   update_index_on_change_of :votes, has_many: true
 
   attr_accessible :description, :on_behalf_of, :body, :representative_id, :simple_description, :simple_body, :status
-  attr_accessible :source_slugs # TODO: convert to polymorphic Proposition#proposers
 
   has_and_belongs_to_many :votes, uniq: true
   has_many :proposition_connections, dependent: :destroy
   has_many :issues, through: :proposition_connections
-  belongs_to :representative
 
-  alias_method :delivered_by, :representative
+  has_many :proposition_endorsements, dependent: :destroy
 
   validates :body, presence: true
   validates :status, presence: true, inclusion: {in: %w[pending published]}
@@ -66,6 +64,14 @@ class Proposition < ActiveRecord::Base
 
   def published?
     status == 'published'
+  end
+
+  def proposers
+    proposition_endorsements.map(&:proposer)
+  end
+
+  def add_proposer(proposer)
+    proposition_endorsements.create!(proposer: proposer)
   end
 
   def previous

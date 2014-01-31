@@ -22,7 +22,7 @@ module Hdo
           Proposition.count.should == 1
 
           prop = Proposition.first
-          prop.delivered_by.should be_kind_of(Representative)
+          prop.proposers.first.should be_kind_of(Representative)
         end
 
         # https://github.com/holderdeord/hdo-site/issues/138

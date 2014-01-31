@@ -19,6 +19,9 @@ class Party < ActiveRecord::Base
 
   has_and_belongs_to_many :governments
 
+  has_many :proposition_endorsements, as: :proposer
+  has_many :propositions, through: :proposition_endorsements
+
   validates :name,        presence: true, uniqueness: true
   validates :external_id, presence: true, uniqueness: true
 

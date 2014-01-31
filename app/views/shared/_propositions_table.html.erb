@@ -2,8 +2,7 @@
   <thead>
     <tr>
       <th><%= Proposition.human_attribute_name :description %></th>
-      <th class="wide-table-header"><%= Proposition.human_attribute_name :on_behalf_of %></th>
-      <th class="wide-table-header"><%= Proposition.human_attribute_name :delivered_by %></th>
+      <th class="wide-table-header"><%= Proposition.human_attribute_name :proposers %></th>
       <th><%= Proposition.human_attribute_name :body %></th>
     </tr>
   </thead>
@@ -12,12 +11,23 @@
     <% vote.propositions.each do |prop| %>
       <tr>
         <td><%= prop.description %></td>
-        <td><%= prop.on_behalf_of %></td>
-        <% if rep = prop.delivered_by %>
-          <td><%= link_to rep.display_name, rep %> (<%= rep.party_at(vote.time).try(:external_id) || t('app.parties.none') %>)</td>
+        <td>
+        <% if prop.proposers.any? %>
+            <ul>
+              <% prop.proposers.each do |proposer| %>
+                <li>
+                  <% if proposer.kind_of?(Representative) %>
+                    <%= link_to proposer.display_name, proposer %> (<%= proposer.party_at(vote.time).try(:external_id) || t('app.parties.none') %>)
+                  <% elsif proposer.kind_of?(Party) %>
+                    <%= link_to proposer.name, proposer %>
+                  <% end %>
+                </li>
+              <% end %>
+            </ul>
         <% else %>
-          <td></td>
+          <%= prop.on_behalf_of %>
         <% end %>
+        </td>
         <td><%= prop.body.html_safe %></td>
       </tr>
     <% end %>

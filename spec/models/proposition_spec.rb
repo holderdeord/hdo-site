@@ -79,4 +79,12 @@ describe Proposition do
     Proposition.make(simple_description: '').should_not be_valid
     Proposition.make(simple_body: '').should_not be_valid
   end
+
+  it 'can add proposers' do
+    proposers   = [Party.make!, Representative.make!]
+    proposition = Proposition.make!
+
+    proposers.each { |proposer| proposition.add_proposer(proposer) }
+    proposition.reload.proposers.should == proposers
+  end
 end

@@ -198,7 +198,6 @@ nn:
       proposition:
         description: "Skildring"
         on_behalf_of: "På vegne av"
-        delivered_by: "Levert av"
         body: "Tekst"
       user:
         name: "Namn"

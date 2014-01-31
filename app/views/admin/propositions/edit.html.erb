@@ -63,7 +63,8 @@
       <% if @proposition.votes.size > 1 %>
         <div class="alert alert-error">Forslaget brukes i flere avstemninger, og må derfor kobles via vanlig saksredigering.</div>
       <% else %>
-        <%= f.select :issues, issue_options_for(@proposition), {}, class: 'input-xlarge', multiple: true, data: {placeholder: 'Velg saker'} %>
+        <%= f.select :issues, issue_options_for(@proposition), {}, 
+                              class: 'input-xlarge chosen', multiple: true, data: {placeholder: 'Velg saker'} %>
       <% end %>
       <p><small class="muted">Kommer: Mulighet til å opprette ny sak herfra.</small></p>
     </div>
@@ -73,10 +74,11 @@
     <div class="span2" style="text-align: right;"><strong>Forslagstiller</strong></div>
     <div class="span4">"<%= @proposition.on_behalf_of %>"</div>
     <div class="span6">
-      <%= f.text_field :source_slugs %>
+      <%= select_tag 'proposers', proposer_options_for(@proposition), 
+                                  class: 'input-xlarge chosen', multiple: true, data: {placeholder: 'Velg forslagsstillere'} %>
 
       <% if @proposition.source_guess.any? %>
-        <small class="muted">Forslag: <%= @proposition.source_guess.join(',') %></small>
+        <small class="muted">Forslag: <span id="source-guess"><%= @proposition.source_guess.join(',') %></span></small>
       <% end %>
     </div>
   </div>
@@ -133,7 +135,7 @@
 <script>
   $(function () {
     $('html, body').animate({scrollTop: $(".header-decoration").offset().top}, 0);
-    $("#proposition_issues").chosen();
+    $("select.chosen").chosen();
   })
 </script>
 <% end %>
