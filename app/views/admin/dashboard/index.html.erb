@@ -15,7 +15,7 @@
     </div>
   </div>
 
-  <div class="row-fluid">
+  <div class="row-fluid hidden-phone">
     <div class="span4">
       <canvas class="percentage-chart" data-json='<%= percentage_chart_json_for(@issue_user_percentage).html_safe %>'></canvas>
     </div>
@@ -29,11 +29,24 @@
     </div>
   </div>
 
-  <div class="row-fluid">
-    <h3>Innkommende forslag</h3>
+  <hr class="soften">
 
-    <div class="span12">
-      <canvas class="line-chart" data-json='<%= @proposition_counts.to_json.html_safe %>'></canvas>
+  <h3><%= link_to 'Innkommende forslag', admin_propositions_path %></h3>
+
+  <div class="row-fluid">
+    <div class="span4">
+      <div class="row-fluid">
+        <canvas class="percentage-chart hidden-phone" data-json='<%= percentage_chart_json_for(@proposition_stats.published_percentage, @proposition_stats.pending_percentage) %>'></canvas>
+      </div>
+
+      <div style="text-align: center">
+        <div class="hdo-primary-text"><%= @proposition_stats.published %> publiserte</div>
+        <div class="hdo-secondary-text"><%= @proposition_stats.pending %> nye</div>
+      </div>
+    </div>
+
+    <div class="span8">
+      <canvas class="line-chart" data-json='<%= @proposition_histogram.to_json.html_safe %>'></canvas>
     </div>
   </div>
 
@@ -91,17 +104,17 @@
 <%= content_for :document_ready do %>
 <script>
 $(function () {
-  $(".percentage-chart").each(function () {
-    var el      = $(this);
-    var dataset = el.data('json');
-    var ctx     = el.get(0).getContext('2d');
+  function drawCharts() {
+    $(".percentage-chart").each(function () {
+      var el      = $(this);
+      var dataset = el.data('json');
+      var ctx     = el.get(0).getContext('2d');
 
-    el.attr('width', el.parent().width()).attr('height', 150);
+      el.attr('width', el.parent().width()).attr('height', 150);
 
-    new Chart(ctx).Doughnut(dataset);
-  })
+      new Chart(ctx).Doughnut(dataset);
+    })
 
-  function drawLineChart() {
     $(".line-chart").each(function () {
       var el      = $(this);
       var dataset = el.data('json');
@@ -126,8 +139,8 @@ $(function () {
     })
   }
 
-  $(window).resize(drawLineChart);
-  drawLineChart();
+  $(window).resize(drawCharts);
+  drawCharts();
 })
 </script>
 <% end %>

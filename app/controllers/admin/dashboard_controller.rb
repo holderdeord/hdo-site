@@ -11,7 +11,8 @@ class Admin::DashboardController < AdminController
     @issue_promise_percentage     = published.flat_map(&:promise_ids).uniq.size * 100 / (promise_count.zero? ? 1 : promise_count)
     @issue_user_percentage        = current_user.percentage_of_issues
 
-    @proposition_counts = fetch_proposition_counts
+    @proposition_histogram = fetch_proposition_counts
+    @proposition_stats     = fetch_proposition_stats
   end
 
   private
@@ -41,7 +42,7 @@ class Admin::DashboardController < AdminController
         current_week = weeks.keys.first
 
         until current_week == (this_week + 1)
-          labels << current_week
+          labels << "Uke #{current_week}"
           data << weeks[current_week]
 
           current_week += 1
@@ -54,5 +55,9 @@ class Admin::DashboardController < AdminController
       logger.error ex.message
       result
     end
+  end
+
+  def fetch_proposition_stats
+    Hdo::Stats::PropositionCounts.from_session(ParliamentSession.current.name)
   end
 end

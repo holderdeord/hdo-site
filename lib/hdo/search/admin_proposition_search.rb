@@ -79,7 +79,7 @@ module Hdo
           q[:filter] = {term: {status: params[:status]}}
         end
 
-        @response = model.search(q).page(params[:page] || 1)
+        @response = model.search(q, size: params[:size]).page(params[:page] || 1)
       end
 
       def model
