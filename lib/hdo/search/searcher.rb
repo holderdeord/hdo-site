@@ -128,11 +128,15 @@ module Hdo
         end
 
         def facets
-          Hashie::Mash.new @response.response['facets']
+          if @response
+            Hashie::Mash.new @response.response['facets']
+          else
+            {}
+          end
         end
 
         def results
-          @response.results
+          @response && @response.results
         end
 
         def success?
