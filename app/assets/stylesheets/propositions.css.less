@@ -1,0 +1,39 @@
+.proposition-feed {
+  h2 {
+    margin-bottom: 10px;
+  }
+
+  h4 {
+    font-weight: normal;
+  }
+
+  .proposition-list {
+    .proposition {
+      background-color: #fff;
+      border-radius: 2px;
+      display: block;
+      position: relative;
+      margin-bottom: 10px;
+      padding: 10px;
+      color: inherit;
+
+      box-shadow: 0 -4px 20px rgba(0,0,0,0.03) inset,
+                  0 0 0 1px rgba(0,0,0,0.1) inset,
+                  0 1px 4px rgba(0,0,0,0.075);
+      &:hover {
+        text-decoration: none;
+        background-color: #fafafa;
+      }
+
+      &:active {
+        background-color: #eee;
+      }
+
+      .proposer {
+        float: right;
+        img { border-radius: 7%; padding: 2px; }
+      }
+
+    }
+  }
+}

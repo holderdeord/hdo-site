@@ -55,17 +55,34 @@ module Hdo
         q = {
           query: {
             query_string: {query: "#{@query}* #{@query}", default_operator: 'OR'}
-          }
+          },
+          sort: ['_score']
         }
 
         opts = {
           index: [Issue, Representative].map(&:index_name),
           type: nil,
           size: 25,
-          sort: ['_score']
         }
 
         response_from { Issue.search(q, opts) }
+      end
+
+      def propositions(params = {})
+        q = {
+          query: {
+            query_string: {query: @query}
+          },
+          sort: [{vote_time: 'desc'}]
+        }
+
+        q[:filter] = {term: {status: params[:status]}} if params[:status].present?
+
+        opts = {
+          size: @size
+        }
+
+        response_from { Proposition.search(q, opts) }
       end
 
       def proposition_histogram(opts = {})
@@ -120,7 +137,7 @@ module Hdo
       end
 
       class Response
-        attr_reader :results, :exception
+        attr_reader :exception, :response
 
         def initialize(response, exception = nil)
           @response = response
@@ -136,7 +153,19 @@ module Hdo
         end
 
         def results
-          @response && @response.results
+          if @response
+            @response.results
+          else
+            []
+          end
+        end
+
+        def records
+          if @response
+            @response.records
+          else
+            []
+          end
         end
 
         def success?
@@ -145,6 +174,10 @@ module Hdo
 
         def down?
           @exception.kind_of? Errno::ECONNREFUSED
+        end
+
+        def error_message
+          @exception && @exception.message
         end
       end # Response
 

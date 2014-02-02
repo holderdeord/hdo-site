@@ -21,7 +21,6 @@ Hdo::Application.routes.draw do
     resources :users
     resources :governments, except: :show
     resources :propositions, only: [:index, :edit, :update]
-
     resources :representatives, only: [:index, :edit, :update] do
       get 'activate'       => 'representatives#activate',       as: :activate
       get 'reset_password' => 'representatives#reset_password', as: :reset_password
@@ -127,16 +126,27 @@ Hdo::Application.routes.draw do
   get 'representatives/index/district' => 'representatives#index_by_district', as: :representatives_by_district
 
   #
+  # propositions
+  #
+
+  get 'propositions/feed'            => 'propositions#feed', as: :propositions_feed
+  get 'propositions/feed/page/:page' => 'propositions#feed'
+
+
+  #
   # votes
   #
 
   resources :votes, only: [:index, :show] do
+    collection do
+      get 'page/:page' => 'votes#index'
+    end
+
     member do
       get 'propositions'
     end
   end
 
-  get 'votes/page/:page' => 'votes#index'
 
   #
   # widgets

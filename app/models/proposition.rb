@@ -18,6 +18,12 @@ class Proposition < ActiveRecord::Base
 
       indexes :votes do
         indexes :slug, index: :not_analyzed
+        indexes :enacted, type: :boolean
+      end
+
+      indexes :proposers do
+        indexes :external_id, index: :not_analyzed
+        indexes :name, index: :not_analyzed
       end
     }
   }
@@ -93,11 +99,12 @@ class Proposition < ActiveRecord::Base
   end
 
   def as_indexed_json(options = nil)
-    methods = [:plain_body]
+    methods = [:plain_body, :proposers]
     methods += [:parliament_session_name, :vote_time] if votes.any?
 
     as_json methods: methods,
-            include: {votes: {only: [:slug]} },
-            only:    [:description, :on_behalf_of, :status, :id, :simple_description, :simple_body]
+            include: {votes: {only: [:slug, :enacted]} },
+            only:    [:description, :on_behalf_of, :status, :id,
+                      :simple_description, :simple_body]
   end
 end

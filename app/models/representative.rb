@@ -102,10 +102,10 @@ class Representative < ActiveRecord::Base
     "#{last_name}, #{first_name}"
   end
 
-  def full_name
+  def name
     "#{first_name} #{last_name}"
   end
-  alias_method :name, :full_name
+  alias_method :full_name, :name
 
   def name_with_party
     # missing spec
