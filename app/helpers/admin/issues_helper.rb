@@ -9,8 +9,8 @@ module Admin::IssuesHelper
   end
 
   def proposer_options_for(model)
-    reps = Representative.all.map { |e| ["#{e.full_name} (#{e.external_id})", "#{e.class}-#{e.id}"]  }
-    party = Party.all.map { |e| ["#{e.name} (#{e.external_id})", "#{e.class}-#{e.id}"] }
+    reps = Representative.all.map { |e| ["#{e.full_name} - #{e.external_id}", "#{e.class}-#{e.id}"]  }
+    party = Party.all.map { |e| ["#{e.name} - #{e.external_id}", "#{e.class}-#{e.id}"] }
 
     selected  = model.proposers.map { |e| "#{e.class}-#{e.id}" }
 
