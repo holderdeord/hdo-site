@@ -20,7 +20,8 @@ module Hdo
           query: {
             query_string: {query: @query, default_operator: 'AND'}
           },
-          indices_boost: BOOST
+          indices_boost: BOOST,
+          sort: ['_score']
         }
 
         indices = (SearchSettings.models - [Vote]).map(&:index_name)
@@ -29,7 +30,6 @@ module Hdo
           index: indices,
           type: nil,
           size: @size,
-          sort: ['_score']
         }
 
         response_from { Issue.search(q, opts) }
@@ -40,12 +40,12 @@ module Hdo
           query: {
             query_string: {query: @query, default_operator: 'AND'}
           },
-          filter: {term: {parliament_period_name: '2013-2017' } }
+          filter: {term: {parliament_period_name: '2013-2017' } },
+          sort: ['_score']
         }
 
         opts = {
           size: @size,
-          sort: ['_score']
         }
 
         response_from { Promise.search(q, opts) }
