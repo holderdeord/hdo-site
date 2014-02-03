@@ -26,7 +26,7 @@ module Hdo
           response.should be_kind_of(Searcher::Response)
           response.should_not be_success
           response.exception.should be_kind_of(Errno::ECONNREFUSED)
-          response.results.should be_nil
+          response.results.should == []
         end
 
         it 'returns a failed response if the search request fails' do
@@ -36,7 +36,7 @@ module Hdo
           response.should be_kind_of(Searcher::Response)
           response.should_not be_success
           response.exception.should be_kind_of(Elasticsearch::Transport::Transport::Errors::InternalServerError)
-          response.results.should be_nil
+          response.results.should == []
         end
       end
 

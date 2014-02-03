@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140201115248) do
+ActiveRecord::Schema.define(:version => 20140203121505) do
 
   create_table "answers", :force => true do |t|
     t.text     "body",                                     :null => false
@@ -279,7 +279,6 @@ ActiveRecord::Schema.define(:version => 20140201115248) do
 
   create_table "propositions", :force => true do |t|
     t.string   "external_id"
-    t.string   "representative_id"
     t.string   "description"
     t.text     "body"
     t.string   "on_behalf_of"
