@@ -14,6 +14,31 @@ describe VoteResult do
     invalid.should be_invalid
   end
 
+  it 'has methods for vote result' do
+    v = VoteResult.make
+
+    v.result = 0
+
+    v.should be_absent
+    v.should_not be_present
+    v.should_not be_for
+    v.should_not be_against
+
+    v.result = 1
+
+    v.should be_for
+    v.should be_present
+    v.should_not be_against
+    v.should_not be_absent
+
+    v.result = -1
+
+    v.should be_against
+    v.should be_present
+    v.should_not be_for
+    v.should_not be_absent
+  end
+
   it 'knows if it is a rebel vote' do
     rep1 = Representative.make!(:full)
 

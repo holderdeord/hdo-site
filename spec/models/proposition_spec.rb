@@ -87,4 +87,29 @@ describe Proposition do
     proposers.each { |proposer| proposition.add_proposer(proposer) }
     proposition.reload.proposers.should == proposers
   end
+
+  it 'finds the previous and next proposition by vote time' do
+    v1 = Vote.make!(time: 1.month.ago)
+    v2 = Vote.make!(time: Time.now)
+    v3 = Vote.make!(time: 1.month.from_now)
+
+    p1 = Proposition.make!(:votes => [v1])
+    p2 = Proposition.make!(:votes => [v2])
+    p3 = Proposition.make!(:votes => [v3])
+
+    p1.next.should == p2
+    p2.next.should == p3
+    p3.next.should be_nil
+
+    p1.previous.should be_nil
+    p2.previous.should == p1
+    p3.previous.should == p2
+  end
+
+  it 'does a source guess' do
+    prop = Proposition.make(on_behalf_of: "Party", description: "Proposition from John Doe")
+    Hdo::Utils::PropositionSourceGuesser.should_receive(:parties_for).with("#{prop.on_behalf_of} #{prop.description}")
+
+    prop.source_guess
+  end
 end
