@@ -1,7 +1,10 @@
 <h4><%= @representative.first_name %> har nylig stemt</h4>
 
-<ul class="unstyled">
-  <% @latest_votes.each do |position, description| %>
-    <li><strong><%= position %></strong> å <%= description %></li>
+<div class="representative-vote-list">
+  <% @latest_votes.each do |position, description, proposition| %>
+    <div class="row-fluid">
+      <strong class="span1"><%= position %></strong>
+      <div class="span11"> å <%= link_to description, proposition %></div>
+    </div>
   <% end %>
-</ul>
+</div>

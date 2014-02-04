@@ -37,11 +37,11 @@
 <% if AppConfig.show_propositions_feed %>
   <div class='row-fluid'>
     <div class="span6">
-      <%= render 'twitter' %>
+      <%= render partial: 'shared/propositions_feed', locals: {feed: @propositions_feed } %>
     </div>
 
     <div class="span6">
-      <%= render partial: 'shared/propositions_feed', locals: {feed: @propositions_feed } %>
+      <%= render 'twitter' %>
     </div>
   </div>
 

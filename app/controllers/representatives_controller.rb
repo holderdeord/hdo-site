@@ -14,9 +14,8 @@ class RepresentativesController < ApplicationController
     end.reverse
 
     if AppConfig.show_propositions_feed
-      propositions = @representative.propositions.published.order('created_at DESC').first(10)
-      @propositions_feed = Hdo::Utils::PropositionsFeed.new(propositions, title: "Siste forslag fra #{@representative.first_name}", height: '310px')
-      @latest_votes = fetch_latest_votes(10)
+      @propositions_feed = Hdo::Utils::PropositionsFeed.for_representative(@representative, count: 10, height: '310px')
+      @latest_votes = fetch_latest_votes(5)
     end
   end
 
@@ -36,10 +35,10 @@ class RepresentativesController < ApplicationController
         desc = proposition.simple_description
         desc = "#{UnicodeUtils.downcase desc[0]}#{desc[1..-1]}"
 
-        [position, desc]
+        [position, desc, proposition]
       end
     end
 
-    latest.uniq
+    latest
   end
 end

@@ -1,0 +1,5 @@
+<% parties.each do |party| %>
+  <%= link_to party, style: 'text-decoration: none' do %>
+    <%= image_tag party.logo.medium, width: 64, height: 64 %>
+  <% end %>
+<% end %>

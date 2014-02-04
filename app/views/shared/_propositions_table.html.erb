@@ -10,16 +10,15 @@
   <tbody>
     <% vote.propositions.each do |prop| %>
       <tr>
-        <td><%= prop.description %></td>
+        <td><%= link_to prop.simple_description || prop.description, proposition_path(prop)  %></td>
         <td>
         <% if prop.proposers.any? %>
-            <ul>
+            <ul class="unstyled">
               <% prop.proposers.each do |proposer| %>
                 <li>
+                  <%= link_to proposer.name, proposer %>
                   <% if proposer.kind_of?(Representative) %>
-                    <%= link_to proposer.display_name, proposer %> (<%= proposer.party_at(vote.time).try(:external_id) || t('app.parties.none') %>)
-                  <% elsif proposer.kind_of?(Party) %>
-                    <%= link_to proposer.name, proposer %>
+                    (<%= proposer.party_at(vote.time).try(:external_id) || t('app.parties.none') %>)
                   <% end %>
                 </li>
               <% end %>
@@ -28,7 +27,7 @@
           <%= prop.on_behalf_of %>
         <% end %>
         </td>
-        <td><%= prop.body.html_safe %></td>
+        <td><%= (prop.simple_body || prop.body.html_safe) %></td>
       </tr>
     <% end %>
   </tbody>

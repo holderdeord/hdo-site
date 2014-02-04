@@ -24,6 +24,10 @@ class User < ActiveRecord::Base
     role == 'superadmin'
   end
 
+  def contributor?
+    role == 'contributor'
+  end
+
   def first_name
     name.split(' ').first
   end

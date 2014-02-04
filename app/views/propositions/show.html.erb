@@ -1,25 +1,81 @@
 <div class="row-fluid">
   <small class="pull-right">
-    <%= link_to t('views.pagination.next').html_safe, @proposition.next if @proposition.next %>
+    <%= link_to 'Nyere &rsaquo;'.html_safe, @proposition.next if @proposition.next %>
   </small>
 
   <small>
-    <%= link_to t('views.pagination.previous').html_safe, @proposition.previous if @proposition.previous %>
+    <%= link_to '&lsaquo; Eldre'.html_safe, @proposition.previous if @proposition.previous %>
   </small>
 </div>
 
-<h2>
-  <%= @proposition.simple_description || @proposition.description %>
-</h2>
-
-<hr class="soften">
+<h2><%= @proposition.title %></h2>
 
 <div class="row-fluid">
-  <div class="span6 well">
-    <h4>Originaltekst</h4>
-    <%= @proposition.body.html_safe %>
+  <div class="span6">
+    Forslaget ble <strong><%= @proposition.enacted? ? 'vedtatt' : 'ikke vedtatt' %></strong> <%= link_to @proposition.timestamp, @proposition.vote %>
   </div>
 
-
-  <div class="span6"><%= @proposition.simple_body %></div>
+    <div class="span6">
+      <% if @proposition.proposers.any? %>
+        <div class="pull-right">Fremmet av <%= @proposition.proposer_links %></div>
+      <% end %>
+    </div>
 </div>
+
+<hr>
+
+<div class="row-fluid">
+  <% if @proposition.opposers.any? %>
+    <div class="span6 centerify">
+      <%= render partial: 'parties', locals: {parties: @proposition.supporters} %>
+      <p class="lead">stemte for</p>
+    </div>
+
+    <div class="span6 centerify">
+      <%= render partial: 'parties', locals: {parties: @proposition.opposers} %>
+      <p class="lead">stemte mot</p>
+    </div>
+  <% else %>
+    <div class="span12 centerify">
+      <%= render partial: 'parties', locals: {parties: @proposition.supporters} %>
+      <p class="lead">enstemmig vedtatt</p>
+    </div>
+  <% end %>
+</div>
+
+<% if @proposition.absentees.any? %>
+  <div class="span12 centerify">
+    <%= render partial: 'parties', locals: {parties: @proposition.absentees} %>
+    <p class="lead">ikke tilstede</p>
+  </div>
+<% end %>
+
+<% if @proposition.body %>
+  <div class="row-fluid">
+    <p class="lead">
+      <%= @proposition.body %>
+      <a href="#" data-toggle="#original-body">Se råtekst</a>
+    </p>
+  </div>
+<% end %>
+
+<div id="original-body" class="row-fluid <%= 'hidden' if @proposition.body %>">
+  <h4>Råtekst fra Stortinget</h4>
+
+  <div class="well">
+    <%= @proposition.original_body %>
+  </div>
+</div>
+
+<%= link_to('Rediger', edit_admin_proposition_path(@proposition), class: 'btn') if current_user && !current_user.contributor? %>
+
+<%= content_for :document_ready do %>
+<script>
+$(function () {
+  $("[data-toggle]").click(function (e) {
+    e.preventDefault();
+    $($(this).data('toggle')).toggleClass('hidden');
+  })
+})
+</script>
+<% end %>

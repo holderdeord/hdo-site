@@ -17,11 +17,12 @@ class PropositionsController < ApplicationController
   end
 
   def show
+    @proposition = @proposition.decorate
   end
 
   private
 
   def fetch_proposition
-    @proposition = Proposition.find(params[:id])
+    @proposition = Proposition.includes(:votes, :proposition_endorsements => :proposer).find(params[:id])
   end
 end

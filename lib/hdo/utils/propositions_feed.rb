@@ -4,6 +4,20 @@ module Hdo
 
       attr_reader :title, :height
 
+      def self.for_party(party, opts = {})
+        propositions = party.propositions.includes(:votes, :proposition_endorsements => :proposer)
+        propositions = propositions.published.order('created_at DESC').first(opts.delete(:count) || 5)
+
+        new(propositions, {title: "Siste forslag fra #{party.name}"}.merge(opts))
+      end
+
+      def self.for_representative(representative, opts = {})
+        propositions = representative.propositions.includes(:votes, :proposition_endorsements => :proposer)
+        propositions.published.order('created_at DESC').first(opts.delete(:count) || 10)
+
+        new(propositions, {title: "Siste forslag fra #{representative.first_name}"}.merge(opts))
+      end
+
       def initialize(propositions, opts = {})
         @propositions = propositions
 
@@ -29,29 +43,7 @@ module Hdo
       end
 
       def propositions
-        @propositions.map { |e| PropositionDecorator.new e }
-      end
-
-      class PropositionDecorator < Draper::Decorator
-        delegate :id, :to_param
-
-        def title
-          str = model.simple_description || model.description
-          "#{UnicodeUtils.upcase str[0]}#{str[1..-1]}"
-        end
-
-        def timestamp
-          ltime = model.vote_time.localtime
-          if ltime > 1.week.ago
-            "#{h.distance_of_time_in_words_to_now(ltime)} siden"
-          else
-            h.l ltime, format: :short_text
-          end
-        end
-
-        def proposers
-          @proposers ||= model.proposers.map(&:name).sort
-        end
+        @propositions.map(&:decorate)
       end
 
     end

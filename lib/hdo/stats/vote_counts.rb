@@ -62,6 +62,11 @@ module Hdo
         !party_for?(party) && party_participated?(party)
       end
 
+      def party_absent?(party)
+        counts = party_counts_for(party)
+        counts[:absent] > 0 && (counts[:for] == 0 && counts[:against] == 0)
+      end
+
       def text_for(party)
         return VoteResult.human_attribute_name 'voted_for' if party_for?(party)
         return VoteResult.human_attribute_name 'voted_against' if party_against?(party)
