@@ -13,7 +13,7 @@ module Hdo
 
       def self.for_representative(representative, opts = {})
         propositions = representative.propositions.includes(:votes, :proposition_endorsements => :proposer)
-        propositions.published.order('created_at DESC').first(opts.delete(:count) || 10)
+        propositions = propositions.published.order('created_at DESC').first(opts.delete(:count) || 10)
 
         new(propositions, {title: "Siste forslag fra #{representative.first_name}"}.merge(opts))
       end
