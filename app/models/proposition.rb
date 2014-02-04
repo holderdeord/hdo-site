@@ -80,10 +80,6 @@ class Proposition < ActiveRecord::Base
     proposition_endorsements.create!(proposer: proposer)
   end
 
-  def to_param
-    "#{id}-#{simple_description}".parameterize
-  end
-
   def previous
     return unless v = votes.order(:time).first
     @previous ||= self.class.joins(:votes).where("votes.time < ?", v.time).order('votes.time DESC').first
