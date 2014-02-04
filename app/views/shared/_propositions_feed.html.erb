@@ -1,0 +1,35 @@
+<div class="proposition-feed">
+  <div class="proposition-list" style="<%= 'height: 890px;' if [controller_name, action_name] == %w[home index] %>">
+    <% propositions.each do |prop| %>
+      <%= link_to proposition_path(prop) do %>
+        <div class="proposition" data-id="<%= prop.id %>">
+          <div class="row-fluid">
+            <div class="span9">
+              <%= unicode_capitalize(prop.simple_description) %>
+            </div>
+
+            <time class="span3 muted">
+              <% if prop.vote_time.localtime > 1.week.ago  %>
+                <%= distance_of_time_in_words_to_now prop.vote_time.localtime %> siden
+              <% else %>
+                <%= l prop.vote_time.localtime, format: :short_text %>
+              <% end %>
+            </time>
+          </div>
+
+          <div class="row-fluid">
+            <% if edit %>
+              <%= link_to 'Rediger', edit_admin_proposition_path(prop), class: 'btn btn-small pull-right' %>
+            <% end %>
+            
+            <% if prop.proposers.any? %>
+              <small class="muted">
+                <%= prop.proposers.map(&:name).sort.to_sentence %>
+              </small>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+</div>

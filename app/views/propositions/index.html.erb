@@ -1,5 +1,4 @@
 <h2>Siste forslag</h2>
 
-<div class="span6">
-  <%= render partial: 'shared/propositions_feed', locals: {propositions: @propositions } %>
-</div>
+<%= render partial: 'shared/propositions_feed', locals: { propositions: @propositions, edit: @logged_in } %>
+<%= paginate @search_response %>
