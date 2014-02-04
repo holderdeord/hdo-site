@@ -1,16 +1,27 @@
-<% if questions.empty? %>
-  <%= representative.full_name %> har foreløpig ingen spørsmål.
-<% else %>
-  <ul class="representative-questions">
-    <% questions.each do |question| %>
-      <li>
-        <%= link_to question.teaser, question %>
+<h4>Spørsmål fra velgerne</h4>
+<% if @representative.askable? %>
+  <% if @questions.empty? %>
+    <%= @representative.full_name %> har foreløpig ingen spørsmål.
+  <% else %>
+    <ul class="representative-questions">
+      <% @questions.each do |question| %>
+        <li>
+          <%= link_to question.teaser, question %>
 
-        <p class="muted">
-          Fra <strong><%= question.from_display_name %></strong>.
-          <%= question.decorate.status_description %>
-        </p>
-      </li>
-    <% end %>
-  </ul>
+          <p class="muted">
+            Fra <strong><%= question.from_display_name %></strong>.
+            <%= question.decorate.status_description %>
+          </p>
+        </li>
+      <% end %>
+    </ul>
+  <% end %>
+<% elsif @representative.opted_out? %>
+  <p><%= @representative.name %> har reservert seg mot å svare på spørsmål.</p>
+<% elsif @representative.attending? && @representative.email.nil? %>
+  <p><%= @representative.name %> møter for tiden på Stortinget, men vi mangler epostadressen.</p>
+  <p>Dette skal helst ikke skje, så gi oss gjerne beskjed <%= mail_to AppConfig.question_answer_email, 'her!', encode: 'hex', subject: "Mangler epost for #{@representative.name} (#{@representative.external_id})" %></p>
+<% else %>
+  <p><%= @representative.name %> møter for tiden ikke på Stortinget. Du kan bare stille spørsmål til møtende representanter.</p>
 <% end %>
+

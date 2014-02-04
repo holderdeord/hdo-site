@@ -12,5 +12,34 @@ class RepresentativesController < ApplicationController
     @questions = @representative.questions.approved.sort_by do |q|
       (q.answer && q.answer.approved?) ? q.answer.created_at : q.created_at
     end.reverse
+
+    if AppConfig.show_propositions_feed
+      propositions = @representative.propositions.published.order('created_at DESC').first(10)
+      @propositions_feed = Hdo::Utils::PropositionsFeed.new(propositions, title: "Siste forslag fra #{@representative.first_name}", height: '310px')
+      @latest_votes = fetch_latest_votes(10)
+    end
+  end
+
+  private
+
+  def fetch_latest_votes(count)
+    vote_results = @representative.vote_results.joins(:vote => :propositions).
+                                   where('propositions.status' => 'published').
+                                   where('result != 0').uniq.
+                                   first(count)
+
+
+    latest = vote_results.flat_map do |result|
+      result.vote.propositions.select(&:published?).map do |proposition|
+        position = result.human
+
+        desc = proposition.simple_description
+        desc = "#{UnicodeUtils.downcase desc[0]}#{desc[1..-1]}"
+
+        [position, desc]
+      end
+    end
+
+    latest.uniq
   end
 end

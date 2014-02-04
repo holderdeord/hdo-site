@@ -2,7 +2,6 @@
 <% party = @representative.latest_party %>
 
 <div class="representative-profile">
-
   <%= image_tag @representative.image.versions[:large], width: '240', height: '320', class: 'representative-image', alt: @representative.full_name %>
 
   <h1 class="representative-name"><%= @representative.full_name %> (<%= @representative.age %>)</h1>
@@ -35,32 +34,43 @@
 
 <hr class="soften">
 
-<div class="row-fluid">
-  <div class="span6 <%= @representative.askable? ? '' : 'muted' %>">
-    <h3>Spørsmål fra velgerne</h3>
-    <% if @representative.askable? %>
-      <%= render partial: 'question_list', locals: { representative: @representative, questions: @questions } %>
-    <% elsif @representative.opted_out? %>
-      <p><%= @representative.name %> har reservert seg mot å svare på spørsmål.</p>
-    <% elsif @representative.attending? && @representative.email.nil? %>
-      <p><%= @representative.name %> møter for tiden på Stortinget, men vi mangler epostadressen.</p>
-      <p>Dette skal helst ikke skje, så gi oss gjerne beskjed <%= mail_to AppConfig.question_answer_email, 'her!', encode: 'hex', subject: "Mangler epost for #{@representative.name} (#{@representative.external_id})" %></p>
-    <% else %>
-      <p><%= @representative.name %> møter for tiden ikke på Stortinget. Du kan bare stille spørsmål til møtende representanter.</p>
-    <% end %>
+<% if AppConfig.show_propositions_feed %>
+  <div class='row-fluid'>
+    <div class="span6">
+      <%= render 'twitter' %>
+    </div>
+
+    <div class="span6">
+      <%= render partial: 'shared/propositions_feed', locals: {feed: @propositions_feed } %>
+    </div>
   </div>
 
-  <div class="span6">
-    <% if @representative.has_twitter? %>
-      <h3>
-        Twitter <%= link_to "(@#{@representative.twitter_id})", @representative.twitter_url, class: 'muted' %>
-      </h3>
+  <hr>
 
-      <%= twitter_widget_for(@representative.twitter_id) %>
-    <% end %>
+  <div class="row-fluid">
+    <div class="span6">
+      <%= render 'vote_list' %>
+    </div>
+
+    <div class="span6 <%= 'muted' unless @representative.askable? %>">
+      <%= render 'question_list' %>
+    </div>
   </div>
-</div>
+<% else %>
+  <div class="row-fluid">
+    <div class="span6 <%= 'muted' unless @representative.askable? %>">
+      <%= render 'question_list' %>
+    </div>
 
-<hr>
+    <div class="span6">
+      <%= render 'twitter' %>
+    </div>
+  </div>
 
-<%= render partial: 'issue_positions', locals: { issue_groups: @issue_groups, representative: @representative } %>
+  <hr>
+
+  <p class="lead">
+    Her kommer snart en oversikt over representantens stemmegivning på Stortinget.
+  </p>
+<% end %>
+

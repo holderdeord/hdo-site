@@ -1,9 +1,5 @@
 module ApplicationHelper
 
-  def unicode_capitalize(str)
-    "#{UnicodeUtils.upcase str[0]}#{str[1..-1]}"
-  end
-
   def header_class
     header_class = []
 

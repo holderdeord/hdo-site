@@ -39,7 +39,7 @@
 
       <% if AppConfig.show_propositions_feed %>
         <div class="span4">
-          <%= render partial: 'propositions_feed' %>
+          <%= render partial: 'shared/propositions_feed', locals: { feed: @propositions_feed } %>
         </div>
       <% end %>
     </div>

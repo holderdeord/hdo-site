@@ -19,8 +19,10 @@ class HomeController < ApplicationController
     @parties     = Party.order(:name)
 
     if AppConfig.show_propositions_feed
-      @issues      = published.for_frontpage(5).map(&:decorate)
-      @propositions = Proposition.where(status: 'published').order(:created_at).reverse_order.first(6)
+      @issues = published.for_frontpage(5).map(&:decorate)
+
+      propositions = Proposition.published.order('created_at DESC').first(6)
+      @propositions_feed = Hdo::Utils::PropositionsFeed.new(propositions, :see_all => true)
     else
       @issues = published.for_frontpage(7).map(&:decorate)
     end

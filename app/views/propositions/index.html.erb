@@ -1,2 +1,2 @@
-<%= render partial: 'shared/propositions_feed', locals: { propositions: @propositions, edit: @logged_in, link_to_all: false } %>
+<%= render partial: 'shared/propositions_feed', locals: { feed: @propositions_feed } %>
 <%= paginate @search_response %>
