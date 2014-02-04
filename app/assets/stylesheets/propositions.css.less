@@ -1,39 +1,44 @@
 .proposition-feed {
-  h2 {
-    margin-bottom: 10px;
-  }
-
-  h4 {
-    font-weight: normal;
-  }
-
   .proposition-list {
+    height: 900px;
+    position: relative;
+    width: 100%;
+    overflow-x: hidden;
+    overflow-y: scroll;
+
+    box-shadow: 0 -4px 20px rgba(0,0,0,0.03) inset,
+                0 0 0 1px rgba(0,0,0,0.1) inset,
+                0 1px 4px rgba(0,0,0,0.075);
+
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
     .proposition {
-      background-color: #fff;
       border-radius: 2px;
+      border-bottom: 1px solid #e8e8e8;
       display: block;
       position: relative;
-      margin-bottom: 10px;
       padding: 10px;
       color: inherit;
 
-      box-shadow: 0 -4px 20px rgba(0,0,0,0.03) inset,
-                  0 0 0 1px rgba(0,0,0,0.1) inset,
-                  0 1px 4px rgba(0,0,0,0.075);
+
       &:hover {
         text-decoration: none;
-        background-color: #fafafa;
+        background-color: #fefefe;
       }
 
       &:active {
         background-color: #eee;
       }
 
-      .proposer {
-        float: right;
-        img { border-radius: 7%; padding: 2px; }
-      }
 
+      time {
+        font-size: 12px;
+        text-align: right;
+      }
     }
   }
 }

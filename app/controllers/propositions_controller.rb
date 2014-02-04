@@ -1,5 +1,7 @@
 class PropositionsController < ApplicationController
-  def feed
+  before_filter :fetch_proposition, only: [:show]
+
+  def index
     searcher = Hdo::Search::Searcher.new(params[:q] || '*')
     @response = searcher.propositions(status: 'published')
 
@@ -12,5 +14,14 @@ class PropositionsController < ApplicationController
     end
 
     @logged_in = current_user && (current_user.admin? || current_user.superadmin?)
+  end
+
+  def show
+  end
+
+  private
+
+  def fetch_proposition
+    @proposition = Proposition.find(params[:id])
   end
 end

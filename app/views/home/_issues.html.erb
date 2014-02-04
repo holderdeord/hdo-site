@@ -17,10 +17,10 @@
     </article>
     <% end %>
 
-    <% @issues.each_slice(3) do |issues| %>
+    <% @issues.each_slice(AppConfig.show_propositions_feed ? 2 : 3) do |issues| %>
       <div class="row-fluid">
         <% issues.each do |issue| %>
-          <article class="issue span4">
+          <article class="issue span<%= AppConfig.show_propositions_feed ? 6 : 4 %>">
             <%= link_to issue do %>
               <h4><%= issue.title %></h4>
               <div class="muted"><%= issue.short_explanation %></div>

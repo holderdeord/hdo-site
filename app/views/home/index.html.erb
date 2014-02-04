@@ -5,8 +5,17 @@
   </p>
 <% end %>
 
-<%= render partial: 'issues' %>
+<div class="row-fluid">
+  <% if AppConfig.show_propositions_feed %>
+    <div class="span8"><%= render partial: 'issues' %></div>
+    <div class="span4"><%= render partial: 'propositions_feed' %></div>
+  <% else %>
+    <%= render partial: 'issues' %>
+  <% end %>
+</div>
+
 <%= render partial: 'leaderboard' %>
+
 <hr class="soften">
 
 <section>

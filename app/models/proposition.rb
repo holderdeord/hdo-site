@@ -81,17 +81,13 @@ class Proposition < ActiveRecord::Base
   end
 
   def previous
-    return unless vote_time
-
-    relation = self.class.includes(:votes).where("votes.time < ?", vote_time).order('votes.time DESC')
-    relation.first
+    return unless v = votes.order(:time).first
+    @previous ||= self.class.joins(:votes).where("votes.time < ?", v.time).order('votes.time DESC').first
   end
 
   def next
-    return unless vote_time
-
-    relation = self.class.includes(:votes).where("votes.time > ?", vote_time).order('votes.time')
-    relation.first
+    return unless v = votes.order(:time).last
+    @next ||= self.class.joins(:votes).where("votes.time > ?", v.time).order('votes.time').first
   end
 
   def source_guess

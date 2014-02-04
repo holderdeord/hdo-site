@@ -129,9 +129,7 @@ Hdo::Application.routes.draw do
   # propositions
   #
 
-  get 'propositions/feed'            => 'propositions#feed', as: :propositions_feed
-  get 'propositions/feed/page/:page' => 'propositions#feed'
-
+  resources :propositions, only: [:index, :show]
 
   #
   # votes

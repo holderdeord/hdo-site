@@ -1,0 +1,25 @@
+<div class="row-fluid">
+  <small class="pull-right">
+    <%= link_to t('views.pagination.next').html_safe, @proposition.next if @proposition.next %>
+  </small>
+
+  <small>
+    <%= link_to t('views.pagination.previous').html_safe, @proposition.previous if @proposition.previous %>
+  </small>
+</div>
+
+<h2>
+  <%= @proposition.simple_description || @proposition.description %>
+</h2>
+
+<hr class="soften">
+
+<div class="row-fluid">
+  <div class="span6 well">
+    <h4>Originaltekst</h4>
+    <%= @proposition.body.html_safe %>
+  </div>
+
+
+  <div class="span6"><%= @proposition.simple_body %></div>
+</div>
