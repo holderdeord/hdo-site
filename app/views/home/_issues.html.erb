@@ -4,34 +4,44 @@
     <h2 class="top-issues-caption"><%= AppConfig.topic_of_the_week %></h2>
 
     <% if @main_issue %>
-    <article class="issue">
-      <%= link_to @main_issue do %>
-        <img src="/images/topic.jpg?title=<%= URI.escape AppConfig.topic_of_the_week %>" alt="Illustrasjonsbilde tema">
-        <h3><%= @main_issue.title %></h3>
-        <div class="muted"><%= @main_issue.short_explanation %></div>
-        <p>
-          <%= @main_issue.description %>
-          <span class="read-more"><%= t('app.read_more') %></span>
-        </p>
-      <% end %>
-    </article>
+      <article class="issue">
+        <%= link_to @main_issue do %>
+          <img src="/images/topic.jpg?title=<%= URI.escape AppConfig.topic_of_the_week %>" alt="Illustrasjonsbilde tema">
+          <h3><%= @main_issue.title %></h3>
+          <div class="muted"><%= @main_issue.short_explanation %></div>
+          <p>
+            <%= @main_issue.description %>
+            <span class="read-more"><%= t('app.read_more') %></span>
+          </p>
+        <% end %>
+      </article>
     <% end %>
 
-    <% @issues.each_slice(AppConfig.show_propositions_feed ? 2 : 3) do |issues| %>
-      <div class="row-fluid">
-        <% issues.each do |issue| %>
-          <article class="issue span<%= AppConfig.show_propositions_feed ? 6 : 4 %>">
-            <%= link_to issue do %>
-              <h4><%= issue.title %></h4>
-              <div class="muted"><%= issue.short_explanation %></div>
-              <p>
-                <%= awesome_truncate issue.description, 200 %>
-                <span class="read-more"><%= t('app.read_more') %></span>
-              </p>
+    <div class="row-fluid">
+      <div class="span<%= AppConfig.show_propositions_feed ? 8 : 12 %>">
+        <% @issues.each_slice(AppConfig.show_propositions_feed ? 2 : 3) do |issues| %>
+          <div class="row-fluid">
+            <% issues.each do |issue| %>
+              <article class="issue span<%= AppConfig.show_propositions_feed ? 6 : 4 %>">
+                <%= link_to issue do %>
+                  <h4><%= issue.title %></h4>
+                  <div class="muted"><%= issue.short_explanation %></div>
+                  <p>
+                    <%= awesome_truncate issue.description, 200 %>
+                    <span class="read-more"><%= t('app.read_more') %></span>
+                  </p>
+                <% end %>
+              </article>
             <% end %>
-          </article>
+          </div>
         <% end %>
       </div>
-    <% end %>
+
+      <% if AppConfig.show_propositions_feed %>
+        <div class="span4">
+          <%= render partial: 'propositions_feed' %>
+        </div>
+      <% end %>
+    </div>
   </section>
 </div>

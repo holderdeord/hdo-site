@@ -20,7 +20,7 @@ class HomeController < ApplicationController
 
     if AppConfig.show_propositions_feed
       @issues      = published.for_frontpage(5).map(&:decorate)
-      @propositions = Proposition.where(status: 'published').order(:created_at).reverse_order.first(20)
+      @propositions = Proposition.where(status: 'published').order(:created_at).reverse_order.first(6)
     else
       @issues = published.for_frontpage(7).map(&:decorate)
     end

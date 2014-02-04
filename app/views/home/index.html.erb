@@ -6,12 +6,7 @@
 <% end %>
 
 <div class="row-fluid">
-  <% if AppConfig.show_propositions_feed %>
-    <div class="span8"><%= render partial: 'issues' %></div>
-    <div class="span4"><%= render partial: 'propositions_feed' %></div>
-  <% else %>
-    <%= render partial: 'issues' %>
-  <% end %>
+  <%= render partial: 'issues' %>
 </div>
 
 <%= render partial: 'leaderboard' %>

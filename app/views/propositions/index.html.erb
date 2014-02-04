@@ -1,4 +1,2 @@
-<h2>Siste forslag</h2>
-
-<%= render partial: 'shared/propositions_feed', locals: { propositions: @propositions, edit: @logged_in } %>
+<%= render partial: 'shared/propositions_feed', locals: { propositions: @propositions, edit: @logged_in, link_to_all: false } %>
 <%= paginate @search_response %>
