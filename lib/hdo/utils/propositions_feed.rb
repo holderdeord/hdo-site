@@ -4,18 +4,11 @@ module Hdo
 
       attr_reader :title, :height
 
-      def self.for_party(party, opts = {})
-        propositions = party.propositions.includes(:votes, :proposition_endorsements => :proposer)
-        propositions = propositions.published.order('created_at DESC').first(opts.delete(:count) || 5)
-
-        new(propositions, {title: "Siste forslag fra #{party.name}"}.merge(opts))
-      end
-
-      def self.for_representative(representative, opts = {})
-        propositions = representative.propositions.includes(:votes, :proposition_endorsements => :proposer)
+      def self.for_model(model, opts = {})
+        propositions = model.propositions.includes(:votes, :proposition_endorsements => :proposer)
         propositions = propositions.published.order('created_at DESC').first(opts.delete(:count) || 10)
 
-        new(propositions, {title: "Siste forslag fra #{representative.first_name}"}.merge(opts))
+        new(propositions, opts)
       end
 
       def initialize(propositions, opts = {})

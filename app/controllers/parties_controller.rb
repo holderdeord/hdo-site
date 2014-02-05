@@ -13,7 +13,7 @@ class PartiesController < ApplicationController
     @issue_groups = Issue.published.order(:title).grouped_by_accountability(@party)
 
     if AppConfig.show_propositions_feed
-      @propositions_feed = Hdo::Utils::PropositionsFeed.for_party @party, count: 10
+      @propositions_feed = Hdo::Utils::PropositionsFeed.for_model @party, count: 10, title: "Siste forslag fra #{@party.name}"
     end
   end
 end
