@@ -8,7 +8,7 @@
       <% if r.votes.first %>
         <li data-proposition-id="<%= r.id %>"><%= link_to r.simple_description || r.description, vote_path(r.votes.first.slug) %></li>
       <% else %>
-        <li data-proposition-id="<%= r.id %>"><%= r.simple_description || description %></li>
+        <li data-proposition-id="<%= r.id %>"><%= r.simple_description || r.description %></li>
       <% end %>
     <% end %>
   </ul>
