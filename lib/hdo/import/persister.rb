@@ -241,11 +241,7 @@ module Hdo
         end
 
         xvote.propositions.each do |e|
-          prop = import_proposition(e)
-
-          if prop && !vote.propositions.include?(prop)
-            vote.propositions << prop
-          end
+          import_proposition(e, vote)
         end
 
         vote.save!
@@ -285,7 +281,7 @@ module Hdo
         rec
       end
 
-      def import_proposition(xprop)
+      def import_proposition(xprop, vote = nil)
         log_import xprop
         xprop.validate!
 
@@ -298,6 +294,10 @@ module Hdo
           on_behalf_of: xprop.on_behalf_of,
           body: xprop.body
         }
+
+        if vote && !prop.votes.include?(vote)
+          prop.votes << vote
+        end
 
         prop.update_attributes attributes
         prop.save!
