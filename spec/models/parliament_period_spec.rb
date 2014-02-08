@@ -1,8 +1,8 @@
 require 'spec_helper'
-require 'models/shared_examples_for_parliament_session_and_period'
+require 'models/shared/fixed_date_range'
 
 describe ParliamentPeriod do
-  it_behaves_like 'parliament session and period'
+  it_behaves_like Hdo::Model::FixedDateRange
 
   it 'can find by name' do
     period = ParliamentPeriod.create!(start_date: '2009-10-01', end_date: '2010-09-30')

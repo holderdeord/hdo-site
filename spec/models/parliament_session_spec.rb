@@ -1,8 +1,8 @@
 require 'spec_helper'
-require 'models/shared_examples_for_parliament_session_and_period'
+require 'models/shared/fixed_date_range'
 
 describe ParliamentSession do
-  it_behaves_like 'parliament session and period'
+  it_behaves_like Hdo::Model::FixedDateRange
 
   it 'finds votes within the time range' do
     start_date = 1.year.ago

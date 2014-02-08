@@ -1,5 +1,5 @@
 class Government < ActiveRecord::Base
-  include Hdo::Model::HasDateRange
+  include Hdo::Model::OpenEndedDateRange
 
   has_and_belongs_to_many :parties,  order: :name
   has_many                :promises, as:    :promisor

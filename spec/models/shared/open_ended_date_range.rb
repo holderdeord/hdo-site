@@ -1,6 +1,4 @@
-require 'spec_helper'
-
-shared_examples 'model with date range' do
+shared_examples Hdo::Model::OpenEndedDateRange do
   it "requires a start_date" do
     described_class.make(:full, :start_date => nil).should_not be_valid
   end

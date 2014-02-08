@@ -1,8 +1,8 @@
 require 'spec_helper'
-require 'models/shared_examples_for_model_with_date_range'
+require 'models/shared/open_ended_date_range'
 
 describe CommitteeMembership do
-  it_behaves_like 'model with date range'
+  it_behaves_like Hdo::Model::OpenEndedDateRange
 
   it 'is invalid with overlapping memberships in the same committee' do
     c = Committee.make!

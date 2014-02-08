@@ -1,21 +1,26 @@
 module Hdo
   module Model
-    module HasDateRange
+    module OpenEndedDateRange
+      extend ActiveSupport::Concern
 
-      def self.included(base)
-        base.validate :start_date_must_be_before_end_date
-        base.validates_presence_of :start_date
+      included do
+        validate :start_date_must_be_before_end_date
+        validates_presence_of :start_date
 
-        base.scope :for_date, ->(date) { base.where('start_date <= date(?) AND (end_date >= date(?) OR end_date IS NULL)', date, date) }
-        base.scope :current,  -> { base.for_date(Time.current) }
+        scope :for_date, ->(date) do
+          where('start_date <= date(?) AND (end_date >= date(?) OR end_date IS NULL)', date, date)
+        end
+
+        scope :current, -> { for_date Date.current }
       end
 
       def current?
-        include? Time.current
+        include? Date.current
       end
 
       def include?(date)
-        date >= start_date && (end_date == nil || date <= end_date)
+        s, e = start_date.to_date, end_date.try(:to_date)
+        date >= s && (e == nil || date <= e)
       end
 
       def intersects?(other)
@@ -38,10 +43,6 @@ module Hdo
       end
 
       private
-
-      #
-      # validations
-      #
 
       def start_date_must_be_before_end_date
         if start_date && end_date && start_date > end_date

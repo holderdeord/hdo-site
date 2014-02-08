@@ -1,5 +1,5 @@
 class PartyMembership < ActiveRecord::Base
-  include Hdo::Model::HasDateRange
+  include Hdo::Model::OpenEndedDateRange
 
   attr_accessible :party, :representative, :start_date, :end_date
 

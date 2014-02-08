@@ -1,5 +1,5 @@
 class CommitteeMembership < ActiveRecord::Base
-  include Hdo::Model::HasDateRange
+  include Hdo::Model::OpenEndedDateRange
 
   attr_accessible :representative, :committee, :start_date, :end_date
 
