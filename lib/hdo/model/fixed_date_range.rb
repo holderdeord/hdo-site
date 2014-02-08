@@ -29,7 +29,7 @@ module Hdo
         end
 
         def previous
-          where('end_date < ?', current.start_date).order(:end_date).first
+          where('end_date < ?', current.start_date).order('start_date DESC').first
         end
 
         def next

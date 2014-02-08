@@ -18,6 +18,7 @@ shared_examples Hdo::Model::FixedDateRange do
   end
 
   it 'knows the previous, current and next instances' do
+    ps2011 = described_class.make! start_date: Date.new(2011, 10, 1), end_date: Date.new(2012, 9, 30)
     ps2012 = described_class.make! start_date: Date.new(2012, 10, 1), end_date: Date.new(2013, 9, 30)
     ps2013 = described_class.make! start_date: Date.new(2013, 10, 1), end_date: Date.new(2014, 9, 30)
     ps2014 = described_class.make! start_date: Date.new(2014, 10, 1), end_date: Date.new(2015, 9, 30)
