@@ -60,8 +60,6 @@ module Hdo
 
       def fetch
         payload = {
-          sort: {promisor_name: 'asc'},
-
           facets: {
             category_names: {
               terms: {field: 'category_names', all_terms: false, size: 250}
@@ -78,6 +76,7 @@ module Hdo
         }
 
         payload[:size] = @size if @size
+        payload[:sort] = q.blank? ? {promisor_name: 'asc'} : :_score
 
         filters = []
         filters << {term: {category_names: category }} if category?
