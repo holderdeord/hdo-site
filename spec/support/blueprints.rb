@@ -48,7 +48,7 @@ Promise.blueprint do
   promisor { Party.make! }
   source { "PP:10" }
   body { "Løftetekst-#{sn}" }
-  categories { [Category.make!] }
+  categories { [Category.make!(main: true)] }
   parliament_period do
     ParliamentPeriod.find_by_external_id('2009-2013') || ParliamentPeriod.make!(external_id: '2009-2013')
   end

@@ -168,6 +168,7 @@ module Hdo
 
     describe 'promise connections' do
       let(:issue) { Issue.make! }
+      before { ParliamentPeriod.stub(current: double(start_date: 1.month.ago.to_date))}
 
       it 'adds promise connections' do
         promise = Promise.make!
@@ -179,27 +180,6 @@ module Hdo
         expect {
           IssueUpdater.new(issue, { promises: promises}, user).update!
           issue.reload
-        }.to change(issue.promise_connections, :count).by(1)
-      end
-
-      it 'only allows "related" promises from 2013-2017' do
-        pp = ParliamentPeriod.make!(external_id: '2013-2017')
-        promise = Promise.make!(parliament_period: pp)
-
-        promises = {
-          promise.id => {'status' => 'for'}
-        }.with_indifferent_access
-
-        expect {
-          IssueUpdater.new(issue, {promises: promises}, user).update!
-        }.to raise_error
-
-        promises = {
-          promise.id => {'status' => 'related'}
-        }.with_indifferent_access
-
-        expect {
-          IssueUpdater.new(issue, {promises: promises}, user).update!
         }.to change(issue.promise_connections, :count).by(1)
       end
 

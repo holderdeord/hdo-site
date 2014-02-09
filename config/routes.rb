@@ -100,8 +100,12 @@ Hdo::Application.routes.draw do
   # promises
   #
 
-  resources :promises, only: [:index, :show]
-  get 'promises/:promises/widget' => 'widgets#promises', as: :widget_promises
+  resources :promises, only: [:index, :show] do
+    collection do
+      get ':promises/widget' => 'widgets#promises', as: :widget
+    end
+  end
+
 
   #
   # parliament_issues
@@ -201,7 +205,7 @@ Hdo::Application.routes.draw do
 
   get 'search/all' => 'search#all', as: :search_all
   get 'search/autocomplete' => 'search#autocomplete', as: :search_autocomplete
-  get 'search/promises' => 'search#promises', as: :search_promises
+  # get 'search/promises' => 'search#promises', as: :search_promises
 
   #
   # various

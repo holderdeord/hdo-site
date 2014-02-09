@@ -10,12 +10,12 @@ describe Promise, :search do
 
       refresh_index
 
-      Promise.search('*').results.first.party_names.should == party.name
+      Promise.search('*').results.first.party_names.should == [party.name]
 
       party.update_attributes!(name: 'before part b')
       refresh_index
 
-      Promise.search('*').results.first.party_names.should == party.name
+      Promise.search('*').results.first.party_names.should == [party.name]
     end
   end
 end

@@ -7,18 +7,26 @@
   </div>
 
   <div class="span10">
-    <%= promise.body %>
+    <div class="row-fluid">
+       <%= promise.body %>
 
-    <% if (issues = promise.issues.published).any? %>
-      <ul class="nav nav-pills">
+       <% unless hide_period %>
+         <small class="muted"><%= promise.parliament_period_name %></small>
+       <% end %>
+    </div>
+
+    <div class="row-fluid">
+      <% if (issues = promise.promise_connections.map(&:issue)).any?(&:published?) %>
+        <ul class="unstyled">
           <li>
-            <span>
-              <strong>Tilknyttede saker:</strong>
+            <small>
+              Se også:
               <%= issues.map { |i| link_to i.title, i }.to_sentence.html_safe %>
-            </span>
+            </small>
           </li>
-      </ul>
-    <% end %>
-  </div>
+        </ul>
+      <% end %>
+    </div>
 
+  </div>
 </li>

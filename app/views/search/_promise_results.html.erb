@@ -1,7 +1,7 @@
 <h3><%= Promise.model_name.human(count: 2).capitalize %></h3>
 
 <ul>
-<% results.group_by { |e| e.party_names }.each do |party_names, promises| %>
+<% results.group_by { |e| e.party_names.to_sentence }.each do |party_names, promises| %>
   <% promises.each do |promise| %>
     <li>
       <%= link_to promise.body, promise_path(promise._id), class: 'promise-link' %>

@@ -64,10 +64,7 @@ describe Promise do
     promise = Promise.make!(promisor: Government.make!(parties: parties))
 
     promise.parties.should == parties
-
-    I18n.with_locale do
-      promise.party_names.should == 'A og B'
-    end
+    promise.party_names.should == %w[A B]
   end
 
   it 'can set a promisor party'

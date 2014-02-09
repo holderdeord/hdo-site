@@ -66,7 +66,9 @@ module Hdo
           filtered: {
             query:   {query_string: {query: query_string}},
             filter: {
-              and: [term: {parliament_session_name: params[:parliament_session_name] }]
+              and: [
+                { term: {parliament_session_name: params[:parliament_session_name] }}
+              ]
             }
           }
         }

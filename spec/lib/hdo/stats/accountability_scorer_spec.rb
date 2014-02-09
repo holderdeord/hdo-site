@@ -39,6 +39,8 @@ module Hdo
       end
 
       it 'calculates score based on status' do
+        ParliamentPeriod.stub(current: double(start_date: 1.month.ago.to_date))
+
         issue = Issue.make!
         party = Party.make!
 

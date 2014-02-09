@@ -52,13 +52,9 @@ class PromiseConnection < ActiveRecord::Base
 
   private
 
-  #
-  # hack to avoid bad promise connections - obviously needs to change
-  #
-
   def only_related_promises_for_next_period
     if !related? && promise && promise.future?
-      errors.add(:promise, "must be from 2009-2013 or marked 'related' for issue connection")
+      errors.add(:promise, "must be from current parliament period or marked 'related' for issue connection")
     end
   end
 end

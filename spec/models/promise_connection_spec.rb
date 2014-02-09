@@ -3,6 +3,10 @@
 require 'spec_helper'
 
 describe PromiseConnection do
+  before do
+    ParliamentPeriod.stub(current: double(start_date: 1.month.ago.to_date))
+  end
+
   it 'should have a valid blueprint' do
     PromiseConnection.make.should be_valid
   end
@@ -53,8 +57,8 @@ describe PromiseConnection do
   end
 
   it 'disallows promises from the next period' do
-    current_period = ParliamentPeriod.make!(external_id: '2009-2013')
-    next_period    = ParliamentPeriod.make!(external_id: '2013-2017')
+    current_period = ParliamentPeriod.make!(start_date: 1.year.ago, end_date: 1.day.from_now)
+    next_period    = ParliamentPeriod.make!(start_date: 2.days.from_now, end_date: 1.year.from_now)
 
     current_promise = Promise.make!(parliament_period: current_period)
     next_promise = Promise.make!(parliament_period: next_period)
@@ -64,8 +68,9 @@ describe PromiseConnection do
   end
 
   it 'allows related promises from the next period' do
-    next_period    = ParliamentPeriod.make!(external_id: '2013-2017')
-    next_promise = Promise.make!(parliament_period: next_period)
+    current_period = ParliamentPeriod.make!(start_date: 1.year.ago, end_date: 1.day.from_now)
+    next_period    = ParliamentPeriod.make!(start_date: 2.days.from_now, end_date: 1.year.from_now)
+    next_promise   = Promise.make!(parliament_period: next_period)
 
     PromiseConnection.make(promise: next_promise, status: 'related').should be_valid
   end

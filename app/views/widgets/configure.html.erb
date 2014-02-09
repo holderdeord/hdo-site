@@ -103,7 +103,7 @@
         spinner.show();
 
         $.ajax({
-          url: '/search/promises.json?size=1000&query=' + encodeURIComponent(query),
+          url: '/promises.json?size=500&parliament_period=2013-2017&q=' + encodeURIComponent(query),
           type: 'GET',
           dataType: 'json',
           complete: function(xhr, textStatus) { spinner.hide(); },
@@ -112,7 +112,7 @@
               hits.html(promises.length + ' treff');
 
               $.each(promises, function () {
-                $(tbody).append('<tr><td>' + this.id + '</td><td>' + this.parliament_period_name + '</td><td>' + this.party_names + '</td><td>' + this.body + '</td>');
+                $(tbody).append('<tr><td>' + this.id + '</td><td>' + this.parliament_period_name + '</td><td>' + this.party_names.join(',') + '</td><td>' + this.body + '</td>');
               });
             }
           },

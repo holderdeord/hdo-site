@@ -1,0 +1,25 @@
+<% if @search.open? %>
+  Du har gjort et åpent søk og har funnet <strong><%= number_with_delimiter @search.hits, delimiter: ' ' -%></strong> løfter.
+<% else %>
+  Du ser etter løfter
+
+  <% if @search.q? %>
+    om <strong><%= @search.q %></strong>
+  <% end %>
+
+  <% if @search.promisor? %>
+    fra <strong><%= @search.promisor %></strong>
+  <% end %>
+
+  <% if @search.parliament_period? %>
+    for perioden <strong><%= @search.parliament_period %></strong>
+  <% end %>
+
+  <% if @search.category? %>
+    som ligger i kategorien <strong><%= @search.category %></strong>
+  <% end %>
+
+  og har fått <strong><%= number_with_delimiter @search.hits, delimiter: ' ' -%></strong> treff.
+
+  <div><small><%= link_to 'Fjern alle filtre', promises_path %></small></div>
+<% end -%>

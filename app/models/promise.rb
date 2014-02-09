@@ -1,16 +1,21 @@
 # encoding: UTF-8
 
 class Promise < ActiveRecord::Base
+  paginates_per 50
+
   include Hdo::Search::Index
   include Elasticsearch::Model::Callbacks
 
   settings(SearchSettings.default) {
     mappings {
       indexes :body, type: :string, analyzer: SearchSettings.default_analyzer
-      indexes :party_names, type: :string
+      indexes :party_names, index: :not_analyzed
+      indexes :category_names, index: :not_analyzed
       indexes :parliament_period_name, type: :string, index: :not_analyzed
+      indexes :promisor_name, type: :string, index: :not_analyzed
     }
   }
+
   update_index_on_change_of :parties, has_many: true
 
   attr_accessible :promisor, :general, :categories, :source, :body, :page, :parliament_period
@@ -36,13 +41,10 @@ class Promise < ActiveRecord::Base
   end
 
   def parties
-    case promisor_type
-    when 'Party'
+    if promisor.kind_of?(Party)
       [promisor]
-    when 'Government'
-      promisor.parties
     else
-      raise "invalid promisor_type: #{promisor_type.inspect}"
+      promisor.parties
     end
   end
 
@@ -55,11 +57,23 @@ class Promise < ActiveRecord::Base
   end
 
   def party_names
-    parties.map(&:name).to_sentence
+    parties.map(&:name)
   end
 
   def short_party_names
-    parties.map(&:external_id).to_sentence
+    parties.map(&:external_id)
+  end
+
+  def promisor_name
+    if promisor.kind_of?(Government)
+      "Regjeringen #{promisor.name}"
+    else
+      promisor.name
+    end
+  end
+
+  def category_names
+    categories.map(&:human_name)
   end
 
   def parliament_period_name
@@ -67,11 +81,16 @@ class Promise < ActiveRecord::Base
   end
 
   def future?
-    # TODO: make this actually check the date when we handle multiple periods
-    parliament_period.external_id != '2009-2013'
+    # TODO: spec
+    parliament_period.start_date > ParliamentPeriod.current.start_date
   end
 
   def as_indexed_json(options = nil)
-    as_json methods: [:party_names, :parliament_period_name], only: :body
+    as_json only: :body, methods: [
+      :party_names,
+      :parliament_period_name,
+      :promisor_name,
+      :category_names
+    ]
   end
 end

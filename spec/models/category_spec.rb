@@ -45,9 +45,20 @@ describe Category do
     category.human_name.should == "Priser og regler"
   end
 
-  it 'keeps EFTA/EU in upper case' do
-    category = Category.create(:name => "EFTA/EU")
-    category.human_name.should == "EFTA/EU"
+  it 'keeps some names in upper case' do
+    cat = Category.create
+
+    cat.name = "EFTA/EU"
+    cat.human_name.should == "EFTA/EU"
+
+    cat.name = 'NATO'
+    cat.human_name.should == 'NATO'
+
+    cat.name = 'FN'
+    cat.human_name.should == 'FN'
+
+    cat.name = 'FN-STYRKER'
+    cat.human_name.should == 'FN-styrker'
   end
 
   it 'can add parliament issues' do
