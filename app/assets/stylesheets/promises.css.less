@@ -1,55 +1,25 @@
-@hdoPrimaryColor: #019ea2;
-@hdoSecondaryColor: #e03d25;
-@hdoTertiaryColor: #332b2e;
-@hdoQuaternaryColor: #231f20;
-
-.multiple-select.nav {
-  overflow: auto;
-  border: 0px solid #ccc;
-  border-width: 1px 0;
-  height: 12em;
-  a {
-    padding: 1px 10px;
-  }
-  li:hover > a {
-    background-color: desaturate(lighten(@hdoPrimaryColor, 65), 60);
-  }
-  li:active > a, li.active > a {
-    background-color: @hdoPrimaryColor;
-    color: #fff;
-  }
-}
-
-@media (min-width: 768px) {
-  .multiple-select {
-    height: 12em;
-  }
-}
-
-.active-period {
-  font-weight: bold;
-}
-
-.period {
-  margin-right: 1em;
-}
-
-#period-choices {
-  margin-bottom: 1em;
-}
-
-
 .promise {
   margin-bottom: 20px;
+
   &.alert {
     padding: 0;
   }
+
   .logos {
     text-align: right;
     img {
       max-width: 32px;
     }
   }
+
+  .details {
+    white-space: nowrap;
+
+    img.permalink {
+      opacity: 0.5;
+    }
+  }
+
 }
 
 .promise-navigators {
