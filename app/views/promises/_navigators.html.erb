@@ -1,4 +1,5 @@
 <h4>Søk</h4>
+
 <%= form_tag promises_path, method: :get, class: 'form-search' do -%>
   <%= text_field_tag 'q', @search.q, tabindex: 2, type: 'search', class: 'search-query' %>
 
