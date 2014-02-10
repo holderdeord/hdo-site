@@ -1,11 +1,11 @@
 <h4>Søk</h4>
-<form>
-  <%= text_field_tag 'q', @search.q, tabindex: 2, type: 'search' %>
+<%= form_tag promises_path, method: :get, class: 'form-search' do -%>
+  <%= text_field_tag 'q', @search.q, tabindex: 2, type: 'search', class: 'search-query' %>
 
   <% @search.query.except(:q).each do |key, value| %>
     <%= hidden_field_tag key, value -%>
   <% end %>
-</form>
+<% end -%>
 
 <% @search.navigators.each do |nav| %>
   <h4><%= nav.title %></h4>

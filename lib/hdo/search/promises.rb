@@ -83,14 +83,24 @@ module Hdo
         filters << {term: {parliament_period_name: parliament_period }} if parliament_period?
         filters << {term: {promisor_name: promisor}} if promisor?
 
-        qstring = {query_string: {query: q.blank? ? '*' : q, default_field: 'body', default_operator: 'AND'}}
+        if q.blank?
+          query = {match_all: {}}
+        else
+          query = {
+            query_string: {
+              query: q,
+              default_field: 'body',
+              default_operator: 'AND'
+            }
+          }
+        end
 
         if filters.empty?
-          payload[:query] = qstring
+          payload[:query] = query
         else
           payload[:query] = {
             filtered: {
-              query: qstring,
+              query: query,
               filter: {and: filters}
             }
           }

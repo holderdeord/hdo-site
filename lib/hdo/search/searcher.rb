@@ -18,7 +18,10 @@ module Hdo
       def all
         q = {
           query: {
-            query_string: {query: @query, default_operator: 'AND'}
+            query_string: {
+              query: @query,
+              default_operator: 'AND',
+            }
           },
           indices_boost: BOOST,
           sort: ['_score']
