@@ -19,7 +19,7 @@ module Hdo
       end
 
       def promises
-        response.page(page).records.includes(:issues, :promisor)
+        response.page(page).records.includes(:issues, :promisor, :parliament_period)
       end
 
       def navigators
@@ -113,10 +113,14 @@ module Hdo
         end
 
         def each_term(&blk)
-          terms.each do |term|
-            active = @query == term['term']
+          if terms.empty? && @query
+            yield @query, 0, true
+          else
+            terms.each do |term|
+              active = @query == term['term']
 
-            yield term['term'], term['count'], active
+              yield term['term'], term['count'], active
+            end
           end
         end
       end
