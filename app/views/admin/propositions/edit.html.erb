@@ -26,18 +26,18 @@
   </div>
 
   <div class="row-fluid">
-    <div class="span2" style="text-align: right;"><strong>Dato</strong></div>
+    <strong class="span2 rightify">Dato</strong>
     <div class="span4"><%= l @proposition.vote_time.localtime, format: :text_time %></div>
   </div>
 
   <div class="row-fluid">
-    <div class="span2" style="text-align: right;"><strong>Forslagstittel</strong></div>
+    <strong class="span2 rightify">Forslagstittel</strong>
     <div class="span4"><%= @proposition.description %></div>
-    <div class="span6"><%= f.text_field :simple_description, class: 'input-xlarge', autofocus: true %></div>
+    <div class="span6"><%= f.text_area :simple_description, class: 'input-xlarge', autofocus: true, rows: 2 %></div>
   </div>
 
   <div class="row-fluid">
-    <div class="span2" style="text-align: right;"><strong>Forslagstekst</strong></div>
+    <strong class="span2 rightify">Forslagstekst</strong>
     <div class="span4">
       <% if @proposition.plain_body.size < 600 %>
         <%= @proposition.body.html_safe %>
@@ -50,7 +50,20 @@
   </div>
 
   <div class="row-fluid">
-    <div class="span2" style="text-align: right;"><strong>Saker</strong></div>
+    <strong class="span2 rightify">Forslagstiller</strong>
+    <div class="span4">"<%= @proposition.on_behalf_of %>"</div>
+    <div class="span6">
+      <%= select_tag 'proposers', proposer_options_for(@proposition),
+                                  class: 'input-xlarge chosen', multiple: true, data: {placeholder: 'Velg forslagsstillere'} %>
+
+      <% if @proposition.source_guess.any? %>
+        <small class="muted">Forslag: <span id="source-guess"><%= @proposition.source_guess.join(',') %></span></small>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="row-fluid">
+    <strong class="span2 rightify">Saker</strong></strong>
     <div class="span4">
       <ul>
         <% @parliament_issues.each do |pissue| %>
@@ -63,43 +76,25 @@
       <% if @proposition.votes.size > 1 %>
         <div class="alert alert-error">Forslaget brukes i flere avstemninger, og må derfor kobles via vanlig saksredigering.</div>
       <% else %>
-        <%= f.select :issues, issue_options_for(@proposition), {}, 
-                              class: 'input-xlarge chosen', multiple: true, data: {placeholder: 'Velg saker'} %>
+        <%= f.select :issues, issue_options_for(@proposition), {},
+                              class: 'input-xlarge chosen', multiple: true, data: {placeholder: 'Velg HDO-saker'} %>
       <% end %>
       <p><small class="muted">Kommer: Mulighet til å opprette ny sak herfra.</small></p>
     </div>
   </div>
 
-  <div class="row-fluid">
-    <div class="span2" style="text-align: right;"><strong>Forslagstiller</strong></div>
-    <div class="span4">"<%= @proposition.on_behalf_of %>"</div>
-    <div class="span6">
-      <%= select_tag 'proposers', proposer_options_for(@proposition), 
-                                  class: 'input-xlarge chosen', multiple: true, data: {placeholder: 'Velg forslagsstillere'} %>
-
-      <% if @proposition.source_guess.any? %>
-        <small class="muted">Forslag: <span id="source-guess"><%= @proposition.source_guess.join(',') %></span></small>
-      <% end %>
+  <% if @related_propositions.any? %>
+    <div class="row-fluid">
+      <strong class="span2 rightify">Andre forslag fra samme sak<%= 'er' if @parliament_issues.size > 1 %></strong>
+      <div class="span4">
+        <ul>
+          <% @related_propositions.each do |prop| %>
+            <li><%= link_to prop.title, edit_admin_proposition_path(prop) %></li>
+          <% end -%>
+        </ul>
+      </div>
     </div>
-  </div>
-
-  <div class="row-fluid">
-    <div class="span2" style="text-align: right;"><strong>Lenke til innstilling</strong></div>
-    <div class="span4">Kommer...?</div>
-    <div class="span6">Kommer...?</div>
-  </div>
-
-  <div class="row-fluid">
-    <div class="span2" style="text-align: right;"><strong>Lenke til referat</strong></div>
-    <div class="span4">Kommer...?</div>
-    <div class="span6">Kommer...?</div>
-  </div>
-
-  <div class="row-fluid">
-    <div class="span2" style="text-align: right;"><strong>Sakstype</strong></div>
-    <div class="span4">Kommer...?</div>
-    <div class="span6">Kommer...?</div>
-  </div>
+  <% end -%>
 
   <hr>
 

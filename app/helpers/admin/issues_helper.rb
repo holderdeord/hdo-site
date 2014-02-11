@@ -9,12 +9,16 @@ module Admin::IssuesHelper
   end
 
   def proposer_options_for(model)
-    reps = Representative.all.map { |e| ["#{e.full_name} - #{e.external_id}", "#{e.class}-#{e.id}"]  }
-    party = Party.all.map { |e| ["#{e.name} - #{e.external_id}", "#{e.class}-#{e.id}"] }
+    proposers = Rails.cache.fetch('admin/propositions/proposers', expires_in: 1.day) do
+      reps = Representative.all.map { |e| ["#{e.full_name} - #{e.external_id}", "#{e.class}-#{e.id}"]  }
+      party = Party.all.map { |e| ["#{e.name} - #{e.external_id}", "#{e.class}-#{e.id}"] }
 
-    selected  = model.proposers.map { |e| "#{e.class}-#{e.id}" }
+      party + reps
+    end
 
-    options_for_select (party + reps), selected: selected
+      selected = model.proposers.map { |e| "#{e.class}-#{e.id}" }
+
+    options_for_select proposers, selected: selected
   end
 
   def editor_options_for(issue)
