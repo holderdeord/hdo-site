@@ -41,8 +41,7 @@
 
   <div class="span6">
     <% if @representative.has_twitter? %>
-      <h4>Twitter <%= link_to "(@#{@representative.twitter_id})", @representative.twitter_url, class: 'muted' %></h4>
-      <%= twitter_widget_for(@representative.twitter_id) %>
+      <%= render 'twitter' %>
     <% else %>
       <div class="span6 <%= 'muted' unless @representative.askable? %>">
         <%= render 'question_list' %>
