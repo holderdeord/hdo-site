@@ -13,7 +13,7 @@ class RepresentativesController < ApplicationController
       (q.answer && q.answer.approved?) ? q.answer.created_at : q.created_at
     end.reverse
 
-    @latest_votes = fetch_latest_votes(10)
+    @latest_votes = fetch_latest_votes(12)
   end
 
   private
@@ -36,6 +36,6 @@ class RepresentativesController < ApplicationController
       end
     end
 
-    latest
+    latest.first(count)
   end
 end

@@ -1,6 +1,6 @@
-<h4><%= @representative.first_name %> har nylig stemt</h4>
-
 <div class="representative-vote-list">
+
+<h4><%= @representative.first_name %> har nylig stemt</h4>
   <% @latest_votes.each do |position, description, proposition| %>
     <div class="row-fluid">
       <strong class="span1"><%= position %></strong>
