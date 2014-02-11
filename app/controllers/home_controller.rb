@@ -18,7 +18,7 @@ class HomeController < ApplicationController
     @all_tags    = published.flat_map(&:tags).uniq.sort_by(&:name)
     @parties     = Party.order(:name)
 
-    if AppConfig.show_propositions_feed
+    if AppConfig.show_front_page_propositions_feed
       @issues = published.for_frontpage(5).map(&:decorate)
 
       propositions = Proposition.published.order('created_at DESC').first(6)
