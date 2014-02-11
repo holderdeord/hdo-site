@@ -34,13 +34,9 @@ class HomeController < ApplicationController
   end
 
   def robots
-    if Rails.env.production?
-      robots = ''
-    else
-      robots = "User-Agent: *\nDisallow: /\n"
-    end
+    path = Rails.root.join("config/robots/#{Rails.env}.txt")
 
-    render text: robots, layout: false, content_type: "text/plain"
+    render text: path.exist? ? path.read : '', layout: false, content_type: 'text/plain'
   end
 
   def about
@@ -67,7 +63,7 @@ class HomeController < ApplicationController
       file.exist? ? file.read : `git rev-parse HEAD`.strip
     )
 
-    render text: rev, content_type: 'text/plain'
+    render text: rev, layout: false, content_type: 'text/plain'
   end
 
   def healthz
