@@ -11,9 +11,5 @@ class PartiesController < ApplicationController
     @representatives = @representatives.sort_by { |e| e.has_image? ? 0 : 1 }
 
     @issue_groups = Issue.published.order(:title).grouped_by_accountability(@party)
-
-    if AppConfig.show_propositions_feed
-      @propositions_feed = Hdo::Utils::PropositionsFeed.for_model @party, count: 10, title: "Siste forslag fra #{@party.name}"
-    end
   end
 end

@@ -18,14 +18,10 @@ class HomeController < ApplicationController
     @all_tags    = published.flat_map(&:tags).uniq.sort_by(&:name)
     @parties     = Party.order(:name)
 
-    if AppConfig.show_front_page_propositions_feed
-      @issues = published.for_frontpage(5).map(&:decorate)
+    @issues = published.for_frontpage(5).map(&:decorate)
 
-      propositions = Proposition.published.order('created_at DESC').first(6)
-      @propositions_feed = Hdo::Utils::PropositionsFeed.new(propositions, :see_all => true)
-    else
-      @issues = published.for_frontpage(7).map(&:decorate)
-    end
+    propositions = Proposition.published.order('created_at DESC').first(6)
+    @propositions_feed = Hdo::Utils::PropositionsFeed.new(propositions, :see_all => true)
 
     @main_issue  = @issues.shift
     @questions   = Question.not_ours.with_approved_answers.order("answers.created_at").last(2).map(&:decorate)

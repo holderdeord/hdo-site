@@ -13,13 +13,7 @@ class RepresentativesController < ApplicationController
       (q.answer && q.answer.approved?) ? q.answer.created_at : q.created_at
     end.reverse
 
-    if AppConfig.show_propositions_feed
-      @propositions_feed = Hdo::Utils::PropositionsFeed.for_model(
-        @representative, count: 10, height: '310px', title: "Siste forslag fra #{@representative.first_name}"
-      )
-
-      @latest_votes = fetch_latest_votes(5)
-    end
+    @latest_votes = fetch_latest_votes(10)
   end
 
   private

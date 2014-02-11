@@ -1,4 +1,0 @@
-<% if @representative.has_twitter? %>
-  <h4>Twitter <%= link_to "(@#{@representative.twitter_id})", @representative.twitter_url, class: 'muted' %></h4>
-  <%= twitter_widget_for(@representative.twitter_id) %>
-<% end %>

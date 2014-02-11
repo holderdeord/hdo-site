@@ -27,11 +27,6 @@
 
 <hr class="soften">
 
-<% if AppConfig.show_propositions_feed %>
-  <div><%= render partial: 'shared/propositions_feed', locals: {feed: @propositions_feed } %></div>
-  <hr>
-<% end %>
-
 <div class="row-fluid">
   <%= render partial: 'positions' unless @party.external_id == 'MDG' %>
 </div>
