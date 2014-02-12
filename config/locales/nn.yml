@@ -285,7 +285,6 @@ nn:
     title: "Holder de ord"
     opengraph:
       description: "Holder de ord gjer det enkelt å sjekke kva som har blitt gjort og lova i norsk politikk."
-      admins: "635985218:525020960:1562377886:757795452:518536137"
     login: "Logg inn"
     logout: "Logg ut"
     description: "Tek politikken til folket."
