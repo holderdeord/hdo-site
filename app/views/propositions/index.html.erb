@@ -17,7 +17,7 @@
   </div>
 
   <div class="span9 proposition-results">
-    <% @search.records.each do |record| %>
+    <% @search.records.includes(:votes).each do |record| %>
 
       <div class="proposition-item row-fluid">
         <%= link_to record.decorate.title, record %>

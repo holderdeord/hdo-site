@@ -63,7 +63,7 @@ class Proposition < ActiveRecord::Base
   end
 
   def parliament_session
-    @parliament_session ||= ParliamentSession.for_date(vote_time)
+    @parliament_session ||= ParliamentSession.for_date(vote_time.to_date)
   end
 
   def parliament_session_name
