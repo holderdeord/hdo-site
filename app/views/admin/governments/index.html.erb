@@ -1,3 +1,4 @@
+<% page_title "#{Government.model_name.human(count: 2).capitalize} - Admin - #{t('app.title')}" %>
 <h1><%= Government.model_name.human(count: 2).capitalize %></h1>
 
 <% if GovernmentPolicy.new(current_user, nil).edit? %>

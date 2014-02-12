@@ -1,3 +1,5 @@
+<% page_title "#{Question.model_name.human(count: 2).capitalize} - Admin - #{t('app.title')}" %>
+
 <h1><%= Question.model_name.human(count: 2).capitalize %></h1>
 <h2 class="muted"><%=Question.pending.count %> spørsmål og <%= Question.with_pending_answers.count %> svar avventer godkjenning!</h2>
 

@@ -1,3 +1,5 @@
+<% page_title "#{User.model_name.human(count: 2).capitalize} - Admin - #{t('app.title')}" %>
+
 <h1><%= User.model_name.human(count: 2).capitalize %></h1>
 
 <% if UserPolicy.new(current_user, nil).edit? %>
