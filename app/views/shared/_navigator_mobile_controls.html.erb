@@ -1,0 +1,33 @@
+<div class="row-fluid visible-phone">
+  <a href="#" id="show-filters">&#9654; Vis søk og filtre</a>
+  <a href="#" id="hide-filters" class="hidden">&#9660; Skjul søk og filtre</a>
+  (<%= number_with_delimiter search.hits, delimiter: ' ' -%></strong> <%= search.model.model_name.human(count: 2) %>)
+</div>
+
+<%= content_for :document_ready do %>
+<script>
+  $(function() {
+    var showLink = $("#show-filters"),
+        hideLink = $("#hide-filters"),
+        navs     = $(".navigators");
+
+    showLink.click(function(e) {
+      e.preventDefault();
+
+      showLink.toggleClass('hidden');
+      hideLink.toggleClass('hidden');
+
+      navs.toggleClass('hidden-phone');
+    });
+
+    $("#hide-filters").click(function(e) {
+      e.preventDefault();
+
+      hideLink.toggleClass('hidden');
+      showLink.toggleClass('hidden');
+
+      navs.toggleClass('hidden-phone');
+    });
+  });
+  </script>
+<% end -%>

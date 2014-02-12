@@ -1,5 +1,5 @@
 class Proposition < ActiveRecord::Base
-  paginates_per 20
+  paginates_per 50
 
   include Hdo::Search::Index
   include Elasticsearch::Model::Callbacks
@@ -25,8 +25,14 @@ class Proposition < ActiveRecord::Base
         indexes :external_id, index: :not_analyzed
         indexes :name, index: :not_analyzed
       end
+
+      indexes :committee_names, index: :not_analyzed
+      indexes :category_names, index: :not_analyzed
+      indexes :parliament_issue_types, index: :not_analyzed
+      indexes :parliament_issue_document_groups, index: :not_analyzed
     }
   }
+
   update_index_on_change_of :votes, has_many: true
 
   attr_accessible :description, :on_behalf_of, :body, :representative_id, :simple_description, :simple_body, :status
@@ -34,7 +40,7 @@ class Proposition < ActiveRecord::Base
   has_and_belongs_to_many :votes, uniq: true
   has_many :proposition_connections, dependent: :destroy
   has_many :issues, through: :proposition_connections
-
+  has_many :parliament_issues, through: :votes
   has_many :proposition_endorsements, dependent: :destroy
 
   validates :body, presence: true
@@ -94,8 +100,37 @@ class Proposition < ActiveRecord::Base
     @source_guess ||= Hdo::Utils::PropositionSourceGuesser.parties_for("#{on_behalf_of} #{description}")
   end
 
+  #
+  # for indexing:
+  #
+
+  def committees
+    parliament_issues.map(&:committee).compact.uniq
+  end
+
+  def committee_names
+    committees.map(&:name)
+  end
+
+  def categories
+    parliament_issues.flat_map(&:categories).uniq
+  end
+
+  def category_names
+    categories.map(&:human_name)
+  end
+
+  def parliament_issue_types
+    parliament_issues.map(&:issue_type).uniq
+  end
+
+  def parliament_issue_document_groups
+    parliament_issues.map(&:document_group).uniq
+  end
+
+
   def as_indexed_json(options = nil)
-    methods = [:plain_body, :proposers]
+    methods = [:plain_body, :proposers, :committee_names, :category_names, :parliament_issue_types, :parliament_issue_document_groups]
     methods += [:parliament_session_name, :vote_time] if votes.any?
 
     as_json methods: methods,

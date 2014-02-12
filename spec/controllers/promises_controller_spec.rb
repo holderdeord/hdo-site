@@ -8,7 +8,7 @@ describe PromisesController do
   end
 
   def results
-    assigns(:search).promises
+    assigns(:search).records.to_a
   end
 
   describe "GET #index" do

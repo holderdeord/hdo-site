@@ -15,6 +15,11 @@ describe PropositionDecorator do
     decorator.title.should == 'Æåø'
   end
 
+  it 'handles an empty description' do
+    proposition.description = ''
+    decorator.title.should == ''
+  end
+
   it 'has a datestamp' do
     decorator.datestamp.should be_kind_of(String)
   end

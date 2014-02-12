@@ -3,7 +3,7 @@ class PropositionDecorator < Draper::Decorator
 
   def title
     str = model.simple_description || model.description
-    "#{UnicodeUtils.upcase str[0]}#{str[1..-1]}"
+    str.blank? ? str : "#{UnicodeUtils.upcase str[0]}#{str[1..-1]}"
   end
 
   def datestamp

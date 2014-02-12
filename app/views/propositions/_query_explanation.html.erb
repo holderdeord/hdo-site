@@ -1,0 +1,33 @@
+<% if @search.open? %>
+  Du har gjort et åpent søk og har funnet <strong><%= number_with_delimiter @search.hits, delimiter: ' ' -%></strong> forslag.
+<% else %>
+  Du ser etter forslag
+
+  <% if @search.q? %>
+    om <strong><%= @search.q %></strong>
+  <% end %>
+
+  <% if @search.parliament_session? %>
+    for sesjonen <strong><%= @search.parliament_session %></strong>
+  <% end %>
+
+  <% if @search.committee? %>
+    behandlet av <strong><%= @search.committee %></strong>
+  <% end %>
+
+  <% if @search.issue_type? -%>
+    med sakstype <strong><%= @search.issue_type %></strong>
+  <% end %>
+
+  <% if @search.document_group? -%>
+    med dokumentgruppe <strong><%= @search.document_group %></strong>
+  <% end %>
+
+  <% if @search.category? %>
+    som ligger i kategorien <strong><%= @search.category %></strong>
+  <% end %>
+
+  og har fått <strong><%= number_with_delimiter @search.hits, delimiter: ' ' -%></strong> treff.
+
+  <%= link_to 'Fjern alle filtre', url_for %></small>
+<% end -%>

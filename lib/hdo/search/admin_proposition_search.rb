@@ -4,6 +4,8 @@ module Hdo
       attr_reader :params, :next, :previous
       attr_accessor :model # for testing
 
+      PER_PAGE = 20
+
       def initialize(params, current_id = nil)
         @params = params
         search
@@ -81,7 +83,7 @@ module Hdo
           q[:filter] = {term: {status: params[:status]}}
         end
 
-        @response = model.search(q, size: params[:size]).page(params[:page] || 1)
+        @response = model.search(q, size: params[:size]).page(params[:page] || 1).per(PER_PAGE)
       end
 
       def model

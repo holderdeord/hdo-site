@@ -1,0 +1,41 @@
+<h4>Søk</h4>
+
+<%= form_tag url_for, method: :get, class: 'form-search' do -%>
+  <%= text_field_tag 'q', search.q, tabindex: 2, type: 'search', class: 'search-query' %>
+
+  <% search.query.except(:q).each do |key, value| %>
+    <%= hidden_field_tag key, value -%>
+  <% end %>
+<% end -%>
+
+<% search.navigators.each do |nav| %>
+<div class="navigator-<%= nav.param %>">
+  <h4><%= nav.title %></h4>
+  <ul class="unstyled">
+    <% nav.each_term do |name, count, active| %>
+      <li class="<%= 'active' if active %>">
+        <% if active %>
+          <%= link_to 'X', url_for(search.merge(nav.param => nil, page: nil)), class: 'pull-right' %>
+        <% end %>
+
+        <%= link_to name, url_for(search.merge(nav.param => name, page: nil)) %> (<%= count %>)
+      </li>
+    <% end %>
+  </ul>
+</div>
+<% end %>
+
+<%= content_for :document_ready do %>
+<script>
+  $(function() {
+    // focus search field with forward slash
+    // everyone should have this
+    $(document).keypress(function(e) {
+      if (e.which == 47 && e.target.tagName !== 'INPUT') {
+        e.preventDefault();
+        $("input[name=q]").focus();
+      }
+    });
+  })
+</script>
+<% end %>

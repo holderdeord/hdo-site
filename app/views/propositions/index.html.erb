@@ -1,2 +1,35 @@
-<%= render partial: 'shared/propositions_feed', locals: { feed: @propositions_feed } %>
-<%= paginate @search_response %>
+<% page_title "#{Proposition.model_name.human(count: 2).capitalize} - #{t 'app.title'}" %>
+
+<h3>Forslag</h3>
+
+<%= render partial: 'shared/navigator_mobile_controls', locals: {search: @search} %>
+
+<div class="row-fluid promises-current-query hidden-phone">
+  <div class="span9">
+    <small><%= render 'query_explanation' %></small>
+  </div>
+</div>
+
+
+<div class="row-fluid">
+  <div class="span3 navigators hidden-phone">
+    <%= render partial: 'shared/navigators', locals: {search: @search} %>
+  </div>
+
+  <div class="span9 proposition-results">
+    <% @search.records.each do |record| %>
+
+      <div class="proposition-item row-fluid">
+        <%= link_to record.decorate.title, record %>
+
+        <span class="details">
+          <% unless @search.parliament_session? %>
+            <small class="muted"><%= record.parliament_session_name %></small>
+          <% end %>
+        </span>
+      </div>
+    <% end %>
+
+    <%= paginate @search.response %>
+  </div>
+</div>

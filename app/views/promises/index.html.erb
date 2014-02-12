@@ -2,11 +2,7 @@
 
 <h3>Løfter</h3>
 
-<div class="row-fluid visible-phone">
-  <a href="#" id="show-filters">&#9654; Vis søk og filtre</a>
-  <a href="#" id="hide-filters" class="hidden">&#9660; Skjul søk og filtre</a>
-  (<%= number_with_delimiter @search.hits, delimiter: ' ' -%></strong> løfter)
-</div>
+<%= render partial: 'shared/navigator_mobile_controls', locals: {search: @search} %>
 
 <div class="row-fluid promises-current-query hidden-phone">
   <div class="span9">
@@ -18,15 +14,14 @@
   </small>
 </div>
 
-
 <div class="row-fluid">
-  <div class="span3 promise-navigators hidden-phone">
+  <div class="span3 navigators hidden-phone">
     <div class="row-fluid visible-phone">
       <%= render 'query_explanation' %>
     </div>
 
     <div class="row-fluid">
-      <%= render 'navigators' %>
+      <%= render partial: 'shared/navigators', locals: { search: @search } %>
     </div>
   </div>
 
@@ -36,7 +31,7 @@
         <%= render partial: 'promise_item', locals: { promise: @promise, highlight: true, hide_period: @search.parliament_period? } %>
       <% end %>
 
-      <% @search.promises.each do |result| %>
+      <% @search.records.includes(:issues, :promisor, :parliament_period).each do |result| %>
         <%= render partial: 'promise_item', locals: { promise: result, highlight: false, hide_period: @search.parliament_period? } unless result == @promise %>
       <% end -%>
     </ul>
@@ -45,41 +40,3 @@
   </div>
 </div>
 
-<% content_for :document_ready do %>
-<script>
-  $(function() {
-    var showLink = $("#show-filters"),
-        hideLink = $("#hide-filters"),
-        navs     = $(".promise-navigators");
-
-    showLink.click(function(e) {
-      e.preventDefault();
-
-      showLink.toggleClass('hidden');
-      hideLink.toggleClass('hidden');
-
-      navs.toggleClass('hidden-phone');
-    });
-
-    $("#hide-filters").click(function(e) {
-      e.preventDefault();
-
-      hideLink.toggleClass('hidden');
-      showLink.toggleClass('hidden');
-
-      navs.toggleClass('hidden-phone');
-
-    });
-
-    // focus search field with forward slash
-    // everyone should have this
-    $(document).keypress(function(e) {
-      if (e.which == 47 && e.target.tagName !== 'INPUT') {
-        e.preventDefault();
-        $("input[name=q]").focus();
-      }
-    });
-
-  });
-</script>
-<% end %>
