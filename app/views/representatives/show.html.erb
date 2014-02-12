@@ -43,7 +43,7 @@
     <% if @representative.has_twitter? %>
       <%= render 'twitter' %>
     <% else %>
-      <div class="span6 <%= 'muted' unless @representative.askable? %>">
+      <div class="<%= 'muted' unless @representative.askable? %>">
         <%= render 'question_list' %>
       </div>
     <% end %>
@@ -51,7 +51,6 @@
 </div>
 
 <% if @representative.has_twitter? %>
-
 <hr>
 
 <div class="row-fluid">
