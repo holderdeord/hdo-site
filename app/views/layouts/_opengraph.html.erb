@@ -1,10 +1,7 @@
-
   <meta property="og:title" content="<%= metadata[:title] %>" />
   <meta property="og:site_name" content="<%=t 'app.title' %>" />
   <meta property="og:description" content="<%= metadata[:description] %>" />
   <meta property="og:type" content="<%= metadata[:type] %>" />
   <meta property="og:url" content="<%= metadata[:url].sub('https', 'http') %>" />
   <meta property="og:image" content="<%= metadata[:image] %>" />
-  <%- t('app.opengraph.admins').split(':').each do |fbid| -%>
-  <meta property="fb:admins" content="<%= fbid %>" />
-  <%- end -%>
+  <meta property="fb:app_id" content="504447209668308" />
