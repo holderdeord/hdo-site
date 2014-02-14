@@ -19,8 +19,13 @@ namespace :search do
       total = klass.count
 
       klass.import { |response|
+        error = response['items'].find { |e| e['index'] && e['index']['error'] }
         count = response['items'].size
         took  = response['took']
+
+        if error
+          raise "reindex failed - #{error.inspect}"
+        end
 
         indexed_count += count
         puts "\t#{count.to_s.ljust(4)} (#{indexed_count}/#{total} in #{took}ms)"
