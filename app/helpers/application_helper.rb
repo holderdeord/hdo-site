@@ -79,8 +79,7 @@ module ApplicationHelper
   end
 
   def markdown(text)
-    @markdown ||= Redcarpet::Markdown.new(Redcarpet::Render::HTML)
-    @markdown.render(text)
+    Hdo::Utils::Markdown.render text
   end
 
   def asset_url(asset)

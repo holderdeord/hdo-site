@@ -24,7 +24,7 @@ class PropositionDecorator < Draper::Decorator
   end
 
   def body
-    model.simple_body
+    h.markdown(model.simple_body.strip).html_safe if model.simple_body
   end
 
   def original_body

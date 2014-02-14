@@ -126,7 +126,7 @@
             <% votes.each do |vote| %>
               <div class="span6 vote">
                 <%= link_to vote.title_with_fallback, vote.vote, class: 'vote-title' %>
-                <div class="vote-detail"><%= vote.comment ? markdown(vote.comment).html_safe : vote.comment_with_fallback.html_safe %></div>
+                <div class="vote-detail"><%= vote.html_comment.html_safe %></div>
               </div>
               <% end %>
             </div>

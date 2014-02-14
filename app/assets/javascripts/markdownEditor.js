@@ -1,5 +1,17 @@
 /*global HDO, jQuery, Markdown */
 
+/*
+
+To use this, provide the following markup:
+
+    <div data-wmd-editor="1">
+      <div id="wmd-button-bar-1" />
+      <textarea id="wmd-input-1">
+      <div id="wmd-preview-1" />
+    </div>
+
+*/
+
 (function (HDO, $, Markdown) {
   HDO.markdownEditor = function (opts) {
     var options = $.extend({
@@ -7,10 +19,11 @@
     }, opts);
 
     $(options.root).find("[data-wmd-editor]").each(function () {
-      var converter, editor;
+      var converter, editor, suffix;
 
+      suffix = "-" + $(this).data('wmd-editor');
       converter = new Markdown.Converter();
-      editor = new Markdown.Editor(converter, "-" + $(this).data('wmd-editor'));
+      editor = new Markdown.Editor(converter, suffix);
 
       editor.run();
     });

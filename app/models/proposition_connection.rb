@@ -25,8 +25,12 @@ class PropositionConnection < ActiveRecord::Base
     title || proposition.simple_description || proposition.description
   end
 
-  def comment_with_fallback
-    comment || proposition.simple_body || proposition.plain_body.truncate(200)
+  def html_comment
+    if comment || proposition.simple_body
+      Hdo::Utils::Markdown.render(comment || proposition.simple_body)
+    else
+      proposition.plain_body.truncate(200)
+    end
   end
 
   def vote
