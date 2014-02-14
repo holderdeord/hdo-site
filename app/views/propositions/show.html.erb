@@ -1,3 +1,6 @@
+<% page_title "Forslag - #{@proposition.id} - #{t('app.title')}" %>
+
+
 <div class="row-fluid">
   <small class="pull-right">
     <%= link_to 'Nyere &rsaquo;'.html_safe, @proposition.next if @proposition.next %>
