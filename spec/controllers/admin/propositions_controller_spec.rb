@@ -98,4 +98,17 @@ describe Admin::PropositionsController do
 
     prop.reload.proposers.should == [rep, party]
   end
+
+  it 'should delete proposers' do
+    rep = Representative.make!
+    prop = Proposition.make!(:with_vote)
+    prop.add_proposer rep
+
+    prop.reload.proposers.should_not be_empty
+
+    post :update, id: prop, save: '' , proposers: nil, proposition: {}
+    response.should redirect_to(edit_admin_proposition_path(prop))
+
+    prop.reload.proposers.should be_empty
+  end
 end

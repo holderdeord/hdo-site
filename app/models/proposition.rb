@@ -84,6 +84,10 @@ class Proposition < ActiveRecord::Base
     proposition_endorsements.create!(proposer: proposer)
   end
 
+  def delete_proposer(proposer)
+    proposition_endorsements.where(proposer_id: proposer.id, proposer_type: proposer.class.name).destroy_all
+  end
+
   def previous
     return unless v = votes.order(:time).first
     @previous ||= self.class.joins(:votes).where("votes.time < ?", v.time).order('votes.time DESC').first

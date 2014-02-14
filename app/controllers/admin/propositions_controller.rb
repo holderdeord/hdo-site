@@ -77,12 +77,16 @@ class Admin::PropositionsController < AdminController
     strings = Array(params.delete(:proposers))
     current_proposers = @proposition.proposers
 
-    strings.each do |str|
+    correct_proposers = strings.map do |str|
       klass, id = str.split('-')
-      proposer = klass.constantize.find(id.to_i)
-
-      @proposition.add_proposer(proposer) unless current_proposers.include?(proposer)
+      klass.constantize.find(id.to_i)
     end
+
+    to_delete = current_proposers - correct_proposers
+    to_add    = correct_proposers - current_proposers
+
+    to_add.each { |p| @proposition.add_proposer(p) }
+    to_delete.each { |p| @proposition.delete_proposer(p) }
   end
 
   def search_session

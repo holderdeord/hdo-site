@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140203121505) do
+ActiveRecord::Schema.define(:version => 20140214192554) do
 
   create_table "answers", :force => true do |t|
     t.text     "body",                                     :null => false
@@ -271,7 +271,7 @@ ActiveRecord::Schema.define(:version => 20140203121505) do
   add_index "proposition_connections", ["proposition_id"], :name => "index_proposition_connections_on_proposition_id"
   add_index "proposition_connections", ["vote_id", "issue_id"], :name => "index_proposition_connections_on_vote_id_and_issue_id"
 
-  create_table "proposition_endorsements", :id => false, :force => true do |t|
+  create_table "proposition_endorsements", :force => true do |t|
     t.integer "proposition_id"
     t.integer "proposer_id"
     t.string  "proposer_type"
