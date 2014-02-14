@@ -35,7 +35,7 @@ describe PropositionDecorator do
   it 'has a body' do
     decorator.body.should be_nil
     proposition.simple_body = 'foo'
-    decorator.body.should == 'foo'
+    decorator.body.should == '<p>foo</p>'
   end
 
   it 'has an original body' do
