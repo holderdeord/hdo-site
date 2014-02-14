@@ -14,7 +14,7 @@ namespace :images do
       rep_image_path.mkpath
 
       Representative.all.each do |rep|
-        url = URI.parse("http://stortinget.no/Personimages/PersonImages_ExtraLarge/#{URI.escape rep.external_id}_ekstrastort.jpg")
+        url = URI.parse("https://stortinget.no/Personimages/PersonImages_ExtraLarge/#{URI.escape rep.external_id}_ekstrastort.jpg")
 
         filename = rep_image_path.join("#{rep.slug}.jpg")
 
