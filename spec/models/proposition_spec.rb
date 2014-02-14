@@ -112,4 +112,12 @@ describe Proposition do
 
     prop.source_guess
   end
+
+  it 'is interesting by default' do
+    proposition = Proposition.make
+    proposition.should be_interesting
+
+    proposition.interesting = false
+    proposition.should_not be_interesting
+  end
 end
