@@ -3,7 +3,7 @@
 <h4><%= @representative.first_name %> har nylig stemt</h4>
   <% @latest_votes.each do |position, description, proposition| %>
     <div class="row-fluid">
-      <strong><%= position %></strong> å <%= link_to description, proposition %>
+      <p><strong><%= position %></strong> å <%= link_to description, proposition %></p>
     </div>
   <% end %>
 </div>
