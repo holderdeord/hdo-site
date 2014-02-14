@@ -34,7 +34,7 @@ class Proposition < ActiveRecord::Base
 
   update_index_on_change_of :votes, has_many: true
 
-  attr_accessible :description, :on_behalf_of, :body, :representative_id, 
+  attr_accessible :description, :on_behalf_of, :body, :representative_id,
                   :simple_description, :simple_body, :status, :interesting
 
   has_and_belongs_to_many :votes, uniq: true
@@ -51,7 +51,8 @@ class Proposition < ActiveRecord::Base
 
   validates_uniqueness_of :external_id, allow_nil: true # https://github.com/holderdeord/hdo-site/issues/138
 
-  scope :published, -> { where(status: 'published') }
+  scope :published,    -> { where(status: 'published') }
+  scope :interesting,  -> { where(interesting: true) }
   scope :vote_ordered, -> { includes(:votes).order('votes.time DESC') }
 
   def plain_body

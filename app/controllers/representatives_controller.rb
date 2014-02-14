@@ -26,7 +26,8 @@ class RepresentativesController < ApplicationController
 
 
     latest = vote_results.flat_map do |result|
-      result.vote.propositions.select(&:published?).map do |proposition|
+      propositions = result.vote.propositions.select { |prop| prop.published? && prop.interesting? }
+      propositions.map do |proposition|
         position = result.human
 
         desc = proposition.simple_description
