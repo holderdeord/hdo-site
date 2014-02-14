@@ -6,7 +6,7 @@ module Hdo
       model Promise
       default_field :body
 
-      search_param :parliament_period, facet: {field: 'parliament_period_name', size: 20,  title: 'Period' }
+      search_param :parliament_period, facet: {field: 'parliament_period_name', size: 20,  title: 'Periode' }
       search_param :promisor,          facet: {field: 'promisor_name',          size: 20,  title: 'Parti / Regjering' }
       search_param :category,          facet: {field: 'category_names',         size: 200, title: 'Kategorier' }
 
