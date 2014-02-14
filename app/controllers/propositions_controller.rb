@@ -1,5 +1,6 @@
 class PropositionsController < ApplicationController
   before_filter :fetch_proposition, only: [:show]
+  hdo_caches_page :show
 
   def index
     @search = Hdo::Search::Propositions.new(params)

@@ -4,7 +4,7 @@ module Hdo
       attr_reader :params, :next, :previous
       attr_accessor :model # for testing
 
-      PER_PAGE = 20
+      PER_PAGE = 25
 
       def initialize(params, current_id = nil)
         @params = params

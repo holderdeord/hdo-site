@@ -5,6 +5,7 @@ module Hdo
 
       model Proposition
       default_sort :vote_time, 'desc'
+      paginates_per 50
 
       search_param :parliament_session,  facet: {field: 'parliament_session_name', size: 100, title: 'Sesjon'}
       search_param :committee,           facet: {field: 'committee_names', size: 20, title: 'Komiteeer'}

@@ -13,6 +13,11 @@ module Hdo
       end
 
       module ClassMethods
+        def paginates_per(n = nil)
+          @paginates_per = n if n
+          @paginates_per
+        end
+
         def search_param(name, opts = nil)
           search_params[name] = opts
 
@@ -72,9 +77,7 @@ module Hdo
       end
 
       def records
-        records = response.page(page).records
-
-        records
+        response.records
       end
 
       def model
@@ -102,9 +105,13 @@ module Hdo
         @query[:page] || 1
       end
 
+      def size
+        @size || self.class.paginates_per || 25
+      end
+
       def fetch
         payload = {}
-        payload[:size] = @size if @size
+        payload[:size] = size
 
         payload.merge! facets
 
@@ -134,7 +141,7 @@ module Hdo
           }
         end
 
-        model.search payload
+        model.search(payload).page(page).per(size)
       end
 
       def filters
