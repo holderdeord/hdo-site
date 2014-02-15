@@ -26,7 +26,7 @@ class PromisesController < ApplicationController
   private
 
   def create_search
-    @search = Hdo::Search::Promises.new(params)
+    @search = Hdo::Search::Promises.new(params, view_context)
     @search.size = params[:size].to_i if params[:size] && request.xhr?
   end
 end

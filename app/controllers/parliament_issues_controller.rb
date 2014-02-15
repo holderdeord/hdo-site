@@ -2,7 +2,7 @@ class ParliamentIssuesController < ApplicationController
   hdo_caches_page :index, :show
 
   def index
-    @search = Hdo::Search::ParliamentIssues.new(params)
+    @search = Hdo::Search::ParliamentIssues.new(params, view_context)
   end
 
   def show

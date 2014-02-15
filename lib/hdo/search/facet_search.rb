@@ -53,12 +53,13 @@ module Hdo
         end
       end # ClassMethods
 
-      def initialize(params)
-        @query = params.slice(*self.class.search_params.keys)
+      def initialize(params, view_context)
+        @query        = params.slice(*self.class.search_params.keys)
+        @view_context = view_context
       end
 
-      def merge(other)
-        @query.merge other
+      def url(params = {})
+        view_context.url_for @query.merge(params)
       end
 
       def response
@@ -100,6 +101,8 @@ module Hdo
       end
 
       private
+
+      attr_reader :view_context
 
       def page
         @query[:page] || 1

@@ -3,7 +3,7 @@ class PropositionsController < ApplicationController
   hdo_caches_page :show
 
   def index
-    @search = Hdo::Search::Propositions.new(params)
+    @search = Hdo::Search::Propositions.new(params, view_context)
   end
 
   def show

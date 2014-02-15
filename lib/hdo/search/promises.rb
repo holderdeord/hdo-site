@@ -11,6 +11,10 @@ module Hdo
       search_param :category,          facet: {field: 'category_names',         size: 200, title: 'Kategorier' }
 
       default_sort :promisor_name, 'asc'
+
+      def url(params = {})
+        view_context.promises_path @query.merge(params)
+      end
     end
   end
 end
