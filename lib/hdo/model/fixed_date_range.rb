@@ -21,7 +21,7 @@ module Hdo
         end
 
         def for_date(date)
-          where('start_date <= date(?) AND end_date >= date(?)', date, date).first
+          where('start_date <= date(?) AND end_date >= date(?)', date.to_date, date.to_date).first
         end
 
         def current

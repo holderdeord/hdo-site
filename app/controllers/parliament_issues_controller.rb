@@ -2,7 +2,7 @@ class ParliamentIssuesController < ApplicationController
   hdo_caches_page :index, :show
 
   def index
-    @parliament_issues = ParliamentIssue.order(:last_update).reverse_order.page(params[:page])
+    @search = Hdo::Search::ParliamentIssues.new(params)
   end
 
   def show

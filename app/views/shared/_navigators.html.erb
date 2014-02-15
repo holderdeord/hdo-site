@@ -18,7 +18,7 @@
           <%= link_to 'X', url_for(search.merge(nav.param => nil, page: nil)), class: 'pull-right' %>
         <% end %>
 
-        <%= link_to name, url_for(search.merge(nav.param => name, page: nil)) %> (<%= count %>)
+        <%= link_to name.truncate(50), url_for(search.merge(nav.param => name, page: nil)) %> (<%= count %>)
       </li>
     <% end %>
   </ul>

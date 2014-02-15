@@ -1,9 +1,43 @@
-<div class="page-header">
-  <h1><%= ParliamentIssue.model_name.human(count: 2).capitalize %></h1>
+<% page_title "#{ParliamentIssue.model_name.human(count: 2).capitalize} - #{t 'app.title'}" %>
+
+<h3><%= ParliamentIssue.model_name.human(count: 2).capitalize %></h3>
+
+<%= render partial: 'shared/navigator_mobile_controls', locals: {search: @search} %>
+
+<div class="row-fluid current-query hidden-phone">
+  <div class="span9">
+    <small><%= render 'query_explanation' -%></small>
+  </div>
 </div>
 
-<p class="pull-right"><%= page_entries_info @parliament_issues %></p>
+<div class="row-fluid">
+  <div class="span3 navigators hidden-phone">
+    <%= render partial: 'shared/navigators', locals: {search: @search} %>
+  </div>
 
-<%= render partial: "shared/parliament_issue_table", locals: { parliament_issues: @parliament_issues } %>
-<%= paginate @parliament_issues %>
+  <div class="span9 facet-results">
+    <% @search.records.includes(:committee).each do |record| %>
+      <div class="facet-item">
+        <div class="row-fluid">
+          <%= link_to record.summary, record %>
+        </div>
 
+        <div class="muted row-fluid">
+          <small class="span3">
+            <%= l record.last_update, format: :text %>
+          </small>
+
+          <small class="span6">
+            <%= record.committee_name %>
+          </small>
+
+          <small class="span3 rightify">
+            <%= record.status_name %>
+          </small>
+        </div>
+      </div>
+    <% end %>
+
+    <%= paginate @search.response %>
+  </div>
+</div>

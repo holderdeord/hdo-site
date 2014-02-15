@@ -8,10 +8,15 @@ class ParliamentIssue < ActiveRecord::Base
     mappings {
       indexes :summary, type: :string, analyzer: SearchSettings.default_analyzer
       indexes :description, type: :string, analyzer: SearchSettings.default_analyzer
-      indexes :status, type: :string
+      indexes :status_name, type: :string, index: :not_analyzed
       indexes :last_update, type: :date, include_in_all: false
       indexes :created_at, type: :date, include_in_all: false
       indexes :slug, type: :string, index: :not_analyzed
+      indexes :parliament_session_name, type: :string, index: :not_analyzed
+      indexes :issue_type_name, type: :string, index: :not_analyzed
+      indexes :document_group_name, type: :string, index: :not_analyzed
+      indexes :committee_name, type: :string, index: :not_analyzed
+      indexes :category_names, index: :not_analyzed
     }
   }
 
@@ -29,10 +34,6 @@ class ParliamentIssue < ActiveRecord::Base
   scope :processed, -> { where("status = ?", I18n.t("app.parliament_issue.states.processed")) }
   scope :latest,    ->(limit) { order(:last_update).reverse_order.limit(limit) }
 
-  def status_text
-    status.gsub(/_/, ' ').capitalize
-  end
-
   def last_update_text
     I18n.l last_update, format: :short_text
   end
@@ -41,8 +42,49 @@ class ParliamentIssue < ActiveRecord::Base
     I18n.t("app.external.urls.parliament_issue") % external_id
   end
 
+  def parliament_session
+    @parliament_session ||= ParliamentSession.for_date(last_update)
+  end
+
+  def parliament_session_name
+    parliament_session.name
+  end
+
+  def committee_name
+    committee.try(:name)
+  end
+
+  def category_names
+    categories.map(&:human_name)
+  end
+
+  def status_name
+    status.humanize
+  end
+
+  alias_method :status_text, :status_name
+
+  def document_group_name
+    document_group && document_group.humanize
+  end
+
+  def issue_type_name
+    issue_type && issue_type.humanize
+  end
+
   def processed?
     status == I18n.t("app.parliament_issue.states.processed")
+  end
+
+  def as_indexed_json(opts = nil)
+    as_json methods: [
+      :parliament_session_name,
+      :committee_name,
+      :category_names,
+      :status_name,
+      :document_group_name,
+      :issue_type_name
+    ]
   end
 
 end

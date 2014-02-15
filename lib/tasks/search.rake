@@ -2,7 +2,7 @@ namespace :search do
   desc 'Reindex'
   task :reindex => :environment do
     Hdo::Search::Settings.models.each do |klass|
-      next if ENV['CLASS'] && ENV['CLASS'] != klass.to_s
+      next if ENV['CLASS'] && !ENV['CLASS'].split(',').include?(klass.name)
       puts "\n#{klass}"
 
       elasticsearch = klass.__elasticsearch__
@@ -19,12 +19,17 @@ namespace :search do
       total = klass.count
 
       klass.import { |response|
-        error = response['items'].find { |e| e['index'] && e['index']['error'] }
-        count = response['items'].size
-        took  = response['took']
+        count     = response['items'].size
+        took      = response['took']
+        timed_out = response['timed_out']
+        error     = response['items'].find { |e| e['index'] && e['index']['error'] }
 
         if error
-          raise "reindex failed - #{error.inspect}"
+          raise "reindex failed: #{error.inspect}"
+        end
+
+        if timed_out
+          raise "reindex timed out: #{response.inspect}"
         end
 
         indexed_count += count

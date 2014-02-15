@@ -4,7 +4,7 @@
 
 <%= render partial: 'shared/navigator_mobile_controls', locals: {search: @search} %>
 
-<div class="row-fluid promises-current-query hidden-phone">
+<div class="row-fluid current-query hidden-phone">
   <div class="span9">
     <small><%= render 'query_explanation' %></small>
   </div>
@@ -29,7 +29,7 @@
       </div>
     <% end %>
 
-        <%= paginate @search.response %>
+    <%= paginate @search.response %>
 
   </div>
 </div>

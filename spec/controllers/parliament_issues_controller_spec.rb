@@ -3,11 +3,9 @@ require 'spec_helper'
 describe ParliamentIssuesController do
 
   it 'can show index' do
-    issue = ParliamentIssue.make!
-
     get :index
 
-    assigns(:parliament_issues).should == [issue]
+    assigns(:search).should be_kind_of(Hdo::Search::ParliamentIssues)
   end
 
   it 'can show an issue' do

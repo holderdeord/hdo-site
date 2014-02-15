@@ -27,8 +27,8 @@ class Proposition < ActiveRecord::Base
 
       indexes :committee_names, index: :not_analyzed
       indexes :category_names, index: :not_analyzed
-      indexes :parliament_issue_types, index: :not_analyzed
-      indexes :parliament_issue_document_groups, index: :not_analyzed
+      indexes :parliament_issue_type_names, index: :not_analyzed
+      indexes :parliament_issue_document_group_names, index: :not_analyzed
     }
   }
 
@@ -125,17 +125,25 @@ class Proposition < ActiveRecord::Base
     categories.map(&:human_name)
   end
 
-  def parliament_issue_types
-    parliament_issues.map(&:issue_type).uniq
+  def parliament_issue_type_names
+    parliament_issues.map(&:issue_type_name).uniq
   end
 
-  def parliament_issue_document_groups
-    parliament_issues.map(&:document_group).uniq
+  def parliament_issue_document_group_names
+    parliament_issues.map(&:document_group_name).uniq
   end
 
 
   def as_indexed_json(options = nil)
-    methods = [:plain_body, :proposers, :committee_names, :category_names, :parliament_issue_types, :parliament_issue_document_groups]
+    methods = [
+      :plain_body,
+      :proposers,
+      :committee_names,
+      :category_names,
+      :parliament_issue_type_names,
+      :parliament_issue_document_group_names
+    ]
+
     methods += [:parliament_session_name, :vote_time] if votes.any?
 
     as_json methods: methods,
