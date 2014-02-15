@@ -8,11 +8,11 @@ class Promise < ActiveRecord::Base
 
   settings(SearchSettings.default) {
     mappings {
-      indexes :body, type: :string, analyzer: SearchSettings.default_analyzer
-      indexes :party_names, index: :not_analyzed
-      indexes :category_names, index: :not_analyzed
+      indexes :body,                   type: :string, analyzer: SearchSettings.default_analyzer
+      indexes :party_names,                           index: :not_analyzed
+      indexes :category_names,                        index: :not_analyzed
       indexes :parliament_period_name, type: :string, index: :not_analyzed
-      indexes :promisor_name, type: :string, index: :not_analyzed
+      indexes :promisor_name,          type: :string, index: :not_analyzed
     }
   }
 

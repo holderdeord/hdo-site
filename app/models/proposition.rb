@@ -3,31 +3,31 @@ class Proposition < ActiveRecord::Base
 
   settings(SearchSettings.default) {
     mappings {
-      indexes :description, type: :string, analyzer: SearchSettings.default_analyzer
-      indexes :plain_body, type: :string, analyzer: SearchSettings.default_analyzer
-      indexes :simple_description, type: :string, analyzer: SearchSettings.default_analyzer
-      indexes :simple_body, type: :string, analyzer: SearchSettings.default_analyzer
-      indexes :on_behalf_of, type: :string
-      indexes :vote_time, type: :date
-      indexes :status, type: :string, index: :not_analyzed
-      indexes :parliament_session_name, type: :string, index: :not_analyzed
-      indexes :id, type: :integer, index: :not_analyzed
-      indexes :interesting, type: :boolean
+      indexes :description,                           type: :string, analyzer: SearchSettings.default_analyzer
+      indexes :plain_body,                            type: :string, analyzer: SearchSettings.default_analyzer
+      indexes :simple_description,                    type: :string, analyzer: SearchSettings.default_analyzer
+      indexes :simple_body,                           type: :string, analyzer: SearchSettings.default_analyzer
+      indexes :on_behalf_of,                          type: :string
+      indexes :vote_time,                             type: :date
+      indexes :status,                                type: :string, index: :not_analyzed
+      indexes :parliament_session_name,               type: :string, index: :not_analyzed
+      indexes :id,                                    type: :integer, index: :not_analyzed
+      indexes :interesting,                           type: :boolean
+      indexes :committee_names,                       type: :string, index: :not_analyzed
+      indexes :category_names,                        type: :string, index: :not_analyzed
+      indexes :parliament_issue_type_names,           type: :string, index: :not_analyzed
+      indexes :parliament_issue_document_group_names, type: :string, index: :not_analyzed
+
 
       indexes :votes do
-        indexes :slug, index: :not_analyzed
+        indexes :slug,    type: :string, index: :not_analyzed
         indexes :enacted, type: :boolean
       end
 
       indexes :proposers do
-        indexes :external_id, index: :not_analyzed
-        indexes :name, index: :not_analyzed
+        indexes :external_id, type: :string, index: :not_analyzed
+        indexes :name,        type: :string, index: :not_analyzed
       end
-
-      indexes :committee_names, index: :not_analyzed
-      indexes :category_names, index: :not_analyzed
-      indexes :parliament_issue_type_names, index: :not_analyzed
-      indexes :parliament_issue_document_group_names, index: :not_analyzed
     }
   }
 

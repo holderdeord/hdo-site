@@ -23,12 +23,12 @@ class Representative < ActiveRecord::Base
         indexes :slug, type: :string, index: :not_analyzed
       end
 
-      indexes :full_name, index: :not_analyzed
-      indexes :last_name, index: :not_analyzed
+      indexes :full_name,  index: :not_analyzed
+      indexes :last_name,  index: :not_analyzed
       indexes :first_name, index: :not_analyzed
       indexes :twitter_id, index: :not_analyzed
-      indexes :attending, index: :not_analyzed
-      indexes :slug
+      indexes :attending,  index: :not_analyzed
+      indexes :slug,       index: :not_analyzed
     end
   }
 

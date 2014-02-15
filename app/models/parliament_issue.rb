@@ -6,17 +6,17 @@ class ParliamentIssue < ActiveRecord::Base
 
   settings(SearchSettings.default) {
     mappings {
-      indexes :summary, type: :string, analyzer: SearchSettings.default_analyzer
-      indexes :description, type: :string, analyzer: SearchSettings.default_analyzer
-      indexes :status_name, type: :string, index: :not_analyzed
-      indexes :last_update, type: :date, include_in_all: false
-      indexes :created_at, type: :date, include_in_all: false
-      indexes :slug, type: :string, index: :not_analyzed
+      indexes :summary,                 type: :string, analyzer: SearchSettings.default_analyzer
+      indexes :description,             type: :string, analyzer: SearchSettings.default_analyzer
+      indexes :status_name,             type: :string, index: :not_analyzed
+      indexes :last_update,             type: :date,   include_in_all: false
+      indexes :created_at,              type: :date,   include_in_all: false
+      indexes :slug,                    type: :string, index: :not_analyzed
       indexes :parliament_session_name, type: :string, index: :not_analyzed
-      indexes :issue_type_name, type: :string, index: :not_analyzed
-      indexes :document_group_name, type: :string, index: :not_analyzed
-      indexes :committee_name, type: :string, index: :not_analyzed
-      indexes :category_names, index: :not_analyzed
+      indexes :issue_type_name,         type: :string, index: :not_analyzed
+      indexes :document_group_name,     type: :string, index: :not_analyzed
+      indexes :committee_name,          type: :string, index: :not_analyzed
+      indexes :category_names,          type: :string, index: :not_analyzed
     }
   }
 
