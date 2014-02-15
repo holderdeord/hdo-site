@@ -9,6 +9,26 @@ module Hdo
       end
 
       module ClassMethods
+        #
+        # Set up default callbacks
+        #
+        # By default for :update, ES will do a partial update based on the dirty attributes in the model.
+        # If you override #as_indexed_json to include non-attribute data, set :partial_update => false to
+        # avoid an outdated index.
+        #
+
+        def add_index_callbacks(opts = {})
+          after_commit -> { __elasticsearch__.index_document  }, on: :create
+          after_commit -> { __elasticsearch__.delete_document }, on: :destroy
+
+
+          if opts[:partial_update] == false
+            after_commit -> { __elasticsearch__.index_document }, on: :update
+          else
+            after_commit -> { __elasticsearch__.update_document }, on: :update
+          end
+        end
+
         def update_index_on_change_of(*classes)
           if classes.last.kind_of?(Hash)
             opts = classes.pop

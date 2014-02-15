@@ -2,13 +2,14 @@ class Vote < ActiveRecord::Base
   extend FriendlyId
 
   include Hdo::Search::Index
-  include Elasticsearch::Model::Callbacks
 
   settings(SearchSettings.default) {
     mappings {
       indexes :category_names, index: :not_analyzed
     }
   }
+
+  add_index_callbacks #partial_update: false
   update_index_on_change_of :propositions, :parliament_issues, has_many: true
 
   attr_accessible :for_count, :against_count, :absent_count,

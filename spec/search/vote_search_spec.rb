@@ -123,5 +123,4 @@ describe Vote, :search do
       result.category_names.first.should == category.name
     end
   end
-
 end

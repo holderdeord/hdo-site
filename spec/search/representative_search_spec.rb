@@ -26,6 +26,18 @@ describe Representative, :search do
     found.should_not be_nil
   end
 
+  it 'indexes non-attribute data (no partial update)' do
+    representative = Representative.make!
+
+    refresh_index
+    Representative.search('*').results.first.full_name.should == representative.full_name
+
+    representative.update_attributes!(last_name: 'Doe')
+
+    refresh_index
+    Representative.search('*').results.first.full_name.should == representative.full_name
+  end
+
   context 'refresh on association update' do
     it 'updates the index when associated district changes' do
       district = District.make!

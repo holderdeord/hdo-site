@@ -1,6 +1,5 @@
 class Proposition < ActiveRecord::Base
   include Hdo::Search::Index
-  include Elasticsearch::Model::Callbacks
 
   settings(SearchSettings.default) {
     mappings {
@@ -32,7 +31,10 @@ class Proposition < ActiveRecord::Base
     }
   }
 
+  add_index_callbacks partial_update: false
+
   update_index_on_change_of :votes, has_many: true
+  update_index_on_change_of :parliament_issues, has_many: true
 
   attr_accessible :description, :on_behalf_of, :body, :representative_id,
                   :simple_description, :simple_body, :status, :interesting
@@ -118,19 +120,19 @@ class Proposition < ActiveRecord::Base
   end
 
   def categories
-    parliament_issues.flat_map(&:categories).uniq
+    parliament_issues.flat_map(&:categories).compact.uniq
   end
 
   def category_names
-    categories.map(&:human_name)
+    categories.map(&:human_name).compact
   end
 
   def parliament_issue_type_names
-    parliament_issues.map(&:issue_type_name).uniq
+    parliament_issues.map(&:issue_type_name).compact.uniq
   end
 
   def parliament_issue_document_group_names
-    parliament_issues.map(&:document_group_name).uniq
+    parliament_issues.map(&:document_group_name).compact.uniq
   end
 
 

@@ -9,7 +9,7 @@ class Representative < ActiveRecord::Base
   extend FriendlyId
 
   include Hdo::Search::Index
-  include Elasticsearch::Model::Callbacks
+  add_index_callbacks partial_update: false
 
   settings(SearchSettings.default) {
     mappings do

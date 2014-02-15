@@ -4,7 +4,7 @@ class Party < ActiveRecord::Base
   extend FriendlyId
 
   include Hdo::Search::Index
-  include Elasticsearch::Model::Callbacks
+  add_index_callbacks
 
   settings(SearchSettings.default) {
     mappings {

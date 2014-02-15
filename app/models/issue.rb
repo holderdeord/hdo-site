@@ -17,7 +17,7 @@ class Issue < ActiveRecord::Base
     }
   }
 
-  after_save    { update_search_index }
+  after_commit  { update_search_index }
   after_destroy { update_search_index }
 
   update_index_on_change_of :categories, if: lambda { |i| i.published? }, has_many: true
@@ -172,10 +172,10 @@ class Issue < ActiveRecord::Base
   private
 
   def update_search_index
-    if published?
-      __elasticsearch__.index_document
-    else
+    if destroyed? || !published?
       __elasticsearch__.delete_document ignore: 404
+    else
+      __elasticsearch__.index_document
     end
   end
 end

@@ -120,4 +120,14 @@ describe Proposition do
     proposition.interesting = false
     proposition.should_not be_interesting
   end
+
+  it 'collects parliament issue data (for indexing)' do
+    vote = Vote.make!
+    i1 = ParliamentIssue.make!(votes: [vote], document_group: 'Foo')
+    i2 = ParliamentIssue.make!(votes: [vote], document_group: nil, issue_type: 'Bar')
+
+    prop = Proposition.make!(votes: [vote])
+    prop.parliament_issue_document_group_names.should == ['Foo']
+    prop.parliament_issue_type_names.should == ['Bar']
+  end
 end

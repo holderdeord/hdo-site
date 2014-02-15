@@ -2,7 +2,7 @@ class ParliamentIssue < ActiveRecord::Base
   extend FriendlyId
 
   include Hdo::Search::Index
-  include Elasticsearch::Model::Callbacks
+  add_index_callbacks partial_update: false
 
   settings(SearchSettings.default) {
     mappings {
@@ -24,6 +24,7 @@ class ParliamentIssue < ActiveRecord::Base
                   :reference, :summary, :description, :committee, :categories
 
   belongs_to :committee
+  has_many :propositions, through: :votes
   has_and_belongs_to_many :categories, uniq: true
   has_and_belongs_to_many :votes,      uniq: true
 

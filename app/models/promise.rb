@@ -4,7 +4,7 @@ class Promise < ActiveRecord::Base
   paginates_per 50
 
   include Hdo::Search::Index
-  include Elasticsearch::Model::Callbacks
+  add_index_callbacks partial_update: false
 
   settings(SearchSettings.default) {
     mappings {

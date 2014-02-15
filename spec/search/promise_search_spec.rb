@@ -18,4 +18,21 @@ describe Promise, :search do
       Promise.search('*').results.first.party_names.should == [party.name]
     end
   end
+
+  it 'indexes non-attribute data (no partial update)' do
+    promise = Promise.make!
+
+    promise.promisor = Party.make!
+    promise.save!
+
+    refresh_index
+    Promise.search('*').results.first.promisor_name.should == promise.promisor.name
+
+    promise.promisor = Party.make!
+    promise.save!
+
+    refresh_index
+    Promise.search('*').results.first.promisor_name.should == promise.promisor.name
+  end
+
 end
