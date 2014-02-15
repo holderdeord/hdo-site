@@ -110,7 +110,7 @@ gem 'nokogiri'
 gem 'unicode_utils'
 
 # debugging
-gem 'pry'
+gem 'pry-rails', :group => :development
 
 # app settings
 gem 'settingslogic'

@@ -230,6 +230,8 @@ GEM
       coderay (~> 1.0)
       method_source (~> 0.8)
       slop (~> 3.4)
+    pry-rails (0.3.2)
+      pry (>= 0.9.10)
     pundit (0.2.1)
       activesupport (>= 3.0.0)
     quiet_assets (1.0.2)
@@ -401,7 +403,7 @@ DEPENDENCIES
   newrelic_rpm
   nokogiri
   pg
-  pry
+  pry-rails
   pundit
   quiet_assets
   rack-cors
