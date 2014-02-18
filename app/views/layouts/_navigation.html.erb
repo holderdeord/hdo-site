@@ -22,10 +22,6 @@
     <%= Promise.model_name.human(count: 2).capitalize %>
   <% end %>
 
-  <%= link_to questions_path, class:"#{active_status_for(:questions)}" do %>
-    <%= Question.model_name.human(count: 2).capitalize %>
-  <% end %>
-
   <div class="dropdown pull-right <%= active_status_for(:home_contact, :home_about, :home_join, :home_people, :home_faq, :home_contact, :home_friends)%>">
     <a class="dropdown-toggle" data-toggle="dropdown" href="#about-us">
       <%= t 'app.about' %>

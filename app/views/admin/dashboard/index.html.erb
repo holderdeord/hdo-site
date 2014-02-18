@@ -67,34 +67,6 @@
         <% end %>
       </ul>
     </div>
-
-    <div class="span6">
-      <h4>
-        <%= link_to "#{@pending_questions.count} #{Question.model_name.human(count: 2)}", admin_questions_path %>
-        og
-        <%= link_to "#{@questions_answer_pending.count} #{Answer.model_name.human(count: 2)}", "#{admin_questions_path}#pending-answers" %>
-
-        <%= t('app.questions.status.pending').downcase %>
-      </h3>
-
-      <% if @pending_questions.any? %>
-        <strong>Spørsmål</strong>
-        <ul>
-          <% @pending_questions.each do |q| %>
-            <li><%= q.teaser %></li>
-          <% end %>
-        </ul>
-      <% end %>
-
-      <% if @questions_answer_pending.any? %>
-        <strong>Svar</strong>
-        <ul>
-          <% @questions_answer_pending.each do |q| %>
-            <li><%= q.teaser %></li>
-          <% end %>
-        </ul>
-      <% end %>
-    </div>
   </div>
 
   <hr>

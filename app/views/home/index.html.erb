@@ -13,28 +13,6 @@
 
 <hr class="soften">
 
-<section>
-  <h2><%= t 'app.questions.title' %></h2>
-
-  <!-- FIXME: inline style -->
-  <div class="row-fluid" style="margin: 20px 0;">
-    <%= link_to t('app.questions.new'), new_question_path, class: 'btn btn-primary' %>
-    <%= link_to t('app.questions.all'), questions_path, class: 'btn' %>
-  </div>
-
-  <h4>Sist besvarte spørsmål</h4>
-
-  <div class="row-fluid">
-    <% @questions.each do |q| %>
-      <div class="span6 questions-index">
-        <%= render partial: 'shared/question_card', locals: {question: q, teaser_length: 300} %>
-      </div>
-    <% end %>
-  </div>
-</section>
-
-<hr class="soften">
-
 <%= render partial: 'blog' %>
 <hr class="soften">
 <%= render partial: 'social' %>

@@ -2,7 +2,8 @@
 <% party = @representative.latest_party %>
 
 <div class="representative-profile">
-  <%= image_tag @representative.image.versions[:large], width: '240', height: '320', class: 'representative-image', alt: @representative.full_name %>
+  <%= image_tag @representative.image.versions[:large], width: '240', height: '320', 
+                                                        class: 'representative-image', alt: @representative.full_name %>
 
   <h1 class="representative-name"><%= @representative.full_name %> (<%= @representative.age %>)</h1>
 
@@ -23,12 +24,6 @@
         <dd>Medlem av <%= link_to com.name, com %></dd>
       <% end %>
     </dl>
-
-    <% if @representative.askable? %>
-      <%= link_to t('app.questions.representative.ask', name: @representative.name),
-                  new_question_path(representative: @representative.slug, district: @representative.district.slug),
-                  class: 'btn btn-primary' %>
-    <% end %>
   </aside>
 </div>
 
@@ -40,22 +35,6 @@
   </div>
 
   <div class="span6">
-    <% if @representative.has_twitter? %>
-      <%= render 'twitter' %>
-    <% else %>
-      <div class="<%= 'muted' unless @representative.askable? %>">
-        <%= render 'question_list' %>
-      </div>
-    <% end %>
+    <%= render 'twitter' if @representative.has_twitter? %>
   </div>
 </div>
-
-<% if @representative.has_twitter? %>
-<hr>
-
-<div class="row-fluid">
-  <div class="span6 <%= 'muted' unless @representative.askable? %>">
-    <%= render 'question_list' %>
-  </div>
-</div>
-<% end %>

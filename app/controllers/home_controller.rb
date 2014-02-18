@@ -15,17 +15,15 @@ class HomeController < ApplicationController
   def index
     published = Issue.published.includes(:tags)
 
-    @all_tags = published.flat_map(&:tags).uniq.sort_by(&:name)
-    @parties  = Party.order(:name)
-    @issues   = published.for_frontpage(5).map(&:decorate)
+    @all_tags     = published.flat_map(&:tags).uniq.sort_by(&:name)
+    @parties      = Party.order(:name)
+    @issues       = published.for_frontpage(5).map(&:decorate)
+    @main_issue   = @issues.shift
+    @leaderboard  = Hdo::Stats::Leaderboard.new(published)
+    @latest_posts = Hdo::Utils::BlogFetcher.last(2)
 
     propositions = Proposition.published.interesting.order('created_at DESC').first(6)
     @propositions_feed = Hdo::Utils::PropositionsFeed.new(propositions, :see_all => true)
-
-    @main_issue   = @issues.shift
-    @questions    = Question.not_ours.with_approved_answers.order("answers.created_at").last(2).map(&:decorate)
-    @leaderboard  = Hdo::Stats::Leaderboard.new(published)
-    @latest_posts = Hdo::Utils::BlogFetcher.last(2)
   end
 
   def robots

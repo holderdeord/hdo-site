@@ -6,27 +6,6 @@ class RepresentativeController < ApplicationController
   before_filter :require_edit, only: :create_answer
 
   def index
-    questions = current_representative.questions.approved.order('created_at DESC') # TODO: use approved_at (also in the view)?
-    answers   = current_representative.answers.order('created_at DESC')
-
-    @unanswered_questions = questions.unanswered
-    @published_answers    = questions.answered.where('answers.status' => 'approved')
-    @pending_answers      = answers.pending
-    @rejected_answers     = answers.rejected
-
-    # TODO:
-    #
-    # - plural if size == 1
-    # - i18n
-    # - specs
-
-    @counts = [
-      ['spørsmål venter på svar', @unanswered_questions.size, false],
-      ['svar til godkjenning', @pending_answers.size, true],
-      ['svar publisert', @published_answers.size, true]
-    ]
-
-    @questions = questions.sort_by { |q| question_sorter q }
   end
 
   def show_question

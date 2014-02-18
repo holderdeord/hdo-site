@@ -1,10 +1,15 @@
 class QuestionsController < ApplicationController
+  before_filter :redirect_to_disabled, except: :disabled
   before_filter :require_edit, only: [:new, :create]
   skip_before_filter :verify_authenticity_token, only: :create
 
   hdo_caches_page :index, :new, :all
 
   DEFAULT_PER_PAGE = 20
+
+  def disabled
+
+  end
 
   def index
     questions = Question.approved
@@ -73,6 +78,10 @@ class QuestionsController < ApplicationController
   end
 
   private
+
+  def redirect_to_disabled
+    redirect_to disabled_questions_path
+  end
 
   def fetch_representatives_and_districts
     @representatives = Representative.potentially_askable.includes(:district, party_memberships: :party).order(:last_name).to_a

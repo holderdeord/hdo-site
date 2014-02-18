@@ -56,8 +56,8 @@ Hdo::Application.routes.draw do
   end
 
   get  'representative'                       => 'representative#index',         as: :representative_root
-  get  'representative/questions/:id'         => 'representative#show_question', as: :representative_question
-  post 'representative/questions/:id/answers' => 'representative#create_answer', as: :representative_question_answers
+  # get  'representative/questions/:id'         => 'representative#show_question', as: :representative_question
+  # post 'representative/questions/:id/answers' => 'representative#create_answer', as: :representative_question_answers
 
 
   #
@@ -184,6 +184,7 @@ Hdo::Application.routes.draw do
   resources :questions, only: [:index, :create, :show, :new] do
     collection do
       get 'conduct'
+      get 'disabled' => 'questions#disabled', as: :disabled
     end
   end
   get 'questions/all/:category' => 'questions#all'
