@@ -9,7 +9,7 @@ class Vote < ActiveRecord::Base
     }
   }
 
-  add_index_callbacks #partial_update: false
+  add_index_callbacks partial_update: false
   update_index_on_change_of :propositions, :parliament_issues, has_many: true
 
   attr_accessible :for_count, :against_count, :absent_count,

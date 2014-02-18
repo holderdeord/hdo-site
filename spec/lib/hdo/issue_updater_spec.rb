@@ -256,6 +256,25 @@ module Hdo
         issue.proposition_connections.map(&:proposition_type).compact.should == [expected_type]
       end
 
+      it 'keeps title and comment nil if blank' do
+        conn  = PropositionConnection.make!(title: nil, comment: nil)
+        issue = Issue.make! proposition_connections: [conn]
+
+        propositions = {
+          conn.proposition.id => {
+            connected: 'true',
+            title: '',
+            comment: ''
+          }
+        }
+
+        IssueUpdater.new(issue, {propositions: propositions}, user).update!
+
+        conn.reload
+        conn.title.should be_nil
+        conn.comment.should be_nil
+      end
+
       it "updates multiple proposition_types simultaneously" do
         issue = Issue.make! proposition_connections: [PropositionConnection.make!, PropositionConnection.make!]
         issue.proposition_connections.each { |v| v.proposition_type.should be_blank }

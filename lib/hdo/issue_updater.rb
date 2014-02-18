@@ -134,6 +134,8 @@ module Hdo
 
         # normalize '' vs nil
         attrs[:proposition_type] = nil if attrs[:proposition_type].blank?
+        attrs[:title]            = nil if attrs[:title].blank?
+        attrs[:comment]          = nil if attrs[:comment].blank?
 
         if existing
           existing.attributes = attrs
