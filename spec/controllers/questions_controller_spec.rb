@@ -8,8 +8,12 @@ describe QuestionsController do
   end
 
   describe "GET index" do
+    it 'redirects to /questions/disabled' do
+      get :index
+      response.should redirect_to(disabled_questions_path)
+    end
 
-    it "assigns unanswered questions as @questions[:unanswered]" do
+    xit "assigns unanswered questions as @questions[:unanswered]" do
       pending = Question.make!
       approved = Question.make!(status: 'approved')
 
@@ -17,7 +21,7 @@ describe QuestionsController do
       assigns(:questions)[:unanswered].should eq([approved])
     end
 
-    it "ignores non-answered questions from our domain" do
+    xit "ignores non-answered questions from our domain" do
       ours = Question.make!(from_email: 'test@holderdeord.no', status: 'approved')
       not_ours = Question.make!(from_email: 'test@example.com', status: 'approved')
 
@@ -32,7 +36,7 @@ describe QuestionsController do
       assigns(:questions)[:answered].should eq([ours_with_approved_answer])
     end
 
-    it "assigns answered questions as @questions[:answered]" do
+    xit "assigns answered questions as @questions[:answered]" do
       q = Question.make! :approved
       a = Answer.make! question: q, status: 'approved'
 
@@ -40,7 +44,7 @@ describe QuestionsController do
       assigns(:questions)[:answered].should eq([q])
     end
 
-    it "puts questions with pending answers in the unanswered bin" do
+    xit "puts questions with pending answers in the unanswered bin" do
       q = Question.make! :approved
       a = Answer.make! question: q, status: 'pending'
 
@@ -48,7 +52,7 @@ describe QuestionsController do
       assigns(:questions)[:unanswered].should eq [q]
     end
 
-    it 'assigns total question counts' do
+    xit 'assigns total question counts' do
       2.times { Question.make! :approved }
       3.times do
         q = Question.make! :approved
@@ -63,7 +67,7 @@ describe QuestionsController do
   end
 
   describe 'GET all' do
-    it 'assigns answered questions when /answered' do
+    xit 'assigns answered questions when /answered' do
       Question.make! :approved
       q = Question.make! :approved
       Answer.make! question: q, status: 'approved'
@@ -73,7 +77,7 @@ describe QuestionsController do
       assigns(:questions).should eq [q]
     end
 
-    it 'assigns unanswered questions when /unanswered' do
+    xit 'assigns unanswered questions when /unanswered' do
       q1 = Question.make! :approved
       q2 = Question.make! :approved
       Answer.make! question: q1, status: 'approved'
@@ -83,7 +87,7 @@ describe QuestionsController do
       assigns(:questions).should eq [q2]
     end
 
-    it 'hides unanswered questions from @hdo' do
+    xit 'hides unanswered questions from @hdo' do
       ours = Question.make!(from_email: 'test@holderdeord.no', status: 'approved')
       not_ours = Question.make!(from_email: 'test@example.com', status: 'approved')
 
@@ -92,7 +96,7 @@ describe QuestionsController do
       assigns(:questions).should eq [not_ours]
     end
 
-    it 'shows 404 for unknown category' do
+    xit 'shows 404 for unknown category' do
       get :all, category: 'goo'
 
       response.code.should eq '404'
@@ -100,7 +104,7 @@ describe QuestionsController do
   end
 
   describe "GET show" do
-    it "assigns the requested question as @question" do
+    xit "assigns the requested question as @question" do
       question = Question.make!(status: 'approved', representative: Representative.make!(:confirmed))
       get :show, id: question.to_param
 
@@ -110,13 +114,13 @@ describe QuestionsController do
       assigns(:party).should eq(question.representative.latest_party)
     end
 
-    it 'only finds approved questions' do
+    xit 'only finds approved questions' do
       expect {
         get :show, id: Question.make!(status: 'pending')
       }.to raise_error(ActiveRecord::RecordNotFound)
     end
 
-    it 'assigns approved answers as @answer' do
+    xit 'assigns approved answers as @answer' do
       question = Question.make!(status: 'approved', representative: Representative.make!(:confirmed))
       question.create_answer!(body: 'foo', representative: question.representative, status: 'approved')
 
@@ -127,7 +131,7 @@ describe QuestionsController do
       assigns(:party).should eq(question.answer.representative.latest_party)
     end
 
-    it 'ignores non-approved answers' do
+    xit 'ignores non-approved answers' do
       question = Question.make!(status: 'approved')
       question.create_answer!(body: 'foo', representative: question.representative, status: 'pending')
 
@@ -138,12 +142,12 @@ describe QuestionsController do
   end
 
   describe "GET new" do
-    it "assigns a new question as @question" do
+    xit "assigns a new question as @question" do
       get :new
       assigns(:question).should be_a_new(Question)
     end
 
-    it "assigns the correct representative list" do
+    xit "assigns the correct representative list" do
       attending_with_email     = Representative.make!(attending: true, email: 'a@stortinget.no')
       attending_without_email  = Representative.make!(attending: true, email: nil)
       not_attending_with_email = Representative.make!(attending: false, email: 'b@stortinget.no')
@@ -153,7 +157,7 @@ describe QuestionsController do
       assigns(:representatives).should == [attending_with_email]
     end
 
-    it "redirects if read_only" do
+    xit "redirects if read_only" do
       AppConfig.any_instance.stub(:read_only).and_return(true)
       get :new
       response.code.should eq '307'
@@ -161,31 +165,31 @@ describe QuestionsController do
   end
 
   describe "POST create" do
-    it "redirects if read_only" do
+    xit "redirects if read_only" do
       AppConfig.any_instance.stub(:read_only).and_return(true)
       post :create
       response.code.should eq '307'
     end
 
     describe "with valid params" do
-      it "creates a new Question" do
+      xit "creates a new Question" do
         expect {
           post :create, question: valid_attributes
         }.to change(Question, :count).by(1)
       end
 
-      it "assigns a newly created question as @question" do
+      xit "assigns a newly created question as @question" do
         post :create, question: valid_attributes
         assigns(:question).should be_a(Question)
         assigns(:question).should be_persisted
       end
 
-      it "redirects to the created question" do
+      xit "redirects to the created question" do
         post :create, question: valid_attributes
         response.should have_rendered(:create)
       end
 
-      it 'does not accepts a blank from_name' do
+      xit 'does not accepts a blank from_name' do
         post :create, question: valid_attributes.merge(from_name: '')
 
         q = assigns(:question)
@@ -194,7 +198,7 @@ describe QuestionsController do
         response.should have_rendered(:new)
       end
 
-      it 'does not accept a blank from_email' do
+      xit 'does not accept a blank from_email' do
         post :create, question: valid_attributes.merge(from_email: '')
 
         q = assigns(:question)
@@ -205,14 +209,14 @@ describe QuestionsController do
     end
 
     describe "with invalid params" do
-      it "assigns a newly created but unsaved question as @question" do
+      xit "assigns a newly created but unsaved question as @question" do
         # Trigger the behavior that occurs when invalid params are submitted
         Question.any_instance.stub(:save).and_return(false)
         post :create, {question: {  }}
         assigns(:question).should be_a_new(Question)
       end
 
-      it "re-renders the 'new' template" do
+      xit "re-renders the 'new' template" do
         # Trigger the behavior that occurs when invalid params are submitted
         Question.any_instance.stub(:save).and_return(false)
         post :create, {question: {  }}
@@ -226,7 +230,7 @@ describe QuestionsController do
   end
 
   describe 'GET conduct' do
-    it 'renders the code of conduct' do
+    xit 'renders the code of conduct' do
       get :conduct
       response.should have_rendered(:_conduct)
     end

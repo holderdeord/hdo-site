@@ -70,7 +70,7 @@ describe RepresentativeController do
     end
 
     describe "with invalid params" do
-      it "assigns a newly created but unsaved answer as @answer" do
+      xit "assigns a newly created but unsaved answer as @answer" do
         # Trigger the behavior that occurs when invalid params are submitted
         Answer.any_instance.stub(:save).and_return(false)
         post :create_answer, default_params.merge(:answer => {})
