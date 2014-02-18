@@ -72,8 +72,8 @@ module Hdo
 
       attr_reader :total, :data
 
-      def initialize(issue)
-        @data = compute(issue)
+      def initialize(issue, parliament_period = nil)
+        @data = compute(issue, parliament_period)
       end
 
       #
@@ -132,8 +132,13 @@ module Hdo
 
       private
 
-      def compute(issue)
-        promise_connections = issue.promise_connections.includes(promise: :promisor)
+      def compute(issue, parliament_period = nil)
+        promise_connections = issue.promise_connections.includes(:promise)
+
+        if parliament_period
+          promise_connections = promise_connections.where('promises.parliament_period_id' => parliament_period.id)
+        end
+
         percentages         = {}
         scores_by_party     = {}
 

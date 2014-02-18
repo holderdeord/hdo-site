@@ -19,7 +19,7 @@ class HomeController < ApplicationController
     @parties      = Party.order(:name)
     @issues       = published.for_frontpage(5).map(&:decorate)
     @main_issue   = @issues.shift
-    @leaderboard  = Hdo::Stats::Leaderboard.new(published)
+    @leaderboard  = Hdo::Stats::Leaderboard.new(published, ParliamentPeriod.named('2009-2013'))
     @latest_posts = Hdo::Utils::BlogFetcher.last(2)
 
     propositions = Proposition.published.interesting.order('created_at DESC').first(6)

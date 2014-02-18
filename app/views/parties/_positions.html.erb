@@ -1,5 +1,5 @@
 <div class="row-fluid">
-  <p>Sakene under er basert på avstemninger i perioden 2009-2013.</p>
+  <p>Sakene under er basert på avstemninger i perioden <%= @parliament_period.name %>.</p>
 </div>
 
 <div class="row-fluid">
@@ -30,7 +30,7 @@
 <div class="row-fluid">
   <div class="span12">
     <h4 class="lead leaderboard-title">
-      <span>Saker hvor <%= @party.name %> ikke har konkrete løfter i sitt partiprogram</span>
+      <span>Saker hvor <%= @party.name %> ikke har konkrete løfter i sitt partiprogram for <%= @parliament_period.name %></span>
     </h4>
 
     <div class="leaderboard issues no_promises">

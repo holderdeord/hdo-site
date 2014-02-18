@@ -17,6 +17,8 @@ describe PartiesController do
   end
 
   describe "GET #show" do
+    before { ParliamentPeriod.make!(start_date: Date.new(2009, 10, 1), end_date: Date.new(2013, 9, 30)) }
+
     it 'assigns the requested party to @party' do
       get :show, id: party
 

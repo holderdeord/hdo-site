@@ -10,6 +10,7 @@ class PartiesController < ApplicationController
     @representatives = @party.current_representatives
     @representatives = @representatives.sort_by { |e| e.has_image? ? 0 : 1 }
 
-    @issue_groups = Issue.published.order(:title).grouped_by_accountability(@party)
+    @parliament_period = ParliamentPeriod.named('2009-2013')
+    @issue_groups      = Issue.published.order(:title).grouped_by_accountability(@party, @parliament_period)
   end
 end

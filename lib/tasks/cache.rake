@@ -8,8 +8,13 @@ namespace :cache do
 
       puts "precomputing stats cache for issues"
 
-      Issue.published.each do |e|
-        e.accountability
+      periods = [
+        ParliamentPeriod.named('2009-2013'),
+        ParliamentPeriod.named('2013-2017')
+      ]
+
+      Issue.published.each do |i|
+        periods.each { |pp| i.accountability(pp) }
         puts e.slug
       end
     end

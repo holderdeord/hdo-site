@@ -76,8 +76,8 @@ class Issue < ActiveRecord::Base
              group_by { |i| i.stats.key_for(i.stats.score_for(entity)) }
   end
 
-  def self.grouped_by_accountability(entity)
-    all.to_a.group_by { |i| i.accountability.key_for(entity) }
+  def self.grouped_by_accountability(entity, parliament_period)
+    all.to_a.group_by { |i| i.accountability(parliament_period).key_for(entity) }
   end
 
   def self.in_tag_groups(opts = {})
@@ -159,8 +159,10 @@ class Issue < ActiveRecord::Base
     to_json methods: [:stats, :accountability]
   end
 
-  def accountability
-    Rails.cache.fetch("#{cache_key}/accountability") { Hdo::Stats::AccountabilityScorer.new(self) }
+  def accountability(parliament_period = ParliamentPeriod.current)
+    Rails.cache.fetch("#{cache_key}/accountability/#{parliament_period.try(:name)}") do
+      Hdo::Stats::AccountabilityScorer.new(self, parliament_period)
+    end
   end
 
   def only_published_issues_on_frontpage
