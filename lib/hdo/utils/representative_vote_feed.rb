@@ -22,7 +22,7 @@ module Hdo
       private
 
       def vote_results
-        vote_results = @representative.vote_results.includes(:vote => :propositions).
+        vote_results = @representative.vote_results.includes(:vote => {:propositions => :issues}).
                                        where('propositions.status' => 'published').
                                        where('result != 0').
                                        order('votes.time desc').
@@ -34,15 +34,24 @@ module Hdo
       end
 
       class Entry
-        attr_reader :proposition, :description, :position
+        attr_reader :proposition, :position
 
         def initialize(result, proposition)
           @proposition = proposition
-
-          @description = proposition.simple_description
-          @description = "#{UnicodeUtils.downcase @description[0]}#{@description[1..-1]}" unless @description.empty?
-
           @position = result.human
+        end
+
+        def issues
+          proposition.issues
+        end
+
+        def description
+          @description ||= (
+            desc = proposition.simple_description
+            desc = "#{UnicodeUtils.downcase desc[0]}#{desc[1..-1]}" unless desc.empty?
+
+            desc
+          )
         end
       end # Entry
     end # RepresentativeVoteFeed
