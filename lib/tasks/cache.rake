@@ -15,7 +15,7 @@ namespace :cache do
 
       Issue.published.each do |i|
         periods.each { |pp| i.accountability(pp) }
-        puts e.slug
+        puts i.slug
       end
     end
   end
