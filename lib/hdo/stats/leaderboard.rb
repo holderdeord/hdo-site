@@ -13,7 +13,7 @@ module Hdo
         @government = []
         @opposition = []
 
-        calculate
+        calculate(issues)
       end
 
       def parliament_period_name
@@ -34,7 +34,7 @@ module Hdo
 
       private
 
-      def calculate
+      def calculate(issues)
         return unless @parliament_period
 
         parties = Party.order(:name)
