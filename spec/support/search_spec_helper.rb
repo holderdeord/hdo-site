@@ -10,8 +10,8 @@ module SearchSpecHelper
   def recreate_index
     elasticsearch.delete_index! force: true
 
-    ok = elasticsearch.create_index!['ok']
-    ok or raise "unable to create index for #{described_class}: #{index.response && index.response.body}"
+    ack = elasticsearch.create_index!['acknowledged']
+    ack or raise "unable to create index for #{described_class}: #{index.response && index.response.body}"
   end
 
   def results_for(query)

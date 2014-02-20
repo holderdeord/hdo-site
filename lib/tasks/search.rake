@@ -7,10 +7,10 @@ namespace :search do
 
       elasticsearch = klass.__elasticsearch__
 
-      elasticsearch.delete_index!
+      elasticsearch.delete_index! force: true
       create_response = elasticsearch.create_index!
 
-      ok = create_response && create_response['ok']
+      ok = create_response && (create_response['acknowledged'] || create_response['ok'])
       ok or raise "unable to create #{elasticsearch.index_name}: #{create_response.inspect}"
 
       klass = klass.published if klass == Issue
