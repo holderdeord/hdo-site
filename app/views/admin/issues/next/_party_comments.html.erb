@@ -1,0 +1,39 @@
+<button class="btn btn-small" id="new-party-comment">Ny</button>
+
+<% issue.party_comments.group_by { |e| e.parliament_period }.
+                        sort_by { |period, _| period.name }.
+                        reverse.each do |period, comments| %>
+  <h4>
+    <%= period.name %>
+    <small class="pull-right muted">
+      <%= comments.size %> <%= PartyComment.model_name.human(count: comments.size) %>
+    </small>
+  </h4>
+
+  <% comments.each do |comment| %>
+    <div class="row-fluid">
+      <div class="span6">
+        <%= select_tag "party_comments[#{comment.id}][party_id]", party_options(selected: comment.party.id) %>
+        <%= select_tag "party_comments[#{comment.id}][parliament_period_id]", parliament_period_options(selected: comment.parliament_period.id) %>
+      </div>
+
+      <div class="span6">
+        <button class="btn btn-small btn-danger destroy-comment" id="destroy-<%= comment.id %>"><%= t('app.destroy') %></button>
+        <%= hidden_field_tag "party_comments[#{comment.id}[id]", comment.id  %>
+        <%= hidden_field_tag "party_comments[#{comment.id}[issue_id]", issue.id  %>
+      </div>
+    </div>
+
+    <div class="row-fluid">
+      <div class="span6">
+        <div id="wmd-button-bar-<%= comment.id %>">Kommentar</div>
+        <%= text_area_tag "party_comments[#{comment.id}][body]", comment.body, rows: '10', id: "wmd-input-#{comment.id}", style: 'width: 100%' %>
+      </div>
+
+      <div class="span6">
+        <strong>Preview</strong>
+        <div id="wmd-preview-<%= comment.id %>" class="well"></div>
+      </div>
+    </div>
+  <% end -%>
+<% end %>

@@ -1,6 +1,6 @@
 class Admin::IssuesController < AdminController
   before_filter :authorize_edit, except: :index
-  before_filter :fetch_issue, only: [:show, :edit, :update, :destroy, :votes_search]
+  before_filter :fetch_issue, only: [:show, :edit, :edit_next, :update, :destroy, :votes_search]
   before_filter :require_edit, except: [:index, :show]
 
   helper_method :edit_steps
@@ -42,6 +42,16 @@ class Admin::IssuesController < AdminController
     else
       redirect_to edit_step_admin_issue_path(@issue.id, step: edit_steps.first)
     end
+  end
+
+  def edit_next
+    @sections = {
+      intro: 'Intro',
+      propositions: 'Forslag',
+      promises: 'Løfter',
+      positions: 'Posisjoner',
+      party_comments: 'Partikommentarer'
+    }
   end
 
   def create

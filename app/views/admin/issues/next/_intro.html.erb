@@ -1,0 +1,61 @@
+<div class="row-fluid">
+  <%= form.text_field :title %>
+  <%= form.text_area :description, rows: 5, style: 'width: 90%' %>
+</div>
+
+<div class="row-fluid">
+  <div class="span4">
+    <p><strong>Tags</strong></p>
+    <input type="text" name="tags" placeholder="Tags" class="tagManager"
+            data-current-tags="<%= @issue.tag_list.join(",") %>"
+            data-all-tags="<%= all_tags.join(',') %>">
+  </div>
+
+  <div class="span4">
+    <p><strong>Kategorier</strong></p>
+    <%=
+      form.select :categories,
+                  options_for_select(
+                    Category.order(:name).map { |c| [c.human_name, c.id] },
+                    selected: issue.categories.map(&:id)
+                  ),
+                  {},
+                  multiple: true
+     %>
+  </div>
+
+  <div class="span4">
+    <p><strong>Redaktør</strong></p>
+
+    <%=
+        form.select :editor,
+                    editor_options_for(issue)
+     %>
+
+   <p><strong>Status</strong></p>
+
+    <%=
+        form.select :status,
+                    options_for_select(Issue::STATUSES.map { |s| [t("app.issues.status.#{s}"), s] }),
+                    class: 'input-small'
+     %>
+
+    <p>
+    <label>
+      <strong>Forsidesak</strong>
+      <%= form.check_box :frontpage %>
+    </label>
+    </p>
+
+  </div>
+
+</div>
+
+<div class="row-fluid">
+  <div class="span4">
+  </div>
+
+  <div class="span4">
+  </div>
+</div>
+

@@ -1,0 +1,18 @@
+<button class="btn btn-small" id="new-position">Ny</button>
+
+<% issue.positions.group_by { |e| e.parliament_period }.
+                   sort_by { |period, _| period.name }.
+                   reverse.each do |period, positions| %>
+  <h4>
+    <%= period.name %>
+    <small class="pull-right muted">
+      <%= positions.size %> <%= Position.model_name.human(count: positions.size).downcase %>
+    </small>
+  </h3>
+
+  <% positions.each do |position| %>
+    <div class="row-fluid">
+      <%= render partial: 'position_row', locals: {position: position} %>
+    </div>
+  <% end -%>
+<% end %>

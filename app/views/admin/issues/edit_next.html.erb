@@ -1,0 +1,34 @@
+<div class="row-fluid">
+  <small class="span3"><%= link_to '&larr; Tilbake til sakslista'.html_safe, admin_issues_path %></small>
+</div>
+
+
+<%= form_for @issue do |form| %>
+  <div class="accordion" id="issue-editor">
+    <button name='save' class="btn btn-primary pull-right">Lagre</button>
+    <h1><%= @issue.title %></h1>
+    <p class="spinner hidden">Lagrer...</p>
+
+    <% @sections.each_with_index do |(key, name), idx| %>
+      <div class="accordion-group">
+        <h2 class="lead accordion-heading">
+          <a class="accordion-toggle" data-toggle="collapse" data-parent="#issue-editor" href="#collapse-<%= key %>">
+            <%= name %>
+          </a>
+        </h2>
+
+        <div id="collapse-<%= key %>" class="accordion-body collapse <%= 'in' if idx == 1 %>">
+          <div class="accordion-inner">
+            <%= render partial: "admin/issues/next/#{key}", locals: {form: form, issue: @issue} %>
+          </div>
+        </div>
+      </div>
+    <% end -%>
+  </div>
+<% end %>
+
+<%= content_for :document_ready do %>
+<script>
+  $(function() { (window.issueEditor = HDO.issueEditor.create("#issue-editor")).init(); });
+</script>
+<% end %>

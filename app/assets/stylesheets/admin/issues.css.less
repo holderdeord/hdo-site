@@ -1,0 +1,51 @@
+@lightGray: darken(white, 3%);
+
+#issue-editor {
+  .spinner {
+    font-style: italic;
+    text-align: center;
+    width: 100%;
+  }
+
+  .accordion-heading {
+    background-color: @lightGray;
+    margin: 0;
+  }
+
+  .new-connection {
+    color: #c09853;
+    background-color: #fcf8e3;
+    border: 1px solid #fbeed5;
+  }
+
+  [data-wmd-editor] {
+    textarea { font-size: 95%; }
+  }
+
+  .proposition-connection {
+    font-size: 85%;
+
+    .alert { padding: 0; }
+
+    [data-expands]:hover {
+      background-color: @lightGray;
+    }
+
+    .proposition-form {
+      padding: 10px;
+      display: none;
+    }
+
+    margin: 5px 0;
+  }
+
+  .expandable:after {
+    content: '▶';
+    padding: 0 5px;
+  }
+
+  .expanded:after {
+    content: '▼';
+    padding: 0 5px;
+  }
+}

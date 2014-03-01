@@ -20,7 +20,10 @@
 
   <div class="span4">
     <h5><%= Position.human_attribute_name :parliament_period %></h5>
-    <%= select_tag "positions[#{position.id}][parliament_period_id]", parliament_period_options_for(position), include_blank: true %>
+    <%= select_tag "positions[#{position.id}][parliament_period_id]",
+                    parliament_period_options_for(position),
+                    include_blank: true
+     %>
   </div>
 </div>
 

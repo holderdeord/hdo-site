@@ -15,6 +15,10 @@ class PromiseConnection < ActiveRecord::Base
 
   validate :only_related_promises_for_next_period
 
+  def self.form_states
+    STATES + [UNRELATED_STATE]
+  end
+
   def kept?
     status.inquiry.kept?
   end
