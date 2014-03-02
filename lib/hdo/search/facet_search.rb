@@ -69,14 +69,12 @@ module Hdo
       def navigators
         data = response.response['facets']
 
-        facet_navigators = facet_params.map do |name, opts|
+        facet_params.map do |name, opts|
           field = opts.fetch(:field).to_s
           title = opts.fetch(:title).to_s
 
           Navigator.new self, @query, name, title, data[field]
         end
-
-        facet_navigators
       end
 
       def records

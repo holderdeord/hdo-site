@@ -12,23 +12,19 @@
     init: function () {
       HDO.markdownEditor();
 
-      this.saveButton            = this.root.find('button[name=save]');
-      this.editorSelect          = this.root.find('select#issue_editor');
-      this.categorySelect        = this.root.find('select#issue_categories');
-      this.positionPartySelects  = this.root.find('select.position-parties');
-      this.newPositionButton     = this.root.find('#new-position');
-      this.newPartyCommentButton = this.root.find('#new-party-comment');
-      this.tagList               = this.root.find('input[name=tags]');
-      this.expandables           = this.root.find('[data-expands]');
-      this.promiseSearchElement  = this.root.find('#promise-search-tab');
-      this.propositionSearchElement  = this.root.find('#proposition-search-tab');
+      this.saveButton                = this.root.find('button[name=save]');
+      this.editorSelect              = this.root.find('select#issue_editor');
+      this.categorySelect            = this.root.find('select#issue_categories');
+      this.positionPartySelects      = this.root.find('select.position-parties');
+      this.newPositionButton         = this.root.find('#new-position');
+      this.newPartyCommentButton     = this.root.find('#new-party-comment');
+      this.tagList                   = this.root.find('input[name=tags]');
+      this.expandables               = this.root.find('[data-expands]');
 
       this.saveButton.click(this.save.bind(this));
       this.newPositionButton.click(this.notImplemented.bind(this));
       this.newPartyCommentButton.click(this.notImplemented.bind(this));
       this.expandables.click(this.toggleRow.bind(this));
-      this.promiseSearchElement.delegate('.navigators a', 'click', this.filterPromises.bind(this));
-      this.propositionSearchElement.delegate('.navigators a', 'click', this.filterPropositions.bind(this));
 
       this.editorSelect.chosen();
       this.categorySelect.chosen();
@@ -37,8 +33,19 @@
       this.setupTagList();
       this.setupTemplates();
 
-      this.renderPromiseSearch();
-      this.renderPropositionSearch();
+      this.facetSearch({
+        baseUrl:  '/promises',
+        root:     this.root.find('#promise-search-tab'),
+        spinner:  $("#promise-spinner"),
+        template: this.templates['promise-search-template']
+      });
+
+      this.facetSearch({
+        baseUrl:  '/propositions',
+        root:     this.root.find('#proposition-search-tab'),
+        spinner:  $("#proposition-spinner"),
+        template: this.templates['proposition-search-template']
+      });
     },
 
     save: function (e) {
@@ -106,52 +113,33 @@
       return this.templates['promise-connection-template'](promise);
     },
 
-    renderPromiseSearch: function (url) {
-      var template, el, promiseSpinner;
+    facetSearch: function (opts) {
+      var baseUrl, root, template, spinner;
 
-      url = url || '/promises';
-      template = this.templates['promise-search-template'];
-      el = this.promiseSearchElement;
-      promiseSpinner = $('#promise-spinner');
+      baseUrl  = opts.baseUrl;
+      root     = opts.root;
+      template = opts.template;
+      spinner  = opts.spinner || $("#spinner");
 
-      promiseSpinner.toggleClass('hidden');
+      var filterHandler = function (e) {
+        e.preventDefault();
+        render(e.target.href);
+      };
 
-      $.ajax({
-        url: url,
-        dataType: 'json',
-        success: function (data) { el.html(template(data)); },
-        error: function (xhr) { window.alert('Uffda, noe gikk helt galt ' + xhr.status); },
-        complete: function () { promiseSpinner.toggleClass('hidden'); }
-      });
-    },
+      var render = function (url) {
+        spinner.toggleClass('hidden');
 
-    renderPropositionSearch: function (url) {
-      var template, el, propositionSpinner;
+        $.ajax({
+          url: url || baseUrl,
+          dataType: 'json',
+          success: function (data) { root.html(template(data)); },
+          error: function (xhr) { window.alert('Uffda, noe gikk helt galt ' + xhr.status); },
+          complete: function () { spinner.toggleClass('hidden'); }
+        });
+      };
 
-      url = url || '/propositions';
-      template = this.templates['proposition-search-template'];
-      el = this.propositionSearchElement;
-
-      propositionSpinner = $('#proposition-spinner');
-      propositionSpinner.toggleClass('hidden');
-
-      $.ajax({
-        url: url,
-        dataType: 'json',
-        success: function (data) { el.html(template(data)); },
-        error: function (xhr) { window.alert('Uffda, noe gikk helt galt ' + xhr.status); },
-        complete: function () { propositionSpinner.toggleClass('hidden'); }
-      });
-    },
-
-    filterPromises: function (e) {
-      e.preventDefault();
-      this.renderPromiseSearch(e.target.href);
-    },
-
-    filterPropositions: function (e) {
-      e.preventDefault();
-      this.renderPropositionSearch(e.target.href);
+      root.delegate('.navigators a', 'click', filterHandler);
+      render();
     }
 
   };
