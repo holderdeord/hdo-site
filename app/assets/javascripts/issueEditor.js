@@ -114,19 +114,19 @@
     },
 
     facetSearch: function (opts) {
-      var baseUrl, root, template, spinner;
+      var baseUrl, root, template, spinner, filterHandler, render;
 
       baseUrl  = opts.baseUrl;
       root     = opts.root;
       template = opts.template;
       spinner  = opts.spinner || $("#spinner");
 
-      var filterHandler = function (e) {
+      filterHandler = function (e) {
         e.preventDefault();
         render(e.target.href);
       };
 
-      var render = function (url) {
+      render = function (url) {
         spinner.toggleClass('hidden');
 
         $.ajax({
