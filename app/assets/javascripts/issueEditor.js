@@ -1,6 +1,6 @@
-/*global HDO, Handlebars */
+/*global jQuery, HDO, Handlebars */
 
-(function (HDO, Handlebars) {
+(function ($, HDO, Handlebars) {
   HDO.issueEditor = {
     create: function (selector, url) {
       var instance = Object.create(this);
@@ -20,11 +20,15 @@
       this.newPartyCommentButton = this.root.find('#new-party-comment');
       this.tagList               = this.root.find('input[name=tags]');
       this.expandables           = this.root.find('[data-expands]');
+      this.promiseSearchElement  = this.root.find('#promise-search-tab');
+      this.propositionSearchElement  = this.root.find('#proposition-search-tab');
 
       this.saveButton.click(this.save.bind(this));
       this.newPositionButton.click(this.notImplemented.bind(this));
       this.newPartyCommentButton.click(this.notImplemented.bind(this));
       this.expandables.click(this.toggleRow.bind(this));
+      this.promiseSearchElement.delegate('.navigators a', 'click', this.filterPromises.bind(this));
+      this.propositionSearchElement.delegate('.navigators a', 'click', this.filterPropositions.bind(this));
 
       this.editorSelect.chosen();
       this.categorySelect.chosen();
@@ -32,6 +36,9 @@
 
       this.setupTagList();
       this.setupTemplates();
+
+      this.renderPromiseSearch();
+      this.renderPropositionSearch();
     },
 
     save: function (e) {
@@ -65,18 +72,23 @@
     },
 
     setupTemplates: function () {
-      var templates, templateSources;
-
-      this.templateSources = templateSources = {
-        promiseConnection: this.root.find('#promise-connection-template').html()
-      };
-
+      var templates;
       this.templates = templates = {};
 
-      templates.fetch = function (name) {
-        templates[name] = templates[name] || Handlebars.compile(this.templateSources[name]);
-        return templates[name];
-      }.bind(this);
+      $("script[type='text/x-handlebars-template']").each(function () {
+        var el, name, partialName;
+
+        el = $(this);
+        name = el.attr('name');
+        partialName = name.match(/^(\w+?)-partial$/);
+        partialName = partialName && partialName[1];
+
+        if (partialName) {
+          Handlebars.registerPartial(partialName, el.html());
+        } else {
+          templates[name] = Handlebars.compile(el.html());
+        }
+      });
     },
 
     toggleRow: function (e) {
@@ -91,7 +103,56 @@
     },
 
     newPromiseConnectionHtmlFor: function (promise) {
-      return this.templates.fetch('promiseConnection')(promise);
+      return this.templates['promise-connection-template'](promise);
+    },
+
+    renderPromiseSearch: function (url) {
+      var template, el, promiseSpinner;
+
+      url = url || '/promises';
+      template = this.templates['promise-search-template'];
+      el = this.promiseSearchElement;
+      promiseSpinner = $('#promise-spinner');
+
+      promiseSpinner.toggleClass('hidden');
+
+      $.ajax({
+        url: url,
+        dataType: 'json',
+        success: function (data) { el.html(template(data)); },
+        error: function (xhr) { window.alert('Uffda, noe gikk helt galt ' + xhr.status); },
+        complete: function () { promiseSpinner.toggleClass('hidden'); }
+      });
+    },
+
+    renderPropositionSearch: function (url) {
+      var template, el, propositionSpinner;
+
+      url = url || '/propositions';
+      template = this.templates['proposition-search-template'];
+      el = this.propositionSearchElement;
+
+      propositionSpinner = $('#proposition-spinner');
+      propositionSpinner.toggleClass('hidden');
+
+      $.ajax({
+        url: url,
+        dataType: 'json',
+        success: function (data) { el.html(template(data)); },
+        error: function (xhr) { window.alert('Uffda, noe gikk helt galt ' + xhr.status); },
+        complete: function () { propositionSpinner.toggleClass('hidden'); }
+      });
+    },
+
+    filterPromises: function (e) {
+      e.preventDefault();
+      this.renderPromiseSearch(e.target.href);
+    },
+
+    filterPropositions: function (e) {
+      e.preventDefault();
+      this.renderPropositionSearch(e.target.href);
     }
+
   };
-}(HDO, Handlebars));
+}(jQuery, HDO, Handlebars));

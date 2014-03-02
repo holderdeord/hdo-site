@@ -7,6 +7,10 @@
     <li>
       <a href="#promise-search-tab" data-toggle="tab">Finn løfter</a>
     </li>
+
+    <li class="pull-right">
+      <%= image_tag 'spinner.gif', id: 'promise-spinner', class: 'hidden' %>
+    </li>
   </ul>
 
   <div class="tab-content">
@@ -24,9 +28,9 @@
         </h4>
 
         <% connections.each do |pc| %>
-          <div class="row-fluid">
+          <div class="row-fluid promise-connection">
             <div class="span2"><%= pc.promise.promisor.name %></div>
-            <div class="span6"><small><%= pc.promise.body %></small></div>
+            <div class="span6"><%= pc.promise.body %></div>
             <div class="span4">
               <%= select_tag "promises[#{pc.promise.id}][status]",
                               options_for_select(
@@ -48,7 +52,7 @@
 
 </div>
 
-<script id="promise-connection-template" type="text/x-handlebars-template">
+<script name="promise-connection-template" type="text/x-handlebars-template">
   <div class="row-fluid new-connection">
     <div class="span2">{{promisor_name}}</div>
     <div class="span6"><small>{{promise_body}}</small></div>
@@ -60,6 +64,26 @@
                       ),
                       class: 'pull-right'
        %>
+    </div>
+  </div>
+</script>
+
+<script name="promise-search-template" type="text/x-handlebars-template">
+  <div class="row-fluid">
+    <div class="span4">
+      {{> navigators}}
+    </div>
+
+    <div class="span8">
+      {{#results}}
+        <div class="row-fluid">
+          {{body}}
+        </div>
+
+        <div class="row-fluid">
+          <small class="muted">{{parliament_period_name}}, {{promisor_name}}</small>
+        </div>
+      {{/results}}
     </div>
   </div>
 </script>

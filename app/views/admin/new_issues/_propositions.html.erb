@@ -7,6 +7,10 @@
     <li>
       <a href="#proposition-search-tab" data-toggle="tab">Finn forslag</a>
     </li>
+
+    <li class="pull-right">
+      <%= image_tag 'spinner.gif', id: 'proposition-spinner', class: 'hidden' %>
+    </li>
   </ul>
 
   <div class="tab-content">
@@ -73,6 +77,37 @@
       <% end -%>
     </div>
 
-    <div class="tab-pane" id="proposition-search-tab"></div>
+    <div class="tab-pane" id="proposition-search-tab">
+      Ække klart ennå
+    </div>
   </div>
 </div>
+
+<script name="proposition-search-template" type="text/x-handlebars-template">
+  <div class="row-fluid">
+    <div class="span4">
+      {{> navigators}}
+    </div>
+
+    <div class="span8">
+      {{#results}}
+        <div class="row-fluid">
+          {{#if simple_description}}
+            {{simple_description}} (HDO)
+          {{else}}
+            {{description}}
+          {{/if}}
+        </div>
+
+        <div class="row-fluid">
+          <small class="muted">
+            {{parliament_session_name}}
+            <a href="/propositions/{{id}}" target='_blank' class="pull-right">
+              <img alt="Link" class="permalink" height="12" src="/assets/link.png" width="12">
+            </a>
+          </small>
+        </div>
+      {{/results}}
+    </div>
+  </div>
+</script>

@@ -27,6 +27,25 @@
   </div>
 <% end %>
 
+<script name="navigators-partial" type="text/x-handlebars-template">
+{{#navigators}}
+  <div class="row-fluid navigators">
+    <strong>{{title}}</strong>
+
+    <ul class="unstyled">
+      {{#terms}}
+        <li class="{{#active}}active{{/active}}">
+          <a href="{{filter_url}}">{{name}}</a>  ({{count}})
+          {{#active}}
+            <a href="{{clear_url}}" class="pull-right">X</a>
+          {{/active}}
+        </li>
+      {{/terms}}
+    </ul>
+  </div>
+{{/navigators}}
+</script>
+
 <%= content_for :document_ready do %>
 <script>
   $(function() {

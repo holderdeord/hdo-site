@@ -10,8 +10,6 @@ class Admin::NewIssuesController < AdminController
       positions: 'Posisjoner',
       party_comments: 'Partikommentarer'
     }
-
-    @promise_search = Hdo::Search::Promises.new(params, view_context)
   end
 
   private

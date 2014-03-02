@@ -4,6 +4,11 @@ class PropositionsController < ApplicationController
 
   def index
     @search = Hdo::Search::Propositions.new(params, view_context)
+
+    respond_to do |format|
+      format.html
+      format.json { render json: @search.as_json }
+    end
   end
 
   def show
