@@ -7,7 +7,7 @@
   <div class="accordion" id="issue-editor">
     <button name='save' class="btn btn-primary pull-right">Lagre</button>
     <h1><%= @issue.title %></h1>
-    <p class="spinner hidden">Lagrer...</p>
+    <%= spinner_tag %>
 
     <% @sections.each_with_index do |(key, name), idx| %>
       <div class="accordion-group">
@@ -17,9 +17,9 @@
           </a>
         </h2>
 
-        <div id="collapse-<%= key %>" class="accordion-body collapse <%= 'in' if idx == 1 %>">
+        <div id="collapse-<%= key %>" class="accordion-body collapse <%= 'in' if idx == 0 %>">
           <div class="accordion-inner">
-            <%= render partial: "admin/issues/next/#{key}", locals: {form: form, issue: @issue} %>
+            <%= render partial: key.to_s, locals: {form: form, issue: @issue} %>
           </div>
         </div>
       </div>
@@ -29,6 +29,9 @@
 
 <%= content_for :document_ready do %>
 <script>
-  $(function() { (window.issueEditor = HDO.issueEditor.create("#issue-editor")).init(); });
+  $(function() {
+    var editor = HDO.issueEditor.create("#issue-editor");
+    editor.init();
+  });
 </script>
 <% end %>

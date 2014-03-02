@@ -17,6 +17,7 @@ nb:
       short: "%Y-%m-%d"
       text: "%e. %B %Y"
       short_text: "%e. %b %Y"
+      short_text_time: "%e. %b %Y %H:%M"
       month_year: "%B %Y"
       text_time: "%e. %B %Y %H:%M"
   valid_email:

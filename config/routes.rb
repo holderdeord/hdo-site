@@ -13,7 +13,10 @@ Hdo::Application.routes.draw do
   namespace :admin do
     resources :issues do
       member do
-        get 'edit/next'    => 'issues#edit_next',    as: :edit_next
+        # new
+        get 'edit/next' => 'new_issues#edit', as: :edit_next
+
+        # old
         get 'edit/:step'   => 'issues#edit',         as: :edit_step
         get 'votes/search' => "issues#votes_search", as: :vote_search
       end

@@ -37,10 +37,10 @@ module ApplicationHelper
   end
 
   def spinner_tag(opts = nil)
-    style = {style: 'text-align: center;'}
-    style.merge!(opts) if opts
+    options = {style: 'text-align: center;'}
+    options.merge!(opts) if opts
 
-    content_tag 'div', opts do
+    content_tag 'div', options do
       image_tag('spinner.gif', id: 'spinner', alt: 'Loading...', style: 'display: none;')
     end
   end

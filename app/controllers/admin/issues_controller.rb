@@ -44,16 +44,6 @@ class Admin::IssuesController < AdminController
     end
   end
 
-  def edit_next
-    @sections = {
-      intro: 'Intro',
-      propositions: 'Forslag',
-      promises: 'Løfter',
-      positions: 'Posisjoner',
-      party_comments: 'Partikommentarer'
-    }
-  end
-
   def create
     @issue = Issue.new(params[:issue])
     @issue.last_updated_by = current_user

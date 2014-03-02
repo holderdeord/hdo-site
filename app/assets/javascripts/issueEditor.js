@@ -1,10 +1,11 @@
 /*global HDO, Handlebars */
 
-(function (H) {
+(function (HDO, Handlebars) {
   HDO.issueEditor = {
-    create: function (selector) {
+    create: function (selector, url) {
       var instance = Object.create(this);
       instance.root = $(selector);
+      instance.url = url;
       return instance;
     },
 
@@ -45,7 +46,7 @@
 
     toggleSpin: function () {
       this.root.find('.accordion-group').toggle();
-      this.root.find('.spinner').toggleClass('hidden');
+      $('#spinner').toggle();
     },
 
     data: function () {
@@ -93,4 +94,4 @@
       return this.templates.fetch('promiseConnection')(promise);
     }
   };
-}(HDO));
+}(HDO, Handlebars));
