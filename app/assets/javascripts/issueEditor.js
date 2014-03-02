@@ -12,14 +12,14 @@
     init: function () {
       HDO.markdownEditor();
 
-      this.saveButton                = this.root.find('button[name=save]');
-      this.editorSelect              = this.root.find('select#issue_editor');
-      this.categorySelect            = this.root.find('select#issue_categories');
-      this.positionPartySelects      = this.root.find('select.position-parties');
-      this.newPositionButton         = this.root.find('#new-position');
-      this.newPartyCommentButton     = this.root.find('#new-party-comment');
-      this.tagList                   = this.root.find('input[name=tags]');
-      this.expandables               = this.root.find('[data-expands]');
+      this.saveButton            = this.root.find('button[name=save]');
+      this.editorSelect          = this.root.find('select#issue_editor');
+      this.categorySelect        = this.root.find('select#issue_categories');
+      this.positionPartySelects  = this.root.find('select.position-parties');
+      this.newPositionButton     = this.root.find('#new-position');
+      this.newPartyCommentButton = this.root.find('#new-party-comment');
+      this.tagList               = this.root.find('input[name=tags]');
+      this.expandables           = this.root.find('[data-expands]');
 
       this.saveButton.click(this.save.bind(this));
       this.newPositionButton.click(this.notImplemented.bind(this));
@@ -55,7 +55,7 @@
       // simulate xhr
       setTimeout(function () {
         this.toggleSpin();
-      }.bind(this), 3000);
+      }.bind(this), 1000);
     },
 
     toggleSpin: function () {
