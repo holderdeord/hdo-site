@@ -73,7 +73,7 @@ module Hdo
           field = opts.fetch(:field).to_s
           title = opts.fetch(:title).to_s
 
-          Navigator.new @query, name, title, data[field]
+          Navigator.new self, @query, name, title, data[field]
         end
       end
 
@@ -95,9 +95,14 @@ module Hdo
       end
 
       def as_json
-        response.results.map do |res|
+        results = response.results.map do |res|
           res._source.merge(id: res._id)
         end
+
+        {
+          navigators: navigators,
+          results: results
+        }
       end
 
       private
@@ -189,26 +194,50 @@ module Hdo
       class Navigator
         attr_reader :title, :param, :terms
 
-        def initialize(query, param, title, data)
-          @query = query[param]
-          @title = title
-          @param = param
-          @total = data['total']
-          @terms = data['terms'].sort_by { |e| e['term'] }
+        def initialize(search, query, param, title, data)
+          @search = search
+          @query  = query[param]
+          @param  = param
+          @title  = title
+          @total  = data['total']
+          @terms  = data['terms'].sort_by { |e| e['term'] }
 
           @terms.reverse! if [:parliament_period, :parliament_session].include? param
         end
 
+        def as_json(opts = nil)
+          terms = []
+          each_term { |term| terms << term.to_hash }
+
+          {
+            query: @query,
+            title: @title,
+            terms: terms
+          }
+        end
+
         def each_term(&blk)
           if terms.empty? && @query
-            yield @query, 0, true
+            yield build(@query, 0, true)
           else
             terms.each do |term|
               active = @query == term['term']
 
-              yield term['term'], term['count'], active
+              yield build(term['term'], term['count'], active)
             end
           end
+        end
+
+        private
+
+        def build(name, count, active)
+          Hashie::Mash.new(
+            name: name,
+            count: count,
+            active: active,
+            clear_url: @search.url(param => nil, :page => nil),
+            filter_url: @search.url(param => name, :page => nil)
+          )
         end
       end # Navigator
 

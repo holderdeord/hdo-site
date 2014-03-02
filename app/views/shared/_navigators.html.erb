@@ -12,13 +12,13 @@
 <div class="navigator-<%= nav.param %>">
   <h4><%= nav.title %></h4>
   <ul class="unstyled">
-    <% nav.each_term do |name, count, active| %>
-      <li class="<%= 'active' if active %>">
-        <% if active %>
-          <%= link_to 'X', search.url(nav.param => nil, page: nil), class: 'pull-right' %>
+    <% nav.each_term do |term| %>
+      <li class="<%= 'active' if term.active %>">
+        <% if term.active %>
+          <%= link_to 'X', term.clear_url, class: 'pull-right' %>
         <% end %>
 
-        <%= link_to name.truncate(50), search.url(nav.param => name, page: nil) %> (<%= count %>)
+        <%= link_to term.name.truncate(50), term.filter_url %> (<%= term.count %>)
       </li>
     <% end %>
   </ul>
