@@ -30,18 +30,25 @@
 <script name="navigators-partial" type="text/x-handlebars-template">
 {{#navigators}}
   <div class="row-fluid navigators">
-    <strong>{{title}}</strong>
+    {{#if type.keyword}}
+      <input type='search' class='input-large search-query' name='{{param}}'
+             data-url-template="{{filter_url}}" value='{{value}}'>
+    {{/if}}
 
-    <ul class="unstyled">
-      {{#terms}}
-        <li class="{{#active}}active{{/active}}">
-          <a href="{{filter_url}}">{{name}}</a>  ({{count}})
-          {{#active}}
-            <a href="{{clear_url}}" class="pull-right">X</a>
-          {{/active}}
-        </li>
-      {{/terms}}
-    </ul>
+    {{#if type.facet}}
+      <strong>{{title}}</strong>
+
+      <ul class="unstyled">
+        {{#terms}}
+          <li class="{{#active}}active{{/active}}">
+            <a href="{{filter_url}}">{{name}}</a>  ({{count}})
+            {{#active}}
+              <a href="{{clear_url}}" class="pull-right">X</a>
+            {{/active}}
+          </li>
+        {{/terms}}
+      </ul>
+    {{/if}}
   </div>
 {{/navigators}}
 </script>

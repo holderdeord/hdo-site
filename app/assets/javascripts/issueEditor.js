@@ -114,19 +114,15 @@
     },
 
     facetSearch: function (opts) {
-      var baseUrl, root, template, spinner, filterHandler, render;
+      var baseUrl, root, template, spinner, query;
 
       baseUrl  = opts.baseUrl;
       root     = opts.root;
       template = opts.template;
       spinner  = opts.spinner || $("#spinner");
+      query    = opts.root.find('input[name=q]');
 
-      filterHandler = function (e) {
-        e.preventDefault();
-        render(e.target.href);
-      };
-
-      render = function (url) {
+      function render(url) {
         spinner.toggleClass('hidden');
 
         $.ajax({
@@ -136,9 +132,28 @@
           error: function (xhr) { window.alert('Uffda, noe gikk helt galt ' + xhr.status); },
           complete: function () { spinner.toggleClass('hidden'); }
         });
-      };
+      }
+
+      function filterHandler(e) {
+        e.preventDefault();
+        render(e.target.href);
+      }
+
+      function queryHandler(e) {
+        if (e.which === 13) {
+          e.preventDefault();
+
+          var target = $(this),
+            url = decodeURI(target.data('url-template'));
+
+          url = url.replace('{query}', encodeURIComponent(target.val()));
+          render(url);
+        }
+      }
 
       root.delegate('.navigators a', 'click', filterHandler);
+      root.delegate('input[name=q]', 'keypress', queryHandler);
+
       render();
     }
 

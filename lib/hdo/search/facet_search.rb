@@ -69,12 +69,16 @@ module Hdo
       def navigators
         data = response.response['facets']
 
-        facet_params.map do |name, opts|
+        navs = facet_params.map do |param, opts|
           field = opts.fetch(:field).to_s
           title = opts.fetch(:title).to_s
 
-          Navigator.new self, @query, name, title, data[field]
+          FacetNavigator.new self, @query, title, param, data[field]
         end
+
+        navs.unshift KeywordNavigator.new(self, @query, 'Søk')
+
+        navs
       end
 
       def records
@@ -192,9 +196,41 @@ module Hdo
       end
 
       class Navigator
-        attr_reader :title, :param, :terms
+        attr_reader :param, :title
 
-        def initialize(search, query, param, title, data)
+        def initialize(search, query, title)
+          @search = search
+          @query  =  query
+          @title  = title
+        end
+
+        def type
+          raise 'subclass responsibility'
+        end
+
+        def keyword?
+          type == :keyword
+        end
+
+        def facet?
+          type == :facet
+        end
+
+        def as_json(opts = nil)
+          {
+            query: @query,
+            title: @title,
+            param: @param,
+            type: {keyword: keyword?, facet: facet?}
+          }
+        end
+      end
+
+      class FacetNavigator < Navigator
+
+        def initialize(search, query, title, param, data)
+          super(search, query, title)
+
           @search = search
           @query  = query[param]
           @param  = param
@@ -205,22 +241,22 @@ module Hdo
           @terms.reverse! if [:parliament_period, :parliament_session].include? param
         end
 
+        def type
+          :facet
+        end
+
         def as_json(opts = nil)
           terms = []
           each_term { |term| terms << term.to_hash }
 
-          {
-            query: @query,
-            title: @title,
-            terms: terms
-          }
+          super.merge(terms: terms)
         end
 
         def each_term(&blk)
-          if terms.empty? && @query
+          if @terms.empty? && @query
             yield build(@query, 0, true)
           else
-            terms.each do |term|
+            @terms.each do |term|
               active = @query == term['term']
 
               yield build(term['term'], term['count'], active)
@@ -231,15 +267,41 @@ module Hdo
         private
 
         def build(name, count, active)
-          Hashie::Mash.new(
+          m = Hashie::Mash.new(
             name: name,
             count: count,
             active: active,
-            clear_url: @search.url(param => nil, :page => nil),
-            filter_url: @search.url(param => name, :page => nil)
+            clear_url: @search.url(@param => nil, :page => nil),
+            filter_url: @search.url(@param => name, :page => nil)
+          )
+
+          def m.count; self[:count]; end # avoid Hash#count
+
+          m
+        end
+      end # FacetNavigator
+
+      class KeywordNavigator < Navigator
+        def initialize(search, query, title)
+          super
+          @param = :q
+        end
+
+        def type
+          :keyword
+        end
+
+        def value
+          @search.query[param]
+        end
+
+        def as_json(opts = nil)
+          super.merge(
+            filter_url: @search.url(q: '{query}', page: nil),
+            value: value
           )
         end
-      end # Navigator
+      end # KeywordNavigator
 
     end # FacetSearch
   end # Search
