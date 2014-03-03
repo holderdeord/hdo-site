@@ -53,6 +53,22 @@
 {{/navigators}}
 </script>
 
+<script name="pagination-partial" type="text/x-handlebars-template">
+  <div class="row-fluid">
+    <small class="pull-right">
+      {{#if previous_url}}
+        <a data-xhr href="{{previous_url}}">Forrige</a>
+      {{/if}}
+
+      {{current_page}}/{{total_pages}}
+
+      {{#if next_url}}
+        <a data-xhr href="{{next_url}}">Neste</a>
+      {{/if}}
+    </small>
+  </div>
+</script>
+
 <%= content_for :document_ready do %>
 <script>
   $(function() {

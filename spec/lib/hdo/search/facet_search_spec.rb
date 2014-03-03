@@ -30,6 +30,10 @@ module Hdo
         response.stub(
           page: response,
           per: response,
+          next_page: 2,
+          prev_page: nil,
+          current_page: 1,
+          total_pages: 2,
           results: [],
           response: {'facets' => {
               'parliament_period_name' => {
@@ -45,7 +49,7 @@ module Hdo
 
       it 'has a JSON representation' do
         json = search.as_json
-        json.keys.should == [:navigators, :results]
+        json.keys.should == [:navigators, :results, :next_url, :previous_url, :current_page, :total_pages]
       end
 
       it 'has a keyword navigator' do

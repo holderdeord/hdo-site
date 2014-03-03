@@ -151,8 +151,13 @@
         }
       }
 
-      root.delegate('.navigators a', 'click', filterHandler);
+      function toggleResult(e) {
+        $(this).toggleClass('selected');
+      }
+
+      root.delegate('.navigators a, a[data-xhr]', 'click', filterHandler);
       root.delegate('input[name=q]', 'keypress', queryHandler);
+      root.delegate('.search-result', 'click', toggleResult);
 
       render();
     }

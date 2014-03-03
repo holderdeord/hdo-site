@@ -105,7 +105,11 @@ module Hdo
 
         {
           navigators: navigators,
-          results: results
+          results: results,
+          next_url: (url(page: response.next_page) if response.next_page),
+          previous_url: (url(page: response.prev_page) if response.prev_page),
+          current_page: response.current_page,
+          total_pages: response.total_pages
         }
       end
 

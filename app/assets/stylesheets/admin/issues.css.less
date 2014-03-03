@@ -1,4 +1,5 @@
 @lightGray: darken(white, 3%);
+@hdoPrimaryColor: #019ea2;
 
 #issue-editor {
   .accordion-heading {
@@ -14,6 +15,15 @@
 
   [data-wmd-editor] {
     textarea { font-size: 95%; }
+  }
+
+  .hdo-title {
+    color: darken(@hdoPrimaryColor, 20%);
+  }
+
+  .search-result {
+    padding: 5px;
+    &.selected { background-color: #fcf8e3; }
   }
 
   .proposition-connection {

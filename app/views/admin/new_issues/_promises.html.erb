@@ -75,6 +75,8 @@
     </div>
 
     <div class="span8">
+      {{> pagination}}
+
       {{#results}}
         <div class="row-fluid">
           {{body}}
@@ -84,6 +86,8 @@
           <small class="muted">{{parliament_period_name}}, {{promisor_name}}</small>
         </div>
       {{/results}}
+
+      {{> pagination}}
     </div>
   </div>
 </script>
