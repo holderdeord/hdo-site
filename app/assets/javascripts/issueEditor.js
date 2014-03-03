@@ -128,6 +128,14 @@
       query    = opts.root.find('input[name=q]');
       cart     = opts.cart;
 
+      function prepareData(data) {
+        $.each(data.results, function (i, e) {
+          e.selected = cart.isSelected(e.type, Number(e.id));
+        });
+
+        return data;
+      }
+
       function render(url) {
         spinner.toggleClass('hidden');
 
@@ -157,14 +165,6 @@
         }
       }
 
-      function prepareData(data) {
-        $.each(data.results, function (i, e) {
-          e.selected = cart.isSelected(e.type, Number(e.id));
-        });
-
-        return data;
-      }
-
       function toggleResult(e) {
         var el = $(this), type, id;
 
@@ -174,9 +174,9 @@
         el.toggleClass('selected');
 
         if (el.hasClass('selected')) {
-          cart.add(type, id)
+          cart.add(type, id);
         } else {
-          cart.remove(type, id)
+          cart.remove(type, id);
         }
       }
 
@@ -194,8 +194,12 @@
       el = $('.cart');
       template = this.templates['shopping-cart-template'];
 
+      function render() {
+        el.html(template(data));
+      }
+
       function isSelected(type, id) {
-        return data[type].indexOf(id) != -1;
+        return data[type].indexOf(id) !== -1;
       }
 
       function add(type, id) {
@@ -209,10 +213,6 @@
           data[type].splice(idx, 1);
           render();
         }
-      }
-
-      function render() {
-        el.html(template(data));
       }
 
       render();
