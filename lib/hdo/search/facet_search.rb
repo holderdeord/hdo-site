@@ -100,7 +100,7 @@ module Hdo
 
       def as_json
         results = response.results.map do |res|
-          res._source.merge(id: res._id)
+          res._source.merge(id: res._id, type: res._type)
         end
 
         {

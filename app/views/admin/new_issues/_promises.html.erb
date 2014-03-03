@@ -10,6 +10,7 @@
 
     <li class="pull-right">
       <%= image_tag 'spinner.gif', id: 'promise-spinner', class: 'hidden' %>
+      <div class="cart"></div>
     </li>
   </ul>
 
@@ -78,12 +79,14 @@
       {{> pagination}}
 
       {{#results}}
-        <div class="row-fluid">
-          {{body}}
-        </div>
+        <div class="search-result {{#selected}}selected{{/selected}}" data-type='promise' data-id='{{id}}'>
+          <div class="row-fluid">
+            {{body}}
+          </div>
 
-        <div class="row-fluid">
-          <small class="muted">{{parliament_period_name}}, {{promisor_name}}</small>
+          <div class="row-fluid">
+            <small class="muted">{{parliament_period_name}}, {{promisor_name}}</small>
+          </div>
         </div>
       {{/results}}
 

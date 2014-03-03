@@ -10,6 +10,7 @@
 
     <li class="pull-right">
       <%= image_tag 'spinner.gif', id: 'proposition-spinner', class: 'hidden' %>
+      <div class="cart"></div>
     </li>
   </ul>
 
@@ -87,7 +88,7 @@
       {{> pagination}}
 
       {{#results}}
-        <div class="search-result">
+        <div class="search-result {{#selected}}selected{{/selected}}" data-type='proposition' data-id='{{id}}'>
           <div class="row-fluid">
             {{#if simple_description}}
               <span class="hdo-title">{{simple_description}}</span>

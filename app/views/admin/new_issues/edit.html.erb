@@ -2,7 +2,6 @@
   <small class="span3"><%= link_to '&larr; Tilbake til sakslista'.html_safe, admin_issues_path %></small>
 </div>
 
-
 <%= form_for @issue do |form| %>
   <div class="accordion" id="issue-editor">
     <button name='save' class="btn btn-primary pull-right">Lagre</button>
@@ -69,11 +68,15 @@
   </div>
 </script>
 
+<script name="shopping-cart-template" type="text/x-handlebars-template">
+  Handlekurv: {{promise.length}} løfter, {{proposition.length}} forslag
+</script>
+
 <%= content_for :document_ready do %>
 <script>
   $(function() {
-    var editor = HDO.issueEditor.create("#issue-editor");
-    editor.init();
+    issueEditor = HDO.issueEditor.create("#issue-editor");
+    issueEditor.init();
   });
 </script>
 <% end %>

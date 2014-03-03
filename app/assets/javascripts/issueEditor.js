@@ -32,19 +32,22 @@
 
       this.setupTagList();
       this.setupTemplates();
+      this.setupCart();
 
       this.facetSearch({
         baseUrl:  '/promises',
         root:     this.root.find('#promise-search-tab'),
         spinner:  $("#promise-spinner"),
-        template: this.templates['promise-search-template']
+        template: this.templates['promise-search-template'],
+        cart:     this.cart
       });
 
       this.facetSearch({
         baseUrl:  '/propositions',
         root:     this.root.find('#proposition-search-tab'),
         spinner:  $("#proposition-spinner"),
-        template: this.templates['proposition-search-template']
+        template: this.templates['proposition-search-template'],
+        cart:     this.cart
       });
     },
 
@@ -98,6 +101,10 @@
       });
     },
 
+    setupCart: function () {
+      this.cart = this.createCart();
+    },
+
     toggleRow: function (e) {
       var el = $(e.delegateTarget);
       el.find('.expandable, .expanded').toggleClass('expandable expanded');
@@ -109,18 +116,17 @@
       window.alert('ikke enda');
     },
 
-    newPromiseConnectionHtmlFor: function (promise) {
-      return this.templates['promise-connection-template'](promise);
-    },
+    // facet search
 
     facetSearch: function (opts) {
-      var baseUrl, root, template, spinner, query;
+      var baseUrl, root, template, spinner, query, cart;
 
       baseUrl  = opts.baseUrl;
       root     = opts.root;
       template = opts.template;
       spinner  = opts.spinner || $("#spinner");
       query    = opts.root.find('input[name=q]');
+      cart     = opts.cart;
 
       function render(url) {
         spinner.toggleClass('hidden');
@@ -128,7 +134,7 @@
         $.ajax({
           url: url || baseUrl,
           dataType: 'json',
-          success: function (data) { root.html(template(data)); },
+          success: function (data) { root.html(template(prepareData(data))); },
           error: function (xhr) { window.alert('Uffda, noe gikk helt galt ' + xhr.status); },
           complete: function () { spinner.toggleClass('hidden'); }
         });
@@ -151,8 +157,27 @@
         }
       }
 
+      function prepareData(data) {
+        $.each(data.results, function (i, e) {
+          e.selected = cart.isSelected(e.type, Number(e.id));
+        });
+
+        return data;
+      }
+
       function toggleResult(e) {
-        $(this).toggleClass('selected');
+        var el = $(this), type, id;
+
+        type = el.data('type');
+        id = el.data('id');
+
+        el.toggleClass('selected');
+
+        if (el.hasClass('selected')) {
+          cart.add(type, id)
+        } else {
+          cart.remove(type, id)
+        }
       }
 
       root.delegate('.navigators a, a[data-xhr]', 'click', filterHandler);
@@ -160,6 +185,43 @@
       root.delegate('.search-result', 'click', toggleResult);
 
       render();
+    },
+
+    createCart: function () {
+      var data, el, template;
+
+      data = { promise: [], proposition: [] };
+      el = $('.cart');
+      template = this.templates['shopping-cart-template'];
+
+      function isSelected(type, id) {
+        return data[type].indexOf(id) != -1;
+      }
+
+      function add(type, id) {
+        data[type].push(id);
+        render();
+      }
+
+      function remove(type, id) {
+        var idx = data[type].indexOf(id);
+        if (idx > -1) {
+          data[type].splice(idx, 1);
+          render();
+        }
+      }
+
+      function render() {
+        el.html(template(data));
+      }
+
+      render();
+
+      return {
+        isSelected: isSelected,
+        add: add,
+        remove: remove
+      };
     }
 
   };
