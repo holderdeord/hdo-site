@@ -253,15 +253,23 @@ module Hdo
         end
 
         def each_term(&blk)
+          terms.each(&blk)
+        end
+
+        def terms
+          terms = []
+
           if @terms.empty? && @query
-            yield build(@query, 0, true)
+            terms << build(@query, 0, true)
           else
             @terms.each do |term|
               active = @query == term['term']
 
-              yield build(term['term'], term['count'], active)
+              terms << build(term['term'], term['count'], active)
             end
           end
+
+          terms
         end
 
         private
