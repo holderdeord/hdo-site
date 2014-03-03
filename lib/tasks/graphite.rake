@@ -42,7 +42,7 @@ namespace :graphite do
     g.add 'hdo.count.representatives.opted_out',  Representative.opted_out.count
     g.add 'hdo.count.representatives.registered', Representative.registered.count
 
-    leaderboard = Hdo::Stats::Leaderboard.new(Issue.published)
+    leaderboard = Hdo::Stats::Leaderboard.new(Issue.published, ParliamentPeriod.named('2009-2013'))
     leaderboard.by_party.each do |party, counts|
       counts.each do |key, count|
         g.add "hdo.count.issues.#{party.slug}.#{key}", count
