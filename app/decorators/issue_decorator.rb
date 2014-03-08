@@ -106,7 +106,7 @@ class IssueDecorator < Draper::Decorator
     end
 
     def accountability_for(party)
-      @issue.accountability.text_for(party)
+      @issue.accountability(@period).text_for(party)
     end
 
     def comment_for(party)
