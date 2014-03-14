@@ -29,19 +29,7 @@
         </h4>
 
         <% connections.each do |pc| %>
-          <div class="row-fluid promise-connection">
-            <div class="span2"><%= pc.promise.promisor.name %></div>
-            <div class="span6"><%= pc.promise.body %></div>
-            <div class="span4">
-              <%= select_tag "promises[#{pc.promise.id}][status]",
-                              options_for_select(
-                                PromiseConnection.form_states.map { |e| [t("app.issues.edit.promise.#{e}"), e] },
-                                selected: pc.status
-                              ),
-                              class: 'pull-right'
-               %>
-            </div>
-          </div>
+          <div class="promise-connection" data-context='<%= pc.as_edit_view_json.to_json.html_safe %>'>Laster...</div>
         <% end %>
       <% end %>
     </div>
@@ -54,17 +42,17 @@
 </div>
 
 <script name="promise-connection-template" type="text/x-handlebars-template">
-  <div class="row-fluid new-connection">
+  <div class="row-fluid">
     <div class="span2">{{promisor_name}}</div>
     <div class="span6"><small>{{promise_body}}</small></div>
     <div class="span4">
-      <%= select_tag "promises[{{promise_id}}][status]",
-                      options_for_select(
-                        PromiseConnection.form_states.map { |e| [t("app.issues.edit.promise.#{e}"), e] },
-                        selected: 'unrelated'
-                      ),
-                      class: 'pull-right'
-       %>
+      <select class="pull-right" id="promises_{{promise_id}}_status" name="promises[{{promise_id}}][status]">
+        <% PromiseConnection.form_states.each do |state| %>
+          <option value="<%= state %>" {{#selectedStatus "<%= state %>"}}selected{{/selectedStatus}}>
+            <%= t("app.issues.edit.promise.#{state}") %>
+          </option>
+        <% end %>
+      </select>
     </div>
   </div>
 </script>

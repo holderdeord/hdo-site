@@ -13,6 +13,10 @@
         <h2 class="lead accordion-heading">
           <a class="accordion-toggle" data-toggle="collapse" data-parent="#issue-editor" href="#collapse-<%= key %>">
             <%= name %>
+
+            <% if [:propositions, :promises].include? key  %>
+              <div class="cart" data-type="<%= key %>"></div>
+            <% end %>
           </a>
         </h2>
 
@@ -69,13 +73,17 @@
 </script>
 
 <script name="shopping-cart-template" type="text/x-handlebars-template">
-  Handlekurv: {{promise.length}} løfter, {{proposition.length}} forslag
+  <div>
+    Kurv: {{items.length}}
+    <a href='#' data-action="use">Bruk</a>
+    <a href='#' data-action="clear">Tøm</a>
+  </div>
 </script>
 
 <%= content_for :document_ready do %>
 <script>
   $(function() {
-    issueEditor = HDO.issueEditor.create("#issue-editor");
+    issueEditor = HDO.issueEditor.create("#issue-editor", "<%= edit_next_admin_issue_path(@issue) %>");
     issueEditor.init();
   });
 </script>
