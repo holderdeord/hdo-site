@@ -76,7 +76,7 @@
         error: function (xhr) {
           self.toggleSpin();
           self.errorElement.html(xhr.responseText).show();
-        },
+        }
       });
     },
 
@@ -128,12 +128,14 @@
 
     // TODO: get rid of all the duplication
     setupCarts: function () {
+      var toggleRow, promiseTemplate, propositionTemplate;
+
       this.promiseCart = this.createCart($('.cart[data-type=promises]'));
       this.propositionCart = this.createCart($('.cart[data-type=propositions]'));
 
-      var toggleRow = this.toggleRow;
-      var promiseTemplate = this.templates['promise-connection-template'];
-      var propositionTemplate = this.templates['proposition-connection-template'];
+      toggleRow = this.toggleRow;
+      promiseTemplate = this.templates['promise-connection-template'];
+      propositionTemplate = this.templates['proposition-connection-template'];
 
       this.promiseCart.on('use', function (items) {
         if (items.length === 0) {
@@ -146,7 +148,7 @@
           url: '/admin/issues/promises/' + items.join(','),
           dataType: 'json',
           success: function (data) {
-            $.each(data, function() {
+            $.each(data, function () {
               var created = $(promiseTemplate(this)).prependTo('#promise-connections-tab');
               created.addClass('new-connection');
             });
@@ -171,7 +173,7 @@
           url: '/admin/issues/propositions/' + items.join(','),
           dataType: 'json',
           success: function (data) {
-            $.each(data, function() {
+            $.each(data, function () {
               var created = $(propositionTemplate(this)).prependTo('#proposition-connections-tab');
               created.addClass('new-connection');
               HDO.markdownEditor({root: created});
@@ -273,7 +275,7 @@
         }
       }
 
-      cart.on('clear', function() {
+      cart.on('clear', function () {
         root.find('.search-result.selected').removeClass('selected');
       });
 
@@ -290,6 +292,12 @@
       items = [];
       template = this.templates['shopping-cart-template'];
       callbacks = {clear: [], use: []};
+
+      function invokeCallbacks(type) {
+        $(callbacks[type]).each(function (i, cb) {
+          cb(items);
+        });
+      }
 
       function render() {
         el.html(template({items: items}));
@@ -312,15 +320,15 @@
         }
       }
 
-      function use() {
-        invokeCallbacks('use');
-        clear();
-      }
-
       function clear() {
         items = [];
         invokeCallbacks('clear');
         render();
+      }
+
+      function use() {
+        invokeCallbacks('use');
+        clear();
       }
 
       function addCallback(type, cb) {
@@ -328,17 +336,11 @@
           throw new TypeError('expected function, got ' + typeof cb);
         }
 
-        if (Object.keys(callbacks).indexOf(type) == -1) {
+        if (Object.keys(callbacks).indexOf(type) === -1) {
           throw new Error('invalid callback type ' + type);
         }
 
         callbacks[type].push(cb);
-      }
-
-      function invokeCallbacks(type) {
-        $(callbacks[type]).each(function(i, cb) {
-          cb(items);
-        });
       }
 
       el.delegate('a[data-action=use]', 'click', function (e) {
