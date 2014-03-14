@@ -14,7 +14,7 @@
   <div class="span4">
     <p><strong>Kategorier</strong></p>
     <%=
-      form.select :categories,
+      form.select :category_ids,
                   options_for_select(
                     Category.order(:name).map { |c| [c.human_name, c.id] },
                     selected: issue.categories.map(&:id)
@@ -28,7 +28,7 @@
     <p><strong>Redaktør</strong></p>
 
     <%=
-        form.select :editor,
+        form.select :editor_id,
                     editor_options_for(issue)
      %>
 
@@ -58,4 +58,3 @@
   <div class="span4">
   </div>
 </div>
-

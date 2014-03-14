@@ -37,6 +37,18 @@ class PropositionConnection < ActiveRecord::Base
     super || proposition.votes.first
   end
 
+  def as_edit_view_json
+    {
+      vote_time: I18n.l(vote.time, format: :short_text_time),
+      hdo_title: title.present? || proposition.simple_description.present?,
+      title: title_with_fallback,
+      proposition_id: proposition.id,
+      connected: persisted?,
+      comment: comment,
+      connection_title: title
+    }
+  end
+
   private
 
   def overrides_vote_if_proposition_has_several_votes

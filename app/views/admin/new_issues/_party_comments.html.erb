@@ -12,15 +12,9 @@
 
   <% comments.each do |comment| %>
     <div class="row-fluid">
-      <div class="span6">
+      <div class="span6 offset6">
         <%= select_tag "party_comments[#{comment.id}][party_id]", party_options(selected: comment.party.id) %>
         <%= select_tag "party_comments[#{comment.id}][parliament_period_id]", parliament_period_options(selected: comment.parliament_period.id) %>
-      </div>
-
-      <div class="span6">
-        <button class="btn btn-small btn-danger destroy-comment" id="destroy-<%= comment.id %>"><%= t('app.destroy') %></button>
-        <%= hidden_field_tag "party_comments[#{comment.id}[id]", comment.id  %>
-        <%= hidden_field_tag "party_comments[#{comment.id}[issue_id]", issue.id  %>
       </div>
     </div>
 

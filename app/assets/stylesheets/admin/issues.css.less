@@ -7,10 +7,14 @@
     margin: 0;
   }
 
-  .new-connection {
-    color: #c09853;
+  .error-message {
+    display: none;
+  }
+
+  .new {
+    border-left: 1px solid #c09853;
     background-color: #fcf8e3;
-    border: 1px solid #fbeed5;
+    border-radiux: 3px;
   }
 
   [data-wmd-editor] {
@@ -26,14 +30,10 @@
     &.selected { background-color: #fcf8e3; }
   }
 
-  .proposition-connection {
+  #proposition-connections-tab {
     font-size: 90%;
 
     .alert { padding: 0; }
-
-    [data-expands]:hover {
-      background-color: @lightGray;
-    }
 
     .proposition-form {
       padding: 10px;
@@ -41,6 +41,10 @@
     }
 
     margin: 5px 0;
+  }
+
+  [data-expands]:hover {
+    background-color: @lightGray;
   }
 
   .expandable:after {
@@ -51,5 +55,14 @@
   .expanded:after {
     content: '▼';
     padding: 0 5px;
+  }
+
+  .cart {
+    float: right;
+    font-size: 0.7em;
+    padding: 0 10px;
+    background-color: white;
+
+    a { font-size: 0.7em; }
   }
 }

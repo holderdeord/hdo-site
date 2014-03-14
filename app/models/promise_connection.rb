@@ -54,6 +54,15 @@ class PromiseConnection < ActiveRecord::Base
     end
   end
 
+  def as_edit_view_json
+    {
+      promisor_name: promise.promisor.name,
+      promise_body: promise.body,
+      promise_id: promise.id,
+      status: status || UNRELATED_STATE
+    }
+  end
+
   private
 
   def only_related_promises_for_next_period

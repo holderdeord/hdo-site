@@ -8,6 +8,10 @@ class Position < ActiveRecord::Base
   validates :parties, presence: true
   validates :title,   presence: true
 
+  def party_names
+    parties.map(&:name).to_sentence
+  end
+
   def downcased_title
     @downcased_title ||= (
       t = title.to_s.strip

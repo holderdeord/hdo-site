@@ -26,7 +26,7 @@ module Hdo
     rescue Unauthorized
       @issue.errors.add :base, I18n.t('app.errors.unauthorized')
       false
-    rescue ActiveRecord::RecordInvalid => ex
+    rescue ActiveRecord::RecordInvalid, ActiveRecord::RecordNotFound => ex
       # failure could be from association
       @issue.errors.empty? && @issue.errors.add(:base, ex.message)
       false
@@ -175,6 +175,7 @@ module Hdo
 
     def update_or_create_or_destroy_position(id, data)
       existing = Position.find_by_issue_id_and_id(@issue.id, id)
+
       if data["deleted"]
         @changed = true
         existing.destroy

@@ -14,11 +14,17 @@ Hdo::Application.routes.draw do
     resources :issues do
       member do
         # new
-        get 'edit/next' => 'new_issues#edit', as: :edit_next
+        get 'edit/next'     => 'new_issues#edit', as: :edit_next
+        put 'edit/next'    => 'new_issues#update'
 
         # old
         get 'edit/:step'   => 'issues#edit',         as: :edit_step
         get 'votes/search' => "issues#votes_search", as: :vote_search
+      end
+
+      collection do
+        get 'promises/:ids' => 'new_issues#promises'
+        get 'propositions/:ids' => 'new_issues#propositions'
       end
     end
 
