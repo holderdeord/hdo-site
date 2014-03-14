@@ -33,12 +33,12 @@
       this.saveButton.click(this.save.bind(this));
       this.newPositionButton.click(this.notImplemented.bind(this));
       this.newPartyCommentButton.click(this.notImplemented.bind(this));
-      this.propositionConnectTab.delegate('[data-expands]', 'click',
-        this.toggleRow.bind(this));
+      this.root.delegate('[data-expands]', 'click', this.toggleRow.bind(this));
 
       this.editorSelect.chosen();
       this.categorySelect.chosen();
       this.positionPartySelects.chosen();
+      this.root.find('.position-form').hide();
 
       this.setupTagList();
       this.setupCarts();
@@ -119,8 +119,12 @@
         }
       });
 
-      Handlebars.registerHelper('selectedStatus', function (status) {
-        if (this.status === status) {
+      Handlebars.registerHelper('selectedIfEqual', function (a, b) {
+        return a === b && 'selected';
+      });
+
+      Handlebars.registerHelper('selectedIfInclude', function (a, b) {
+        if (b.indexOf(a) !== -1) {
           return 'selected';
         }
       });
@@ -190,7 +194,7 @@
     },
 
     toggleRow: function (e) {
-      var el = $(e.target).parent('.row-fluid');
+      var el = $(e.target).parents('.row-fluid:first');
       el.find('.expandable, .expanded').toggleClass('expandable expanded');
       $(el.data('expands')).slideToggle();
     },
@@ -201,18 +205,14 @@
     },
 
     renderForm: function () {
-      var propositionTemplate,  promiseTemplate;
-
-      propositionTemplate = this.templates['proposition-connection-template'];
-      promiseTemplate = this.templates['promise-connection-template'];
-
       function render(template, i, e) {
         var el = $(e);
         el.html(template(el.data('context')));
       }
 
-      $(".proposition-connection").each(render.bind(null, propositionTemplate));
-      $(".promise-connection").each(render.bind(null, promiseTemplate));
+      $(".proposition-connection").each(render.bind(null, this.templates['proposition-connection-template']));
+      $(".promise-connection").each(render.bind(null, this.templates['promise-connection-template']));
+      $(".position").each(render.bind(null, this.templates['position-template']));
     },
 
     facetSearch: function (opts) {

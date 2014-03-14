@@ -48,7 +48,7 @@
     <div class="span4">
       <select class="pull-right" id="promises_{{promise_id}}_status" name="promises[{{promise_id}}][status]">
         <% PromiseConnection.form_states.each do |state| %>
-          <option value="<%= state %>" {{#selectedStatus "<%= state %>"}}selected{{/selectedStatus}}>
+          <option value="<%= state %>" {{selectedIfEqual "<%= state %>" status}}>
             <%= t("app.issues.edit.promise.#{state}") %>
           </option>
         <% end %>

@@ -11,58 +11,84 @@
   </h3>
 
   <% positions.each do |position| %>
-    <div class="row-fluid">
-      <div class="row-fluid">
-        <div class="span4">
-          <h5><%= Position.human_attribute_name :parties %></h5>
-          <%= select_tag "positions[#{position.id}][parties]",
-                         party_options(selected: position.party_ids),
-                         multiple: true, data: { placeholder: 'Velg partier' },
-                         id: "position-#{position.id}-parties",
-                         class: 'position-parties' %>
-        </div>
-
-        <div class="span4">
-          <h5><%= Position.human_attribute_name :title %></h5>
-          <div class="row-fluid">
-            <%= text_field_tag "positions[#{position.id}][title]", position.title %>
-          </div>
-
-          <h5><%= Position.human_attribute_name :priority %></h5>
-          <%= text_field_tag "positions[#{position.id}][priority]", position.priority %>
-        </div>
-
-        <div class="span4">
-          <h5><%= Position.human_attribute_name :parliament_period %></h5>
-          <%= select_tag "positions[#{position.id}][parliament_period_id]",
-                          parliament_period_options_for(position),
-                          include_blank: true
-           %>
-        </div>
-      </div>
-
-      <div class="row-fluid" data-wmd-editor="<%= position.id %>">
-        <div class="row-fluid">
-          <div class="span7">
-            <h5><%= Position.human_attribute_name :description %></h5>
-            <div id="wmd-button-bar-<%= position.id %>"></div>
-
-            <%= text_area_tag "positions[#{position.id}][description]",
-                             position.description,
-                             rows: '10',
-                             id: "wmd-input-#{position.id}",
-                             class: 'span12' %>
-
-          </div>
-
-          <div class="span5">
-            <h5>Forhåndsvisning</h5>
-            <div id="wmd-preview-<%= position.id %>" class="well"></div>
-          </div>
-        </div>
-      </div>
-
-      <hr class="soften">
+    <div class="row-fluid position" data-context='<%= position.as_json(methods: [:party_ids, :party_names]).to_json.html_safe %>'>
+      Laster...
     </div>
   <% end -%>
 <% end %>
+
+<script name="position-template" type="text/x-handlebars-template">
+<div class="row-fluid" data-expands="#position-{{id}}">
+  <div class="span5">
+    <span class="expandable"></span>
+    <small>{{party_names}}</small>
+  </div>
+
+  <div class="span1">{{priority}}</div>
+  <div class="span6">{{title}}</div>
+</div>
+
+<div class="position-form" id="position-{{id}}">
+  <div class="row-fluid">
+    <div class="span4">
+      <h5>Partier</h5>
+
+      <select
+        id="positions_{{id}}_parties"
+        name="positions[{{id}}][parties]"
+        class="position-parties"
+        data-placeholder="Velg partier"
+        multiple>
+
+        <% Party.order(:name).each do |party| %>
+          <option value="<%= party.id %>" {{selectedIfInclude <%= party.id %> party_ids}}>
+            <%= party.name %>
+          </option>
+        <% end %>
+      </select>
+    </div>
+
+    <div class="span4">
+      <h5>Tittel</h5>
+      <div class="row-fluid">
+        <input type="text" id="positions_{{id}}_title" name='positions[{{id}}][title]' value="{{title}}">
+      </div>
+
+      <h5>Prioritet</h5>
+      <input type="text" id="positions_{{id}}_priority" name="positions[{{position.id}}][priority]" value="{{priority}}">
+    </div>
+
+    <div class="span4">
+      <h5>Stortingsperiode</h5>
+      <select id="positions_{{id}}_parliament_period_id"
+              name="positions[{{id}}][parliament_period_id]">
+        <% ParliamentPeriod.order('start_date DESC').each do |pp| %>
+          <option value="<%= pp.id %>" {{selectedIfEqual <%= pp.id %> parliament_period_id}}>
+            <%= pp.name %>
+          </option>
+        <% end %>
+      </select>
+    </div>
+  </div>
+
+  <div class="row-fluid" data-wmd-editor="{{id}}">
+    <div class="span7">
+      <h5>Beskrivelse</h5>
+      <div id="wmd-button-bar-{{id}}"></div>
+
+      <textarea
+        id="wmd-input-{{id}}"
+        name="positions[{{id}}][description]"
+        rows="10"
+        class="span12">{{description}}</textarea>
+    </div>
+
+    <div class="span5">
+      <h5>Forhåndsvisning</h5>
+      <div id="wmd-preview-{{id}}" class="well"></div>
+    </div>
+  </div>
+
+  <hr class="soften">
+</div>
+</script>
