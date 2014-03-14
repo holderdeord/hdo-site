@@ -15,7 +15,6 @@
 
   <div class="tab-content">
     <div class="tab-pane active" id="proposition-connections-tab">
-
       <% issue.proposition_connections.includes(:proposition).
                                    sort_by { |pc| pc.vote.time }.
                                    reverse.each do |connection| %>

@@ -4,6 +4,8 @@
 
 <%= form_for @issue do |form| %>
   <div class="accordion" id="issue-editor">
+    <div class="error-message alert alert-error"></div>
+
     <button name='save' class="btn btn-primary pull-right">Lagre</button>
     <h1><%= @issue.title %></h1>
     <%= spinner_tag %>
@@ -14,7 +16,7 @@
           <a class="accordion-toggle" data-toggle="collapse" data-parent="#issue-editor" href="#collapse-<%= key %>">
             <%= name %>
 
-            <% if [:propositions, :promises].include? key  %>
+            <% if [:propositions, :promises].include? key %>
               <div class="cart" data-type="<%= key %>"></div>
             <% end %>
           </a>
@@ -34,8 +36,11 @@
 {{#navigators}}
   <div class="row-fluid navigators">
     {{#if type.keyword}}
-      <input type='search' class='input-large search-query' name='{{param}}'
-             data-url-template="{{filter_url}}" value='{{value}}'>
+      <input type='search'
+             class='input-large search-query'
+             name='{{param}}'
+             data-url-template="{{filter_url}}"
+             value='{{value}}'>
     {{/if}}
 
     {{#if type.facet}}

@@ -17,21 +17,24 @@
 
       this.form                  = $('form.edit_issue');
       this.saveButton            = this.root.find('button[name=save]');
-      this.editorSelect          = this.root.find('select#issue_editor');
-      this.categorySelect        = this.root.find('select#issue_categories');
+      this.editorSelect          = this.root.find('select#issue_editor_id');
+      this.categorySelect        = this.root.find('select#issue_category_ids');
       this.positionPartySelects  = this.root.find('select.position-parties');
       this.newPositionButton     = this.root.find('#new-position');
       this.newPartyCommentButton = this.root.find('#new-party-comment');
       this.tagList               = this.root.find('input[name=tags]');
-      this.expandables           = this.root.find('[data-expands]');
       this.promiseSearchTab      = this.root.find('#promise-search-tab');
       this.promiseSpinner        = this.root.find("#promise-spinner");
+      this.propositionConnectTab = this.root.find("#proposition-connections-tab");
       this.propositionSearchTab  = this.root.find('#proposition-search-tab');
       this.propositionSpinner    = this.root.find("#proposition-spinner");
+      this.errorElement          = this.root.find('.error-message');
 
       this.saveButton.click(this.save.bind(this));
       this.newPositionButton.click(this.notImplemented.bind(this));
       this.newPartyCommentButton.click(this.notImplemented.bind(this));
+      this.propositionConnectTab.delegate('[data-expands]', 'click',
+        this.toggleRow.bind(this));
 
       this.editorSelect.chosen();
       this.categorySelect.chosen();
@@ -39,7 +42,6 @@
 
       this.setupTagList();
       this.setupCarts();
-      this.setupExpandables();
 
       this.facetSearch({
         baseUrl:  '/promises',
@@ -56,7 +58,6 @@
         template: this.templates['proposition-search-template'],
         cart:     this.propositionCart
       });
-
     },
 
     save: function (e) {
@@ -67,13 +68,16 @@
 
       $.ajax({
         url: this.url,
-        method: 'PUT',
+        method: 'POST',
         data: this.form.serialize(),
-        success: function () { self.toggleSpin(); },
-        error: function (xhr) { window.alert('Uffda, noe gikk helt galt ' + xhr.status); },
-        complete: function () {}
+        success: function (data) {
+          window.location.href = data.location; // trololol
+        },
+        error: function (xhr) {
+          self.toggleSpin();
+          self.errorElement.html(xhr.responseText).show();
+        },
       });
-
     },
 
     toggleSpin: function () {
@@ -94,10 +98,6 @@
         typeaheadSource: el.data('all-tags').split(","),
         hiddenTagListName: 'issue[tag_list]'
       });
-    },
-
-    setupExpandables: function () {
-      this.expandables.click(this.toggleRow.bind(this));
     },
 
     setupTemplates: function () {
@@ -126,6 +126,7 @@
       });
     },
 
+    // TODO: get rid of all the duplication
     setupCarts: function () {
       this.promiseCart = this.createCart($('.cart[data-type=promises]'));
       this.propositionCart = this.createCart($('.cart[data-type=propositions]'));
@@ -135,6 +136,10 @@
       var propositionTemplate = this.templates['proposition-connection-template'];
 
       this.promiseCart.on('use', function (items) {
+        if (items.length === 0) {
+          return;
+        }
+
         $('a[href=#promise-connections-tab]').click();
 
         $.ajax({
@@ -146,7 +151,9 @@
               created.addClass('new-connection');
             });
           },
-          error: function (xhr) { window.alert('Uffda, noe gikk helt galt ' + xhr.status); },
+          error: function (xhr) {
+            window.alert('Uffda, noe gikk helt galt ' + xhr.status);
+          },
           complete: function () {
             // TODO: spinner
           }
@@ -154,6 +161,10 @@
       });
 
       this.propositionCart.on('use', function (items) {
+        if (items.length === 0) {
+          return;
+        }
+
         $('a[href=#proposition-connections-tab]').click();
 
         $.ajax({
@@ -166,18 +177,18 @@
               HDO.markdownEditor({root: created});
             });
           },
-          error: function (xhr) { window.alert('Uffda, noe gikk helt galt ' + xhr.status); },
+          error: function (xhr) {
+            window.alert('Uffda, noe gikk helt galt ' + xhr.status);
+          },
           complete: function () {
             // TODO: spinner
           }
         });
       });
-
-
     },
 
     toggleRow: function (e) {
-      var el = $(e.delegateTarget);
+      var el = $(e.target).parent('.row-fluid');
       el.find('.expandable, .expanded').toggleClass('expandable expanded');
       $(el.data('expands')).slideToggle();
     },
