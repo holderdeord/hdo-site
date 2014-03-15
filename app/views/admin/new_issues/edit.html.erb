@@ -12,15 +12,15 @@
 
     <% @sections.each_with_index do |(key, name), idx| %>
       <div class="accordion-group">
-        <h2 class="lead accordion-heading">
-          <a class="accordion-toggle" data-toggle="collapse" data-parent="#issue-editor" href="#collapse-<%= key %>">
+        <div class="lead accordion-heading">
+          <div class="accordion-toggle" data-toggle="collapse" data-parent="#issue-editor" data-target="#collapse-<%= key %>">
             <%= name %>
 
             <% if [:propositions, :promises].include? key %>
               <div class="cart" data-type="<%= key %>"></div>
             <% end %>
-          </a>
-        </h2>
+          </div>
+        </div>
 
         <div id="collapse-<%= key %>" class="accordion-body collapse <%= 'in' if idx == 0 %>">
           <div class="accordion-inner">
@@ -32,7 +32,7 @@
   </div>
 <% end %>
 
-<script name="navigators-partial" type="text/x-handlebars-template">
+<script data-name="navigators-partial" type="text/x-handlebars-template">
 {{#navigators}}
   <div class="row-fluid navigators">
     {{#if type.keyword}}
@@ -61,7 +61,7 @@
 {{/navigators}}
 </script>
 
-<script name="pagination-partial" type="text/x-handlebars-template">
+<script data-name="pagination-partial" type="text/x-handlebars-template">
   <div class="row-fluid">
     <small class="pull-right">
       {{#if previous_url}}
@@ -77,7 +77,7 @@
   </div>
 </script>
 
-<script name="shopping-cart-template" type="text/x-handlebars-template">
+<script data-name="shopping-cart-template" type="text/x-handlebars-template">
   <div>
     Kurv: {{items.length}}
     <a href='#' data-action="use">Bruk</a>

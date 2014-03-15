@@ -9,7 +9,7 @@
       <small class="pull-right muted">
         <%= positions.size %> <%= Position.model_name.human(count: positions.size).downcase %>
       </small>
-    </h3>
+    </h4>
 
     <% positions.each do |position| %>
       <div class="row-fluid position" data-context='<%= position.as_json(methods: [:party_ids, :party_names]).to_json.html_safe %>'>
@@ -19,7 +19,7 @@
   <% end %>
 </div>
 
-<script name="position-template" type="text/x-handlebars-template">
+<script data-name="position-template" type="text/x-handlebars-template">
 <div class="row-fluid" data-expands="#position-{{id}}">
   <div class="span5">
     <span class="expandable"></span>

@@ -95,6 +95,7 @@
 
       created = $(template(position)).prependTo('.positions');
       created.addClass('new');
+      created.find('.expandable, .expanded').toggleClass('expandable expanded');
 
       created.find('.position-parties').chosen();
       HDO.markdownEditor({root: created});
@@ -119,7 +120,7 @@
         var el, name, partialName;
 
         el = $(this);
-        name = el.attr('name');
+        name = el.data('name');
         partialName = name.match(/^(\w+?)-partial$/);
         partialName = partialName && partialName[1];
 
