@@ -11,6 +11,7 @@ class Admin::NewIssuesController < AdminController
     ok = Hdo::IssueUpdater.new(@issue, params, current_user).update
 
     if ok
+      PageCache.expire_issue(@issue)
       render json: { location: edit_next_admin_issue_path(@issue) }
     else
       render text: @issue.errors.full_messages.to_sentence, status: :unprocessable_entity
