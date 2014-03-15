@@ -64,14 +64,19 @@
       e.preventDefault();
       this.toggleSpin();
 
-      var self = this;
+      var self, currentSection;
+
+      self = this;
+      currentSection = this.root.find('.in').data('key');
 
       $.ajax({
         url: this.url,
         method: 'POST',
         data: this.form.serialize(),
         success: function (data) {
-          window.location.href = data.location; // trololol
+          // trololol
+          window.location.href = currentSection ?
+              data.location + ('?section=' + encodeURIComponent(currentSection)) : data.location;
         },
         error: function (xhr) {
           self.toggleSpin();
@@ -206,7 +211,15 @@
     },
 
     toggleRow: function (e) {
-      var el = $(e.target).parents('.row-fluid:first');
+      var target, el;
+
+      target = $(e.target);
+
+      if (target.hasClass('permalink')) {
+        return;
+      }
+
+      el = target.parents('.row-fluid:first');
       el.find('.expandable, .expanded').toggleClass('expandable expanded');
       $(el.data('expands')).slideToggle();
     },

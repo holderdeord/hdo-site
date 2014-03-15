@@ -135,7 +135,6 @@ class Proposition < ActiveRecord::Base
     parliament_issues.map(&:document_group_name).compact.uniq
   end
 
-
   def as_indexed_json(options = nil)
     methods = [
       :plain_body,

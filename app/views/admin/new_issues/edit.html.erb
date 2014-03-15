@@ -22,7 +22,7 @@
           </div>
         </div>
 
-        <div id="collapse-<%= key %>" class="accordion-body collapse <%= 'in' if idx == 0 %>">
+        <div id="collapse-<%= key %>" class="accordion-body collapse <%= 'in' if key.to_s == (params[:section] || 'intro') %>" data-key="<%= key %>">
           <div class="accordion-inner">
             <%= render partial: key.to_s, locals: {form: form, issue: @issue} %>
           </div>

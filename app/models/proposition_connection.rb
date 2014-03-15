@@ -43,7 +43,7 @@ class PropositionConnection < ActiveRecord::Base
       hdo_title: title.present? || proposition.simple_description.present?,
       title: title_with_fallback,
       proposition_id: proposition.id,
-      connected: persisted?,
+      connected: true,
       comment: comment,
       connection_title: title
     }
