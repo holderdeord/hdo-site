@@ -41,7 +41,7 @@
       {{> pagination}}
 
       {{#results}}
-        <div class="search-result {{#selected}}selected{{/selected}}" data-type='proposition' data-id='{{id}}'>
+        <div class="search-result {{#selected}}selected{{/selected}} {{#connected}}connected{{/connected}}" data-type='proposition' data-id='{{id}}'>
           <div class="row-fluid">
             {{#if simple_description}}
               <span class="hdo-title">{{simple_description}}</span>
@@ -117,6 +117,5 @@
         </div>
       </div>
     </div>
-
   </div>
 </script>

@@ -9,15 +9,15 @@ class Proposition < ActiveRecord::Base
       indexes :simple_body,                           type: :string, analyzer: SearchSettings.default_analyzer
       indexes :on_behalf_of,                          type: :string
       indexes :vote_time,                             type: :date
-      indexes :status,                                type: :string, index: :not_analyzed
-      indexes :parliament_session_name,               type: :string, index: :not_analyzed
+      indexes :status,                                type: :string,  index: :not_analyzed
+      indexes :parliament_session_name,               type: :string,  index: :not_analyzed
       indexes :id,                                    type: :integer, index: :not_analyzed
       indexes :interesting,                           type: :boolean
-      indexes :committee_names,                       type: :string, index: :not_analyzed
-      indexes :category_names,                        type: :string, index: :not_analyzed
-      indexes :parliament_issue_type_names,           type: :string, index: :not_analyzed
-      indexes :parliament_issue_document_group_names, type: :string, index: :not_analyzed
-
+      indexes :committee_names,                       type: :string,  index: :not_analyzed
+      indexes :category_names,                        type: :string,  index: :not_analyzed
+      indexes :parliament_issue_type_names,           type: :string,  index: :not_analyzed
+      indexes :parliament_issue_document_group_names, type: :string,  index: :not_analyzed
+      indexes :issue_ids,                             type: :integer, index: :not_analyzed
 
       indexes :votes do
         indexes :slug,    type: :string, index: :not_analyzed
@@ -35,6 +35,7 @@ class Proposition < ActiveRecord::Base
 
   update_index_on_change_of :votes, has_many: true
   update_index_on_change_of :parliament_issues, has_many: true
+  update_index_on_change_of :proposition_connections
 
   attr_accessible :description, :on_behalf_of, :body, :representative_id,
                   :simple_description, :simple_body, :status, :interesting
@@ -135,6 +136,10 @@ class Proposition < ActiveRecord::Base
     parliament_issues.map(&:document_group_name).compact.uniq
   end
 
+  def issue_ids
+    issues.map(&:id)
+  end
+
   def as_indexed_json(options = nil)
     methods = [
       :plain_body,
@@ -142,7 +147,8 @@ class Proposition < ActiveRecord::Base
       :committee_names,
       :category_names,
       :parliament_issue_type_names,
-      :parliament_issue_document_group_names
+      :parliament_issue_document_group_names,
+      :issue_ids
     ]
 
     methods += [:parliament_session_name, :vote_time] if votes.any?

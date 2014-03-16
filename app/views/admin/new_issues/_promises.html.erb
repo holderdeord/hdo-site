@@ -67,7 +67,7 @@
       {{> pagination}}
 
       {{#results}}
-        <div class="search-result {{#selected}}selected{{/selected}}" data-type='promise' data-id='{{id}}'>
+        <div class="search-result {{#selected}}selected{{/selected}} {{#connected}}connected{{/connected}}" data-type='promise' data-id='{{id}}'>
           <div class="row-fluid">
             {{body}}
           </div>

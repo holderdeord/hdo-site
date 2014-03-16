@@ -8,15 +8,17 @@ class Promise < ActiveRecord::Base
 
   settings(SearchSettings.default) {
     mappings {
-      indexes :body,                   type: :string, analyzer: SearchSettings.default_analyzer
-      indexes :party_names,                           index: :not_analyzed
-      indexes :category_names,                        index: :not_analyzed
-      indexes :parliament_period_name, type: :string, index: :not_analyzed
-      indexes :promisor_name,          type: :string, index: :not_analyzed
+      indexes :body,                   type: :string,  analyzer: SearchSettings.default_analyzer
+      indexes :party_names,                            index: :not_analyzed
+      indexes :category_names,                         index: :not_analyzed
+      indexes :parliament_period_name, type: :string,  index: :not_analyzed
+      indexes :promisor_name,          type: :string,  index: :not_analyzed
+      indexes :issue_ids,              type: :integer, index: :not_analyzed
     }
   }
 
   update_index_on_change_of :parties, has_many: true
+  update_index_on_change_of :promise_connections
 
   attr_accessible :promisor, :general, :categories, :source, :body, :page, :parliament_period
 
@@ -80,6 +82,10 @@ class Promise < ActiveRecord::Base
     parliament_period.name
   end
 
+  def issue_ids
+    issues.map(&:id)
+  end
+
   def future?
     # TODO: spec
     parliament_period.start_date > ParliamentPeriod.current.start_date
@@ -90,7 +96,8 @@ class Promise < ActiveRecord::Base
       :party_names,
       :parliament_period_name,
       :promisor_name,
-      :category_names
+      :category_names,
+      :issue_ids
     ]
   end
 end

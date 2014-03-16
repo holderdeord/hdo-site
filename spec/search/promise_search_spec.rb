@@ -17,6 +17,24 @@ describe Promise, :search do
 
       Promise.search('*').results.first.party_names.should == [party.name]
     end
+
+    it 'updates the index when associated promise connections change' do
+      prom  = Promise.make!
+      issue = Issue.make!(promise_connections: [])
+      pconn = issue.promise_connections.create!(promise: prom, status: 'related')
+
+      refresh_index
+      results = Promise.search('*').results
+      results.size.should == 1
+      results.first.issue_ids.should == prom.issue_ids
+
+      pconn.destroy
+
+      refresh_index
+      result = Promise.search('*').results.first
+      result.issue_ids.should == prom.reload.issue_ids
+    end
+
   end
 
   it 'indexes non-attribute data (no partial update)' do

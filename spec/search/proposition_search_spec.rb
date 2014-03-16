@@ -32,6 +32,23 @@ describe Proposition, :search do
       result = Proposition.search('*').results.first
       result.parliament_issue_document_group_names.should == ['Bar']
     end
+
+    it 'updates the index when associated proposition connections change' do
+      prop  = Proposition.make!
+      issue = Issue.make!(proposition_connections: [])
+      pconn = issue.proposition_connections.create!(proposition: prop)
+
+      refresh_index
+      results = Proposition.search('*').results
+      results.size.should == 1
+      results.first.issue_ids.should == prop.issue_ids
+
+      pconn.destroy
+
+      refresh_index
+      result = Proposition.search('*').results.first
+      result.issue_ids.should == prop.reload.issue_ids
+    end
   end
 
   it 'indexes non-attribute data (no partial update)' do

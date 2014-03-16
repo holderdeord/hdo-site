@@ -2,10 +2,12 @@
 
 (function ($, HDO, Handlebars) {
   HDO.issueEditor = {
-    create: function (selector, url) {
+    create: function (opts) {
       var instance = Object.create(this);
-      instance.root = $(selector);
-      instance.url = url;
+      instance.root = $(opts.root);
+      instance.url = opts.url;
+      instance.issueId = opts.id;
+
       return instance;
     },
 
@@ -48,7 +50,8 @@
         root:     this.promiseSearchTab,
         spinner:  this.promiseSpinner,
         template: this.templates['promise-search-template'],
-        cart:     this.promiseCart
+        cart:     this.promiseCart,
+        issueId:  this.issueId
       });
 
       this.facetSearch({
@@ -56,7 +59,8 @@
         root:     this.propositionSearchTab,
         spinner:  this.propositionSpinner,
         template: this.templates['proposition-search-template'],
-        cart:     this.propositionCart
+        cart:     this.propositionCart,
+        issueId:  this.issueId
       });
     },
 
@@ -241,7 +245,7 @@
     },
 
     facetSearch: function (opts) {
-      var baseUrl, root, template, spinner, query, cart;
+      var baseUrl, root, template, spinner, query, cart, filter, issueId;
 
       baseUrl  = opts.baseUrl;
       root     = opts.root;
@@ -249,10 +253,12 @@
       spinner  = opts.spinner || $("#spinner");
       query    = opts.root.find('input[name=q]');
       cart     = opts.cart;
+      issueId  = opts.issueId;
 
       function prepareData(data) {
         $.each(data.results, function (i, e) {
           e.selected = cart.isSelected(Number(e.id));
+          e.connected = e.issue_ids.indexOf(issueId) !== -1;
         });
 
         return data;
@@ -289,6 +295,10 @@
 
       function toggleResult(e) {
         var el = $(this), id;
+
+        if (el.hasClass('connected')) {
+          return;
+        }
 
         id = el.data('id');
         el.toggleClass('selected');

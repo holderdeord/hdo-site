@@ -92,7 +92,12 @@
 <%= content_for :document_ready do %>
 <script>
   $(function() {
-    issueEditor = HDO.issueEditor.create("#issue-editor", "<%= edit_next_admin_issue_path(@issue) %>");
+    issueEditor = HDO.issueEditor.create({
+      root: "#issue-editor",
+      url: "<%= edit_next_admin_issue_path(@issue) %>",
+      id: <%= @issue.id %>
+    });
+
     issueEditor.init();
   });
 </script>

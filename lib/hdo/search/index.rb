@@ -55,7 +55,11 @@ module Hdo
                                               : ->(obj) { [ obj.__send__(singular) ] }
 
           classes.each do |clazz|
-            clazz.after_save { fetch_association.call(self).each(&updater) }
+            clazz.after_commit {
+              associated = fetch_association.call(self)
+              associated.each(&:reload) if destroyed?
+              associated.each(&updater)
+            }
           end
         end
       end
