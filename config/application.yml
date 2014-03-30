@@ -39,6 +39,7 @@ staging:
 
 production:
   <<: *defaults
+  statsd_enabled: true
   analytics_enabled: true
   fastly_enabled: true
   ssl_enabled: true
