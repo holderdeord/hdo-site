@@ -7,7 +7,7 @@ class Admin::NewIssuesController < AdminController
   end
 
   def update
-    logger.info "updating issue: #{params.inspect}"
+    logger.info "updating issue: #{params.to_json}"
     ok = Hdo::IssueUpdater.new(@issue, params, current_user).update
 
     if ok

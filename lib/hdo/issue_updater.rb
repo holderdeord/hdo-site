@@ -5,7 +5,7 @@ module Hdo
     end
 
     def self.for_proposition(proposition, issue, user)
-      Hdo::IssueUpdater.new(issue, {propositions: {proposition.id => {connected: true}}}, user)
+      Hdo::IssueUpdater.new(issue, {propositions: {proposition.id => [{connected: true}]}}, user)
     end
 
     def initialize(issue, params, user)
@@ -105,7 +105,7 @@ module Hdo
     end
 
     def update_or_create_promise_connection(promise_id, data)
-      existing = PromiseConnection.where('promise_id = ? and issue_id = ?', promise_id, @issue.id).first
+      existing = PromiseConnection.where(promise_id: promise_id, issue_id: @issue.id).first
       status   = data.fetch(:status)
 
       if status == 'unrelated'
@@ -126,30 +126,32 @@ module Hdo
       end
     end
 
-    def update_or_create_proposition_connection(proposition_id, data)
-      existing = PropositionConnection.where('proposition_id = ? and issue_id = ?', proposition_id, @issue.id).first
+    def update_or_create_proposition_connection(proposition_id, connections)
+      connections.each do |data|
+        existing = PropositionConnection.where(proposition_id: proposition_id, issue_id: @issue.id, vote_id: data[:vote_id]).first
 
-      if data[:connected]
-        attrs = data.except(:connected).merge(proposition_id: proposition_id)
+        if data[:connected]
+          attrs = data.except(:connected).merge(proposition_id: proposition_id)
 
-        # normalize '' vs nil
-        attrs[:proposition_type] = nil if attrs[:proposition_type].blank?
-        attrs[:title]            = nil if attrs[:title].blank?
-        attrs[:comment]          = nil if attrs[:comment].blank?
+          # normalize '' vs nil
+          attrs[:proposition_type] = nil if attrs[:proposition_type].blank?
+          attrs[:title]            = nil if attrs[:title].blank?
+          attrs[:comment]          = nil if attrs[:comment].blank?
 
-        if existing
-          existing.attributes = attrs
-          @changed ||= existing.changed?
+          if existing
+            existing.attributes = attrs
+            @changed ||= existing.changed?
 
-          existing.save!
+            existing.save!
+          else
+            @issue.proposition_connections.create!(attrs)
+            @changed = true
+          end
         else
-          new_connection = @issue.proposition_connections.create!(attrs)
-          @changed = true
-        end
-      else
-        if existing
-          @issue.proposition_connections.delete existing
-          @changed = true
+          if existing
+            @issue.proposition_connections.delete existing
+            @changed = true
+          end
         end
       end
     end
@@ -168,7 +170,7 @@ module Hdo
 
         existing.save!
       else
-        new_party_comment = @issue.party_comments.create!(data.except(:id))
+        @issue.party_comments.create!(data.except(:id))
         @changed = true
       end
     end

@@ -215,11 +215,11 @@ module Hdo
         issue = Issue.make! proposition_connections: [PropositionConnection.make!]
 
         propositions = {
-          issue.propositions[0].id => {
+          issue.propositions[0].id => [{
             connected: 'true',
             title: 'title!!!!!!!!',
             proposition_type: PropositionConnection::PROPOSITION_TYPES.first
-          }
+          }]
         }
 
         IssueUpdater.new(issue, {propositions: propositions}, user).update!
@@ -238,16 +238,16 @@ module Hdo
         expected_type = PropositionConnection::PROPOSITION_TYPES.first
 
         propositions = {
-          issue.propositions[0].id => {
+          issue.propositions[0].id => [{
             connected: 'true',
             title: 'title!!!!!!!!',
             proposition_type: expected_type
-          },
-          issue.propositions[1].id => {
+          }],
+          issue.propositions[1].id => [{
             connected: 'true',
             title: 'title!!!!!!!!',
             proposition_type: ""
-          }
+          }]
         }
 
         IssueUpdater.new(issue, {propositions: propositions}, user).update!
@@ -261,11 +261,11 @@ module Hdo
         issue = Issue.make! proposition_connections: [conn]
 
         propositions = {
-          conn.proposition.id => {
+          conn.proposition.id => [{
             connected: 'true',
             title: '',
             comment: ''
-          }
+          }]
         }
 
         IssueUpdater.new(issue, {propositions: propositions}, user).update!
@@ -283,16 +283,16 @@ module Hdo
         last  = PropositionConnection::PROPOSITION_TYPES.last
 
         propositions = {
-          issue.propositions[0].id => {
+          issue.propositions[0].id => [{
             connected: 'true',
             title: 'title!!!!!!!!',
             proposition_type: first
-          },
-          issue.propositions[1].id => {
+          }],
+          issue.propositions[1].id => [{
             connected: 'true',
             title: 'title!!!!!!!!',
             proposition_type: last
-          }
+          }]
         }
 
         IssueUpdater.new(issue, {propositions: propositions}, user).update!
@@ -311,10 +311,10 @@ module Hdo
         issue.last_updated_by.should be_nil
 
         propositions = {
-          proposition.id => {
+          proposition.id => [{
             connected: 'true',
             proposition_type: '' # input is an empty string
-          }
+          }]
         }
 
         IssueUpdater.new(issue, {propositions: propositions}, user).update!

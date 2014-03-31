@@ -20,6 +20,7 @@ nb:
       short_text_time: "%e. %b %Y %H:%M"
       month_year: "%B %Y"
       text_time: "%e. %B %Y %H:%M"
+      text_time_precise: "%e. %B %Y %H:%M:%S"
   valid_email:
     validations:
       email:

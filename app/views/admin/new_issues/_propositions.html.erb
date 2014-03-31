@@ -68,10 +68,10 @@
 
 
 <script data-name="proposition-connection-template" type="text/x-handlebars-template">
-  <div class="row-fluid" data-expands="#proposition-connection-{{proposition_id}}">
+  <div class="row-fluid" data-expands="#proposition-connection-{{proposition_id}}-{{id}}">
     <div class="span3">
       <span class="expandable"></span>
-      {{vote_time}}
+      <span class="{{#unless vote_id}}{{#multiple_votes}}alert alert-error{{/multiple_votes}}{{/unless}}">{{vote_time}}</span>
     </div>
 
     <div class="span9">
@@ -87,33 +87,46 @@
     </div>
   </div>
 
-  <div class="row-fluid proposition-form" id="proposition-connection-{{proposition_id}}">
+  <div class="row-fluid proposition-form" id="proposition-connection-{{proposition_id}}-{{id}}">
     <div class="row-fluid">
       <div class="span6">
-        <textarea class="span12" placeholder="Overstyr tittel" id="propositions_{{proposition_id}}_title" name="propositions[{{proposition_id}}][title]">{{connection_title}}</textarea>
+        <textarea class="span12" placeholder="Overstyr tittel" name="propositions[{{proposition_id}}][][title]">{{connection_title}}</textarea>
       </div>
 
       <div class="span6">
         <label>
           <strong>Koblet til saken?</strong>
-          <input type="checkbox" name="propositions[{{proposition_id}}][connected]" {{#connected}}checked='checked'{{/connected}}>
+          <input type="checkbox" name="propositions[{{proposition_id}}][][connected]" {{#connected}}checked='checked'{{/connected}}>
         </label>
+
+        {{#if multiple_votes}}
+          <strong>Avstemning</strong>
+
+          <select class="input-xlarge" name="propositions[{{proposition_id}}][][vote_id]">
+            {{#votes}}
+              <option value="{{id}}" {{#selected}}selected{{/selected}}>
+                {{subject}}
+              </option>
+            {{/votes}}
+          </select>
+        {{/if}}
+        <label>
       </div>
     </div>
 
     <div class="row-fluid">
-      <div data-wmd-editor="{{proposition_id}}">
+      <div data-wmd-editor="{{proposition_id}}-{{id}}">
         <div class="span6">
           <strong>Kommentar</strong>
-          <div id="wmd-button-bar-{{proposition_id}}"></div>
+          <div id="wmd-button-bar-{{proposition_id}}-{{id}}"></div>
 
-          <textarea class="span12" id="wmd-input-{{proposition_id}}" placeholder="Overstyr kommentar" name="propositions[{{proposition_id}}][comment]" rows="10">{{{comment}}}</textarea>
+          <textarea class="span12" id="wmd-input-{{proposition_id}}-{{id}}" placeholder="Overstyr kommentar" name="propositions[{{proposition_id}}][][comment]" rows="10">{{{comment}}}</textarea>
         </div>
 
         <div class="span6">
           <strong>Forhåndsvisning</strong>
           <br><br>
-          <div id="wmd-preview-{{proposition_id}}" class="well"></div>
+          <div id="wmd-preview-{{proposition_id}}-{{id}}" class="well"></div>
         </div>
       </div>
     </div>

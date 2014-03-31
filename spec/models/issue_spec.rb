@@ -247,10 +247,10 @@ describe Issue do
 
     it 'is locked when adding a proposition connection' do
       propositions = {
-        Proposition.make!.id => {
+        Proposition.make!.id => [{
           connected: 'true',
           title: 'more cowbell'
-        }
+        }]
       }
       update_attributes_on @issue, {propositions: propositions}
       expect_stale_object_error_when_updating @same_issue
@@ -275,11 +275,11 @@ describe Issue do
       @same_issue.reload
 
       propositions = {
-        prop.id => {
+        prop.id => [{
           connected: 'true',
           title: 'hello',
           proposition_type: PropositionConnection::PROPOSITION_TYPES.first
-        }
+        }]
       }
       update_attributes_on @issue, {propositions: propositions}
       expect_stale_object_error_when_updating @same_issue

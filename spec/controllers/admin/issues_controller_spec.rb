@@ -13,11 +13,11 @@ describe Admin::IssuesController do
     params = {}
 
     connections.each do |connection|
-      params[connection.proposition_id] = {
+      params[connection.proposition_id] = [{
         :connected   => true,
         :comment     => connection.comment,
         :title       => connection.title
-      }
+      }]
     end
 
     params
@@ -292,7 +292,7 @@ describe Admin::IssuesController do
       issue.proposition_connections = [connection]
 
       propositions = proposition_params(issue.proposition_connections)
-      propositions[connection.proposition_id][:connected] = nil
+      propositions[connection.proposition_id].first[:connected] = nil
 
       put :update, propositions: propositions, id: issue
 
@@ -306,11 +306,11 @@ describe Admin::IssuesController do
 
       prop = Proposition.make!(:votes => [Vote.make!])
       propositions = {
-        prop.id => {
+        prop.id => [{
           connected: nil,
           title: "",
           comment: ""
-        }
+        }]
       }
 
       put :update, propositions: propositions, id: issue
@@ -324,7 +324,7 @@ describe Admin::IssuesController do
       prop = Proposition.make!
       issue.proposition_connections = []
 
-      proposition_params = {prop.id => {connected: 'true', comment: 'hello', title: 'world'}}
+      proposition_params = {prop.id => [{connected: 'true', comment: 'hello', title: 'world'}]}
       put :update, propositions: proposition_params, id: issue
 
       issue = assigns(:issue)
@@ -337,7 +337,7 @@ describe Admin::IssuesController do
       issue.proposition_connections = [connection]
 
       propositions = proposition_params(issue.proposition_connections)
-      propositions[connection.proposition_id][:comment] = 'goodbye'
+      propositions[connection.proposition_id].first[:comment] = 'goodbye'
 
       put :update, propositions: propositions, id: issue
 
