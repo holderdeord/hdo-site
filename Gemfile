@@ -82,6 +82,9 @@ gem 'friendly_id', "~> 4.0"
 # view models
 gem 'draper'
 
+# api
+gem 'roar-rails'
+
 # various db / model
 gem 'pg'
 gem 'acts_as_tree', '~> 1.1'
@@ -139,4 +142,3 @@ if ENV['LOCAL_IMPORTER']
 else
   gem 'hdo-storting-importer', "~> 0.5.3", require: 'hdo/storting_importer'
 end
-

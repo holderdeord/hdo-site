@@ -1,6 +1,19 @@
 Hdo::Application.routes.draw do
 
   #
+  # api
+  #
+
+  namespace :api do
+    root to: 'root#index'
+
+    resources :parties, only: [:index, :show]
+    resources :representatives, only: [:index, :show]
+    resources :issues, only: [:index, :show]
+
+  end
+
+  #
   # user sign-in
   #
 
