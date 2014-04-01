@@ -115,13 +115,13 @@
       e.preventDefault();
 
       var target = $(e.target),
-          id = target.data('id'),
-          parties = target.data('parties'),
-          title = target.data('title');
+        id = target.data('id'),
+        parties = target.data('parties'),
+        title = target.data('title'),
+        container = target.closest('.position');
 
-      var container = target.closest('.position');
 
-      container.html('<del>' + parties + '<strong'> + title + '</strong'> + '</del>');
+      container.html('<del>' + parties + '<strong>' + title + '</strong>' + '</del>');
       container.append(
         $('<input/>')
           .attr('type', 'hidden')
