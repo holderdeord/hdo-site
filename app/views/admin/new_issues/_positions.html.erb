@@ -7,7 +7,7 @@
     <h4>
       <%= period.name %>
       <small class="pull-right muted">
-        <%= positions.size %> <%= Position.model_name.human(count: positions.size).downcase %>
+        <span class="positions-counter"><%= positions.size %></span> <%= Position.model_name.human(count: positions.size).downcase %>
       </small>
     </h4>
 
@@ -21,13 +21,16 @@
 
 <script data-name="position-template" type="text/x-handlebars-template">
 <div class="row-fluid" data-expands="#position-{{id}}">
-  <div class="span5">
+  <div class="span4">
     <span class="expandable"></span>
     <small>{{party_names}}</small>
   </div>
 
   <div class="span1">{{priority}}</div>
   <div class="span6">{{title}}</div>
+  <div class="span1">
+    <a href="#" class="btn btn-small btn-danger position-remove" data-id="{{id}}" data-description="{{party_names}}" data-title="{{title}}">Slett</a>
+  </div>
 </div>
 
 <div class="position-form" id="position-{{id}}">

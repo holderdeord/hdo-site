@@ -41,6 +41,7 @@
       this.categorySelect.chosen();
       this.positionPartySelects.chosen();
       this.root.find('.position-form').hide();
+      this.root.delegate('.position-remove', 'click', this.removePosition.bind(this));
 
       this.setupTagList();
       this.setupCarts();
@@ -108,6 +109,25 @@
 
       created.find('.position-parties').chosen();
       HDO.markdownEditor({root: created});
+    },
+
+    removePosition: function (e) {
+      e.preventDefault();
+
+      var target = $(e.target),
+          id = target.data('id'),
+          parties = target.data('parties'),
+          title = target.data('title');
+
+      var container = target.closest('.position');
+
+      container.html('<del>' + parties + '<strong'> + title + '</strong'> + '</del>');
+      container.append(
+        $('<input/>')
+          .attr('type', 'hidden')
+          .attr('name', 'positions[' + id + '][deleted]')
+          .val('true')
+      );
     },
 
     setupTagList: function () {
@@ -219,13 +239,13 @@
 
       target = $(e.target);
 
-      if (target.hasClass('permalink')) {
+      if (target.hasClass('permalink') || e.originalEvent.defaultPrevented) {
         return;
       }
 
       el = target.parents('.row-fluid:first');
       el.find('.expandable, .expanded').toggleClass('expandable expanded');
-      $(el.data('expands')).slideToggle();
+      $(el.data('expands')).slideToggle('fast');
     },
 
     notImplemented: function (e) {
