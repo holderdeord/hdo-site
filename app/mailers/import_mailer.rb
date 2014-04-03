@@ -9,6 +9,7 @@ class ImportMailer < ActionMailer::Base
     return unless votes.any?
 
     @parliament_issues = votes.flat_map { |vote| vote.parliament_issues.to_a }.uniq
+    @proposition_counts = Hdo::Stats::PropositionCounts.from_session(ParliamentSession.current.name)
 
     mail subject: "#{@parliament_issues.size} nye saker behandlet"
   end

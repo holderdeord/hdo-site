@@ -5,3 +5,7 @@
     <li><%= link_to pi.summary, parliament_issue_url(pi) %></li>
   <% end %>
 </ul>
+
+<h3>
+  <%= @proposition_counts.pending %> (<%= @proposition_counts.pending_percentage %>%) forslag venter på publisering.
+</h3>
