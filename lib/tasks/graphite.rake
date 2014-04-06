@@ -27,27 +27,31 @@ namespace :graphite do
     g.add 'hdo.count.issues.total',               Issue.count
     g.add 'hdo.count.issues.published',           Issue.published.count
 
-    g.add 'hdo.count.questions.total',            Question.count
-    g.add 'hdo.count.questions.user_total',       Question.not_ours.count
-    g.add 'hdo.count.questions.answered',         Question.answered.count
-    g.add 'hdo.count.questions.unanswered',       Question.unanswered.count
-    g.add 'hdo.count.questions.approved',         Question.approved.count
-    g.add 'hdo.count.questions.pending',          Question.pending.count
-    g.add 'hdo.count.questions.rejected',         Question.rejected.count
-
     g.add 'hdo.count.promises.total',             Promise.count
     g.add 'hdo.count.promises.connected',         PromiseConnection.includes(:issue).where("issues.status" => "published").select(:promise_id).count
-    g.add 'hdo.count.votes.connected',            PropositionConnection.includes(:issue).where("issues.status" => "published").select(:vote_id).count
+    g.add 'hdo.count.propositions.connected',     PropositionConnection.includes(:issue).where("issues.status" => "published").select(:proposition_id).count
 
     g.add 'hdo.count.representatives.opted_out',  Representative.opted_out.count
     g.add 'hdo.count.representatives.registered', Representative.registered.count
 
-    leaderboard = Hdo::Stats::Leaderboard.new(Issue.published, ParliamentPeriod.named('2009-2013'))
-    leaderboard.by_party.each do |party, counts|
-      counts.each do |key, count|
-        g.add "hdo.count.issues.#{party.slug}.#{key}", count
+    previous_period = ParliamentPeriod.previous
+    current_period  = ParliamentPeriod.current
+    current_session = ParliamentSession.current
+
+    [previous_period, current_period].each do |period|
+      leaderboard = Hdo::Stats::Leaderboard.new(Issue.published, period)
+      leaderboard.by_party.each do |party, counts|
+        counts.each do |key, count|
+          g.add "hdo.count.issues.#{period.name}.#{party.slug}.#{key}", count
+        end
       end
     end
+
+    counts = Hdo::Stats::PropositionCounts.from_session(current_session.name)
+
+    g.add "hdo.count.propositions.#{current_session.name}.published", counts.published
+    g.add "hdo.count.propositions.#{current_session.name}.pending", counts.pending
+    g.add "hdo.count.propositions.#{current_session.name}.total", counts.total
   end
 
   task :submit => %w[facebook stortinget holderdeord] do
