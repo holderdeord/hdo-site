@@ -6,10 +6,13 @@ namespace :graphite do
 
   task :facebook => :env do
     g = Hdo::Utils::GraphiteReporter.instance
+    Hdo::Utils::FacebookStats.new.stats.each { |k, v| g.add k, v }
+  end
 
-    Hdo::Utils::FacebookStats.new.stats.each do |key, value|
-      g.add key, value
-    end
+  task :twitter => :env do
+    g = Hdo::Utils::GraphiteReporter.instance
+
+    Hdo::Utils::TwitterStats.new.stats.each { |k, v| g.add k, v }
   end
 
   task :stortinget => :env do
@@ -54,7 +57,7 @@ namespace :graphite do
     g.add "hdo.count.propositions.#{current_session.name}.total", counts.total
   end
 
-  task :submit => %w[facebook stortinget holderdeord] do
+  task :submit => %w[facebook twitter stortinget holderdeord] do
     Hdo::Utils::GraphiteReporter.instance.submit
   end
 

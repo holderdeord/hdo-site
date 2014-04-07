@@ -53,6 +53,7 @@ GEM
     better_errors (1.0.1)
       coderay (>= 1.0.0)
       erubis (>= 2.6.6)
+    buftok (0.2.0)
     builder (3.0.4)
     bullet (4.5.0)
       uniform_notifier
@@ -113,6 +114,7 @@ GEM
     elasticsearch-transport (0.4.7)
       faraday
       multi_json
+    equalizer (0.0.9)
     erubis (2.7.0)
     ethon (0.6.2)
       ffi (>= 1.3.0)
@@ -160,6 +162,9 @@ GEM
     hike (1.2.3)
     hipchat (0.12.0)
       httparty
+    http (0.5.0)
+      http_parser.rb
+    http_parser.rb (0.6.0)
     httparty (0.12.0)
       json (~> 1.8)
       multi_xml (>= 0.5.2)
@@ -199,6 +204,8 @@ GEM
     mail (2.5.4)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
+    memoizable (0.4.0)
+      thread_safe (~> 0.1.3)
     meta_request (0.2.8)
       callsite
       rack-contrib
@@ -212,6 +219,7 @@ GEM
     multi_test (0.0.3)
     multi_xml (0.5.5)
     multipart-post (2.0.0)
+    naught (1.0.0)
     net-http-persistent (2.9)
     net-scp (1.1.0)
       net-ssh (>= 2.6.5)
@@ -312,6 +320,7 @@ GEM
       rubyzip (~> 1.0)
       websocket (~> 1.0.4)
     settingslogic (2.0.9)
+    simple_oauth (0.2.0)
     simplecov (0.7.1)
       multi_json (~> 1.0)
       simplecov-html (~> 0.7.1)
@@ -341,6 +350,17 @@ GEM
     treetop (1.4.15)
       polyglot
       polyglot (>= 0.3.1)
+    twitter (5.8.0)
+      addressable (~> 2.3)
+      buftok (~> 0.2.0)
+      equalizer (~> 0.0.9)
+      faraday (~> 0.9.0)
+      http (~> 0.5.0)
+      http_parser.rb (~> 0.6.0)
+      json (~> 1.8)
+      memoizable (~> 0.4.0)
+      naught (~> 1.0)
+      simple_oauth (~> 0.2.0)
     typhoeus (0.6.7)
       ethon (~> 0.6.2)
     tzinfo (0.3.39)
@@ -420,6 +440,7 @@ DEPENDENCIES
   statsd-ruby
   therubyracer
   thin
+  twitter
   typhoeus
   uglifier (>= 1.0.3)
   unicode_utils

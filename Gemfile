@@ -57,7 +57,10 @@ end
 gem 'capistrano', '~> 2.13'
 gem 'capistrano-maintenance'
 gem 'capistrano-ext'
+
+# services
 gem 'hipchat'
+gem 'twitter'
 
 # frontend stuff
 gem 'jquery-rails', '>= 3.0.4'
