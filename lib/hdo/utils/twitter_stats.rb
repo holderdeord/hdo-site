@@ -26,7 +26,7 @@ module Hdo
 
         usernames.keys.sort.each_slice(50) do |slice|
           @client.users(slice).each do |user|
-            slug = usernames[user.screen_name]
+            slug = usernames[user.screen_name] || next
 
             data["twitter.#{slug}.followers"] = user.followers_count
             data["twitter.#{slug}.following"] = user.friends_count
