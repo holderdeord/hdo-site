@@ -14,6 +14,7 @@ module Hdo
           propositions.map { |proposition| Entry.new(result, proposition) }
         end
 
+        entries = entries.uniq_by { |e| e.description }
         entries = entries.first(@limit) if @limit
 
         entries
