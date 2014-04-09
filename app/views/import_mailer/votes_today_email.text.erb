@@ -4,4 +4,4 @@ Saker med nye avstemninger for <%= l 1.day.ago, format: :text %>:
 * <%= parliament_issue_url pi %> <%= pi.summary %>
 <% end %>
 
-<%= @proposition_counts.pending %> (<%= @proposition_counts.pending_percentage %>%) forslag venter på publisering.
+<%= @proposition_counts.pending %> av <%= @proposition_counts.total %> forslag venter på publisering.
