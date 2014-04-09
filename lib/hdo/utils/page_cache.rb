@@ -35,8 +35,15 @@ module Hdo
         @purger.execute
       end
 
-      def expire_question(question)
-        # TODO: expire_question
+      def expire_representatives
+        Representative.all.map do |r|
+          @purger.add representative_url(r)
+        end
+      end
+
+      def expire_people
+        @purger.add home_people_url
+        @purger.execute
       end
 
       class Purger

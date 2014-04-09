@@ -44,6 +44,7 @@ class Admin::UsersController < AdminController
     end
 
     if @user.save
+      PageCache.expire_people
       redirect_to admin_user_path(@user), notice: t('app.created.user')
     else
       render action: 'new'
@@ -66,6 +67,7 @@ class Admin::UsersController < AdminController
     end
 
     if @user.update_attributes(attrs)
+      PageCache.expire_people
       redirect_to admin_user_path(@user), notice: t('app.updated.user')
     else
       render action: "edit"
