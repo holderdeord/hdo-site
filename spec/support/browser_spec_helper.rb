@@ -46,7 +46,6 @@ module BrowserSpecHelper
     $spec_app = Thread.new do
       Rack::Server.new(:app         => Hdo::Application,
                        :environment => Rails.env,
-                       :server      => 'puma',
                        :Port        => port_to_use).start
     end
 
