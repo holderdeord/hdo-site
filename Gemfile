@@ -45,7 +45,7 @@ group :test, :development do
 end
 
 group :development do
-  gem 'thin'
+  gem 'puma'
   gem "rails-erd"
   gem 'quiet_assets'
   gem 'bullet'
