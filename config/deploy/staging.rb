@@ -1,5 +1,5 @@
-role :web, 'hetzner03.holderdeord.no'
-role :app, 'hetzner03.holderdeord.no'
-role :db,  'hetzner03.holderdeord.no', :primary => true
+role :web, 'staging.holderdeord.no'
+role :app, 'staging.holderdeord.no'
+role :db,  'staging.holderdeord.no', :primary => true
 
 set :rails_env, 'staging'
