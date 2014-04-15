@@ -13,6 +13,7 @@ class Proposition < ActiveRecord::Base
       indexes :parliament_session_name,               type: :string,  index: :not_analyzed
       indexes :id,                                    type: :integer, index: :not_analyzed
       indexes :interesting,                           type: :boolean
+      indexes :starred,                               type: :boolean
       indexes :committee_names,                       type: :string,  index: :not_analyzed
       indexes :category_names,                        type: :string,  index: :not_analyzed
       indexes :parliament_issue_type_names,           type: :string,  index: :not_analyzed
@@ -38,7 +39,8 @@ class Proposition < ActiveRecord::Base
   update_index_on_change_of :proposition_connections
 
   attr_accessible :description, :on_behalf_of, :body, :representative_id,
-                  :simple_description, :simple_body, :status, :interesting
+                  :simple_description, :simple_body, :status,
+                  :interesting, :starred
 
   has_and_belongs_to_many :votes, uniq: true
   has_many :proposition_connections, dependent: :destroy
@@ -156,6 +158,6 @@ class Proposition < ActiveRecord::Base
     as_json methods: methods,
             include: {votes: {only: [:slug, :enacted]} },
             only:    [:description, :on_behalf_of, :status, :id,
-                      :simple_description, :simple_body, :interesting]
+                      :simple_description, :simple_body, :interesting, :starred]
   end
 end
