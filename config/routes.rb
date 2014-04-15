@@ -14,8 +14,8 @@ Hdo::Application.routes.draw do
     resources :issues do
       member do
         # new
-        get 'edit/next'     => 'new_issues#edit', as: :edit_next
-        put 'edit/next'    => 'new_issues#update'
+        get 'edit/next'  => 'new_issues#edit', as: :edit_next
+        put  'edit/next' => 'new_issues#update'
 
         # old
         get 'edit/:step'   => 'issues#edit',         as: :edit_step
@@ -23,8 +23,10 @@ Hdo::Application.routes.draw do
       end
 
       collection do
-        get 'promises/:ids' => 'new_issues#promises'
-        get 'propositions/:ids' => 'new_issues#propositions'
+        post 'next'              => 'new_issues#create',  as: :create_next
+        get  'new/next'          => 'new_issues#new',     as: :new_next
+        get  'promises/:ids'     => 'new_issues#promises'
+        get  'propositions/:ids' => 'new_issues#propositions'
       end
     end
 

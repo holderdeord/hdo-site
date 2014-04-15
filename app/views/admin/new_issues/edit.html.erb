@@ -94,8 +94,8 @@
   $(function() {
     issueEditor = HDO.issueEditor.create({
       root: "#issue-editor",
-      url: "<%= edit_next_admin_issue_path(@issue) %>",
-      id: <%= @issue.id %>
+      url: "<%= @issue.new_record? ? create_next_admin_issues_path : edit_next_admin_issue_path(@issue) %>",
+      id: <%= @issue.id || -1 %>
     });
 
     issueEditor.init();

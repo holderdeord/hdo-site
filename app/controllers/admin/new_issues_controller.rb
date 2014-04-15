@@ -1,21 +1,30 @@
 class Admin::NewIssuesController < AdminController
   before_filter :fetch_issue, only: [:edit, :update]
-  before_filter :fetch_sections, only: [:edit, :update]
+  before_filter :fetch_sections, only: [:new, :create, :edit, :update]
   before_filter :authorize_edit
+
+  def new
+    @issue = Issue.new(status: 'in_progress')
+    render 'edit'
+  end
+
+  def create
+    @issue = Issue.new(params[:issue])
+    @issue.last_updated_by = current_user
+
+    if @issue.save
+      save_issue
+    else
+      render text: @issue.errors.full_messages.to_sentence, status: :unprocessable_entity
+    end
+  end
 
   def edit
   end
 
   def update
     logger.info "updating issue: #{params.to_json}"
-    ok = Hdo::IssueUpdater.new(@issue, params, current_user).update
-
-    if ok
-      PageCache.expire_issue(@issue)
-      render json: { location: edit_next_admin_issue_path(@issue) }
-    else
-      render text: @issue.errors.full_messages.to_sentence, status: :unprocessable_entity
-    end
+    save_issue
   end
 
   def promises
@@ -57,6 +66,17 @@ class Admin::NewIssuesController < AdminController
       positions: 'Posisjoner',
       party_comments: 'Partikommentarer'
     }
+  end
+
+  def save_issue
+    ok = Hdo::IssueUpdater.new(@issue, params, current_user).update
+
+    if ok
+      PageCache.expire_issue(@issue)
+      render json: { location: edit_next_admin_issue_path(@issue) }
+    else
+      render text: @issue.errors.full_messages.to_sentence, status: :unprocessable_entity
+    end
   end
 
 end

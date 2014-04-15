@@ -36,7 +36,7 @@
 
     <%=
         form.select :status,
-                    options_for_select(Issue::STATUSES.map { |s| [t("app.issues.status.#{s}"), s] }),
+                    options_for_select(Issue::STATUSES.map { |s| [t("app.issues.status.#{s}"), s] }, selected: @issue.status),
                     class: 'input-small'
      %>
 

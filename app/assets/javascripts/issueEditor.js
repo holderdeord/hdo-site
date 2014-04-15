@@ -17,7 +17,7 @@
 
       HDO.markdownEditor();
 
-      this.form                  = $('form.edit_issue');
+      this.form                  = $('form.edit_issue, form.new_issue');
       this.saveButton            = this.root.find('button[name=save]');
       this.editorSelect          = this.root.find('select#issue_editor_id');
       this.categorySelect        = this.root.find('select#issue_category_ids');
