@@ -120,7 +120,7 @@ If you used [Postgres.app](http://postgresapp.com/), make sure you've set up the
     $ [sudo] bundle install
     $ cp config/database.yml.example config/database.yml
     $ rake db:setup
-    $ rails server
+    $ rails server puma
 
 # Data
 
