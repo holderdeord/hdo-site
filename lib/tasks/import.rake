@@ -14,25 +14,25 @@ namespace :import do
       Hdo::Import::CLI.new(['json', "http://files.holderdeord.no/dev/data/promises.dev.json"]).run
     end
 
-    desc 'Import a (reduced) production dump to the development db'
-    task :dump => ['tmp/db.download.sql', :verify] do
-      puts "Importing production dump"
-
-      un = YAML.load_file(Rails.root.join('config/database.yml'))['development']['username']
-
-      if un
-        sh "psql -U #{un} hdo_development < tmp/db.download.sql"
-      else
-        sh "psql hdo_development < tmp/db.download.sql"
-      end
-    end
-
     REMOTE_DUMP = "http://files.holderdeord.no/dev/data/db.dev.sql"
     LOCAL_DUMP  = 'tmp/db.download.sql'
 
     file LOCAL_DUMP do |t|
       puts "Downloading DB dump from #{REMOTE_DUMP}..."
       sh "curl", REMOTE_DUMP, "--create-dirs", "--output", t.name
+    end
+
+    desc 'Import a (reduced) production dump to the development db'
+    task :dump => [LOCAL_DUMP, :verify] do
+      puts "Importing production dump"
+
+      un = YAML.load_file(Rails.root.join('config/database.yml'))['development']['username']
+
+      if un
+        sh "psql -U #{un} hdo_development < #{LOCAL_DUMP}"
+      else
+        sh "psql hdo_development < #{LOCAL_DUMP}"
+      end
     end
 
     task :verify do
