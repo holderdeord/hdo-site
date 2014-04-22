@@ -3,7 +3,7 @@
 class IssuesController < ApplicationController
   before_filter :fetch_issue, except: [:index, :admin_info, :votes]
 
-  hdo_caches_page :index, :show, :votes
+  hdo_caches_page :index, :votes
 
   def index
     @groups = Issue.published.in_tag_groups
@@ -11,6 +11,8 @@ class IssuesController < ApplicationController
   end
 
   def show
+    set_default_expiry unless params[:next]
+
     if policy(@issue).show?
       fresh_when @issue, public: can_cache?
       @issue = IssueDecorator.decorate(@issue)

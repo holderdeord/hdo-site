@@ -48,6 +48,16 @@ class IssueDecorator < Draper::Decorator
              map { |year, days| OpenStruct.new(:year => year, :days => days) }
     end
 
+    def promisors
+      @promises ||= @issue.promise_connections.joins(:promise).
+                      where('promises.parliament_period_id' => @parliament_period).
+                      group_by { |e| e.promise.promisor }.
+                      sort_by { |promisor, _| [promisor.kind_of?(Party) ? 0 : 1, promisor.name] }.
+                      map { |promisor, connections| Promisor.new(promisor, connections) }
+
+    end
+
+
     def positions
       @positions ||= @issue.positions.where(parliament_period_id: @parliament_period).order(:priority).map { |pos| Position.new(@issue, pos) }
     end
@@ -118,6 +128,16 @@ class IssueDecorator < Draper::Decorator
 
   class PartyInfo < Struct.new(:party, :comment, :promises, :accountability)
     delegate :logo, :slug, :name, to: :party
+  end
+
+  class Promisor < Struct.new(:promisor, :connections)
+    def parties
+      promisor.kind_of?(Government) ? promisor.parties : [promisor]
+    end
+
+    def teaser
+      connections.first.promise.body.truncate(100)
+    end
   end
 
   class Day
