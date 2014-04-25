@@ -27,7 +27,7 @@
           <%= prop.on_behalf_of %>
         <% end %>
         </td>
-        <td><%= (prop.simple_body || prop.body.html_safe) %></td>
+        <td><%= (prop.simple_body ? markdown(proposition.simple_body) : prop.body).html_safe %></td>
       </tr>
     <% end %>
   </tbody>
