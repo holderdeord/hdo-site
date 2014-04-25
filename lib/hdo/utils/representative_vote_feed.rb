@@ -43,7 +43,7 @@ module Hdo
         end
 
         def issues
-          proposition.issues
+          proposition.issues.published
         end
 
         def description
