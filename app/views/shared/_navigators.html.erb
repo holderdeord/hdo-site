@@ -4,7 +4,7 @@
   <% end %>
 
   <% search.navigators.each do |nav| %>
-    <div class="navigator-<%= nav.param %>">
+    <div class="navigator navigator-<%= nav.param %>">
       <h4><%= nav.title %></h4>
 
       <% if nav.keyword? %>
@@ -13,7 +13,7 @@
 
         <ul class="unstyled">
           <% nav.each_term do |term| %>
-            <li class="<%= 'active' if term.active %>">
+            <li class="term <%= 'active' if term.active %>">
               <% if term.active %>
                 <%= link_to 'X', term.clear_url, class: 'pull-right' %>
               <% end %>
@@ -22,6 +22,14 @@
             </li>
           <% end %>
         </ul>
+      <% elsif nav.boolean? %>
+        <div class="term <%= 'active' if nav.active? %>">
+          <% if nav.active? %>
+            <%= link_to 'X', nav.clear_url, class: 'pull-right' %>
+          <% end %>
+
+          <%= link_to nav.title, nav.filter_url %>
+        </div>
       <% end %>
     </div>
   <% end %>

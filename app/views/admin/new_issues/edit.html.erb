@@ -52,7 +52,7 @@
 
       <ul class="unstyled">
         {{#terms}}
-          <li class="{{#active}}active{{/active}}">
+          <li class="term {{#active}}active{{/active}}">
             <a href="{{filter_url}}">{{name}}</a>  ({{count}})
             {{#active}}
               <a href="{{clear_url}}" class="pull-right">X</a>
@@ -60,6 +60,15 @@
           </li>
         {{/terms}}
       </ul>
+    {{/if}}
+
+    {{#if type.boolean}}
+      <div class="term {{#active}}active{{/active}}">
+        <a href="{{filter_url}}">{{title}}</a>
+        {{#active}}
+          <a href="{{clear_url}}" class="pull-right">X</a>
+        {{/active}}
+      </div>
     {{/if}}
   </div>
 {{/navigators}}

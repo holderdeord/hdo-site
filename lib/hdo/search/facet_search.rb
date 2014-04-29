@@ -8,7 +8,7 @@ module Hdo
         attr_accessor :size
 
         # defaults
-        search_param :q
+        search_param :q, title: 'Søk'
         search_param :page
       end
 
@@ -56,6 +56,12 @@ module Hdo
       def initialize(params, view_context)
         @query        = params.slice(*self.class.search_params.keys)
         @view_context = view_context
+
+        @ignored      = []
+      end
+
+      def ignore(param)
+        @ignored << param
       end
 
       def url(params = {})
@@ -69,16 +75,25 @@ module Hdo
       def navigators
         data = response.response['facets']
 
-        navs = facet_params.map do |param, opts|
-          field = opts.fetch(:field).to_s
-          title = opts.fetch(:title).to_s
+        search_params.map do |param, opts|
+          next if param == :page
 
-          FacetNavigator.new self, @query, title, param, data[field]
-        end
+          p opts
 
-        navs.unshift KeywordNavigator.new(self, @query, 'Søk')
+          if opts[:facet]
+            opts = opts[:facet]
 
-        navs
+            title = opts.fetch(:title).to_s
+            field = opts.fetch(:field).to_s
+            FacetNavigator.new self, @query, title, param, data[field]
+          elsif param == :q
+            KeywordNavigator.new self, @query, opts.fetch(:title), param
+          elsif opts[:boolean]
+            BooleanNavigator.new self, @query, opts.fetch(:title), param
+          else
+            raise "unknown search param type: #{param}"
+          end
+        end.compact
       end
 
       def records
@@ -116,6 +131,10 @@ module Hdo
       private
 
       attr_reader :view_context
+
+      def search_params
+        self.class.search_params.reject { |key, _| @ignored.include?(key) }
+      end
 
       def page
         @query[:page] || 1
@@ -169,12 +188,23 @@ module Hdo
             filters << {term: {field => @query[name] }} if @query[name].present?
           end
 
+          boolean_params.each do |name, opts|
+            filters << {term: {name => true}} if @query[name] == 'true'
+          end
+
           filters
         )
       end
 
       def facet_params
-        @facet_params ||= self.class.search_params.select { |name, opts| opts && opts[:facet] }.map { |name, opts| [name, opts[:facet]] }
+        @facet_params ||= search_params.
+          select { |name, opts| opts && opts[:facet] }.
+          map    { |name, opts| [name, opts[:facet]] }
+      end
+
+      def boolean_params
+        @boolean_params ||= search_params.
+          select { |name, opts| opts && opts[:boolean] }
       end
 
       def facets
@@ -202,10 +232,11 @@ module Hdo
       class Navigator
         attr_reader :param, :title
 
-        def initialize(search, query, title)
+        def initialize(search, query, title, param)
           @search = search
           @query  =  query
           @title  = title
+          @param  = param
         end
 
         def type
@@ -220,24 +251,26 @@ module Hdo
           type == :facet
         end
 
+        def boolean?
+          type == :boolean
+        end
+
         def as_json(opts = nil)
           {
             query: @query,
             title: @title,
             param: @param,
-            type: {keyword: keyword?, facet: facet?}
+            type: {keyword: keyword?, facet: facet?, boolean: boolean?}
           }
         end
       end
 
       class FacetNavigator < Navigator
-
         def initialize(search, query, title, param, data)
-          super(search, query, title)
+          super(search, query, title, param)
 
           @search = search
           @query  = query[param]
-          @param  = param
           @title  = title
           @total  = data['total']
           @terms  = data['terms'].sort_by { |e| e['term'] }
@@ -294,11 +327,6 @@ module Hdo
       end # FacetNavigator
 
       class KeywordNavigator < Navigator
-        def initialize(search, query, title)
-          super
-          @param = :q
-        end
-
         def type
           :keyword
         end
@@ -309,11 +337,42 @@ module Hdo
 
         def as_json(opts = nil)
           super.merge(
-            filter_url: @search.url(q: '{query}', page: nil),
+            filter_url: @search.url(@param => '{query}', :page => nil),
             value: value
           )
         end
       end # KeywordNavigator
+
+      class BooleanNavigator < Navigator
+        def type
+          :boolean
+        end
+
+        def value
+          @search.query[param]
+        end
+
+        def filter_url
+          @search.url(@param => 'true', :page => nil)
+        end
+
+        def clear_url
+          @search.url(@param => nil, :page => nil)
+        end
+
+        def active?
+          value == 'true'
+        end
+
+        def as_json(opts = nil)
+          super.merge(
+            filter_url: filter_url,
+            clear_url: clear_url,
+            value: value,
+            active: active?
+          )
+        end
+      end
 
     end # FacetSearch
   end # Search

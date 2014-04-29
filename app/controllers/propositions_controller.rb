@@ -5,6 +5,10 @@ class PropositionsController < ApplicationController
   def index
     @search = Hdo::Search::Propositions.new(params, view_context)
 
+    unless current_user && request.xhr?
+      @search.ignore :starred
+    end
+
     respond_to do |format|
       format.html
       format.json { render json: @search.as_json }
