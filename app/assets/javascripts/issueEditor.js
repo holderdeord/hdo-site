@@ -97,10 +97,16 @@
 
     newPosition: function (e) {
       var position, created, template;
+      this.newPositionId = this.newPositionId || 0;
 
       e.preventDefault();
 
-      position = { id: 0, party_ids: [], priority: 0 };
+      position = {
+        id: --this.newPositionId,
+        party_ids: [],
+        priority: 0
+      };
+
       template = this.templates['position-template'];
 
       created = $(template(position)).prependTo('.positions');
