@@ -319,7 +319,7 @@ nb:
         parties: Partier
         description: Beskrivelse
         title: Tittel
-        priority: Prioritet
+        priority: Rekkefølge
         parliament_period: Stortingsperiode
       government:
         name: Navn
