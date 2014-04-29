@@ -32,7 +32,6 @@
         <td>
           <p class="pull-right">
             <%= link_to t('app.edit'), edit_next_admin_issue_path(issue), class: 'btn btn-mini' %>
-            <%= link_to t('app.edit') + ' (gammel)', edit_admin_issue_path(issue), class: 'btn btn-mini' %>
             <%= link_to t('app.destroy'), admin_issue_path(issue), class: 'btn btn-mini btn-danger',
                         method: :delete,
                         data: { confirm: t('app.issues.edit.confirm_destroy', title: issue.title) } %>
