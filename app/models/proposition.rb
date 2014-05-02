@@ -110,6 +110,13 @@ class Proposition < ActiveRecord::Base
     @source_guess ||= Hdo::Utils::PropositionSourceGuesser.parties_for("#{on_behalf_of} #{description}")
   end
 
+  def related_propositions
+    related_propositions = parliament_issues.flat_map { |e| e.votes.flat_map(&:propositions) }.uniq
+    related_propositions.delete self
+
+    related_propositions
+  end
+
   #
   # for indexing:
   #

@@ -1,5 +1,5 @@
 class PropositionDecorator < Draper::Decorator
-  delegate :id, :to_param, :next, :previous
+  delegate :id, :to_param, :next, :previous, :issues
 
   def title
     str = model.simple_description || model.description
@@ -33,6 +33,10 @@ class PropositionDecorator < Draper::Decorator
 
   def vote
     @vote ||= model.votes.find { |e| e.personal? } || model.votes.first
+  end
+
+  def related_propositions
+    @related_propositions ||= self.class.decorate_collection(model.related_propositions)
   end
 
   def proposers

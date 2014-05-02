@@ -14,9 +14,8 @@ class Admin::PropositionsController < AdminController
   def edit
     @search               = Hdo::Search::AdminPropositionSearch.new(search_session, @proposition.id)
     @stats                = @search.stats
-    @parliament_issues    = @proposition.votes.includes(:parliament_issues => {votes: :propositions}).flat_map(&:parliament_issues).uniq
-
-    @related_propositions = fetch_related_propositions
+    @parliament_issues    = @proposition.parliament_issues
+    @related_propositions = PropositionDecorator.decorate_collection(@proposition.related_propositions)
   end
 
   def update
@@ -48,13 +47,6 @@ class Admin::PropositionsController < AdminController
 
   def fetch_proposition
     @proposition = Proposition.find(params[:id])
-  end
-
-  def fetch_related_propositions
-    @related_propositions = @parliament_issues.flat_map { |e| e.votes.flat_map(&:propositions) }.uniq
-    @related_propositions.delete @proposition
-
-    @related_propositions = PropositionDecorator.decorate_collection(@related_propositions)
   end
 
   def update_issues
