@@ -59,6 +59,30 @@
               <div class="span6 vote">
                 <%= link_to vote.title_with_fallback, vote.vote, class: 'vote-title' %>
                 <div class="vote-detail"><%= vote.html_comment.html_safe %></div>
+                
+                <hr class="soften">
+                
+                <div class="row-fluid">
+                  <small>
+                    <div class="span6">
+                      <strong>For</strong>
+                      <ul class="unstyled">
+                        <% vote.proposition.decorate.supporters.map(&:name).each do |name| %> 
+                          <li><%= name %></li>
+                        <% end %>
+                      </ul>
+                    </div>
+
+                    <div class="span6">
+                      <strong>Mot</strong>
+                      <ul class="unstyled">
+                        <% vote.proposition.decorate.opposers.map(&:name).each do |name| %> 
+                          <li><%= name %></li>
+                        <% end %>
+                      </ul>
+                    </div>
+                  </small>
+                </div>
               </div>
               <% end %>
             </div>
