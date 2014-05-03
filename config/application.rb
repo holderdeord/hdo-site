@@ -53,6 +53,10 @@ module Hdo
 
     # Configure sensitive parameters which will be filtered from the log file.
     config.filter_parameters += [:password]
+    
+    config.lograge.custom_options = lambda do |event|
+      {:time => event.time.iso8601}
+    end
 
     # Use SQL instead of Active Record's schema dumper when creating the database.
     # This is necessary if your schema can't be completely dumped by the schema dumper,
