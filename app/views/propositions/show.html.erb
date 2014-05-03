@@ -71,17 +71,17 @@
 </div>
 
   <small class="row-fluid">
-    <% if @proposition.issues.any? %>
       <div class="span6">
-        Relaterte saker
+        <% if @proposition.issues.any? %>
+          Relaterte saker
 
-        <ul>
-        <% @proposition.issues.published.each do |issue| %>
-          <li><%= link_to issue.title, issue %></li>
+          <ul>
+          <% @proposition.issues.published.each do |issue| %>
+            <li><%= link_to issue.title, issue %></li>
+          <% end %>
+          </ul>
         <% end %>
-        </ul>
       </div>
-    <% end %>
 
     <% if @proposition.related_propositions.any? %>
       <div class="span6">
