@@ -8,8 +8,10 @@
 
     <!-- promises -->
     <div class="row-fluid <%= 'hidden' if period.promisors.empty? %>">
-      <div class="span9 offset2">
-        <h4>Hva har blitt lovet</h4>
+      <div class="row-fluid">
+        <div class="span9 offset2">
+          <h4>Hva har blitt lovet</h4>
+        </div>
       </div>
 
       <% period.promisors.each do |promisor| %>
@@ -30,12 +32,12 @@
             <span class="teaser">
               <%= promisor.teaser %>
             </span>
-            
+
             <div class="promises">
               <ul>
                 <% promisor.promises.each do |promise| %>
                   <li>
-                    <%= promise.body %> 
+                    <%= promise.body %>
                     <%= link_to promise, target: '_blank' do %>
                       <%= image_tag 'link.png', width: '12' %>
                     <% end %>
@@ -46,9 +48,9 @@
           </div>
         </div>
       <% end %>
-      
+
       <hr class="divider">
-      
+
     </div>
 
     <!-- positions -->
@@ -79,33 +81,16 @@
 
     <!-- accountability -->
     <div class="row-fluid">
-      <div class="row-fluid">
-        <div class="span9 offset2">
-          <h4>Vår vurdering</h4>
-        </div>
+      <div class="span9 offset2">
+        <h4>Vår vurdering</h4>
       </div>
-
-      <% period.positions.flat_map(&:parties).uniq.sort_by(&:name).each do |party| %>
-        <div class="row-fluid group">
-          <div class="span1 offset1"><%= image_tag party.logo.versions[:medium], alt: "#{party.name}s logo" %></div>
-          <div class="span10"><%= party.accountability %></div>
-        </div>
-      <% end %>
     </div>
 
+    <% period.positions.flat_map(&:parties).uniq.sort_by(&:name).each do |party| %>
+      <div class="row-fluid group">
+        <div class="span1 offset1"><%= image_tag party.logo.versions[:medium], alt: "#{party.name}s logo" %></div>
+        <div class="span10"><%= party.accountability %></div>
+      </div>
+    <% end %>
   </div>
-<% end %>
-
-<% content_for :document_ready do %>
-  <script type="text/javascript" charset="utf-8">
-    var lists = $(".promise-list")
-
-    lists.on('click', '.expandable, .expanded, .teaser', function (e) {
-      e.preventDefault();
-      var dt = $(e.delegateTarget);
-
-      dt.find('.expandable, .expanded').toggleClass('expandable expanded');
-      dt.find('.teaser, .promises').toggle();
-    });
-  </script>
 <% end %>
