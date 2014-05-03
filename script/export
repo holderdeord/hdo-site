@@ -5,7 +5,6 @@ require 'fileutils'
 require 'pathname'
 require 'csv'
 require 'yaml'
-require 'pry'
 
 class Export
   def initialize
