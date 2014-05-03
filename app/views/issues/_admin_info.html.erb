@@ -9,8 +9,7 @@
 
     <div class="span4 rightify">
       <% if policy(@issue).edit? %>
-        <%= link_to t('app.edit'), edit_admin_issue_path(@issue), class: 'btn btn-small' %>
-        <%= link_to t('app.edit') + ' ny', edit_next_admin_issue_path(@issue), class: 'btn btn-small' %>
+        <%= link_to t('app.edit'), edit_next_admin_issue_path(@issue), class: 'btn btn-small' %>
         <button class="btn btn-small" data-modal-url="<%= admin_issue_path(@issue) %>" href="#view-scores"><%= t 'app.issues.view_scores' %></button>
       <% end %>
     </div>
