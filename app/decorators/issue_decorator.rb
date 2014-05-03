@@ -142,15 +142,19 @@ class IssueDecorator < Draper::Decorator
     end
 
     def teaser_promise
-      @teaser_promise ||= connections.first.promise.body
+      @teaser_promise ||= teaser_connection.promise.body
     end
 
     def teaser
       teaser_promise.truncate(TEASER_LENGTH)
     end
 
+    def teaser_connection
+      connections.find { |e| !e.related? } || connections.first
+    end
+
     def promises
-      connections.map(&:promise)
+      connections.map { |c| [c.promise, c] }
     end
 
     def expandable?

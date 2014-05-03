@@ -24,19 +24,19 @@
 
           <div class="span10 promise-list">
             <% if promisor.expandable? %>
-              <span class="expandable"></span>
+              <span class="expandable <%= 'muted' if promisor.teaser_connection.related? %>"></span>
             <% else %>
               <span style="padding: 0 5px;">&nbsp;&nbsp;&nbsp;</span>
             <% end %>
 
-            <span class="teaser">
+            <span class="teaser <%= 'muted' if promisor.teaser_connection.related? %>">
               <%= promisor.teaser %>
             </span>
 
             <div class="promises">
               <ul>
-                <% promisor.promises.each do |promise| %>
-                  <li>
+                <% promisor.promises.each do |promise, connection| %>
+                  <li class="<%= 'muted' if connection.related? %>">
                     <%= promise.body %>
                     <%= link_to promise, target: '_blank' do %>
                       <%= image_tag 'link.png', width: '12' %>
