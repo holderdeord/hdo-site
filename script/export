@@ -1,0 +1,95 @@
+#!/usr/bin/env ruby
+
+require 'pg'
+require 'fileutils'
+require 'pathname'
+require 'csv'
+require 'yaml'
+require 'pry'
+
+class Export
+  def initialize
+    create_out(ARGV.first || "hdo-csv-dump.#{Time.now.strftime("%F")}")
+    @db = PG.connect(dbname: "hdo_#{ENV['RAILS_ENV'] || ENV['RACK_ENV'] || 'development'}")
+  end
+
+  def execute
+    @db.exec <<-SQL
+    CREATE OR REPLACE FUNCTION _hdo_dump_csv(path TEXT) RETURNS void AS $$
+    declare
+      tables RECORD;
+      statement TEXT;
+    begin
+      FOR tables IN
+        SELECT (table_schema || '.' || table_name) AS schema_table
+        FROM information_schema.tables AS t
+        WHERE t.table_schema = 'public'
+        AND table_name NOT IN ('questions', 'answers', 'email_events', 'users', 'taggings', 'tags', 'schema_migrations', 'issues_questions')
+
+      LOOP
+        EXECUTE 'COPY ' || tables.schema_table || ' TO ''' || path || '/' || tables.schema_table || '.csv' ||''' WITH CSV HEADER';
+      END LOOP;
+    end;
+    $$ LANGUAGE plpgsql;
+    SQL
+
+    @db.exec_params "SELECT _hdo_dump_csv($1)", [@out.to_s]
+
+    # remove sensitive data
+    remove_columns(@out.join('public.representatives.csv'), [
+      "image",
+      "encrypted_password",
+      "reset_password_token",
+      "reset_password_sent_at",
+      "remember_created_at",
+      "sign_in_count",
+      "current_sign_in_at",
+      "last_sign_in_at",
+      "current_sign_in_ip",
+      "last_sign_in_ip",
+      "confirmation_token",
+      "confirmed_at",
+      "confirmation_sent_at",
+      "attending",
+      "opted_out"
+    ])
+
+    filter(@out.join('public.issues.csv')) { |i| i['status'] != 'published' }
+  end
+
+  private
+
+  def remove_columns(path, ignored_columns)
+    data = CSV.parse(path.read, headers: true)
+    columns = data.headers - ignored_columns
+
+    str = CSV.generate do |csv|
+      csv << columns
+      data.each { |row| csv << row.to_hash.values_at(*columns) }
+    end
+
+    path.open('w') { |io| io << str }
+  end
+
+  def filter(path, &blk)
+    raw = CSV.parse(path.read, headers: true)
+    filtered = raw.reject { |e| yield e.to_hash }
+
+    str = CSV.generate do |csv|
+      csv << raw.headers
+      filtered.each { |row| csv << row }
+    end
+
+    path.open('w') { |io| io << str }
+  end
+
+  def create_out(root)
+    @out = Pathname.new("#{root}").expand_path
+    FileUtils.rm_rf @out.to_s
+    @out.mkpath
+  end
+end
+
+if __FILE__ == $0
+  Export.new.execute
+end
