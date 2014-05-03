@@ -131,12 +131,30 @@ class IssueDecorator < Draper::Decorator
   end
 
   class Promisor < Struct.new(:promisor, :connections)
+    TEASER_LENGTH = 90
+
+    def slug
+      parties.map { |e| e.slug }.join('-')
+    end
+
     def parties
       promisor.kind_of?(Government) ? promisor.parties : [promisor]
     end
 
+    def teaser_promise
+      @teaser_promise ||= connections.first.promise.body
+    end
+
     def teaser
-      connections.first.promise.body.truncate(100)
+      teaser_promise.truncate(TEASER_LENGTH)
+    end
+
+    def promises
+      connections.map(&:promise)
+    end
+
+    def expandable?
+      connections.size > 1 || teaser_promise.length >= TEASER_LENGTH
     end
   end
 

@@ -1,69 +1,111 @@
 <% if period.positions.any? %>
-  <div class="positions">
+  <div class="new-positions">
     <div class="row-fluid">
       <div class="span8 offset2">
-        <h3>Det store bildet <%= period.name %></h3>
-        <small class="muted"><%= period.explanation %></small>
+        <h3><%= period.name %> oppsummert</h3>
       </div>
     </div>
 
-    <% period.positions.each do |position| %>
-      <div class="row-fluid">
-        <div class="span9 offset2">
-          <h4><%= position.title %></h4>
-          <p class="position-description"><%= position.description %></p>
-        </div>
+    <!-- promises -->
+    <div class="row-fluid <%= 'hidden' if period.promisors.empty? %>">
+      <div class="span9 offset2">
+        <h4>Hva har blitt lovet</h4>
       </div>
 
-      <% position.parties.each do |party| %>
-        <div class="row-fluid">
-
+      <% period.promisors.each do |promisor| %>
+        <div class="row-fluid group">
           <div class="span1 offset1">
-            <%= image_tag party.logo.versions[:medium], alt: "#{party.name}s logo" %>
+            <% promisor.parties.reverse.each do |party| %>
+              <%= image_tag party.logo.versions[:medium], alt: "#{party.name}s logo" %>
+            <% end %>
           </div>
 
-          <div class="span9">
-            <%= party.accountability %>
+          <div class="span10 promise-list">
+            <% if promisor.expandable? %>
+              <span class="expandable"></span>
+            <% else %>
+              <span style="padding: 0 5px;">&nbsp;&nbsp;&nbsp;</span>
+            <% end %>
 
-            <% if party.promises.any? %>
-              <a data-toggle="collapse" data-target="#<%= [party.slug, period.name, 'promises'].join('-') %>" href="#" >
-                <% if party.promises.all?(&:related?) %>
-                  Se relaterte løfter
-                <% else %>
-                  Se løftene
+            <span class="teaser">
+              <%= promisor.teaser %>
+            </span>
+            
+            <div class="promises">
+              <ul>
+                <% promisor.promises.each do |promise| %>
+                  <li>
+                    <%= promise.body %> 
+                    <%= link_to promise, target: '_blank' do %>
+                      <%= image_tag 'link.png', width: '12' %>
+                    <% end %>
+                  </li>
                 <% end %>
-              </a>
-            <% end %>
-
-            <% if party.comment.present? %>
-              &nbsp;
-              <a data-toggle="collapse" data-target="#<%= [party.slug, period.name, 'comments'].join('-') %>" href="#">
-                <%= party.name %>s kommentar
-              </a>
-            <% end %>
-
-            <% if party.promises.any? %>
-              <div class="collapse promises" id="<%= [party.slug, period.name, 'promises'].join('-') %>">
-                <ul>
-                  <% party.promises.each do |p| %>
-                    <li class="promise-<%= p.status %> <%= 'muted' if p.related? %>">
-                      <%= link_to p.promise.body, p.promise %>
-                    </li>
-                  <% end %>
-                </ul>
-              </div>
-            <% end %>
-
-            <% if party.comment.present? %>
-              <div class="collapse party-comments" id="<%= [party.slug, period.name, 'comments'].join('-') %>">
-                <small class="muted">Kommentar fra <%= party.name %>, <%= l party.comment.created_at, format: :text %></small>
-                <blockquote><%= markdown(party.comment.body).html_safe %></blockquote>
-              </div>
-            <% end %>
-
+              </ul>
+            </div>
           </div>
         </div>
       <% end %>
-    <% end %>
+      
+      <hr class="divider">
+      
+    </div>
+
+    <!-- positions -->
+    <div class="row-fluid">
+      <div class="row-fluid">
+        <div class="span9 offset2">
+          <h4>Hva har blitt stemt</h4>
+          <small class="muted"><%= period.explanation %></small>
+        </div>
+      </div>
+
+      <% period.positions.each do |position| %>
+      <div class="row-fluid group position">
+        <div class="span1 offset1">
+          <% position.parties.reverse.each do |party| %>
+            <%= image_tag party.logo.versions[:medium], alt: "#{party.name}s logo" %>
+          <% end %>
+        </div>
+
+        <div class="span9">
+          <div><strong><%= position.title %></strong></div>
+          <div><%= position.description %></div>
+        </div>
+      </div>
+      <% end %>
+    </div>
+    <hr class="divider">
+
+    <!-- accountability -->
+    <div class="row-fluid">
+      <div class="row-fluid">
+        <div class="span9 offset2">
+          <h4>Vår vurdering</h4>
+        </div>
+      </div>
+
+      <% period.positions.flat_map(&:parties).uniq.sort_by(&:name).each do |party| %>
+        <div class="row-fluid group">
+          <div class="span1 offset1"><%= image_tag party.logo.versions[:medium], alt: "#{party.name}s logo" %></div>
+          <div class="span10"><%= party.accountability %></div>
+        </div>
+      <% end %>
+    </div>
+
   </div>
+<% end %>
+
+<% content_for :document_ready do %>
+  <script type="text/javascript" charset="utf-8">
+    var lists = $(".promise-list")
+
+    lists.on('click', '.expandable, .expanded, .teaser', function (e) {
+      e.preventDefault();
+      var dt = $(e.delegateTarget);
+
+      dt.find('.expandable, .expanded').toggleClass('expandable expanded');
+      dt.find('.teaser, .promises').toggle();
+    });
+  </script>
 <% end %>

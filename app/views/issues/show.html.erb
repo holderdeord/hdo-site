@@ -38,11 +38,7 @@
   <p class="issue-description"><%= @issue.description %></p>
 
   <% @issue.periods.each do |period| %>
-    <% if params[:next] %>
-      <%= render partial: 'new_period_summary', locals: {period: period} %>
-    <% else %>
-      <%= render partial: 'period_summary', locals: {period: period} %>
-    <% end %>
+    <%= render partial: 'period_summary', locals: {period: period} %>
 
     <div class="timeline">
       <% period.years.each do |year| %>
@@ -72,9 +68,3 @@
     </div>
   <% end %>
 </article>
-
-<% content_for :document_ready do %>
-  <script type="text/javascript" charset="utf-8">
-    $("a[data-toggle]").on('click', function(e) { $(this).toggleClass('expanded'); e.preventDefault(); });
-  </script>
-<% end %>
