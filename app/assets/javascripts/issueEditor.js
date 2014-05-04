@@ -112,8 +112,8 @@
       created = $(template(position)).prependTo('.positions');
       created.addClass('new');
       created.find('.expandable, .expanded').toggleClass('expandable expanded');
-
       created.find('.position-parties').chosen();
+
       HDO.markdownEditor({root: created});
     },
 
