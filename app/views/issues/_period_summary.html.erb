@@ -50,7 +50,6 @@
       <% end %>
 
       <hr class="divider">
-
     </div>
 
     <!-- positions -->
@@ -89,7 +88,21 @@
     <% period.positions.flat_map(&:parties).uniq.sort_by(&:name).each do |party| %>
       <div class="row-fluid group">
         <div class="span1 offset1"><%= image_tag party.logo.versions[:medium], alt: "#{party.name}s logo" %></div>
-        <div class="span10"><%= party.accountability %></div>
+        <div class="span10">
+          <%= party.accountability %>
+
+          <% if party.comment.present? %>
+            <small>
+              <a data-toggle="collapse" href="#<%= [party.slug, period.name, 'comments'].join('-') %>"><%= party.name %>s kommentar</a>
+            </small>
+
+            <div class="collapse party-comments" id="<%= [party.slug, period.name, 'comments'].join('-') %>">
+              <small class="muted">Kommentar fra <%= party.name %>, <%= l party.comment.created_at, format: :text %></small>
+              <blockquote><%= markdown(party.comment.body).html_safe %></blockquote>
+            </div>
+          <% end %>
+
+        </div>
       </div>
     <% end %>
   </div>

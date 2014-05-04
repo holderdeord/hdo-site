@@ -60,8 +60,6 @@
                 <%= link_to vote.title_with_fallback, vote.vote, class: 'vote-title' %>
                 <div class="vote-detail"><%= vote.html_comment.html_safe %></div>
 
-                <hr class="soften">
-
                 <div class="row-fluid">
                   <small>
                     <div class="span6">
@@ -83,6 +81,8 @@
                     </div>
                   </small>
                 </div>
+
+                <hr class="soften">
               </div>
               <% end %>
             </div>
