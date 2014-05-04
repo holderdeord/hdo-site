@@ -1,5 +1,6 @@
 <div class="row-fluid">
   <small class="span3"><%= link_to '&larr; Tilbake til sakslista'.html_safe, admin_issues_path %></small>
+  <small class="span3 offset6 rightify"><%= link_to 'Til sakssiden &rarr;'.html_safe, issue_path(@issue), target: '_blank' %></small>
 </div>
 
 <%= form_for @issue do |form| %>
@@ -7,6 +8,7 @@
     <div class="error-message alert alert-error"></div>
 
     <button name='save' class="btn btn-primary pull-right">Lagre</button>
+
     <h1><%= @issue.title %></h1>
     <%= spinner_tag %>
 

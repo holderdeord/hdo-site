@@ -56,7 +56,7 @@
     <div class="span4">
       <h5>Tittel</h5>
       <div class="row-fluid">
-        <input type="text" id="positions_{{id}}_title" name='positions[{{id}}][title]' value="{{title}}">
+        <input type="text" id="positions_{{id}}_title" name='positions[{{id}}][title]' value="{{title}}" placeholder="Stemt for å ...">
       </div>
 
       <h5>Prioritet</h5>
@@ -85,7 +85,9 @@
         id="wmd-input-{{id}}"
         name="positions[{{id}}][description]"
         rows="10"
-        class="span12">{{description}}</textarea>
+        class="span12"
+        placeholder="Har stemt ..."
+        >{{description}}</textarea>
     </div>
 
     <div class="span5">
