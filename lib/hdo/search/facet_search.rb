@@ -78,8 +78,6 @@ module Hdo
         search_params.map do |param, opts|
           next if param == :page
 
-          p opts
-
           if opts[:facet]
             opts = opts[:facet]
 
