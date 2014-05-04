@@ -41,7 +41,7 @@ module Hdo
       end
 
       def percentage_of(count, total)
-        count * 100 / (total.zero? ? 1 : total)
+        (count * 100 / (total.zero? ? 1 : total).to_f).round
       end
 
       def party_counts_for(party)
