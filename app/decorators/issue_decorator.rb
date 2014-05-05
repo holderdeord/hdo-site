@@ -20,7 +20,7 @@ class IssueDecorator < Draper::Decorator
 
   def periods
     periods = [ParliamentPeriod.named('2013-2017'), ParliamentPeriod.named('2009-2013')].compact
-    periods.map { |pp| Period.new(pp, model) }.select { |e| e.years.any? }
+    periods.map { |pp| Period.new(pp, model) }.select { |e| e.years.any? || e.promisors.any? }
   end
 
   def period_named(name)
@@ -65,11 +65,15 @@ class IssueDecorator < Draper::Decorator
     def explanation
       votes = proposition_connections.map(&:vote).uniq
 
-      count      = votes.size
-      start_date = votes.first.time
-      end_date   = votes.last.time
+      if votes.any?
+        count      = votes.size
+        start_date = votes.first.time
+        end_date   = votes.last.time
 
-      "Basert på #{count} avstemning#{count == 1 ? '' : 'er'} på Stortinget mellom #{I18n.l start_date, format: :month_year} og #{I18n.l end_date, format: :month_year}"
+        "Basert på #{count} avstemning#{count == 1 ? '' : 'er'} på Stortinget mellom #{I18n.l start_date, format: :month_year} og #{I18n.l end_date, format: :month_year}"
+      else
+        ''
+      end
     end
 
     private

@@ -1,90 +1,100 @@
-<% if period.positions.any? %>
-  <div class="new-positions">
+<div class="new-positions">
+  <div class="row-fluid">
+    <div class="span8 offset2">
+      <h3><%= period.name %> oppsummert</h3>
+    </div>
+  </div>
+
+  <!-- promises -->
+  <div class="row-fluid <%= 'hidden' if period.promisors.empty? %>">
     <div class="row-fluid">
-      <div class="span8 offset2">
-        <h3><%= period.name %> oppsummert</h3>
+      <div class="span9 offset2">
+        <h4>Hva har blitt lovet</h4>
       </div>
     </div>
 
-    <!-- promises -->
-    <div class="row-fluid <%= 'hidden' if period.promisors.empty? %>">
-      <div class="row-fluid">
-        <div class="span9 offset2">
-          <h4>Hva har blitt lovet</h4>
-        </div>
-      </div>
-
-      <% period.promisors.each do |promisor| %>
-        <div class="row-fluid group">
-          <div class="span1 offset1">
-            <% promisor.parties.reverse.each do |party| %>
-              <%= image_tag party.logo.versions[:medium], alt: "#{party.name}s logo" %>
-            <% end %>
-          </div>
-
-          <div class="span10 promise-list">
-            <% if promisor.expandable? %>
-              <span class="expandable <%= 'muted' if promisor.teaser_connection.related? %>"></span>
-            <% else %>
-              <span style="padding: 0 5px;">&nbsp;&nbsp;&nbsp;</span>
-            <% end %>
-
-            <span class="teaser <%= 'muted' if promisor.teaser_connection.related? %>">
-              <%= promisor.teaser %>
-            </span>
-
-            <div class="promises">
-              <ul>
-                <% promisor.promises.each do |promise, connection| %>
-                  <li class="<%= 'muted' if connection.related? %>">
-                    <%= promise.body %>
-                    <%= link_to promise, target: '_blank' do %>
-                      <%= image_tag 'link.png', width: '12' %>
-                    <% end %>
-                  </li>
-                <% end %>
-              </ul>
-            </div>
-          </div>
-        </div>
-      <% end %>
-
-      <hr class="divider">
-    </div>
-
-    <!-- positions -->
-    <div class="row-fluid">
-      <div class="row-fluid">
-        <div class="span9 offset2">
-          <h4>Hva har blitt stemt</h4>
-          <small class="muted"><%= period.explanation %></small>
-        </div>
-      </div>
-
-      <% period.positions.each do |position| %>
-      <div class="row-fluid group position">
+    <% period.promisors.each do |promisor| %>
+      <div class="row-fluid group">
         <div class="span1 offset1">
-          <% position.parties.reverse.each do |party| %>
+          <% promisor.parties.reverse.each do |party| %>
             <%= image_tag party.logo.versions[:medium], alt: "#{party.name}s logo" %>
           <% end %>
         </div>
 
-        <div class="span9">
-          <div><strong><%= position.title %></strong></div>
-          <div><%= position.description %></div>
+        <div class="span10 promise-list">
+          <% if promisor.expandable? %>
+            <span class="expandable <%= 'muted' if promisor.teaser_connection.related? %>"></span>
+          <% else %>
+            <span style="padding: 0 5px;">&nbsp;&nbsp;&nbsp;</span>
+          <% end %>
+
+          <span class="teaser <%= 'muted' if promisor.teaser_connection.related? %>">
+            <%= promisor.teaser %>
+          </span>
+
+          <div class="promises">
+            <ul class="unstyled">
+              <% promisor.promises.each do |promise, connection| %>
+                <li class="<%= 'muted' if connection.related? %>">
+                  <%= promise.body %>
+                  <%= link_to promise, target: '_blank' do %>
+                    <%= image_tag 'link.png', width: '12' %>
+                  <% end %>
+                </li>
+              <% end %>
+            </ul>
+          </div>
         </div>
       </div>
-      <% end %>
-    </div>
-    <hr class="divider">
+    <% end %>
 
-    <!-- accountability -->
+    <hr class="divider">
+  </div>
+
+  <!-- positions -->
+  <div class="row-fluid">
     <div class="row-fluid">
       <div class="span9 offset2">
-        <h4>Vår vurdering</h4>
+        <h4>Hva har blitt stemt</h4>
+        <small class="muted"><%= period.explanation %></small>
       </div>
     </div>
 
+    <% if period.positions.empty? %>
+      <div class="row-fluid">
+        <i class="offset2">Vi har foreløpig ikke nok relevante avstemninger i denne perioden til å oppsummere posisjonene.</i>
+      </div>
+    <% else %>
+      <% period.positions.each do |position| %>
+        <div class="row-fluid group position">
+          <div class="span1 offset1">
+            <% position.parties.reverse.each do |party| %>
+              <%= image_tag party.logo.versions[:medium], alt: "#{party.name}s logo" %>
+            <% end %>
+          </div>
+
+          <div class="span9">
+            <div><strong><%= position.title %></strong></div>
+            <div><%= position.description %></div>
+          </div>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+  <hr class="divider">
+
+  <!-- accountability -->
+  <div class="row-fluid">
+    <div class="span9 offset2">
+      <h4>Vår vurdering</h4>
+    </div>
+  </div>
+
+  <% if period.positions.empty? %>
+    <div class="row-fluid">
+      <i class="offset2">Vi har foreløpig ikke nok relevante avstemninger i denne perioden til å vurdere løftebrudd.</i>
+    </div>
+  <% else %>
     <% period.positions.flat_map(&:parties).uniq.sort_by(&:name).each do |party| %>
       <div class="row-fluid group">
         <div class="span1 offset1"><%= image_tag party.logo.versions[:medium], alt: "#{party.name}s logo" %></div>
@@ -101,9 +111,8 @@
               <blockquote><%= markdown(party.comment.body).html_safe %></blockquote>
             </div>
           <% end %>
-
         </div>
       </div>
     <% end %>
-  </div>
-<% end %>
+  <% end %>
+</div>
