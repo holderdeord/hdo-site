@@ -79,7 +79,7 @@ class IssueDecorator < Draper::Decorator
     private
 
     def proposition_connections
-      @proposition_connections ||= @issue.proposition_connections.select { |e| @parliament_period.include?(e.vote.time) }.sort_by { |e| e.vote.time }
+      @proposition_connections ||= @issue.proposition_connections.includes(:proposition => :votes).select { |e| @parliament_period.include?(e.vote.time) }.sort_by { |e| e.vote.time }
     end
   end
 
