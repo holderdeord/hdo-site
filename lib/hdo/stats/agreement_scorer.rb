@@ -36,12 +36,12 @@ module Hdo
         data, total = new(opts).result.values_at(:data, :total)
         data.map do |combo, count|
           {combination: combo, percentage: (count * 100 / total.to_f).round(1), total: total, count: count }
-        end.sort_by { |e| e[:percentage]}
+        end.sort_by { |e| e[:percentage] }
       end
 
       def self.csv_summary(opts = {})
         CSV.generate do |csv|
-          csv << ["combination", "agreed_proposition_count", "total_proposition_count", "percentage"]
+          csv << ["combination", "agreed_count", "total_count", "percentage"]
           summary(opts).sort_by { |e| e[:percentage] }.each do |entry|
             csv << entry.values_at(:combination, :count, :total, :percentage)
           end
