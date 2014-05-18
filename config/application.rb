@@ -53,7 +53,7 @@ module Hdo
 
     # Configure sensitive parameters which will be filtered from the log file.
     config.filter_parameters += [:password]
-    
+
     config.lograge.custom_options = lambda do |event|
       {:time => event.time.iso8601}
     end
@@ -105,8 +105,5 @@ module Hdo
     # we rely on fastly + instant purges
     config.middleware.delete 'Rack::Cache'
     config.middleware.insert_after ActiveRecord::QueryCache, 'Hdo::Rack::Fastly'
-
-    # skylight
-    config.skylight.environments << 'staging'
   end
 end

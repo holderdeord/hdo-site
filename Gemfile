@@ -121,7 +121,6 @@ gem 'settingslogic'
 # instrumentation
 gem 'statsd-ruby', :require => 'statsd'
 gem 'newrelic_rpm'
-gem 'skylight'
 
 # http
 gem 'faraday'

@@ -325,8 +325,6 @@ GEM
       multi_json (~> 1.0)
       simplecov-html (~> 0.7.1)
     simplecov-html (0.7.1)
-    skylight (0.3.12)
-      activesupport (>= 3.0.0)
     slop (3.4.7)
     spin (0.6.0)
     spreadsheet (0.9.6)
@@ -436,7 +434,6 @@ DEPENDENCIES
   selenium-webdriver (~> 2.39)
   settingslogic
   simplecov
-  skylight
   statsd-ruby
   therubyracer
   twitter
