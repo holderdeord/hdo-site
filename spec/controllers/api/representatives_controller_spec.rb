@@ -7,8 +7,8 @@ describe Api::RepresentativesController do
   end
 
   it 'can GET :show' do
-    pr = Representative.make!
-    get :show, id: pr, format: :hal
+    rep = Representative.make!(:full)
+    get :show, id: rep, format: :hal
 
     response.should be_success
   end
