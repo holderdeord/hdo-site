@@ -32,6 +32,6 @@ else
   rm -f bundle.tgz
   tar cjf bundle.tgz .bundle
 
-  curl -X PUT --user "${HDO_DEPLOY_AUTH}" "http://${DEPLOY_HOST}/travis/bundle?${DEPLOY_PARAMS}" --upload-file bundle.tgz --progress-bar
-  curl -X PUT --user "${HDO_DEPLOY_AUTH}" "http://${DEPLOY_HOST}/travis/bundle/sha?${DEPLOY_PARAMS}" -d "$LOCAL_SHA"
+  curl -o /dev/null --progress-bar -X PUT --user "${HDO_DEPLOY_AUTH}" "http://${DEPLOY_HOST}/travis/bundle?${DEPLOY_PARAMS}" --upload-file bundle.tgz
+  curl -o /dev/null --progress-bar -X PUT --user "${HDO_DEPLOY_AUTH}" "http://${DEPLOY_HOST}/travis/bundle/sha?${DEPLOY_PARAMS}" -d "$LOCAL_SHA"
 fi
