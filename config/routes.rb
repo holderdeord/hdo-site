@@ -4,7 +4,7 @@ Hdo::Application.routes.draw do
   # api
   #
 
-  namespace :api do
+  namespace :api, defaults: {format: :hal} do
     root to: 'root#index'
 
     resources :parties, only: [:index, :show]
