@@ -10,7 +10,7 @@ Hdo::Application.routes.draw do
     resources :parties, only: [:index, :show]
     resources :representatives, only: [:index, :show]
     resources :issues, only: [:index, :show]
-
+    resources :committees, only: [:index, :show]
   end
 
   #

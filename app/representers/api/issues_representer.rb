@@ -6,8 +6,24 @@ module Api
       api_issues_url
     end
 
-    links :issues do
-      map { |e| {href: api_issue_url(e) } }
+    link :next do
+      api_issues_url(page: represented.next_page) if represented.next_page
     end
+
+    link :find do
+      {
+        href: api_issue_url('...').sub('...', '{id}'),
+        templated: true
+      }
+    end
+
+    property :total_count
+
+    collection :to_a,
+      embedded: true,
+      name: :issues,
+      as: :issues,
+      extend: IssueRepresenter
+
   end
 end
