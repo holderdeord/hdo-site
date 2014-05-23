@@ -1,9 +1,11 @@
-class Api::RepresentativesController < ApiController
-  def index
-    respond_with Representative.order(:last_name).page(params[:page] || 1)
-  end
+module Api
+  class RepresentativesController < ApiController
+    def index
+      respond_with Representative.order(:last_name).page(params[:page] || 1)
+    end
 
-  def show
-    respond_with Representative.find(params[:id])
+    def show
+      respond_with Representative.find(params[:id])
+    end
   end
 end
