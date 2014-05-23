@@ -17,7 +17,7 @@ module Api
       }
     end
 
-    property :count
+    property :total_count
 
     collection :to_a,
       embedded: true,
