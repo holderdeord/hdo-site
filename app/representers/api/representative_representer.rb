@@ -2,6 +2,11 @@ module Api
   module RepresentativeRepresenter
     include Roar::Representer::JSON::HAL
 
+    property :last_name
+    property :first_name
+    property :slug
+    property :attending
+
     link :self do
       api_representative_url represented
     end
@@ -13,10 +18,5 @@ module Api
     links :committees do
       committees.map { |e| {href: api_committee_url(e) } }
     end
-
-    property :last_name
-    property :first_name
-    property :slug
-    property :attending
   end
 end

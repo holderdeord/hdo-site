@@ -2,6 +2,8 @@ module Api
   module PartiesRepresenter
     include Roar::Representer::JSON::HAL
 
+    property :total_count
+
     link :self do
       api_parties_url
     end
@@ -16,8 +18,6 @@ module Api
         templated: true
       }
     end
-
-    property :total_count
 
     collection :to_a,
       embedded: true,

@@ -20,6 +20,8 @@ module Hdo
       end
 
       def expire_issue(issue)
+        # TODO: add api urls
+
         @purger.add issues_url
         @purger.add issue_url issue
         @purger.add votes_issue_url issue
@@ -36,6 +38,8 @@ module Hdo
       end
 
       def expire_representatives
+        # TODO: add api urls
+
         Representative.all.map do |r|
           @purger.add representative_url(r)
         end
