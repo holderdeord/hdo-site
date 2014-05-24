@@ -8,5 +8,13 @@ module Api
     link :self do
       api_party_url represented
     end
+
+    link :logo do
+      {
+        href: logo_api_party_url(represented) + '{?version}',
+        templated: true,
+        type: 'image/png'
+      }
+    end
   end
 end
