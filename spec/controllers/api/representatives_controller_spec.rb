@@ -12,4 +12,11 @@ describe Api::RepresentativesController do
 
     response.should be_success
   end
+
+  it "returns :not_found if the representative doesn't exist" do
+    get :show, id: 'foobar', format: :hal
+
+    response.should be_not_found
+  end
+
 end

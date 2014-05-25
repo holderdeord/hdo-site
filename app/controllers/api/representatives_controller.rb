@@ -15,12 +15,16 @@ module Api
 
     def image
       version = params[:version] || :medium
-      img = @representative.image.versions[version.to_sym]
 
-      if img
-        redirect_to img.url
+      images = @representative.image
+      image = images.versions[version.to_sym]
+
+      if image
+        redirect_to image.url
       else
-        render status: 404
+        render hal: {
+          message: "invalid version #{version.inspect}, expected #{images.versions.keys.inspect}"
+        }, status: :bad_request
       end
     end
 
