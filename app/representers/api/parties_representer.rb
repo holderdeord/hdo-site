@@ -5,11 +5,19 @@ module Api
     property :total_count
 
     link :self do
-      api_parties_url
+      if current_page == 1
+        api_parties_url
+      else
+        api_parties_url page: current_page
+      end
     end
 
     link :next do
-      api_parties_url(page: represented.next_page) if represented.next_page
+      api_parties_url(page: next_page) if next_page
+    end
+
+    link :prev do
+      api_parties_url(page: prev_page) if prev_page
     end
 
     link :find do

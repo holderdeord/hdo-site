@@ -5,12 +5,21 @@ module Api
     property :total_count
 
     link :self do
-      api_issues_url
+      if current_page == 1
+        api_issues_url
+      else
+        api_issues_url page: current_page
+      end
     end
 
     link :next do
-      api_issues_url(page: represented.next_page) if represented.next_page
+      api_issues_url(page: next_page) if next_page
     end
+
+    link :prev do
+      api_issues_url(page: prev_page) if prev_page
+    end
+
 
     link :find do
       {
