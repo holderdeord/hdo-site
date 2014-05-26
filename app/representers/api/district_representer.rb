@@ -1,11 +1,13 @@
-module Api::DistrictRepresenter
-  include Roar::Representer::JSON::HAL
+module Api
+  module DistrictRepresenter
+    include Roar::Representer::JSON::HAL
 
-  link :self do
-    api_district_url represented
+    link :self do
+      api_district_url represented
+    end
+
+    property :name
+    property :slug
+
   end
-
-  property :name
-  property :slug
-
 end
