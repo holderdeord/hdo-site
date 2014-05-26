@@ -2,7 +2,8 @@ module Api
   module PartiesRepresenter
     include Roar::Representer::JSON::HAL
 
-    property :total_count
+    property :total_count, as: :total
+    property :count
 
     link :self do
       if current_page == 1
@@ -18,6 +19,10 @@ module Api
 
     link :prev do
       api_parties_url(page: prev_page) if prev_page
+    end
+
+    link :last do
+      api_parties_url(page: total_pages) if total_pages > 1
     end
 
     link :find do

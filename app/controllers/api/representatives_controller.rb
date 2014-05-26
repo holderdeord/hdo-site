@@ -4,6 +4,7 @@ module Api
 
     def index
       respond_with Representative.
+                    includes(:committees, party_memberships: :party).
                     order(:last_name).
                     page(params[:page] || 1).
                     per(10)
