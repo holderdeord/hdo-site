@@ -6,6 +6,8 @@ module Api
     property :first_name
     property :slug
     property :attending
+    property :date_of_birth
+    property :date_of_death
     property :twitter_id, as: :twitter
 
     link :self do
@@ -18,6 +20,10 @@ module Api
 
     links :committees do
       committees.map { |e| {href: api_committee_url(e) } }
+    end
+
+    link :district do
+      api_district_url district
     end
 
     link :image do

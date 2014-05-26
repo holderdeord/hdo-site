@@ -9,6 +9,7 @@ Hdo::Application.routes.draw do
 
     resources :issues, only: [:index, :show]
     resources :committees, only: [:index, :show]
+    resources :districts, only: [:index, :show]
 
     resources :parties, only: [:index, :show] do
       member { get 'logo' }

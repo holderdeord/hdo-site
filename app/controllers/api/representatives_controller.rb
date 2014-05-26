@@ -22,7 +22,7 @@ module Api
       if image
         redirect_to image.url
       else
-        render hal: {
+        render json: {
           message: "invalid version #{version.inspect}, expected #{images.versions.keys.inspect}"
         }, status: :bad_request
       end
