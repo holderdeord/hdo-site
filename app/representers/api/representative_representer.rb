@@ -19,7 +19,7 @@ module Api
     end
 
     links :committees do
-      committees.map { |e| {href: api_committee_url(e) } }
+      current_committees.map { |e| {href: api_committee_url(e) } }
     end
 
     link :district do
