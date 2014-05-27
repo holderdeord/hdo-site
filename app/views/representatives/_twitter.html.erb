@@ -1,9 +1,9 @@
 <h4>Twitter <%= link_to "(@#{@representative.twitter_id})", @representative.twitter_url, class: 'muted' %></h4>
 
-<span id="twitter-container">
+<div id="twitter-container">
   <a href="<%= @representative.twitter_url %>"
      class='twitter-timeline'
-     height='445px';
+     height='445px'
      data-dnt='true'
      data-widget-id='<%= AppConfig.twitter_widget_id %>'
      data-lang='no'
@@ -13,7 +13,7 @@
      >
     Tweets fra <%= @representative.name %>
   </a>
-</span>
+</div>
 
 <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
 </script>
