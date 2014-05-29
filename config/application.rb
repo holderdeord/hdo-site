@@ -104,6 +104,7 @@ module Hdo
 
     # we rely on fastly + instant purges
     config.middleware.delete 'Rack::Cache'
-    config.middleware.insert_after ActiveRecord::QueryCache, 'Hdo::Rack::Fastly'
+    config.middleware.insert_before ActionDispatch::Cookies, 'Hdo::Rack::Fastly'
+    config.middleware.insert_before Rack::ConditionalGet, 'Hdo::Rack::Date'
   end
 end
