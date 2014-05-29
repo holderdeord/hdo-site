@@ -13,13 +13,21 @@ module Api
 
     def logo
       version = params[:version] || :medium
-      img = @party.image.versions[version.to_sym]
+      img = @party.logo.versions[version.to_sym]
 
       if img
         redirect_to img.url
       else
         head status: 404
       end
+    end
+
+    def representatives
+      rel = @party.representatives.includes(:district, party_memberships: :party, committee_memberships: :committee)
+      rel = rel.attending if params[:attending]
+      rel = rel.page(params[:page] || 1)
+
+      respond_with rel, represent_with: PartyRepresentativesRepresenter, attending: params[:attending]
     end
 
     private

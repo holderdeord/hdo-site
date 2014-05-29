@@ -12,7 +12,10 @@ Hdo::Application.routes.draw do
     resources :districts, only: [:index, :show]
 
     resources :parties, only: [:index, :show] do
-      member { get 'logo' }
+      member {
+        get 'logo'
+        get 'representatives'
+      }
     end
 
     resources :representatives, only: [:index, :show] do

@@ -5,6 +5,7 @@ module Api
     property :title
     property :description
     property :tag_list, as: :tags
+    property :to_param, as: :slug
 
     link :self do
       api_issue_url id
