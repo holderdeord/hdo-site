@@ -8,6 +8,8 @@ module Api
 
     def show
       respond_with Issue.published.find(params[:id])
+    rescue ActiveRecord::RecordNotFound
+      render json: {message: "could not find issue with id=#{params[:id]}"}
     end
   end
 end
