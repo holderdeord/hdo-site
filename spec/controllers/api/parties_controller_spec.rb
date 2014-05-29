@@ -12,4 +12,12 @@ describe Api::PartiesController do
 
     response.should be_success
   end
+
+  it 'can GET :representatives' do
+    rep = Representative.make!(:full)
+
+    get :representatives, id: rep.latest_party.id, format: :hal
+
+    response.should be_success
+  end
 end

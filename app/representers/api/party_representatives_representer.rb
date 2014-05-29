@@ -1,3 +1,7 @@
+#
+# TODO: find a way to generalize this
+#
+
 module Api
   module PartyRepresentativesRepresenter
     include Roar::Representer::JSON::HAL
