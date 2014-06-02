@@ -29,11 +29,9 @@ module Api
       representatives_api_party_url(party, url_params_from(opts).merge(page: total_pages)) if total_pages > 1
     end
 
-    collection :to_a,
-      embedded: true,
-      name: :representatives,
-      as: :representatives,
-      extend: RepresentativeRepresenter
+    collection :to_a, embedded: true,
+               as: lambda { |opts| opts[:attending] ? "attending_representatives" : "representatives" },
+               extend: RepresentativeRepresenter
 
     def party
       @party ||= first.current_party
