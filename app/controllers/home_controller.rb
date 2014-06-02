@@ -90,6 +90,7 @@ class HomeController < ApplicationController
       'Endre Ottosen',
       'Erik Seierstad',
       'Esben Jensen',
+      'Arne Hassel',
       'Frode Hiorth',
       'Guro Øistensen',
       'Inge Olav Fure',
