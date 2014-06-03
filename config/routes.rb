@@ -35,21 +35,9 @@ Hdo::Application.routes.draw do
 
   namespace :admin do
     resources :issues do
-      member do
-        # new
-        get 'edit/next'  => 'new_issues#edit', as: :edit_next
-        put  'edit/next' => 'new_issues#update'
-
-        # old
-        get 'edit/:step'   => 'issues#edit',         as: :edit_step
-        get 'votes/search' => "issues#votes_search", as: :vote_search
-      end
-
       collection do
-        post 'next'              => 'new_issues#create',  as: :create_next
-        get  'new/next'          => 'new_issues#new',     as: :new_next
-        get  'promises/:ids'     => 'new_issues#promises'
-        get  'propositions/:ids' => 'new_issues#propositions'
+        get  'promises/:ids'     => 'issues#promises'
+        get  'propositions/:ids' => 'issues#propositions'
       end
     end
 

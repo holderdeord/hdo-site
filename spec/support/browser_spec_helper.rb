@@ -1,13 +1,17 @@
 require 'selenium-webdriver'
 require 'loadable_component'
 
+require_relative 'pages/waitable'
 require_relative 'pages/page'
 require_relative 'pages/menu'
 require_relative 'pages/front_page'
 require_relative 'pages/votes_page'
+require_relative 'pages/admin_login_page'
+require_relative 'pages/admin_issue_editor_page'
 
 module BrowserSpecHelper
   extend self
+  include Rails.application.routes.url_helpers
 
   def driver
     $spec_driver ||= Selenium::WebDriver.for :firefox
@@ -27,6 +31,24 @@ module BrowserSpecHelper
 
   def front_page
     @front_page ||= Pages::FrontPage.new(driver, app_url)
+  end
+
+  def admin_login_page
+    @admin_login_page ||= Pages::AdminLoginPage.new(driver, URI.join(app_url, '/users/sign_in').to_s)
+  end
+
+  def refresh_indeces
+    SearchSettings.models.each { |m| m.__elasticsearch__.refresh_index! }
+  end
+
+  def admin_issue_editor_page(id = :new)
+    if id == :new
+      path = new_admin_issue_path
+    else
+      path = admin_edit_issue_path(slug)
+    end
+
+    Pages::AdminIssueEditorPage.new(driver, URI.join(app_url, path).to_s)
   end
 
   def votes_page

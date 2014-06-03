@@ -1,6 +1,6 @@
 <div class="row-fluid">
   <div class="pull-right">
-    <%= link_to t('app.issues.edit.new'), new_next_admin_issues_path, class: 'btn btn-primary' %>
+    <%= link_to t('app.issues.edit.new'), new_admin_issue_path, class: 'btn btn-primary' %>
   </div>
 </div>
 
@@ -31,7 +31,7 @@
         </td>
         <td>
           <p class="pull-right">
-            <%= link_to t('app.edit'), edit_next_admin_issue_path(issue), class: 'btn btn-mini' %>
+            <%= link_to t('app.edit'), edit_admin_issue_path(issue), class: 'btn btn-mini' %>
             <%= link_to t('app.destroy'), admin_issue_path(issue), class: 'btn btn-mini btn-danger',
                         method: :delete,
                         data: { confirm: t('app.issues.edit.confirm_destroy', title: issue.title) } %>

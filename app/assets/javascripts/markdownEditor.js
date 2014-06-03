@@ -10,6 +10,9 @@ To use this, provide the following markup:
       <div id="wmd-preview-1" />
     </div>
 
+    The data-wmd-editor attribute should unique for the page,
+    and can be any valid attribute string.
+
 */
 
 (function (HDO, $, Markdown) {

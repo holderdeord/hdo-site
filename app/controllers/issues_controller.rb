@@ -11,8 +11,6 @@ class IssuesController < ApplicationController
   end
 
   def show
-    set_default_expiry unless params[:next]
-
     if policy(@issue).show?
       fresh_when @issue, public: can_cache?
       @issue = IssueDecorator.decorate(@issue)

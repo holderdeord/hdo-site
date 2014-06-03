@@ -320,7 +320,7 @@ GEM
     ruby-graphviz (1.0.9)
     ruby-ole (1.2.11.7)
     ruby-progressbar (1.0.2)
-    rubyzip (1.1.3)
+    rubyzip (1.1.4)
     sass (3.2.7)
     sass-rails (3.2.6)
       railties (~> 3.2.0)
@@ -447,7 +447,7 @@ DEPENDENCIES
   roar-rails
   rspec-rails (~> 2.13)
   sass-rails (~> 3.2.3)
-  selenium-webdriver (~> 2.39)
+  selenium-webdriver (~> 2.42)
   settingslogic
   simplecov
   statsd-ruby

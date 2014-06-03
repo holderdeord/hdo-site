@@ -32,11 +32,11 @@ module Hdo
       end
 
       def published_percentage
-        (published / total.to_f) * 100
+        total.zero? ? 0 : (published / total.to_f) * 100
       end
 
       def pending_percentage
-        (pending / total.to_f) * 100
+        total.zero? ? 0: (pending / total.to_f) * 100
       end
 
       def published

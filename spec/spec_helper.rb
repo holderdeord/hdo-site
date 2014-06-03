@@ -19,6 +19,7 @@ if ENV['TRAVIS']
 end
 
 # ensure correct require order
+require Rails.root.join('spec/support/pages/waitable')
 require Rails.root.join('spec/support/pages/page')
 require Rails.root.join('spec/support/pages/menu')
 
