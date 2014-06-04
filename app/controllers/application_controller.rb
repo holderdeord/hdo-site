@@ -12,14 +12,25 @@ class ApplicationController < ActionController::Base
 
   protected
 
-  # mostly copied from Rails 4
-  def force_ssl_redirect(host = AppConfig.ssl_host)
+  # copied from rails 4
+  def force_ssl_redirect(host_or_options = nil)
     unless request.ssl?
-      redirect_options = {:protocol => 'https://', :status => :moved_permanently}
-      redirect_options.merge!(:host => host) if host
-      redirect_options.merge!(:params => request.query_parameters)
+      options = {
+        :protocol => 'https://',
+        :host     => request.host,
+        :path     => request.fullpath,
+        :status   => :moved_permanently
+      }
+
+      if host_or_options.is_a?(Hash)
+        options.merge!(host_or_options)
+      elsif host_or_options
+        options.merge!(:host => host_or_options)
+      end
+
+      secure_url = ActionDispatch::Http::URL.url_for(options.slice(:protocol, :host, :domain, :subdomain, :port, :path))
       flash.keep if respond_to?(:flash)
-      redirect_to redirect_options
+      redirect_to secure_url, options.slice(:status, :flash, :alert, :notice)
     end
   end
 
