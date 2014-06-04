@@ -13,6 +13,8 @@ class HomeController < ApplicationController
                   :terms,
                   :statutes
 
+  skip_before_filter :force_ssl_redirect, only: :healthz
+
   def index
     published = Issue.published.includes(:tags)
 
