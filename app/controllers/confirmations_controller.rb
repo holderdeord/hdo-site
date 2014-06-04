@@ -1,5 +1,4 @@
 class ConfirmationsController < Devise::ConfirmationsController
-  hdo_force_ssl
 
   # Remove the first skip_before_filter (:require_no_authentication) if you
   # don't want to enable logged users to access the confirmation page.

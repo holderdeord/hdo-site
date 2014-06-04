@@ -1,6 +1,5 @@
 class SessionsController < Devise::SessionsController
   include Hdo::DeviseControllerHelper
-  hdo_force_ssl
 
   def create
     setup_params_for_hdo_resource

@@ -4,14 +4,10 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
   rescue_from Pundit::NotAuthorizedError, with: :policy_not_allowed
 
+  before_filter :force_ssl_redirect if AppConfig.ssl_enabled
+
   def self.hdo_caches_page(*actions)
     before_filter :set_default_expiry, only: actions
-  end
-
-  def self.hdo_force_ssl(options = {})
-    if AppConfig.ssl_enabled
-      before_filter :force_ssl_redirect, options
-    end
   end
 
   protected
@@ -45,7 +41,7 @@ class ApplicationController < ActionController::Base
   end
 
   def after_sign_out_path_for(model)
-    root_url protocol: 'http'
+    root_url
   end
 
   def set_default_expiry
