@@ -55,8 +55,8 @@ Hdo::Application.configure do
   config.action_mailer.delivery_method       = :smtp
   config.action_mailer.smtp_settings         = { :address => "localhost", :port => 25 }
 
-  config.action_mailer.default_url_options = { host: 'next.holderdeord.no' }
-  config.representer.default_url_options   = { host: 'next.holderdeord.no' }
+  config.action_mailer.default_url_options = { host: 'next.holderdeord.no', protocol: 'https' }
+  config.representer.default_url_options   = { host: 'next.holderdeord.no', protocol: 'https' }
 
   # Enable threaded mode
   config.threadsafe! unless $rails_rake_task
