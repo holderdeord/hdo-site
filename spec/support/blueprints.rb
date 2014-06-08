@@ -90,13 +90,19 @@ ParliamentSession.blueprint do
   end_date { Date.new(2013, 9, 30) }
 end
 
+ParliamentSession.blueprint(:current) do # TODO: fixme
+  external_id { "2013-2014" }
+  start_date { Date.new(2013, 10, 1) }
+  end_date { Date.new(2014, 9, 30) }
+end
+
 ParliamentPeriod.blueprint do
   external_id { "2009-2013-#{sn}" }
   start_date { Date.new(2009, 10, 1) }
   end_date { Date.new(2013, 9, 30) }
 end
 
-ParliamentPeriod.blueprint(:current) do
+ParliamentPeriod.blueprint(:current) do # TODO: fixme
   external_id { "2013-2017" }
   start_date { Date.new(2013, 10, 1) }
   end_date { Date.new(2017, 9, 30) }

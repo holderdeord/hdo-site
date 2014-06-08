@@ -1,7 +1,0 @@
-<%= form_for [:admin, @issue] do |form| %>
-  <%= form.hidden_field :lock_version %>
-
-  <%= render partial: "step_pagination", locals: { form: form, issue_steps: @issue_steps } if @issue_steps %>
-  <%= render partial: "edit_buttons", locals: { form: form, disable_prev: @disable_prev, disable_next: @disable_next } %>
-  <%= render partial: "#{edit_steps.current}_step", locals: { form: form } %>
-<% end %>

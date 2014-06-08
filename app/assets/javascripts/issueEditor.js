@@ -34,12 +34,13 @@
 
       this.saveButton.click(this.save.bind(this));
       this.newPositionButton.click(this.newPosition.bind(this));
-      this.newPartyCommentButton.click(this.notImplemented.bind(this));
+      this.newPartyCommentButton.click(this.newPartyComment.bind(this));
       this.root.delegate('[data-expands]', 'click', this.toggleRow.bind(this));
 
       this.editorSelect.chosen();
       this.categorySelect.chosen();
       this.positionPartySelects.chosen();
+
       this.root.find('.position-form').hide();
       this.root.delegate('.position-remove', 'click', this.removePosition.bind(this));
 
@@ -96,10 +97,10 @@
     },
 
     newPosition: function (e) {
+      e.preventDefault();
+
       var position, created, template;
       this.newPositionId = this.newPositionId || 0;
-
-      e.preventDefault();
 
       position = {
         id: --this.newPositionId,
@@ -117,13 +118,33 @@
       HDO.markdownEditor({root: created});
     },
 
+    newPartyComment: function (e) {
+      e.preventDefault();
+
+      var comment, created, template;
+
+      this.newPartyCommentId = this.newPartyCommentId || 0;
+
+      comment = {
+        id: --this.newPartyCommentId
+      };
+
+      template = this.templates['party-comment-template'];
+      created = $(template(comment)).prependTo('.party-comments');
+      created.addClass('new');
+
+      console.log(created.html());
+
+      HDO.markdownEditor({root: created});
+    },
+
     removePosition: function (e) {
       e.preventDefault();
 
-      var target = $(e.target),
-        id = target.data('id'),
-        parties = target.data('parties'),
-        title = target.data('title'),
+      var target  = $(e.target),
+        id        = target.data('id'),
+        parties   = target.data('parties'),
+        title     = target.data('title'),
         container = target.closest('.position');
 
 
@@ -200,6 +221,7 @@
           dataType: 'json',
           success: function (data) {
             $.each(data, function () {
+              this.status = 'related';
               var created = $(promiseTemplate(this)).prependTo('#promise-connections-tab');
               created.addClass('new');
             });

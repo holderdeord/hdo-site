@@ -61,11 +61,7 @@ describe Admin::IssuesController do
 
   it 'should get :new' do
     get :new
-
-    response.should have_rendered(:new)
-
-    session[:issue_step].should == 'categories'
-    assigns(:categories).should_not be_nil
+    response.should have_rendered(:edit)
   end
 
   it 'should get :show if the request is an XHR' do
@@ -76,54 +72,20 @@ describe Admin::IssuesController do
     response.should have_rendered(:show)
   end
 
-  it 'edit redirects to the categories step if no step was specified' do
-    get :edit, id: issue
-
-    response.should redirect_to(edit_step_admin_issue_path(issue.id, step: 'categories'))
-  end
-
-  it 'edits the proposition step if specified' do
-    get :edit, id: issue, step: 'propositions'
-
-    response.should have_rendered(:edit)
-    assigns(:propositions_and_connections).should_not be_nil
-  end
-
-  it 'edits the promises step if specified' do
-    get :edit, id: issue, step: 'promises'
-
-    response.should have_rendered(:edit)
-    assigns(:promises_by_party).should_not be_nil
-  end
-
-  it 'edits the cateogires step if specified' do
-    get :edit, id: issue, step: 'categories'
-
-    response.should have_rendered(:edit)
-    assigns(:categories).should_not be_nil
-  end
-
   it "should create a new issue with a name" do
-    post :create, issue: { title: 'More Cowbell' }, finish: true
+    post :create, issue: { title: 'More Cowbell' }
 
     Issue.count.should == 1
 
     issue = assigns(:issue)
     issue.should be_kind_of(Issue)
 
-    response.should redirect_to(issue_path(issue))
+    response.should be_success
   end
 
-  it 'should render new if save was unsuccessful' do
-    post :create, issue: {title: ''}, finish: true
-
-    flash.alert.should_not be_nil
-    response.should render_template(:new)
-  end
-
-  it 'should perform a vote search' do
-    post :votes_search, id: issue, filter: 'selected-categories', keyword: 'skatt'
-    response.should have_rendered(:votes_search_result)
+  it 'should fails if save was unsuccessful' do
+    post :create, issue: {title: ''}
+    response.should_not be_success
   end
 
   context 'destroy' do
@@ -135,114 +97,27 @@ describe Admin::IssuesController do
     end
   end
 
-  context "next" do
-    it "should show the proposition step when hit next from create" do
-      post :create, issue: { title: "Less Cowbell!" }
-
-      issue = assigns(:issue)
-      issue.should be_kind_of(Issue)
-      issue.last_updated_by.should == user
-
-      expected_url = edit_step_admin_issue_path(id: issue.id, step: 'propositions')
-      response.should redirect_to(expected_url)
-    end
-
-    it "should show party_comments step when hit next from promises" do
-      session[:issue_step] = 'promises'
-
-      put :update, issue: issue_params(issue), id: issue
-
-      assigns(:issue).should == issue
-      session[:issue_step].should == 'party_comments'
-
-      response.should redirect_to(edit_step_admin_issue_url(issue.id, step: 'party_comments'))
-    end
-
-    it "should show positions step when hit next from party comments" do
-      session[:issue_step] = 'party_comments'
-
-      put :update, issue: issue_params(issue), id: issue
-
-      assigns(:issue).should == issue
-      session[:issue_step].should == 'positions'
-
-      response.should redirect_to(edit_step_admin_issue_url(issue.id, step: 'positions'))
-    end
-
-    it "should show categories step when hit next from positions" do
-      session[:issue_step] = 'positions'
-
-      put :update, issue: issue_params(issue), id: issue
-
-      assigns(:issue).should == issue
-      session[:issue_step].should == 'categories'
-
-      response.should redirect_to(edit_step_admin_issue_url(issue.id, step: 'categories'))
-    end
-  end
-
-  context "previous" do
-    it "should show promises when hit next from propositions" do
-      session[:issue_step] = 'propositions'
-
-      put :update, issue: issue_params(issue), id: issue
-
-      session[:issue_step].should == 'promises'
-      assigns(:issue).should == issue
-      response.should redirect_to edit_step_admin_issue_url(issue.id, step: 'promises')
-    end
-
-    it "should show the categories step when hit previous from propositions" do
-      session[:issue_step] = 'propositions'
-
-      put :update, previous: true, issue: issue_params(issue), id: issue
-
-      session[:issue_step] = 'categories'
-      assigns(:issue).should == issue
-      response.should redirect_to edit_step_admin_issue_url(issue.id, step: 'categories')
-    end
-  end
-
-  context 'save' do
-    it 'should stay on the same step when saving' do
-      session[:issue_step] = 'categories'
-
-      put :update, save: true, issue: issue_params(issue), id: issue
-
-      assigns(:issue).should == issue
-      session[:issue_step].should == 'categories'
-
-      response.should redirect_to edit_step_admin_issue_url(issue.id, step: 'categories')
-    end
-  end
-
   context "finish" do
     before do
       PageCache.should_receive(:expire_issue).with instance_of(Issue)
     end
 
     it "should save and redirect to issue when hit finish from edit step" do
-      session[:issue_step] = 'propositions'
-
-      put :update, finish: true, issue: issue_params(issue), id: issue
+      put :update, issue: issue_params(issue), id: issue
 
       assigns(:issue).should == issue
-      response.should redirect_to issue_path(issue, lv: issue.reload.lock_version)
+      response.should be_success
     end
 
     it "should update the published state" do
-      put :update, finish: true, issue: issue_params(issue).merge('status' => 'published'), id: issue
+      put :update, issue: issue_params(issue).merge('status' => 'published'), id: issue
 
       issue = assigns(:issue)
       issue.should be_published
 
-      response.should redirect_to issue_path(issue, lv: issue.reload.lock_version)
+      response.should be_success
     end
   end
-
-  #
-  # TODO: move to issue_updater_spec?
-  #
 
   context "update" do
     it 'sets last_updated_by when published state changes' do
@@ -368,18 +243,6 @@ describe Admin::IssuesController do
 
       issue = assigns(:issue)
       issue.last_updated_by.should == other_user
-    end
-  end
-
-  describe "the issue_steps parameter" do
-    it "should be set when editing an issue" do
-      get :edit, id: issue, step: 'categories'
-      assigns(:issue_steps).should_not be_nil
-    end
-
-    it "should not be set when creating a new issue" do
-      get :new
-      assigns(:issue_steps).should be_nil
     end
   end
 
