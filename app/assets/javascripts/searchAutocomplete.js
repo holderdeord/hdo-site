@@ -17,10 +17,10 @@
         self.contactServer(q, function (data) {
           var result = [];
           if (data.issue) {
-            result.push(cull.map(self.parseIssue.bind(self), data.issue));
+            result.push(c.map(self.parseIssue.bind(self), data.issue));
           }
           if (data.representative) {
-            result.push(cull.map(self.parseRepresentative.bind(self), data.representative));
+            result.push(c.map(self.parseRepresentative.bind(self), data.representative));
           }
           process(cull.flatten(result));
         });
