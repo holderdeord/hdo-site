@@ -277,8 +277,7 @@ describe Issue do
       propositions = {
         prop.id => [{
           connected: 'true',
-          title: 'hello',
-          proposition_type: PropositionConnection::PROPOSITION_TYPES.first
+          title: 'hello'
         }]
       }
       update_attributes_on @issue, {propositions: propositions}

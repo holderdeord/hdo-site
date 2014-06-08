@@ -134,7 +134,6 @@ module Hdo
           attrs = data.except(:connected).merge(proposition_id: proposition_id)
 
           # normalize '' vs nil
-          attrs[:proposition_type] = nil if attrs[:proposition_type].blank?
           attrs[:title]            = nil if attrs[:title].blank?
           attrs[:comment]          = nil if attrs[:comment].blank?
 

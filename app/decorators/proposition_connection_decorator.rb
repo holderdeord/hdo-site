@@ -7,10 +7,6 @@ class PropositionConnectionDecorator < Draper::Decorator
            :title,
            :comment
 
-  def proposition_type_text
-    model.proposition_type.blank? ? '' : I18n.t("app.votes.proposition_types.#{model.proposition_type}")
-  end
-
   def time_text
     I18n.l time, format: :text
   end

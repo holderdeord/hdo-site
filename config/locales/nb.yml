@@ -294,7 +294,6 @@ nb:
       proposition_connection:
         comment: "Kommentar"
         title: "Tittel"
-        proposition_type: "Forslagstype"
       question:
         body: Tekst
         from_name: Navn
@@ -470,24 +469,6 @@ nb:
         mostly_for_html: "%{name} har <strong>stort sett stemt for</strong>"
         not_participated: "%{name} har ikke deltatt i nok avstemninger om"
         not_participated_html: "%{name} har ikke deltatt i nok avstemninger om"
-      proposition_types:
-        none: '--Velg forslagstype--'
-        alternate_national_budget: 'Alternativt statsbudsjett'
-        government_proposal: Regjeringsproposisjon
-        legislation: Lovforslag
-        national_budget_committee_proposition: 'Statsbudsjett, komitéinnstilling'
-        national_budget_financial_proposition: 'Statsbudsjett, finansinnstilling'
-        national_budget_taxes: 'Statsbudsjett, skattedelen'
-        opposition_proposal_throne: 'Opposisjonsforslag, trontale'
-        opposition_proposition_budget: 'Opposisjonsforslag, statsbudsjett'
-        opposition_proposition_legislation: 'Opposisjonsforslag, lovforslag'
-        opposition_proposition_parliamentary_report: 'Opposisjonsforslag, stortingsmelding'
-        parliamentary_report: Stortingsmelding
-        parliamentary_report_committee_proposal: 'Stortingsmelding, komitéinnstilling'
-        proposal_attached_to_the_minutes: 'Forslag vedlegges protokollen'
-        rebalanced_national_budget: 'Nysaldering av statsbudsjett'
-        representative_proposition: 'Representantforslag'
-        revised_national_budget: 'Revidert statsbudsjett'
     users:
       edit:
         created: Brukeren ble opprettet.

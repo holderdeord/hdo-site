@@ -210,52 +210,7 @@ module Hdo
       end
     end
 
-    describe 'proposition types' do
-      it "updates a single proposition_type" do
-        issue = Issue.make! proposition_connections: [PropositionConnection.make!]
-
-        propositions = {
-          issue.propositions[0].id => [{
-            connected: 'true',
-            title: 'title!!!!!!!!',
-            proposition_type: PropositionConnection::PROPOSITION_TYPES.first
-          }]
-        }
-
-        IssueUpdater.new(issue, {propositions: propositions}, user).update!
-
-        issue.reload
-
-        issue.proposition_connections.each do |pc|
-          pc.proposition_type.should == PropositionConnection::PROPOSITION_TYPES.first
-        end
-      end
-
-      it "updates one of many proposition_types" do
-        issue = Issue.make! proposition_connections: [PropositionConnection.make!, PropositionConnection.make!]
-        issue.proposition_connections.each { |v| v.proposition_type.should be_blank }
-
-        expected_type = PropositionConnection::PROPOSITION_TYPES.first
-
-        propositions = {
-          issue.propositions[0].id => [{
-            connected: 'true',
-            title: 'title!!!!!!!!',
-            proposition_type: expected_type
-          }],
-          issue.propositions[1].id => [{
-            connected: 'true',
-            title: 'title!!!!!!!!',
-            proposition_type: ""
-          }]
-        }
-
-        IssueUpdater.new(issue, {propositions: propositions}, user).update!
-        issue.reload
-
-        issue.proposition_connections.map(&:proposition_type).compact.should == [expected_type]
-      end
-
+    describe 'proposition connections' do
       it 'keeps title and comment nil if blank' do
         conn  = PropositionConnection.make!(title: nil, comment: nil)
         issue = Issue.make! proposition_connections: [conn]
@@ -273,52 +228,6 @@ module Hdo
         conn.reload
         conn.title.should be_nil
         conn.comment.should be_nil
-      end
-
-      it "updates multiple proposition_types simultaneously" do
-        issue = Issue.make! proposition_connections: [PropositionConnection.make!, PropositionConnection.make!]
-        issue.proposition_connections.each { |v| v.proposition_type.should be_blank }
-
-        first = PropositionConnection::PROPOSITION_TYPES.first
-        last  = PropositionConnection::PROPOSITION_TYPES.last
-
-        propositions = {
-          issue.propositions[0].id => [{
-            connected: 'true',
-            title: 'title!!!!!!!!',
-            proposition_type: first
-          }],
-          issue.propositions[1].id => [{
-            connected: 'true',
-            title: 'title!!!!!!!!',
-            proposition_type: last
-          }]
-        }
-
-        IssueUpdater.new(issue, {propositions: propositions}, user).update!
-        issue.reload
-
-        actual = issue.proposition_connections.map(&:proposition_type).sort
-        actual.should == [first, last].sort
-      end
-
-      it 'does not touch the issue if proposition type is already nil or empty' do
-        proposition_connection = PropositionConnection.make!
-        proposition            = proposition_connection.proposition
-        issue                  = Issue.make! proposition_connections: [proposition_connection]
-
-        proposition_connection.proposition_type.should be_nil
-        issue.last_updated_by.should be_nil
-
-        propositions = {
-          proposition.id => [{
-            connected: 'true',
-            proposition_type: '' # input is an empty string
-          }]
-        }
-
-        IssueUpdater.new(issue, {propositions: propositions}, user).update!
-        issue.last_updated_by.should be_nil
       end
     end
 

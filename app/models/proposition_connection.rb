@@ -5,22 +5,12 @@ class PropositionConnection < ActiveRecord::Base
   belongs_to :proposition
   belongs_to :vote # optional
 
-  attr_accessible :issue, :comment, :title, :proposition, :proposition_id,
-                  :proposition_type, :vote_id
-
-  PROPOSITION_TYPES = I18n.t('app.votes.proposition_types').except(:none).keys.map(&:to_s)
-  validates_inclusion_of :proposition_type,
-                         in: PROPOSITION_TYPES + [nil, '']
-
+  attr_accessible :issue, :comment, :title, :proposition, :proposition_id, :vote_id
 
   validates_presence_of :issue, :proposition
   validates_uniqueness_of :proposition_id, scope: [:issue_id, :vote_id]
 
   validate :overrides_vote_if_proposition_has_several_votes
-
-  def proposition_type_text
-    I18n.t("app.votes.proposition_types.#{proposition_type}")
-  end
 
   def title_with_fallback
     title || proposition.simple_description || proposition.description
