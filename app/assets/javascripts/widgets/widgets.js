@@ -72,91 +72,93 @@ var HDO = HDO || {};
             return iframe;
         },
 
-        queryParamFor: function (key, value) {
-            return key + '=' + encodeURIComponent(value);
+        parseOrNull: function (str) {
+            if (!(window.JSON && window.JSON.parse)) {
+                return null;
+            } else {
+                return JSON.parse(str);
+            }
         },
 
-        addIssueParams: function (el, url) {
-            var issues, count;
+        widgetOptionsFor: function (el) {
+            var path = '', params = {};
 
-            issues = el.getAttribute('data-issue-ids');
-            count  = el.getAttribute('data-issue-count');
 
-            if (issues && issues.length) {
-                url += '?' + this.queryParamFor('issues', issues);
-            } else if (count && count.length) {
-                url += '?' + this.queryParamFor('count', count);
+            if (this.type === 'issue') {
+                path           = 'issues/:issueId/widget';
+                params.issueId = el.getAttribute('data-issue-id');
+                params.period  = el.getAttribute('data-period');
+            } else if (this.type === 'representative') {
+                path                    = 'representatives/:representativeId/widget';
+                params.representativeId = el.getAttribute('data-representative-id');
+                params.issues           = el.getAttribute('data-issue-ids');
+                params.count            = el.getAttribute('data-issue-count');
+            } else if (this.type === 'party') {
+                path           = 'parties/:partyId/widget';
+                params.partyId = el.getAttribute('data-party-id');
+                params.count   = el.getAttribute('data-count');
+                params.issues  = el.getAttribute('data-issue-ids');
+            } else if (this.type === 'topic') {
+                path            = 'widgets/topic';
+                params.issues   = el.getAttribute('data-issues');
+                params.promises = this.parseOrNull(el.getAttribute('data-promises'));
+            } else if (this.type === 'promises') {
+                path            = 'promises/:promises/widget';
+                params.promises = el.getAttribute('data-promises');
+            } else {
+                throw new Error('invalid HDO widget type: ' + this.type);
+            }
+
+            var target = el.getAttribute('data-target');
+
+            if (target && target.length) {
+                params.target = target;
+            }
+
+            var partner = el.getAttribute('data-partner');
+
+            if (partner && partner.length) {
+                params.partner = partner;
+            }
+
+            return { 'url': this.buildUrl(H.widgets.baseUrl + path, params) };
+        },
+
+        buildUrl: function (url, params) {
+            var key;
+
+            for (key in params) {
+                if (params.hasOwnProperty(key)) {
+                    url = this.addParam(url, key, params[key]);
+                }
             }
 
             return url;
         },
 
-        promisesQueryFor: function (str) {
-            if (!(window.JSON && window.JSON.parse)) {
-                return '';
-            }
-
-            var data, result, key;
-
-            data = JSON.parse(str);
-            result = [];
-
-            for (key in data) {
-                if (data.hasOwnProperty(key)) {
-                    result.push('promises[' + key + ']=' + encodeURIComponent(data[key].join(',')));
-                }
-            }
-
-            return result.join('&');
-        },
-
-        widgetOptionsFor: function (el) {
-            var url, target, partner, count, period, promises;
-
-            if (this.type === 'issue') {
-                url = H.widgets.baseUrl + 'issues/' + el.getAttribute('data-issue-id') + '/widget';
-                period = el.getAttribute('data-period');
-                url = (period && period.length) ? this.addParam(url, 'period', period) : url;
-            } else if (this.type === 'representative') {
-                url = H.widgets.baseUrl + 'representatives/' + el.getAttribute('data-representative-id') + '/widget';
-                url = this.addIssueParams(el, url);
-            } else if (this.type === 'party') {
-                url = H.widgets.baseUrl + 'parties/' + el.getAttribute('data-party-id') + '/widget';
-                count = el.getAttribute('data-count');
-                url = (count && count.length) ? this.addParam(url, 'count', count) : this.addIssueParams(el, url);
-            } else if (this.type === 'topic') {
-                url = H.widgets.baseUrl + 'widgets/topic?'
-                    + this.queryParamFor('issues', el.getAttribute('data-issues')) + '&'
-                    + this.promisesQueryFor(el.getAttribute('data-promises'));
-            } else if (this.type === 'promises') {
-                promises = encodeURIComponent(el.getAttribute('data-promises'));
-                url = H.widgets.baseUrl + 'promises/' + promises + '/widget';
-            } else {
-                throw new Error('invalid HDO widget type: ' + this.type);
-            }
-
-            target = el.getAttribute('data-target');
-
-            if (target && target.length) {
-                url = this.addParam(url, 'target', target);
-            }
-
-            partner = el.getAttribute('data-partner');
-
-            if (partner && partner.length) {
-                url = this.addParam(url, 'partner', partner);
-            }
-
-            return { 'url': url };
-        },
-
         addParam: function (url, key, value) {
-            var param = this.queryParamFor(key, value);
+            if (!value) {
+                return url;
+            }
 
-            if (url.indexOf('?') > 0) {
-                url += '&' + param;
-            } else {
-                url += '?' + param;
+            if (value === Object(value)) {
+                var result = [];
+                for (var k in value) {
+                    if (value.hasOwnProperty(k)) {
+                        result.push(key + '[' + k + ']=' + encodeURIComponent(value[k]));
+                    }
+                }
+
+                url += url.indexOf('?') < 0 ? '?' : '&';
+                url += result.join('&');
+            } else if (value.length) {
+                var exp = new RegExp(':' + key, 'g');
+                if (url.match(exp)) {
+                    url = url.replace(exp, encodeURIComponent(value));
+                } else {
+                    url += url.indexOf('?') < 0 ? '?' : '&';
+                    url += key + '=' + encodeURIComponent(value);
+                }
             }
 
             return url;
