@@ -267,23 +267,6 @@ describe Issue do
       expect_stale_object_error_when_updating @same_issue
     end
 
-    it 'is locked when changing proposition type of an existing proposition' do
-      @issue.proposition_connections.create! proposition: Proposition.make!, title: 'hello'
-      prop = @issue.propositions.first
-
-      @issue.save
-      @same_issue.reload
-
-      propositions = {
-        prop.id => [{
-          connected: 'true',
-          title: 'hello'
-        }]
-      }
-      update_attributes_on @issue, {propositions: propositions}
-      expect_stale_object_error_when_updating @same_issue
-    end
-
     def expect_stale_object_error_when_updating(issue)
       issue.last_updated_by = User.make!
       lambda { issue.save }.should raise_error(ActiveRecord::StaleObjectError)
