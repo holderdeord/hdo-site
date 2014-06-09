@@ -94,6 +94,11 @@ namespace :images do
 
     Issue.published.each do |issue|
       issue.frontpage = topic_ids.include?(issue.id)
+
+      if issue.changed?
+        issue.last_updated_by = User.where(name: 'admin').first
+      end
+
       issue.save!
     end
   end
