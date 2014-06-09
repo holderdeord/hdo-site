@@ -55,9 +55,17 @@ module ApplicationHelper
     text
   end
 
+  GRAVATAR_OVERRIDES = {
+    'hilde.wibe@abelia.no' => 'hdo/hilde-wibe.jpg'
+  }
+
   def gravatar_url(email, opts = {})
-    default = opts[:fallback] == 'blank' ? 'blank' : asset_url("representatives/fallback_avatar.png")
-    "//gravatar.com/avatar/#{Digest::MD5.hexdigest email}?s=300&d=#{URI.encode default}"
+    if GRAVATAR_OVERRIDES.key?(email)
+      return asset_path(GRAVATAR_OVERRIDES[email])
+    else
+      default = opts[:fallback] == 'blank' ? 'blank' : asset_url("representatives/fallback_avatar.png")
+      "//gravatar.com/avatar/#{Digest::MD5.hexdigest email}?s=300&d=#{URI.encode default}"
+    end
   end
 
   def metadata
