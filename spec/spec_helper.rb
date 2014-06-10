@@ -43,6 +43,7 @@ RSpec.configure do |config|
   config.include BrowserSpecHelper, type: :request
   config.include CacheSpecHelper, :cache
   config.include SearchSpecHelper, :search
+  config.include ApiSpecHelper, :api
 
   config.before :suite do
     DatabaseCleaner.strategy = :deletion
