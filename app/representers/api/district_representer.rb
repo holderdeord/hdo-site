@@ -1,6 +1,5 @@
 module Api
-  module DistrictRepresenter
-    include Roar::Representer::JSON::HAL
+  class DistrictRepresenter < BaseRepresenter
 
     link :self do
       api_district_url represented
@@ -8,6 +7,5 @@ module Api
 
     property :name
     property :slug
-
   end
 end

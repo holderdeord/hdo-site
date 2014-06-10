@@ -1,28 +1,26 @@
 module Api
-  module IssuesRepresenter
-    include Roar::Representer::JSON::HAL
-
+  class IssuesRepresenter < BaseRepresenter
     property :total_count, as: :total
     property :count
 
     link :self do
-      if current_page == 1
+      if represented.current_page == 1
         api_issues_url
       else
-        api_issues_url page: current_page
+        api_issues_url page: represented.current_page
       end
     end
 
     link :next do
-      api_issues_url(page: next_page) if next_page
+      api_issues_url(page: represented.next_page) if represented.next_page
     end
 
     link :prev do
-      api_issues_url(page: prev_page) if prev_page
+      api_issues_url(page: represented.prev_page) if represented.prev_page
     end
 
     link :last do
-      api_issues_url(page: total_pages) if total_pages > 1
+      api_issues_url(page: represented.total_pages) if represented.total_pages > 1
     end
 
     link :find do

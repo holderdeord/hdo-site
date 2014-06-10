@@ -1,7 +1,5 @@
 module Api
-  module CommitteesRepresenter
-    include Roar::Representer::JSON::HAL
-
+  class CommitteesRepresenter < BaseRepresenter
     link :self do
       api_committees_url
     end

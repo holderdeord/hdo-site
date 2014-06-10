@@ -1,7 +1,5 @@
 module Api
-  module RepresentativeRepresenter
-    include Roar::Representer::JSON::HAL
-
+  class RepresentativeRepresenter < BaseRepresenter
     property :last_name
     property :first_name
     property :slug
@@ -15,15 +13,15 @@ module Api
     end
 
     link :party do
-      api_party_url latest_party
+      api_party_url represented.latest_party
     end
 
     links :committees do
-      current_committees.map { |e| {href: api_committee_url(e) } }
+      represented.current_committees.map { |e| {href: api_committee_url(e) } }
     end
 
     link :district do
-      api_district_url district
+      api_district_url represented.district
     end
 
     link :image do
@@ -35,7 +33,7 @@ module Api
     end
 
     link :twitter do
-      {href: twitter_url, type: 'text/html'} if twitter_id
+      {href: represented.twitter_url, type: 'text/html'} if represented.twitter_id
     end
   end
 end

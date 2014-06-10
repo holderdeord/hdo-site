@@ -1,6 +1,5 @@
 module Api
-  module DistrictsRepresenter
-    include Roar::Representer::JSON::HAL
+  class DistrictsRepresenter < BaseRepresenter
 
     link :self do
       api_districts_url

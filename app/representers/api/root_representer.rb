@@ -1,7 +1,5 @@
 module Api
-  module RootRepresenter
-    include Roar::Representer::JSON::HAL
-
+  class RootRepresenter < BaseRepresenter
     link(:self)            { api_root_url }
     link(:license)         { {href: "http://creativecommons.org/licenses/by-sa/3.0/no/", type: 'text/html'} }
 

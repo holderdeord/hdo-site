@@ -1,6 +1,5 @@
 module Api
-  module PartyRepresenter
-    include Roar::Representer::JSON::HAL
+  class PartyRepresenter < BaseRepresenter
 
     property :name
     property :slug

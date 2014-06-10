@@ -1,7 +1,5 @@
 module Api
-  module CommitteeRepresenter
-    include Roar::Representer::JSON::HAL
-
+  class CommitteeRepresenter < BaseRepresenter
     property :name
     property :slug
 
@@ -10,7 +8,9 @@ module Api
     end
 
     links :representatives do
-      current_representatives.map { |rep| {href: api_representative_url(rep) } }
+      represented.
+        current_representatives.
+        map { |rep| {href: api_representative_url(rep) } }
     end
   end
 end

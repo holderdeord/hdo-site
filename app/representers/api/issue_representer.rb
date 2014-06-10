@@ -1,7 +1,5 @@
 module Api
-  module IssueRepresenter
-    include Roar::Representer::JSON::HAL
-
+  class IssueRepresenter < BaseRepresenter
     property :title
     property :description
     property :tag_list, as: :tags
@@ -11,7 +9,7 @@ module Api
     property :updated_at
 
     link :self do
-      api_issue_url id
+      api_issue_url represented.id
     end
   end
 end
