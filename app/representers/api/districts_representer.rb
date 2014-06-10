@@ -1,13 +1,12 @@
 module Api
   class DistrictsRepresenter < BaseRepresenter
-
     link :self do
       api_districts_url
     end
 
     link :find do
       {
-        href: api_district_url('...').sub('...', '{slug}'),
+        href: templated_url(:api_district_url, id: 'slug'),
         templated: true
       }
     end

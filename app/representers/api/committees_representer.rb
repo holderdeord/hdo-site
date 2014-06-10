@@ -6,7 +6,7 @@ module Api
 
     link :find do
       {
-        href: api_committee_url('...').sub('...', '{slug}'),
+        href: templated_url(:api_committee_url, id: 'slug'),
         templated: true
       }
     end
