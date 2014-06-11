@@ -3,11 +3,17 @@ module Api
     before_filter :fetch_representative, except: :index
 
     def index
-      respond_with Representative.
-                    includes(:committees, party_memberships: :party).
-                    order(:last_name).
-                    page(params[:page] || 1).
-                    per(10)
+      representatives = Representative.
+                          includes(:committees, party_memberships: :party).
+                          order(:last_name)
+
+
+
+      if params[:attending]
+        representatives = representatives.attending
+      end
+
+      respond_with representatives.page(params[:page] || 1).per(params[:size] || 10)
     end
 
     def show

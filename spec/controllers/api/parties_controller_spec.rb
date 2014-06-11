@@ -22,7 +22,7 @@ describe Api::PartiesController, :api do
     get :representatives, id: rep.latest_party.id, format: :hal
 
     response.should be_success
-    relations.should == %w[representatives self] # TODO: pagination rels
+    relations.should == %w[find representatives self] # TODO: pagination rels
   end
 
   it 'can GET :attending_representatives' do
@@ -31,6 +31,6 @@ describe Api::PartiesController, :api do
     get :representatives, id: rep.current_party.id, attending: true, format: :hal
 
     response.should be_success
-    relations.should == %w[attending_representatives self] # TODO: pagination rels
+    relations.should == %w[attending_representatives find self] # TODO: pagination rels
   end
 end

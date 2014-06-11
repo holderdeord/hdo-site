@@ -2,7 +2,6 @@ module Api
   class PartiesController < ApiController
     before_filter :fetch_party, except: :index
 
-
     def index
       respond_with Party.order(:name).page(params[:page] || 1)
     end
@@ -27,7 +26,7 @@ module Api
       rel = rel.attending if params[:attending]
       rel = rel.page(params[:page] || 1)
 
-      respond_with rel, represent_with: PartyRepresentativesRepresenter, attending: params[:attending]
+      respond_with rel, represent_with: RepresentativesRepresenter, attending: params[:attending], party: @party
     end
 
     private
