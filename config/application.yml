@@ -20,7 +20,7 @@ defaults: &defaults
   weights_enabled: true
   chat_notifications_enabled: false
   ignore_votes_against_alternate_budget: true
-  topic_of_the_week: Helse og omsorg
+  topic_of_the_week: Samferdsel
 
 development:
   <<: *defaults

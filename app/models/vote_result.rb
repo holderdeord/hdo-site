@@ -45,6 +45,8 @@ class VoteResult < ActiveRecord::Base
   end
 
   def rebel?
+    # this should be optimized in SQL if used for anything serious
+
     party = representative.party_at(vote.time)
     stats = vote.stats
 
