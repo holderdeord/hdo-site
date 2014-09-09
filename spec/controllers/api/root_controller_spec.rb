@@ -6,13 +6,14 @@ describe Api::RootController, :api do
 
     response.should be_success
     relations.should == %w[
-      self 
-      license 
-      issues 
-      representatives 
+      self
+      license
+      issues
+      representatives
       parties
       committees
       districts
+      promises
     ].sort
   end
 end
