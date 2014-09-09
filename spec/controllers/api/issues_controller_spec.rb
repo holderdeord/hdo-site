@@ -18,7 +18,7 @@ describe Api::IssuesController, :api do
     get :show, id: i, format: :hal
 
     response.should be_success
-    relations.should == %w[self]
+    relations.should == %w[promises self]
   end
 
   it 'returns 404 for a non-published issue' do

@@ -7,7 +7,12 @@ Hdo::Application.routes.draw do
   namespace :api, defaults: {format: :hal} do
     root to: 'root#index'
 
-    resources :issues, only: [:index, :show]
+    resources :issues, only: [:index, :show] do
+      member {
+        get 'promises'
+      }
+    end
+
     resources :committees, only: [:index, :show]
     resources :districts, only: [:index, :show]
 
@@ -21,6 +26,8 @@ Hdo::Application.routes.draw do
     resources :representatives, only: [:index, :show] do
       member { get 'image' }
     end
+
+    resources :promises, only: [:index, :show]
   end
 
   #

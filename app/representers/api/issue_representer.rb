@@ -11,5 +11,9 @@ module Api
     link :self do
       api_issue_url represented.id
     end
+
+    link :promises do
+      promises_api_issue_url represented.id
+    end
   end
 end

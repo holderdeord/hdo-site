@@ -38,6 +38,8 @@ class Promise < ActiveRecord::Base
 
   validates_length_of :categories, minimum: 1
 
+  scope :by_date, -> { includes(:parliament_period).order('parliament_periods.start_date DESC') }
+
   def self.parliament_periods
     ParliamentPeriod.joins(:promises).uniq.order(:start_date)
   end
