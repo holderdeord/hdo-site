@@ -4,10 +4,10 @@ module Hdo
   module Import
     describe CLI do
       it 'has a default session and period' do
-        CLI.new(['api']).options.should include(
-          session: '2013-2014',
-          period:  '2013-2017'
-        )
+        opts = CLI.new(['api']).options
+
+        opts[:session].should =~ /^\d{4}-\d{4}$/
+        opts[:period].should  =~ /^\d{4}-\d{4}$/
       end
 
       it 'raises on unknown commands' do
