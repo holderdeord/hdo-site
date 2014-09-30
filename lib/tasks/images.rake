@@ -1,7 +1,12 @@
 require 'net/http'
 require 'uri'
+require 'hdo/storting_importer'
 
 namespace :images do
+  task :locale do
+    I18n.locale = :en # make sure we don't try to translate imagemagick errors
+  end
+
   namespace :representatives do
     desc 'Reset representative images'
     task :reset => :environment do
@@ -9,13 +14,13 @@ namespace :images do
     end
 
     desc 'Fetch representatives images from stortinget.no'
-    task :fetch => :environment do
+    task :fetch => %w[environment locale] do
+      api = Hdo::StortingImporter::ApiDataSource.default
+
       rep_image_path = Rails.root.join("tmp/downloads/representatives")
       rep_image_path.mkpath
 
       Representative.all.each do |rep|
-        url = URI.parse("https://stortinget.no/Personimages/PersonImages_ExtraLarge/#{URI.escape rep.external_id}_ekstrastort.jpg")
-
         filename = rep_image_path.join("#{rep.slug}.jpg")
 
         if ENV['FORCE'].nil? && filename.exist?
@@ -23,48 +28,18 @@ namespace :images do
 
           rep.image = filename.open
           rep.save!
+        else
+          begin
+            photo = api.person_photo(rep.slug, :large)
 
-          next
-        end
+            File.open(filename.to_s, 'wb') { |io| io << photo }
+            puts "saved #{rep.full_name} -> #{filename}"
 
-        File.open(filename.to_s, "wb") do |destination|
-          resp = Net::HTTP.get_response(url) do |response|
-            total = response.content_length
-            progress = 0
-            segment_count = 0
-
-            response.read_body do |segment|
-              progress += segment.length
-              segment_count += 1
-
-              if segment_count % 15 == 0
-                percent = (progress.to_f / total.to_f) * 100
-                print "\rDownloading #{url}: #{percent.to_i}% (#{progress} / #{total})"
-                $stdout.flush
-                segment_count = 0
-              end
-
-              destination.write(segment)
-            end
-          end
-
-          destination.close
-
-          if !resp.kind_of?(Net::HTTPSuccess)
-            puts "\nERROR:#{resp.code} for #{url}"
-            File.delete(destination.path)
-          else
-            if File.zero?(destination.path)
-              puts "\nERROR: url #{url} returned an empty file"
-              File.delete(destination.path)
-            else
-              print "\rDownloading #{url} finished. Saved as #{filename}\n"
-
-              rep.image = filename.open
-              rep.save!
-
-              $stdout.flush
-            end
+            rep.image = filename.open
+            rep.save!
+          rescue Hdo::StortingImporter::DataSource::ServerError => ex
+            raise unless ex.code == 404
+            puts "WARN: unable to find image for #{rep.full_name}"
           end
         end
       end
@@ -72,15 +47,22 @@ namespace :images do
   end
 
   desc 'Save and scale party logos to Party models'
-  task :party_logos => :environment do
+  task :party_logos => %w[environment locale] do
     path_to_logos = Rails.root.join("app/assets/images/party-logos-current")
 
     Party.all.each do |party|
-      party.logo = path_to_logos.join("#{party.slug}.png").open
-      party.save!
-      puts "Logo for #{party.name} mapped as #{party.logo.url}."
+      path = path_to_logos.join("#{party.slug}.png")
+
+      if path.exist?
+        party.logo = path.open
+        party.save!
+        puts "Logo for #{party.name} mapped as #{party.logo.url}."
+      else
+        raise "not found: #{path}"
+      end
     end
   end
+
 
   TOPICS = {
     'Samferdsel'      => {ids: [251, 149, 212, 161, 257, 193, 200, 166, 259, 77, 6], image: "tema_samferdsel.jpg"},
