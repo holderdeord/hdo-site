@@ -34,6 +34,19 @@ namespace :check do
       raise "found missing categories"
     end
   end
+
+  desc 'Check if Stortingets API changelog changed'
+  task :changelog => :environment do
+    url    = URI.parse("http://data.stortinget.no/om-tjenesten/endringslogg")
+    md5sum = Digest::MD5.hexdigest(Net::HTTP.get_response(url).body)
+    state  = Pathname.new('/var/tmp/no.holderdeord.stortinget.changelog.md5')
+
+    if state.exist? && state.read != md5sum
+      ActiveSupport::Notifications.pubish "stortinget.api.changed", url
+    end
+
+    state.open('w') { |io| io << md5sum }
+  end
 end
 
 task :check => %w[check:tabs]
