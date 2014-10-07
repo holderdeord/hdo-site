@@ -98,3 +98,13 @@
 
   <%= paginate @propositions %>
 </section>
+
+<% content_for :document_ready do %>
+<script>
+ $(function() {
+   $("select[name=parliament_session_name]").change(function() {
+     $(this).parents('form:first').submit();
+   });
+ });
+</script>
+<% end %>
