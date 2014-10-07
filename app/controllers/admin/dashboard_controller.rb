@@ -58,7 +58,7 @@ class Admin::DashboardController < AdminController
   end
 
   def fetch_proposition_stats
-    [ParliamentSession.current, ParliamentSession.previous].map do |session|
+    [ParliamentSession.current, ParliamentSession.previous].compact.map do |session|
       [session, Hdo::Stats::PropositionCounts.from_session(session.name)]
     end
   end

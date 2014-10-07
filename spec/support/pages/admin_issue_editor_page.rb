@@ -44,7 +44,13 @@ module Pages
 
     def save
       driver.first(name: 'save').click
-      wait_until { !spinner.displayed? }
+      wait_until {
+        begin
+          !spinner.displayed?
+        rescue Selenium::WebDriver::Error::StaleElementReferenceError
+          false
+        end
+      }
 
       error_messages.empty?
     end

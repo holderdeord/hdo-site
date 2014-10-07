@@ -34,11 +34,13 @@ module Hdo
         end
 
         def previous
-          where('end_date < ?', current.start_date).order('start_date DESC').first
+          c = current or return
+          where('end_date < ?', c.start_date).order('start_date DESC').first
         end
 
         def next
-          where('start_date > ?', current.end_date).order(:start_date).first
+          c = current or return 
+          where('start_date > ?', c.end_date).order(:start_date).first
         end
       end
     end
