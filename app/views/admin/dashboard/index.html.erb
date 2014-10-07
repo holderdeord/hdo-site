@@ -31,30 +31,31 @@
     </div>
   </div>
 
-  <h3><%= link_to 'Innkommende forslag', admin_propositions_path %></h3>
+  <h3>Innkommende forslag</h3>
+  <div class="row-fluid">
+    <% @proposition_stats.each do |session, stats| %>
+      <div class="span6">
+        <h4 style="text-align: center"><%= link_to session.name, admin_propositions_path(parliament_session_name: session.name) %></h4>
+        <canvas class="percentage-chart hidden-phone" data-json='<%= percentage_chart_json_for(stats.published_percentage, stats.pending_percentage) %>'></canvas>
+
+        <div style="text-align: center">
+          <div class="hdo-primary-text"><%= stats.published %> publiserte</div>
+          <div class="hdo-secondary-text"><%= stats.pending %> nye</div>
+        </div>
+      </div>
+    <% end %>
+  </div>
 
   <div class="row-fluid">
-    <div class="span4">
-      <div class="row-fluid">
-        <canvas class="percentage-chart hidden-phone" data-json='<%= percentage_chart_json_for(@proposition_stats.published_percentage, @proposition_stats.pending_percentage) %>'></canvas>
-      </div>
-
-      <div style="text-align: center">
-        <div class="hdo-primary-text"><%= @proposition_stats.published %> publiserte</div>
-        <div class="hdo-secondary-text"><%= @proposition_stats.pending %> nye</div>
-      </div>
-    </div>
-
-    <div class="span8">
-      <canvas class="line-chart" data-json='<%= @proposition_histogram.to_json.html_safe %>'></canvas>
-    </div>
+    <h3>Aktivitet på Stortinget, siste 6 måneder</h3>
+    <canvas class="line-chart" data-json='<%= @proposition_histogram.to_json.html_safe %>'></canvas>
   </div>
 
   <hr class="soften">
 
   <div class="row-fluid">
     <div class="span6">
-      <h4>Dine saker</h3>
+      <h4>Dine saker</h4>
       <ul>
         <% current_user.issues.each do |issue| %>
           <li>
@@ -73,46 +74,47 @@
 </div>
 
 <%= content_for :document_ready do %>
-<script>
-$(function () {
-  function drawCharts() {
-    $(".percentage-chart").each(function () {
-      var el      = $(this);
-      var dataset = el.data('json');
-      var ctx     = el.get(0).getContext('2d');
+  <script>
+    $(function () {
+        function drawCharts() {
+            $(".percentage-chart").each(function () {
+                var el      = $(this);
+                var dataset = el.data('json');
+                var ctx     = el.get(0).getContext('2d');
 
-      el.attr('width', el.parent().width()).attr('height', 120);
+                el.attr('width', el.parent().width()).attr('height', 120);
 
-      new Chart(ctx).Doughnut(dataset);
+                new Chart(ctx).Doughnut(dataset);
+            })
+
+                $(".line-chart").each(function () {
+                    var el      = $(this);
+                    var dataset = el.data('json');
+                    var ctx     = el.get(0).getContext('2d');
+
+                    el.attr('width', el.parent().width()).attr('height', 200);
+
+                    var params = {
+                        labels: dataset.labels,
+                        datasets: [
+                            {
+                                scaleShowGridLines: false,
+                                fillColor : "rgba(151,187,205,0.5)",
+                                strokeColor : "rgba(151,187,205,1)",
+                                pointColor : "rgba(151,187,205,1)",
+                                pointStrokeColor : "#fff",
+                                data: dataset.data
+                            }
+                        ]
+                    }
+
+                    new Chart(ctx).Line(params)
+                })
+                    }
+
+        $(window).resize(drawCharts);
+        drawCharts();
     })
-
-    $(".line-chart").each(function () {
-      var el      = $(this);
-      var dataset = el.data('json');
-      var ctx     = el.get(0).getContext('2d');
-
-      el.attr('width', el.parent().width()).attr('height', 200);
-
-      var params = {
-        labels: dataset.labels,
-        datasets: [
-          {
-            fillColor : "rgba(151,187,205,0.5)",
-            strokeColor : "rgba(151,187,205,1)",
-            pointColor : "rgba(151,187,205,1)",
-            pointStrokeColor : "#fff",
-            data: dataset.data
-          }
-        ]
-      }
-
-      new Chart(ctx).Line(params)
-    })
-  }
-
-  $(window).resize(drawCharts);
-  drawCharts();
-})
-</script>
+  </script>
 <% end %>
 
