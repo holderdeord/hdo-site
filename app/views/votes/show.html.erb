@@ -2,40 +2,6 @@
   <h1><%= @vote.subject %></h1>
 </div>
 
-<div class="row-fluid">
-  <div class="span6">
-    <h4><%= ParliamentIssue.model_name.human(count: 2).capitalize %></h4>
-    <ul>
-      <% @parliament_issues.each do |parliament_issue| %>
-        <li><%= link_to parliament_issue.summary, parliament_issue %> (<%= link_to parliament_issue.issue_type, parliament_issue.url %>)</li>
-      <% end %>
-    </ul>
-
-    <% if @issues.any? %>
-      <h4>HDO-saker</h4>
-      <ul>
-        <% @issues.each do |issue| %>
-          <li><%= link_to issue.title, issue %></li>
-        <% end %>
-      </ul>
-    <% end %>
-  </div>
-
-  <div class="span6">
-    <h4>Behandling</h4>
-    <p><%= l @vote.time.localtime, format: :text_time %></p>
-    <p>
-      <%= @vote.enacted? ? 'Vedtatt' : 'Ikke vedtatt' %>
-      <small class="muted"><%= @vote.for_count %> for, <%= @vote.against_count %> mot, <%= @vote.absent_count %> ikke tilstede</small>
-    </p>
-
-  </div>
-</div>
-
-<hr class="soften">
-
-<h3><%= VoteResult.model_name.human(count: 2).capitalize %></h3>
-
 <% if @vote.inferred? %>
   <div class="alert alert-info"><%= I18n.t('app.votes.non_personal.inferred') %></div>
   Les mer om <%= link_to 'enstemmige vedtak', home_faq_path(anchor: 'hvordan-vet-dere-hvem-som-var-tilstede-nr-vedtaket-er-enstemmig') %>.
@@ -43,17 +9,32 @@
   <div class="alert alert-info"><%= I18n.t('app.votes.non_personal.unknown') %></div>
 <% end %>
 
+<small class="row-fluid muted">
+  <div class="span6">
+    <strong><%= @vote.enacted? ? 'Vedtatt' : 'Ikke vedtatt' %>.</strong>
+    <%= @vote.for_count %> for, <%= @vote.against_count %> mot, <%= @vote.absent_count %> ikke tilstede
+  </div>
+
+  <div class="span6">
+    <div class="pull-right"><%= l @vote.time.localtime, format: :text_time %></div>
+  </div>
+</small>
+
 <% if @vote.vote_results.size > 0 %>
   <div class="row-fluid">
-    <h5 class="span4">For</h5>
-    <h5 class="span4">Mot</h5>
-    <h5 class="span4">Ikke tilstede</h5>
+    <h5 class="span3">For</h5>
+    <h5 class="span3">Mot</h5>
+    <h5 class="span3">Ikke tilstede</h5>
   </div>
 
   <% @results_by_party.each do |party, results_by_status| %>
     <div class="vote-result-row row-fluid" data-toggle="collapse" data-target='#vote-results-<%= party.slug %>'>
-      <% results_by_status.each do |status, results| %>
+      <% results_by_status.each_with_index do |(status, results), idx| %>
         <div class="span4">
+          <% if idx == 0 %>
+            <span class="expandable"></span>
+          <% end  %>
+
           <% if results.any? %>
             <%= image_tag party.logo, alt: party.name, width: '24', height: '24' %>
             <span><%= party.name %> (<%= results.size %>)</span>
@@ -75,14 +56,74 @@
       <% end %>
     </div>
   <% end %>
+
+  <% content_for :document_ready do %>
+    <script>
+     function toggleExpandable(e) {
+       $(this)
+          .prev('.vote-result-row')
+          .find('.expandable')
+          .toggleClass('expanded');
+     }
+
+     $(function() {
+       $(".collapse").
+         on("show", toggleExpandable)
+         .on("hide", toggleExpandable);
+     });
+    </script>
+  <% end %>
 <% end %>
+
+<hr class="soften">
+
+<div class="row-fluid">
+  <% if @issues.any? %>
+    <div class="span6">
+      <h4>Avstemningen brukes i</h4>
+      <ul>
+        <% @issues.each do |issue| %>
+          <li><%= link_to issue.title, issue %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="span6">
+    <h4><%= ParliamentIssue.model_name.human(count: 2).capitalize %></h4>
+    <ul>
+      <% @parliament_issues.each do |parliament_issue| %>
+        <li>
+          <%= link_to parliament_issue.summary, parliament_issue %>
+          <%= link_to parliament_issue.url do %>
+            <%= image_tag 'link.png', width: 12, height: 12, class: 'permalink' %>
+          <% end %>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+</div>
 
 <hr class="soften">
 
 <div class="row-fluid">
   <h3><%= Proposition.model_name.human(count: @vote.propositions.size).capitalize %></h3>
   <% if @vote.propositions.any? %>
-    <%= render partial: "shared/propositions_table", locals: { vote: @vote } %>
+    <% @vote.propositions.each do |prop| %>
+      <div class="row-fluid">
+        <h4><%= link_to prop.simple_description || prop.description, proposition_path(prop)  %></h4>
+
+        <blockquote class="pull-right">
+          <%= (prop.simple_body ? markdown(prop.simple_body) : prop.body).html_safe %>
+
+          <% if prop.proposers.any? %>
+            <small><%= prop.proposers.map(&:name).to_sentence %></small>
+          <% elsif prop.on_behalf_of.present? %>
+            <small><%= prop.on_behalf_of %></small>
+          <% end %>
+        </blockquote>
+      </div>
+    <% end %>
   <% else %>
     <p>Hmm, denne avstemningen har ingen forslag koblet til seg.</p>
   <% end %>
