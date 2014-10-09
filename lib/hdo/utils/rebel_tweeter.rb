@@ -5,6 +5,11 @@ module Hdo
     class RebelTweeter
       MIN_TWEET_INTERVAL = 60
 
+      MESSAGES = [
+        "%{party}s %{representative} brøt med partiflertallet og stemte %{result}",
+        "%{party}s %{representative} fulgte hjertet og stemte %{result}",
+      ]
+
       def self.since(date)
         new(date)
       end
@@ -35,8 +40,9 @@ module Hdo
 
       def message_for(vote, vote_result)
         representative = vote_result.representative
+        name           = representative.has_twitter? ? "@#{representative.twitter_id}" : representative.name
         party          = representative.party_at(vote.time)
-        message        = "#{representative.full_name} (#{party.external_id}) stemte #{vote_result.human.downcase} #{vote.subject}"
+        message        = MESSAGES.sample % {party: party.name, representative: name, result: vote_result.human.downcase}
         url            = helpers.vote_url(vote, host: 'www.holderdeord.no')
 
         [message.truncate(140 - url.length - 1), url].join(' ')
@@ -52,6 +58,9 @@ module Hdo
 
       def send_tweet(msg)
         client.update msg
+      rescue Twitter::Error => ex
+        # don't crash - we'll keep trying the rest our tweets
+        Rails.logger.error ex.message
       end
 
       def client
