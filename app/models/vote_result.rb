@@ -46,11 +46,12 @@ class VoteResult < ActiveRecord::Base
 
   def rebel?
     # this should be optimized in SQL if used for anything serious
+    return @rebel if defined?(@rebel)
 
     party = representative.party_at(vote.time)
     stats = vote.stats
 
-    stats.party_for?(party) && against? || stats.party_against?(party) && for?
+    @rebel = stats.party_for?(party) && against? || stats.party_against?(party) && for?
   end
 
   def icon
