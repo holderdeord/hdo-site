@@ -50,3 +50,13 @@ chromedriver.log
 # no thank you.
 .rvmrc
 .ruby-version
+
+# emac
+*~
+\#*\#
+/.emacs.desktop
+/.emacs.desktop.lock
+*.elc
+auto-save-list
+tramp
+.\#*
