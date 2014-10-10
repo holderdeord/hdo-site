@@ -2,12 +2,8 @@ module Hdo
   module Utils
     class TwitterStats
       def initialize(opts = {})
-        @client = Twitter::REST::Client.new({
-          consumer_key: ENV['TWITTER_CONSUMER_KEY'],
-          consumer_secret: ENV['TWITTER_CONSUMER_SECRET'],
-        }.merge(opts))
-
-        @data = {}
+        @client = TwitterClients.hdo
+        @data   = {}
       end
 
       def display
