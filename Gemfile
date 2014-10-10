@@ -40,7 +40,7 @@ group :test do
 end
 
 group :test, :development do
-  gem "rspec-rails", "~> 2.13"
+  gem "rspec-rails", "> 2.0", "< 2.99"
   gem 'jasmine'
 end
 

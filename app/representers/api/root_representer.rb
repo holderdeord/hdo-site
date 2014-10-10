@@ -12,5 +12,6 @@ module Api
     link(:parties)         { api_parties_url }
     link(:committees)      { api_committees_url }
     link(:districts)       { api_districts_url }
+    link(:votes)           { api_votes_url }
   end
 end

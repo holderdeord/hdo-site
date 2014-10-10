@@ -2,7 +2,6 @@
 
 class IssuesController < ApplicationController
   before_filter :fetch_issue, except: [:index, :admin_info, :votes]
-
   hdo_caches_page :index, :votes
 
   def index

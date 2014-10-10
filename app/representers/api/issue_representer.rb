@@ -15,5 +15,9 @@ module Api
     link :promises do
       promises_api_issue_url represented.id
     end
+
+    link :timeline do
+      timeline_api_issue_url represented.id
+    end
   end
 end

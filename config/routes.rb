@@ -10,11 +10,13 @@ Hdo::Application.routes.draw do
     resources :issues, only: [:index, :show] do
       member {
         get 'promises'
+        get 'timeline'
       }
     end
 
     resources :committees, only: [:index, :show]
     resources :districts, only: [:index, :show]
+    resources :votes, only: [:index, :show]
 
     resources :parties, only: [:index, :show] do
       member {

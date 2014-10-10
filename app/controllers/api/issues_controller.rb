@@ -16,10 +16,15 @@ module Api
     end
 
     def promises
-      rel = @issue.promises
-      rel = rel.page(params[:page] || 1)
+      rel = @issue.promises.page(params[:page] || 1)
 
       respond_with rel, represent_with: PromisesRepresenter, issue: @issue
+    end
+
+    def timeline
+      rel = @issue.proposition_connections.page(params[:page] || 1)
+
+      respond_with rel, represent_with: PropositionConnectionsRepresenter, issue: @issue
     end
 
     private
