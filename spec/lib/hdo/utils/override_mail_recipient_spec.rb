@@ -3,7 +3,7 @@ require 'spec_helper'
 module Hdo
   module Utils
     describe OverrideMailRecipient do
-      let(:mail) { mock(to: ["representative@example.com"]) }
+      let(:mail) { double(to: ["representative@example.com"]) }
 
       it 'should change recipient to the test account' do
         mail.should_receive(:to=).with('test+representative_example.com@holderdeord.no')

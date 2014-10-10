@@ -7,7 +7,7 @@ module Hdo
       before { I18n.default_locale = :nb }
 
       let(:app_headers) { {} }
-      let(:app) { mock(:app, :call => [200, app_headers, [""]]) }
+      let(:app) { double(:app, :call => [200, app_headers, [""]]) }
       let(:locale) { Locale.new(app) }
 
       it 'should change locale to :nn' do

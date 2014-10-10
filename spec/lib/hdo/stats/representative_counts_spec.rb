@@ -5,15 +5,15 @@ module Hdo
     describe RepresentativeCounts do
       let(:vote_results) {
         [
-          mock(result: 1),
-          mock(result: 1),
-          mock(result: 1),
-          mock(result: 0),
-          mock(result: -1),
-          mock(result: -1),
+          double(result: 1),
+          double(result: 1),
+          double(result: 1),
+          double(result: 0),
+          double(result: -1),
+          double(result: -1),
         ]
       }
-      let(:vote)  { stub(vote_results: vote_results) }
+      let(:vote)  { double(vote_results: vote_results) }
       let(:counts) { RepresentativeCounts.new(vote) }
 
       it 'knows the absent count' do

@@ -1,5 +1,5 @@
 require 'acts_as_tree'
 require 'nokogiri'
 require 'carrierwave/orm/activerecord'
-
+require 'typhoeus/adapters/faraday'
 require_dependency 'hdo/stats/vote_counts'

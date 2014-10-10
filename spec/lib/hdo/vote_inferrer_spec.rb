@@ -53,7 +53,7 @@ module Hdo
         time: Time.parse("2012-08-08 12:56"),
       )
 
-      subject.log = mock(Logger)
+      subject.log = double(Logger)
       subject.log.should_receive(:info).with kind_of(String)
 
       subject.infer!.should == [false]

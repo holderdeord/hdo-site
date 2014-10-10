@@ -5,7 +5,7 @@ module Hdo
   module Rack
     describe Fastly do
       let(:response) { [200, {}, [""]] }
-      let(:app) { mock(:app, call: response) }
+      let(:app) { double(:app, call: response) }
       let(:fastly) { Fastly.new(app) }
 
       it 'sets HTTPS=on for HTTP_FASTLY_SSL' do

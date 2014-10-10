@@ -18,7 +18,8 @@ module BrowserSpecHelper
   end
 
   def stop
-    $spec_driver.quit if $spec_driver
+    $spec_driver && $spec_driver.quit
+    $spec_driver = nil
   end
 
   def app_url
@@ -74,8 +75,8 @@ module BrowserSpecHelper
 
     Thread.abort_on_exception = true
 
-    $spec_app = Thread.new do
-      Rack::Server.new(:app         => Hdo::Application,
+    $spec_app ||= Thread.new do
+      Rack::Server.new(:app => Hdo::Application,
                        :environment => Rails.env,
                        :Port        => port_to_use).start
     end
@@ -83,6 +84,10 @@ module BrowserSpecHelper
     sp = Selenium::WebDriver::SocketPoller.new(host, port, timeout)
     unless sp.connected?
       raise "could not launch app in #{timeout} seconds"
+    end
+
+    wait(10).until do
+      Net::HTTP.get_response(URI.parse(app_url)).code == "200"
     end
   end
 

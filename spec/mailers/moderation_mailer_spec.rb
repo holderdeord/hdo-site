@@ -29,7 +29,7 @@ describe ModerationMailer do
     end
 
     it "makes a bracketed email" do
-      Hdo::Utils::OverrideMailRecipient.stub!(:delivering_email)
+      Hdo::Utils::OverrideMailRecipient.stub(:delivering_email)
       mail = ModerationMailer.question_approved_representative_email(question)
       mail[:to].field.value.should eq "#{representative.name} <#{representative.email}>"
     end

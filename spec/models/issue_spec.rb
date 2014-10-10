@@ -208,7 +208,7 @@ describe Issue do
       t2 = Issue.make! title: 'aaaa2', status: 'published'
       t3 = Issue.make! title: 'aaaa3', status: 'in_progress'
 
-      left, right = t2.previous_and_next(policy: mock(scope: Issue.published))
+      left, right = t2.previous_and_next(policy: double(scope: Issue.published))
 
       left.should == t1
       right.should be_nil

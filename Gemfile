@@ -13,7 +13,7 @@ gem 'rails', '3.2.19'
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
-  gem 'less-rails'
+  gem 'less-rails', '~> 2.3.2'
   gem 'sass-rails', '~> 3.2.3'
 
   gem 'therubyracer', platform: :ruby
@@ -92,8 +92,8 @@ gem 'yaml_db' # db dump / load
 gem 'acts-as-taggable-on', '~> 2.4.1'
 
 # search
-gem 'elasticsearch-model', '~> 0.1.0.rc1'
-gem 'elasticsearch-rails', github: 'elasticsearch/elasticsearch-rails', ref: '884de11b77ea991f07e24e5c49c6e22b826f4c4e'
+gem 'elasticsearch-model', '~> 0.1.6'
+gem 'elasticsearch-rails', '~> 0.1.6'
 
 # caching
 gem 'cache_digests'

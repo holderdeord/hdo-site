@@ -36,7 +36,7 @@ describe PartiesController do
       t3.proposition_connections.map { |e| e.vote.update_attributes!(time: 2.days.ago) }
       t3.proposition_connections.map { |e| e.vote.update_attributes!(time: 1.day.ago) }
 
-      stats = mock(score_for: 100, key_for: :for)
+      stats = double(score_for: 100, key_for: :for)
       Issue.any_instance.stub(stats: stats)
 
       get :show, id: party

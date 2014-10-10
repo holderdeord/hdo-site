@@ -4,7 +4,7 @@ module Hdo
   module Utils
 
     describe PageCache do
-      let(:purger) { mock }
+      let(:purger) { double }
       let(:cache) { PageCache.new(purger) }
 
       it 'should expire an issue' do

@@ -26,7 +26,7 @@ module Hdo
       end
 
       it "has a text representation of an entity's score" do
-        party  = stub
+        party  = double
         scorer = AccountabilityScorer.new(Issue.make)
 
         I18n.with_locale :nb do

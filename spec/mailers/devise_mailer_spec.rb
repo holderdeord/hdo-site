@@ -18,7 +18,7 @@ describe DeviseMailer do
   end
 
   it "makes a bracketed email" do
-    Hdo::Utils::OverrideMailRecipient.stub!(:delivering_email)
+    Hdo::Utils::OverrideMailRecipient.stub(:delivering_email)
     mail = rep.send_reset_password_instructions
     mail[:to].field.value.should eq "#{rep.name} <#{rep.email}>"
   end

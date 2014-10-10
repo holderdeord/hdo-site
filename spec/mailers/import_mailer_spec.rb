@@ -10,10 +10,10 @@ describe ImportMailer do
       before do
         Hdo::Stats::PropositionCounts.should_receive(:from_session).
           with(session_name).
-          and_return(mock(pending_percentage: 1, pending: 1, total: 1))
+          and_return(double(pending_percentage: 1, pending: 1, total: 1))
 
         ParliamentSession.should_receive(:current).
-          and_return(mock(name: session_name))
+          and_return(double(name: session_name))
 
         vote
       end

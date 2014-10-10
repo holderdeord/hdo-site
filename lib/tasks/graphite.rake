@@ -39,9 +39,10 @@ namespace :graphite do
 
     previous_period = ParliamentPeriod.previous
     current_period  = ParliamentPeriod.current
+    previous_session = ParliamentSession.previous
     current_session = ParliamentSession.current
 
-    [previous_period, current_period].each do |period|
+    [previous_period, current_period].compact.each do |period|
       leaderboard = Hdo::Stats::Leaderboard.new(Issue.published, period)
       leaderboard.by_party.each do |party, counts|
         counts.each do |key, count|
@@ -50,11 +51,13 @@ namespace :graphite do
       end
     end
 
-    counts = Hdo::Stats::PropositionCounts.from_session(current_session.name)
+    [previous_session, current_session].each do |session|
+      counts = Hdo::Stats::PropositionCounts.from_session(session.name)
 
-    g.add "hdo.count.propositions.#{current_session.name}.published", counts.published
-    g.add "hdo.count.propositions.#{current_session.name}.pending", counts.pending
-    g.add "hdo.count.propositions.#{current_session.name}.total", counts.total
+      g.add "hdo.count.propositions.#{current_session.name}.published", counts.published
+      g.add "hdo.count.propositions.#{current_session.name}.pending", counts.pending
+      g.add "hdo.count.propositions.#{current_session.name}.total", counts.total
+    end
   end
 
   task :submit => %w[facebook twitter stortinget holderdeord] do
