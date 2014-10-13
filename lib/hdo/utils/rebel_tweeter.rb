@@ -7,7 +7,8 @@ module Hdo
 
       MESSAGES = [
         "%{party}s %{representative} brøt med partiflertallet og stemte %{result}",
-        "%{party}s %{representative} fulgte hjertet og stemte %{result}",
+        "%{party}s %{representative} fulgte samvittigheten og stemte %{result}",
+        "%{party}s %{representative} fulgte sin overbevisning og stemte %{result}"
       ]
 
       def self.since(date)
