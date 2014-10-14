@@ -64,6 +64,18 @@ describe VoteResult do
     rebel.should be_rebel
   end
 
+  it 'is not a rebel vote if an equal number is absent' do
+    rep1 = Representative.make!(:full)
+    rep2 = Representative.make!
+    rep2.party_memberships.make!(party: rep1.current_party)
+
+    vote    = Vote.make!(vote_results: [])
+    absent  = vote.vote_results.make!(representative: rep1, result: 0)
+    present = vote.vote_results.make!(representative: rep2, result: 1)
+
+    present.should_not be_rebel
+  end
+
   it 'has a human text representation of the result' do
     I18n.with_locale :nb do
       VoteResult.make(:result => 1).human.should == "For"
