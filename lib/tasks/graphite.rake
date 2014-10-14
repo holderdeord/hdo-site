@@ -54,9 +54,9 @@ namespace :graphite do
     [previous_session, current_session].each do |session|
       counts = Hdo::Stats::PropositionCounts.from_session(session.name)
 
-      g.add "hdo.count.propositions.#{current_session.name}.published", counts.published
-      g.add "hdo.count.propositions.#{current_session.name}.pending", counts.pending
-      g.add "hdo.count.propositions.#{current_session.name}.total", counts.total
+      g.add "hdo.count.propositions.#{session.name}.published", counts.published
+      g.add "hdo.count.propositions.#{session.name}.pending", counts.pending
+      g.add "hdo.count.propositions.#{session.name}.total", counts.total
     end
   end
 
