@@ -92,7 +92,14 @@
       <strong class="span2 rightify">Favoritt?</strong>
       <div class="span6 offset4">
         <%= f.check_box :starred %>
+        <p>
+          <small class="muted">
+            Favoritter er forslag som vil bli brukt i mange saker, og bør brukes for viktige budsjett-forslag.
+            Disse finner man lett igjen via Favoritter-filteret i sakslagingen.
+          </small>
+        </p>
       </div>
+
     </div>
 
     <div class="row-fluid">
@@ -102,7 +109,7 @@
           <% @parliament_issues.each do |pissue| %>
             <li>
               <span><%= pissue.summary %></span>
-              
+
               <%= link_to 'HDO', pissue, target: '_blank' %>,
               <%= link_to 'Stortinget', target: '_blank' %>
             </li>
