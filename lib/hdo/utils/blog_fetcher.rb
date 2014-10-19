@@ -27,7 +27,7 @@ module Hdo
       private
 
       def fetch
-        response = Typhoeus.get("http://blog.holderdeord.no/feeds/posts/default")
+        response = Typhoeus.get("http://blog.holderdeord.no/atom.xml")
 
         if response.success?
           Nokogiri.XML(response.body)
