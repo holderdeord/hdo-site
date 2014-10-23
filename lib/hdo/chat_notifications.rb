@@ -19,8 +19,8 @@ module Hdo
 
       ActiveSupport::Notifications.subscribe('stortinget.api.changed') do |event_name, url|
         begin
-          msg = "Stortinget har oppdatert APIets endringslogg: #{url}"
-          client['Holder de ord'].send('HDO', msg, color: 'green', notify: true)
+          msg = "Stortinget har oppdatert <a href='#{url}'>APIets endringslogg</a>."
+          client['Holder de ord'].send('HDO', msg, color: 'green', notify: true, message_format: 'html')
         rescue
           Rails.logger.warn "#{self}: failed notification for #{event_name}"
         end
