@@ -42,7 +42,7 @@ namespace :check do
     state  = Pathname.new('/var/tmp/no.holderdeord.stortinget.changelog.md5')
 
     if state.exist? && state.read != md5sum
-      ActiveSupport::Notifications.pubish "stortinget.api.changed", url
+      ActiveSupport::Notifications.publish "stortinget.api.changed", url
     end
 
     state.open('w') { |io| io << md5sum }
