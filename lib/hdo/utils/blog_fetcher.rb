@@ -46,7 +46,7 @@ module Hdo
         def initialize(entry)
           @title      = entry.css('title').text
           @url        = entry.css('link[rel=alternate][type="text/html"]').first.try(:attr, 'href')
-          @author     = entry.css('author name').text
+          @author     = entry.css('author').map { |e| e.css('name').text }.to_sentence
           @updated_at = Time.parse(entry.css('updated').text)
           @html       = entry.css('content[type=html]').text
         end
