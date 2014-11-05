@@ -14,9 +14,10 @@ module Hdo
           tries = 0
 
           begin
+            tries += 1
             fetch_stats
           rescue
-            tries < 3 ? retry : raise
+            tries <= 3 ? retry : raise
           end
         )
       end
