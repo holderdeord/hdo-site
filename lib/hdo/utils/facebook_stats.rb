@@ -20,6 +20,21 @@ module Hdo
       end
 
       def stats
+        @stats ||= (
+          tries = 0
+
+          begin
+            tries += 1
+            fetch_stats
+          rescue
+            tries <= 3 ? retry : raise
+          end
+        )
+      end
+
+      private
+
+      def fetch_stats
         data = {}
 
         like_counts_for(issue_urls + question_urls).each do |entry|
@@ -37,8 +52,6 @@ module Hdo
 
         data
       end
-
-      private
 
       def helpers
         @helpers ||= Rails.application.routes.url_helpers

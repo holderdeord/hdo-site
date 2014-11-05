@@ -3,7 +3,6 @@ module Hdo
     class TwitterStats
       def initialize(opts = {})
         @client = TwitterClients.hdo
-        @data   = {}
       end
 
       def display
@@ -11,7 +10,21 @@ module Hdo
       end
 
       def stats
-        data = @data
+        @stats ||= (
+          tries = 0
+
+          begin
+            fetch_stats
+          rescue
+            tries < 3 ? retry : raise
+          end
+        )
+      end
+
+      private
+
+      def fetch_stats
+        data = {}
 
         usernames = {'holderdeord' => 'holderdeord'}
 
@@ -31,6 +44,7 @@ module Hdo
         end
 
         data
+
       end
     end
   end
