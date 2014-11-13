@@ -63,6 +63,7 @@ module Hdo
       rescue Twitter::Error => ex
         # don't crash - we'll keep trying the rest our tweets
         Rails.logger.error ex.message
+        puts ex.message
       end
 
       def client
