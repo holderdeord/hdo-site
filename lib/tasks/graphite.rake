@@ -3,7 +3,6 @@ namespace :graphite do
     require 'hdo/stats/accountability_scorer'
   end
 
-
   task :facebook => :env do
     g = Hdo::Utils::GraphiteReporter.instance
     Hdo::Utils::FacebookStats.new.stats.each { |k, v| g.add k, v }
@@ -60,10 +59,13 @@ namespace :graphite do
     end
   end
 
+  desc 'Fetch and submit data to Graphite'
   task :submit => %w[facebook twitter stortinget holderdeord] do
     Hdo::Utils::GraphiteReporter.instance.submit
   end
 
+
+  desc 'Print data that would be submitted to Graphite'
   task :print => %w[facebook stortinget holderdeord] do
     Hdo::Utils::GraphiteReporter.instance.print
   end

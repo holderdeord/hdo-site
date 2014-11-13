@@ -16,8 +16,14 @@ module Hdo
           begin
             tries += 1
             fetch_stats
-          rescue
-            tries <= 3 ? retry : raise
+          rescue => ex
+            if tries <= 3
+              retry
+            elsif ex.kind_of?(Twitter::Error::RequestTimeout)
+              {} # ignore
+            else
+              raise
+            end
           end
         )
       end
