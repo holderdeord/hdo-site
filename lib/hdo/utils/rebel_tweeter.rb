@@ -4,11 +4,12 @@ module Hdo
   module Utils
     class RebelTweeter
       MIN_TWEET_INTERVAL = 60
+      MAX_TWEET_LENGTH   = 140
 
       MESSAGES = [
-        "%{party}s %{representative} brøt med partiflertallet og stemte %{result}",
-        "%{party}s %{representative} fulgte samvittigheten og stemte %{result}",
-        "%{party}s %{representative} fulgte sin overbevisning og stemte %{result}"
+        "%{party}s %{representative} brøt med partiflertallet og stemte %{result} følgende forslag:",
+        "%{party}s %{representative} fulgte samvittigheten og stemte %{result} følgende forslag:",
+        "%{party}s %{representative} fulgte sin overbevisning og stemte %{result} følgende forslag: "
       ]
 
       def self.since(date)
@@ -43,10 +44,10 @@ module Hdo
         representative = vote_result.representative
         name           = representative.has_twitter? ? "@#{representative.twitter_id}" : representative.name
         party          = representative.party_at(vote.time)
-        message        = MESSAGES.sample % {party: party.name, representative: name, result: vote_result.human.downcase}
-        url            = helpers.vote_url(vote, host: 'www.holderdeord.no')
+        message        = MESSAGES.sample % {party: party.short_name, representative: name, result: vote_result.human.downcase}
+        url            = helpers.vote_url(vote, host: 'localhost:3000', src: 'rtw')
 
-        [message.truncate(140 - url.length - 1), url].join(' ')
+        [message.truncate(MAX_TWEET_LENGTH - url.length - 1), url].join(' ')
       end
 
       def each_rebel_vote(&blk)

@@ -13,6 +13,12 @@ class VotesController < ApplicationController
   def show
     @vote = Vote.with_results.find(params[:id])
 
+    # from the rebel tweeter
+    if params[:src] == 'rtw' && @vote.propositions.size == 1
+      redirect_to @vote.propositions.first
+      return
+    end
+
     if stale?(@vote, public: can_cache?)
       @parliament_issues = @vote.parliament_issues
       @stats             = @vote.stats

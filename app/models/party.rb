@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 class Party < ActiveRecord::Base
   mount_uploader :logo, PartyUploader
 
@@ -45,6 +47,17 @@ class Party < ActiveRecord::Base
 
   def representatives_at(date)
     party_memberships.includes(:representative).for_date(date).map(&:representative).sort_by(&:last_name)
+  end
+
+  def short_name
+    case external_id
+    when 'A'
+      'Ap'
+    when 'V', 'H'
+      name
+    else
+      external_id
+    end
   end
 
   def image
