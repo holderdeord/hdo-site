@@ -45,7 +45,7 @@ module Hdo
         name           = representative.has_twitter? ? "@#{representative.twitter_id}" : representative.name
         party          = representative.party_at(vote.time)
         message        = MESSAGES.sample % {party: party.short_name, representative: name, result: vote_result.human.downcase}
-        url            = helpers.vote_url(vote, host: 'localhost:3000', src: 'rtw')
+        url            = helpers.vote_url(vote, host: 'www.holderdeord.no', src: 'rtw')
 
         [message.truncate(MAX_TWEET_LENGTH - url.length - 1), url].join(' ')
       end

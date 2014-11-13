@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 require 'spec_helper'
 
 describe Party do
@@ -76,5 +77,15 @@ describe Party do
     party.destroy
 
     rep.party_memberships.should == []
+  end
+
+  it "should know the party's short name" do
+    Party.make!(external_id: 'A', name: 'Arbeiderpartiet').short_name.should == 'Ap'
+    Party.make!(external_id: 'V', name: 'Venstre').short_name.should == 'Venstre'
+    Party.make!(external_id: 'H', name: 'Høyre').short_name.should == 'Høyre'
+    Party.make!(external_id: 'KrF', name: 'Kristelig Folkeparti').short_name.should == 'KrF'
+    Party.make!(external_id: 'FrP', name: 'Fremskrittspartiet').short_name.should == 'FrP'
+    Party.make!(external_id: 'Sp', name: 'Senterpartiet').short_name.should == 'Sp'
+    Party.make!(external_id: 'MDG', name: 'Miljø...').short_name.should == 'MDG'
   end
 end
