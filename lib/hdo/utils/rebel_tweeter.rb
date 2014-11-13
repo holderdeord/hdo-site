@@ -29,7 +29,7 @@ module Hdo
 
       def tweet
         each_rebel_vote do |vote, vote_result|
-          send_tweet message_for(vote, vote_result).truncate(140)
+          send_tweet message_for(vote, vote_result)
           sleep interval
         end
       end
