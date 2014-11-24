@@ -143,7 +143,7 @@
       <div class="row-fluid">
         <h4><%= link_to prop.simple_description || prop.description, proposition_path(prop)  %></h4>
 
-        <blockquote class="pull-right">
+        <blockquote>
           <%= (prop.simple_body ? markdown(prop.simple_body) : prop.body).html_safe %>
 
           <% if prop.proposers.any? %>
