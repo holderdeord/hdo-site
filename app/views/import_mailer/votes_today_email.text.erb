@@ -5,3 +5,11 @@ Saker med nye avstemninger for <%= l 1.day.ago, format: :text %>:
 <% end %>
 
 <%= @proposition_counts.pending %> av <%= @proposition_counts.total %> forslag venter på publisering.
+
+<% if @rebel_tweets.any? %>
+Tweets fra @partipisken i morgen:
+
+<% @rebel_tweets.each do |tweet| %>
+* <%= tweet %>
+<% end %>
+<% end %>

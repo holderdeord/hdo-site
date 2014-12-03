@@ -3,6 +3,8 @@
 module Hdo
   module Utils
     class RebelTweeter
+      include Enumerable
+
       MIN_TWEET_INTERVAL = 60
       MAX_TWEET_LENGTH   = 140
 
@@ -18,6 +20,12 @@ module Hdo
 
       def initialize(start_date)
         @start_date = start_date
+      end
+
+      def each(&blk)
+        each_rebel_vote do |vote, vote_result|
+          yield message_for(vote, vote_result)
+        end
       end
 
       def print

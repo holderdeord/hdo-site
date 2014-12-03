@@ -6,6 +6,16 @@
   <% end %>
 </ul>
 
-<h3>
+<strong>
   <%= @proposition_counts.pending %> av <%= @proposition_counts.total %> forslag venter på publisering.
-</h3>
+</strong>
+
+<% if @rebel_tweets.any? %>
+  <h3>Tweets fra <a href="https://twitter.com/partipisken">@partipisken</a> i morgen</h3>
+
+  <ul>
+    <% @rebel_tweets.each do |tweet| %>
+      <li><%= tweet %></li>
+    <% end %>
+  </ul>
+<% end %>

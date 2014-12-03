@@ -8,8 +8,9 @@ class ImportMailer < ActionMailer::Base
     votes = Vote.since_yesterday
     return unless votes.any?
 
-    @parliament_issues = votes.flat_map { |vote| vote.parliament_issues.to_a }.uniq
+    @parliament_issues  = votes.flat_map { |vote| vote.parliament_issues.to_a }.uniq
     @proposition_counts = Hdo::Stats::PropositionCounts.from_session(ParliamentSession.current.name)
+    @rebel_tweets       = Hdo::Utils::RebelTweeter.since(1.day.ago).to_a
 
     mail subject: "#{@parliament_issues.size} nye saker behandlet"
   end
