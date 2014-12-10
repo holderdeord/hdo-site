@@ -52,6 +52,10 @@ module Hdo
         end
 
         def teaser(max = 250)
+          if @updated_at > Time.new(2014, 12, 1)
+            return Nokogiri::HTML.fragment(@html.split("\n").first).text
+          end
+
           size = 0
 
           teaser_paragraphs = []
@@ -79,10 +83,10 @@ module Hdo
                 paragraphs.last << node.text
               when 'br'
                 paragraphs << ''
-              when 'script', 'img'
+              when 'script', 'img', 'select', 'input'
                 # do nothing
               else
-                paragraphs.last << node.to_s
+                paragraphs.last << node.text
               end
             end
 
