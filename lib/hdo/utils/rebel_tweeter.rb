@@ -28,6 +28,16 @@ module Hdo
         end
       end
 
+      def votes
+        res = []
+
+        each_rebel_vote do |vote, vote_result|
+          res << [vote, vote_result]
+        end
+
+        res
+      end
+
       def print
         each_rebel_vote do |vote, vote_result|
           msg = message_for(vote, vote_result)
