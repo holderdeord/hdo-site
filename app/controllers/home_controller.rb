@@ -20,7 +20,7 @@ class HomeController < ApplicationController
 
     @latest_posts = Hdo::Utils::BlogFetcher.last(2)
 
-    propositions = Proposition.published.interesting.order('created_at DESC').first(5)
+    propositions = Proposition.published.interesting.order('created_at DESC').first(10)
     @propositions_feed = Hdo::Utils::PropositionsFeed.new(propositions, :see_all => true)
   end
 
