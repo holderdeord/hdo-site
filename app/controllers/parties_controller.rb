@@ -10,6 +10,10 @@ class PartiesController < ApplicationController
     @representatives = @party.current_representatives
     @representatives = @representatives.sort_by { |e| e.has_image? ? 0 : 1 }
 
-    @propositions_feed = Hdo::Utils::PropositionsFeed.for_model(@party, :see_all => true)
+    @propositions_feed = Hdo::Utils::PropositionsFeed.for_model(
+      @party,
+      see_all: true,
+      title: "Siste forslag fra #{@party.name}"
+    )
   end
 end
