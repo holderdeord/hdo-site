@@ -16,16 +16,11 @@ class HomeController < ApplicationController
   skip_before_filter :force_ssl_redirect, only: :healthz
 
   def index
-    published = Issue.published.includes(:tags)
-
-    @all_tags     = published.flat_map(&:tags).uniq.sort_by(&:name)
     @parties      = Party.order(:name)
-    @issues       = published.for_frontpage(5).map(&:decorate)
-    @main_issue   = @issues.shift
-    @leaderboard  = Hdo::Stats::Leaderboard.new(published, ParliamentPeriod.named('2009-2013'))
+
     @latest_posts = Hdo::Utils::BlogFetcher.last(2)
 
-    propositions = Proposition.published.interesting.order('created_at DESC').first(6)
+    propositions = Proposition.published.interesting.order('created_at DESC').first(5)
     @propositions_feed = Hdo::Utils::PropositionsFeed.new(propositions, :see_all => true)
   end
 

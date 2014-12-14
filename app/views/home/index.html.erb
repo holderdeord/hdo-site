@@ -5,27 +5,43 @@
   </p>
 <% end %>
 
+<%= render partial: 'blog' %>
+
+<!-- HACK -->
+</div><div class="separator-image" style="background-position: 50% 70%; background-image: url(http://files.holderdeord.no/images/stortingssalen.jpg);"></div><div class="container">
+
 <div class="row-fluid">
-  <%= render partial: 'issues' %>
+  <%= render partial: 'shared/propositions_feed', locals: { feed: @propositions_feed } %>
 </div>
 
-<%= render partial: 'leaderboard' %>
+<!-- HACK -->
+</div><div class="separator-image" style="background-position: 50% 20%; background-image: url(http://files.holderdeord.no/images/blog-header.jpg);"></div><div class="container">
 
-<hr class="soften">
+<div class="row-fluid">
+  <div class="span6">
+    <h4><a href="https://twitter.com/holderdeord">@holderdeord</a></h4>
 
-<%= render partial: 'blog' %>
-<hr class="soften">
-<%= render partial: 'social' %>
+    <a class="twitter-timeline" href="https://twitter.com/holderdeord"
+       data-widget-id="262119575246733312"
+       data-link-color="#019ea2"
+       data-lang="no"
+       data-screen-name="holderdeord"
+       data-chrome="noheader"
+       data-tweet-limit="5">Følg @holderdeord</a>
+  </div>
 
-<section>
-  <h2>Alle tema</h2>
-  <% @all_tags.each_slice(4) do |tags| %>
-    <div class="row-fluid">
-    <% tags.each do |tag| %>
-      <div class="span3">
-        <%= link_to tag.name, issues_path(anchor: "tag-#{tag.slug}") %>
-      </div>
-    <% end %>
-    </div>
-  <% end %>
-</section>
+  <div class="span6">
+    <h4><a href="https://twitter.com/partipisken">@partipisken</a></h4>
+
+    <a class="twitter-timeline" href="https://twitter.com/partipisken"
+       data-widget-id="262119575246733312" data-link-color="#019ea2" data-lang="no" data-screen-name="partipisken" data-chrome="noheader" data-tweet-limit="6">Følg @partipisken</a>
+  </div>
+
+  <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+</div>
+
+<div class="">
+  <div class="fb-like" data-href="https://www.facebook.com/holderdeord" data-send="false" data-layout="button_count" data-width="100" data-show-faces="false"></div>
+</div>
+
+

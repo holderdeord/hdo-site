@@ -60,6 +60,23 @@ class Party < ActiveRecord::Base
     end
   end
 
+  # TODO: move to DB
+
+  TWITTER_IDS = {
+    'a'   => 'Arbeiderpartiet',
+    'frp' => 'frp_no',
+    'h'   => 'Hoyre',
+    'krf' => 'KrFNorge',
+    'mdg' => 'Partiet',
+    'sp'  => 'Senterpartiet',
+    'sv'  => 'SVParti',
+    'v'   => 'Venstre'
+  }
+
+  def twitter_id
+    TWITTER_IDS.fetch slug
+  end
+
   def image
     logger.warn "Party#image is deprecated, use Party#logo (from #{caller(0).to_s})"
     logo

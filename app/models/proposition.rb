@@ -152,9 +152,9 @@ class Proposition < ActiveRecord::Base
   def as_indexed_json(options = nil)
     methods = [
       :plain_body,
-      :proposers,
       :committee_names,
       :category_names,
+      :proposers,
       :parliament_issue_type_names,
       :parliament_issue_document_group_names,
       :issue_ids

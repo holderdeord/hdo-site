@@ -19,13 +19,15 @@
         <% else %>
           <div class="header-decoration"></div>
         <% end %>
-
       </div>
     </header>
 
-    <div id="hdo-content" class="container">
-      <%= yield %>
+    <div id="hdo-content">
+      <div class="container">
+        <%= yield %>
+      </div>
     </div>
+
     <div class="push"></div>
 
     <%= render 'layouts/footer'%>
