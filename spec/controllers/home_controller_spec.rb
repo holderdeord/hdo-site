@@ -1,31 +1,6 @@
 require 'spec_helper'
 
 describe HomeController do
-  context 'issues' do
-    it 'loads only published issues' do
-      issues = []
-
-      issues << Issue.make!(status: 'published')
-      issues << Issue.make!(status: 'in_progress')
-      issues << Issue.make!(status: 'published')
-      issues << Issue.make!(status: 'published')
-
-      issues.first.tap do |i|
-        i.tag_list << "foo"
-        i.save!
-      end
-
-      get :index
-
-      assigns(:issues).each do |issue|
-        issue.should be_published
-      end
-
-      assigns(:all_tags).map(&:name).should == ["foo"]
-      assigns(:leaderboard).should be_kind_of(Hdo::Stats::Leaderboard)
-    end
-  end
-
   it 'disallows robots in non-production environments' do
     get :robots
 

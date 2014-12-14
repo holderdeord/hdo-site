@@ -19,29 +19,10 @@ describe PartiesController do
   describe "GET #show" do
     before { ParliamentPeriod.make!(start_date: Date.new(2009, 10, 1), end_date: Date.new(2013, 9, 30)) }
 
-    it 'assigns the requested party to @party' do
+    it 'assigns the proposition feed' do
       get :show, id: party
 
-      assigns(:party).should == party
-    end
-
-    it 'fetches published issues' do
-      t1 = Issue.make! status: 'published',   title: 'a'
-      t2 = Issue.make! status: 'published',   title: 'b'
-      t3 = Issue.make! status: 'in_progress', title: 'c'
-      t4 = Issue.make! status: 'in_review',   title: 'd'
-
-      t1.proposition_connections.map { |e| e.vote.update_attributes!(time: 4.days.ago) }
-      t2.proposition_connections.map { |e| e.vote.update_attributes!(time: 3.days.ago) }
-      t3.proposition_connections.map { |e| e.vote.update_attributes!(time: 2.days.ago) }
-      t3.proposition_connections.map { |e| e.vote.update_attributes!(time: 1.day.ago) }
-
-      stats = double(score_for: 100, key_for: :for)
-      Issue.any_instance.stub(stats: stats)
-
-      get :show, id: party
-
-      assigns(:issue_groups).should == {'no_promises' => [t1, t2]}
+      assigns(:proposition_feed)
     end
 
     it 'renders the :show template' do
