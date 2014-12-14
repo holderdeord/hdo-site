@@ -41,59 +41,17 @@ module Hdo
       end
 
       class Post
-        attr_reader :title, :url, :updated_at, :html, :author
+        attr_reader :title, :url, :updated_at, :author, :summary
 
         def initialize(entry)
           @title      = entry.css('title').text
           @url        = entry.css('link[rel=alternate][type="text/html"]').first.try(:attr, 'href')
           @author     = entry.css('author').map { |e| e.css('name').text }.to_sentence
           @updated_at = Time.parse(entry.css('updated').text)
-          @html       = entry.css('content[type=html]').text
+          @summary    = entry.css('summary').text
         end
 
-        def teaser(max = 250)
-          if @updated_at > Time.new(2014, 12, 1)
-            return Nokogiri::HTML.fragment(@html.split("\n").first).text
-          end
-
-          size = 0
-
-          teaser_paragraphs = []
-
-          paragraphs.each do |pr|
-            teaser_paragraphs << pr
-            size += pr.size
-
-            break if size >= max
-          end
-
-          teaser_paragraphs.map { |e| "<p>#{e}</p>" }.join
-        end
-
-        def paragraphs
-          @paragraphs ||= (
-            paragraphs = ['']
-
-            fragment = Nokogiri::HTML.fragment(@html)
-
-            fragment.children.each do |node|
-              case node.name
-              when 'a'
-                next if node['class'] =~ /hdo-.+-widget/
-                paragraphs.last << node.text
-              when 'br'
-                paragraphs << ''
-              when 'script', 'img', 'select', 'input'
-                # do nothing
-              else
-                paragraphs.last << node.text
-              end
-            end
-
-            paragraphs.delete ''
-            paragraphs
-          )
-        end
+        alias_method :teaser, :summary
 
       end
 
