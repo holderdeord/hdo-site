@@ -4,7 +4,7 @@
   position: relative;
   width: 100%;
   overflow-x: hidden;
-  overflow-y: scroll;
+  overflow-y: auto;
 
   .proposition-list {
 
@@ -20,7 +20,6 @@
         color: inherit;
       }
 
-      border-radius: 2px;
       border-bottom: 1px solid #e8e8e8;
       display: block;
       position: relative;
@@ -29,12 +28,11 @@
 
       &:hover {
         text-decoration: none;
-        background-color: #f6f6f6;
-        border-color: #eee;
+        background-color: rgba(0,0,0, 0.04);
       }
 
       &:active {
-        background-color: #eee;
+        background-color: rgba(0,0,0, 0.08);
       }
 
 
