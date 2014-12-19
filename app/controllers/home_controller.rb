@@ -18,7 +18,7 @@ class HomeController < ApplicationController
   def index
     @parties      = Party.order(:name)
 
-    @latest_posts = Hdo::Utils::BlogFetcher.last(2)
+    @latest_posts = Hdo::Utils::BlogFetcher.last(AppConfig.blog_count)
 
     propositions = Proposition.published.interesting.order('created_at DESC').first(10)
     @propositions_feed = Hdo::Utils::PropositionsFeed.new(propositions, :see_all => true)

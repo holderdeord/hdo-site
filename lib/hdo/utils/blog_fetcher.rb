@@ -24,10 +24,14 @@ module Hdo
         @posts = extract_posts(fetch)
       end
 
+      def url
+        URI.join(AppConfig.blog_url, 'atom.xml')
+      end
+
       private
 
       def fetch
-        response = Typhoeus.get("http://blog.holderdeord.no/atom.xml")
+        response = Typhoeus.get(url)
 
         if response.success?
           Nokogiri.XML(response.body)

@@ -21,6 +21,8 @@ defaults: &defaults
   chat_notifications_enabled: false
   ignore_votes_against_alternate_budget: true
   topic_of_the_week: Samferdsel
+  blog_url: http://drafts.holderdeord.no/
+  blog_count: 4
 
 development:
   <<: *defaults
@@ -45,3 +47,5 @@ production:
   ssl_enabled: true
   default_bcc_email: prodcopy@holderdeord.no
   chat_notifications_enabled: true
+  blog_url: http://blog.holderdeord.no/
+  blog_count: 2

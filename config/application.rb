@@ -95,7 +95,7 @@ module Hdo
     config.middleware.use ::Rack::Cors do
       allow do
         origins(/holderdeord\.no$/)
-        resource '*', :headers => :any, :methods => [:get, :options]
+        resource '*', :headers => :any, :methods => [:get, :options, :head]
       end
     end
 
