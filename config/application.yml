@@ -48,4 +48,3 @@ production:
   default_bcc_email: prodcopy@holderdeord.no
   chat_notifications_enabled: true
   blog_url: http://blog.holderdeord.no/
-  blog_count: 2
