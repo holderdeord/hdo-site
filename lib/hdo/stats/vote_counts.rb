@@ -79,6 +79,17 @@ module Hdo
         @party_counts.keys.select { |e| party_participated?(e) }
       end
 
+      def groups
+        res = {for: [], against: []}
+
+        parties.each do |party|
+          res[:for] << party if party_for?(party)
+          res[:against] << party if party_against?(party)
+        end
+
+        res
+      end
+
       private
 
       def compute_party_counts(vote)
