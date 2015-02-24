@@ -23,7 +23,7 @@ group :assets do
 end
 
 group :test do
-  gem "selenium-webdriver", "~> 2.42"
+  gem "selenium-webdriver", "~> 2.45.0.dev3"
   gem "machinist", "~> 2.0"
   gem "database_cleaner", "~> 0.9.1"
   gem "loadable_component", ">= 0.1.1"
