@@ -42,7 +42,7 @@ module Hdo
       def import_committees(committees)
         transaction do
           committees.each { |e| import_committee(e) }
-        end
+      end
       end
 
       def import_categories(categories)
@@ -54,12 +54,6 @@ module Hdo
       def import_districts(districts)
         transaction do
           districts.each { |e| import_district(e) }
-        end
-      end
-
-      def import_parliament_issues(parliament_issues)
-        transaction do
-          parliament_issues.each { |e| import_parliament_issue(e) }
         end
       end
 
@@ -147,27 +141,31 @@ module Hdo
         d
       end
 
-      def import_parliament_issue(issue)
-        log_import issue
-        issue.validate!
+      def import_parliament_issue(issue, details)
+        transaction { 
+          log_import issue
+          issue.validate!
 
-        committee = issue.committee && Committee.find_by_name!(issue.committee)
-        categories = issue.categories.map { |e| Category.find_by_name! e }
+          committee  = issue.committee && Committee.find_by_name!(issue.committee)
+          categories = issue.categories.map { |e| Category.find_by_name! e }
+          links      = details.links.map { |e| find_or_create_link(e) }.sort_by(&:href)
 
-        record = ParliamentIssue.find_or_create_by_external_id issue.external_id
-        record.update_attributes!(
-          :document_group => issue.document_group,
-          :issue_type     => issue.type, # AR doesn't like :type as a column name
-          :status         => issue.status,
-          :last_update    => Time.parse(issue.last_update),
-          :reference      => issue.reference,
-          :summary        => issue.summary,
-          :description    => issue.description,
-          :committee      => committee,
-          :categories     => categories
-        )
+          record = ParliamentIssue.find_or_create_by_external_id issue.external_id
+          record.update_attributes!(
+            :document_group => issue.document_group,
+            :issue_type     => issue.type, # AR doesn't like :type as a column name
+            :status         => issue.status,
+            :last_update    => Time.parse(issue.last_update),
+            :reference      => issue.reference,
+            :summary        => issue.summary,
+            :description    => issue.description,
+            :committee      => committee,
+            :categories     => categories,
+            :links          => links
+          )
 
-        record
+          record
+        }
       end
 
       VOTE_RESULTS = {
@@ -391,6 +389,20 @@ module Hdo
 
       def find_or_import_representative(xrep)
         Representative.find_by_external_id(xrep.external_id) || import_representative(xrep)
+      end
+
+      def find_or_create_link(xlink) 
+        link = Link.where(href: xlink.fetch('url')).first
+
+        link ||= Link.create!(
+          external_id:    xlink['external_id'],
+          title:          xlink['title'],
+          href:           xlink.fetch('url'),
+          link_type:      xlink['type'],
+          link_sub_type:  xlink['subtype']
+        )
+
+        link
       end
 
       def infer(imported_votes)

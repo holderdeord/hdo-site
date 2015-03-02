@@ -21,12 +21,14 @@ class ParliamentIssue < ActiveRecord::Base
   }
 
   attr_accessible :document_group, :issue_type, :status, :last_update,
-                  :reference, :summary, :description, :committee, :categories
+                  :reference, :summary, :description, 
+                  :committee, :categories, :links
 
   belongs_to :committee
   has_many :propositions, through: :votes
   has_and_belongs_to_many :categories, uniq: true
   has_and_belongs_to_many :votes,      uniq: true
+  has_and_belongs_to_many :links,      uniq: true
 
   validates :external_id, uniqueness: true
 

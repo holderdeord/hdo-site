@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140608185204) do
+ActiveRecord::Schema.define(:version => 20150302213127) do
 
   create_table "answers", :force => true do |t|
     t.text     "body",                                     :null => false
@@ -134,6 +134,21 @@ ActiveRecord::Schema.define(:version => 20140608185204) do
   end
 
   add_index "issues_questions", ["question_id", "issue_id"], :name => "index_issues_questions_on_question_id_and_issue_id"
+
+  create_table "links", :force => true do |t|
+    t.string "external_id"
+    t.text   "title"
+    t.text   "href"
+    t.string "link_type"
+    t.string "link_sub_type"
+  end
+
+  create_table "links_parliament_issues", :id => false, :force => true do |t|
+    t.integer "link_id"
+    t.integer "parliament_issue_id"
+  end
+
+  add_index "links_parliament_issues", ["link_id", "parliament_issue_id"], :name => "index_links_par_issues"
 
   create_table "parliament_issues", :force => true do |t|
     t.string   "external_id"

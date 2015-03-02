@@ -75,11 +75,11 @@ module Hdo
         import_api_representatives
 
         parliament_issues = parsing_data_source.parliament_issues(@options[:session])
-        persister.import_parliament_issues parliament_issues
 
-        each_vote_for(parsing_data_source, parliament_issues) do |votes|
+        each_parliament_issue(parliament_issues) do |parliament_issue, parliament_issue_details, votes|
+          persister.import_parliament_issue parliament_issue, parliament_issue_details
           persister.import_votes votes, infer: false
-        end
+        end 
 
         persister.infer_current_session
         notify_new_votes if Rails.env.production?
@@ -96,11 +96,10 @@ module Hdo
           parliament_issues = parliament_issues.select { |i| @options[:parliament_issue_ids].include? i.external_id }
         end
 
-        persister.import_parliament_issues parliament_issues
-
-        each_vote_for(parsing_data_source, parliament_issues, vote_limit) do |votes|
+        each_parliament_issue(parliament_issues, vote_limit) do |parliament_issue, parliament_issue_details, votes|
+          persister.import_parliament_issue parliament_issue, parliament_issue_details
           persister.import_votes votes, infer: false
-        end
+        end 
 
         persister.infer_all_votes
       end
@@ -141,14 +140,16 @@ module Hdo
         persister.import_promises promises
       end
 
-      def each_vote_for(data_source, parliament_issues, limit = nil)
+      def each_parliament_issue(parliament_issues, limit = nil)
         count = 0
 
         parliament_issues.each_with_index do |parliament_issue, index|
-          votes = data_source.votes_for(parliament_issue.external_id)
+          details = parsing_data_source.parliament_issue_details(parliament_issue.external_id)
+          votes   = parsing_data_source.votes_for(parliament_issue.external_id)
+
           count += votes.size
 
-          yield votes
+          yield parliament_issue, details, votes
           break if limit && count >= limit
 
           parliament_issue_count = index + 1
