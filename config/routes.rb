@@ -248,6 +248,7 @@ Hdo::Application.routes.draw do
   get 'robots.txt'    => 'home#robots'
   get 'info/revision' => 'home#revision'
   get 'healthz'       => 'home#healthz' # cheap health check for varnish/others
+  get 'opensearch'    => 'home#opensearch'
 
   root to: 'home#index'
 end

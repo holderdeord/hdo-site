@@ -354,7 +354,7 @@ nb:
       description: "Holder de ord gjør det enkelt å sjekke hva som har blitt gjort og lovet i norsk politikk."
     login: "Logg inn"
     logout: "Logg ut"
-    description: "Bringer politikken til folket."
+    description: "Vi jobber for å gi folk større innflytelse over politikken ved hjelp av digitale verktøy."
     lang:
       infinitive_particle: "å"
     about: "Om oss"

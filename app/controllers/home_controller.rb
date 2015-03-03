@@ -11,7 +11,8 @@ class HomeController < ApplicationController
                   :faq,
                   :friends,
                   :terms,
-                  :statutes
+                  :statutes,
+                  :opensearch
 
   skip_before_filter :force_ssl_redirect, only: :healthz
 
@@ -46,6 +47,10 @@ class HomeController < ApplicationController
   end
 
   def friends
+  end
+
+  def opensearch
+    render layout: false, content_type: 'application/opensearchdescription+xml'
   end
 
   def revision

@@ -282,7 +282,7 @@ nn:
     url: 'holderdeord.no'
     title: "Holder de ord"
     opengraph:
-      description: "Holder de ord gjer det enkelt å sjekke kva som har blitt gjort og lova i norsk politikk."
+      description: "Vi jobber for å gi folk større innflytelse over politikken ved hjelp av digitale verktøy."
     login: "Logg inn"
     logout: "Logg ut"
     description: "Tek politikken til folket."

@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<OpenSearchDescription xmlns="http://a9.com/-/spec/opensearch/1.1/">
+ <ShortName><%= t 'app.title' %></ShortName>
+ <Description><%= t 'app.description' %></Description>
+ <Url type="text/html" method="get" template="<%= request.protocol %><%= request.host_with_port %>/search/all?query={searchTerms}"/>
+</OpenSearchDescription>
