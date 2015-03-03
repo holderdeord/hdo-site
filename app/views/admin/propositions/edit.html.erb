@@ -105,16 +105,22 @@
     <div class="row-fluid">
       <strong class="span2 rightify">Saker</strong>
       <div class="span4">
-        <ul>
           <% @parliament_issues.each do |pissue| %>
-            <li>
+            <div>
               <span><%= pissue.summary %></span>
 
-              <%= link_to 'HDO', pissue, target: '_blank' %>,
-              <%= link_to 'Stortinget', target: '_blank' %>
-            </li>
+              <small>
+                <ul>
+                  <% pissue.links.order(:link_type, :title).each do |link| %>
+                    <li><%= link_to link.title, link.href, target: '_blank' %></li>
+                  <% end %>
+
+                  <li><%= link_to 'Sak hos HDO', pissue, target: '_blank' %></li>
+                  <li><%= link_to 'Sak hos Stortinget', pissue.url, target: '_blank' %></li>
+                </ul>
+              </small>
+            </div>
           <% end %>
-        </ul>
       </div>
 
       <div class="span6">
