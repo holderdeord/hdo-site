@@ -9,6 +9,13 @@ describe HomeController do
     body.should include("Disallow: /")
   end
 
+  it 'renders opensearch description' do
+    get :opensearch, format: :xml
+
+    expect(response).to be_ok
+    expect(response.content_type).to eq("application/opensearchdescription+xml")
+  end
+
   context 'with rendered views' do
     render_views
 
