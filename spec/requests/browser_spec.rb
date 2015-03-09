@@ -68,7 +68,9 @@ describe Hdo::Application do
 
       i = Issue.first
       i.should_not be_nil
-      i.proposition_connections.size.should == 1
+
+      wait(5).until { i.reload.proposition_connections.size == 1 }
+
       i.promise_connections.size.should     == 1
       i.positions.size.should               == 1
       i.party_comments.size.should          == 1
