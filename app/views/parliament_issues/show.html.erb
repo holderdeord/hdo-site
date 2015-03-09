@@ -53,12 +53,20 @@
       </li>
     <% end %>
   </ul>
-</div>
 
-<h2>stortinget.no</h2>
-<ul class="nav nav-tabs">
-  <li><a href="<%= @parliament_issue.url %>">Sak</a></li>
-</ul>
+  <strong>Lenker:</strong>
+  <ul>
+    <li>
+      <%= link_to 'Sak hos Stortinget', @parliament_issue.url, class: 'external', target: '_blank' %>
+    </li>
+
+    <% @parliament_issue.links.order(:link_type).each do |link| %>
+      <li>
+        <%= link_to link.title, link.href, class: 'external', target: '_blank' %>
+        </li>
+    <% end %>
+  </ul>
+</div>
 
 <h2><%= Vote.model_name.human(count: 2).capitalize %></h2>
 <%= render partial: "shared/votes_summary_table", locals: {votes: @parliament_issue.votes, show_issues: false }%>
