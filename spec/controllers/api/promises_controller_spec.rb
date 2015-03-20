@@ -8,7 +8,7 @@ describe Api::PromisesController, :api do
 
     response.should be_success
     json_response['total'].should == 1
-    relations.should == %w[find promises self] # TODO: pagination rels
+    relations.should == %w[find promises self widgets] # TODO: pagination rels
   end
 
   it 'can GET :show' do
@@ -18,6 +18,6 @@ describe Api::PromisesController, :api do
 
     response.should be_success
     json_response.keys.should include('source', 'body', 'promisor_name', 'party_names')
-    relations.should == %w[parties self]
+    relations.should == %w[parties self widget]
   end
 end
