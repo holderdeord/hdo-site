@@ -33,7 +33,10 @@ module Api
     end
 
     link :twitter do
-      {href: represented.twitter_url, type: 'text/html'} if represented.twitter_id
+      {
+        href: represented.twitter_url,
+        type: 'text/html'
+      } if represented.twitter_id
     end
   end
 end

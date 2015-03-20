@@ -10,10 +10,21 @@ module Api
       api_promise_url represented
     end
 
-    link :parties do
+    links :parties do
       represented.parties.map do |p|
-        { href: api_party_url(p) }
+        {
+          title: p.name,
+          href: api_party_url(p)
+        }
       end
     end
+
+    link :widget do
+      {
+        href: widget_promises_url(represented),
+        type: 'text/html'
+      }
+    end
+
   end
 end

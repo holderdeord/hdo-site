@@ -16,6 +16,13 @@ module Api
       representatives_api_party_url represented, attending: true
     end
 
+    link :widget do
+      {
+        href: widget_party_url(represented),
+        type: 'text/html'
+      }
+    end
+
     link :logo do
       {
         href: logo_api_party_url(represented) + '{?version}',

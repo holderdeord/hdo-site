@@ -7,6 +7,27 @@ module Api
       }
     end
 
+    links :widgets do
+      result = [
+        {
+          title: 'all',
+          href: widget_promises_url(represented.map(&:id).join(',')),
+          type: 'text/html'
+        }
+      ]
+
+      by_period = represented.group_by { |e| e.parliament_period }
+      result += by_period.map do |period, promises|
+        {
+          title: period.name,
+          href: widget_promises_url(promises.map(&:id).join(',')),
+          type: 'text/html'
+        }
+      end
+
+      result
+    end
+
     collection :to_a,
                embedded: true,
                as: :promises,

@@ -19,5 +19,12 @@ module Api
     link :timeline do
       timeline_api_issue_url represented.id
     end
+
+    link :widget do
+      {
+        href: widget_issue_url(represented.id),
+        type: 'text/html'
+      }
+    end
   end
 end
