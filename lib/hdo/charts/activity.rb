@@ -28,7 +28,7 @@ module Hdo
           subtitle: %Q{Basert på #{@results.size} voteringer for #{@name}},
           credits: I18n.t('app.url'),
           series: [
-            { name: 'Prosent tilstede', data: series }
+            { name: 'Prosent til stede', data: series }
           ]
         }
       end

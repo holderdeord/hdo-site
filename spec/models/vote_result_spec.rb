@@ -79,7 +79,7 @@ describe VoteResult do
   it 'has a human text representation of the result' do
     I18n.with_locale :nb do
       VoteResult.make(:result => 1).human.should == "For"
-      VoteResult.make(:result => 0).human.should == "Ikke tilstede"
+      VoteResult.make(:result => 0).human.should == "Ikke til stede"
       VoteResult.make(:result => -1).human.should == "Mot"
     end
   end

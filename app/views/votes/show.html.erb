@@ -5,7 +5,7 @@
 <small class="row-fluid muted">
   <div class="span6">
     <strong><%= @vote.enacted? ? 'Vedtatt' : 'Ikke vedtatt' %>.</strong>
-    <%= @vote.for_count %> for, <%= @vote.against_count %> mot, <%= @vote.absent_count %> ikke tilstede
+    <%= @vote.for_count %> for, <%= @vote.against_count %> mot, <%= @vote.absent_count %> ikke til stede
   </div>
 
   <div class="span6">
@@ -26,7 +26,7 @@
     <div class="row-fluid">
       <h5 class="span4">For</h5>
       <h5 class="span4">Mot</h5>
-      <h5 class="span4">Ikke tilstede</h5>
+      <h5 class="span4">Ikke til stede</h5>
     </div>
 
     <% @results_by_party.each do |party, results_by_status| %>
@@ -69,7 +69,7 @@
         <%= image_tag party.logo, alt: party.name, width: '24', height: '24' %>
       </h4>
 
-      <p class="muted"><%= results_by_status[:for].size %> for, <%= results_by_status[:against].size %> mot, <%= results_by_status[:against].size %> ikke tilstede</p>
+      <p class="muted"><%= results_by_status[:for].size %> for, <%= results_by_status[:against].size %> mot, <%= results_by_status[:against].size %> ikke til stede</p>
 
       <% results_by_status.each do |status, results| %>
         <% results.each do |result| %>

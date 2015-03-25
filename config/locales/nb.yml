@@ -229,7 +229,7 @@ nb:
         subject: "Beskrivelse"
         for_count: "For"
         against_count: "Mot"
-        absent_count: "Ikke tilstede"
+        absent_count: "Ikke til stede"
         time: "Dato"
         enacted: "Vedtatt"
         counts: "Stemmegivning"
@@ -392,7 +392,7 @@ nb:
     for: 'For'
     against: 'Mot'
     for_and_against: 'Både for og mot'
-    absent: 'Ikke tilstede'
+    absent: 'Ikke til stede'
     unrelated: 'Ikke relatert'
     connection: 'Kobling'
     expand: 'Åpne'
