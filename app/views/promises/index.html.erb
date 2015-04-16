@@ -37,6 +37,12 @@
     </ul>
 
     <%= paginate @search.response %>
+
+    <small class="pull-right muted small">
+      Last ned:
+        <%= link_to 'CSV', @search.url(format: :csv, size: @search.hits) %>
+        |
+        <%= link_to 'TSV', @search.url(format: :tsv, size: @search.hits) %>
+    </small>
   </div>
 </div>
-

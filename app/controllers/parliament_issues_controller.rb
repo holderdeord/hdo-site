@@ -3,6 +3,13 @@ class ParliamentIssuesController < ApplicationController
 
   def index
     @search = Hdo::Search::ParliamentIssues.new(params, view_context)
+
+    respond_to do |format|
+      format.html
+      format.json { render json: @search.as_json }
+      format.csv  { send_data @search.as_csv }
+      format.tsv  { send_data @search.as_csv(col_sep: "\t") }
+    end
   end
 
   def show

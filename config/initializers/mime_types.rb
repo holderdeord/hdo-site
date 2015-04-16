@@ -7,3 +7,5 @@
 Rack::Mime::MIME_TYPES['.woff'] = 'application/x-font-woff'
 Mime::Type.register "application/x-font-woff", :woff
 Mime::Type.register "application/hal+json", :hal
+Mime::Type.register "text/tab-separated-values", :tsv
+

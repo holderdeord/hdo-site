@@ -12,6 +12,8 @@ class PropositionsController < ApplicationController
     respond_to do |format|
       format.html
       format.json { render json: @search.as_json }
+      format.csv  { send_data @search.as_csv }
+      format.tsv  { send_data @search.as_csv(col_sep: "\t") }
     end
   end
 

@@ -7,6 +7,8 @@ class PromisesController < ApplicationController
     respond_to do |format|
       format.html
       format.json { render json: @search.as_json }
+      format.csv  { send_data @search.as_csv }
+      format.tsv  { send_data @search.as_csv(col_sep: "\t") }
     end
   end
 
@@ -27,6 +29,6 @@ class PromisesController < ApplicationController
 
   def create_search
     @search = Hdo::Search::Promises.new(params, view_context)
-    @search.size = params[:size].to_i if params[:size] && request.xhr?
+    @search.size = params[:size].to_i if params[:size]
   end
 end

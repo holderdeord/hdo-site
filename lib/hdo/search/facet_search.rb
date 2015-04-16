@@ -126,6 +126,28 @@ module Hdo
         }
       end
 
+      def as_csv(opts = {})
+        CSV.generate(opts) do |csv|
+          to_a.each { |row| csv << row }
+        end
+      end
+
+      def to_a
+        result = []
+
+        headers = response.results.first.try(:_source).try(:keys)
+        result << headers || []
+
+        response.results.each do |res|
+          result << headers.map do |h|
+            val = res._source[h]
+            val.kind_of?(Array) ? val.join(';') : val
+          end
+        end
+
+        result
+      end
+
       private
 
       attr_reader :view_context
