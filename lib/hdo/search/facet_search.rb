@@ -135,8 +135,8 @@ module Hdo
       def to_a
         result = []
 
-        headers = response.results.first.try(:_source).try(:keys)
-        result << headers || []
+        headers = response.results.first.try(:_source).try(:keys) || []
+        result << headers
 
         response.results.each do |res|
           result << headers.map do |h|

@@ -18,6 +18,16 @@ describe PromisesController do
       response.should have_rendered(:index)
     end
 
+    it 'renders promises#index as csv' do
+      get :index, format: :csv
+      response.should be_success
+    end
+
+    it 'renders promises#index as tsv' do
+      get :index, format: :tsv
+      response.should be_success
+    end
+
     it 'contains all promises in a period by default' do
       promise_a = Promise.make!(parliament_period: ParliamentPeriod.make!(start_date: '2009-10-01'))
       promise_b = Promise.make!(parliament_period: ParliamentPeriod.make!(start_date: '2013-10-01'))

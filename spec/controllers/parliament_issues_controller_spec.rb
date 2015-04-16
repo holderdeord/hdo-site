@@ -8,6 +8,16 @@ describe ParliamentIssuesController do
     assigns(:search).should be_kind_of(Hdo::Search::ParliamentIssues)
   end
 
+  it 'renders promises#index as csv' do
+    get :index, format: :csv
+    response.should be_success
+  end
+
+  it 'renders promises#index as tsv' do
+    get :index, format: :tsv
+    response.should be_success
+  end
+
   it 'can show an issue' do
     issue = ParliamentIssue.make!
 
