@@ -1,4 +1,8 @@
-<% page_title "Forslag - #{@proposition.id} - #{t('app.title')}" %>
+<% page_title "Forslag: #{@proposition.title} - #{t('app.title')}" %>
+
+<% metadata[:description] = sanitize(@proposition.body || @proposition.title, :tags => []).split("\n").first.to_s.strip %>
+<% metadata[:type] = 'article' %>
+<% metadata[:url] = proposition_url(@proposition) %>
 
 
 <div class="row-fluid">
