@@ -237,7 +237,6 @@ GEM
     net-ssh-gateway (1.2.0)
       net-ssh (>= 2.6.5)
     netrc (0.10.3)
-    newrelic_rpm (3.9.6.257)
     nokogiri (1.6.3.1)
       mini_portile (= 0.6.0)
     orm_adapter (0.5.0)
@@ -453,7 +452,6 @@ DEPENDENCIES
   mini_magick (~> 3.5)
   multi_json
   net-http-persistent
-  newrelic_rpm
   nokogiri
   pg
   pry-rails
