@@ -86,9 +86,10 @@ module Hdo
         end
       end
 
-      def self.csv
-        all        = new.result
-        categories = by_category
+      def self.csv(opts = {})
+        all               = new(opts).result
+        parliament_issues = opts[:votes] ? opts[:votes].flat_map(&:parliament_issues) : ParliamentIssue.all
+        categories        = by_category(parliament_issues)
 
         category_names = categories.keys.sort
         combinations = all[:data].keys.sort
