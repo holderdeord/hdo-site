@@ -39,6 +39,8 @@ module Api
 
     def fetch_representative
       @representative = Representative.find(params[:id])
+    rescue ActiveRecord::RecordNotFound
+      @representative = Representative.find_by_external_id(params[:id]) or raise
     end
   end
 end
