@@ -9,4 +9,3 @@ Disallow: /promises.csv
 Disallow: /parliament-issues.tsv
 Disallow: /parliament-issues.csv
 Crawl-delay: 1
-Cache-delay: 5
