@@ -202,7 +202,7 @@ class Representative < ActiveRecord::Base
   end
 
   def stats
-    Hdo::Stats::RepresentativeCounts.new self
+    Hdo::Stats::RepresentativeCounts.new self.vote_results
   end
 
   def as_indexed_json(options = nil)
