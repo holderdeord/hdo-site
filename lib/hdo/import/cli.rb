@@ -79,7 +79,7 @@ module Hdo
         each_parliament_issue(parliament_issues) do |parliament_issue, parliament_issue_details, votes|
           persister.import_parliament_issue parliament_issue, parliament_issue_details
           persister.import_votes votes, infer: false
-        end 
+        end
 
         persister.infer_current_session
         notify_new_votes if Rails.env.production?
@@ -99,7 +99,7 @@ module Hdo
         each_parliament_issue(parliament_issues, vote_limit) do |parliament_issue, parliament_issue_details, votes|
           persister.import_parliament_issue parliament_issue, parliament_issue_details
           persister.import_votes votes, infer: false
-        end 
+        end
 
         persister.infer_all_votes
       end
@@ -124,7 +124,10 @@ module Hdo
 
         # mark currently attending representatives
         # see https://github.com/holderdeord/hdo-site/issues/195
-        attending_xids = representatives_today.map(&:external_id)
+        attending_xids = representatives_today.map do |r|
+          r.substitute ? r.substitute : r.external_id
+        end
+
         Representative.all.each do |rep|
           rep.update_attributes!(attending: attending_xids.include?(rep.external_id))
         end
