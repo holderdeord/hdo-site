@@ -70,7 +70,7 @@ class HomeController < ApplicationController
     @all_members = User.where(active: true).sort_by { |e| e.name.split(" ").last }
     @board = @all_members.select { |member| member.board? }
 
-    @other = [
+    @other = User.where(active: false).map(&:name) + [
       'Alex Asensi',
       'Anders Berg Hansen',
       'Anne Raaum Christensen',
@@ -132,5 +132,7 @@ class HomeController < ApplicationController
       'Vilde Grønn',
       'Øystein Jerkø Kostøl',
      ]
+
+     @other = @other.uniq.sort_by { |name| name.split(" ").last }
   end
 end
