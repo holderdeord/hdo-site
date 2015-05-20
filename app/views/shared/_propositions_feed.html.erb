@@ -16,7 +16,7 @@
         <% end %>
 
         <% if feed.show_parties? %>
-          <div class="row-fluid positions muted">
+          <div class="row-fluid positions muted hidden-phone">
             <div class="span4 position-support">
               <div><strong>For</strong></div>
               <%= prop.supporters.map(&:external_id).join(' ') %>
@@ -27,7 +27,7 @@
                 <div><strong>Fraværende</strong></div>
                 <%= prop.absentees.map(&:external_id).join(' ') %>
               <% end %>
-            </div>    
+            </div>
 
             <div class="span4 position-oppose">
               <div><strong>Mot</strong></div>

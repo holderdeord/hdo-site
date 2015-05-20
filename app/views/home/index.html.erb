@@ -5,17 +5,18 @@
   </p>
 <% end %>
 
-<%= render partial: 'blog' %>
-
-<!-- HACK -->
-</div><div class="separator-image" style="background-position: 50% 70%; background-image: url(http://files.holderdeord.no/images/stortingssalen.jpg);"></div><div class="container">
-
 <div class="row-fluid">
-  <%= render partial: 'shared/propositions_feed', locals: { feed: @propositions_feed } %>
+  <div class="span6">
+    <%= render partial: 'shared/propositions_feed', locals: { feed: @propositions_feed } %>
+  </div>
+
+  <div class="span6">
+    <%= render partial: 'blog' %>
+  </div>
 </div>
 
 <!-- HACK -->
-</div><div class="separator-image" style="background-position: 50% 20%; background-image: url(http://files.holderdeord.no/images/blog-header.jpg);"></div><div class="container">
+</div><div class="separator-image" style="background-position: 50% 70%; background-image: url(http://files.holderdeord.no/images/stortingssalen.jpg);"></div><div class="container">
 
 <div class="row-fluid">
   <div class="span6">
@@ -23,6 +24,7 @@
     <small class="muted">Hold deg oppdatert på hva Norges parlamentariske vaktbikkje pusler med.</small>
 
     <a class="twitter-timeline" href="https://twitter.com/holderdeord"
+       width='100%'
        data-widget-id="262119575246733312"
        data-link-color="#019ea2"
        data-lang="no"
@@ -36,19 +38,26 @@
     <small class="muted">Vi tvitrer hver gang noen stemmer mot sitt eget parti på Stortinget.</small>
 
     <a class="twitter-timeline" href="https://twitter.com/partipisken"
-       data-widget-id="262119575246733312" 
-       data-link-color="#019ea2" 
-       data-lang="no" 
-       data-screen-name="partipisken" 
-       data-chrome="noheader nofooter" 
+       width='100%'
+       data-widget-id="262119575246733312"
+       data-link-color="#019ea2"
+       data-lang="no"
+       data-screen-name="partipisken"
+       data-chrome="noheader nofooter"
        data-tweet-limit="6">Følg @partipisken</a>
+
+    <div class="">
+     <div class="fb-like" data-href="https://www.facebook.com/holderdeord" data-send="false" data-layout="button_count" data-width="100" data-show-faces="false"></div>
+    </div>
+
   </div>
 
   <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+
 </div>
 
-<div class="">
-  <div class="fb-like" data-href="https://www.facebook.com/holderdeord" data-send="false" data-layout="button_count" data-width="100" data-show-faces="false"></div>
-</div>
 
+
+<!-- HACK -->
+</div><div class="separator-image" style="background-position: 50% 20%; background-image: url(http://files.holderdeord.no/images/blog-header.jpg);"></div><div class="container">
 
