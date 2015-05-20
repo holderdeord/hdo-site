@@ -14,9 +14,11 @@ module Hdo
       def initialize(propositions, opts = {})
         @propositions = propositions
 
-        @title   = opts[:title] || 'Siste forslag fra Stortinget'
-        @see_all = !!opts[:see_all]
-        @height  = opts[:height]
+        @title          = opts[:title] || 'Siste forslag fra Stortinget'
+        @see_all        = !!opts[:see_all]
+        @height         = opts[:height]
+        @show_parties   = !!opts[:show_parties]
+        @show_proposers = !!opts[:show_proposers]
       end
 
       def empty?
@@ -37,6 +39,14 @@ module Hdo
 
       def propositions
         @propositions.map(&:decorate)
+      end
+
+      def show_parties?
+        @show_parties
+      end
+
+      def show_proposers?
+        @show_proposers  
       end
 
     end

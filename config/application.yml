@@ -23,6 +23,7 @@ defaults: &defaults
   topic_of_the_week: Samferdsel
   blog_url: http://drafts.holderdeord.no/
   blog_count: 4
+  parties_in_proposition_feed: true
 
 development:
   <<: *defaults
@@ -48,3 +49,4 @@ production:
   default_bcc_email: prodcopy@holderdeord.no
   chat_notifications_enabled: true
   blog_url: http://blog.holderdeord.no/
+  parties_in_proposition_feed: false

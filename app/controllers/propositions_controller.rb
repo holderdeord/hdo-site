@@ -25,6 +25,9 @@ class PropositionsController < ApplicationController
   private
 
   def fetch_proposition
-    @proposition = Proposition.includes(:votes => :parliament_issues, :proposition_endorsements => :proposer).find(params[:id])
+    @proposition = Proposition.includes(
+      :votes => :parliament_issues, 
+      :proposition_endorsements => :proposer
+    ).find(params[:id])
   end
 end

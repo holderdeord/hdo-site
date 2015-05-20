@@ -9,11 +9,32 @@
           <time class="span3 muted"><%= prop.datestamp %></time>
         </div>
 
-        <div class="row-fluid">
-          <% if prop.proposers.any? %>
-            <small class="muted"><%= prop.proposers.to_sentence %></small>
-          <% end %>
-        </div>
+        <% if feed.show_proposers? && prop.proposers.any? %>
+          <div class="row-fluid">
+              <small class="muted"><%= prop.proposers.to_sentence %></small>
+          </div>
+        <% end %>
+
+        <% if feed.show_parties? %>
+          <div class="row-fluid positions muted">
+            <div class="span4 position-support">
+              <div><strong>For</strong></div>
+              <%= prop.supporters.map(&:external_id).join(' ') %>
+            </div>
+
+            <div class="span4 position-absent">
+              <% if prop.absentees.any? %>
+                <div><strong>Fraværende</strong></div>
+                <%= prop.absentees.map(&:external_id).join(' ') %>
+              <% end %>
+            </div>    
+
+            <div class="span4 position-oppose">
+              <div><strong>Mot</strong></div>
+              <%= prop.opposers.map(&:external_id).join(' ') %>
+            </div>
+          </div>
+        <% end %>
       <% end %>
     <% end %>
 

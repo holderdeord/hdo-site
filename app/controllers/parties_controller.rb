@@ -13,7 +13,8 @@ class PartiesController < ApplicationController
     @propositions_feed = Hdo::Utils::PropositionsFeed.for_model(
       @party,
       see_all: true,
-      title: "Siste forslag fra #{@party.name}"
+      title: "Siste forslag fra #{@party.name}",
+      show_parties: AppConfig.parties_in_proposition_feed
     )
   end
 end
