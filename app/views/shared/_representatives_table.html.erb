@@ -4,19 +4,26 @@
   <thead>
     <tr>
       <th><%= Representative.human_attribute_name :name %></th>
+
       <% if show_party %>
         <th><%= Representative.human_attribute_name :party %></th>
       <% end %>
+
+      <th>Møtende</th>
     </tr>
   </thead>
   <tbody>
       <% representatives.each do |rep| %>
       <tr>
         <td><%= link_to rep.display_name, rep %></td>
+
         <% if show_party && rep.latest_party %>
           <td><%= link_to rep.latest_party.name, rep.latest_party %></td>
         <% end %>
+
+        <td><% if rep.attending? %>&#9733;<% end %></td>
       </tr>
+
       <% end %>
   </tbody>
 </table>
