@@ -13,15 +13,14 @@ module Hdo
           double(result: -1),
         ]
       }
-      let(:vote)  { double(vote_results: vote_results) }
-      let(:counts) { RepresentativeCounts.new(vote) }
+      let(:counts) { RepresentativeCounts.new(vote_results) }
 
       it 'knows the absent count' do
         counts.absent_count.should == 1
       end
 
       it 'knows the for count' do
-        counts.for_count.should == 3
+        counts.for_count.to_i.should == 3
       end
 
       it 'knows the against count' do
@@ -29,7 +28,7 @@ module Hdo
       end
 
       it 'knows the absent percent' do
-        counts.absent_percent.should == 16
+        counts.absent_percent.to_i.should == 16
       end
 
       it 'knows the for percent' do
@@ -37,7 +36,7 @@ module Hdo
       end
 
       it 'knows the against percent' do
-        counts.against_percent.should == 33
+        counts.against_percent.to_i.should == 33
       end
     end
   end
