@@ -74,31 +74,41 @@
   </div>
 </div>
 
-  <small class="row-fluid">
-      <div class="span6">
-        <% if @proposition.issues.any? %>
-          Relaterte saker
+<small class="row-fluid">
+  <div class="span4">
+    Relaterte dokumenter
 
-          <ul>
-          <% @proposition.issues.published.each do |issue| %>
-            <li><%= link_to issue.title, issue %></li>
-          <% end %>
-          </ul>
-        <% end %>
-      </div>
+    <ul>
+      <% @parliament_issues.flat_map(&:links).sort_by { |l| [l.link_type, l.title] }.uniq.each do |link| %>
+        <li><%= link_to link.title, link.href, target: '_blank', class: 'external' %></li>
+      <% end %>
+    </ul>    
+  </div>
+  
+  <div class="span4">
+    <% if @proposition.issues.any? %>
+      Relaterte saker
 
-    <% if @proposition.related_propositions.any? %>
-      <div class="span6">
-        Relaterte forslag
-
-        <ul>
-          <% @proposition.related_propositions.each do |prop| %>
-            <li><%= link_to prop.title.truncate(100), prop %></li>
-          <% end %>
-        </ul>
-      </div>
+      <ul>
+      <% @proposition.issues.published.each do |issue| %>
+        <li><%= link_to issue.title, issue %></li>
+      <% end %>
+      </ul>
     <% end %>
-  </small>
+  </div>
+
+  <% if @proposition.related_propositions.any? %>
+    <div class="span4">
+      Relaterte forslag
+  
+      <ul>
+        <% @proposition.related_propositions.each do |prop| %>
+          <li><%= link_to prop.title.truncate(100), prop %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+</small>
 
 <%= link_to('Rediger', edit_admin_proposition_path(@proposition), class: 'btn') if current_user && !current_user.contributor? %>
 
