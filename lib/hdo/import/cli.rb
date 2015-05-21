@@ -124,12 +124,25 @@ module Hdo
 
         # mark currently attending representatives
         # see https://github.com/holderdeord/hdo-site/issues/195
-        attending_xids = representatives_today.map do |r|
-          r.substitute ? r.substitute : r.external_id
+        attending_xids = []
+        substitute_xids = []
+
+        representatives_today.map do |r|
+          if r.substitute
+            attending_xids << r.substitute
+            substitute_xids << r.substitute
+          else
+            attending_xids << r.external_id
+          end
         end
 
         Representative.all.each do |rep|
-          rep.update_attributes!(attending: attending_xids.include?(rep.external_id))
+          xid = rep.external_id
+
+          rep.update_attributes!(
+            attending: attending_xids.include?(xid),
+            substitute: substitute_xids.include?(xid)
+          )
         end
 
         missing_reps = Representative.attending.where(:email => nil).map(&:full_name)

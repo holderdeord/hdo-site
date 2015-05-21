@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150302213127) do
+ActiveRecord::Schema.define(:version => 20150521214835) do
 
   create_table "answers", :force => true do |t|
     t.text     "body",                                     :null => false
@@ -355,6 +355,7 @@ ActiveRecord::Schema.define(:version => 20150302213127) do
     t.datetime "confirmation_sent_at"
     t.boolean  "attending",              :default => false
     t.boolean  "opted_out"
+    t.boolean  "substitute",             :default => false
   end
 
   add_index "representatives", ["attending"], :name => "index_representatives_on_attending"
