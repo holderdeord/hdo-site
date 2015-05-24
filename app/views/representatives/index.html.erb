@@ -1,21 +1,6 @@
-<div class="row-fluid">
-  <div class="span6">
-    <%= t('app.counts.representative', count: @representatives.size).html_safe %>
-  </div>
-</div>
-
 <div class="row-fluid" id="representatives">
-  <div class="row-fluid">
-    <div class="span3"><h5><%= Representative.human_attribute_name :name %></h5></div>
-    <div class="span3"><h5><%= Representative.human_attribute_name :party %></h5></div>
-    <div class="span3"><h5><%= Representative.human_attribute_name :district %></h5></div>
+  <%=
+    render partial: 'shared/representatives_table',
+           locals: { representatives: @representatives, show_party: true, show_district: true }
+  %>
   </div>
-
-  <% @representatives.each do |rep| %>
-    <div class="row-fluid">
-      <div class="span3"><%= link_to rep.display_name, rep %></div>
-      <div class="span3"><%= (party = rep.latest_party) && link_to(party.name, party) %></div>
-      <div class="span3"><%= link_to rep.district.name, rep.district %></div>
-    </div>
-  <% end %>
-</div>

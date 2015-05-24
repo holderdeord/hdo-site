@@ -9,7 +9,12 @@
         <th><%= Representative.human_attribute_name :party %></th>
       <% end %>
 
+      <% if show_district %>
+        <th><%= Representative.human_attribute_name :district %></th>
+      <% end %>
+
       <th>Møtende</th>
+      <th>Vara</th>
     </tr>
   </thead>
   <tbody>
@@ -21,7 +26,12 @@
           <td><%= link_to rep.latest_party.name, rep.latest_party %></td>
         <% end %>
 
+        <% if show_district %>
+          <td><%= link_to rep.district.name, rep.district %></td>
+        <% end %>
+
         <td><% if rep.attending? %>&#9733;<% end %></td>
+        <td><% if rep.substitute? %>&#9733;<% end %></td>
       </tr>
 
       <% end %>
