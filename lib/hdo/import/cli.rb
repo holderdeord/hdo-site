@@ -145,7 +145,7 @@ module Hdo
           )
         end
 
-        missing_reps = Representative.attending.where(:email => nil).map(&:full_name)
+        missing_reps = representatives_without_email.map(&:full_name)
         log.warn "representatives missing emails: #{missing_reps.to_json}" if missing_reps.any?
       end
 
@@ -285,12 +285,12 @@ module Hdo
 
       def notify_missing_emails
         client = hipchat_client || return
-        missing = Representative.attending.where('email is null')
+        missing = representatives_without_email
 
         return if missing.empty?
 
         template = <<-HTML
-        <h2>Møtende representanter uten epostadresse:</h2>
+        <h2>Møtende representanter (ekslkudert varaer) uten epostadresse:</h2>
         <ul>
           <% missing.each do |rep| %>
           <li><%= rep.external_id %>: <%= rep.full_name %></li>
@@ -309,6 +309,10 @@ module Hdo
         client['Teknisk'].send('API', "Feil hos data.stortinget.no! Hjelp!", color: 'red', notify: true)
       rescue => ex
         log.error ex.message
+      end
+
+      def representatives_without_email
+        Representative.attending.where(email: nil, substitute: false)
       end
 
       def hipchat_client
