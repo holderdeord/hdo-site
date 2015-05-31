@@ -16,6 +16,10 @@ class PartyUploader < CarrierWave::Uploader::Base
     asset_path "party-logos-current/unknown.png"
   end
 
+  version :large do
+    process :scale => [290, 290]
+  end
+
   version :medium do
     process :scale => [128, 128]
   end
