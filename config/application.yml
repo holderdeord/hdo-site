@@ -37,7 +37,7 @@ staging:
   <<: *defaults
   statsd_enabled: true
   fastly_enabled: true
-  ssl_enabled: true
+  ssl_enabled: false
   chat_notifications_enabled: true
 
 production:
