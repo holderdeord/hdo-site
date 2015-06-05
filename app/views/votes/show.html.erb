@@ -32,32 +32,32 @@
     <% @results_by_party.each do |party, results_by_status| %>
       <div class="vote-result-row row-fluid" data-toggle="collapse" data-target='#vote-results-<%= party.slug %>'>
         <% results_by_status.each_with_index do |(status, results), idx| %>
-        <div class="span4">
-          <% if idx == 0 %>
-            <span class="expandable"></span>
-          <% end  %>
+          <div class="span4">
+            <% if idx == 0 %>
+              <span class="expandable"></span>
+            <% end  %>
 
-          <% if results.any? %>
-            <%= image_tag party.logo, alt: party.name, width: '24', height: '24' %>
-            <span><%= party.name %> (<%= results.size %>)</span>
-          <% end %>
-        </div>
+            <% if results.any? %>
+              <%= image_tag party.logo, alt: party.name, width: '24', height: '24' %>
+              <span><%= party.name %> (<%= results.size %>)</span>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+
+      <div class="row-fluid collapse" id="vote-results-<%= party.slug %>">
+        <% results_by_status.each do |_, results| %>
+          <div class="span4">
+            <% results.each do |result| %>
+              <p>
+                <%= link_to result.representative.name, result.representative %>
+                <%= '(utbryter)' if result.rebel? %>
+              </p>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
     <% end %>
-    </div>
-
-    <div class="row-fluid collapse" id="vote-results-<%= party.slug %>">
-      <% results_by_status.each do |_, results| %>
-        <div class="span4">
-          <% results.each do |result| %>
-            <p>
-              <%= link_to result.representative.name, result.representative %>
-              <%= '(utbryter)' if result.rebel? %>
-            </p>
-          <% end %>
-        </div>
-      <% end %>
-    </div>
-<% end %>
 </div>
 
 <!-- flat list on mobile  -->
@@ -69,19 +69,24 @@
         <%= image_tag party.logo, alt: party.name, width: '24', height: '24' %>
       </h4>
 
-      <p class="muted"><%= results_by_status[:for].size %> for, <%= results_by_status[:against].size %> mot, <%= results_by_status[:against].size %> ikke til stede</p>
+      <p class="muted">
+        <%= results_by_status[:for].size %> for, <%= results_by_status[:against].size %> mot, <%= results_by_status[:against].size %> ikke til stede
+        <small class="pull-right"><a class="show-representatives" data-party="<%= party.slug %>" href="#">Vis representanter</a></small>
+      </p>
 
-      <% results_by_status.each do |status, results| %>
-        <% results.each do |result| %>
-          <div class="row-fluid">
-            <strong style="padding-right: 0.5em"><%= result.human %></strong>
-            <%= link_to result.representative.name, result.representative %>
-            <%= '(utbryter)' if result.rebel? %>
-          </div>
-        <% end %>
-      <% end %>
+      <div id="<%= party.slug %>-results" class="hidden">
+        <% results_by_status.each do |status, results| %>
+          <% results.each do |result| %>
+            <div class="row-fluid">
+              <strong style="padding-right: 0.5em"><%= result.human %></strong>
+              <%= link_to result.representative.name, result.representative %>
+              <%= '(utbryter)' if result.rebel? %>
+            </div>
+          <% end %>
+        <% end %>  
+      </div>      
 
-      <hr class="soften">
+      <hr class="small">
     <% end %>
   </div>
 </div>
@@ -89,17 +94,25 @@
 <% content_for :document_ready do %>
   <script>
     function toggleExpandable(e) {
-    $(this)
-    .prev('.vote-result-row')
-    .find('.expandable')
-    .toggleClass('expanded');
+      $(this)
+        .prev('.vote-result-row')
+        .find('.expandable')
+        .toggleClass('expanded');
     }
 
     $(function() {
-    $(".collapse").
-    on("show", toggleExpandable)
-    .on("hide", toggleExpandable);
-    });
+      $(".collapse")
+        .on("show", toggleExpandable)
+        .on("hide", toggleExpandable);
+      });
+
+      $(".show-representatives").click(function() {
+        var slug = $(this).data('party');
+        var toggled = $('#' + slug + "-results").toggleClass('hidden');
+
+        var newText = $(this).text().indexOf('Skjul') === -1 ? 'Skjul representanter' : 'Vis representanter';
+        $(this).text(newText);
+      });
   </script>
 <% end %>
 
