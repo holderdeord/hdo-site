@@ -2,8 +2,13 @@
   <h1><%= @committee.name %> <small class="pull-right"><%= @committee.external_id %></small></h1>
 </div>
 
-<%= render partial: 'shared/representatives_table',
-           locals: { representatives: @committee.current_representatives, show_party: true }
+<%=
+  render partial: 'shared/representatives_table',
+    locals: {
+      representatives: @committee.current_representatives,
+      show_party: true,
+      show_district: true
+    }
 %>
 
 <h2><%= ParliamentIssue.model_name.human(count: 2).capitalize %></h2>
