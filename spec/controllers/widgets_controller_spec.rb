@@ -81,6 +81,8 @@ describe WidgetsController do
   end
 
   describe 'GET #configuration' do
+    before { Vote.make!(slug: '1433776904e') }
+
     let(:auth) do
       ActionController::HttpAuthentication::Basic.encode_credentials(*Hdo::BasicAuth.users.first)
     end
@@ -94,6 +96,7 @@ describe WidgetsController do
       sign_in User.make!
 
       get :configure
+
       response.should be_success
     end
 

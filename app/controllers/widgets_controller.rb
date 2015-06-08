@@ -89,7 +89,7 @@ class WidgetsController < ApplicationController
       example_promises = []
       period           = ParliamentPeriod.named('2009-2013')
       example_promises = period.promises.order('random()').first(5) if period
-      example_vote     = Vote.find('1433776904e')
+      example_vote     = Vote.personal.order('random()').first
 
       @examples = []
 
