@@ -106,7 +106,9 @@
         .on("hide", toggleExpandable);
       });
 
-      $(".show-representatives").click(function() {
+      $(".show-representatives").click(function(e) {
+        e.preventDefault();
+
         var slug = $(this).data('party');
         var toggled = $('#' + slug + "-results").toggleClass('hidden');
 
