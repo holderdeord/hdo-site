@@ -17,6 +17,7 @@ var HDO = HDO || {};
             H.widgets.create('topic').init();
             H.widgets.create('promises').init();
             H.widgets.create('party').init();
+            H.widgets.create('vote').init();
         },
 
         resize: function (event) {
@@ -105,6 +106,9 @@ var HDO = HDO || {};
             } else if (this.type === 'promises') {
                 path            = 'promises/:promises/widget';
                 params.promises = el.getAttribute('data-promises');
+            } else if (this.type === 'vote') {
+                path = 'votes/:voteId/widget';
+                params.voteId = el.getAttribute('data-vote-id');
             } else {
                 throw new Error('invalid HDO widget type: ' + this.type);
             }

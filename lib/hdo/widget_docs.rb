@@ -7,7 +7,7 @@ module Hdo
         'Sak',
         'utvalgt sak',
         "<a class='hdo-issue-widget' href='#{root_url}' data-issue-id='#{issue.try(:id)}' data-period='#{period.name}'>Laster innhold fra Holder de ord</a>",
-        "<iframe src='#{widget_issue_url(issue, period: period.name)}'>"
+        "<iframe style='height: auto;' src='#{widget_issue_url(issue, period: period.name)}'>"
       )
     end
 
@@ -16,7 +16,7 @@ module Hdo
         'Parti',
         'siste 5 saker etter voteringstidspunkt',
         "<a class='hdo-party-widget' href='#{root_url}' data-party-id='#{party.try(:slug)}'>Laster innhold fra Holder de ord</a>",
-        "<iframe src='#{widget_party_url(party)}'>"
+        "<iframe style='height: auto;' src='#{widget_party_url(party)}'>"
       )
     end
 
@@ -25,7 +25,7 @@ module Hdo
         'Parti',
         "siste N=#{n} saker etter voteringstidspunkt",
         "<a class='hdo-party-widget' href='#{root_url}' data-count='#{n}' data-party-id='#{party.try(:slug)}'>Laster innhold fra Holder de ord</a>",
-        "<iframe src='#{widget_party_url(party, count: n)}'>"
+        "<iframe style='height: auto;' src='#{widget_party_url(party, count: n)}'>"
       )
     end
 
@@ -36,7 +36,7 @@ module Hdo
         'Parti',
         'utvalgte saker',
         "<a class='hdo-party-widget' href='#{root_url}' data-issue-ids='#{ids}' data-party-id='#{party.try(:slug)}'>Laster innhold fra Holder de ord</a>",
-        "<iframe src='#{widget_party_url(party, issues: ids)}'>"
+        "<iframe style='height: auto;' src='#{widget_party_url(party, issues: ids)}'>"
       )
     end
 
@@ -47,7 +47,16 @@ module Hdo
         'Løfter',
         'utvalgte løfter',
         "<a class='hdo-promises-widget' href='#{root_url}' data-promises='#{ids}'>Laster innhold fra Holder de ord</a>",
-        "<iframe src='#{widget_promises_url(promises: ids)}'>"
+        "<iframe style='height: auto;' src='#{widget_promises_url(promises: ids)}'>"
+      )
+    end
+
+    def vote(vote)
+      Widget.new(
+        'Avstemning',
+        'blokker',
+        "<a class='hdo-vote-widget' href='#{root_url}' data-vote-id='#{vote.slug}'>Laster innhold fra Holder de ord</a>",
+        "<iframe style='height: auto;' src='#{widget_vote_url(vote)}'>"
       )
     end
 

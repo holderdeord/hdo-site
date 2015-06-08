@@ -1,0 +1,42 @@
+<header>
+  <h1>
+    <%= @vote.subject %>
+  </h1>
+
+  <p>
+    <span style="color: #999">
+      <%= @vote.enacted? ? 'Vedtatt' : 'Ikke vedtatt' %> <%= I18n.l @vote.time.localtime, format: :text %>.
+    </span>
+
+    <%= link_to "Les mer", @vote %>
+  </p>
+</header>
+
+<article>
+  <figure class="positions">
+    <div class="labels">
+      <% @position_groups.each do |label, parties| %>
+        <div class="position">
+          <div class="position-wrapper">
+            <h3>
+              <%= label %>
+            </h3>
+          </div>
+        </div>
+      <% end %>
+    </div>
+
+    <div class="icons">
+      <% @position_groups.each do |label, parties| %>
+        <div class="position">
+          <div class="position-wrapper">
+            <% parties.each do |party| %>
+              <%= image_tag party.logo.versions[:medium], alt: "#{party.name}s logo" %>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </figure>
+
+</article>

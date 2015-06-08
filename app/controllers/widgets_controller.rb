@@ -48,6 +48,35 @@ class WidgetsController < ApplicationController
     @promise_groups = promises.group_by { |e| e.parties.to_a }
   end
 
+  def vote
+    @vote = Vote.find(params[:id])
+
+    opposers   = []
+    supporters = []
+    absentees  = []
+
+    s = @vote.stats
+
+    Party.all.each do |party|
+      if s.party_for?(party)
+        supporters << party
+      elsif s.party_against?(party)
+        opposers << party
+      elsif s.party_absent?(party)
+        absentees << party
+      end
+    end
+
+    opposers.sort_by!(&:name)
+    supporters.sort_by!(&:name)
+    absentees.sort_by!(&:name)
+
+    @position_groups = {
+      'For'            => supporters,
+      'Mot'            => opposers
+    }
+  end
+
   def load
   end
 
@@ -60,6 +89,7 @@ class WidgetsController < ApplicationController
       example_promises = []
       period           = ParliamentPeriod.named('2009-2013')
       example_promises = period.promises.order('random()').first(5) if period
+      example_vote     = Vote.find('1433776904e')
 
       @examples = []
 
@@ -71,6 +101,7 @@ class WidgetsController < ApplicationController
         @examples << docs.party_count(example_party, 10)
         @examples << docs.party_issues(example_party, issues.order('random()').first(5))
         @examples << docs.promises(example_promises)
+        @examples << docs.vote(example_vote)
       end
 
       @issues = issues.order(:title)

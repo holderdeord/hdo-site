@@ -178,6 +178,7 @@ Hdo::Application.routes.draw do
 
     member do
       get 'propositions'
+      get 'widget' => 'widgets#vote'
     end
   end
 
