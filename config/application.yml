@@ -36,7 +36,7 @@ test:
 staging:
   <<: *defaults
   statsd_enabled: true
-  fastly_enabled: true
+  fastly_enabled: false
   ssl_enabled: false
   chat_notifications_enabled: true
 
