@@ -144,3 +144,6 @@ if ENV['LOCAL_IMPORTER']
 else
   gem 'hdo-storting-importer', "~> 0.5.7", require: 'hdo/storting_importer'
 end
+
+# necessary for ruby 2.2
+gem 'test-unit', '~> 3.0'
