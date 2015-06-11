@@ -8,7 +8,10 @@ def linux_only(require_as)
   RUBY_PLATFORM.include?('linux') && require_as
 end
 
-gem 'rails', '3.2.21'
+# gem 'rails', '3.2.21'
+
+gem 'rails', git: 'https://github.com/rails/rails.git', branch: '3-2-stable'
+
 
 # Gems used only for assets and not required
 # in production environments by default.
