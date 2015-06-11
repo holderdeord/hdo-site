@@ -59,7 +59,8 @@ module Hdo
       end
 
       def party_against?(party)
-        !party_for?(party) && party_participated?(party)
+        counts = party_counts_for(party)
+        counts[:against] > counts[:for]
       end
 
       def party_absent?(party)
