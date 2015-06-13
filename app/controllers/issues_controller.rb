@@ -2,7 +2,7 @@
 
 class IssuesController < ApplicationController
   before_filter :fetch_issue, except: [:index, :admin_info, :votes]
-  hdo_caches_page :index, :votes
+  hdo_caches_page :index, :votes, :show
 
   def index
     @groups = Issue.published.in_tag_groups
