@@ -67,13 +67,19 @@ describe VoteResult do
   it 'is not a rebel vote if an equal number is absent' do
     rep1 = Representative.make!(:full)
     rep2 = Representative.make!
+    rep3 = Representative.make!
+
     rep2.party_memberships.make!(party: rep1.current_party)
+    rep3.party_memberships.make!(party: rep1.current_party)
 
     vote    = Vote.make!(vote_results: [])
     absent  = vote.vote_results.make!(representative: rep1, result: 0)
-    present = vote.vote_results.make!(representative: rep2, result: 1)
+    against = vote.vote_results.make!(representative: rep2, result: 1)
+    support = vote.vote_results.make!(representative: rep3, result: -1)
 
-    present.should_not be_rebel
+    absent.should_not be_rebel
+    against.should_not be_rebel
+    absent.should_not be_rebel
   end
 
   it 'has a human text representation of the result' do
