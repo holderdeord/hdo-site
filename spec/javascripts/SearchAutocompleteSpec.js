@@ -2,11 +2,15 @@ describe('HDO.searchAutocomplete', function () {
     var server, searcher;
 
     beforeEach(function () {
-        jasmine.Clock.useMock();
+        jasmine.clock().install();
         server = jasmine.createSpyObj('server', ['search']);
         searcher = HDO.searchAutocomplete.create({
             server: server
         });
+    });
+
+    afterEach(function () {
+        jasmine.clock().uninstall();
     });
 
     function getRepresentative(id) {
@@ -22,13 +26,13 @@ describe('HDO.searchAutocomplete', function () {
         var process = jasmine.createSpy('process');
 
         searcher.search('s', process);
-        jasmine.Clock.tick(150);
+        jasmine.clock().tick(150);
 
         searcher.search('sk', process);
-        jasmine.Clock.tick(150);
+        jasmine.clock().tick(150);
 
         searcher.search('ska', process);
-        jasmine.Clock.tick(300);
+        jasmine.clock().tick(300);
 
         expect(server.search).toHaveBeenCalledWith('ska', jasmine.any(Function));
     });
@@ -72,13 +76,13 @@ describe('HDO.searchAutocomplete', function () {
     it('should call process with parsed results', function () {
         var process = jasmine.createSpy('process');
         searcher.search('s', process);
-        jasmine.Clock.tick(300);
+        jasmine.clock().tick(300);
 
         var data = {
             issue: [{title: 'Test 1', url: '/test-1'}, {title: 'Test 2', url: '/test-2'}],
             representative: [getRepresentative(1), getRepresentative(2)]
         };
-        server.search.mostRecentCall.args[1](data); // invoke callback
+        server.search.calls.mostRecent().args[1](data); // invoke callback
 
         expect(process).toHaveBeenCalledWith(['Test 1', 'Test 2',
                                               'Test Name-1 (Party Hard)', 'Test Name-2 (Party Hard)']);
@@ -87,9 +91,9 @@ describe('HDO.searchAutocomplete', function () {
     it('should handle empty results', function () {
         var process = jasmine.createSpy('process');
         searcher.search('s', process);
-        jasmine.Clock.tick(300);
+        jasmine.clock().tick(300);
 
-        server.search.mostRecentCall.args[1]({}); // invoke callback
+        server.search.calls.mostRecent().args[1]({}); // invoke callback
         expect(process).toHaveBeenCalledWith([]);
     });
 
