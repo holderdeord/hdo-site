@@ -58,3 +58,21 @@ hr.soften {
 hr.small {
   margin: 0;
 }
+
+.img-responsive {
+  display: block;
+  max-width: 100%; // Set a maximum relative to the parent
+  height: auto;    // Scale the height according to the width, otherwise you get stretching
+}
+
+.hover-zoom {
+  opacity: 0.8;
+  transform: scale(0.95);
+  -webkit-transition: all .3s ease-in-out;
+  transition: all .3s ease-in-out;
+}
+
+.hover-zoom:hover {
+  opacity: 1;
+  transform: scale(1);
+}
