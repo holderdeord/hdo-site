@@ -12,15 +12,15 @@
     },
 
     search: function (query, process) {
-      var self = this;
+      var self = this;      
       return this.throttler.queue(query, function (q) {
-        self.contactServer(q, function (data) {
+        self.contactServer(q, function (data) {          
           var result = [];
           if (data.issue) {
-            result.push(c.map(self.parseIssue.bind(self), data.issue));
+            result.push(c.map(function(i) { return self.parseIssue(i); }, data.issue));
           }
           if (data.representative) {
-            result.push(c.map(self.parseRepresentative.bind(self), data.representative));
+            result.push(c.map(function(r) { return self.parseRepresentative(r); }, data.representative));
           }
           process(cull.flatten(result));
         });

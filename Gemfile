@@ -8,7 +8,7 @@ def linux_only(require_as)
   RUBY_PLATFORM.include?('linux') && require_as
 end
 
-gem 'rails', '3.2.21'
+gem 'rails', '3.2.22'
 
 # Gems used only for assets and not required
 # in production environments by default.
@@ -41,7 +41,7 @@ end
 
 group :test, :development do
   gem "rspec-rails", "> 2.0", "< 2.99"
-  gem 'jasmine', '1.3.2'
+  gem 'jasmine', '2.3.0'
 end
 
 group :development do
@@ -141,3 +141,6 @@ if ENV['LOCAL_IMPORTER']
 else
   gem 'hdo-storting-importer', "~> 0.5.7", require: 'hdo/storting_importer'
 end
+
+# necessary for ruby 2.2
+gem 'test-unit', '~> 3.0'
