@@ -42,7 +42,7 @@ describe('HDO.throttler', function () {
         jasmine.clock().tick(150);
 
         expect(callback).toHaveBeenCalledWith('LOL');
-        expect(callback.callCount).toEqual(1);
+        expect(callback.calls.count()).toEqual(1);
     });
 
 });
