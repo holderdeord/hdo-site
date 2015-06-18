@@ -74,7 +74,7 @@ module ApplicationHelper
       title: page_title,
       description: t('app.opengraph.description'),
       url: "http://#{request.host}#{request.fullpath}",
-      image: File.join(root_url, asset_path('og_logo.jpg'))
+      image: File.join(root_url, asset_path('og_logo.png'))
     }
   end
 
