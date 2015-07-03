@@ -1,7 +1,7 @@
 require 'bundler/capistrano'
 require 'capistrano/maintenance'
 
-set :stages, %w(vagrant staging production)
+set :stages, %w(vagrant staging production new)
 
 if ENV['VAGRANT']
   set :default_stage, :vagrant
