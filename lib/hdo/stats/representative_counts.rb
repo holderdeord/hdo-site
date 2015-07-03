@@ -1,6 +1,31 @@
 module Hdo
   module Stats
     class RepresentativeCounts
+
+      def self.attendance_for_votes(votes, opts = {})
+        data = votes.
+          flat_map(&:vote_results).
+          group_by(&:representative).
+          inject({}) do |mem, (rep, vote_results)|
+            mem.merge(rep => new(vote_results).as_json)
+          end
+
+        if opts[:csv]
+          require 'csv'
+
+          CSV.generate(col_sep: "\t") do |csv|
+            columns = data.first.last.keys
+            csv << ['representative_name', *columns]
+
+            data.each do |rep, counts|
+              csv << [rep.name, *columns.map { |c| counts[c] }]
+            end
+          end
+        else
+          data
+        end
+      end
+
       def initialize(vote_results)
         @data = vote_results.group_by(&:result)
       end

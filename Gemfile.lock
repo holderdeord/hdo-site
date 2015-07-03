@@ -484,3 +484,6 @@ DEPENDENCIES
   workflow
   yajl-ruby
   yaml_db
+
+BUNDLED WITH
+   1.10.3
