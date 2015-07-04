@@ -7,7 +7,6 @@ services:
   - postgresql
   - elasticsearch
 notifications:
-  webhooks: http://deploy.holderdeord.no/travis
   recipients:
     - jari@holderdeord.no
   hipchat:
@@ -17,13 +16,6 @@ notifications:
     on_failure: always
   template:
     - "%{author} | %{commit} | %{message} | %{build_url}"
-  irc:
-    channels:
-      - "irc.freenode.net#holderdeord"
-    on_success: change
-    on_failure: change
-    template:
-      - "%{author} | %{commit} | %{message} | %{build_url}"
 bundler_args: --without development --path ~/.bundle
 script: "RAILS_ENV=test SPEC_OPTS=--backtrace bundle exec rake travis"
 before_script:
