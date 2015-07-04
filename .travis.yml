@@ -7,8 +7,8 @@ services:
 - postgresql
 - elasticsearch
 notifications:
-  recipients:
-  - jari@holderdeord.no
+  email:
+    - jari@holderdeord.no
   hipchat:
     rooms:
       secure: |-
@@ -17,8 +17,8 @@ notifications:
         nICGbjLhNPSDTIg1QPO/AkUCF3YG6szmd3JX9XLathUrt0HOBTY=
     on_success: always
     on_failure: always
-  template:
-  - "%{author} | %{commit} | %{message} | %{build_url}"
+    template:
+      - "%{author} | %{commit} | %{message} | %{build_url}"
 bundler_args: "--without development --path ~/.bundle"
 script: RAILS_ENV=test SPEC_OPTS=--backtrace bundle exec rake travis
 before_script:
@@ -32,11 +32,7 @@ after_success:
 - '[[ "$TRAVIS_BRANCH" = "master" ]] && bundle exec cap production deploy'
 env:
   global:
-  - secure: |-
-      PSyNsqaahsPzmTbjo+tAOZONgXDcWYomETnk+fFnqTBNFhkR9v+fAzIc2drD
-      Hn2QHd26TfmCN7YJtn7b57RwQ/TN2V4WVRI6TLC6BaIGLbj7HJpnR8rb37U9
-      xo/HYULBAK/McwnaVOS6d6EmaI+jvHNDAeUd9NfH2tVx74C2qSU=
-  - DISPLAY=:99.0
-  - COVERAGE_THRESHOLD=83
-  - RUBY_GC_MALLOC_LIMIT=50000000
-  - secure: nnTbf1vKvwZhbjyxbl5JFQhSahFlDPQDQ4MsF07YdLyxqoePUkq7TiMlq/KG+H/PBQ257PEUsCXqaiOqjqE5fXJEBMAxjiJO+H96fDvrk7ovsQTlNh7eJAGidGUDvXHKooFmRSWgODG2mA1WRaaq/HfK6PWeqeH9rbAefCpoFzc=
+    - DISPLAY=:99.0
+    - COVERAGE_THRESHOLD=83
+    - RUBY_GC_MALLOC_LIMIT=50000000
+    - secure: nnTbf1vKvwZhbjyxbl5JFQhSahFlDPQDQ4MsF07YdLyxqoePUkq7TiMlq/KG+H/PBQ257PEUsCXqaiOqjqE5fXJEBMAxjiJO+H96fDvrk7ovsQTlNh7eJAGidGUDvXHKooFmRSWgODG2mA1WRaaq/HfK6PWeqeH9rbAefCpoFzc=
