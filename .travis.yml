@@ -2,33 +2,41 @@ language: ruby
 cache: bundler
 sudo: false
 rvm:
-  - 2.0.0
+- 2.0.0
 services:
-  - postgresql
-  - elasticsearch
+- postgresql
+- elasticsearch
 notifications:
   recipients:
-    - jari@holderdeord.no
+  - jari@holderdeord.no
   hipchat:
     rooms:
-      secure: "dPDcvtGQXXzdj31ftZkRShrn+l1TCnTEPTdr6YVAfzAI1Ashzhr4yGvnNfMs\n4lbxYDJfRxpTO5Xd1Hte5HH7c0ijoHEGjajySSl43+nLeShw+CWhuxKSbmCM\nnICGbjLhNPSDTIg1QPO/AkUCF3YG6szmd3JX9XLathUrt0HOBTY="
+      secure: |-
+        dPDcvtGQXXzdj31ftZkRShrn+l1TCnTEPTdr6YVAfzAI1Ashzhr4yGvnNfMs
+        4lbxYDJfRxpTO5Xd1Hte5HH7c0ijoHEGjajySSl43+nLeShw+CWhuxKSbmCM
+        nICGbjLhNPSDTIg1QPO/AkUCF3YG6szmd3JX9XLathUrt0HOBTY=
     on_success: always
     on_failure: always
   template:
-    - "%{author} | %{commit} | %{message} | %{build_url}"
-bundler_args: --without development --path ~/.bundle
-script: "RAILS_ENV=test SPEC_OPTS=--backtrace bundle exec rake travis"
+  - "%{author} | %{commit} | %{message} | %{build_url}"
+bundler_args: "--without development --path ~/.bundle"
+script: RAILS_ENV=test SPEC_OPTS=--backtrace bundle exec rake travis
 before_script:
-  - dpkg -s elasticsearch | grep --color=never Version
-  - mv config/database.yml.travis config/database.yml
-  - sh -e /etc/init.d/xvfb start
-  - ./script/travis/npm_bootstrap.sh
+- dpkg -s elasticsearch | grep --color=never Version
+- mv config/database.yml.travis config/database.yml
+- sh -e /etc/init.d/xvfb start
+- "./script/travis/npm_bootstrap.sh"
 after_success:
-  - openssl aes-256-cbc -K $encrypted_773fd9c2aa2a_key -iv $encrypted_773fd9c2aa2a_iv -in config/deploy/deploy.enc -out config/deploy/deploy_dsa -d
-  - '[[ "$TRAVIS_BRANCH" = "master" ]] && bundle exec cap production deploy'
+- openssl aes-256-cbc -K $encrypted_773fd9c2aa2a_key -iv $encrypted_773fd9c2aa2a_iv
+  -in config/deploy/deploy.enc -out config/deploy/deploy_dsa -d
+- '[[ "$TRAVIS_BRANCH" = "master" ]] && bundle exec cap production deploy'
 env:
   global:
-    - secure: "PSyNsqaahsPzmTbjo+tAOZONgXDcWYomETnk+fFnqTBNFhkR9v+fAzIc2drD\nHn2QHd26TfmCN7YJtn7b57RwQ/TN2V4WVRI6TLC6BaIGLbj7HJpnR8rb37U9\nxo/HYULBAK/McwnaVOS6d6EmaI+jvHNDAeUd9NfH2tVx74C2qSU="
-    - DISPLAY=:99.0
-    - COVERAGE_THRESHOLD=83
-    - RUBY_GC_MALLOC_LIMIT=50000000
+  - secure: |-
+      PSyNsqaahsPzmTbjo+tAOZONgXDcWYomETnk+fFnqTBNFhkR9v+fAzIc2drD
+      Hn2QHd26TfmCN7YJtn7b57RwQ/TN2V4WVRI6TLC6BaIGLbj7HJpnR8rb37U9
+      xo/HYULBAK/McwnaVOS6d6EmaI+jvHNDAeUd9NfH2tVx74C2qSU=
+  - DISPLAY=:99.0
+  - COVERAGE_THRESHOLD=83
+  - RUBY_GC_MALLOC_LIMIT=50000000
+  - secure: nnTbf1vKvwZhbjyxbl5JFQhSahFlDPQDQ4MsF07YdLyxqoePUkq7TiMlq/KG+H/PBQ257PEUsCXqaiOqjqE5fXJEBMAxjiJO+H96fDvrk7ovsQTlNh7eJAGidGUDvXHKooFmRSWgODG2mA1WRaaq/HfK6PWeqeH9rbAefCpoFzc=
