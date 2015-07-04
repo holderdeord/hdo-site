@@ -1,3 +1,3 @@
-role :app, 'app.holderdeord.no'
-role :web, 'app.holderdeord.no'
-role :db,  'app.holderdeord.no', :primary => true
+role :app, 'hdo02.holderdeord.no'
+role :web, 'hdo02.holderdeord.no'
+role :db,  'hdo02.holderdeord.no', :primary => true
