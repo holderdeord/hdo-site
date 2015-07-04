@@ -21,6 +21,11 @@ set :deploy_via,      :remote_cache
 set :shared_children, shared_children + %w[public/uploads tmp/downloads]
 set :passenger_restart_strategy, :hard
 
+key = 'config/deploy/deploy_dsa'
+if File.exist?(key)
+    set :ssh_options, keys: [key]
+end
+
 namespace :deploy do
   task(:start) {}
   task(:stop) {}
