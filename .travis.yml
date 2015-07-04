@@ -29,7 +29,7 @@ before_script:
 after_success:
 - openssl aes-256-cbc -K $encrypted_773fd9c2aa2a_key -iv $encrypted_773fd9c2aa2a_iv
   -in config/deploy/deploy.enc -out config/deploy/deploy_dsa -d
-- '[[ "$TRAVIS_BRANCH" = "master" ]] && bundle exec cap production deploy:migrations'
+- '[[ "$TRAVIS_BRANCH" = "master" ]] && bundle exec cap -S revision="$TRAVIS_COMMIT" production deploy:migrations deploy:cleanup'
 env:
   global:
     - DISPLAY=:99.0
