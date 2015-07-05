@@ -65,7 +65,7 @@ gem 'twitter'
 # frontend stuff
 gem 'jquery-rails', '>= 3.0.4'
 gem 'jquery-tablesorter', ">= 1.5.0"
-gem 'redcarpet'
+gem 'redcarpet', ">= 3.3.2"
 
 # authentication
 gem 'devise', "~> 2.2.5"
