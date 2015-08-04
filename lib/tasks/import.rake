@@ -71,6 +71,6 @@ namespace :import do
 
   desc 'Import a DB dump from production (assumes SSH access)'
   task :dump do
-    sh "ssh hdo@app.holderdeord.no 'pg_dump --clean hdo_production | gzip' | gunzip | psql hdo_development"
+    sh "ssh hdo@hdo02.holderdeord.no 'pg_dump --clean hdo_production | gzip' | gunzip | psql hdo_development"
   end
 end
