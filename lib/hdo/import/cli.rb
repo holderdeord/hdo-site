@@ -40,6 +40,8 @@ module Hdo
           import_parliament_issues
         when 'representative-emails'
           import_representative_emails
+        when 'wikidata'
+          import_wikidata
         else
           raise ArgumentError, "unknown command: #{@cmd.inspect}"
         end
@@ -80,6 +82,8 @@ module Hdo
           persister.import_parliament_issue parliament_issue, parliament_issue_details
           persister.import_votes votes, infer: false
         end
+
+        import_wikidata
 
         persister.infer_current_session
         notify_new_votes if Rails.env.production?
@@ -154,6 +158,11 @@ module Hdo
 
         promises = Hdo::StortingImporter::Promise.from_xlsx(spreadsheet)
         persister.import_promises promises
+      end
+
+      def import_wikidata
+        key = ENV['MORPH_IO_API_KEY'] || return
+        Wikidata.new(api_key: key, log: log).import
       end
 
       def each_parliament_issue(parliament_issues, limit = nil)
