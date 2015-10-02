@@ -332,7 +332,7 @@ module Hdo
       end
 
       def parse_options(args)
-        options = {:period => '2013-2017', :session => '2014-2015'}
+        options = {:period => '2013-2017', :session => '2015-2016'}
 
         OptionParser.new { |opt|
           opt.on("-s", "--quiet") { @options[:quiet] = true }
