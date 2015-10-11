@@ -55,7 +55,7 @@ Hdo::Application.configure do
 
   config.action_mailer.raise_delivery_errors = true
   config.action_mailer.delivery_method     = :smtp
-  config.action_mailer.smtp_settings       = { :address => "post.holderdeord.no", :port => 25 }
+  config.action_mailer.smtp_settings       = { :address => "localhost", :port => 25 }
 
   config.action_mailer.default_url_options = { host: 'www.holderdeord.no', protocol: 'https' }
   config.representer.default_url_options   = { host: 'www.holderdeord.no', protocol: 'https' }
