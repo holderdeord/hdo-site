@@ -6,6 +6,7 @@ module Api
     property :attending
     property :date_of_birth
     property :date_of_death
+    property :email
     property :twitter_id, as: :twitter
 
     link :self do
