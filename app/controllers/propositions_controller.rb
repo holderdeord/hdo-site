@@ -18,7 +18,14 @@ class PropositionsController < ApplicationController
   end
 
   def autotitle
-    @propositions = Proposition.includes(:votes).where('simple_description is not null').vote_ordered.limit(500)
+    @propositions = case params[:type]
+      when 'latest', nil
+        Proposition.includes(:votes).where('simple_description is not null').vote_ordered.limit(500)
+      when 'random'
+        Proposition.includes(:votes).order('random()').limit(500)
+      else
+        []
+      end
   end
 
   def show
