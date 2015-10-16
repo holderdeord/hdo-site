@@ -206,6 +206,10 @@ class Representative < ActiveRecord::Base
     "https://twitter.com/#{twitter_id}" if twitter_id
   end
 
+  def wikidata_url
+    "https://www.wikidata.org/wiki/Special:EntityData/#{wikidata_id}.json" if wikidata_id
+  end
+
   def stats
     Hdo::Stats::RepresentativeCounts.new self.vote_results
   end

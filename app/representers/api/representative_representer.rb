@@ -8,6 +8,7 @@ module Api
     property :date_of_death
     property :email
     property :twitter_id, as: :twitter
+    property :wikidata_id, as: :wikidata
 
     link :self do
       api_representative_url represented
@@ -38,6 +39,14 @@ module Api
         href: represented.twitter_url,
         type: 'text/html'
       } if represented.twitter_id
+    end
+
+    link :wikidata do
+      {
+        href: represented.wikidata_url,
+        type: 'application/json'
+      } if represented.wikidata_url
+
     end
   end
 end
