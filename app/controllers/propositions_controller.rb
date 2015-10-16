@@ -17,6 +17,10 @@ class PropositionsController < ApplicationController
     end
   end
 
+  def autotitle
+    @propositions = Proposition.includes(:votes).where('simple_description is not null').vote_ordered.limit(500)
+  end
+
   def show
     @parliament_issues = @proposition.parliament_issues
     @proposition = @proposition.decorate
@@ -26,8 +30,9 @@ class PropositionsController < ApplicationController
 
   def fetch_proposition
     @proposition = Proposition.includes(
-      :votes => :parliament_issues, 
+      :votes => :parliament_issues,
       :proposition_endorsements => :proposer
     ).find(params[:id])
   end
+
 end

@@ -64,6 +64,22 @@ class Proposition < ActiveRecord::Base
     Nokogiri::HTML.parse(body).xpath('//text()').map { |e| e.text.strip }.join(' ')
   end
 
+  TITLE_RULES = {
+    /^Stortinget ber regjeringen/ => 'Be regjeringen',
+    /^Stortinget samtykker i/ => 'Samtykke i',
+    /^.+? – (.+?) – vedlegges protokollen/ => 'Legge \\1 ved protokollen'
+  }
+
+  def auto_title
+    title = plain_body.split(/(?<!Meld|Prop|Kap|jf|St|\d)[.:]( |$)/).first
+
+    TITLE_RULES.each do |rx, replacement|
+      title.sub!(rx, replacement)
+    end
+
+    title.ends_with?(".") ? title : "#{title}."
+  end
+
   def vote_time
     @vote_time ||= votes.first.try(:time)
   end

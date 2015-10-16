@@ -165,7 +165,11 @@ Hdo::Application.routes.draw do
   # propositions
   #
 
-  resources :propositions, only: [:index, :show]
+  resources :propositions, only: [:index, :show] do
+    collection do
+      get 'autotitle' => 'propositions#autotitle'
+    end
+  end
 
   #
   # votes

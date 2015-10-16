@@ -215,6 +215,8 @@ class Representative < ActiveRecord::Base
   end
 
   def as_indexed_json(options = nil)
+    # TODO: decompose and index wikidata?
+
     as_json include: [:district],
             methods: [:latest_party, :full_name],
             only: [:slug, :last_name, :first_name, :twitter_id, :attending]
