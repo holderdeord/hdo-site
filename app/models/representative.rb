@@ -69,6 +69,7 @@ class Representative < ActiveRecord::Base
   scope :attending,              -> { where(attending: true) }
   scope :with_email,             -> { where('email IS NOT NULL') }
   scope :with_twitter,           -> { where('twitter_id IS NOT NULL') }
+  scope :without_twitter,        -> { where('twitter_id IS NULL') }
   scope :potentially_askable,    -> { attending.with_email }
   scope :askable,                -> { potentially_askable.where('opted_out IS NULL or opted_out IS FALSE') }
   scope :opted_out,              -> { potentially_askable.where('opted_out IS TRUE') }

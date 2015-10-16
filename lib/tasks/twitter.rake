@@ -33,23 +33,39 @@ namespace :twitter do
 
     desc "Add all DB reps to our public 'Politikere på Twitter' list"
     task :sync => :environment do
-      begin
-        client = Hdo::Utils::TwitterClients.hdo
-        Representative.with_twitter.pluck(:twitter_id).each_slice(50) do |slice|
-          puts slice.size
-          client.add_list_members('holderdeord', 'politikere-på-twitter', slice)
-        end
-      rescue Twitter::Error::ServiceUnavailable => ex
-        # binding.pry
-        raise
+      client = Hdo::Utils::TwitterClients.hdo
+      Representative.with_twitter.pluck(:twitter_id).each_slice(50) do |slice|
+        puts slice.size
+        client.add_list_members('holderdeord', 'politikere-på-twitter', slice)
       end
     end
 
     desc "Print representatives who are not on Twitter"
     task :missing => :environment do
-      Representative.where("twitter_id IS NULL").each do |r|
-        puts "#{r.slug}: #{r.full_name} #{r.latest_party.external_id}"
+      reps = Representative.without_twitter
+
+      if ENV['CSV'] || ENV['csv']
+        require 'csv'
+
+        STDOUT << CSV.generate(col_sep: "\t") do |csv|
+          csv << ['status', 'slug', 'name', 'party', 'twitter_id']
+
+          reps.each do |r|
+            csv << [
+              r.attending? ? 'møtende' : '',
+              r.slug,
+              r.name,
+              r.latest_party.name,
+              r.twitter_id
+            ]
+          end
+        end
+      else
+        reps.each do |r|
+          puts "#{r.slug}: #{r.full_name} #{r.latest_party.external_id}"
+        end
       end
+
     end
 
   end
