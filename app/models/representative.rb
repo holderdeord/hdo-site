@@ -76,6 +76,10 @@ class Representative < ActiveRecord::Base
 
   friendly_id :external_id, use: :slugged
 
+  def year_of_birth
+    date_of_birth.localtime.year
+  end
+
   def unconfirmed_email
     email unless confirmed?
   end
