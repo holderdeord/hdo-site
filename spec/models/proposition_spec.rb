@@ -130,4 +130,65 @@ describe Proposition do
     prop.parliament_issue_document_group_names.should == ['Foo']
     prop.parliament_issue_type_names.should == ['Bar']
   end
+
+  context "auto title" do
+    def auto_title_for(str)
+      Proposition.make(body: str).auto_title
+    end
+
+    it 'handles "Stortinget ber regjeringen"' do
+      auto_title_for(
+        "Stortinget ber regjeringen legge fram forslag."
+      ).should == "Be regjeringen legge fram forslag."
+    end
+
+    it 'handles "Stortinget ber Regjeringen"' do
+      auto_title_for(
+        "Stortinget ber Regjeringen legge fram forslag."
+      ).should == "Be Regjeringen legge fram forslag."
+    end
+
+    it 'handles "Stortinget ber regjeringa"' do
+      auto_title_for(
+        "Stortinget ber regjeringa legge fram forslag."
+      ).should == "Be regjeringa legge fram forslag."
+    end
+
+    it 'handles "vedlegges protokollen"' do
+      auto_title_for(
+        "Dokument 8:55 S (2013–2014) – representantforslag fra stortingsrepresentantene Eva Kristin Hansen, Trond Giske og Dag Terje Andersen om å tillate bruk av blyhagl utenfor våtmarksområder og skytebaner – vedlegges protokollen."
+      ).should == "Legge representantforslag fra stortingsrepresentantene Eva Kristin Hansen, Trond Giske og Dag Terje Andersen om å tillate bruk av blyhagl utenfor våtmarksområder og skytebaner ved protokollen."
+    end
+
+    it 'handles "vedlegges protokollen" with newlines' do
+      auto_title_for(
+        "Dokument 8:139 S (2010–2011) – representantforslag\nfra stortingsrepresentantene Trine Skei Grande og Borghild Tenden\nom å nedsette et offentlig utvalg som skal følge opp Ansvarsreformen\nfor å bedre livssituasjonen til psykisk utviklingshemmede – vedlegges\nprotokollen."
+      ).should == "Legge representantforslag fra stortingsrepresentantene Trine Skei Grande og Borghild Tenden om å nedsette et offentlig utvalg som skal følge opp Ansvarsreformen for å bedre livssituasjonen til psykisk utviklingshemmede ved protokollen."
+    end
+
+
+    it 'handles "vedlegges protokollen" with long dash delimiters' do
+      auto_title_for(
+        "Meld. St. 6 (2012–2013) – om en helhetlig integreringspolitikk – mangfold og fellesskap – vedlegges protokollen."
+      )
+    end
+
+    it "handles middle name shorthand" do
+      auto_title_for(
+        "Dokument 12:30 (2011–2012) – grunnlovsforslag fra Per-Kristian Foss, Martin Kolberg, Marit Nybakk, Jette F. Christensen, Anders Anundsen, Hallgeir H. Langeland, Per Olaf Lundteigen, Geir Jørgen Bekkevold og Trine Skei Grande, romertall XXIV (domstolenes prøvingsrett), samtlige alternativer – bifalles ikke."
+      ).should == "Ikke bifalle grunnlovsforslag fra Per-Kristian Foss, Martin Kolberg, Marit Nybakk, Jette F. Christensen, Anders Anundsen, Hallgeir H. Langeland, Per Olaf Lundteigen, Geir Jørgen Bekkevold og Trine Skei Grande, romertall XXIV (domstolenes prøvingsrett), samtlige alternativer."
+    end
+
+    it 'handles "vert vedlagt protokollen"' do
+      auto_title_for(
+        "Dokument 8:25 S (2012–2013) – Innstilling frå finanskomiteen om representantforslag fra stortingsrepresentantene Ketil Solvik-Olsen, Christian Tybring-Gjedde, Anders Anundsen, Kenneth Svendsen og Jørund Rytman om bedret saksgang ved skatteklager – vert vedlagt protokollen."
+      ).should == "Legge innstilling frå finanskomiteen om representantforslag fra stortingsrepresentantene Ketil Solvik-Olsen, Christian Tybring-Gjedde, Anders Anundsen, Kenneth Svendsen og Jørund Rytman om bedret saksgang ved skatteklager ved protokollen."
+    end
+
+    it 'removes quote marks' do
+      auto_title_for(
+        "«Stortinget ber regjeringen fremme forslag til et revidert takstsystem for fastlegeordningen som belønner tidsbruk for behandling og oppfølging på laveste nivå (primærhelsetjenesten).»"
+      ).should == "Be regjeringen fremme forslag til et revidert takstsystem for fastlegeordningen som belønner tidsbruk for behandling og oppfølging på laveste nivå (primærhelsetjenesten)."
+    end
+  end
 end

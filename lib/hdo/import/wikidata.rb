@@ -1,4 +1,3 @@
-require 'open-uri'
 require 'json'
 require 'hashie/mash'
 require 'logger'
@@ -13,13 +12,24 @@ module Hdo
         @log = opts[:log] || Logger.new(STDOUT)
       end
 
+      def decompose(representative)
+        # TODO: fetch decompose claims
+        data = JSON.parse(Typhoeus.get(representative.wikidata_url).body)
+
+
+      end
+
       def data
         @data ||= (
-          res = open(
+          res = Typhoeus.get(
             "https://api.morph.io/tmtmtmtm/norway-stortingsrepresentanter-wikidata/data.json?key=#{@api_key}&query=select%20*%20from%20data"
-          ).read
+          )
 
-          JSON.parse(res).map { |e| Hashie::Mash.new(e) }.group_by { |e| e.name.split(' ').last }
+          if res.success?
+            JSON.parse(res.body).map { |e| Hashie::Mash.new(e) }.group_by { |e| e.name.split(' ').last }
+          else
+            raise "unable to fetch wikidata representatives: #{res.code} #{res.body}"
+          end
         )
       end
 

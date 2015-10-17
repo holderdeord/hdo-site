@@ -65,19 +65,40 @@ class Proposition < ActiveRecord::Base
   end
 
   TITLE_RULES = {
-    /^Stortinget ber regjeringen/ => 'Be regjeringen',
+    /^«(.+?)»$/ => '\\1',
+    /^Stortinget ber (regjeringen|regjeringa)/i => 'Be \\1',
     /^Stortinget samtykker i/ => 'Samtykke i',
-    /^.+? – (.+?) – vedlegges protokollen/ => 'Legge \\1 ved protokollen'
   }
 
   def auto_title
-    title = plain_body.split(/(?<!Meld|Prop|Kap|jf|St|\d)[.:]( |$)/).first
+    title = plain_body.gsub("\n", " ")
 
     TITLE_RULES.each do |rx, replacement|
       title.sub!(rx, replacement)
     end
 
-    title.ends_with?(".") ? title : "#{title}."
+    title.sub!(/^.+? [––] (.+?) [––] (vedlegges protokollen|vert vedlagt protokollen|bifalles ikke|vedtas ikke)/) { |e|
+      desc = $1
+      action = $2
+
+      desc_words = desc.split(" ")
+      new_desc = "#{UnicodeUtils.downcase(desc_words[0])} #{desc_words[1..-1].join(" ")}"
+
+      case action
+      when 'bifalles ikke'
+        "Ikke bifalle #{new_desc}"
+      when 'vedtas ikke'
+        "Ikke vedta #{new_desc}"
+      else
+        "Legge #{new_desc} ved protokollen"
+      end
+    }
+
+    title = title.split(/(?<!Meld|Prop|Kap|jf|nr|St|\b[A-Z]|\d)[.:]( |$)/).first
+
+    title = "#{title}." unless title.ends_with?(".")
+
+    "#{UnicodeUtils.upcase title[0]}#{title[1..-1]}"
   end
 
   def vote_time

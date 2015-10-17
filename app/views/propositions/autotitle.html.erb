@@ -1,7 +1,7 @@
 <% @propositions.each do |prop| %>
   <div class="row-fluid">
     <h3>
-      <%= link_to prop.description %>
+      <%= link_to prop.description, prop %>
       <small class="pull-right muted"><%= I18n.l prop.vote_time, format: :short_text_time %></small>
     </h3>
   </div>
