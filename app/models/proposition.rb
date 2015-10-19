@@ -66,7 +66,7 @@ class Proposition < ActiveRecord::Base
 
   TITLE_RULES = {
     /^«(.+?)»$/ => '\\1',
-    /^Stortinget ber (regjeringen|regjeringa)/i => 'Be \\1',
+    /^Stortinget (ber|anmoder) (regjeringen|regjeringa|stortingets presidentskap)( om å)?/i => '',
     /^Stortinget samtykker i/ => 'Samtykke i',
   }
 
@@ -77,7 +77,7 @@ class Proposition < ActiveRecord::Base
       title.sub!(rx, replacement)
     end
 
-    title.sub!(/^.+? [––] (.+?) [––] (vedlegges protokollen|vert vedlagt protokollen|bifalles ikke|vedtas ikke)/) { |e|
+    title.sub!(/^.+? [–] (.+?) [–] (vedlegges protokollen|vert vedlagt protokollen|bifalles ikke|vedtas ikke)/) { |e|
       desc = $1
       action = $2
 
@@ -94,9 +94,10 @@ class Proposition < ActiveRecord::Base
       end
     }
 
-    title = title.split(/(?<!Meld|Prop|Kap|jf|nr|St|\b[A-Z]|\d)[.:]( |$)/).first
-
+    title = title.split(/(?<!Meld|Prop|Kap|jf|nr|mill|St|\b[A-Z]|\d)[.:]( |$)/).first
     title = "#{title}." unless title.ends_with?(".")
+
+    title.strip!
 
     "#{UnicodeUtils.upcase title[0]}#{title[1..-1]}"
   end

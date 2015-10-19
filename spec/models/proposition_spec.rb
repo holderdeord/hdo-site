@@ -139,19 +139,25 @@ describe Proposition do
     it 'handles "Stortinget ber regjeringen"' do
       auto_title_for(
         "Stortinget ber regjeringen legge fram forslag."
-      ).should == "Be regjeringen legge fram forslag."
+      ).should == "Legge fram forslag."
     end
 
     it 'handles "Stortinget ber Regjeringen"' do
       auto_title_for(
         "Stortinget ber Regjeringen legge fram forslag."
-      ).should == "Be Regjeringen legge fram forslag."
+      ).should == "Legge fram forslag."
     end
 
     it 'handles "Stortinget ber regjeringa"' do
       auto_title_for(
         "Stortinget ber regjeringa legge fram forslag."
-      ).should == "Be regjeringa legge fram forslag."
+      ).should == "Legge fram forslag."
+    end
+
+    it 'handles "Stortinget anmoder Stortingets presidentskap om å"' do
+      auto_title_for(
+        "Stortinget anmoder Stortingets presidentskap om å legge fram forslag."
+      ).should == "Legge fram forslag."
     end
 
     it 'handles "vedlegges protokollen"' do
@@ -188,7 +194,7 @@ describe Proposition do
     it 'removes quote marks' do
       auto_title_for(
         "«Stortinget ber regjeringen fremme forslag til et revidert takstsystem for fastlegeordningen som belønner tidsbruk for behandling og oppfølging på laveste nivå (primærhelsetjenesten).»"
-      ).should == "Be regjeringen fremme forslag til et revidert takstsystem for fastlegeordningen som belønner tidsbruk for behandling og oppfølging på laveste nivå (primærhelsetjenesten)."
+      ).should == "Fremme forslag til et revidert takstsystem for fastlegeordningen som belønner tidsbruk for behandling og oppfølging på laveste nivå (primærhelsetjenesten)."
     end
   end
 end
