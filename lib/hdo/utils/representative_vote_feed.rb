@@ -10,7 +10,7 @@ module Hdo
 
       def entries
         entries = vote_results.flat_map do |result|
-          propositions = result.vote.propositions.select { |prop| prop.published? && prop.interesting? }
+          propositions = result.vote.propositions.select(&:interesting?)
           propositions.map { |proposition| Entry.new(result, proposition) }
         end
 
@@ -24,7 +24,6 @@ module Hdo
 
       def vote_results
         vote_results = @representative.vote_results.includes(:vote => {:propositions => :issues}).
-                                       where('propositions.status' => 'published').
                                        where('result != 0').
                                        order('votes.time desc').
                                        uniq
@@ -47,12 +46,7 @@ module Hdo
         end
 
         def description
-          @description ||= (
-            desc = proposition.simple_description
-            desc = "#{UnicodeUtils.downcase desc[0]}#{desc[1..-1]}" unless desc.empty?
-
-            desc
-          )
+          @description ||= proposition.simple_description || proposition.auto_title
         end
       end # Entry
     end # RepresentativeVoteFeed

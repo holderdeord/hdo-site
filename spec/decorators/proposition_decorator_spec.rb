@@ -8,8 +8,10 @@ describe PropositionDecorator do
   let(:decorator) { proposition.decorate }
 
   it 'has a title' do
+    proposition.body = "Stortinget ber regjeringen å hjelpe."
     proposition.description = 'foo'
-    decorator.title.should == 'Foo'
+
+    decorator.title.should == 'Å hjelpe.'
 
     proposition.simple_description = 'æåø'
     decorator.title.should == 'Æåø'
@@ -17,6 +19,7 @@ describe PropositionDecorator do
 
   it 'handles an empty description' do
     proposition.description = ''
+    proposition.body = ''
     decorator.title.should == ''
   end
 

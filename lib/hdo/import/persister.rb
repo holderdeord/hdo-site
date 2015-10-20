@@ -142,7 +142,7 @@ module Hdo
       end
 
       def import_parliament_issue(issue, details)
-        transaction { 
+        transaction {
           log_import issue
           issue.validate!
 
@@ -305,6 +305,14 @@ module Hdo
           prop.add_proposer(rep) unless prop.proposers.include?(rep)
         end
 
+        prop.source_guess.each do |xid|
+          party = Party.find(xid)
+
+          unless prop.proposers.include?(party)
+            endorsement = prop.add_proposer(party, inferred: true)
+          end
+        end
+
         prop
       end
 
@@ -391,7 +399,7 @@ module Hdo
         Representative.find_by_external_id(xrep.external_id) || import_representative(xrep)
       end
 
-      def find_or_create_link(xlink) 
+      def find_or_create_link(xlink)
         link = Link.where(href: xlink.fetch('url')).first
 
         link ||= Link.create!(

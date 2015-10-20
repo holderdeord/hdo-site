@@ -8,7 +8,7 @@ module Hdo
         include_context :persister
 
         def setup_proposition(prop)
-          rep = prop.delivered_by
+          rep = prop.delivered_by || return
           rep.parties.each { |p| Party.make!(external_id: p.external_id) }
           rep.committees.each { |c| Committee.make!(external_id: c.external_id) }
           District.make!(name: rep.district)
@@ -23,6 +23,21 @@ module Hdo
 
           prop = Proposition.first
           prop.proposers.first.should be_kind_of(Representative)
+        end
+
+        it 'imports a proposition' do
+          example = StortingImporter::Proposition.example(delivered_by: nil)
+          setup_proposition example
+
+          krf = Party.make!(external_id: 'KRF')
+          example.delivered_by = nil
+          example.description = 'Forslag fra KrF';
+
+          persister.import_propositions [example]
+          Proposition.count.should == 1
+
+          prop = Proposition.first
+          prop.proposers.first.should == krf
         end
 
         # https://github.com/holderdeord/hdo-site/issues/138

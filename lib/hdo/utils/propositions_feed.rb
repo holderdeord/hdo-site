@@ -6,7 +6,7 @@ module Hdo
 
       def self.for_model(model, opts = {})
         propositions = model.propositions.includes(:votes, :proposition_endorsements => :proposer)
-        propositions = propositions.published.order('created_at DESC').first(opts.delete(:count) || 10)
+        propositions = propositions.order('created_at DESC').first(opts.delete(:count) || 10)
 
         new(propositions, opts)
       end
@@ -46,7 +46,7 @@ module Hdo
       end
 
       def show_proposers?
-        @show_proposers  
+        @show_proposers
       end
 
     end

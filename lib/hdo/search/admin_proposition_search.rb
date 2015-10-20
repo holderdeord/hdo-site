@@ -12,10 +12,6 @@ module Hdo
         set_next_and_prev_for(current_id) if current_id
       end
 
-      def stats
-        Hdo::Stats::PropositionCounts.new @response.response['facets']
-      end
-
       def results
         @response.results
       end

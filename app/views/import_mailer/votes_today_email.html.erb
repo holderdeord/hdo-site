@@ -2,13 +2,17 @@
 
 <ul>
   <% @parliament_issues.each do |pi| %>
-    <li><%= link_to pi.summary, parliament_issue_url(pi) %></li>
+    <li>
+      <h4><%= link_to pi.summary, parliament_issue_url(pi) %></h4>
+
+      <ul>
+        <% pi.votes.select { |v| v.created_at >= 1.day.ago }.flat_map(&:propositions).each do |prop| %>
+          <li><%= link_to prop.auto_title, admin_proposition_url(prop) %></li>
+        <% end %>
+      </ul>
+    </li>
   <% end %>
 </ul>
-
-<strong>
-  <%= @proposition_counts.pending %> av <%= @proposition_counts.total %> forslag venter på publisering.
-</strong>
 
 <% if @rebel_tweets.any? %>
   <h3>Tweets fra <a href="https://twitter.com/partipisken">@partipisken</a> i morgen</h3>

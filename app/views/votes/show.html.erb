@@ -83,8 +83,8 @@
               <%= '(utbryter)' if result.rebel? %>
             </div>
           <% end %>
-        <% end %>  
-      </div>      
+        <% end %>
+      </div>
 
       <hr class="small">
     <% end %>
@@ -156,7 +156,7 @@
   <% if @vote.propositions.any? %>
     <% @vote.propositions.each do |prop| %>
       <div class="row-fluid">
-        <h4><%= link_to prop.simple_description || prop.description, proposition_path(prop)  %></h4>
+        <h4><%= link_to prop.simple_description || prop.auto_title, proposition_path(prop)  %></h4>
 
         <blockquote>
           <%= (prop.simple_body ? markdown(prop.simple_body) : prop.body).html_safe %>

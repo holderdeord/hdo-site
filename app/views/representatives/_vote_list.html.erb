@@ -3,7 +3,8 @@
 <h4><%= @representative.first_name %> har nylig stemt</h4>
   <% @vote_feed.entries.each do |entry| %>
     <div class="row-fluid proposition">
-      <strong><%= entry.position %></strong> å <%= link_to entry.description, entry.proposition, class: 'proposition-title' %>
+      <strong><%= entry.position %></strong>: <%= link_to entry.description, entry.proposition, class: 'proposition-title' %>
+
       <% if entry.issues.any? %>
         <small class="pull-right">Se også <%= entry.issues.map { |i| link_to i.title, i }.to_sentence.html_safe %></small>
       <% end %>

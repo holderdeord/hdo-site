@@ -31,21 +31,6 @@
     </div>
   </div>
 
-  <h3>Innkommende forslag</h3>
-  <div class="row-fluid">
-    <% @proposition_stats.each do |session, stats| %>
-      <div class="span6">
-        <h4 style="text-align: center"><%= link_to session.name, admin_propositions_path(parliament_session_name: session.name) %></h4>
-        <canvas class="percentage-chart hidden-phone" data-json='<%= percentage_chart_json_for(stats.published_percentage, stats.pending_percentage) %>'></canvas>
-
-        <div style="text-align: center">
-          <div class="hdo-primary-text"><%= stats.published %> publiserte</div>
-          <div class="hdo-secondary-text"><%= stats.pending %> nye</div>
-        </div>
-      </div>
-    <% end %>
-  </div>
-
   <div class="row-fluid">
     <h3>Aktivitet på Stortinget, siste 6 måneder</h3>
     <canvas class="line-chart" data-json='<%= @proposition_histogram.to_json.html_safe %>'></canvas>

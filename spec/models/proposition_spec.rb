@@ -37,42 +37,11 @@ describe Proposition do
     plain.should == 'foo'
   end
 
-  it 'has a default pending status' do
-    prop = Proposition.new
-    prop.status.should == 'pending'
-    prop.should be_pending
-  end
-
-  it 'can have "published" status' do
-    prop = Proposition.make(status: 'published', simple_description: 'foo')
-    prop.status.should == 'published'
-    prop.should be_published
-  end
-
-  it 'can not have "published" status without a simple description' do
-    prop = Proposition.make(status: 'published')
-    prop.should_not be_valid
-
-    prop.simple_description = 'foo'
-    prop.should be_valid
-  end
-
-  it 'validates status' do
-    Proposition.make(status: 'foo').should_not be_valid
-  end
-
   it 'has a parliament session' do
     prop = Proposition.make(votes: [Vote.make(time: Time.now)])
 
     prop.parliament_session.should == @parliament_session
     prop.parliament_session_name.should == "#{@start.year}-#{@finish.year}"
-  end
-
-  it 'has a published scope' do
-    published = Proposition.make!(status: 'published', simple_description: 'foo')
-    _         = Proposition.make!(status: 'pending')
-
-    Proposition.published.should == [published]
   end
 
   it 'can not have an empty simple description or body' do

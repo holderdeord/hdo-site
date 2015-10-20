@@ -1,5 +1,5 @@
 class PropositionEndorsement < ActiveRecord::Base
-  attr_accessible :proposer, :proposition
+  attr_accessible :proposer, :proposition, :inferred
 
   belongs_to :proposer, polymorphic: true
   belongs_to :proposition

@@ -1,19 +1,17 @@
 class Admin::PropositionsController < AdminController
   before_filter :fetch_proposition, except: [:index]
 
-  SEARCH_PARAMS = [:status, :parliament_session_name, :q, :page]
+  SEARCH_PARAMS = [:parliament_session_name, :q, :page]
 
   def index
     session[:admin_proposition_search] = params.reverse_merge(parliament_session_name: ParliamentSession.current.name).slice(*SEARCH_PARAMS)
 
     @search       = Hdo::Search::AdminPropositionSearch.new(search_session)
-    @stats        = @search.stats
     @propositions = @search.results
   end
 
   def edit
     @search               = Hdo::Search::AdminPropositionSearch.new(search_session, @proposition.id)
-    @stats                = @search.stats
     @parliament_issues    = @proposition.parliament_issues
     @related_propositions = PropositionDecorator.decorate_collection(@proposition.related_propositions)
   end
@@ -21,20 +19,14 @@ class Admin::PropositionsController < AdminController
   def update
     update_issues || return
 
-    if params[:save_publish] || params[:save_publish_next]
-      params[:proposition][:status] = 'published'
-    end
-
     if @proposition.update_attributes(normalize_blanks(params[:proposition]))
       update_proposers
       Proposition.__elasticsearch__.refresh_index!
 
-      if params[:save_publish]
-        redirect_to admin_propositions_path(status: 'published'), notice: t('app.updated.proposition')
-      elsif params[:save_publish_next]
+      if params[:save_next]
         path      = params[:next] ? edit_admin_proposition_path(params[:next]) : admin_propositions_path
         redirect_to path, notice: t('app.updated.proposition')
-      elsif params[:save]
+      else
         redirect_to edit_admin_proposition_path(@proposition), notice: t('app.updated.proposition')
       end
     else

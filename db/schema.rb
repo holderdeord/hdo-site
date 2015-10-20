@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150809192314) do
+ActiveRecord::Schema.define(:version => 20151020214958) do
 
   create_table "answers", :force => true do |t|
     t.text     "body",                                     :null => false
@@ -289,6 +289,7 @@ ActiveRecord::Schema.define(:version => 20150809192314) do
     t.integer "proposition_id"
     t.integer "proposer_id"
     t.string  "proposer_type"
+    t.boolean "inferred",       :default => false
   end
 
   create_table "propositions", :force => true do |t|
@@ -296,16 +297,13 @@ ActiveRecord::Schema.define(:version => 20150809192314) do
     t.string   "description"
     t.text     "body"
     t.string   "on_behalf_of"
-    t.datetime "created_at",                                :null => false
-    t.datetime "updated_at",                                :null => false
-    t.string   "status",             :default => "pending"
+    t.datetime "created_at",                            :null => false
+    t.datetime "updated_at",                            :null => false
     t.string   "simple_description"
     t.text     "simple_body"
     t.boolean  "interesting",        :default => true
     t.boolean  "starred",            :default => false
   end
-
-  add_index "propositions", ["status"], :name => "index_propositions_on_status"
 
   create_table "propositions_votes", :id => false, :force => true do |t|
     t.integer "proposition_id"

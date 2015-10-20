@@ -1,7 +1,5 @@
 <% page_title "Forslag #{@proposition.id} - Forslagsvask - Admin - #{t('app.title')}" %>
 
-<%= render 'progress_bar' %>
-
 <style>
   .proposition-edit .row-fluid {
     margin-bottom: 20px;
@@ -27,14 +25,6 @@
     </div>
 
     <div class="row-fluid">
-      <div class="span2" style="text-align: right"><strong>Status</strong></div>
-      <div class="alert alert-small <%= @proposition.status == 'published' ? 'alert-success' : 'alert-info' %> span10">
-        <%= t("app.propositions.status.#{@proposition.status}", count: 1) %>
-      </div>
-
-    </div>
-
-    <div class="row-fluid">
       <strong class="span2 rightify">Dato</strong>
       <div class="span4"><%= l @proposition.vote_time.localtime, format: :text_time %></div>
     </div>
@@ -42,7 +32,7 @@
     <div class="row-fluid">
       <strong class="span2 rightify">Forslagstittel</strong>
       <div class="span4"><%= @proposition.description %></div>
-      <div class="span6"><%= f.text_area :simple_description, style: 'width: 100%', autofocus: true, rows: 2 %></div>
+      <div class="span6"><%= f.text_area :simple_description, style: 'width: 100%', autofocus: true, rows: 2, placeholder: @proposition.auto_title %></div>
     </div>
 
     <div class="row-fluid" data-wmd-editor="<%= @proposition.id %>">
@@ -152,11 +142,10 @@
     <div class="row-fluid">
       <div class="span6 offset6">
         <%= f.submit 'Lagre', name: 'save', class: 'btn' %>
-        <%= f.submit 'Lagre og publiser', name: 'save_publish', class: 'btn' %>
 
         <% if @search.next %>
           <input type="hidden" name="next" value="<%= @search.next %>">
-          <%= f.submit 'Lagre, publiser, gå til neste', name: 'save_publish_next', class: 'btn btn-primary' %>
+          <%= f.submit 'Lagre og gå til neste', name: 'save_next', class: 'btn btn-primary' %>
         <% end %>
       </div>
     </div>

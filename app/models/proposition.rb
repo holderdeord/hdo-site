@@ -9,7 +9,6 @@ class Proposition < ActiveRecord::Base
       indexes :simple_body,                           type: :string, analyzer: SearchSettings.default_analyzer
       indexes :on_behalf_of,                          type: :string
       indexes :vote_time,                             type: :date
-      indexes :status,                                type: :string,  index: :not_analyzed
       indexes :parliament_session_name,               type: :string,  index: :not_analyzed
       indexes :id,                                    type: :integer, index: :not_analyzed
       indexes :interesting,                           type: :boolean
@@ -39,7 +38,7 @@ class Proposition < ActiveRecord::Base
   update_index_on_change_of :proposition_connections
 
   attr_accessible :description, :on_behalf_of, :body, :representative_id,
-                  :simple_description, :simple_body, :status,
+                  :simple_description, :simple_body,
                   :interesting, :starred
 
   has_and_belongs_to_many :votes, uniq: true
@@ -49,14 +48,11 @@ class Proposition < ActiveRecord::Base
   has_many :proposition_endorsements, dependent: :destroy
 
   validates :body, presence: true
-  validates :status, presence: true, inclusion: {in: %w[pending published]}
-  validates :simple_description, presence: true, if: :published?
   validates :simple_description, length: {minimum: 1, maximum: 255}, allow_nil: true
   validates :simple_body, length: {minimum: 1}, allow_nil: true
 
   validates_uniqueness_of :external_id, allow_nil: true # https://github.com/holderdeord/hdo-site/issues/138
 
-  scope :published,    -> { where(status: 'published') }
   scope :interesting,  -> { where(interesting: true) }
   scope :vote_ordered, -> { includes(:votes).order('votes.time DESC') }
 
@@ -95,11 +91,14 @@ class Proposition < ActiveRecord::Base
     }
 
     title = title.split(/(?<!Meld|Prop|Kap|jf|nr|mill|St|\b[A-Z]|\d)[.:]( |$)/).first
-    title = "#{title}." unless title.ends_with?(".")
 
-    title.strip!
-
-    "#{UnicodeUtils.upcase title[0]}#{title[1..-1]}"
+    if title
+      title = "#{title}." unless title.ends_with?(".")
+      title.strip!
+      "#{UnicodeUtils.upcase title[0]}#{title[1..-1]}"
+    else
+      ''
+    end
   end
 
   def vote_time
@@ -114,20 +113,12 @@ class Proposition < ActiveRecord::Base
     parliament_session.try(:name)
   end
 
-  def pending?
-    status == 'pending'
-  end
-
-  def published?
-    status == 'published'
-  end
-
   def proposers
     proposition_endorsements.map(&:proposer)
   end
 
-  def add_proposer(proposer)
-    proposition_endorsements.create!(proposer: proposer)
+  def add_proposer(proposer, params = {})
+    proposition_endorsements.create!(proposer: proposer, inferred: !!params[:inferred])
   end
 
   def delete_proposer(proposer)
@@ -195,14 +186,15 @@ class Proposition < ActiveRecord::Base
       :proposers,
       :parliament_issue_type_names,
       :parliament_issue_document_group_names,
-      :issue_ids
+      :issue_ids,
+      :auto_title
     ]
 
     methods += [:parliament_session_name, :vote_time] if votes.any?
 
     as_json methods: methods,
             include: {votes: {only: [:slug, :enacted]} },
-            only:    [:description, :on_behalf_of, :status, :id,
+            only:    [:description, :on_behalf_of, :id,
                       :simple_description, :simple_body, :interesting, :starred]
   end
 end

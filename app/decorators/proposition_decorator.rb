@@ -2,7 +2,7 @@ class PropositionDecorator < Draper::Decorator
   delegate :id, :to_param, :next, :previous, :issues
 
   def title
-    str = model.simple_description || model.description
+    str = model.simple_description || model.auto_title || model.description
     str.blank? ? str : "#{UnicodeUtils.upcase str[0]}#{str[1..-1]}"
   end
 

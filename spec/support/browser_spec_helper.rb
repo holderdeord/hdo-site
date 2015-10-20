@@ -14,7 +14,7 @@ module BrowserSpecHelper
   include Rails.application.routes.url_helpers
 
   def driver
-    $spec_driver ||= Selenium::WebDriver.for((ENV['WEBDRIVER_BROWSER'] || :firefox).to_sym)
+    $spec_driver ||= Selenium::WebDriver.for((ENV['WEBDRIVER_BROWSER'] || :chrome).to_sym)
   end
 
   def stop

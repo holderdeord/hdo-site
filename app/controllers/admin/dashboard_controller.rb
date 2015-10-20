@@ -12,7 +12,6 @@ class Admin::DashboardController < AdminController
     @issue_user_percentage        = current_user.percentage_of_issues
 
     @proposition_histogram = fetch_proposition_counts
-    @proposition_stats     = fetch_proposition_stats
   end
 
   private
@@ -56,11 +55,4 @@ class Admin::DashboardController < AdminController
       result
     end
   end
-
-  def fetch_proposition_stats
-    [ParliamentSession.current, ParliamentSession.previous].compact.map do |session|
-      [session, Hdo::Stats::PropositionCounts.from_session(session.name)]
-    end
-  end
-
 end

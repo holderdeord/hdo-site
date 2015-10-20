@@ -7,33 +7,9 @@
 
 <section class="proposition-index">
   <div class="row-fluid">
-    <div class="span8">
-        <ul class="nav nav-tabs">
-          <li class="<%= 'active' if @search.params[:status].blank? %>">
-            <%= link_to "Alle forslag (#{@stats.total})", admin_propositions_path(@search.params.merge(status: nil, page: nil)) %>
-          </li>
-
-          <li class="<%= 'active' if @search.params[:status] == 'published' %>">
-            <%= link_to "Publiserte (#{@stats.published})", admin_propositions_path(@search.params.merge(status: 'published', page: nil)) %>
-          </li>
-
-          <li class="<%= 'active' if @search.params[:status] == 'pending' %>">
-            <%= link_to "Nye (#{@stats.pending})", admin_propositions_path(@search.params.merge(status: 'pending', page: nil)) %>
-          </li>
-        </ul>
-    </div>
 
     <form action="<%= admin_propositions_path %>" method="get">
-      <div class="span2">
-        <%= select_tag 'parliament_session_name',
-                       options_from_collection_for_select(
-                         ParliamentSession.order(:start_date).reverse_order, :name, :name,
-                         @search.params[:parliament_session_name],
-                       ),
-                       class: 'span9' %>
-
-      </div>
-      <div class="span2">
+      <div class="span6">
         <div class="input-append">
             <input type="search"
                    name="q"
@@ -44,17 +20,26 @@
                    autofocus>
         </div>
       </div>
+
+      <div class="span6">
+        <div class="pull-right">
+          <%= select_tag 'parliament_session_name',
+                         options_from_collection_for_select(
+                           ParliamentSession.order(:start_date).reverse_order, :name, :name,
+                           @search.params[:parliament_session_name],
+                         )
+                 %>
+        </div>
+      </div>
     </form>
   </div>
-
-  <%= render 'progress_bar' %>
 
   <div class="row-fluid">
     <table class="table table-striped table-hover">
       <thead>
         <tr>
           <th class="wide-table-header">Importert</th>
-          <th>Status</th>
+          <th></th>
           <th>Forslagstittel</th>
           <th>Forslagstekst</th>
           <th></th>
@@ -63,23 +48,18 @@
 
       <tbody>
         <% @propositions.each do |prop| %>
-          <tr class="<%= prop.status == 'published' ? 'success' : 'warning' %>" data-id="<%= prop._id %>">
+          <tr data-id="<%= prop._id %>">
             <td><%= l prop.vote_time.to_time.localtime, format: :short_text %></td>
             <td>
-              <%= t("app.propositions.status.#{prop.status}", count: 1) %>
               <% unless prop.interesting %>
                 <small class="muted">Uinteressant</small>
               <% end %>
             </td>
 
-            <% if prop.simple_description.present? %>
-              <td>
-                <%= prop.simple_description %>
-                <p class="muted"><%= prop.description %></p>
-              </td>
-            <% else %>
-              <td><%= prop.description %></td>
-            <% end %>
+            <td>
+              <%= prop.simple_description || prop.auto_title %>
+              <p class="muted"><%= prop.description %></p>
+            </td>
 
             <% if prop.simple_body.present? %>
               <td><%= prop.simple_body.truncate(200) %>

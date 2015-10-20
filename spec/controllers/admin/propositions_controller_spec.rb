@@ -51,24 +51,12 @@ describe Admin::PropositionsController do
     prop.simple_body.should be_nil
   end
 
-  it 'should post :update and publish' do
-    prop = Proposition.make!(:with_vote)
-    prop.should be_pending
-
-    post :update, id: prop, save_publish: '', proposition: {simple_description: 'foo'}
-    response.should redirect_to(admin_propositions_path(status: 'published'))
-
-    prop.reload.should be_published
-  end
-
-  it 'should post :update and publish and redirect to the next proposition' do
+  it 'should post :update and redirect to the next proposition' do
     props = [Proposition.make!(:with_vote), Proposition.make!(:with_vote)]
-    props.first.should be_pending
 
-    post :update, id: props.first, save_publish_next: '', proposition: {simple_description: 'foo'}, next: props.last
+    post :update, id: props.first, save_next: '', proposition: {simple_description: 'foo'}, next: props.last
+
     response.should redirect_to(edit_admin_proposition_path(props.last))
-
-    props.first.reload.should be_published
   end
 
   it 'should update issues' do
