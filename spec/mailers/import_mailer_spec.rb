@@ -15,8 +15,22 @@ describe ImportMailer do
         mail.should be_multipart
       end
 
-      it 'can fetch the raw HTML' do
-        mail.parts.last.body.raw_source.should be_kind_of(String)
+      it 'has an HTML body' do
+        source = mail.parts.last.body.raw_source
+        source.should be_kind_of(String)
+
+        puts source
+
+        source.should_not be_empty
+      end
+
+      it 'has a text body' do
+        source = mail.parts.first.body.raw_source
+        source.should be_kind_of(String)
+
+        puts source
+
+        source.should_not be_empty
       end
     end
 
