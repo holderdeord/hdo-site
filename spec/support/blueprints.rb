@@ -16,6 +16,10 @@ Vote.blueprint do
   subject { "vote-subject-#{sn}" }
 end
 
+Vote.blueprint(:with_proposition) do
+  propositions { [Proposition.make!]}
+end
+
 PropositionConnection.blueprint do
   issue
   proposition { Proposition.make!(:votes => [Vote.make!])}

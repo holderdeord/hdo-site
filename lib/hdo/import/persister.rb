@@ -306,10 +306,10 @@ module Hdo
         end
 
         prop.source_guess.each do |xid|
-          party = Party.find(xid)
+          party = Party.find_by_external_id(xid)
 
           unless prop.proposers.include?(party)
-            endorsement = prop.add_proposer(party, inferred: true)
+            prop.add_proposer(party, inferred: true)
           end
         end
 

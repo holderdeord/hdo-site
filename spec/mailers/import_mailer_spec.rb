@@ -3,12 +3,15 @@ require "spec_helper"
 describe ImportMailer do
   context 'votes today' do
     let(:mail) { ImportMailer.votes_today_email }
-    let(:vote) { Vote.make!(created_at: 23.hours.ago) }
-    let(:session_name) { '2013-2017' }
+    let(:vote) { Vote.make!(:with_proposition) }
 
     context 'with votes' do
       before do
-        vote
+        vote.created_at = 23.hours.ago
+      end
+
+      after do
+        vote.destroy
       end
 
       it 'creates a multipart body' do
@@ -17,19 +20,15 @@ describe ImportMailer do
 
       it 'has an HTML body' do
         source = mail.parts.last.body.raw_source
+
         source.should be_kind_of(String)
-
-        puts source
-
         source.should_not be_empty
       end
 
       it 'has a text body' do
         source = mail.parts.first.body.raw_source
+
         source.should be_kind_of(String)
-
-        puts source
-
         source.should_not be_empty
       end
     end

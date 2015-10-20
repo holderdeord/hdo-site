@@ -7,7 +7,7 @@
 
       <ul>
         <% pi.votes.select { |v| v.created_at >= 1.day.ago }.flat_map(&:propositions).each do |prop| %>
-          <li><%= link_to prop.auto_title, admin_proposition_url(prop) %></li>
+          <li><%= link_to prop.auto_title, proposition_url(prop) %></li>
         <% end %>
       </ul>
     </li>

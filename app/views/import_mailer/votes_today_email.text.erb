@@ -3,7 +3,7 @@ Saker med nye avstemninger for <%= l 1.day.ago, format: :text %>:
 <% @parliament_issues.each do |pi| %>
 * <%= parliament_issue_url pi %> <%= pi.summary %>
 <% pi.votes.select { |v| v.created_at >= 1.day.ago }.flat_map(&:propositions).each do |prop| %>
-- <%= prop.auto_title %> (<%= admin_proposition_url(prop) %>)
+- <%= prop.auto_title %> (<%= proposition_url(prop) %>)
 <% end %>
 <% end %>
 

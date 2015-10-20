@@ -26,18 +26,21 @@ module Hdo
         end
 
         it 'imports a proposition' do
-          example = StortingImporter::Proposition.example(delivered_by: nil)
-          setup_proposition example
+          example = StortingImporter::Proposition.example(
+            'delivered_by' => nil,
+            'description'  => 'Forslag fra KrF'
+          )
 
-          krf = Party.make!(external_id: 'KRF')
-          example.delivered_by = nil
-          example.description = 'Forslag fra KrF';
+          setup_proposition example
+          krf = Party.make!(external_id: 'KrF')
 
           persister.import_propositions [example]
           Proposition.count.should == 1
 
           prop = Proposition.first
+
           prop.proposers.first.should == krf
+          prop.proposition_endorsements.first.should be_inferred
         end
 
         # https://github.com/holderdeord/hdo-site/issues/138
