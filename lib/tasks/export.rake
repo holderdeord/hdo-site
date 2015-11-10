@@ -44,8 +44,9 @@ namespace :export do
 
   task :create => 'tmp/db.dev.sql'
 
+  desc 'Upload database dump'
   task :upload => :create do
     sh "scp tmp/db.dev.sql hdo@files.holderdeord.no:/webapps/files/dev/data/db.dev.sql"
-    sh "cat tmp/db.dev.sql | openssl md5 | ssh hdo@files.holderdeord.no 'dd > /webapps/files/dev/data/db.dev.sql.md5'"
+    sh "cat tmp/db.dev.sql | openssl md5 | cut -d' ' -f2 | ssh hdo@files.holderdeord.no 'dd > /webapps/files/dev/data/db.dev.sql.md5'"
   end
 end
