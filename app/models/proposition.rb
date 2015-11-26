@@ -90,7 +90,7 @@ class Proposition < ActiveRecord::Base
       end
     }
 
-    title = title.split(/(?<!Meld|Prop|Kap|jf|nr|mill|St|\b[A-Z]|\d)[.:]( |$)/).first
+    title = title.split(/(?<!Meld|Prop|Kap|jf|nr|mill|St|pst|\b[A-Z]|\d)[.:]( |$)/).first
 
     if title
       title = "#{title}." unless title.ends_with?(".")

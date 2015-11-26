@@ -165,5 +165,11 @@ describe Proposition do
         "«Stortinget ber regjeringen fremme forslag til et revidert takstsystem for fastlegeordningen som belønner tidsbruk for behandling og oppfølging på laveste nivå (primærhelsetjenesten).»"
       ).should == "Fremme forslag til et revidert takstsystem for fastlegeordningen som belønner tidsbruk for behandling og oppfølging på laveste nivå (primærhelsetjenesten)."
     end
+
+    it 'handles abbreviation "pst"' do
+      auto_title_for(
+        "Stortinget ber regjeringen fremme forslag til lov som sikrer at 50 pst. av de ansatte i hver barnehage skal ha utdanning som barnehagelærer."
+      ).should == "Fremme forslag til lov som sikrer at 50 pst. av de ansatte i hver barnehage skal ha utdanning som barnehagelærer."
+    end
   end
 end
