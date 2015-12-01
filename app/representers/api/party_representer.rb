@@ -25,10 +25,14 @@ module Api
 
     link :logo do
       {
-        href: logo_api_party_url(represented) + '{?version}',
+        href: templated_url(:logo_api_party_url, represented, version: 'version'),
         templated: true,
         type: 'image/png'
       }
+    end
+
+    link :promises do
+      promises_api_party_url represented
     end
   end
 end

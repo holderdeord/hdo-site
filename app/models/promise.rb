@@ -39,6 +39,18 @@ class Promise < ActiveRecord::Base
   validates_length_of :categories, minimum: 1
 
   scope :by_date, -> { includes(:parliament_period).order('parliament_periods.start_date DESC') }
+  scope :random, -> { order('random()') }
+
+  scope :with_parliament_period, ->(period) {
+    case period
+    when ParliamentPeriod
+      includes(:parliament_period).where(:parliament_period_id => period)
+    when 'current'
+      includes(:parliament_period).where(:parliament_period_id => ParliamentPeriod.current)
+    else
+      includes(:parliament_period).where('parliament_periods.external_id' => period)
+    end
+  }
 
   def self.parliament_periods
     ParliamentPeriod.joins(:promises).uniq.order(:start_date)

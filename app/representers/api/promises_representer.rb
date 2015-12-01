@@ -7,6 +7,17 @@ module Api
       }
     end
 
+    link :filtered do |opts|
+      params = url_params_for(opts)
+      params.delete(:parliament_period)
+      params.delete(:random)
+
+      {
+        href: url_helper(params) + '{?parliament_period,random}',
+        templated: true
+      }
+    end
+
     links :widgets do
       result = [
         {
@@ -37,6 +48,8 @@ module Api
     def url_helper(opts)
       if issue = opts.delete(:issue)
         promises_api_issue_url(issue, opts)
+      elsif party = opts.delete(:party)
+        promises_api_party_url(party, opts)
       else
         api_promises_url(opts)
       end
@@ -45,7 +58,10 @@ module Api
     def url_params_for(opts)
       params = {}
 
-      params[:issue] = opts[:issue] if opts[:issue]
+      params[:issue]             = opts[:issue] if opts[:issue]
+      params[:party]             = opts[:party] if opts[:party]
+      params[:parliament_period] = opts[:parliament_period] if opts[:parliament_period]
+      params[:random]            = opts[:random] if opts[:random]
 
       params
     end

@@ -13,7 +13,7 @@ describe Api::PartiesController, :api do
     get :show, id: pr, format: :hal
 
     response.should be_success
-    relations.should == %w[attending_representatives logo representatives self widget]
+    relations.should == %w[attending_representatives logo promises representatives self widget]
   end
 
   it 'can GET :representatives' do

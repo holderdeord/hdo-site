@@ -124,4 +124,16 @@ describe Promise do
     with_main.main_category.should == main
     without_main.main_category.should == main
   end
+
+  it 'has a with_parliament_period scope' do
+    period = ParliamentPeriod.make!
+    other_period = ParliamentPeriod.make!
+
+    a = Promise.make!(parliament_period: period)
+    b = Promise.make!(parliament_period: other_period)
+
+    Promise.with_parliament_period(period).should == [a]
+
+    Promise.with_parliament_period(other_period.external_id).should == [b]
+  end
 end

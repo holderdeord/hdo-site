@@ -22,6 +22,7 @@ Hdo::Application.routes.draw do
       member {
         get 'logo'
         get 'representatives'
+        get 'promises'
       }
     end
 
