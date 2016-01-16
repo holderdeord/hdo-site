@@ -173,7 +173,7 @@ module Hdo
       private
 
       def agree?(parties, stats)
-        parties.map { |party| stats.text_for(party) }.uniq.size == 1
+        parties.map { |party| stats.key_for(party) }.reject { |e| e === :unknown }.uniq.size == 1
       end
 
       def all_parties

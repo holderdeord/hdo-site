@@ -68,10 +68,25 @@ module Hdo
         counts[:absent] > 0 && (counts[:for] == 0 && counts[:against] == 0)
       end
 
+      def party_split?(party)
+        counts = party_counts_for(party)
+        counts[:for] == counts[:against] && (counts[:for] > 0)
+      end
+
       def text_for(party)
         return VoteResult.human_attribute_name 'voted_for' if party_for?(party)
         return VoteResult.human_attribute_name 'voted_against' if party_against?(party)
         return VoteResult.human_attribute_name 'voted_neither' unless party_participated?(party)
+        return VoteResult.human_attribute_name 'voted_neither' if party_split?(party)
+
+        raise 'Vote counting error.'
+      end
+
+      def key_for(party)
+        return :for if party_for?(party)
+        return :against if party_against?(party)
+        return :unknown unless party_participated?(party)
+        return :unknown if party_split?(party)
 
         raise 'Vote counting error.'
       end

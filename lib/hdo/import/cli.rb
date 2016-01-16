@@ -42,6 +42,8 @@ module Hdo
           import_representative_emails
         when 'wikidata'
           import_wikidata
+        when 'agreement-stats'
+          generate_agreement_stats
         else
           raise ArgumentError, "unknown command: #{@cmd.inspect}"
         end
@@ -86,8 +88,11 @@ module Hdo
         import_wikidata
 
         persister.infer_current_session
+
         notify_new_votes if Rails.env.production?
         notify_missing_emails if Rails.env.production?
+
+        generate_agreement_stats if Rails.env.production?
       rescue Hdo::StortingImporter::DataSource::ServerError
         notify_api_error if Rails.env.production?
         raise
@@ -163,6 +168,31 @@ module Hdo
       def import_wikidata
         key = ENV['MORPH_IO_API_KEY'] || return
         Wikidata.new(api_key: key, log: log).import
+      end
+
+      def generate_agreement_stats
+        sessions = ParliamentSession.where('start_date > ?', Time.parse('2009-08-01')).order(:start_date)
+        result = {by_session: {}}
+
+        sessions.each do |session|
+          log.info "calculating agreement for #{session.name}"
+
+          result[:by_session][session.name] = Hdo::Stats::AgreementScorer.new(
+            votes: session.votes,
+            unit: :propositions,
+            ignore_unanimous: true
+          ).result
+        end
+
+        log.info "calculating agreement for all time"
+
+        result[:all_time] = Hdo::Stats::AgreementScorer.new(
+          unit: :propositions,
+          ignore_unanimous: true
+        ).result
+
+        FileUtils.mkdir_p('public/data')
+        File.open('public/data/agreement.json', 'w') { |io| io << result.to_json }
       end
 
       def each_parliament_issue(parliament_issues, limit = nil)
