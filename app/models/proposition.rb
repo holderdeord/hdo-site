@@ -62,7 +62,7 @@ class Proposition < ActiveRecord::Base
 
   TITLE_RULES = {
     /^«(.+?)»$/ => '\\1',
-    /^Stortinget (ber|anmoder) (regjeringen|regjeringa|stortingets presidentskap)( om å)?/i => '',
+    /^Stortinget (ber|anmoder) (regjeringen|regjeringa|stortingets presidentskap)( om å)?(, )?/i => '',
     /^Stortinget samtykker i/ => 'Samtykke i',
   }
 
@@ -90,7 +90,7 @@ class Proposition < ActiveRecord::Base
       end
     }
 
-    title = title.split(/(?<!Meld|Prop|Kap|jf|nr|mill|St|pst|\b[A-Z]|\d)[.:]( |$)/).first
+    title = title.split(/(?<!Meld|Prop|Kap|jf|nr|mill|St|pst|pr|\b[A-Z]|\d)[.:]( |$)/).first
 
     if title
       title = "#{title}." unless title.ends_with?(".")

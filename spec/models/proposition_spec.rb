@@ -117,6 +117,16 @@ describe Proposition do
       ).should == "Legge fram forslag."
     end
 
+    it 'handles "Stortinget ber regjeringen, ..."' do
+      auto_title_for(
+        "Stortinget ber regjeringen, i samråd med institusjonene, finne en rimelig ramme for tilskudd til private høyskoler med henblikk på etablering av nye studieplasser og tilskudd til infrastruktur i private høyskoler."
+      ).should == "I samråd med institusjonene, finne en rimelig ramme for tilskudd til private høyskoler med henblikk på etablering av nye studieplasser og tilskudd til infrastruktur i private høyskoler."
+
+      auto_title_for(
+        "Stortinget ber regjeringen, senest i forbindelse med revidert nasjonalbudsjett, vurdere nærmere om tilskuddet pr. kvadratmeter til private kirkebygg i tilstrekkelig grad tar høyde for økningen i byggekostnader de senere år."
+      ).should == "Senest i forbindelse med revidert nasjonalbudsjett, vurdere nærmere om tilskuddet pr. kvadratmeter til private kirkebygg i tilstrekkelig grad tar høyde for økningen i byggekostnader de senere år."
+    end
+
     it 'handles "Stortinget ber regjeringa"' do
       auto_title_for(
         "Stortinget ber regjeringa legge fram forslag."
@@ -167,6 +177,12 @@ describe Proposition do
     end
 
     it 'handles abbreviation "pst"' do
+      auto_title_for(
+        "Stortinget ber regjeringen fremme forslag til lov som sikrer at 50 pst. av de ansatte i hver barnehage skal ha utdanning som barnehagelærer."
+      ).should == "Fremme forslag til lov som sikrer at 50 pst. av de ansatte i hver barnehage skal ha utdanning som barnehagelærer."
+    end
+
+    it 'handles abbreviation "per"' do
       auto_title_for(
         "Stortinget ber regjeringen fremme forslag til lov som sikrer at 50 pst. av de ansatte i hver barnehage skal ha utdanning som barnehagelærer."
       ).should == "Fremme forslag til lov som sikrer at 50 pst. av de ansatte i hver barnehage skal ha utdanning som barnehagelærer."
