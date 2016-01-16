@@ -187,5 +187,11 @@ describe Proposition do
         "Stortinget ber regjeringen fremme forslag til lov som sikrer at 50 pst. av de ansatte i hver barnehage skal ha utdanning som barnehagelærer."
       ).should == "Fremme forslag til lov som sikrer at 50 pst. av de ansatte i hver barnehage skal ha utdanning som barnehagelærer."
     end
+
+    it 'handles budgets with no punctuation' do
+      auto_title_for(
+        "I statsbudsjettet for 2013 gjøres følgende endringer Kap. Post Formål Kroner 20 Statsministerens kontor 1 Driftsutgifter, forhøyes med 3 000 000 fra kr 91 450 000 til kr 94 450 000 21 Statsrådet 1 Driftsutgifter, forhøyes med 4 000 000 fra kr 147 800 000 til kr 151 800 000 43 Stortingets ombudsmann for forvaltningen 1 Driftsutgifter, forhøyes med 4 510 000 fra kr 54 350 000 til kr 58 860 000 61 Høyesterett 1 Driftsutgifter, forhøyes med 1 329 000 fra kr 85 084 000 til kr 86 413 000 100 Utenriksdepartementet 1 Driftsutgifter, nedsettes med 1 450 000 fra kr 1 820 686 000 til kr 1 819 236 000 118 Nordområdetiltak m.v."
+      ).should == "I statsbudsjettet for 2013 gjøres følgende endringer."
+    end
   end
 end

@@ -64,6 +64,7 @@ class Proposition < ActiveRecord::Base
     /^«(.+?)»$/ => '\\1',
     /^Stortinget (ber|anmoder) (regjeringen|regjeringa|stortingets presidentskap)( om å)?(, )?/i => '',
     /^Stortinget samtykker i/ => 'Samtykke i',
+    /^(I statsbudsjettet for \d+ gjøres følgende endringer\b).+/im => '\\1'
   }
 
   def auto_title
