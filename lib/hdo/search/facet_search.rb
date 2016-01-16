@@ -136,13 +136,15 @@ module Hdo
         result = []
 
         headers = response.results.first.try(:_source).try(:keys) || []
-        result << headers
+        result << ['id'] + headers
 
         response.results.each do |res|
-          result << headers.map do |h|
+          values = headers.map do |h|
             val = res._source[h]
             val.kind_of?(Array) ? val.join(';') : val
           end
+
+          result << [res._id] + values
         end
 
         result
