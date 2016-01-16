@@ -31,6 +31,7 @@ Hdo::Application.routes.draw do
     end
 
     resources :promises, only: [:index, :show]
+    resources :propositions, only: [:index, :show]
   end
 
   #
