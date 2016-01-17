@@ -15,6 +15,7 @@ describe Api::RootController, :api do
       districts
       promises
       votes
+      propositions
     ].sort
   end
 end
