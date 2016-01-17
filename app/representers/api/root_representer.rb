@@ -6,6 +6,7 @@ module Api
     # hdo
     link(:issues)          { api_issues_url }
     link(:promises)        { api_promises_url }
+    link(:propositions)    { api_propositions_url }
 
     # parliament
     link(:representatives) { api_representatives_url }
