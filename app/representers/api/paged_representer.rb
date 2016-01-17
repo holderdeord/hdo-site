@@ -2,6 +2,7 @@ module Api
   class PagedRepresenter < BaseRepresenter
     property :total_count, as: :total
     property :count
+    property :total_pages
 
     link :self do |opts|
       if represented.current_page == 1
