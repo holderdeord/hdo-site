@@ -18,7 +18,7 @@ set :deploy_to,       "/webapps/#{application}"
 set :default_shell,   '/bin/bash -l'
 set :use_sudo,        false
 set :deploy_via,      :remote_cache
-set :shared_children, shared_children + %w[public/uploads tmp/downloads]
+set :shared_children, shared_children + %w[public/uploads tmp/downloads public/data]
 set :passenger_restart_strategy, :hard
 
 key = 'config/deploy/deploy_dsa'
