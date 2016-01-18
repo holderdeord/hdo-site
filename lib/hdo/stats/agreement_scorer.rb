@@ -173,7 +173,8 @@ module Hdo
       private
 
       def agree?(parties, stats)
-        parties.map { |party| stats.key_for(party) }.reject { |e| e === :unknown }.uniq.size == 1
+        parties.all? { |party| stats.party_participated?(party) } &&
+          parties.map { |party| stats.key_for(party) }.uniq.size == 1
       end
 
       def all_parties
@@ -181,7 +182,10 @@ module Hdo
       end
 
       def ignore?(vote)
-        @ignore_unanimous && (vote.non_personal? || agree?(all_parties, vote.stats))
+        @ignore_unanimous && (vote.non_personal? || agree?(
+          all_parties.select { |party| vote.stats.party_participated?(party) },
+          vote.stats
+        ))
       end
 
     end
