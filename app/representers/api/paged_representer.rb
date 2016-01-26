@@ -3,6 +3,7 @@ module Api
     property :total_count, as: :total
     property :count
     property :total_pages
+    property :current_page
 
     link :self do |opts|
       if represented.current_page == 1
