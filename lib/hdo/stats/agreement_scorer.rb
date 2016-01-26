@@ -33,14 +33,22 @@ module Hdo
       end
 
       def self.summary(opts = {})
-        data, total = new(opts).result.values_at(:data, :total)
-        data.map do |combo, count|
-          {combination: combo, percentage: (count * 100 / total.to_f).round(1), total: total, count: count }
+        data = new(opts).result
+        data.map do |combo, entry|
+          count = entry[:count]
+          total = entry[:total]
+
+          {
+            combination: combo,
+            percentage: (count * 100 / total.to_f).round(1),
+            total: total,
+            count: count
+          }
         end.sort_by { |e| e[:percentage] }
       end
 
       def self.csv_summary(opts = {})
-        CSV.generate do |csv|
+        CSV.generate(col_sep: "\t") do |csv|
           csv << ["combination", "agreed_count", "total_count", "percentage"]
           summary(opts).sort_by { |e| e[:percentage] }.each do |entry|
             csv << entry.values_at(:combination, :count, :total, :percentage)
@@ -56,14 +64,14 @@ module Hdo
 
         result = Hash.new { |hash, key| hash[key] = {} }
 
-        groups.each do |time, votes|
-          data, total_count = new(votes: votes, combinations: party_combos).result.values_at(:data, :total)
-          data.each do |combo, vote_count|
-            result[time][combo] = {count: vote_count, total: total_count}
+        groups.each do |time, group_votes|
+          data = new(votes: group_votes, combinations: party_combos).result
+          data.each do |combo, entry|
+            result[time][combo] = entry
           end
         end
 
-        CSV.generate do |csv|
+        CSV.generate(col_sep: "\t") do |csv|
           csv << ['month', 'unit_count', *combos.map { |e| e.join(',') }]
 
           result.sort_by { |time, _| time.split('-').map(&:to_i) }.each do |time, data|
@@ -77,10 +85,6 @@ module Hdo
               month_percentages << (d[:count] / d[:total].to_f) * 100
             end
 
-            if month_totals.uniq.size > 1
-              raise "total units varies by party combo for #{time.inspect}: #{month_totals.inspect}"
-            end
-
             csv << [time, month_totals.first, *month_percentages]
           end
         end
@@ -90,20 +94,18 @@ module Hdo
         all               = new(opts).result
         parliament_issues = opts[:votes] ? opts[:votes].flat_map(&:parliament_issues) : ParliamentIssue.all
         categories        = by_category(parliament_issues)
-
-        category_names = categories.keys.sort
-        combinations = all[:data].keys.sort
+        combinations      = all.keys.sort
 
         table = []
 
         table << [nil, *combinations]
-        table << ["Alle kategorier", *combinations.map { |key| '%.1f' % ((all[:data][key] / all[:total].to_f) * 100) }]
+        table << ["Alle kategorier", *combinations.map { |key| '%.1f' % ((all[key][:count] / all[key][:total].to_f) * 100) }]
 
         categories.each do |name, result|
-          table << [name, *combinations.map { |key| '%.1f' % ((result[:data][key] / result[:total].to_f) * 100) }]
+          table << [name, *combinations.map { |key| '%.1f' % ((result[key][:count] / result[key][:total].to_f) * 100) }]
         end
 
-        CSV.generate do |csv|
+        CSV.generate(col_sep: "\t") do |csv|
           table.transpose.each { |row| csv << row }
         end
       end
@@ -126,7 +128,7 @@ module Hdo
 
       def result
         @result ||= (
-          result = Hash.new(0)
+          result = Hash.new { |hash, key| hash[key] = {count: 0, total: 0} }
           count  = 0
 
           @votes.each do |vote|
@@ -148,24 +150,28 @@ module Hdo
             @combinations.each do |current_parties|
               key = current_parties.map(&:external_id).sort.join(',')
 
-              if agree?(current_parties, stats)
-                result[key] += unit_count
-              else
-                result[key] += 0
+              if current_parties.all? { |party| stats.party_participated?(party)  }
+                if agree?(current_parties, stats)
+                  result[key][:count] += unit_count
+                end
+
+                result[key][:total] += unit_count
               end
             end
           end
 
-          { :total => count, :data => result }
+          result
         )
       end
 
       def print(io = $stdout)
-        total, data = result.values_at(:total, :data)
-        data = data.sort_by { |combo, value| -value }
+        data = result.sort_by { |combo, entry| -entry[:count] }
 
-        data.each do |c, v|
-          str = "%s: %.2f%% (%d/%d)" % [c.ljust(20), (v * 100 / total.to_f), v, total]
+        data.each do |combo, entry|
+          count = entry[:count]
+          total = entry[:total]
+
+          str = "%s: %.2f%% (%d/%d)" % [combo.ljust(20), (count * 100 / total.to_f), count, total]
           io.puts str
         end
       end
@@ -173,8 +179,7 @@ module Hdo
       private
 
       def agree?(parties, stats)
-        parties.all? { |party| stats.party_participated?(party) } &&
-          parties.map { |party| stats.key_for(party) }.uniq.size == 1
+        parties.map { |party| stats.key_for(party) }.reject { |k| k == :split }.uniq.size == 1
       end
 
       def all_parties

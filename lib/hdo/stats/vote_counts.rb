@@ -86,7 +86,7 @@ module Hdo
         return :for if party_for?(party)
         return :against if party_against?(party)
         return :unknown unless party_participated?(party)
-        return :unknown if party_split?(party)
+        return :split if party_split?(party)
 
         raise 'Vote counting error.'
       end

@@ -172,7 +172,10 @@ module Hdo
 
       def generate_agreement_stats
         sessions = ParliamentSession.where('start_date > ?', Time.parse('2009-08-01')).order(:start_date)
-        result = {by_session: {}}
+        result = {
+          by_session: {},
+          current_session: ParliamentSession.current.name
+        }
 
         sessions.each do |session|
           log.info "calculating agreement for #{session.name}"
