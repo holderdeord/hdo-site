@@ -174,7 +174,8 @@ module Hdo
         sessions = ParliamentSession.where('start_date > ?', Time.parse('2009-08-01')).order(:start_date)
         result = {
           by_session: {},
-          current_session: ParliamentSession.current.name
+          current_session: ParliamentSession.current.name,
+          last_update: Time.now
         }
 
         sessions.each do |session|
