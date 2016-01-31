@@ -45,7 +45,7 @@ module Hdo
       end
 
       class Post
-        attr_reader :title, :url, :updated_at, :author, :summary
+        attr_reader :title, :url, :updated_at, :author, :summary, :image
 
         def initialize(entry)
           @title      = entry.css('title').text
@@ -53,6 +53,7 @@ module Hdo
           @author     = entry.css('author').map { |e| e.css('name').text }.to_sentence
           @updated_at = Time.parse(entry.css('updated').text)
           @summary    = entry.css('summary').text
+          @image      = entry.css('link[rel=thumbnail][type="image/jpg"], link[rel=thumbnail][type="image/png"]').first.try(:attr, 'href')
         end
 
         alias_method :teaser, :summary

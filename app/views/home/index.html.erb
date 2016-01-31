@@ -6,13 +6,31 @@
 <% end %>
 
 <div class="row-fluid">
-  <div class="span12">
-    <h4>Prøv <a href="https://tale.holderdeord.no/">«Sagt i salen» - vårt nye referatsøk:</a></h4>
+  <% if AppConfig.agreement_teaser_enabled %>
+    <div class="span6">
+      <h4>Hvem stemmer sammen på Stortinget?</a></h4>
 
-    <a href="https://tale.holderdeord.no/">
-      <img src="//files.holderdeord.no/images/tale.png" class="img-responsive hover-zoom">
-    </a>
-  </div>
+      <a href="https://enighet.holderdeord.no/">
+        <div style="background-image: url(//files.holderdeord.no/images/enighet.raw.png)" class="background-image hover-zoom"></div>
+      </a>
+    </div>
+
+    <div class="span6">
+      <h4>Prøv <a href="https://tale.holderdeord.no/">«Sagt i salen» - vårt referatsøk:</a></h4>
+
+      <a href="https://tale.holderdeord.no/">
+        <div style="background-image: url(//files.holderdeord.no/images/tale.png)" class="background-image hover-zoom"></div>
+      </a>
+    </div>
+  <% else %>
+    <div class="span12">
+      <h4>Prøv <a href="https://tale.holderdeord.no/">«Sagt i salen» - vårt nye referatsøk:</a></h4>
+
+      <a href="https://tale.holderdeord.no/">
+        <img src="//files.holderdeord.no/images/tale.png" class="img-responsive hover-zoom">
+      </a>
+    </div>
+  <% end %>
 </div>
 
 <%= render partial: 'blog' %>
