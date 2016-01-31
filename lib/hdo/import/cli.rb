@@ -171,18 +171,23 @@ module Hdo
       end
 
       def generate_agreement_stats
-        sessions = ParliamentSession.where('start_date > ?', Time.parse('2009-08-01')).order(:start_date)
+        sessions = ParliamentSession.where('start_date > ?', Time.parse('2009-08-31')).order(:start_date).to_a
+        periods  = ParliamentPeriod.where('start_date > ?', Time.parse('2009-08-31')).order(:start_date).to_a
+
         result = {
           by_session: {},
+          by_period: {},
           current_session: ParliamentSession.current.name,
+          current_period: ParliamentPeriod.current.name,
           last_update: Time.now
         }
 
-        sessions.each do |session|
-          log.info "calculating agreement for #{session.name}"
+        (sessions + periods).each do |range|
+          log.info "calculating agreement for #{range.name}"
+          key = range.kind_of?(ParliamentSession) ? :by_session : :by_period
 
-          result[:by_session][session.name] = Hdo::Stats::AgreementScorer.new(
-            votes: session.votes,
+          result[key][range.name] = Hdo::Stats::AgreementScorer.new(
+            votes: range.votes,
             unit: :propositions,
             ignore_unanimous: true
           ).result
