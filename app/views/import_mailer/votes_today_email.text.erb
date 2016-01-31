@@ -14,3 +14,15 @@ Tweets fra @partipisken i morgen:
 * <%= tweet %>
 <% end %>
 <% end %>
+
+
+<% if @upcoming_issues.any? %>
+Mottatt / til behandling:
+
+<% @upcoming_issues.each do |pi| %>
+* <%= link_to pi.summary, parliament_issue_url(pi) %>
+<% pi.links do |link| %>
+- <%= link_to prop.title, link.href %>
+<% end %>
+<% end %>
+<% end %>

@@ -21,7 +21,7 @@ class ParliamentIssue < ActiveRecord::Base
   }
 
   attr_accessible :document_group, :issue_type, :status, :last_update,
-                  :reference, :summary, :description, 
+                  :reference, :summary, :description,
                   :committee, :categories, :links
 
   belongs_to :committee
@@ -36,6 +36,8 @@ class ParliamentIssue < ActiveRecord::Base
 
   scope :processed, -> { where("status = ?", I18n.t("app.parliament_issue.states.processed")) }
   scope :latest,    ->(limit) { order(:last_update).reverse_order.limit(limit) }
+  scope :since_yesterday, -> { where("created_at >= ?", 1.day.ago) }
+  scope :upcoming, -> { where(status: ['til_behandling', 'mottatt']) }
 
   def last_update_text
     I18n.l last_update, format: :short_text

@@ -23,3 +23,21 @@
     <% end %>
   </ul>
 <% end %>
+
+<% if @upcoming_issues.any? %>
+  <h3>Mottatt / til behandling</h3>
+
+  <ul>
+    <% @upcoming_issues.each do |pi| %>
+      <li>
+        <h4><%= link_to pi.summary, parliament_issue_url(pi) %></h4>
+
+        <ul>
+          <% pi.links do |link| %>
+            <li><%= link_to prop.title, link.href %></li>
+          <% end %>
+        </ul>
+      </li>
+    <% end %>
+  </ul>
+<% end %>
