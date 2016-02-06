@@ -22,8 +22,8 @@ defaults: &defaults
   ignore_votes_against_alternate_budget: true
   topic_of_the_week: Samferdsel
   blog_url: https://blog.holderdeord.no/
-  blog_count: 2
-  parties_in_proposition_feed: true
+  blog_count: 4
+  parties_in_proposition_feed: false
   agreement_teaser_enabled: false
 
 development:

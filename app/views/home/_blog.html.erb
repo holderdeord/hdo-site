@@ -1,16 +1,12 @@
-<small class="pull-right" style="padding-top: 2rem;">
-  <a href="http://blog.holderdeord.no/">Se alle &raquo;</a>
-</small>
-
 <div class="blog">
   <div class="row-fluid">
     <h4>Siste artikler</h4>
 
     <div class="span12">
       <% @latest_posts.in_groups_of(2) do |group| %>
-        <div class="row-fluid">
+        <div>
           <% group.each do |latest_post| %>
-            <a href="<%= latest_post.url %>" class="span6">
+            <a href="<%= latest_post.url %>">
               <% if latest_post.image %>
                 <div class="background-image" style="background-image: url(<%= latest_post.image %>);"></div>
               <% end %>
@@ -26,8 +22,11 @@
         </div>
       <% end %>
     </div>
-
   </div>
 </div>
+
+<small class="pull-right" style="padding-top: 1rem;">
+  <a href="http://blog.holderdeord.no/">Se alle artikler &raquo;</a>
+</small>
 
 
