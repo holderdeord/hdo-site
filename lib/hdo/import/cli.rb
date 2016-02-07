@@ -173,32 +173,58 @@ module Hdo
       def generate_agreement_stats
         sessions = ParliamentSession.where('start_date > ?', Time.parse('2009-08-31')).order(:start_date).to_a
         periods  = ParliamentPeriod.where('start_date > ?', Time.parse('2009-08-31')).order(:start_date).to_a
+        main_categories = Category.where(main: true)
 
         result = {
-          by_session: {},
-          by_period: {},
+          by_session: Hash.new { |hash, key| hash[key] = {all: {}, categories: {}} },
+          by_period: Hash.new { |hash, key| hash[key] = {all: {}, categories: {}} },
+          all_time: {all: {}, categories: {}},
           current_session: ParliamentSession.current.name,
           current_period: ParliamentPeriod.current.name,
-          last_update: Time.now
+          last_update: Time.now,
+          categories: main_categories.map(&:human_name)
+        }
+
+        config = {
+          unit: :propositions,
+          ignore_unanimous: true
         }
 
         (sessions + periods).each do |range|
           log.info "calculating agreement for #{range.name}"
           key = range.kind_of?(ParliamentSession) ? :by_session : :by_period
 
-          result[key][range.name] = Hdo::Stats::AgreementScorer.new(
-            votes: range.votes,
-            unit: :propositions,
-            ignore_unanimous: true
-          ).result
+          votes = range.votes
+
+          result[key][range.name][:all] =
+            Hdo::Stats::AgreementScorer.new({votes: votes}.merge(config)).result
+
+          category_to_votes = Hash.new { |hash, key| hash[key] = [] }
+
+          votes.each do |vote|
+            vote.parliament_issues.each do |pi|
+              pi.categories.each do |cat|
+                cat = cat.main? ? cat : cat.parent
+                category_to_votes[cat.human_name] << vote
+              end
+            end
+          end
+
+          category_to_votes.each do |category_name, category_votes|
+            result[key][range.name][:categories][category_name] =
+              Hdo::Stats::AgreementScorer.new({votes: category_votes.uniq}.merge(config)).result
+          end
         end
 
         log.info "calculating agreement for all time"
+        result[:all_time][:all] = Hdo::Stats::AgreementScorer.new(config).result
 
-        result[:all_time] = Hdo::Stats::AgreementScorer.new(
-          unit: :propositions,
-          ignore_unanimous: true
-        ).result
+        main_categories.each do |category|
+          votes = (category.votes + category.children.flat_map(&:votes)).uniq
+
+          result[:all_time][:categories][category.name] =
+            Hdo::Stats::AgreementScorer.new(config.merge(votes: votes)).result
+        end
 
         FileUtils.mkdir_p('public/data')
         File.open('public/data/agreement.json', 'w') { |io| io << result.to_json }
