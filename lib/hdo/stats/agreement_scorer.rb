@@ -111,18 +111,24 @@ module Hdo
       end
 
       def initialize(opts = {})
-        @votes            = opts[:votes] || Vote.with_results.includes(:propositions)
-        @combinations     = opts[:combinations] || COMBINATIONS
-        @ignore_unanimous = !!opts[:ignore_unanimous]
+        @votes            = opts.delete(:votes) || Vote.with_results.includes(:propositions)
+        @combinations     = opts.delete(:combinations) || COMBINATIONS
+        @ignore_unanimous = !!opts.delete(:ignore_unanimous)
 
-        if opts[:unit]
-          unless VALID_UNITS.include?(opts[:unit])
-            raise "invalid unit: #{opts[:unit].inspect}"
+        unit = opts.delete(:unit)
+
+        if unit
+          unless VALID_UNITS.include?(unit)
+            raise "invalid unit: #{unit.inspect}"
           end
 
-          @unit = opts[:unit]
+          @unit = unit
         else
           @unit = :propositions
+        end
+
+        if opts.any?
+          raise ArgumentError, "unknown options: #{opts.keys.inspect}"
         end
       end
 

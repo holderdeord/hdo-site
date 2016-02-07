@@ -8,6 +8,8 @@ class Category < ActiveRecord::Base
   has_and_belongs_to_many :promises,          uniq: true
   has_and_belongs_to_many :issues,            uniq: true
 
+  has_many :votes, through: :parliament_issues
+
   acts_as_tree order: :name
 
   validates :name,        presence: true, uniqueness: true
