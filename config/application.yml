@@ -24,12 +24,11 @@ defaults: &defaults
   blog_url: https://blog.holderdeord.no/
   blog_count: 4
   parties_in_proposition_feed: false
-  agreement_teaser_enabled: false
+  agreement_teaser_enabled: true
 
 development:
   <<: *defaults
   basic_auth_users: 'test:test'
-  agreement_teaser_enabled: true
 
 test:
   <<: *defaults
