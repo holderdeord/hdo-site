@@ -16,6 +16,8 @@ class User < ActiveRecord::Base
   ROLES = %w[contributor admin superadmin]
   validates :role, presence: true, inclusion: { in: ROLES }
 
+  scope :active, -> { where(active: true) }
+
   def admin?
     role == 'admin'
   end

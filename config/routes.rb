@@ -32,6 +32,11 @@ Hdo::Application.routes.draw do
 
     resources :promises, only: [:index, :show]
     resources :propositions, only: [:index, :show]
+
+    namespace :hdo do
+      resources :users, only: [:index]
+    end
+
   end
 
   #
