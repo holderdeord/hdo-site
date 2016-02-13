@@ -34,7 +34,7 @@ Hdo::Application.routes.draw do
     resources :propositions, only: [:index, :show]
 
     namespace :hdo do
-      resources :users, only: [:index]
+      resources :users, only: [:index, :show]
     end
 
   end

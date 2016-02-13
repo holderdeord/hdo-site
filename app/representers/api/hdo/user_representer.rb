@@ -7,6 +7,10 @@ module Api
       property :board
       property :image, exec_context: :decorator
 
+      link :self do
+        api_hdo_user_url represented
+      end
+
       def image
         gravatar_url(represented.email)
       end

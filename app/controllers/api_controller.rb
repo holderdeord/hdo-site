@@ -4,7 +4,6 @@ class ApiController < ApplicationController
   before_filter -> { expires_in 30.minutes, public: true }
 
   rescue_from StandardError do |exception|
-
     render json: exception_as_json(exception), status: :internal_server_error
   end
 
