@@ -197,12 +197,12 @@ module Hdo
           log.info "calculating agreement for #{range.name}"
           key = range.kind_of?(ParliamentSession) ? :by_session : :by_period
 
-          votes = range.votes.with_results.includes(:propositions).to_a
+          votes = range.votes.with_results.includes(:propositions)
 
           result[key][range.name][:all] =
             Hdo::Stats::AgreementScorer.new({votes: votes}.merge(config)).result
 
-          category_to_votes = Hash.new { |hash, key| hash[key] = [] }
+          category_to_votes = Hash.new { |hash, k| hash[k] = [] }
 
           votes.each do |vote|
             vote.categories.each do |cat|
@@ -226,7 +226,7 @@ module Hdo
           votes = (category.votes + category.children.flat_map(&:votes)).uniq
 
           result[:all_time][:categories][category.human_name] =
-            Hdo::Stats::AgreementScorer.new(config.merge(votes: votes)).result
+            Hdo::Stats::AgreementScorer.new({votes: votes}.merge(config)).result
         end
 
         FileUtils.mkdir_p('public/data')

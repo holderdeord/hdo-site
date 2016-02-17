@@ -111,6 +111,8 @@ module Hdo
       end
 
       def initialize(opts = {})
+        opts = opts.dup
+
         @votes            = opts.delete(:votes) || Vote.with_results.includes(:propositions)
         @combinations     = opts.delete(:combinations) || COMBINATIONS
         @ignore_unanimous = !!opts.delete(:ignore_unanimous)

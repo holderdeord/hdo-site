@@ -11,6 +11,10 @@ module Hdo
         date >= start_date && date <= end_date
       end
 
+      def current?
+        include? Date.today
+      end
+
       def name
         [start_date.year, end_date.year].join('-')
       end
