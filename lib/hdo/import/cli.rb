@@ -190,7 +190,10 @@ module Hdo
           ignore_unanimous: true
         }
 
-        (sessions + periods).each do |range|
+        ranges = sessions
+        # ranges = sessions + periods
+
+        ranges.each do |range|
           log.info "calculating agreement for #{range.name}"
           key = range.kind_of?(ParliamentSession) ? :by_session : :by_period
 
