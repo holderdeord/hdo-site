@@ -18,6 +18,7 @@ class Vote < ActiveRecord::Base
   has_and_belongs_to_many :parliament_issues, uniq: true
   has_and_belongs_to_many :propositions, uniq: true
 
+  has_many :categories, through: :parliament_issues, uniq: true
   has_many :representatives, through: :vote_results, order: :last_name
   has_many :vote_results, dependent: :destroy,
                           before_add: :clear_stats_cache,
