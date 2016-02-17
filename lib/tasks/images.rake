@@ -30,7 +30,7 @@ namespace :images do
           rep.save!
         else
           begin
-            photo = api.person_photo(rep.slug, :large)
+            photo = api.person_photo(rep.external_id, :large)
 
             File.open(filename.to_s, 'wb') { |io| io << photo }
             puts "saved #{rep.full_name} -> #{filename}"
