@@ -146,7 +146,7 @@ module Hdo
 
             case @unit
             when :propositions
-              unit_count = vote.propositions.uniq.size
+              unit_count = vote.propositions.count
             when :votes
               unit_count = 1
             else

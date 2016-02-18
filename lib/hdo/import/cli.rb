@@ -172,7 +172,6 @@ module Hdo
 
       def generate_agreement_stats
         sessions = ParliamentSession.where('start_date > ?', Time.parse('2009-08-31')).order(:start_date).to_a
-        periods  = ParliamentPeriod.where('start_date > ?', Time.parse('2009-08-31')).order(:start_date).to_a
         main_categories = Category.where(main: true)
 
         result = {
@@ -197,7 +196,7 @@ module Hdo
           log.info "calculating agreement for #{range.name}"
           key = range.kind_of?(ParliamentSession) ? :by_session : :by_period
 
-          votes = range.votes.with_results.includes(:propositions)
+          votes = range.votes
 
           result[key][range.name][:all] =
             Hdo::Stats::AgreementScorer.new({votes: votes}.merge(config)).result
@@ -221,6 +220,7 @@ module Hdo
 
         log.info "calculating agreement for all time"
         result[:all_time][:all] = Hdo::Stats::AgreementScorer.new(config).result
+        GC.start
 
         main_categories.each do |category|
           votes = (category.votes + category.children.flat_map(&:votes)).uniq
