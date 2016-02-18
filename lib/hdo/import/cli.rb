@@ -89,10 +89,11 @@ module Hdo
 
         persister.infer_current_session
 
-        notify_new_votes if Rails.env.production?
-        notify_missing_emails if Rails.env.production?
-
-        generate_agreement_stats if Rails.env.production?
+        if Rails.env.production?
+          notify_new_votes
+          notify_missing_emails
+          generate_agreement_stats
+        end
       rescue Hdo::StortingImporter::DataSource::ServerError
         notify_api_error if Rails.env.production?
         raise
