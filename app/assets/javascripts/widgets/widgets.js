@@ -109,6 +109,7 @@ var HDO = HDO || {};
             } else if (this.type === 'vote') {
                 path = 'votes/:voteId/widget';
                 params.voteId = el.getAttribute('data-vote-id');
+                params.proposition = el.getAttribute('data-proposition-id');
             } else {
                 throw new Error('invalid HDO widget type: ' + this.type);
             }

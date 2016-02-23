@@ -55,7 +55,7 @@ module Hdo
       Widget.new(
         'Avstemning',
         'blokker',
-        "<a class='hdo-vote-widget' href='#{root_url}' data-vote-id='#{vote.slug}'>Laster innhold fra Holder de ord</a>",
+        "<a class='hdo-vote-widget' href='#{root_url}' data-vote-id='#{vote.slug}' data-proposition-id='#{vote.propositions.first.id}'>Laster innhold fra Holder de ord</a>",
         "<iframe style='height: auto;' src='#{widget_vote_url(vote)}'>"
       )
     end

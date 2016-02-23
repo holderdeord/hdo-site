@@ -50,6 +50,12 @@ class WidgetsController < ApplicationController
 
   def vote
     @vote = Vote.find(params[:id])
+    @header = @vote.subject
+
+    if params[:proposition]
+      prop = @vote.propositions.find(params[:proposition])
+      @header = prop.simple_description || prop.auto_title
+    end
 
     opposers   = []
     supporters = []
@@ -72,8 +78,8 @@ class WidgetsController < ApplicationController
     absentees.sort_by!(&:name)
 
     @position_groups = {
-      'For'            => supporters,
-      'Mot'            => opposers
+      'For' => supporters,
+      'Mot' => opposers
     }
   end
 
