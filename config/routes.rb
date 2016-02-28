@@ -35,6 +35,7 @@ Hdo::Application.routes.draw do
 
     namespace :hdo do
       resources :users, only: [:index, :show]
+      resources :blog, only: [:index]
     end
 
   end
