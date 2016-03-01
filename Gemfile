@@ -28,19 +28,11 @@ group :test do
   gem "database_cleaner", "~> 0.9.1"
   gem "loadable_component", ">= 0.1.1"
   gem 'simplecov', require: false
-  gem 'fuubar'
   gem 'coveralls', require: false
-
-  # guard
-  gem 'guard'
-  gem 'guard-rspec'
-  gem 'guard-spin'
-  gem 'rb-fsevent', require: darwin_only('rb-fsevent')
-  gem 'rb-inotify', require: linux_only('rb-inotify')
 end
 
 group :test, :development do
-  gem "rspec-rails", "> 2.0", "< 2.99"
+  gem "rspec-rails", "~> 3.0"
   gem 'jasmine', '2.3.0'
 end
 

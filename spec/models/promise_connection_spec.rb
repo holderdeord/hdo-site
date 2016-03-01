@@ -52,7 +52,7 @@ describe PromiseConnection do
       pc.status_text.should == 'relatert'
 
       pc.status = 'unrelated'
-      expect { pc.status_text }.to raise_error
+      expect { pc.status_text }.to raise_error(StandardError)
     end
   end
 

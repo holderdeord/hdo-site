@@ -6,9 +6,10 @@ module Hdo
       let(:response) { double.as_null_object }
 
       it 'handles an empty query' do
-        Proposition.should_receive(:search).with { |body|
+        expect(Proposition).to receive(:search).and_wrap_original do |m, body|
           body[:query][:filtered][:query][:query_string][:query].should == '*'
-        }.and_return(response)
+          response
+        end
 
         AdminPropositionSearch.new(q: '')
       end

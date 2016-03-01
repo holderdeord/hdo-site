@@ -40,7 +40,7 @@ describe Government do
       end_date: Date.tomorrow
     )
 
-    g.include?(Date.today).should be_true
+    g.include?(Date.today).should be true
 
     g = Government.make(
       start_date: Date.yesterday

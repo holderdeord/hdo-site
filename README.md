@@ -172,13 +172,6 @@ Run specs with Rails preloaded
     $ spin push spec/models/representative_spec.rb:10
     # etc.
 
-Run affected specs automatically when files change:
-
-    $ bundle exec guard
-
-While guard is running, it will launch the spin server so you can use
-the normal spin commands.
-
 # JavaScript:
 
 ## Testing

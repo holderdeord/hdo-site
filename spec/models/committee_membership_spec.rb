@@ -34,14 +34,14 @@ describe CommitteeMembership do
     b = CommitteeMembership.make(:start_date => Date.new(2010, 1, 1), :end_date => Date.new(2012, 1, 1))
     c = CommitteeMembership.make(:start_date => Date.new(2011, 6, 1), :end_date => nil)
 
-    a.intersects?(b).should be_true
-    b.intersects?(a).should be_true
+    a.intersects?(b).should be true
+    b.intersects?(a).should be true
 
-    b.intersects?(c).should be_true
-    c.intersects?(b).should be_true
+    b.intersects?(c).should be true
+    c.intersects?(b).should be true
 
-    a.intersects?(c).should be_false
-    c.intersects?(a).should be_false
+    a.intersects?(c).should be false
+    c.intersects?(a).should be false
   end
 
 end

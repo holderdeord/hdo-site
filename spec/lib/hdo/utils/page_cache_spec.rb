@@ -11,7 +11,7 @@ module Hdo
         issue = Issue.make!
         actual = []
 
-        purger.stub(:add).with do |url|
+        allow(purger).to receive(:add) do |url|
           actual << url
         end
 

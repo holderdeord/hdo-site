@@ -255,20 +255,20 @@ module Hdo
           updater.update!
         }.to raise_error(IssueUpdater::Unauthorized)
 
-        updater.update.should be_false
+        updater.update.should be false
         issue.errors.should_not be_empty
       end
 
       it "can publish if authorized as superadmin" do
         updater = IssueUpdater.new(issue, {issue: {status: 'published'}}, superadmin)
-        updater.update.should be_true
+        updater.update.should be true
         issue.errors.should be_empty
       end
 
       it "can change other statuses if authorized as admin" do
         updater = IssueUpdater.new(issue, {issue: {status: 'in_review'}}, admin)
 
-        updater.update.should be_true
+        updater.update.should be true
         issue.errors.should be_empty
       end
 
@@ -276,7 +276,7 @@ module Hdo
         issue.should_receive(:published_at=).with(instance_of(Time))
 
         updater = IssueUpdater.new(issue, {issue: {status: 'published'}}, superadmin)
-        updater.update.should be_true
+        updater.update.should be true
       end
 
       it 'sets does not set published_at on any status change' do
@@ -284,7 +284,7 @@ module Hdo
         issue.should_receive(:published_at=).never
 
         updater = IssueUpdater.new(issue, {issue: {status: 'in_progress'}}, superadmin)
-        updater.update.should be_true
+        updater.update.should be true
       end
 
       it 'can not perform updates if the user has a non-admin role' do

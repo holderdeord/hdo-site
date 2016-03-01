@@ -7,7 +7,7 @@ module Hdo
     end
 
     def render_read_only_page
-      render file: 'public/read_only', formats: [:html], layout: false, status: 307
+      render file: "public/read_only", formats: [:html], layout: false, status: 307
     end
   end
 end

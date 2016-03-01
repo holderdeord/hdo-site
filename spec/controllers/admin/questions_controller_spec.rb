@@ -198,7 +198,7 @@ describe Admin::QuestionsController do
         question = Question.make!(show_sender: false)
         put :update, id: question, question: { show_sender: true }
 
-        question.reload.show_sender.should be_true
+        question.reload.show_sender.should be true
       end
 
       it 'can change answer created_at' do

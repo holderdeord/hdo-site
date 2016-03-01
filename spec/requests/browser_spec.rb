@@ -39,7 +39,7 @@ describe Hdo::Application do
         description: "People sometimes disagree."
       )
 
-      page.save.should be_true, page.error_messages
+      page.save.should be true
       Issue.count.should == 1
     end
 

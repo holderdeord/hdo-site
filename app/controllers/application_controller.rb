@@ -88,11 +88,11 @@ class ApplicationController < ActionController::Base
   end
 
   def render_not_found
-    render file: 'public/404', formats: [:html], layout: false, status: 404
+    render file: "#{Rails.root}/public/404", formats: [:html], layout: false, status: 404
   end
 
   def policy_not_allowed
-    render file: 'public/422', formats: [:html], layout: false, status: 401
+    render file: "#{Rails.root}/public/422", formats: [:html], layout: false, status: 401
   end
 
 end

@@ -1,3 +1,4 @@
+require 'spec_helper'
 require 'hdo/rack/locale'
 require 'i18n'
 
@@ -7,7 +8,11 @@ module Hdo
       before { I18n.default_locale = :nb }
 
       let(:app_headers) { {} }
-      let(:app) { double(:app, :call => [200, app_headers, [""]]) }
+      let(:app) do
+        Proc.new do |env|
+          ['200', app_headers, ['']]
+        end
+      end
       let(:locale) { Locale.new(app) }
 
       it 'should change locale to :nn' do
@@ -15,13 +20,15 @@ module Hdo
           'HTTP_ACCEPT_LANGUAGE' => 'nn-no,nn;q=0.9,no-no;q=0.8,no;q=0.6,nb-no;q=0.5,nb;q=0.4,en-us;q=0.3,en;q=0.1'
         }
 
-        app.should_receive(:call).with do |env|
-          I18n.locale.should == :nn
+        expect(app).to receive(:call).and_wrap_original do |m, *args|
+          expect(I18n.locale).to eq :nn
+
+          m.call(args)
         end
+        
+        locale.call(env)
 
-        status, headers, body = locale.call(env)
-
-        I18n.locale.should == :nb
+        expect(I18n.locale).to eq :nb
       end
 
       it 'should not change locale to :en' do
@@ -29,24 +36,27 @@ module Hdo
           'HTTP_ACCEPT_LANGUAGE' => 'en-US,en;q=0.8'
         }
 
-        app.should_receive(:call).with do |env|
-          I18n.locale.should == :nb
+        expect(app).to receive(:call).and_wrap_original do |m, *args|
+          expect(I18n.locale).to eq :nb
+
+          m.call(args)
         end
 
-        status, headers, body = locale.call(env)
-        I18n.locale.should == :nb
+        locale.call(env)
+        expect(I18n.locale).to eq :nb
       end
 
       it 'resets locale on exceptions' do
-        app.should_receive(:call).with do |env|
+        expect(app).to receive(:call).and_wrap_original do |m, *args|
           I18n.locale = :en
-        end.and_raise("foo")
+          raise "foo"
+        end
 
         expect {
           locale.call({})
-        }.to raise_error
+        }.to raise_error(StandardError)
 
-        I18n.locale.should == :nb
+        expect(I18n.locale).to eq :nb
       end
 
       it 'adds a Content-Language header' do

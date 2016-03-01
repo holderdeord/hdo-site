@@ -41,7 +41,7 @@ describe PasswordsController do
         password_confirmation: '111111'
       }
 
-      user.reload.valid_password?('111111').should be_true
+      user.reload.valid_password?('111111').should be true
     end
 
     it "only sets the password if the confirmation matches" do
@@ -54,7 +54,7 @@ describe PasswordsController do
         password_confirmation: '222222'
       }
 
-      user.reload.valid_password?('111111').should be_false
+      user.reload.valid_password?('111111').should be false
     end
   end
 
@@ -83,7 +83,7 @@ describe PasswordsController do
         password_confirmation: '111111'
       }
 
-      rep.reload.valid_password?('111111').should be_true
+      rep.reload.valid_password?('111111').should be true
     end
 
     it "validates password confirmation" do
@@ -96,7 +96,7 @@ describe PasswordsController do
         password_confirmation: '2222222'
       }
 
-      rep.reload.valid_password?('111111').should be_false
+      rep.reload.valid_password?('111111').should be false
     end
   end
 
