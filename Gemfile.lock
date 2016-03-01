@@ -423,6 +423,7 @@ DEPENDENCIES
   net-http-persistent
   nokogiri
   pg
+  pry
   pry-rails
   puma
   pundit

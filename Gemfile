@@ -34,6 +34,8 @@ end
 group :test, :development do
   gem "rspec-rails", "~> 3.0"
   gem 'jasmine', '2.3.0'
+  gem 'pry-rails'
+  gem 'pry'
 end
 
 group :development do
@@ -106,9 +108,6 @@ gem 'multi_json'
 gem 'yajl-ruby'
 gem 'nokogiri'
 gem 'unicode_utils'
-
-# debugging
-gem 'pry-rails', :group => :development
 
 # app settings
 gem 'settingslogic'
