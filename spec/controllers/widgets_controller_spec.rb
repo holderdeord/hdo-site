@@ -7,7 +7,7 @@ describe WidgetsController do
   let(:representative) { Representative.make! }
 
   before do
-    ParliamentPeriod.make!(:current) unless ParliamentPeriod.current
+    ParliamentPeriod.make!(:current) unless ParliamentPeriod.current    
   end
 
   describe 'GET #issue' do
@@ -81,7 +81,7 @@ describe WidgetsController do
   end
 
   describe 'GET #configuration' do
-    before { Vote.make!(slug: '1433776904e') }
+    before { Vote.make!(slug: '1433776904e', propositions: [Proposition.make!]) }
 
     let(:auth) do
       ActionController::HttpAuthentication::Basic.encode_credentials(*Hdo::BasicAuth.users.first)
