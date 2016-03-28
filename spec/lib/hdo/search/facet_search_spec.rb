@@ -35,11 +35,12 @@ module Hdo
           current_page: 1,
           total_pages: 2,
           results: [],
-          response: {'facets' => {
+          response: {
+            'aggregations' => {
               'parliament_period_name' => {
-                'terms' => [
-                  {'term' => '2009-2013', 'count' => 111},
-                  {'term' => '2013-2017', 'count' => 222}
+                'buckets' => [
+                  {'key' => '2009-2013', 'doc_count' => 111},
+                  {'key' => '2013-2017', 'doc_count' => 222}
                 ]
               }
             }
