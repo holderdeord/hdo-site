@@ -24,6 +24,8 @@ script: RAILS_ENV=test SPEC_OPTS=--backtrace bundle exec rake travis
 before_script:
 - dpkg -s elasticsearch | grep --color=never Version
 - mv config/database.yml.travis config/database.yml
+- cp config/words.nb.txt $ELASTICSEARCH_CONFIG_PATH/hdo.words.nb.txt
+- cp config/synonyms.nb.txt $ELASTICSEARCH_CONFIG_PATH/hdo.synonyms.nb.txt
 - sh -e /etc/init.d/xvfb start
 - "./script/travis/npm_bootstrap.sh"
 after_success:
@@ -35,4 +37,5 @@ env:
     - COVERAGE_THRESHOLD=82
     - RUBY_GC_MALLOC_LIMIT=50000000
     - WEBDRIVER_BROWSER=firefox
+    - ELASTICSEARCH_CONFIG_PATH=/etc/elasticsearch
     - secure: nnTbf1vKvwZhbjyxbl5JFQhSahFlDPQDQ4MsF07YdLyxqoePUkq7TiMlq/KG+H/PBQ257PEUsCXqaiOqjqE5fXJEBMAxjiJO+H96fDvrk7ovsQTlNh7eJAGidGUDvXHKooFmRSWgODG2mA1WRaaq/HfK6PWeqeH9rbAefCpoFzc=
