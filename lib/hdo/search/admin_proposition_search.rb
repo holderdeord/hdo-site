@@ -71,7 +71,7 @@ module Hdo
           }
         }
 
-        q[:facets] = {
+        q[:aggregations] = {
           status: {terms: {field: "status", size: 10, all_terms: false}}
         }
 
