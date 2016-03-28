@@ -73,7 +73,7 @@ module Hdo
       end
 
       def navigators
-        data = response.response['facets']
+        data = response.response['aggregations']
 
         search_params.map do |param, opts|
           next if param == :page
@@ -234,7 +234,7 @@ module Hdo
           f = {}
 
           if facet_params.any?
-            result = f[:facets] = {}
+            result = f[:aggregations] = {}
 
             facet_params.each do |name, opts|
               field = opts.fetch(:field)
@@ -295,7 +295,7 @@ module Hdo
           @query  = query[param]
           @title  = title
           @total  = data['total']
-          @terms  = data['terms'].sort_by { |e| e['term'] }
+          @terms  = data['buckets'].sort_by { |e| e['key'] }
 
           @terms.reverse! if [:parliament_period, :parliament_session].include? param
         end
@@ -322,9 +322,9 @@ module Hdo
             terms << build(@query, 0, true)
           else
             @terms.each do |term|
-              active = @query == term['term']
+              active = @query == term['key']
 
-              terms << build(term['term'], term['count'], active)
+              terms << build(term['key'], term['doc_count'], active)
             end
           end
 

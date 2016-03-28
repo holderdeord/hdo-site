@@ -71,10 +71,14 @@ module Hdo
       end
 
       def config_path_for(filename)
-        if Rails.env.production? || Rails.env.staging?
+        es_conf_path = ENV['ELASTICSEARCH_CONFIG_PATH']
+
+        if es_conf_path
+          Pathname.new(es_conf_path).join("hdo.#{filename}").to_s
+        elsif Rails.env.production? || Rails.env.staging?
           "/etc/elasticsearch/hdo.#{filename}"
         else
-          Rails.root.join("config/search/#{filename}").to_s
+          raise "must set ELASTICSEARCH_CONFIG_PATH (e.g. in config/env.yml) and move #{Rails.root.join("config/search/#{filename}")} => ${ELASTICSEARCH_CONFIG_PATH}/hdo.#{filename}"
         end
       end
 
