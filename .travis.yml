@@ -5,7 +5,6 @@ rvm:
 - 2.0.0
 services:
 - postgresql
-- elasticsearch
 notifications:
   email:
     - jari@holderdeord.no
@@ -22,10 +21,13 @@ notifications:
 bundler_args: "--without development --path ~/.bundle"
 script: RAILS_ENV=test SPEC_OPTS=--backtrace bundle exec rake travis
 before_script:
+- sudo wget https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-2.2.1.deb
+- sudo dpkg -i elasticsearch-2.2.1.deb
+- sudo service elasticsearch start
 - dpkg -s elasticsearch | grep --color=never Version
-- mv config/database.yml.travis config/database.yml
 - sudo cp config/search/words.nb.txt $ELASTICSEARCH_CONFIG_PATH/hdo.words.nb.txt
 - sudo cp config/search/synonyms.nb.txt $ELASTICSEARCH_CONFIG_PATH/hdo.synonyms.nb.txt
+- mv config/database.yml.travis config/database.yml
 - sh -e /etc/init.d/xvfb start
 - "./script/travis/npm_bootstrap.sh"
 after_success:
