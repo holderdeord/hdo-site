@@ -13,10 +13,11 @@ module Hdo
 
       def as_json(opts = nil)
         {
-          :approve => for_count,
-          :against => against_count,
-          :absent  => absent_count,
-          :parties => Hash[@party_counts.map { |party, counts| [party && party.name, counts] }]
+          approve: for_count,
+          against: against_count,
+          absent:  absent_count,
+          parties: Hash[@party_counts.map { |party, counts| [party && party.name, counts] }],
+          groups: groups.inject({}) { |a, (k,v)| a.merge(k => v.map { |p| {name: p.name, slug: p.slug } }) }
         }
       end
 
