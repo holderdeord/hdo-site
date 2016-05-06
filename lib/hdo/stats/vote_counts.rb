@@ -17,7 +17,7 @@ module Hdo
           against: against_count,
           absent:  absent_count,
           parties: Hash[@party_counts.map { |party, counts| [party && party.name, counts] }],
-          groups: groups.inject({}) { |a, (k,v)| a.merge(k => v.map { |p| {name: p.name, slug: p.slug } }) }
+          groups: groups.inject({}) { |a, (k,v)| a.merge(k => v.compact.map { |p| {name: p.name, slug: p.slug } }) }
         }
       end
 
