@@ -7,20 +7,14 @@ module Api
       }
     end
 
-    link :find_multiple do
-      {
-        href: templated_url(:api_promises_url, ids: 'id1,id2'),
-        templated: true
-      }
-    end
-
     link :filtered do |opts|
       params = url_params_for(opts)
       params.delete(:parliament_period)
       params.delete(:random)
+      params.delete(:ids)
 
       {
-        href: url_helper(params) + '{?parliament_period,random}',
+        href: url_helper(params) + '{?parliament_period,random,ids}',
         templated: true
       }
     end
