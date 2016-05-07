@@ -14,6 +14,7 @@ module Api
       represented.parties.map do |p|
         {
           title: p.name,
+          slug: p.slug,
           href: api_party_url(p)
         }
       end
