@@ -1,3 +1,4 @@
+<% if @parliament_issues.any? %>
 Saker med nye avstemninger for <%= l 1.day.ago, format: :text %>:
 
 <% @parliament_issues.each do |pi| %>
@@ -14,10 +15,11 @@ Tweets fra @partipisken i morgen:
 * <%= tweet %>
 <% end %>
 <% end %>
+<% end %>
 
 
 <% if @upcoming_issues.any? %>
-Mottatt / til behandling:
+Saker mottatt/til behandling for <%= l 1.day.ago, format: :text %>
 
 <% @upcoming_issues.each do |pi| %>
 * <%= link_to pi.summary, parliament_issue_url(pi) %>

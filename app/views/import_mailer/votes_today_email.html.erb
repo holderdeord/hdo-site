@@ -1,31 +1,35 @@
-<h2>Saker med nye avstemninger for <%= l 1.day.ago, format: :text %></h2>
-
-<ul>
-  <% @parliament_issues.each do |pi| %>
-    <li>
-      <h4><%= link_to pi.summary, parliament_issue_url(pi) %></h4>
-
-      <ul>
-        <% pi.votes.select { |v| v.created_at >= 1.day.ago }.flat_map(&:propositions).each do |prop| %>
-          <li><%= link_to prop.auto_title, proposition_url(prop) %></li>
-        <% end %>
-      </ul>
-    </li>
-  <% end %>
-</ul>
-
-<% if @rebel_tweets.any? %>
-  <h3>Tweets fra <a href="https://twitter.com/partipisken">@partipisken</a> i morgen</h3>
+<% if @parliament_issues.any? %>
+  <h2 style="font-family: 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif; line-height: 1.2em; color: #111111; font-weight: 200; margin: 40px 0 10px; padding: 0;">
+    Saker med nye avstemninger for <%= l 1.day.ago, format: :text %>
+  </h2>
 
   <ul>
-    <% @rebel_tweets.each do |tweet| %>
-      <li><%= tweet %></li>
+    <% @parliament_issues.each do |pi| %>
+      <li>
+        <h4><%= link_to pi.summary, parliament_issue_url(pi) %></h4>
+
+        <ul>
+          <% pi.votes.select { |v| v.created_at >= 1.day.ago }.flat_map(&:propositions).each do |prop| %>
+            <li><%= link_to prop.auto_title, proposition_url(prop) %></li>
+          <% end %>
+        </ul>
+      </li>
     <% end %>
   </ul>
+
+  <% if @rebel_tweets.any? -%>
+    <h3 style="font-family: 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif; line-height: 1.2em; color: #111111; font-weight: 200; margin: 40px 0 10px; padding: 0;">Tweets fra <a href="https://twitter.com/partipisken">@partipisken</a> i morgen</h3>
+
+    <ul>
+      <% @rebel_tweets.each do |tweet| %>
+        <li><%= tweet %></li>
+      <% end %>
+    </ul>
+  <% end -%>
 <% end %>
 
 <% if @upcoming_issues.any? %>
-  <h3>Mottatt / til behandling</h3>
+  <h2 style="font-family: 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif; line-height: 1.2em; color: #111111; font-weight: 200; margin: 40px 0 10px; padding: 0;">Saker mottatt/til behandling for <%= l 1.day.ago, format: :text %></h2>
 
   <ul>
     <% @upcoming_issues.each do |pi| %>
