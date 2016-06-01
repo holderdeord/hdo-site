@@ -195,6 +195,16 @@ module Hdo
           end
         end
 
+        it 'imports vote comments' do
+          example = StortingImporter::Vote.example
+          setup_vote example
+
+          persister.import_vote example
+
+          Vote.first.comment.should == example.comment
+        end
+
+
       end
     end
   end

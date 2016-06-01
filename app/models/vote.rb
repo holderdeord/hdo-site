@@ -13,7 +13,7 @@ class Vote < ActiveRecord::Base
   update_index_on_change_of :propositions, :parliament_issues, has_many: true
 
   attr_accessible :for_count, :against_count, :absent_count,
-                  :enacted, :personal, :subject, :time, :external_id
+                  :enacted, :personal, :subject, :time, :external_id, :comment
 
   has_and_belongs_to_many :parliament_issues, uniq: true
   has_and_belongs_to_many :propositions, uniq: true

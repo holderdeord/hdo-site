@@ -82,6 +82,26 @@ describe VoteResult do
     absent.should_not be_rebel
   end
 
+  it "is not a rebel vote if the vote has a comment with the representative's name" do
+    rep1 = Representative.make!(:full)
+    rep2 = Representative.make!
+    rep3 = Representative.make!
+
+    rep2.party_memberships.make!(party: rep1.current_party)
+    rep3.party_memberships.make!(party: rep1.current_party)
+
+    vote = Vote.make!(
+      vote_results: [], 
+      comment: "Representanten #{rep3.name} skulle stemt for."
+    )
+
+    party_line1         = vote.vote_results.make!(representative: rep1, result: 1)
+    party_line2         = vote.vote_results.make!(representative: rep2, result: 1)
+    not_rebel_after_all = vote.vote_results.make!(representative: rep3, result: -1)
+
+    not_rebel_after_all.should_not be_rebel
+  end
+
   it 'has a human text representation of the result' do
     I18n.with_locale :nb do
       VoteResult.make(:result => 1).human.should == "For"

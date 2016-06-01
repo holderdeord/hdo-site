@@ -47,6 +47,8 @@ class VoteResult < ActiveRecord::Base
   def rebel?
     if absent?
       false
+    elsif vote.comment && vote.comment.include?(representative.name)
+      false
     else
       party  = representative.party_at(vote.time)
       stats  = vote.stats

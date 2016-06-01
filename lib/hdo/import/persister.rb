@@ -207,7 +207,8 @@ module Hdo
           enacted:  xvote.enacted?,
           personal: xvote.personal?,
           subject:  xvote.subject,
-          time:     Time.parse(xvote.time)
+          comment:  xvote.comment,
+          time:     Time.parse(xvote.time),
         }
 
         unless vote.inferred?

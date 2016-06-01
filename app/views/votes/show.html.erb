@@ -58,6 +58,12 @@
         <% end %>
       </div>
     <% end %>
+
+    <div class="row-fluid" style="margin-top: 1rem;">
+      <% if @vote.comment && @vote.comment.size > 0 %>
+        <p class="muted"><strong>Merknad: </strong><%= @vote.comment %></p>
+      <% end %>
+    </div>
 </div>
 
 <!-- flat list on mobile  -->
