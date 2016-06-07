@@ -15,8 +15,6 @@ module Hdo
       def decompose(representative)
         # TODO: fetch decompose claims
         data = JSON.parse(Typhoeus.get(representative.wikidata_url).body)
-
-
       end
 
       def data
@@ -26,7 +24,10 @@ module Hdo
           )
 
           if res.success?
-            JSON.parse(res.body).map { |e| Hashie::Mash.new(e) }.group_by { |e| e.name.split(' ').last }
+            JSON.parse(res.body).map { |e| Hashie::Mash.new(e) }.group_by do |e|
+              n = e.name || e.name__nb || e.original_wikiname
+              n.split(' ').last if n
+            end
           else
             raise "unable to fetch wikidata representatives: #{res.code} #{res.body}"
           end
