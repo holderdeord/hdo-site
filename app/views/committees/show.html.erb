@@ -2,6 +2,12 @@
   <h1><%= @committee.name %> <small class="pull-right"><%= @committee.external_id %></small></h1>
 </div>
 
+<% if @committee.special? && @committee.current_representatives.size == 0 %>
+  <div class="alert alert-info">
+    Stortingets datatjeneste publiserer i skrivende stund ikke oversikt over medlemskap i denne komiteen.
+  </div>
+<% end %>
+
 <%=
   render partial: 'shared/representatives_table',
     locals: {

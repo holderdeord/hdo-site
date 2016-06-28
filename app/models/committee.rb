@@ -16,6 +16,10 @@ class Committee < ActiveRecord::Base
     representatives_at Date.today
   end
 
+  def special?
+    %w[UUFK ARBKOM DENSÆRS FULLMAKT KONTR PRES SÆRKOM VALG].include?(external_id)
+  end
+
   def representatives_at(date)
     committee_memberships.includes(:representative).for_date(date).map { |e| e.representative }
   end

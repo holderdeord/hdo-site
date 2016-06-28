@@ -13,6 +13,13 @@ class RepresentativesController < ApplicationController
       (q.answer && q.answer.approved?) ? q.answer.created_at : q.created_at
     end.reverse
 
-    @vote_feed = Hdo::Utils::RepresentativeVoteFeed.new(@representative, limit: 12)
+    per_page = 16
+    offset = params[:page].to_i * per_page
+
+    @vote_feed = Hdo::Utils::RepresentativeVoteFeed.new(
+      @representative,
+      limit: per_page,
+      offset: offset
+    )
   end
 end

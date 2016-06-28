@@ -1,13 +1,33 @@
 <div class="representative-vote-list">
 
-<h4><%= @representative.first_name %> har nylig stemt</h4>
+  <h4><%= @representative.first_name %> har nylig stemt</h4>
+
   <% @vote_feed.entries.each do |entry| %>
     <div class="row-fluid proposition">
-      <strong><%= entry.position %></strong>: <%= link_to entry.description, entry.proposition, class: 'proposition-title' %>
+      <div>
+        <strong><%= entry.position %></strong>: <%= link_to entry.description, entry.proposition, class: 'proposition-title' %>
+        <small><%= l entry.time, format: :short_text %></small>
+      </div>
 
       <% if entry.issues.any? %>
-        <small class="pull-right">Se også <%= entry.issues.map { |i| link_to i.title, i }.to_sentence.html_safe %></small>
+        <small class="pull-right">
+          Se også <%= entry.issues.map { |i| link_to i.title, i }.to_sentence.html_safe %>
+        </small>
       <% end %>
     </div>
   <% end %>
+
+  <div class="row-fluid">
+    <div class="span6">
+      <% if params[:page] && params[:page].to_i > 1 %>
+        <%= link_to '&larr; Nyere avstemninger'.html_safe, representative_path(@representative, page: (params[:page].to_i - 1))  %>
+      <% end %>
+    </div>
+
+    <div class="span6">
+      <p style="text-align: right;">
+        <%= link_to 'Eldre avstemninger &rarr;'.html_safe, representative_path(@representative, page: ((params[:page] || 1).to_i + 1))  %>
+      </p>
+    </div>
+  </div>
 </div>

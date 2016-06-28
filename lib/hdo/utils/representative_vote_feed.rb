@@ -6,6 +6,7 @@ module Hdo
       def initialize(representative, options = {})
         @representative = representative
         @limit          = options[:limit]
+        @offset         = options[:offset]
       end
 
       def entries
@@ -30,6 +31,7 @@ module Hdo
 
 
         vote_results = vote_results.limit(@limit) if @limit
+        vote_results = vote_results.offset(@offset) if @offset
         vote_results
       end
 
@@ -43,6 +45,10 @@ module Hdo
 
         def issues
           proposition.issues.published
+        end
+
+        def time
+          proposition.votes.first.time
         end
 
         def description

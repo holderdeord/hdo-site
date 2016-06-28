@@ -160,7 +160,6 @@ Hdo::Application.routes.draw do
 
   resources :representatives, only: [:index, :show] do
     member do
-      get 'page/:page' => 'representatives#show'
       get 'widget'     => 'widgets#representative'
     end
   end

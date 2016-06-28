@@ -74,24 +74,29 @@ class Proposition < ActiveRecord::Base
       title.sub!(rx, replacement)
     end
 
-    title.sub!(/^.+? [–] (.+?) [–] (vedlegges protokollen|vert vedlagt protokollen|bifalles ikke|vedtas ikke)/) { |e|
+    if title =~ /^.+? [–] (.+?) [–] (vedlegges protokollen|vert vedlagt protokollen|bifalles ikke|vedtas ikke)/
       desc = $1
       action = $2
 
       desc_words = desc.split(" ")
       new_desc = "#{UnicodeUtils.downcase(desc_words[0])} #{desc_words[1..-1].join(" ")}"
 
-      case action
-      when 'bifalles ikke'
-        "Ikke bifalle #{new_desc}"
-      when 'vedtas ikke'
-        "Ikke vedta #{new_desc}"
-      else
-        "Legge #{new_desc} ved protokollen"
-      end
-    }
+      title = case action
+              when 'bifalles ikke'
+                "Ikke bifalle #{new_desc}"
+              when 'vedtas ikke'
+                "Ikke vedta #{new_desc}"
+              else
+                if desc[0] =~ /[A-ZÆÅØ]/u
+                  %{Legge «#{desc}» ved protokollen}
+                else
+                  %{Legge #{new_desc} ved protokollen}
+                end
+              end
+    else
+      title = title.split(/(?<!Meld|Prop|Kap|jf|nr|mill|St|pst|pr|\b[A-Z]|\d)[.:]( |$)/).first
+    end
 
-    title = title.split(/(?<!Meld|Prop|Kap|jf|nr|mill|St|pst|pr|\b[A-Z]|\d)[.:]( |$)/).first
 
     if title
       title = "#{title}." unless title.ends_with?(".")
