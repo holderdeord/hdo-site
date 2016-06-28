@@ -1,21 +1,33 @@
 <div class="representative-vote-list">
 
-  <h4><%= @representative.first_name %> har nylig stemt</h4>
+  <h4><%= @representative.first_name %> har sist stemt</h4>
 
-  <% @vote_feed.entries.each do |entry| %>
-    <div class="row-fluid proposition">
-      <div>
-        <strong><%= entry.position %></strong>: <%= link_to entry.description, entry.proposition, class: 'proposition-title' %>
-        <small><%= l entry.time, format: :short_text %></small>
-      </div>
+  <table class="table">
+    <tbody>
+      <% @vote_feed.entries.each do |entry| %>
+        <tr>
+          <td style="white-space: nowrap;"><%= l entry.time, format: :short_text %></td>
 
-      <% if entry.issues.any? %>
-        <small class="pull-right">
-          Se også <%= entry.issues.map { |i| link_to i.title, i }.to_sentence.html_safe %>
-        </small>
+          <td>
+            <strong><%= entry.position %></strong>
+          </td>
+
+          <td>
+            <div><%= link_to entry.description, entry.proposition, class: 'proposition-title' %></div>
+
+            <div>
+              <% if entry.issues.any? %>
+                <small>
+                  Se også <%= entry.issues.map { |i| link_to i.title, i }.to_sentence.html_safe %>
+                </small>
+              <% end %>              
+            </div>
+          </td>
+
+        </tr>        
       <% end %>
-    </div>
-  <% end %>
+    </tbody>
+  </table>
 
   <div class="row-fluid">
     <div class="span6">
