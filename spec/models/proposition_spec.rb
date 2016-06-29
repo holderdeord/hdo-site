@@ -199,5 +199,11 @@ describe Proposition do
         "Meld. St. 17 (2015–2016) – Trygghet og omsorg. Fosterhjem til barns beste – vedlegges protokollen."
       ).should == 'Legge «Trygghet og omsorg. Fosterhjem til barns beste» ved protokollen.'
     end
+
+    it 'handles "følgende endringer:"' do
+      auto_title_for(
+        "I statsbudsjettet for 2013 gjøres følgende endringer:\nKap.\nPost\nFormål"
+      ).should == 'I statsbudsjettet for 2013 gjøres følgende endringer:'
+    end
   end
 end

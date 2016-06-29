@@ -99,7 +99,7 @@ class Proposition < ActiveRecord::Base
 
 
     if title
-      title = "#{title}." unless title.ends_with?(".")
+      title = "#{title}." unless title.ends_with?(".") || title.include?('følgende')
       title.strip!
       "#{UnicodeUtils.upcase title[0]}#{title[1..-1]}"
     else

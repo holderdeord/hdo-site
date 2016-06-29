@@ -1,6 +1,6 @@
 <div class="representative-vote-list">
 
-  <h4><%= @representative.first_name %> har sist stemt</h4>
+  <h4><%= @representative.first_name %> har <%= @representative.attending? ? 'nylig' : 'sist' %> stemt</h4>
 
   <table class="table">
     <tbody>
