@@ -171,7 +171,13 @@ module Hdo
         Wikidata.new(api_key: key, log: log).import
       end
 
+      def mb_used
+        (`ps -o rss= -p #{Process.pid}`.to_i * 1024).to_f / 2**20
+      end
+
       def generate_agreement_stats
+        mb_before = mb_used
+
         sessions = ParliamentSession.where('start_date > ?', Time.parse('2009-08-31')).order(:start_date).to_a
         main_categories = Category.where(main: true)
 
@@ -232,6 +238,10 @@ module Hdo
 
         FileUtils.mkdir_p('public/data')
         File.open('public/data/agreement.json', 'w') { |io| io << result.to_json }
+
+        mb_after = mb_used
+
+        p :memory_used => (mb_after - mb_used)
       end
 
       def each_parliament_issue(parliament_issues, limit = nil)

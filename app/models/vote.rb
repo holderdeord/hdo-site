@@ -90,6 +90,10 @@ class Vote < ActiveRecord::Base
     ParliamentPeriod.for_date time
   end
 
+  def propositions_count
+    Rails.cache.fetch("votes/#{id}/propositions_count") { propositions.count }
+  end
+
   def alternate_of?(other)
     time == other.time &&
       for_count == other.against_count &&

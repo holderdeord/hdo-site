@@ -111,12 +111,19 @@ module Hdo
 
       def compute_party_counts(vote)
         time = vote.time
-        party_results = vote.vote_results.includes(representative: {party_memberships: :party}).group_by { |r| r.representative.party_at(time) }
+
+        vote_results = VoteResult.pluck_all(vote.vote_results, :representative_id, :result)
+
+        results_by_party_id = vote_results.group_by do |vr|
+          rid = vr['representative_id']
+          rep = Rails.cache.fetch("representatives/#{rid}") { Representative.find_by_id(rid) }
+          rep.party_id_at(time)
+        end
 
         res = {}
 
-        party_results.each do |party, vote_results|
-          res[party] = counts_for(vote_results)
+        results_by_party_id.each do |party_id, vrs|
+          res[Party.by_id(party_id)] = counts_for(vrs)
         end
 
         res
@@ -124,8 +131,9 @@ module Hdo
 
       def counts_for(vote_results)
         res = Hash.new(0)
+
         vote_results.each do |vote_result|
-          res[vote_result.state] += 1
+          res[VoteResult.state_for(vote_result['result'].to_i)] += 1
         end
 
         res

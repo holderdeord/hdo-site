@@ -31,6 +31,10 @@ class Party < ActiveRecord::Base
 
   attr_accessible :name
 
+  def self.by_id(id)
+    Rails.cache.fetch("parties/#{id}") { self.find_by_id(id) }
+  end
+
   def self.in_government
     gov = Government.current.first
     gov ? gov.parties : []

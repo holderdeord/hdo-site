@@ -152,14 +152,21 @@ class Representative < ActiveRecord::Base
     membership = party_membership_at(date)
     membership && membership.party
   end
+  
+  def party_id_at(date)
+    membership = party_membership_at(date)
+    membership && membership.party_id
+  end
 
   def party_membership_at(date)
-    if party_memberships.loaded?
-      # if all the memberships are already loaded, it's faster to check dates in code
-      # a better solution would probably be to do a more clever query in Hdo::Stats::VoteScorer#party_percentages_for
-      party_memberships.find { |e| e.include?(date) }
-    else
-      party_memberships.for_date(date).first
+    Rails.cache.fetch("representatives/#{id}/party_membership_at/#{date.strftime('%Y-%m-%d')}") do 
+      if party_memberships.loaded?
+        # if all the memberships are already loaded, it's faster to check dates in code
+        # a better solution would probably be to do a more clever query in Hdo::Stats::VoteScorer#party_percentages_for
+        party_memberships.find { |e| e.include?(date) }
+      else
+        party_memberships.for_date(date).first
+      end
     end
   end
 

@@ -25,7 +25,7 @@ module Hdo
         result = {}
 
         category_votes.each do |category_name, vote_ids|
-          votes = Vote.with_results.find(vote_ids.uniq)
+          votes = Vote.find(vote_ids.uniq)
           result[category_name] = new(votes: votes).result
         end
 
@@ -113,7 +113,7 @@ module Hdo
       def initialize(opts = {})
         opts = opts.dup
 
-        @votes            = opts.delete(:votes) || Vote.with_results.includes(:propositions)
+        @votes            = opts.delete(:votes) || Vote.all
         @combinations     = opts.delete(:combinations) || COMBINATIONS
         @ignore_unanimous = !!opts.delete(:ignore_unanimous)
 
@@ -146,7 +146,7 @@ module Hdo
 
             case @unit
             when :propositions
-              unit_count = vote.propositions.count
+              unit_count = vote.propositions_count
             when :votes
               unit_count = 1
             else

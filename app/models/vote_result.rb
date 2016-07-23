@@ -1,10 +1,23 @@
 class VoteResult < ActiveRecord::Base
+  include Hdo::Model::MultiPluck
+
   attr_accessible :representative, :result
 
   belongs_to :representative
   belongs_to :vote
 
   validates_uniqueness_of :representative_id, scope: [:vote_id]
+
+  def self.state_for(result)
+    case result
+    when 1
+      :for
+    when 0
+      :absent
+    when -1
+      :against
+    end
+  end
 
   def human
     case result
@@ -18,14 +31,7 @@ class VoteResult < ActiveRecord::Base
   end
 
   def state
-    case result
-    when 1
-      :for
-    when 0
-      :absent
-    when -1
-      :against
-    end
+    self.class.state_for(result)
   end
 
   def for?
