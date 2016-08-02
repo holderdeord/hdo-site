@@ -184,6 +184,10 @@ class Proposition < ActiveRecord::Base
     issues.map(&:id)
   end
 
+  def vote_enacted
+    votes.first.try(:enacted?)
+  end
+
   def as_indexed_json(options = nil)
     methods = [
       :plain_body,
@@ -193,7 +197,8 @@ class Proposition < ActiveRecord::Base
       :parliament_issue_type_names,
       :parliament_issue_document_group_names,
       :issue_ids,
-      :auto_title
+      :auto_title,
+      :vote_enacted
     ]
 
     methods += [:parliament_session_name, :vote_time] if votes.any?

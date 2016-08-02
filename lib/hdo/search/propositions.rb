@@ -9,6 +9,7 @@ module Hdo
       paginates_per 50
 
       search_param :starred,             boolean: true, title: 'Favoritter'
+      search_param :vote_enacted,        facet: {field: 'vote_enacted', title: 'Vedtatt' }
       search_param :parliament_session,  facet: {field: 'parliament_session_name', size: 100, title: 'Sesjon'}
       search_param :committee,           facet: {field: 'committee_names', size: 20, title: 'Komiteeer'}
       search_param :issue_type,          facet: {field: 'parliament_issue_type_names', size: 10, title: 'Sakstyper'}

@@ -83,6 +83,7 @@ module Hdo
 
             title = opts.fetch(:title).to_s
             field = opts.fetch(:field).to_s
+
             FacetNavigator.new self, @query, title, param, data[field]
           elsif param == :q
             KeywordNavigator.new self, @query, opts.fetch(:title), param
@@ -241,7 +242,9 @@ module Hdo
 
               result[field] = {
                 terms: {
-                  field: field.to_s, all_terms: false, size: opts[:size] || 10
+                  field: field.to_s,
+                  all_terms: false,
+                  size: opts[:size] || 10
                 }
               }
             end
@@ -297,7 +300,7 @@ module Hdo
           @total  = data['total']
           @terms  = data['buckets'].sort_by { |e| e['key'] }
 
-          @terms.reverse! if [:parliament_period, :parliament_session].include? param
+          @terms.reverse! if [:parliament_period, :parliament_session, :vote_enacted].include? param
         end
 
         def type
@@ -322,7 +325,7 @@ module Hdo
             terms << build(@query, 0, true)
           else
             @terms.each do |term|
-              active = @query == term['key']
+              active = @query == term['key'].to_s
 
               terms << build(term['key'], term['doc_count'], active)
             end
@@ -333,9 +336,14 @@ module Hdo
 
         private
 
+        BOOLEAN_NAMES = {
+          0 => 'Nei',
+          1 => 'Ja'
+        }
+
         def build(name, count, active)
           m = Hashie::Mash.new(
-            name: name,
+            name: BOOLEAN_NAMES[name] || name,
             count: count,
             active: active,
             clear_url: @search.url(@param => nil, :page => nil),

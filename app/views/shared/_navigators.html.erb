@@ -18,7 +18,7 @@
                 <%= link_to 'X', term.clear_url, class: 'pull-right' %>
               <% end %>
 
-              <%= link_to term.name.truncate(50), term.filter_url %> (<%= term.count %>)
+              <%= link_to term.name.to_s.truncate(50), term.filter_url %> (<%= term.count %>)
             </li>
           <% end %>
         </ul>
