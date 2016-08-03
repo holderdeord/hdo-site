@@ -3,7 +3,7 @@ require 'socket'
 module Hdo
   module Utils
     class FacebookStats
-      DEFAULT_HOST = 'www.holderdeord.no'
+      DEFAULT_HOST = 'data.holderdeord.no'
 
       def initialize(opts = {})
         @host = opts[:host] || DEFAULT_HOST
