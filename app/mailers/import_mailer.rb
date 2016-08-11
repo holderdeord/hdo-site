@@ -24,7 +24,13 @@ class ImportMailer < ActionMailer::Base
       counts[pi.status_name.downcase] += 1
     end
 
-    @subject = "Nye saker fra Stortinget: " + counts.map { |key, value| "#{value} #{key}" if value > 0 }.compact.join(', ')
+    header = counts.
+      sort_by { |k, v| k }.
+      map { |key, value| "#{value} #{key}" if value > 0 }.
+      compact.
+      join(', ')
+      
+    @subject = "Nye saker fra Stortinget: #{header}"
 
     @rebel_tweets = Hdo::Utils::RebelTweeter.since(1.day.ago).to_a
 
