@@ -1,7 +1,38 @@
+require 'hashie/mash'
+
 module Hdo
   module Stats
     class Rebels
       include Enumerable
+
+      def self.stats_for(votes)
+        stats = Hashie::Mash.new(
+          representatives: {}
+        )
+
+        new(votes).each do |vote, rebel_vote_results|
+          rebel_vote_results.each do |vr|
+            rep = vr.representative
+            vote = vr.vote
+
+            data = stats.representatives[rep.slug] ||= Hashie::Mash.new(
+              name: rep.name,
+              party: {
+                name: rep.current_party.name,
+                slug: rep.current_party.slug
+              },
+              rebel_votes: []
+            )
+
+            data.rebel_votes << {
+              time: vote.time.strftime("%Y-%m-%d"),
+              id: vote.id
+            }
+          end
+        end
+
+        stats
+      end
 
       def initialize(votes)
         @votes = votes

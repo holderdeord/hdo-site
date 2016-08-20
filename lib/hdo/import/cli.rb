@@ -44,6 +44,11 @@ module Hdo
           import_wikidata
         when 'agreement-stats'
           generate_agreement_stats
+        when 'rebel-stats'
+          generate_rebel_stats
+        when 'stats'
+          generate_agreement_stats
+          generate_rebel_stats
         else
           raise ArgumentError, "unknown command: #{@cmd.inspect}"
         end
@@ -92,7 +97,6 @@ module Hdo
         if Rails.env.production?
           notify_new_votes
           notify_missing_emails
-          generate_agreement_stats
         end
       rescue Hdo::StortingImporter::DataSource::ServerError
         notify_api_error if Rails.env.production?
@@ -232,6 +236,13 @@ module Hdo
 
         FileUtils.mkdir_p('public/data')
         File.open('public/data/agreement.json', 'w') { |io| io << result.to_json }
+      end
+
+      def generate_rebel_stats
+        votes = Vote.where('time > ?', 3.months.ago)
+
+        result = Hdo::Stats::Rebels.stats_for(votes)
+        File.open('public/data/rebels.json', 'w') { |io| io << result.to_json }
       end
 
       def each_parliament_issue(parliament_issues, limit = nil)
