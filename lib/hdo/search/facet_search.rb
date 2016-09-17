@@ -5,7 +5,7 @@ module Hdo
 
       included do
         attr_reader :query
-        attr_accessor :size
+        attr_writer :size
 
         # defaults
         search_param :q, title: 'Søk'
@@ -56,8 +56,11 @@ module Hdo
       def initialize(params, view_context)
         @query        = params.slice(*self.class.search_params.keys)
         @view_context = view_context
-
         @ignored      = []
+
+        if params[:size] && params[:size].to_i > 0
+          @size = params[:size].to_i
+        end
       end
 
       def ignore(param)
