@@ -413,7 +413,7 @@ module Hdo
 
       def parse_options(args)
         options = {
-          :period => ParliamentPeriod.current.external_id,
+          :period  => ParliamentPeriod.current.external_id,
           :session => ParliamentSession.current.external_id
         }
 

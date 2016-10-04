@@ -3,6 +3,11 @@ require 'spec_helper'
 module Hdo
   module Import
     describe CLI do
+      before do
+        ParliamentSession.make!(:current)
+        ParliamentPeriod.make!(:current)
+      end
+
       it 'has a default session and period' do
         opts = CLI.new(['api']).options
 
