@@ -2,9 +2,10 @@
 
 $LOAD_PATH.unshift File.expand_path("../../lib", __FILE__)
 require 'hdo/import'
-cli = Hdo::Import::CLI.new(ARGV) # parse args before loading env
+args = ARGV.dup # get args before loading env
 
 require File.expand_path('../../config/environment',  __FILE__)
 require 'hdo/storting_importer'
 
+cli = Hdo::Import::CLI.new(args) 
 cli.run
