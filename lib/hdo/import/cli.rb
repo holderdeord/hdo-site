@@ -90,7 +90,7 @@ module Hdo
           persister.import_votes votes, infer: false
         end
 
-        import_wikidata
+        # import_wikidata
 
         persister.infer_current_session
 
