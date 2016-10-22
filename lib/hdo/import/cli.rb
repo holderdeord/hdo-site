@@ -239,7 +239,8 @@ module Hdo
       end
 
       def generate_rebel_stats
-        votes = Vote.where('time > ?', 12.months.ago)
+        # votes = Vote.where('time > ?', 12.months.ago)
+        votes = Vote.all
 
         result = Hdo::Stats::Rebels.stats_for(votes)
         File.open('public/data/rebels.json', 'w') { |io| io << result.to_json }

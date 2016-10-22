@@ -25,7 +25,7 @@ module Api
         if GRAVATAR_OVERRIDES.key?(email)
           GRAVATAR_OVERRIDES[email]
         else
-          default = 'https://www.holderdeord.no/assets/representatives/fallback_avatar.png'
+          default = 'https://data.holderdeord.no/assets/representatives/fallback_avatar.png'
           "//gravatar.com/avatar/#{Digest::MD5.hexdigest email}?s=300&d=#{URI.encode default}"
         end
       end

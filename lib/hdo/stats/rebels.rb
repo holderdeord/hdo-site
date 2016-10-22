@@ -15,11 +15,13 @@ module Hdo
             vote = vr.vote
             party = rep.party_at(vote.time)
 
+            associated_party = rep.current_party || party
+
             rep_data = stats[:representatives][rep.slug] ||= {
               name: rep.name,
               party: {
-                name: rep.current_party.name,
-                slug: rep.current_party.slug
+                name: associated_party.name,
+                slug: associated_party.slug
               },
               rebel_votes: []
             }
