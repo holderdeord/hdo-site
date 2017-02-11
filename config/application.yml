@@ -10,7 +10,7 @@ defaults: &defaults
   statsd_port: 8125
   statsd_enabled: false
   read_only: false
-  front_page_search_enabled: true
+  front_page_search_enabled: false
   fastly_enabled: false
   ssl_enabled: false
   ssl_host: ~

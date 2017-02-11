@@ -24,6 +24,12 @@
 
     <div id="hdo-content">
       <div class="container">
+        <% unless url_for == '/home/index' %>
+          <div class="alert alert-info">
+            Du besøker nå de gamle nettsidene våre. Se våre nye sider <%= link_to 'her', 'https://www.holderdeord.no' %>.
+          </div>
+        <% end %>
+
         <%= yield %>
       </div>
     </div>

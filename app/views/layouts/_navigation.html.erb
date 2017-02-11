@@ -1,10 +1,4 @@
-<nav>
-
-  <%= link_to issues_path, class: "#{active_status_for(:issues)}" do %>
-    <%= Issue.model_name.human(count: 2).capitalize %>
-  <% end %>
-
-
+<nav class="pull-right">
   <div class="dropdown <%= active_status_for(:parties_show) %>">
     <a class="dropdown-toggle" data-toggle="dropdown" href="#partier">
       <%= Party.model_name.human(count: 2).capitalize %>
@@ -22,20 +16,5 @@
     <%= Promise.model_name.human(count: 2).capitalize %>
   <% end %>
 
-  <div class="dropdown pull-right <%= active_status_for(:home_contact, :home_about, :home_join, :home_people, :home_faq, :home_contact, :home_friends)%>">
-    <a class="dropdown-toggle" data-toggle="dropdown" href="#about-us">
-      <%= t 'app.about' %>
-      <b class="caret"></b>
-    </a>
-
-    <ul class="dropdown-menu">
-      <li><%= link_to t("app.what_we_do"), home_about_path %></li>
-      <li><%= link_to t("app.people"), home_people_path %></li>
-      <li><%= link_to t("app.faq"), home_faq_path %></li>
-      <li><%= link_to t("app.contact_us"), home_contact_path %></li>
-      <li><%= link_to t("app.friends"), home_friends_path %></li>
-      <li><a href="http://blog.holderdeord.no/">Blogg</a></li>
-    </ul>
-  </div>
-
+  <%= link_to 'Om oss', 'https://www.holderdeord.no/portal/om-oss' %>
 </nav>
