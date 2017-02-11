@@ -27,6 +27,7 @@
         <% unless url_for == '/home/index' %>
           <div class="alert alert-info">
             Du besøker nå de gamle nettsidene våre. Se våre nye sider <%= link_to 'her', 'https://www.holderdeord.no' %>.
+            <%= @extra_alert_message %>
           </div>
         <% end %>
 
@@ -46,7 +47,6 @@
 
     <%= render 'shared/social' %>
 
-    <script>HDO.setupSearchWidget();</script>
     <%= yield :document_ready %>
   </body>
 </html>

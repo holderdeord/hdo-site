@@ -2,7 +2,7 @@ module Hdo
   module Search
     class Searcher
       BOOST = {
-        Issue.index_name           => 5,
+        Issue.index_name           => 0,
         Party.index_name           => 3.5,
         Representative.index_name  => 2,
         Promise.index_name         => 1,
@@ -27,7 +27,7 @@ module Hdo
           sort: ['_score']
         }
 
-        indices = (SearchSettings.models - [Vote]).map(&:index_name)
+        indices = (SearchSettings.models - [Issue, Vote]).map(&:index_name)
 
         opts = {
           index: indices,
@@ -63,12 +63,12 @@ module Hdo
         }
 
         opts = {
-          index: [Issue, Representative].map(&:index_name),
+          index: [Representative].map(&:index_name),
           type: nil,
           size: 25,
         }
 
-        response_from { Issue.search(q, opts) }
+        response_from { Representative.search(q, opts) }
       end
 
       def propositions(params = {})

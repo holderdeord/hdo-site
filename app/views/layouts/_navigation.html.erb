@@ -1,4 +1,4 @@
-<nav class="pull-right">
+<nav>
   <div class="dropdown <%= active_status_for(:parties_show) %>">
     <a class="dropdown-toggle" data-toggle="dropdown" href="#partier">
       <%= Party.model_name.human(count: 2).capitalize %>
@@ -16,5 +16,5 @@
     <%= Promise.model_name.human(count: 2).capitalize %>
   <% end %>
 
-  <%= link_to 'Om oss', 'https://www.holderdeord.no/portal/om-oss' %>
+  <%= link_to 'Om oss', 'https://www.holderdeord.no/portal/om-oss', class: 'pull-right' %>
 </nav>

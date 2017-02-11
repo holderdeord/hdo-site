@@ -4,13 +4,18 @@ class IssuesController < ApplicationController
   before_filter :fetch_issue, except: [:index, :admin_info, :votes]
   hdo_caches_page :index, :votes, :show
 
+  ALERT = "Dette innholdet vil ikke bli oppdatert."
+
   def index
     @groups = Issue.published.in_tag_groups
     @groups = @groups.sort_by { |t, _| t.name }
+
+    @extra_alert_message = ALERT
   end
 
   def show
     if policy(@issue).show?
+      @extra_alert_message = ALERT
       fresh_when @issue, public: can_cache?
       @issue = IssueDecorator.decorate(@issue)
     else
