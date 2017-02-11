@@ -25,22 +25,4 @@ describe SearchController do
     response.should be_success
   end
 
-  context 'with real search', search: true do
-    let(:described_class) { Issue }
-
-    it 'provides urls consistent with Issue#to_param' do
-      issue = Issue.make!(title: "Fjerne formueskatten", status: 'published')
-      refresh_index
-
-      get :autocomplete, query: 'skatt', format: :json
-      response.should be_success
-
-      hits = JSON.parse(response.body)['issue']
-      hits.size.should == 1
-
-      issue_result = hits.first
-      URI.parse(issue_result['url']).path.should == "/issues/#{issue.to_param}"
-    end
-  end
-
 end
