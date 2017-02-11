@@ -8,3 +8,4 @@ Disallow: /promises.tsv
 Disallow: /promises.csv
 Disallow: /parliament-issues.tsv
 Disallow: /parliament-issues.csv
+Disallow: /issues/
