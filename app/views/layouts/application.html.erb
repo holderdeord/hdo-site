@@ -25,9 +25,11 @@
     <div id="hdo-content">
       <div class="container">
         <% unless url_for == '/home/index' %>
-          <div class="alert alert-info">
-            Du besøker nå de gamle nettsidene våre. Se våre nye sider <%= link_to 'her', 'https://www.holderdeord.no' %>.
-            <%= @extra_alert_message %>
+          <div class="row-fluid">
+            <div class="alert alert-info <%= current_page?(controller: 'representatives', action: 'show') ? 'pull-right' : '' %>">
+              Du besøker nå de gamle nettsidene våre. Se våre nye sider <%= link_to 'her', 'https://www.holderdeord.no' %>.
+              <%= @extra_alert_message %>
+            </div>
           </div>
         <% end %>
 
