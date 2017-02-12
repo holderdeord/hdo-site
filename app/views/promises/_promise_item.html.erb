@@ -20,19 +20,5 @@
         <% end %>
       </span>
     </div>
-
-    <div class="row-fluid">
-      <% if (issues = promise.promise_connections.map(&:issue)).any?(&:published?) %>
-        <ul class="unstyled">
-          <li>
-            <small>
-              Se også:
-              <%= issues.map { |i| link_to i.title, i }.to_sentence.html_safe %>
-            </small>
-          </li>
-        </ul>
-      <% end %>
-    </div>
-
   </div>
 </li>

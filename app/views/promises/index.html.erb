@@ -31,7 +31,7 @@
         <%= render partial: 'promise_item', locals: { promise: @promise, highlight: true, hide_period: @search.parliament_period? } %>
       <% end %>
 
-      <% @search.records.includes(:issues, :promisor, :parliament_period).each do |result| %>
+      <% @search.records.includes(:promisor, :parliament_period).each do |result| %>
         <%= render partial: 'promise_item', locals: { promise: result, highlight: false, hide_period: @search.parliament_period? } unless result == @promise %>
       <% end -%>
     </ul>
