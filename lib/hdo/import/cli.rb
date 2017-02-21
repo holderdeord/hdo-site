@@ -8,6 +8,11 @@ require 'fileutils'
 module Hdo
   module Import
     class CLI
+      AGREEMENT_CONFIG = {
+        unit: :propositions,
+        ignore_unanimous: true
+      }
+
       attr_reader :options
 
       def initialize(argv)
@@ -44,6 +49,8 @@ module Hdo
           import_wikidata
         when 'agreement-stats'
           generate_agreement_stats
+        when 'agreement-for-category'
+          generate_agreement_for_category
         when 'rebel-stats'
           generate_rebel_stats
         when 'stats'
@@ -175,6 +182,45 @@ module Hdo
         Wikidata.new(api_key: key, log: log).import
       end
 
+      def generate_agreement_for_category
+        category_name = ENV['CATEGORY_NAME'] || abort('must set CATEGORY_NAME')
+
+        pis_by_session = Category.where(name: category_name).first.parliament_issues.group_by { |pi| pi.parliament_session_name }
+
+        result = {}
+
+        pis_by_session.to_a.each do |session_name, pis|
+          votes = pis.flat_map(&:votes).uniq
+
+          result[session_name] = Hdo::Stats::AgreementScorer.new(
+            {votes: votes}.merge(AGREEMENT_CONFIG.dup)
+          ).result
+        end
+
+        STDOUT << CSV.generate(col_sep: "\t") do |csv|
+          sessions = result.keys.sort;
+          combos = result.values.flat_map { |e| e.keys }.sort.uniq
+
+          csv << ['', *sessions]
+
+          combos.each do |combo|
+            data = sessions.map do |s| 
+              d = result[s][combo]
+              count = d[:count]
+              total = d[:total]
+
+              if count == 0 && total == 0
+                0
+              else
+                (count * 100) / total.to_f
+              end
+            end 
+
+            csv << [combo, *data]
+          end
+        end
+      end
+
       def generate_agreement_stats
         sessions = ParliamentSession.where('start_date > ?', Time.parse('2009-08-31')).order(:start_date).to_a
         main_categories = Category.where(main: true)
@@ -189,11 +235,7 @@ module Hdo
           categories: main_categories.map(&:human_name)
         }
 
-        config = {
-          unit: :propositions,
-          ignore_unanimous: true
-        }
-
+        config = AGREEMENT_CONFIG.dup
         ranges = sessions
         # ranges = sessions + periods
 
