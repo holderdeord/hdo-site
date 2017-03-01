@@ -1,10 +1,16 @@
 require 'spec_helper'
 
 describe PromisesController do
+  include SearchSpecHelper
+
   let(:promise) { Promise.make! }
 
+  def elasticsearch
+    Promise.__elasticsearch__
+  end
+
   def refresh
-    Promise.__elasticsearch__.refresh_index!
+    refresh_index
   end
 
   def results
