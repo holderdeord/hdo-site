@@ -41,7 +41,7 @@ after_success:
 env:
   global:
   - DISPLAY=:99.0
-  - COVERAGE_THRESHOLD=82
+  - COVERAGE_THRESHOLD=80
   - RUBY_GC_MALLOC_LIMIT=50000000
   - WEBDRIVER_BROWSER=firefox
   - ELASTICSEARCH_CONFIG_PATH=/etc/elasticsearch
