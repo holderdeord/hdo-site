@@ -168,7 +168,7 @@ module Hdo
             end
           end
 
-          result
+          {}.merge(result) # avoid default proc for cache serialization
         )
       end
 

@@ -204,7 +204,7 @@ module Hdo
           csv << ['', *sessions]
 
           combos.each do |combo|
-            data = sessions.map do |s| 
+            data = sessions.map do |s|
               d = result[s][combo]
               count = d[:count]
               total = d[:total]
@@ -214,7 +214,7 @@ module Hdo
               else
                 (count * 100) / total.to_f
               end
-            end 
+            end
 
             csv << [combo, *data]
           end
@@ -222,8 +222,12 @@ module Hdo
       end
 
       def generate_agreement_stats
-        sessions = ParliamentSession.where('start_date > ?', Time.parse('2009-08-31')).order(:start_date).to_a
-        main_categories = Category.where(main: true)
+        all_categories = !!ENV['ALL_CATEGORIES']
+        sessions       = ParliamentSession.where('start_date > ?', Time.parse('2009-08-31')).order(:start_date).to_a
+        categories     = all_categories ? Category.all : Category.where(main: true)
+        category_key   = all_categories ? 'categories-main' : 'categories-all'
+        short_expiry   = 1.day
+        long_expiry    = 30.days
 
         result = {
           by_session: Hash.new { |hash, key| hash[key] = {all: {}, categories: {}} },
@@ -232,7 +236,7 @@ module Hdo
           current_session: ParliamentSession.current.name,
           current_period: ParliamentPeriod.current.name,
           last_update: Time.now,
-          categories: main_categories.map(&:human_name)
+          categories: categories.map(&:human_name)
         }
 
         config = AGREEMENT_CONFIG.dup
@@ -243,41 +247,55 @@ module Hdo
           log.info "calculating agreement for #{range.name}"
           key = range.kind_of?(ParliamentSession) ? :by_session : :by_period
 
-          votes = range.votes
+          expires_in = range.current? ? short_expiry : long_expiry
 
           result[key][range.name][:all] =
-            Hdo::Stats::AgreementScorer.new({votes: votes}.merge(config)).result
+            Rails.cache.fetch("agreement/#{key}/#{range.name}/all", expires_in: expires_in) do
+              Hdo::Stats::AgreementScorer.new({votes: range.votes}.merge(config)).result
+            end
 
           category_to_votes = Hash.new { |hash, k| hash[k] = [] }
 
-          votes.each do |vote|
+          range.votes.each do |vote|
             vote.categories.each do |cat|
-              cat = cat.main? ? cat : cat.parent
+              unless all_categories
+                cat = cat.main? ? cat : cat.parent
+              end
+
               category_to_votes[cat.human_name] << vote
             end
           end
 
           category_to_votes.each do |category_name, category_votes|
             result[key][range.name][:categories][category_name] =
-              Hdo::Stats::AgreementScorer.new({votes: category_votes.uniq}.merge(config)).result
+              Rails.cache.fetch("agreement/#{key}/#{range.name}/#{category_key}/#{category_name}", expires_in: expires_in) do
+                Hdo::Stats::AgreementScorer.new({votes: category_votes.uniq}.merge(config)).result
+              end
           end
 
           GC.start
         end
 
         log.info "calculating agreement for all time"
-        result[:all_time][:all] = Hdo::Stats::AgreementScorer.new(config).result
+        result[:all_time][:all] = Rails.cache.fetch('agreement/all_time/all', expires_in: short_expiry) do
+          Hdo::Stats::AgreementScorer.new(config).result
+        end
         GC.start
 
-        main_categories.each do |category|
-          votes = (category.votes + category.children.flat_map(&:votes)).uniq
-
+        categories.each do |category|
           result[:all_time][:categories][category.human_name] =
-            Hdo::Stats::AgreementScorer.new({votes: votes}.merge(config)).result
+            Rails.cache.fetch("agreement/all_time/#{category_key}/#{category.human_name}", expires_in: short_expiry) do
+              votes = category.votes
+              votes += category.children.flat_map(&:votes) unless all_categories
+
+              Hdo::Stats::AgreementScorer.new({votes: votes.uniq}.merge(config)).result
+            end
         end
 
+        filename = "agreement#{all_categories ? '-all-categories' : ''}.json"
+
         FileUtils.mkdir_p('public/data')
-        File.open('public/data/agreement.json', 'w') { |io| io << result.to_json }
+        File.open("public/data/#{filename}", 'w') { |io| io << result.to_json }
       end
 
       def generate_rebel_stats
