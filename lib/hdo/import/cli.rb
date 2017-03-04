@@ -258,11 +258,13 @@ module Hdo
 
           range.votes.each do |vote|
             vote.categories.each do |cat|
-              unless all_categories
+              if all_categories
+                category_to_votes[cat.human_name] << vote
+                category_to_votes[cat.parent.human_name] << vote unless cat.main?
+              else
                 cat = cat.main? ? cat : cat.parent
+                category_to_votes[cat.human_name] << vote
               end
-
-              category_to_votes[cat.human_name] << vote
             end
           end
 
@@ -280,15 +282,17 @@ module Hdo
         result[:all_time][:all] = Rails.cache.fetch('agreement/all_time/all', expires_in: short_expiry) do
           Hdo::Stats::AgreementScorer.new(config).result
         end
+
         GC.start
 
         categories.each do |category|
           result[:all_time][:categories][category.human_name] =
             Rails.cache.fetch("agreement/all_time/#{category_key}/#{category.human_name}", expires_in: short_expiry) do
-              votes = category.votes
-              votes += category.children.flat_map(&:votes) unless all_categories
+              votes = category.votes + category.children.flat_map(&:votes)
 
-              Hdo::Stats::AgreementScorer.new({votes: votes.uniq}.merge(config)).result
+              Hdo::Stats::AgreementScorer.new(
+                {votes: votes.uniq}.merge(config)
+              ).result
             end
         end
 
