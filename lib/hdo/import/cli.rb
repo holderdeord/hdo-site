@@ -224,6 +224,7 @@ module Hdo
       def generate_agreement_stats
         all_categories = !!ENV['ALL_CATEGORIES']
         sessions       = ParliamentSession.where('start_date > ?', Time.parse('2009-08-31')).order(:start_date).to_a
+        periods        = ParliamentPeriod.where('start_date > ?', Time.parse('2009-08-31')).order(:start_date).to_a
         categories     = all_categories ? Category.all : Category.where(main: true)
         category_key   = all_categories ? 'categories-main' : 'categories-all'
         short_expiry   = 1.day
@@ -240,8 +241,7 @@ module Hdo
         }
 
         config = AGREEMENT_CONFIG.dup
-        ranges = sessions
-        # ranges = sessions + periods
+        ranges = sessions + periods
 
         ranges.each do |range|
           log.info "calculating agreement for #{range.name}"
