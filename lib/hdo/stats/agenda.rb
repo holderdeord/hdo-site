@@ -1,5 +1,4 @@
 require 'csv'
-require 'pry'
 
 module Hdo
   module Stats
