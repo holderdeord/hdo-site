@@ -223,12 +223,15 @@ module Hdo
 
       def generate_agreement_stats
         all_categories = !!ENV['ALL_CATEGORIES']
-        sessions       = ParliamentSession.where('start_date > ?', Time.parse('2009-08-31')).order(:start_date).to_a
-        periods        = ParliamentPeriod.where('start_date > ?', Time.parse('2009-08-31')).order(:start_date).to_a
-        categories     = all_categories ? Category.all : Category.where(main: true)
-        category_key   = all_categories ? 'categories-main' : 'categories-all'
-        short_expiry   = 1.day
-        long_expiry    = 30.days
+        exclude_budget = !!ENV['EXCLUDE_BUDGET']
+
+        sessions     = ParliamentSession.where('start_date > ?', Time.parse('2009-08-31')).order(:start_date).to_a
+        periods      = ParliamentPeriod.where('start_date > ?', Time.parse('2009-08-31')).order(:start_date).to_a
+        categories   = all_categories ? Category.all : Category.where(main: true)
+        category_key = all_categories ? 'categories-main' : 'categories-all'
+        short_expiry = 1.day
+        long_expiry  = 30.days
+        budget_key   = "budget=#{!exclude_budget}"
 
         result = {
           by_session: Hash.new { |hash, key| hash[key] = {all: {}, categories: {}} },
@@ -241,7 +244,10 @@ module Hdo
         }
 
         config = AGREEMENT_CONFIG.dup
+        config.merge!({exclude_issue_types: ['budsjett']}) if exclude_budget
+
         ranges = sessions + periods
+        # ranges = periods
 
         ranges.each do |range|
           log.info "calculating agreement for #{range.name}"
@@ -250,7 +256,7 @@ module Hdo
           expires_in = range.current? ? short_expiry : long_expiry
 
           result[key][range.name][:all] =
-            Rails.cache.fetch("agreement/#{key}/#{range.name}/all", expires_in: expires_in) do
+            Rails.cache.fetch("agreement/#{key}/#{range.name}/#{budget_key}/all", expires_in: expires_in) do
               Hdo::Stats::AgreementScorer.new({votes: range.votes}.merge(config)).result
             end
 
@@ -270,7 +276,7 @@ module Hdo
 
           category_to_votes.each do |category_name, category_votes|
             result[key][range.name][:categories][category_name] =
-              Rails.cache.fetch("agreement/#{key}/#{range.name}/#{category_key}/#{category_name}", expires_in: expires_in) do
+              Rails.cache.fetch("agreement/#{key}/#{range.name}/#{budget_key}/#{category_key}/#{category_name}", expires_in: expires_in) do
                 Hdo::Stats::AgreementScorer.new({votes: category_votes.uniq}.merge(config)).result
               end
           end
@@ -279,7 +285,7 @@ module Hdo
         end
 
         log.info "calculating agreement for all time"
-        result[:all_time][:all] = Rails.cache.fetch('agreement/all_time/all', expires_in: short_expiry) do
+        result[:all_time][:all] = Rails.cache.fetch("agreement/all_time/#{budget_key}/all", expires_in: short_expiry) do
           Hdo::Stats::AgreementScorer.new(config).result
         end
 
@@ -287,7 +293,7 @@ module Hdo
 
         categories.each do |category|
           result[:all_time][:categories][category.human_name] =
-            Rails.cache.fetch("agreement/all_time/#{category_key}/#{category.human_name}", expires_in: short_expiry) do
+            Rails.cache.fetch("agreement/all_time/#{budget_key}/#{category_key}/#{category.human_name}", expires_in: short_expiry) do
               votes = category.votes + category.children.flat_map(&:votes)
 
               Hdo::Stats::AgreementScorer.new(
@@ -296,7 +302,11 @@ module Hdo
             end
         end
 
-        filename = "agreement#{all_categories ? '-all-categories' : ''}.json"
+        filename_parts = ['agreement']
+        filename_parts << 'all-categories' if all_categories
+        filename_parts << 'no-budget' if exclude_budget
+
+        filename = "#{filename_parts.join('-')}.json"
 
         FileUtils.mkdir_p('public/data')
         File.open("public/data/#{filename}", 'w') { |io| io << result.to_json }

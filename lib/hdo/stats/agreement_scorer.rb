@@ -113,9 +113,10 @@ module Hdo
       def initialize(opts = {})
         opts = opts.dup
 
-        @votes            = opts.delete(:votes) || Vote.with_results.includes(:propositions)
-        @combinations     = opts.delete(:combinations) || COMBINATIONS
-        @ignore_unanimous = !!opts.delete(:ignore_unanimous)
+        @votes               = opts.delete(:votes) || Vote.with_results.includes(:propositions)
+        @combinations        = opts.delete(:combinations) || COMBINATIONS
+        @ignore_unanimous    = !!opts.delete(:ignore_unanimous)
+        @exclude_issue_types = opts.delete(:exclude_issue_types)
 
         unit = opts.delete(:unit)
 
@@ -195,10 +196,15 @@ module Hdo
       end
 
       def ignore?(vote)
-        @ignore_unanimous && (vote.non_personal? || agree?(
-          all_parties.select { |party| vote.stats.party_participated?(party) },
-          vote.stats
-        ))
+        (
+          @ignore_unanimous &&
+            (vote.non_personal? || agree?(
+              all_parties.select { |party| vote.stats.party_participated?(party) },
+              vote.stats
+            ))
+        ) || (
+          @exclude_issue_types && vote.parliament_issues.any? { |pi| @exclude_issue_types.include?(pi.issue_type) }
+        )
       end
 
     end
