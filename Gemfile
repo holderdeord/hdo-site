@@ -86,8 +86,8 @@ gem 'yaml_db' # db dump / load
 gem 'acts-as-taggable-on', '~> 2.4.1'
 
 # search
-gem 'elasticsearch-model', '~> 0.1.8'
-gem 'elasticsearch-rails', '~> 0.1.8'
+gem 'elasticsearch-model', '~> 0.1.9'
+gem 'elasticsearch-rails', '~> 0.1.9'
 
 # caching
 gem 'cache_digests'
