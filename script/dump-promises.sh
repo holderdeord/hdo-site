@@ -6,7 +6,7 @@ psql "hdo_$RAILS_ENV" -t -X <<SQL
   COPY (
     SELECT 
       promises.id, 
-      regexp_replace(body, E'[\\n\\r]+', ' ', 'g' ),
+      regexp_replace(body, E'[\\n\\r]+', ' ', 'g' ) as body,
       source, 
       promisor_type, 
       concat(governments.name, parties.name) AS promisor, 
