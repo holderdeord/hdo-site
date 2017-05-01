@@ -19,11 +19,11 @@ describe Issue, :search do
   end
 
   it 'does synonym mappings' do
-    issue_titled 'miljøvern'
-    issue_titled 'klima'
+    issue_titled 'formuesskatt'
+    issue_titled 'formueskatt'
 
-    results_for('miljøvern').size.should == 2
-    results_for('klima').size.should == 2
+    results_for('formuesskatt').size.should == 2
+    results_for('formueskatt').size.should == 2
   end
 
   context 'refresh on association update' do
