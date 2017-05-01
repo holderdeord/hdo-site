@@ -1,4 +1,2 @@
 # http://www.elasticsearch.org/guide/reference/index-modules/analysis/synonym-tokenfilter.html
-miljø, miljøvern, klima
-skole, grunnskole, utdanning
 formueskatt, formuesskatt
