@@ -39,10 +39,15 @@ sheets.each do |sheet|
   promises = data.fetch('Løfter').map.with_index do |promise, idx|
     xid = [sheet[:external_id].downcase, period_name, idx + 2].join(':')
     raw_body = promise.fetch('LØFTE').to_s.strip
-    body = "#{sheet[:party]} vil #{UnicodeUtils.downcase raw_body[0]}#{raw_body[1..-1]}"
 
-    if body[-1] != "."
-      body = "#{body}."
+    if raw_body.blank?
+      body = ''
+    else
+      body = "#{sheet[:party]} vil #{UnicodeUtils.downcase raw_body[0]}#{raw_body[1..-1]}"
+
+      if body[-1] != "."
+        body = "#{body}."
+      end
     end
 
     promise = Hdo::StortingImporter::Promise.new xid,
