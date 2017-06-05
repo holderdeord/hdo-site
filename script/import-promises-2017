@@ -1,0 +1,60 @@
+#!/usr/bin/env ruby
+
+require 'restclient'
+
+sheets = [
+  { party: 'KrF', external_id: 'KrF',     key: '1wSdXijwJFmYIFTXUJmzATpJHoroNwCmXPEWwTRYB_3s' },
+  { party: 'FrP', external_id: 'FrP',     key: '1sh1DRIYoLhFE9hLytdSQjj7zM5Elg1dq-HZh3opKKrU' },
+  { party: 'Ap', external_id: 'A',      key: '1CckveM3VYMokgZPk1LsRz-Pud0IbANf-aXsTX8KUhGw' },
+  { party: 'Venstre', external_id: 'V', key: '1DBQbW_uPtek6-91kM5WowKvc1aPe8_s0mSpfjaYawQw' },
+  { party: 'SV', external_id: 'SV',      key: '1E7DH4AQ3JWnzYSPSEHHwojJR7J48b4Cf_gAFxdcyLAg' },
+  { party: 'Høyre', external_id: 'H',   key: '1ippIkch5xeuIR8K8Jqd-Wc2jSed8xeOvrlkl1_pRUME' },
+  { party: 'Sp', external_id: 'Sp',      key: '10-Gh7spVmab8VbkMRDErEpYWWqz8aebFZvFgwOMsYN4' }
+]
+
+period_name = '2017-2021'
+period = ParliamentPeriod.find_by_external_id period_name
+
+unless period
+  period = ParliamentPeriod.find_or_initialize_by_external_id(period_name)
+  period.start_date = Date.parse('2017-10-01')
+  period.end_date = Date.parse('2017-09-30')
+
+  period.save!
+end
+
+log = Hdo::StortingImporter.logger
+persister = Hdo::Import::Persister.new
+persister.log = log
+
+log.info "Removing existing promises"
+
+Promise.where(parliament_period_id: period.id).delete_all
+
+sheets.each do |sheet|
+  log.info sheet.inspect
+
+  data = JSON.parse(RestClient.get("https://files.holderdeord.no/gdrive/#{sheet[:key]}.json")).fetch('data')
+
+  promises = data.fetch('Løfter').map.with_index do |promise, idx|
+    xid = [sheet[:external_id].downcase, period_name, idx + 2].join(':')
+    raw_body = promise.fetch('LØFTE').to_s.strip
+    body = "#{sheet[:party]} vil #{UnicodeUtils.downcase raw_body[0]}#{raw_body[1..-1]}"
+
+    if body[-1] != "."
+      body = "#{body}."
+    end
+
+    promise = Hdo::StortingImporter::Promise.new xid,
+                                      sheet[:external_id],
+                                      body,
+                                      false,
+                                      promise.fetch('KATEGORIER'),
+                                      'Partiprogram',
+                                      promise.fetch('SIDETALL I PP').to_i,
+                                      period_name
+
+  end
+
+  persister.import_promises promises
+end

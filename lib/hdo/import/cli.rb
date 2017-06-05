@@ -45,6 +45,9 @@ module Hdo
           import_parliament_issues
         when 'representative-emails'
           import_representative_emails
+        when 'parliament-periods', 'parliament-sessions'
+          import_parliament_periods
+          import_parliament_sessions
         when 'wikidata'
           import_wikidata
         when 'agreement-stats'
@@ -78,6 +81,14 @@ module Hdo
 
         import_api_representatives
         import_api_votes(vote_limit)
+      end
+
+      def import_parliament_periods
+        persister.import_parliament_periods parsing_data_source.parliament_periods
+      end
+
+      def import_parliament_sessions
+        persister.import_parliament_sessions parsing_data_source.parliament_sessions
       end
 
       def import_daily
