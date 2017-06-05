@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 
-require 'restclient'
+require 'open-uri'
 
 sheets = [
   { party: 'KrF', external_id: 'KrF',     key: '1wSdXijwJFmYIFTXUJmzATpJHoroNwCmXPEWwTRYB_3s' },
@@ -18,7 +18,7 @@ period = ParliamentPeriod.find_by_external_id period_name
 unless period
   period = ParliamentPeriod.find_or_initialize_by_external_id(period_name)
   period.start_date = Date.parse('2017-10-01')
-  period.end_date = Date.parse('2017-09-30')
+  period.end_date = Date.parse('2021-09-30')
 
   period.save!
 end
@@ -34,7 +34,7 @@ Promise.where(parliament_period_id: period.id).delete_all
 sheets.each do |sheet|
   log.info sheet.inspect
 
-  data = JSON.parse(RestClient.get("https://files.holderdeord.no/gdrive/#{sheet[:key]}.json")).fetch('data')
+  data = JSON.parse(open("https://files.holderdeord.no/gdrive/#{sheet[:key]}.json").read).fetch('data')
 
   promises = data.fetch('Løfter').map.with_index do |promise, idx|
     xid = [sheet[:external_id].downcase, period_name, idx + 2].join(':')
