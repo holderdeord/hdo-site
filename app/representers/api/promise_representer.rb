@@ -5,6 +5,7 @@ module Api
     property :promisor_name
     property :party_names
     property :parliament_period_name
+    property :category_names
 
     link :self do
       api_promise_url represented
