@@ -1,3 +1,4 @@
+
 # encoding: utf-8
 
 require 'spec_helper'
@@ -8,14 +9,6 @@ describe Issue, :search do
     refresh_index
 
     issue
-  end
-
-  it 'finds "formueskatten" for query "skatt"' do
-    issue = issue_titled 'fjerne formueskatten'
-    results = results_for 'skatt'
-
-    results.should_not be_empty
-    results.first._id.to_i.should == issue.id
   end
 
   it 'does synonym mappings' do
