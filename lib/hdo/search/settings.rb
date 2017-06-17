@@ -37,10 +37,10 @@ module Hdo
                 type: 'stop',
                 stopwords: locale.fetch(:stopwords)
               },
-              hdo_decompounder: {
-                type: 'dictionary_decompounder',
-                word_list_path: word_list_path
-              },
+              # hdo_decompounder: {
+              #   type: 'dictionary_decompounder',
+              #   word_list_path: word_list_path
+              # },
               hdo_synonym: {
                 type: "synonym",
                 synonyms_path: synonyms_path
