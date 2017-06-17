@@ -25,7 +25,7 @@ module Hdo
                 type: 'custom',
                 tokenizer: 'standard',
                 # don't decompound words in the queries
-                filter: default_filters - %w[hdo_decompounder]
+                filter: default_filters
               }
             },
             filter: {
@@ -55,7 +55,7 @@ module Hdo
       end
 
       def default_filters
-        %w[standard lowercase hdo_synonym hdo_stop hdo_snowball hdo_decompounder]
+        %w[standard lowercase hdo_synonym hdo_stop hdo_snowball]
       end
 
       def locale
