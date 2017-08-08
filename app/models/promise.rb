@@ -106,7 +106,7 @@ class Promise < ActiveRecord::Base
   end
 
   def as_indexed_json(options = nil)
-    as_json only: :body, methods: [
+    as_json only: [:body, :id], methods: [
       :party_names,
       :parliament_period_name,
       :promisor_name,
