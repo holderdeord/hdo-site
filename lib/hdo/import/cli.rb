@@ -499,8 +499,8 @@ module Hdo
 
       def parse_options(args)
         options = {
-          :period  => ParliamentPeriod.current.external_id,
-          :session => ParliamentSession.current.external_id
+          :period  => ParliamentPeriod.current ? ParliamentPeriod.current.external_id : nil,
+          :session => ParliamentSession.current ? ParliamentSession.current.external_id : nil
         }
 
         OptionParser.new { |opt|

@@ -44,7 +44,7 @@ class Category < ActiveRecord::Base
     n = name
 
     case n
-    when 'EFTA/EU', 'EFTA', 'EU','FN', 'NATO'
+    when 'EFTA/EU', 'EFTA', 'EU','FN', 'NATO', 'EU/EØS'
       n
     when 'FN-STYRKER'
       'FN-styrker'
