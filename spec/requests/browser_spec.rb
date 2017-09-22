@@ -1,7 +1,7 @@
 require 'spec_helper'
 SimpleCov.command_name 'requests'
 
-describe Hdo::Application do
+xdescribe Hdo::Application do
   context 'normal user' do
     it "should load the front page" do
       front_page.get
