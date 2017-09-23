@@ -3,15 +3,23 @@
 require 'open-uri'
 
 sheets = [
-  { party: 'KrF', external_id: 'KrF',   key: '1wSdXijwJFmYIFTXUJmzATpJHoroNwCmXPEWwTRYB_3s' },
-  { party: 'FrP', external_id: 'FrP',   key: '1sh1DRIYoLhFE9hLytdSQjj7zM5Elg1dq-HZh3opKKrU' },
-  { party: 'Ap', external_id: 'A',      key: '1CckveM3VYMokgZPk1LsRz-Pud0IbANf-aXsTX8KUhGw' },
-  { party: 'Venstre', external_id: 'V', key: '1DBQbW_uPtek6-91kM5WowKvc1aPe8_s0mSpfjaYawQw' },
-  { party: 'SV', external_id: 'SV',     key: '1E7DH4AQ3JWnzYSPSEHHwojJR7J48b4Cf_gAFxdcyLAg' },
-  { party: 'Høyre', external_id: 'H',   key: '1ippIkch5xeuIR8K8Jqd-Wc2jSed8xeOvrlkl1_pRUME' },
-  { party: 'Sp', external_id: 'Sp',     key: '10-Gh7spVmab8VbkMRDErEpYWWqz8aebFZvFgwOMsYN4' },
-  { party: 'MDG', external_id: 'MDG',   key: '1agYDhipu_hWfneEVL9mrWOIxEKPwN1dEeZ6G5gNw0GQ' }
+  # { party: 'KrF', external_id: 'KrF',   key: '1wSdXijwJFmYIFTXUJmzATpJHoroNwCmXPEWwTRYB_3s' },
+  # { party: 'FrP', external_id: 'FrP',   key: '1sh1DRIYoLhFE9hLytdSQjj7zM5Elg1dq-HZh3opKKrU' },
+  # { party: 'Ap', external_id: 'A',      key: '1CckveM3VYMokgZPk1LsRz-Pud0IbANf-aXsTX8KUhGw' },
+  # { party: 'Venstre', external_id: 'V', key: '1DBQbW_uPtek6-91kM5WowKvc1aPe8_s0mSpfjaYawQw' },
+  # { party: 'SV', external_id: 'SV',     key: '1E7DH4AQ3JWnzYSPSEHHwojJR7J48b4Cf_gAFxdcyLAg' },
+  # { party: 'Høyre', external_id: 'H',   key: '1ippIkch5xeuIR8K8Jqd-Wc2jSed8xeOvrlkl1_pRUME' },
+  # { party: 'Sp', external_id: 'Sp',     key: '10-Gh7spVmab8VbkMRDErEpYWWqz8aebFZvFgwOMsYN4' },
+  { party: 'Rødt', external_id: 'R',    key: '18k_PLjkXBG6pegEjtHp4xBMTnvDreP1BJqZnVfJgD_U' }
 ]
+
+unless Party.find_by_external_id('R')
+  party = Party.new
+  party.name = 'Rødt'
+  party.external_id = 'R'
+
+  party.save!
+end
 
 period_name = '2017-2021'
 period = ParliamentPeriod.find_by_external_id period_name
@@ -28,9 +36,9 @@ log = Hdo::StortingImporter.logger
 persister = Hdo::Import::Persister.new
 persister.log = log
 
-log.info "Removing existing promises"
+# log.info "Removing existing promises"
 
-Promise.where(parliament_period_id: period.id).delete_all
+# Promise.where(parliament_period_id: period.id).delete_all
 
 sheets.each do |sheet|
   log.info sheet.inspect

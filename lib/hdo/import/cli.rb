@@ -39,6 +39,8 @@ module Hdo
           import_api_representatives
         when 'votes'
           import_api_votes
+        when 'parties'
+          import_parties
         when 'promises'
           import_promises
         when 'parliament-issues', 'parliament-issues'
@@ -71,13 +73,17 @@ module Hdo
         persister.import_parliament_issues parliament_issues
       end
 
+      def import_parties
+        persister.import_parties parsing_data_source.parties(@options[:session])
+      end
+
       def import_api(vote_limit = nil)
+        persister.import_parliament_periods parsing_data_source.parliament_periods
+        persister.import_parliament_sessions parsing_data_source.parliament_sessions
         persister.import_parties parsing_data_source.parties(@options[:session])
         persister.import_committees parsing_data_source.committees(@options[:session])
         persister.import_districts parsing_data_source.districts
         persister.import_categories parsing_data_source.categories
-        persister.import_parliament_periods parsing_data_source.parliament_periods
-        persister.import_parliament_sessions parsing_data_source.parliament_sessions
 
         import_api_representatives
         import_api_votes(vote_limit)
