@@ -147,11 +147,12 @@ module Hdo
 
         # the information in 'representatives_today' is more complete,
         # so it takes precedence
+        if @options[:period] == ParliamentPeriod.current.name
+          representatives_today = parsing_data_source.representatives_today
 
-        representatives_today = parsing_data_source.representatives_today
-
-        representatives_today.each do |rep|
-          representatives[rep.external_id] = rep
+          representatives_today.each do |rep|
+            representatives[rep.external_id] = rep
+          end
         end
 
         parsing_data_source.representatives(@options[:period]).each do |rep|

@@ -63,14 +63,15 @@ class Party < ActiveRecord::Base
   # TODO: move to DB
 
   TWITTER_IDS = {
-    'a'   => 'Arbeiderpartiet',
-    'frp' => 'frp_no',
-    'h'   => 'Hoyre',
-    'krf' => 'KrFNorge',
-    'mdg' => 'Partiet',
-    'sp'  => 'Senterpartiet',
-    'sv'  => 'SVParti',
-    'v'   => 'Venstre'
+    'a'    => 'Arbeiderpartiet',
+    'frp'  => 'frp_no',
+    'h'    => 'Hoyre',
+    'krf'  => 'KrFNorge',
+    'mdg'  => 'Partiet',
+    'sp'   => 'Senterpartiet',
+    'sv'   => 'SVParti',
+    'v'    => 'Venstre',
+    'rodt' => 'raudt'
   }
 
   def twitter_id
