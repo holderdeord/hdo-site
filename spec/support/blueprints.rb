@@ -95,9 +95,9 @@ ParliamentSession.blueprint do
 end
 
 ParliamentSession.blueprint(:current) do # TODO: create this dynamically
-  external_id { "2016-2017" }
-  start_date { Date.new(2016, 10, 1) }
-  end_date { Date.new(2017, 9, 30) }
+  external_id { "2017-2018" }
+  start_date { Date.new(2017, 10, 1) }
+  end_date { Date.new(2018, 9, 30) }
 end
 
 ParliamentPeriod.blueprint do
@@ -107,9 +107,9 @@ ParliamentPeriod.blueprint do
 end
 
 ParliamentPeriod.blueprint(:current) do # TODO: create this dynamically
-  external_id { "2013-2017" }
-  start_date { Date.new(2013, 10, 1) }
-  end_date { Date.new(2017, 9, 30) }
+  external_id { "2017-2021" }
+  start_date { Date.new(2017, 10, 1) }
+  end_date { Date.new(2021, 9, 30) }
 end
 
 Representative.blueprint do
