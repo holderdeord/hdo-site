@@ -147,7 +147,7 @@ class WidgetsController < ApplicationController
     period = params[:period] ? issue.periods.find { |e| e.name == params[:period] } : issue.periods.last
 
     if period.nil?
-      raise ActiveRecord::RecordNotFound
+      raise ActiveRecord::RecordNotFound, "unable to find parliament period for issue"
     else
       period
     end

@@ -7,12 +7,13 @@ describe WidgetsController do
   let(:representative) { Representative.make! }
 
   before do
-    ParliamentPeriod.make!(:current) unless ParliamentPeriod.current    
+    ParliamentPeriod.make!(:current) unless ParliamentPeriod.current
   end
 
   describe 'GET #issue' do
     it 'assigns the requested issue' do
       get :issue, id: published_issue
+
       response.should be_ok
 
       assigns(:issue).should be_kind_of(Issue)

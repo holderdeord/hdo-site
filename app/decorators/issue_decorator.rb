@@ -19,7 +19,7 @@ class IssueDecorator < Draper::Decorator
   end
 
   def periods
-    periods = [ParliamentPeriod.named('2013-2017'), ParliamentPeriod.named('2009-2013')].compact
+    periods = ParliamentPeriod.all
     periods.map { |pp| Period.new(pp, model) }.select { |e| e.years.any? || e.promisors.any? }
   end
 
