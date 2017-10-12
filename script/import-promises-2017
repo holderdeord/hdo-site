@@ -10,7 +10,7 @@ sheets = [
   # { party: 'SV', external_id: 'SV',     key: '1E7DH4AQ3JWnzYSPSEHHwojJR7J48b4Cf_gAFxdcyLAg' },
   # { party: 'Høyre', external_id: 'H',   key: '1ippIkch5xeuIR8K8Jqd-Wc2jSed8xeOvrlkl1_pRUME' },
   # { party: 'Sp', external_id: 'Sp',     key: '10-Gh7spVmab8VbkMRDErEpYWWqz8aebFZvFgwOMsYN4' },
-  { party: 'Rødt', external_id: 'Rødt',    key: '18k_PLjkXBG6pegEjtHp4xBMTnvDreP1BJqZnVfJgD_U' }
+  { party: 'Rødt', external_id: 'R',    key: '18k_PLjkXBG6pegEjtHp4xBMTnvDreP1BJqZnVfJgD_U' }
 ]
 
 period_name = '2017-2021'

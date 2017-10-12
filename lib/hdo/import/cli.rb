@@ -144,6 +144,7 @@ module Hdo
 
       def import_api_representatives
         representatives = {}
+        representatives_today = []
 
         # the information in 'representatives_today' is more complete,
         # so it takes precedence
