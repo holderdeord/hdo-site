@@ -130,7 +130,7 @@ gem 'workflow'
 if ENV['LOCAL_IMPORTER']
   gem 'hdo-storting-importer', :path => File.expand_path("../../hdo-storting-importer", __FILE__)
 else
-  gem 'hdo-storting-importer', "~> 0.5.8", require: 'hdo/storting_importer'
+  gem 'hdo-storting-importer', "~> 0.5.9", require: 'hdo/storting_importer'
 end
 
 # necessary for ruby 2.2
