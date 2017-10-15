@@ -23,7 +23,7 @@ module Hdo
         /\b(sosialistisk venstreparti|sv)\b/i                     => 'SV',
         /\b(venstre|#{NEGATIVES}v)\b/i                            => 'V',
         /\b(miljøpartiet dei? grønne|mdg)\b/i                     => 'MDG',
-        /\b(rødt|raudt|r)\b/i                                               => 'R',
+        /\b(rødt|raudt|r)\b/i                                     => 'R',
       }
 
     end
