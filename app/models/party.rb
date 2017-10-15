@@ -71,7 +71,8 @@ class Party < ActiveRecord::Base
     'sp'   => 'Senterpartiet',
     'sv'   => 'SVParti',
     'v'    => 'Venstre',
-    'rodt' => 'raudt'
+    'r'    => 'raudt',
+    'uav'  => nil
   }
 
   def twitter_id

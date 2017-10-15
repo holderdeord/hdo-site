@@ -55,7 +55,9 @@ namespace :images do
     path_to_logos = Rails.root.join("app/assets/images/party-logos-current")
 
     Party.all.each do |party|
-      path = path_to_logos.join("#{party.slug}.png")
+      slug = party.slug == 'uav' ? 'unknown' : party.slug
+
+      path = path_to_logos.join("#{slug}.png")
 
       if path.exist?
         party.logo = path.open
