@@ -2,6 +2,7 @@ module Api
   class VoteRepresenter < BaseRepresenter
     property :subject
     property :time
+    property :external_id
 
     property :enacted
     property :stats, as: :counts
