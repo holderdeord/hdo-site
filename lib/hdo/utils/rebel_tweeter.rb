@@ -10,8 +10,8 @@ module Hdo
 
       MESSAGES = [
         "%{party}s %{representative} brøt med partiflertallet og stemte %{result} følgende forslag:",
-        "%{party}s %{representative} fulgte samvittigheten og stemte %{result} følgende forslag:",
-        "%{party}s %{representative} fulgte sin overbevisning og stemte %{result} følgende forslag: "
+        "%{party}s %{representative} stemte mot eget parti i følgende forslag:",
+        "%{party}s %{representative} stemte ikke sammen med resten av stortingsgruppa i følgende forslag:"
       ]
 
       def self.since(date)
