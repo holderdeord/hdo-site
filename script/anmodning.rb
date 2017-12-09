@@ -32,6 +32,7 @@ else
   end
 
   File.open("anmodning.json", "w") { |file| file << data.to_json }
+  data = JSON.parse(data.to_json) # stringify keys
 end
 
 # STDOUT << CSV.generate(col_sep: "\t") do |csv|
@@ -64,7 +65,44 @@ end
 #   end
 # end
 
-pp data.find { |e| (e['vote_for'] + e['vote_against'] + e['vote_absent']).any?(&:nil?) }
+by_session = data.group_by { |e| e['session'] }
 
-# all_parties = data.flat_map { |e| (e['vote_for'] + e['vote_against'] + e['vote_against']) }
-# p all_parties
+total_counts_by_session = Hash.new { |hash, key| hash[key] = {total: 0, enacted: 0} }
+party_counts_by_session = Hash.new { |hash, key| hash[key] = Hash.new { |hash, key| hash[key] = {total: 0, enacted: 0}}}
+
+by_session.each do |session, props|
+  props.each do |prop|
+    total_counts_by_session[session][:total] += 1
+    total_counts_by_session[session][:enacted] += 1 if prop['vote_enacted']
+
+    prop['vote_for'].each do |party|
+      party_counts_by_session[session][party['name']][:total] += 1
+      party_counts_by_session[session][party['name']][:enacted] += 1 if prop['vote_enacted']
+    end
+  end
+end
+
+File.open("anmodning-totals.tsv", "w") { |io|
+  io << CSV.generate(col_sep: "\t") do |csv|
+    csv << ['session', 'total', 'vedtatt']
+
+    total_counts_by_session.sort_by { |session, counts| session }.each do |session, counts|
+      csv << [session, counts[:total], counts[:enacted]]
+    end
+  end
+}
+
+File.open("anmodning-parties.tsv", "w") { |io|
+  io << CSV.generate(col_sep: "\t") do |csv|
+    csv << ['session', 'parti', 'total', 'vedtatt']
+
+    party_counts_by_session.sort_by { |session, counts| session }.each do |session, counts|
+      counts.each do |party, party_counts|
+        csv << [session, party, party_counts[:total], party_counts[:enacted]]
+      end
+    end
+  end
+}
+
+# pp total_counts_by_session
+# pp party_counts_by_session
