@@ -8,6 +8,7 @@ module Hdo
       end
 
       def include?(date)
+        date = date.try(:to_date) || date
         date >= start_date && date <= end_date
       end
 
@@ -43,7 +44,7 @@ module Hdo
         end
 
         def next
-          c = current or return 
+          c = current or return
           where('start_date > ?', c.end_date).order(:start_date).first
         end
       end

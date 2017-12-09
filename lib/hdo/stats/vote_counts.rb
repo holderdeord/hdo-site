@@ -111,7 +111,8 @@ module Hdo
 
       def compute_party_counts(vote)
         time = vote.time
-        party_results = vote.vote_results.includes(:representative).group_by { |r| r.representative.party_at(time) }
+        party_results = vote.vote_results.includes({representative: {party_memberships: :party}}).group_by { |r| r.representative.party_at(time) }
+
         res = {}
 
         party_results.each do |party, vote_results|

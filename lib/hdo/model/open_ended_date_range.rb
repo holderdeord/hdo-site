@@ -20,6 +20,8 @@ module Hdo
 
       def include?(date)
         s, e = start_date.to_date, end_date.try(:to_date)
+
+        date = date.try(:to_date) || date # convert time to date
         date >= s && (e == nil || date <= e)
       end
 
