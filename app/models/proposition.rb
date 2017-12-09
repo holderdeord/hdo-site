@@ -119,6 +119,14 @@ class Proposition < ActiveRecord::Base
     parliament_session.try(:name)
   end
 
+  def parliament_period
+    @parliament_period ||= ParliamentPeriod.for_date(vote_time.to_date)
+  end
+
+  def parliament_period_name
+    parliament_period.try(:name)
+  end
+
   def proposers
     proposition_endorsements.map(&:proposer)
   end
@@ -201,7 +209,7 @@ class Proposition < ActiveRecord::Base
       :vote_enacted
     ]
 
-    methods += [:parliament_session_name, :vote_time] if votes.any?
+    methods += [:parliament_session_name, :parliament_period_name, :vote_time] if votes.any?
 
     as_json methods: methods,
             include: {votes: {only: [:slug, :enacted]} },
