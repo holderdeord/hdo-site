@@ -14,5 +14,6 @@ module Api
       extend: PartyRepresenter
 
     alias_method :url_helper, :api_parties_url
+
   end
 end
