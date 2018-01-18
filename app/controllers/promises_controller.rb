@@ -5,7 +5,7 @@ class PromisesController < ApplicationController
     create_search
 
     respond_to do |format|
-      format.html
+      format.html { redirect_to 'https://lofter.holderdeord.no/', status: 302 }
       format.json { render json: @search.as_json }
       format.csv  { send_data @search.as_csv }
       format.tsv  { send_data @search.as_csv(col_sep: "\t") }

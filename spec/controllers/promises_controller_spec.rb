@@ -19,7 +19,7 @@ describe PromisesController do
 
   describe "GET #index" do
 
-    it 'renders promises#index' do
+    xit 'renders promises#index' do
       get :index
       response.should have_rendered(:index)
     end
@@ -34,7 +34,7 @@ describe PromisesController do
       response.should be_success
     end
 
-    it 'contains all promises in a period by default' do
+    xit 'contains all promises in a period by default' do
       promise_a = Promise.make!(parliament_period: ParliamentPeriod.make!(start_date: '2009-10-01'))
       promise_b = Promise.make!(parliament_period: ParliamentPeriod.make!(start_date: '2013-10-01'))
 

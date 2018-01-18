@@ -10,7 +10,9 @@ sheets = [
   # { party: 'SV', external_id: 'SV',     key: '1E7DH4AQ3JWnzYSPSEHHwojJR7J48b4Cf_gAFxdcyLAg' },
   # { party: 'Høyre', external_id: 'H',   key: '1ippIkch5xeuIR8K8Jqd-Wc2jSed8xeOvrlkl1_pRUME' },
   # { party: 'Sp', external_id: 'Sp',     key: '10-Gh7spVmab8VbkMRDErEpYWWqz8aebFZvFgwOMsYN4' },
-  { party: 'Rødt', external_id: 'R',    key: '18k_PLjkXBG6pegEjtHp4xBMTnvDreP1BJqZnVfJgD_U' }
+  # { party: 'Rødt', external_id: 'R',    key: '18k_PLjkXBG6pegEjtHp4xBMTnvDreP1BJqZnVfJgD_U' }
+  { government: 'Regjeringen Solberg', external_id: 'Solberg', key: '1urK2jvsV3hnsRBRpIx7sDiGTT68BZGTQRSX3zMpPp_o' }
+
 ]
 
 period_name = '2017-2021'
@@ -40,23 +42,28 @@ sheets.each do |sheet|
   promises = data.fetch('Løfter').map.with_index do |promise, idx|
     xid = [sheet[:external_id].downcase, period_name, idx + 2].join(':')
     raw_body = promise.fetch('LØFTE').to_s.strip
+    promisor = sheet[:party] || sheet[:government]
+
+    is_government = sheet[:government] && !sheet[:party]
 
     if raw_body.blank?
       body = ''
     else
-      body = "#{sheet[:party]} vil #{UnicodeUtils.downcase raw_body[0]}#{raw_body[1..-1]}"
+      body = "#{is_government ? 'Regjeringen' : promisor} vil #{UnicodeUtils.downcase raw_body[0]}#{raw_body[1..-1]}"
 
       if body[-1] != "."
         body = "#{body}."
       end
     end
 
+    body.gsub!("\r", ' ')
+
     promise = Hdo::StortingImporter::Promise.new xid,
                                       sheet[:external_id],
                                       body,
                                       false,
                                       promise.fetch('KATEGORIER'),
-                                      'Partiprogram',
+                                      'Regjeringserklæring',
                                       promise.fetch('SIDETALL I PP').to_i,
                                       period_name
 
