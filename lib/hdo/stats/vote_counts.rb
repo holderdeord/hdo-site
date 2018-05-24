@@ -92,6 +92,10 @@ module Hdo
         raise 'Vote counting error.'
       end
 
+      def unanimous?
+        @unanimous ||= parties.map { |party| key_for(party) }.reject { |k| k == :split }.uniq.size == 1
+      end
+
       def parties
         @party_counts.keys.select { |e| party_participated?(e) }
       end
@@ -103,6 +107,9 @@ module Hdo
           res[:for] << party if party_for?(party)
           res[:against] << party if party_against?(party)
         end
+
+        res[:for].sort!
+        res[:against].sort!
 
         res
       end
