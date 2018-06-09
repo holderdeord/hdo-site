@@ -20,6 +20,7 @@ File.open(output, "w") do |file|
       'personlig',
       'vedtatt',
       'enstemmig',
+      'lenker',
       *parties.map { |p| p.external_id  }
     ]
 
@@ -46,6 +47,7 @@ File.open(output, "w") do |file|
             vote.personal?,
             vote.enacted?,
             stats.unanimous?,
+            vote.parliament_issues.map { |e| e.url }.join(','),
             *parties.map { |p| stats.key_for(p) }
           ]
 

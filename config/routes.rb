@@ -14,6 +14,7 @@ Hdo::Application.routes.draw do
       }
     end
 
+    resources :parliament_issues, only: [:index, :show], path: 'parliament-issues'
     resources :committees, only: [:index, :show]
     resources :districts, only: [:index, :show]
     resources :votes, only: [:index, :show]
