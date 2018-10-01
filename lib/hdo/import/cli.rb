@@ -339,12 +339,29 @@ module Hdo
         File.open('public/data/rebels.json', 'w') { |io| io << result.to_json }
       end
 
+      def error_code_for(server_error_body)
+        return Nokogiri::XML(e.body).css('//feilkode').text
+      rescue
+        nil
+      end
+
       def each_parliament_issue(parliament_issues, limit = nil)
         count = 0
 
         parliament_issues.each_with_index do |parliament_issue, index|
           details = parsing_data_source.parliament_issue_details(parliament_issue.external_id)
-          votes   = parsing_data_source.votes_for(parliament_issue.external_id)
+          votes = []
+
+          begin
+            votes = parsing_data_source.votes_for(parliament_issue.external_id)
+          rescue Hdo::StortingImporter::DataSource::ServerError => ex
+            p ex.message
+            # fra ME @ Stortinget
+            ##### Grunnen til at du får en feilmelding på disse voteringene er at denne saken faktisk ikke har vedtak. Se merknad som er lagt ut på saken på nettsidene for nærmere forklaring på hvorfor dette skjer: https://www.stortinget.no/no/Saker-og-publikasjoner/Saker/Sak/Voteringsoversikt/?p=72682&dnid=1
+            ##### Hvordan vi kan og skal håndtere disse sakene har vi ikke noe klart svar på akkurat nå. Det krever eventuelt endringer i underliggende systemer som vi ikke får gjort nå.
+            ##### Den eneste løsningen jeg kan tilby nå er at man behandler feilkode 0 som at det ikke foreligger noe vedtak til voteringen.
+            raise ex unless (ex.code == 500 || error_code_for(e.body) == "0")
+          end
 
           count += votes.size
 
