@@ -1,6 +1,20 @@
 # encoding: utf-8
 require 'machinist/active_record'
 
+## helpers
+
+def session_for_date(date)
+  new_session_start = Date.new(date.year, 10, 1)
+
+  if date >= new_session_start
+    new_session_start..(Date.new(date.year + 1, 9, 30))
+  else
+    Date.new(date.year - 1, 10, 1)..Date.new(date.year, 9, 30)
+  end
+end
+
+## blueprints
+
 User.blueprint do
   name { "user #{sn}" }
   email { "user#{sn}@email.com" }
@@ -94,10 +108,12 @@ ParliamentSession.blueprint do
   end_date { Date.new(2013, 9, 30) }
 end
 
-ParliamentSession.blueprint(:current) do # TODO: create this dynamically
-  external_id { "2017-2018" }
-  start_date { Date.new(2017, 10, 1) }
-  end_date { Date.new(2018, 9, 30) }
+session_range = session_for_date(Date.today)
+
+ParliamentSession.blueprint(:current) do
+  external_id { "#{session_range.first.year}-#{session_range.last.year}" }
+  start_date { session_range.first }
+  end_date { session_range.last }
 end
 
 ParliamentPeriod.blueprint do
@@ -222,3 +238,4 @@ Position.blueprint do
   description { 'the reason i am here in paris is...'}
   title { 'parties chose to...' }
 end
+
