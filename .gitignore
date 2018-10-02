@@ -61,3 +61,6 @@ chromedriver.log
 auto-save-list
 tramp
 .\#*
+
+# docker
+/docker-volumes

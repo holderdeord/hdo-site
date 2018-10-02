@@ -211,3 +211,13 @@ or
 # Deployment
 
 Our own servers are set up with Puppet, using the code from the [hdo-puppet repo](http://github.com/holderdeord/hdo-puppet).
+
+## Docker
+
+You can run the site using Docker + docker-compose:
+
+    $ mkdir -p docker-volumes/{pg,es,hdo-site}/data && chmod 0777 docker-volumes/{pg,es,hdo-site}/data
+    $ docker-compose up -d
+    $ docker-compose run --rm hdo-site bash -c 'bundle exec rake db:migrate'
+
+Now you should be able to access the app at localhost:3333.

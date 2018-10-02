@@ -1,0 +1,10 @@
+production:
+  adapter: postgresql
+  encoding: unicode
+  database: hdo_production
+  pool: 5
+  host: pg
+  port: 5432
+  username: hdo
+  password:
+  min_messages: warning

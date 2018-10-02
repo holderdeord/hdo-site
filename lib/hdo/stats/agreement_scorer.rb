@@ -5,12 +5,15 @@ module Hdo
     class AgreementScorer
       VALID_UNITS = [:propositions, :votes]
 
-      COMBINATIONS = (
-        parties = Party.all.to_a
-        2.upto(parties.size).flat_map do |n|
-          parties.combination(n).to_a
-        end
-      )
+      def self.combinations
+        @combinations ||= (
+          parties = Party.all.to_a
+
+          2.upto(parties.size).flat_map do |n|
+            parties.combination(n).to_a
+          end
+        )
+      end
 
       def self.by_category(parliament_issues = ParliamentIssue.all)
         category_votes = Hash.new { |h, k| h[k] = [] }
@@ -114,7 +117,7 @@ module Hdo
         opts = opts.dup
 
         @votes               = opts.delete(:votes) || Vote.with_results.includes(:propositions)
-        @combinations        = opts.delete(:combinations) || COMBINATIONS
+        @combinations        = opts.delete(:combinations) || AgreementScorer.combinations
         @ignore_unanimous    = !!opts.delete(:ignore_unanimous)
         @exclude_issue_types = opts.delete(:exclude_issue_types)
 

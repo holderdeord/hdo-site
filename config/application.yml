@@ -45,8 +45,8 @@ production:
   <<: *defaults
   statsd_enabled: true
   analytics_enabled: true
-  fastly_enabled: true
-  ssl_enabled: true
+  fastly_enabled: <%= ENV['FASTLY_ENABLED'] || 'true' %>
+  ssl_enabled: <%= ENV['SSL_ENABLED'] || 'true' %>
   default_bcc_email: prodcopy@holderdeord.no
   chat_notifications_enabled: true
   parties_in_proposition_feed: false

@@ -1,0 +1,5 @@
+.git
+./docker-volumes
+./log
+./tmp
+./public/assets

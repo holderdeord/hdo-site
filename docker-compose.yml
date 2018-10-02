@@ -1,0 +1,49 @@
+version: "3"
+
+services:
+  pg:
+    image: postgres:10
+    ports:
+      - 5432
+    volumes:
+      - ./docker-volumes/pg/data:/var/lib/postgresql/data
+    environment:
+        POSTGRES_USER: hdo
+        POSTGRES_DB: hdo_production
+
+  es:
+    image: elasticsearch:2.2.1
+    ports:
+      - 9200
+    volumes:
+      - ./docker-volumes/es/data:/usr/share/es/data
+      - ./config/search/synonyms.nb.txt:/usr/local/etc/elasticsearch/hdo/hdo.synonyms.nb.txt
+      - ./config/search/words.nb.txt:/usr/local/etc/elasticsearch/hdo/hdo.words.nb.txt
+    environment:
+      discovery.type: single-node
+      xpack.license.self_generated.type: basic
+
+  hdo-site:
+    build: .
+    command: "bundle exec rails s"
+    links:
+      - es
+      - pg
+    depends_on:
+      - es
+      - pg
+    ports:
+      - 3333:3000
+    volumes:
+      - ./docker-volumes/hdo-site/data:/app/log
+    environment:
+      ELASTICSEARCH_URL: http://es:9200
+      ELASTICSEARCH_CONFIG_PATH: /usr/local/etc/elasticsearch/hdo
+      SSL_ENABLED: "false"
+      FASTLY_ENABLED: "false"
+      RAILS_ENV: production
+      RAILS_SERVE_STATIC_FILES: "true"
+      WAIT_HOSTS: es:9200, pg:5432
+      WAIT_HOSTS_TIMEOUT: 60
+
+
