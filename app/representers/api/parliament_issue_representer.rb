@@ -9,5 +9,14 @@ module Api
       api_parliament_issue_url represented
     end
 
+    links :votes do
+      represented.votes.map do |p|
+        {
+          title: p.subject,
+          href: api_vote_url(p)
+        }
+      end
+    end
+
   end
 end
