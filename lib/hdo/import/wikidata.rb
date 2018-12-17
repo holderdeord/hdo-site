@@ -20,7 +20,7 @@ module Hdo
       def data
         @data ||= (
           res = Typhoeus.get(
-            "https://api.morph.io/tmtmtmtm/norway-stortingsrepresentanter-wikidata/data.json?key=#{@api_key}&query=select%20*%20from%20data"
+            "https://api.morph.io/everypolitician-scrapers/norway-stortingsrepresentanter-wikidata/data.json?key=#{@api_key}&query=select%20*%20from%20data"
           )
 
           if res.success?
