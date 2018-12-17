@@ -2,7 +2,7 @@ module Api
   class RepresentativesRepresenter < PagedRepresenter
     link :find do
       {
-        href: templated_url(:api_representative_url, id: 'slug'),
+        href: templated_url(:api_representative_url, id: 'slug_or_external_id'),
         templated: true
       }
     end
