@@ -31,6 +31,40 @@ namespace :twitter do
       end
     end
 
+    desc "Check and sync for representatives with Twitter accounts in Wikidata"
+    task :wikidata => :environment do
+      query = <<-SQL
+      SELECT DISTINCT ?item ?itemLabel ?twitterName ?stortingId WHERE {
+        ?item wdt:P2002 ?twitterName.
+        ?item wdt:P3072 ?stortingId.
+        SERVICE wikibase:label { bd:serviceParam wikibase:language "nb". }
+      }
+      SQL
+
+      res = Typhoeus.get('https://query.wikidata.org/sparql', params: {
+        query: query,
+        format: 'json'
+      })
+
+      data = Hashie::Mash.new(JSON.parse(res.body))
+
+      data.results.bindings.each do |d|
+        rep = Representative.find_by_external_id(d.stortingId.value)
+
+        if rep.nil?
+          puts "no representative with external_id #{d.stortingId.value} #{d.item.value}"
+        elsif rep.twitter_id && rep.twitter_id == d.twitterName.value
+          puts "matched: #{rep.twitter_id}"
+        elsif rep.twitter_id
+          puts "mismatch, not overwriting: #{rep.twitter_id} != #{d.twitterName.value}"
+        else
+          puts "adding: #{d.twitterName.value} to #{rep.name_with_party}"
+          rep.twitter_id = d.twitterName.value
+          rep.save!
+        end
+      end
+    end
+
     desc "Add all DB reps to our public 'Politikere på Twitter' list"
     task :sync => :environment do
       client = Hdo::Utils::TwitterClients.hdo
