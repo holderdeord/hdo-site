@@ -24,7 +24,7 @@ notifications:
   slack:
     secure: K239cqAqap9kYXuyDY7Y6B942caJjmAMrz64TuTfQVQsUf/Rud1ZwZ6sSXOTVgk9XbMebVrLB60AYo0MgYucrG++ZF9Cad7UbR47NTEZsHfa+dAchb96/HgzPlMzoG3CqQP8+bhJzbcO4WDi0toa3POi4ESjinXYy/AI55tIG6M=
 bundler_args: "--without development --path ~/.bundle"
-script: RAILS_ENV=test SPEC_OPTS=--backtrace bundle exec rake travis
+script: RAILS_ENV=test SPEC_OPTS=--backtrace xvfb-run bundle exec rake travis
 before_script:
 - sudo wget https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-2.2.1.deb
 - sudo dpkg -i elasticsearch-2.2.1.deb
@@ -33,7 +33,6 @@ before_script:
 - sudo cp config/search/words.nb.txt $ELASTICSEARCH_CONFIG_PATH/hdo.words.nb.txt
 - sudo cp config/search/synonyms.nb.txt $ELASTICSEARCH_CONFIG_PATH/hdo.synonyms.nb.txt
 - mv config/database.yml.travis config/database.yml
-- sh -e /etc/init.d/xvfb start
 - "./script/travis/npm_bootstrap.sh"
 - curl http://localhost:9200/ || echo 'failed to check ES'
 after_success:
