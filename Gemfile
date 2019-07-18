@@ -93,7 +93,7 @@ gem 'elasticsearch-rails', '~> 0.1.9'
 gem 'cache_digests'
 
 # images
-gem 'mini_magick', "~> 3.5"
+gem 'mini_magick', "~> 4.9"
 gem 'carrierwave', '~> 0.8'
 
 # logging
