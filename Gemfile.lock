@@ -189,7 +189,7 @@ GEM
       activesupport (>= 3)
       railties (>= 3)
     machinist (2.0)
-    mail (2.5.4)
+    mail (2.5.5)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
     memoizable (0.4.2)
