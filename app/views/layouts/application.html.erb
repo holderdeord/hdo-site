@@ -27,7 +27,8 @@
         <% unless url_for == '/home/index' %>
           <div class="row-fluid">
             <div class="alert alert-info <%= current_page?(controller: 'representatives', action: 'show') ? 'pull-right' : '' %>">
-              Du besøker nå de gamle nettsidene våre. Se våre nye sider <%= link_to 'her', 'https://www.holderdeord.no' %>.
+              <%# Du besøker nå de gamle nettsidene våre. Se våre nye sider <%= link_to 'her', 'https://www.holderdeord.no'. %> %>
+              <strong>Holder de ord</strong> legges ned i løpet av 2020.
               <%= @extra_alert_message %>
             </div>
           </div>
