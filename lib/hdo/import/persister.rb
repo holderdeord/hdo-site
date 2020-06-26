@@ -156,7 +156,7 @@ module Hdo
             :issue_type     => issue.type, # AR doesn't like :type as a column name
             :status         => issue.status,
             :last_update    => Time.parse(issue.last_update),
-            :reference      => issue.reference,
+            :reference      => issue.reference.truncate(250),
             :summary        => issue.summary,
             :description    => issue.description,
             :committee      => committee,
