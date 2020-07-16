@@ -1,4 +1,4 @@
-FROM ruby:2.2
+FROM ruby:2.3
 
 RUN gem install bundler
 ADD Gemfile /app/Gemfile
