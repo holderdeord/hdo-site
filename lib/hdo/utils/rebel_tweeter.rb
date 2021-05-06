@@ -58,12 +58,20 @@ module Hdo
         MIN_TWEET_INTERVAL + rand(MIN_TWEET_INTERVAL)
       end
 
+      def external_url(vote)
+        id = vote.parliament_issues.last.external_id
+
+        "https://stortinget.no/no/Saker-og-publikasjoner/Saker/Sak/Voteringsoversikt/?p=#{id}"
+      rescue
+        helpers.vote_url(vote, host: 'data.holderdeord.no', src: 'rtw')
+      end
+
       def message_for(vote, vote_result)
         representative = vote_result.representative
         name           = representative.has_twitter? ? "@#{representative.twitter_id}" : representative.name
         party          = representative.party_at(vote.time)
         message        = MESSAGES.sample % {party: party.short_name, representative: name, result: vote_result.human.downcase}
-        url            = helpers.vote_url(vote, host: 'data.holderdeord.no', src: 'rtw')
+        url            = external_url(vote)
 
         [message.truncate(MAX_TWEET_LENGTH - url.length - 1), url].join(' ')
       end
