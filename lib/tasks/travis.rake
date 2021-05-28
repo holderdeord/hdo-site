@@ -28,7 +28,6 @@ task :travis => %w[
   tmp:create
   spec
   js:test
-  js:lint
   spec:coverage:ensure
 ]
 

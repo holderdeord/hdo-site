@@ -1,6 +1,5 @@
 [![Build Status](https://secure.travis-ci.org/holderdeord/hdo-site.png?branch=master)](http://travis-ci.org/holderdeord/hdo-site)
 [![Code Climate](https://codeclimate.com/github/holderdeord/hdo-site.png)](https://codeclimate.com/github/holderdeord/hdo-site)
-[![Coverage Status](https://coveralls.io/repos/holderdeord/hdo-site/badge.png?branch=master)](https://coveralls.io/r/holderdeord/hdo-site)
 [![Dependency Status](https://gemnasium.com/holderdeord/hdo-site.png)](https://gemnasium.com/holderdeord/hdo-site)
 
 # IRC channel
