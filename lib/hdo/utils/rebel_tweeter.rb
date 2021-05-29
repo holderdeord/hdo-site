@@ -61,7 +61,7 @@ module Hdo
       def external_url(vote)
         id = vote.parliament_issues.last.external_id
 
-        "https://stortinget.no/no/Saker-og-publikasjoner/Saker/Sak/Voteringsoversikt/?p=#{id}"
+        "https://stortinget.no/no/Saker-og-publikasjoner/Saker/Sak/Voteringsoversikt/?p=#{id}&dnid=1"
       rescue
         helpers.vote_url(vote, host: 'data.holderdeord.no', src: 'rtw')
       end
